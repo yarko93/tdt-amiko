@@ -16,7 +16,7 @@ cp -a $RELEASEDIR/* $TMPROOTDIR
 
 
 if [  -e $CURDIR/extras/dev_ufs912.tar.gz ]; then
-  tar -xzf $CURDIR/extras/dev_ufs912.tar.gz -C $TMPROOTDIR/dev/
+tar -xzf $CURDIR/extras/dev_ufs912.tar.gz -C $TMPROOTDIR/dev/
 fi
   rm -rf  $TMPROOTDIR/dev/dvb/adapter0/ca1 
 	  cd $TMPROOTDIR/dev/dvb/adapter0 
