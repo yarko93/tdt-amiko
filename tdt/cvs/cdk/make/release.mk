@@ -11,6 +11,9 @@ release_common_utils:
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release/etc/init.d/halt
 	mkdir -p $(prefix)/release/etc/rc.d/rc0.d
+	mkdir -p $(prefix)/release/etc/opkg
+	cp $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
+	cp $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
 	ln -s ../init.d $(prefix)/release/etc/rc.d
 	ln -fs halt $(prefix)/release/sbin/reboot
 	ln -fs halt $(prefix)/release/sbin/poweroff
@@ -213,7 +216,7 @@ release_spark:
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
 
 	$(INSTALL_DIR) $(prefix)/release/usr/local/share/fonts
-	cp $(targetprefix)/usr/local/share/fonts/* $(prefix)/release/usr/local/share/fonts/
+	cp $(targetprefix)/usr/local/share/fonts/* $(prefix)/release/usr/share/fonts/
 
 	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/ftdi_sio.ko $(prefix)/release/lib/modules/ftdi.ko
 	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/pl2303.ko $(prefix)/release/lib/modules
@@ -798,7 +801,7 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/ram && \
 	$(INSTALL_DIR) $(prefix)/release/var && \
 	$(INSTALL_DIR) $(prefix)/release/var/etc && \
-	$(INSTALL_DIR) $(prefix)/release/var/opkg && \
+	$(INSTALL_DIR) $(prefix)/release/usr/lib/opkg && \
 	export CROSS_COMPILE=$(target)- && \
 		$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/release && \
 	touch $(prefix)/release/var/etc/.firstboot && \
@@ -1079,6 +1082,7 @@ endif
 
 	cp -p $(targetprefix)/usr/bin/killall $(prefix)/release/usr/bin/
 	cp -p $(targetprefix)/usr/bin/opkg-cl $(prefix)/release/usr/bin/opkg
+	ln -s ipkg-cl $(prefix)/release/usr/bin/opkg
 	cp -p $(targetprefix)/usr/bin/ffmpeg $(prefix)/release/sbin/
 	cp -p $(targetprefix)/usr/bin/tuxtxt $(prefix)/release/usr/bin/
 	cp -p $(targetprefix)/usr/sbin/ethtool $(prefix)/release/usr/sbin/

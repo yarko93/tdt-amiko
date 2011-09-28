@@ -1027,7 +1027,7 @@ $(DEPDIR)/opkg.do_compile: bootstrap opkg.do_prepare
 			--prefix=/usr \
 			--disable-curl \
 			--disable-gpg \
-			--with-opkglibdir=/var && \
+			--with-opkglibdir=/usr/lib && \
 		$(MAKE) all
 	touch $@
 
