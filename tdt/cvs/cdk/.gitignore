@@ -17,5 +17,10 @@ setuptools-*
 zope.interface-*
 busybox-*
 e2fsprogs-*
-sqlite-3.6.0-*
+sqlite-*
+glib-*
+gst-plugins-*
+gstreamer-*
+libogg-*
+libsoup-*
 .directory

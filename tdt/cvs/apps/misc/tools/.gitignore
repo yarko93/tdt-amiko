@@ -1,0 +1,5 @@
+ipbox_eeprom/Makefile
+ipbox_eeprom/eeprom
+gst-plugins-dvbmediasink/Makefile
+gst-plugins-dvbmediasink/m4/Makefile
+gst-plugins-dvbmediasink/src/Makefile
