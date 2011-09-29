@@ -11,9 +11,6 @@ release_common_utils:
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release/etc/init.d/halt
 	mkdir -p $(prefix)/release/etc/rc.d/rc0.d
-	mkdir -p $(prefix)/release/etc/opkg
-	cp $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
-	cp $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
 	ln -s ../init.d $(prefix)/release/etc/rc.d
 	ln -fs halt $(prefix)/release/sbin/reboot
 	ln -fs halt $(prefix)/release/sbin/poweroff
@@ -191,6 +188,9 @@ release_spark:
 	chmod 755 $(prefix)/release/etc/init.d/rc
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release/etc/init.d/halt
+	mkdir -p $(prefix)/release/etc/opkg
+	cp $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
+	cp $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
 	mkdir -p $(prefix)/release/etc/rc.d/rc0.d
 	ln -s ../init.d $(prefix)/release/etc/rc.d
 	ln -fs halt $(prefix)/release/sbin/reboot
@@ -231,6 +231,7 @@ release_spark:
 	echo 'sda1   -fstype=auto,noatime,nodiratime          :/dev/sda1' >> $(prefix)/release/etc/auto.usb
 	echo 'sda2   -fstype=auto,noatime,nodiratime          :/dev/sda2' >> $(prefix)/release/etc/auto.usb
 	echo 'sda3   -fstype=auto,noatime,nodiratime          :/dev/sda3' >> $(prefix)/release/etc/auto.usb
+	echo 'sr0   -fstype=auto,noatime,nodiratime          :/dev/sr0' >> $(prefix)/release/etc/auto.usb
 
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-avl2108.fw
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-stv6306.fw
@@ -1082,7 +1083,7 @@ endif
 
 	cp -p $(targetprefix)/usr/bin/killall $(prefix)/release/usr/bin/
 	cp -p $(targetprefix)/usr/bin/opkg-cl $(prefix)/release/usr/bin/opkg
-	ln -s ipkg-cl $(prefix)/release/usr/bin/opkg
+	ln -s /usr/bin/opkg  $(prefix)/release/usr/bin/ipkg-cl
 	cp -p $(targetprefix)/usr/bin/ffmpeg $(prefix)/release/sbin/
 	cp -p $(targetprefix)/usr/bin/tuxtxt $(prefix)/release/usr/bin/
 	cp -p $(targetprefix)/usr/sbin/ethtool $(prefix)/release/usr/sbin/
