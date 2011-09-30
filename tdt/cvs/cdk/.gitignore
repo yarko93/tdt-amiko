@@ -24,4 +24,4 @@ gstreamer-*
 libogg-*
 libsoup-*
 .directory
-own_build*
+own_build/*
