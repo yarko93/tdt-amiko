@@ -17,6 +17,7 @@ setuptools-*
 zope.interface-*
 busybox-*
 e2fsprogs-*
+<<<<<<< HEAD
 sqlite-*
 glib-*
 gst-plugins-*
@@ -28,4 +29,10 @@ libsoup-*
 own_build
 =======
 own_build/*
+<<<<<<< HEAD
+=======
+sqlite-3.6.0
+>>>>>>> duckbox/master
+=======
 >>>>>>> 0f9434129f09f5e8fc1832d60f6e31e333545c34
+>>>>>>> 1c2023a281b6817ff6871705371cb7e7a5285af1
