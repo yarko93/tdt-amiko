@@ -209,8 +209,8 @@ release_spark:
 	cp $(targetprefix)/boot/video_7111.elf $(prefix)/release/boot/video.elf
 	cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
-	cp -f $(buildprefix)/root/release/vfd_spark$(KERNELSTMLABEL).ko $(prefix)/release/lib/modules/vfd.ko
-	cp -f $(buildprefix)/root/release/encrypt_spark$(KERNELSTMLABEL).ko $(prefix)/release/lib/modules/encrypt.ko
+	cp -f $(buildprefix)/root/release/vfd_spark$(KERNELSTMLABEL)_noptk.ko $(prefix)/release/lib/modules/vfd.ko
+	cp -f $(buildprefix)/root/release/encrypt_spark$(KERNELSTMLABEL)_noptk.ko $(prefix)/release/lib/modules/encrypt.ko
 
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
@@ -1246,13 +1246,13 @@ endif
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/zope.interface-3.3.0-py2.6.egg-info
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/test
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/conch
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/mail
+#	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/mail
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/manhole
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/names
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/news
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/trial
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/words
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/application
+#	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/application
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/enterprise
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/flow
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/lore
@@ -1268,7 +1268,7 @@ endif
 	rm -rf $(prefix)/release/usr/lib/python2.6/ctypes
 	rm -rf $(prefix)/release/usr/lib/python2.6/curses
 	rm -rf $(prefix)/release/usr/lib/python2.6/distutils
-	rm -rf $(prefix)/release/usr/lib/python2.6/email
+#	rm -rf $(prefix)/release/usr/lib/python2.6/email
 
 #	Dont remove pyo files, remove pyc instead
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.pyc' -exec rm -f {} \;
@@ -1314,7 +1314,7 @@ endif
 
 #GSTREAMER STUFF
 	if [ -d $(prefix)/release/usr/lib/gstreamer-0.10 ]; then \
-		rm -rf $(prefix)/release/usr/lib/libgstfft*; \
+		#rm -rf $(prefix)/release/usr/lib/libgstfft*; \
 		rm -rf $(prefix)/release/usr/lib/gstreamer-0.10/*.la; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstapp.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstasf.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
