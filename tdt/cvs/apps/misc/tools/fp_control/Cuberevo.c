@@ -529,6 +529,22 @@ static int setRFModulator(Context_t* context, int on)
    return 0;   
 }
 
+static int setDisplayTime(Context_t* context, int on)
+{
+   struct micom_ioctl_data vData;
+
+   vData.u.display_time.on = on;
+   
+   setMode(context->fd);
+
+   if (ioctl(context->fd, VFDSETDISPLAYTIME, &vData) < 0)
+   {
+      perror("setDisplayTime: ");
+      return -1;
+   }
+   return 0;   
+}
+
 static int setFan(Context_t* context, int on)
 {
    struct micom_ioctl_data vData;
@@ -603,30 +619,19 @@ static int getWakeupReason(Context_t* context, int* reason)
 
 static int getVersion(Context_t* context, int* version)
 {
-   char strVersion[8];
+   struct micom_ioctl_data micom;
 
    fprintf(stderr, "waiting on version from fp ...\n");
 
    /* front controller time */
-   if (ioctl(context->fd, VFDGETVERSION, &strVersion) < 0)
+   if (ioctl(context->fd, VFDGETVERSION, &micom) < 0)
    {
       perror("getVersion: ");
       return -1;
    }
 
-   /* if we get the fp time */
-   if (strVersion[0] != '\0')
-   {
-      fprintf(stderr, "success reading version from fp\n");
+   printf("micom version = %d\n", micom.u.version.version);
 
-      *version = strVersion[1] * 10 | strVersion[2];
-      
-      printf("version = %d\n", *version);
-   } else
-   {
-      fprintf(stderr, "error reading version from fp\n");
-      *version = 0;
-   }
    return 0;
 }
 
@@ -720,5 +725,6 @@ Model_t Cuberevo_model = {
 	.SetRF            = setRFModulator,
 	.SetFan           = setFan,
     .GetWakeupTime    = getWakeupTime,
+    .SetDisplayTime   = setDisplayTime,
 	.private          = NULL
 };
