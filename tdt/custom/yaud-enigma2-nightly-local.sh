@@ -15,5 +15,6 @@ echo config.usage.quickzap_bouquet_change=true >> $NRELDIR/etc/enigma2/settings
 echo config.usage.multiepg_ask_bouquet=true >> $NRELDIR/etc/enigma2/settings
 echo config.skin.primary_skin=AmikoSkin/skin.xml >> $NRELDIR/etc/enigma2/settings
 echo config.audio.volume=30 >> $NRELDIR/etc/enigma2/settings
+cp -RP ~/enigma2-amiko/enigma2/* $NRELDIR
 echo "--- Erledigt ---"
 exit

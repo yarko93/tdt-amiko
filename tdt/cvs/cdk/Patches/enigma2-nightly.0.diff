@@ -1022,7 +1022,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/driver/vfd
 +	//ioctl(fpc, FRONTPANELSCROLLMODE, &scrollMode);
 +	
 +	// display string
-+	char str[] = "        AAF DEV-TEAM ENIGMA2";
++	char str[] = "        AR-P TEAM ENIGMA2";
 +	int length = strlen(str);
 +	char dispData[MAX_CHARS + 1];
 +	int offset = 0;
@@ -1086,7 +1086,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/driver/vfd
 +	evfd vfd;
 +	blocked = true;
 +	//vfd.vfd_clear_icons();
-+	vfd.vfd_write_string("AAF DEV-TEAM", true);
++	vfd.vfd_write_string("AR-P TEAM", true);
 +	//run 2 times through all icons 
 +	for  (int vloop = 0; vloop < 128; vloop++) {
 +		/*if (vloop%14 == 0 )
@@ -4495,6 +4495,41 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
  class Harddisk:
  	def __init__(self, device):
  		self.device = device
+@@ -22,12 +39,16 @@
+ 	def __init__(self, device):
+ 		self.device = device
+ 
+-		if access("/dev/.udev", 0):
+-			self.type = DEVTYPE_UDEV
+-		elif access("/dev/.devfsd", 0):
+-			self.type = DEVTYPE_DEVFS
+-		else:
+-			print "Unable to determine structure of /dev"
++#--->
++#-		if access("/dev/.udev", 0):
++#-			self.type = self.DEVTYPE_UDEV
++#-		elif access("/dev/.devfsd", 0):
++#-			self.type = self.DEVTYPE_DEVFS
++#-		else:
++#-			print "Unable to determine structure of /dev"
++#+++>
++		self.type = DEVTYPE_UDEV
++#+++<
+ 
+ 		self.max_idle_time = 0
+ 		self.idle_running = False
+@@ -45,8 +66,8 @@
+ 			tmp = readFile(self.sysfsPath('dev')).split(':')
+ 			s_major = int(tmp[0])
+ 			s_minor = int(tmp[1])
+-			for disc in listdir("/dev/discs"):
+-				dev_path = path.realpath('/dev/discs/' + disc)
++			for disc in ['sda', 'sdb', 'sdc', 'sdd', 'sr0', 'sr1']:# listdir("/dev/discs"):
++				dev_path = path.realpath('/dev/' + disc)
+ 				disk_path = dev_path + '/disc'
+ 				try:
+ 					rdev = stat(disk_path).st_rdev
+
 @@ -181,7 +198,12 @@
                                  continue                                                                    
                          try:                                                                                
@@ -6000,6 +6035,18 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
  						self.NotifierCallback = callback
  						self.startIpkgListAvailable()
  				else:	
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py		2011-05-16 06:52:32.585842342 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2011-05-16 06:52:32.585842342 +0200
+@@ -85,7 +85,7 @@
+ 		for x in names:
+ 			if x == "skin.xml":
+ 				if dirname <> self.root:
+-					subdir = dirname[19:]
++					subdir = dirname[25:]
+ 					self.skinlist.append(subdir)
+ 				else:
+ 					subdir = "Default Skin" 
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	1970-01-01 01:00:00.000000000 +0100
 +++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	2011-09-03 18:23:47.390032997 +0200
