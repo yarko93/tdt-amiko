@@ -45,10 +45,14 @@ mplayer;make:install INSTALLSTRIP="":DESTDIR=TARGETS
 mencoder;make:install INSTALLSTRIP="":DESTDIR=TARGETS
 jfsutils;make:install:prefix=TARGETS
 <<<<<<< HEAD
+<<<<<<< HEAD
 opkg;make:install:DESTDIR=TARGETS;link:/usr/bin/opkg-cl:TARGET/usr/bin/opkg;mkdir:TARGET/usr/lib/opkg
 =======
 opkg;make:install:DESTDIR=TARGETS;rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/libopkg.pc;link:/usr/bin/opkg-cl:TARGETS/usr/bin/opkg;mkdir:TARGETS/var/opkg;rewrite-libtool:TARGETS/usr/lib/libopkg.la
 >>>>>>> remote1/master
+=======
+opkg;make:install:DESTDIR=TARGETS;rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/libopkg.pc;link:/usr/bin/opkg-cl:TARGETS/usr/bin/opkg;mkdir:TARGETS/var/opkg;rewrite-libtool:TARGETS/usr/lib/libopkg.la
+>>>>>>> tdt/master
 
 #
 # contrib libs
