@@ -4457,22 +4457,15 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/stmfb.
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/Harddisk.py enigma2-nightly.patched/lib/python/Components/Harddisk.py
 --- enigma2-nightly.org/lib/python/Components/Harddisk.py	2011-09-03 18:23:25.810022128 +0200
 +++ enigma2-nightly.patched/lib/python/Components/Harddisk.py	2011-09-03 18:23:47.290032918 +0200
-@@ -1,9 +1,26 @@
+@@ -1,9 +1,18 @@
 -from os import system, listdir, statvfs, popen, makedirs, stat, major, minor, path, access
 -from Tools.Directories import SCOPE_HDD, resolveFilename
-+#--->
-+#-from os import system, listdir, statvfs, popen, makedirs, stat, major, minor, path, access
-+#-from Tools.Directories import SCOPE_HDD, resolveFilename
-+#---<
-+#+++>
 +from os import system, listdir, statvfs, popen, makedirs, stat, major, minor, path, access, readlink, remove, path as os_path
 +from Tools.Directories import SCOPE_HDD, resolveFilename, removeDir
-+#+++<
  from Tools.CList import CList
  from SystemInfo import SystemInfo
  import time
  from Components.Console import Console
-+#+++>
 +from enigma import eConsoleAppContainer, evfd
 +import os
 +
@@ -4482,43 +4475,26 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 +	except IOError:
 +		return ""
 +	return procFile
-+#+++<
  
  def MajorMinor(path):
  	rdev = stat(path).st_rdev
-@@ -17,7 +34,7 @@
- 
- DEVTYPE_UDEV = 0
- DEVTYPE_DEVFS = 1
--
-+	
+@@ -21,14 +30,7 @@
  class Harddisk:
  	def __init__(self, device):
  		self.device = device
-@@ -22,12 +39,16 @@
- 	def __init__(self, device):
- 		self.device = device
- 
+-
 -		if access("/dev/.udev", 0):
 -			self.type = DEVTYPE_UDEV
 -		elif access("/dev/.devfsd", 0):
 -			self.type = DEVTYPE_DEVFS
 -		else:
 -			print "Unable to determine structure of /dev"
-+#--->
-+#-		if access("/dev/.udev", 0):
-+#-			self.type = self.DEVTYPE_UDEV
-+#-		elif access("/dev/.devfsd", 0):
-+#-			self.type = self.DEVTYPE_DEVFS
-+#-		else:
-+#-			print "Unable to determine structure of /dev"
-+#+++>
+-
 +		self.type = DEVTYPE_UDEV
-+#+++<
- 
  		self.max_idle_time = 0
  		self.idle_running = False
-@@ -45,8 +66,8 @@
+ 		self.timer = None
+@@ -45,8 +47,8 @@
  			tmp = readFile(self.sysfsPath('dev')).split(':')
  			s_major = int(tmp[0])
  			s_minor = int(tmp[1])
@@ -4529,39 +4505,30 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
  				disk_path = dev_path + '/disc'
  				try:
  					rdev = stat(disk_path).st_rdev
-
-@@ -181,7 +198,12 @@
+@@ -181,7 +183,7 @@
                                  continue                                                                    
                          try:                                                                                
                                  if MajorMinor(real_path) == MajorMinor(self.partitionPath(real_path[-1])):
 -					cmd = ' ' . join([cmd, parts[1]])
-+#--->			
-+#-					cmd = ' ' . join([cmd, parts[1]])
-+#---<
-+#+++>
 +					cmd = ' -fl ' . join([cmd, parts[1]])
-+#+++<
  					break
  			except OSError:
  				pass
-@@ -190,7 +212,7 @@
+@@ -190,7 +192,8 @@
  		return (res >> 8)
  
  	def createPartition(self):
 -		cmd = 'printf "8,\n;0,0\n;0,0\n;0,0\ny\n" | sfdisk -f -uS ' + self.disk_path
++
 +		cmd = 'echo "0,\n;\n;\n;\ny\n" | sfdisk -f ' + self.disk_path
  		res = system(cmd)
  		return (res >> 8)
  
-@@ -199,7 +221,18 @@
+@@ -199,7 +202,13 @@
  		if self.diskSize() > 4 * 1024:
  			cmd += "-T largefile "
  		cmd += "-m0 -O dir_index " + self.partitionPath("1")
 -		res = system(cmd)
-+#--->
-+#-		res = system(cmd)
-+#---<
-+#+++>
 +		print "[Harddisk] mkfs: ", cmd
 +		if os.path.exists("/sbin/cmd") is True:
 +			self.container = eConsoleAppContainer()
@@ -4569,19 +4536,17 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 +			res = 0
 +		else:	
 +			res = system(cmd)
-+#+++<
  		return (res >> 8)
  
  	def mount(self):
-@@ -238,7 +271,18 @@
- 		# We autocorrect any failures
- 		# TODO: we could check if the fs is actually ext3
+@@ -235,10 +244,14 @@
+ 		return 0
+ 
+ 	def fsck(self):
+-		# We autocorrect any failures
+-		# TODO: we could check if the fs is actually ext3
  		cmd = "fsck.ext3 -f -p " + self.partitionPath("1")
 -		res = system(cmd)
-+#--->
-+#-		res = system(cmd)
-+#---<
-+#+++>		
 +		print "[Harddisk] fsck: ", cmd
 +		if os.path.exists("/sbin/cmd") is True:
 +			self.container = eConsoleAppContainer()
@@ -4589,11 +4554,23 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 +			res = 0
 +		else:	
 +			res = system(cmd)
-+#+++<
  		return (res >> 8)
  
  	def killPartition(self, n):
-@@ -429,14 +473,11 @@
+@@ -256,12 +269,6 @@
+ 
+ 	def initialize(self):
+ 		self.unmount()
+-
+-		# Udev tries to mount the partition immediately if there is an
+-		# old filesystem on it when fdisk reloads the partition table.
+-		# To prevent that, we overwrite the first 3 sectors of the
+-		# partition, if the partition existed before. That's enough for
+-		# ext3 at least.
+ 		self.killPartition("1")
+ 
+ 		if self.createPartition() != 0:
+@@ -429,14 +436,11 @@
  	}
  
  DEVICEDB = \
@@ -4612,62 +4589,58 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
  		},
  	"dm800":
  	{
-@@ -446,7 +487,13 @@
+@@ -446,8 +450,14 @@
  	"dm7025":
  	{
  		"/devices/pci0000:00/0000:00:14.1/ide1/1.0": "CF Card Slot", #hdc
 -		"/devices/pci0000:00/0000:00:14.1/ide0/0.0": "Internal Harddisk"
+-	}
 +		"/devices/pci0000:00/0000:00:14.1/ide0/0.0": "Internal Harddisk",
 +	},
-+	"UFS922":
-+	{
-+		"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.1/1-1.1:1.0/": "Back, upper USB Slot",
-+		"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.2/1-1.2:1.0/": "Back, lower USB Slot",
-+		"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.3/1-1.3:1.0/": "Front USB Slot",
- 	}
++	 "UFS922":
++		{
++			"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.1/1-1.1:1.0/": "Back, upper USB Slot",
++			"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.2/1-1.2:1.0/": "Back, lower USB Slot",
++			"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.3/1-1.3:1.0/": "Front USB Slot",
++		}
  	}
  
-@@ -489,7 +536,12 @@
+ class HarddiskManager:
+@@ -489,7 +499,7 @@
  		try:
  			removable = bool(int(readFile(devpath + "/removable")))
  			dev = int(readFile(devpath + "/dev").split(':')[0])
 -			if dev in (7, 31): # loop, mtdblock
-+#--->
-+#-			if dev in (7, 31): # loop, mtdblock
-+#---<
-+#+++>
 +			if dev in [1, 7, 31, 253]: # ram, loop, mtdblock, ramzswap
-+#+++<
  				blacklisted = True
  			if blockdev[0:2] == 'sr':
  				is_cdrom = True
-@@ -548,6 +600,13 @@
+@@ -547,7 +557,12 @@
+ 				physdev = path.realpath('/sys/block/' + dev + '/device')[4:]
  			except OSError:
  				physdev = dev
- 				print "couldn't determine blockdev physdev for device", device
-+#+++>		
+-				print "couldn't determine blockdev physdev for device", device
++				print "couldn't determine blockdev physdev for device", device	
 +		else:
 +			dev, part = self.splitDeviceName(device)
 +		if part is not 0:
 +			print "[Harddisk] start automount"
-+			#Automount(device,"mount")
-+#+++<		
++			#Automount(device,"mount")	
  
  		error, blacklisted, removable, is_cdrom, partitions, medium_found = self.getBlockDevInfo(device)
  		print "found block device '%s':" % device,
-@@ -594,6 +653,12 @@
+@@ -594,7 +609,10 @@
  					self.hdd.remove(hdd)
  					break
  			SystemInfo["Harddisk"] = len(self.hdd) > 0
-+#+++>
+-
 +		dev, part = self.splitDeviceName(device)
 +		if part is not 0:
 +			print "[Harddisk] start auto umount"
 +			#Automount(device,"umount")
-+#+++<
- 
  	def HDDCount(self):
  		return len(self.hdd)
+
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/NimManager.py enigma2-nightly.patched/lib/python/Components/NimManager.py
 --- enigma2-nightly.org/lib/python/Components/NimManager.py	2011-09-03 18:23:25.860022078 +0200
 +++ enigma2-nightly.patched/lib/python/Components/NimManager.py	2011-09-03 18:23:47.300033012 +0200

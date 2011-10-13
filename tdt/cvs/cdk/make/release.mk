@@ -209,8 +209,8 @@ release_spark:
 	cp $(targetprefix)/boot/video_7111.elf $(prefix)/release/boot/video.elf
 	cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
-	cp -f $(buildprefix)/root/release/vfd_spark$(KERNELSTMLABEL)_noptk.ko $(prefix)/release/lib/modules/vfd.ko
-	cp -f $(buildprefix)/root/release/encrypt_spark$(KERNELSTMLABEL)_noptk.ko $(prefix)/release/lib/modules/encrypt.ko
+	cp -f $(buildprefix)/root/release/vfd_spark$(KERNELSTMLABEL).ko $(prefix)/release/lib/modules/vfd.ko
+	cp -f $(buildprefix)/root/release/encrypt_spark$(KERNELSTMLABEL).ko $(prefix)/release/lib/modules/encrypt.ko
 
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
@@ -1150,6 +1150,7 @@ endif
 	cp -p $(targetprefix)/usr/bin/killall $(prefix)/release/usr/bin/
 	cp -p $(targetprefix)/usr/bin/opkg-cl $(prefix)/release/usr/bin/opkg
 	ln -s /usr/bin/opkg  $(prefix)/release/usr/bin/ipkg-cl
+	ln -s /usr/bin/opkg  $(prefix)/release/usr/bin/ipkg
 	cp -p $(targetprefix)/usr/bin/ffmpeg $(prefix)/release/sbin/
 	cp -p $(targetprefix)/usr/bin/tuxtxt $(prefix)/release/usr/bin/
 	cp -p $(targetprefix)/usr/sbin/ethtool $(prefix)/release/usr/sbin/
@@ -1241,6 +1242,7 @@ endif
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/TempFanControl
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/DefaultServicesScanner
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/DiseqcTester
+	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/SoftwareManager
 
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/python2.6
 	cp -a $(targetprefix)/usr/lib/python2.6/* $(prefix)/release/usr/lib/python2.6/
