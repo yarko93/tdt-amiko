@@ -87,18 +87,6 @@ done
    insmod $MODDIR/stv090x.ko
    insmod $MODDIR/lnb.ko
    if [ $player -gt 131 ]; then
-<<<<<<< HEAD
-	insmod $MODDIR/pti.ko waitMS=20 videoMem=4096
-	insmod $MODDIR/stm_monitor.ko
-	insmod $MODDIR/stmsysfs.ko
-	insmod $MODDIR/stmdvb.ko  highSR="$HighSR" swts="$SWTS"
-   else
-	insmod $MODDIR/pti.ko
-	insmod $MODDIR/stmdvb.ko
-	insmod $MODDIR/stm_monitor.ko
-   fi
-   insmod $MODDIR/player2.ko  discardlateframe="$DiscardLateFrame"  useoldaudiofw="$DTS_downmix_ON"
-=======
       # Full feature pti
       insmod $MODDIR/pti.ko waitMS=20 videoMem=4096
       if [ $?=='2' ]; then
@@ -114,7 +102,6 @@ done
       insmod $MODDIR/stm_monitor.ko
    fi
    insmod $MODDIR/player2.ko
->>>>>>> master/master
    insmod $MODDIR/sth264pp.ko
    insmod $MODDIR/stmalloc.ko
    insmod $MODDIR/platform.ko
