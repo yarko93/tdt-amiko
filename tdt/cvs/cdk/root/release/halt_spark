@@ -55,13 +55,8 @@ fi
 
 #red led on
 /bin/fp_control -l 0 1
-x="`date +"%H:%M:%S %d-%m-%Y"`" 
-/bin/fp_control -s $x
-/bin/fp_control -e
+/bin/fp_control -e -s `date +"%H:%M:%S %d-%m-%Y"`
 echo "0" > /proc/progress
 halt -d -f -i $poweroff $hddown
 : exit 0
-<<<<<<< HEAD
 
-=======
->>>>>>> 90a2bec2fa5f20aad33b5bff4f7cb7434765c4d2

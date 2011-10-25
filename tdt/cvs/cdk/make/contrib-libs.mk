@@ -1644,12 +1644,14 @@ $(DEPDIR)/libflac.do_compile: $(DEPDIR)/libflac.do_prepare
 		--host=$(target) \
 		--prefix=/usr \
 		--disable-oggtest --disable-id3libtest \
+		--disable-asm-optimizations \
 		--disable-doxygen-docs \
 		--disable-xmms-plugin \
 		--without-xmms-prefix \
 		--without-xmms-exec-prefix \
 		--without-libiconv-prefix \
-		--without-id3lib
+		--without-id3lib \
+		--with-ogg-includes=.
 	touch $@
 
 $(DEPDIR)/min-libflac $(DEPDIR)/std-libflac $(DEPDIR)/max-libflac \
@@ -1712,7 +1714,7 @@ $(DEPDIR)/%gst_plugins_base: $(DEPDIR)/gst_plugins_base.do_compile
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 # GST-PLUGINS-GOOD
-$(DEPDIR)/gst_plugins_good.do_prepare: bootstrap gstreamer gst_plugins_base libsoup @DEPENDS_gst_plugins_good@
+$(DEPDIR)/gst_plugins_good.do_prepare: bootstrap gstreamer gst_plugins_base libsoup libflac @DEPENDS_gst_plugins_good@
 	@PREPARE_gst_plugins_good@
 	touch $@
 
@@ -1847,6 +1849,7 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 
 # GST-PLUGINS-DVBMEDIASINK
 $(DEPDIR)/gst_plugins_dvbmediasink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly @DEPENDS_gst_plugins_dvbmediasink@
+	@PREPARE_gst_plugins_dvbmediasink@
 	touch $@
 
 $(DEPDIR)/gst_plugins_dvbmediasink.do_compile: $(DEPDIR)/gst_plugins_dvbmediasink.do_prepare

@@ -24,6 +24,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
 #include <sys/ioctl.h>
 
 #include "global.h"
@@ -37,33 +38,45 @@
 #define CONFIG "/etc/vdstandby.cfg"
 char * sDisplayStd = "%a %d %H:%M:%S";
 
+#define WAKEUPFILE "/var/wakeup"
+#define WAS_TIMER_WAKEUP "/proc/stb/fp/was_timer_wakeup"
+
 #define E2_WAKEUP_TIME_PROC
 #ifdef E2_WAKEUP_TIME_PROC
-unsigned long int read_e2_timers(time_t curTime)
+static time_t read_e2_timers(time_t curTime)
 {
-	unsigned long int recordTime = 3000000000ul;
-	char              line[12];
-	FILE              *fd = fopen (E2WAKEUPTIME, "r");
+	char   line[12];
+	time_t recordTime = LONG_MAX;
+	FILE   *fd        = fopen (E2WAKEUPTIME, "r");
+
+	printf("Getting enigma2 wakeup time");
 
 	if (fd > 0)
 	{
 		fgets(line, 11, fd);
-		sscanf(line, "%lu", &recordTime);
-		printf("parsed wakeup_time \"%s\"=%lu\n", line, recordTime);
-	} else
-	{
-		printf("error reading %s\n", E2WAKEUPTIME);
+		sscanf(line, "%ld", &recordTime);
+		if (recordTime <= curTime)
+		{
+			recordTime = LONG_MAX;
+			printf(" - Got timer but in the past (ignoring)\n");
+		}
+		else
+			printf(" - Done\n");
 	}
+	else
+		printf(" - Error reading %s\n", E2WAKEUPTIME);
 
 	return recordTime;
 }
 #else
-unsigned long int read_e2_timers(time_t curTime)
+static time_t read_e2_timers(time_t curTime)
 {
-	unsigned long int recordTime = 3000000000ul;
-	char              recordString[11];
-	char              line[1000];
-	FILE              *fd = fopen (E2TIMERSXML, "r");
+	char   recordString[11];
+	char   line[1000];
+	time_t recordTime = LONG_MAX;
+	FILE   *fd        = fopen (E2TIMERSXML, "r");
+
+	printf("Getting enigma2 wakeup time");
 
 	if (fd > 0)
 	{
@@ -79,18 +92,23 @@ unsigned long int read_e2_timers(time_t curTime)
 				recordTime = (tmp < recordTime && tmp > curTime ? tmp : recordTime);
 			}
 		}
-	} else
-		printf("error reading %s\n", E2TIMERSXML);
+		printf(" - Done\n");
+	}
+	else
+		printf(" - Error reading %s\n", E2TIMERSXML);
+
 
 	return recordTime;
 }
 #endif
 
-unsigned long int read_neutrino_timers(time_t curTime)
+static time_t read_neutrino_timers(time_t curTime)
 {
-	unsigned long int recordTime = 3000000000ul;
-	char              line[1000];
-	FILE              *fd = fopen (NEUTRINO_TIMERS, "r");
+	char   line[1000];
+	time_t recordTime = LONG_MAX;
+	FILE   *fd        = fopen (NEUTRINO_TIMERS, "r");
+
+	printf("Getting neutrino wakeup time");
 
 	if (fd > 0)
 	{
@@ -102,7 +120,7 @@ unsigned long int read_neutrino_timers(time_t curTime)
 
 			if (strstr(line, "ALARM_TIME_") != NULL )
 			{
-				unsigned long int tmp = 0;
+				time_t tmp = 0;
 				char* str;
 
 				str = strstr(line, "=");
@@ -114,52 +132,155 @@ unsigned long int read_neutrino_timers(time_t curTime)
 				}
 			}
 		}
-	} else
-		printf("error reading %s\n", NEUTRINO_TIMERS);
+		printf(" - Done\n");
+	}
+	else
+		printf(" - Error reading %s\n", NEUTRINO_TIMERS);
 
 	return recordTime;
 }
 
+// Write the wakeup time to a file to allow detection of wakeupcause if fp does not support
+static void write_wakeup_file(time_t wakeupTime)
+{
+	FILE *wakeupFile;
+
+	wakeupFile = fopen(WAKEUPFILE,"w");
+	if (wakeupFile) {
+		fprintf(wakeupFile, "%ld", wakeupTime);
+		fclose(wakeupFile);
+		system("sync");
+	}
+}
+
+static time_t read_wakeup_file()
+{
+	time_t wakeupTime = LONG_MAX;
+	FILE  *wakeupFile;
+
+	wakeupFile = fopen(WAKEUPFILE,"r");
+	if (wakeupFile) {
+		fscanf(wakeupFile,"%ld", &wakeupTime);
+		fclose(wakeupFile);
+	}
+
+	return wakeupTime;
+}
+
+#define FIVE_MIN 300
+
+// Important: system has to have a vaild current time
+// This is a little bit triggy, we can only detect if the time is valid
+// and this check happens +-5min arround the timer
+int getWakeupReasonPseudo(eWakeupReason *reason)
+{
+	time_t curTime    = 0;
+	time_t wakeupTime = LONG_MAX;
+
+	printf("getWakeupReasonPseudo: IMPORTANT: Valid Linux System Time is mandetory\n");
+
+	time(&curTime);
+	wakeupTime = read_wakeup_file();
+
+	if ((curTime - FIVE_MIN) < wakeupTime && (curTime + FIVE_MIN) > wakeupTime)
+		*reason = TIMER;
+	else
+		*reason = NONE;
+	return 0;
+}
+
+int syncWasTimerWakeup(eWakeupReason reason)
+{
+	FILE *wasTimerWakeupProc = fopen(WAS_TIMER_WAKEUP, "w");
+	if(wasTimerWakeupProc == NULL) {
+		fprintf(stderr, "setWakeupReason failed to open %s\n", WAS_TIMER_WAKEUP);
+		return -1;
+	}
+	if (reason == TIMER)
+		fwrite("1\n", 2, 1, wasTimerWakeupProc);
+	else
+		fwrite("0\n", 2, 1, wasTimerWakeupProc);
+	fclose(wasTimerWakeupProc);
+	return 0;
+}
+
+// This function tries to read the wakeup time from enigma2 and neutrino
+// The wakeup time will also be written to file for wakeupcause detection
+// If no wakeup time can be found LONG_MAX will be returned
+time_t read_timers_utc(time_t curTime)
+{
+	time_t wakeupTime = LONG_MAX;
+
+	wakeupTime = read_e2_timers(curTime);
+
+	if (wakeupTime == LONG_MAX)
+		wakeupTime = read_neutrino_timers(curTime);
+
+	write_wakeup_file(wakeupTime);
+
+	return wakeupTime;
+}
+
+// This functio returns a time in the future
+time_t read_fake_timer_utc(time_t curTime)
+{
+	struct tm tsWake;
+	struct tm *ts;
+	time_t wakeupTime = LONG_MAX;
+
+	ts = gmtime (&curTime);
+
+	tsWake.tm_hour = ts->tm_hour;
+	tsWake.tm_min  = ts->tm_min;
+	tsWake.tm_sec  = ts->tm_sec;
+	tsWake.tm_mday = ts->tm_mday;
+	tsWake.tm_mon  = ts->tm_mon;
+	tsWake.tm_year = ts->tm_year + 1;
+
+	wakeupTime = mktime(&tsWake);
+
+	return wakeupTime;
+}
 /* ******************************************** */
 
 double modJulianDate(struct tm *theTime)
 {
 
-  double date;
-  int month;
-  int day; 
-  int year;
+	double date;
+	int month;
+	int day; 
+	int year;
 
-  year  = theTime->tm_year + 1900;
-  month = theTime->tm_mon + 1;
-  day   = theTime->tm_mday;
+	year  = theTime->tm_year + 1900;
+	month = theTime->tm_mon + 1;
+	day   = theTime->tm_mday;
 
-  date = day - 32076 + 
-    1461 * (year + 4800 + (month - 14)/12)/4 +
-    367 * (month - 2 - (month - 14)/12*12)/12 - 
-    3 * ((year + 4900 + (month - 14)/12)/100)/4;
+	date = day - 32076 + 
+		1461 * (year + 4800 + (month - 14)/12)/4 +
+		367 * (month - 2 - (month - 14)/12*12)/12 - 
+		3 * ((year + 4900 + (month - 14)/12)/100)/4;
 
-  date += (theTime->tm_hour + 12.0)/24.0;
-  date += (theTime->tm_min)/1440.0;
-  date += (theTime->tm_sec)/86400.0;
+	date += (theTime->tm_hour + 12.0)/24.0;
+	date += (theTime->tm_min)/1440.0;
+	date += (theTime->tm_sec)/86400.0;
 
-  date -= 2400000.5;
+	date -= 2400000.5;
 
-  return date;
+	return date;
 }
 
 /* ********************************************** */
 
 int searchModel(Context_t  *context, eBoxType type) {
-    int i;
-    for (i = 0; AvailableModels[i] != NULL; i++)
+	int i;
+	for (i = 0; AvailableModels[i] != NULL; i++)
 
-        if (AvailableModels[i]->Type == type) {
-            context->m = AvailableModels[i];
-            return 0;
-        }
+		if (AvailableModels[i]->Type == type) {
+			context->m = AvailableModels[i];
+			return 0;
+		}
 
-    return -1;
+	return -1;
 }
 
 int checkConfig(int* display, int* display_custom, char** timeFormat, int* wakeup) {
@@ -179,7 +300,7 @@ int checkConfig(int* display, int* display_custom, char** timeFormat, int* wakeu
 	{
 		printf("config file (%s) not found, use standard config", CONFIG);
 		printf("configs: DISPLAY = %d, DISPLAYCUSTOM = %d, CUSTOM = %s, WAKEUPDECREMENT  %d\n", 
-	            *display, *display_custom, *timeFormat, *wakeup);
+			*display, *display_custom, *timeFormat, *wakeup);
 		return -1;
 	}
 	
@@ -201,10 +322,10 @@ int checkConfig(int* display, int* display_custom, char** timeFormat, int* wakeu
 	}
 	
 	if (*timeFormat == NULL)
-	   *timeFormat = sDisplayStd;
+		*timeFormat = sDisplayStd;
 	
 	printf("configs: DISPLAY = %d, DISPLAYCUSTOM = %d, CUSTOM = %s, WAKEUPDECREMENT  %d\n", 
-	            *display, *display_custom, *timeFormat, *wakeup);
+		*display, *display_custom, *timeFormat, *wakeup);
 	
 	fclose(fd_config);
 	
