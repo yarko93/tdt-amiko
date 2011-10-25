@@ -215,9 +215,11 @@ release_spark:
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
 
-	$(INSTALL_DIR) $(prefix)/release/usr/local/share/fonts
+	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts
 	cp $(targetprefix)/usr/local/share/fonts/* $(prefix)/release/usr/share/fonts/
-
+if STM23
+	[ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cpu_frequ/cpu_frequ.ko ] && cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cpu_frequ/cpu_frequ.ko $(prefix)/release/lib/modules || true
+endif
 	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/ftdi_sio.ko $(prefix)/release/lib/modules/ftdi.ko
 	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/pl2303.ko $(prefix)/release/lib/modules
 	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/usbserial.ko $(prefix)/release/lib/modules
@@ -1219,6 +1221,7 @@ endif
 	rm -f $(prefix)/release/usr/lib/*.a
 	rm -f $(prefix)/release/usr/lib/*.o
 	rm -f $(prefix)/release/usr/lib/*.la
+	chmod 755 -R $(prefix)/release/usr/lib/
 	find $(prefix)/release/usr/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/enigma2
@@ -1228,6 +1231,7 @@ endif
 
 #	Dont remove pyo files, remove pyc instead
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
+	find $(prefix)/release/usr/lib/enigma2/ -name '*.pyo' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
@@ -1284,6 +1288,7 @@ endif
 
 #	Dont remove pyo files, remove pyc instead
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.pyc' -exec rm -f {} \;
+	find $(prefix)/release/usr/lib/python2.6/ -name '*.pyo' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.a' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.o' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.la' -exec rm -f {} \;

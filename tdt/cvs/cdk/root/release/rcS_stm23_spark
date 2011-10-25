@@ -97,7 +97,6 @@ done
       insmod $MODDIR/stmsysfs.ko
       insmod $MODDIR/stmdvb.ko highSR="$HighSR" swts="$SWTS"
    else
-      insmod $MODDIR/pti.ko
       insmod $MODDIR/stmdvb.ko
       insmod $MODDIR/stm_monitor.ko
    fi
@@ -123,10 +122,23 @@ done
    rm -f /dev/sparkid
    mknod /dev/sparkid c $major 0 
 
-   /bin/evremote2 spark &
-
-   stfbcontrol a 255
-   echo " e2 "
+	var=`cat /proc/cmdline`
+	var=${var##*STB_ID=}
+	var=${var:0:8}
+	if [ $var = "09:00:0B" ]; then
+	/bin/evremote1 spark &
+	fi
+	if [ $var = "09:00:0A" ]; then
+	/bin/evremote2 spark &
+	fi
+	if [ $var = "09:00:07" ]; then
+	/bin/evremote3 spark &
+	fi
+	if [ $var = "09:00:08" ]; then
+	/bin/evremote4 spark &
+	fi
+	stfbcontrol a 255
+	echo " e2 "
 
    /etc/init.d/mountall start
    /etc/init.d/hostname start

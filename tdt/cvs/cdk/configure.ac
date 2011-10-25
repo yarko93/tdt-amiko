@@ -651,7 +651,7 @@ AC_MSG_CHECKING([for apps directory])
 #if test ! -f "$appsdir/dvb/zapit/configure.ac" ; then
 if test ! -f "$appsdir/enigma2/configure.ac" ; then
 	AC_MSG_WARN([appsdir $appsdir not found])
-	appsdir="missing_appsir"
+	appsdir="missing_appdir"
 	dircheck="fail"
 else
 	AC_MSG_RESULT([yes])

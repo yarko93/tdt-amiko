@@ -24,6 +24,6 @@ rm  $NRELDIR/usr/local/share/enigma2/keymap_ufs910.xml
 rm  $NRELDIR/usr/local/share/enigma2/keymap_ufs912.xml
 rm  $NRELDIR/usr/local/share/enigma2/keymap_vip2.xml
 rm  $NRELDIR/usr/local/share/enigma2/keymap_ipbox.xml
-cp -RP ~/enigma2-amiko/enigma2/* $NRELDIR
+cp -RP ~/enigma2-amiko/enigma2/* $NRELDIR/
 echo "--- Erledigt ---"
 exit

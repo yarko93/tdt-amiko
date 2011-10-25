@@ -398,16 +398,16 @@
 ! static struct mtd_partition mtd_parts_table[] = {
   	{
   		.name = "Boot firmware",
-! 		.size = 0x00080000,
+! 		.size = 0x00060000,
   		.offset = 0x00000000,
   	}, {
   		.name = "Kernel",
-! 		.size = 0x00700000,
-! 		.offset = 0x00080000,
+! 		.size = 0x00500000,
+! 		.offset = 0x00060000,
   	}, {
 ! 		.name = "Reserve",
   		.size = MTDPART_SIZ_FULL,
-! 		.offset = 0x00780000,
+! 		.offset = 0x00560000,
   	}
   };
   
