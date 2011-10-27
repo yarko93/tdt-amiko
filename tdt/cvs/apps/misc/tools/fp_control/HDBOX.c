@@ -199,7 +199,7 @@ static int setTimer(Context_t* context, time_t* theGMTTime)
       wakeupTime = read_timers_utc(curTime);
    else
       wakeupTime = *theGMTTime;
-  
+
    if ((wakeupTime <= 0) || (wakeupTime == LONG_MAX))
    {
        /* nothing to do for e2 */  

@@ -245,7 +245,7 @@ static int setTimer(Context_t* context, time_t* theGMTTime)
    struct tm               *ts;
    tHS5101Private* private = (tHS5101Private*) 
         ((Model_t*)context->m)->private;
-   
+
    printf("%s\n", __func__);
 
    time(&curTime);
