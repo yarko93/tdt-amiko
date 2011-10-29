@@ -9,7 +9,7 @@ $(appsdir)/enigma2/config.status: bootstrap freetype expat fontconfig libpng jpe
 			--without-libsdl \
 			--with-datadir=/usr/local/share \
 			--with-libdir=/usr/lib \
-			--with-plugindir=/usr/lib/tuxbox/plugins \
+			--with-plugindir=/usr/lib/enigma2/python/Plugins \
 			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
 			PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
 			PY_PATH=$(targetprefix)/usr \

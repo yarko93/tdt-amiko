@@ -59,5 +59,4 @@ fi
 
 echo "0" > /proc/progress
 halt -d -f -i $poweroff $hddown
-: exit 0
 

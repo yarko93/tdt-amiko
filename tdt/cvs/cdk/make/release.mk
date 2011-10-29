@@ -202,6 +202,7 @@ release_spark:
 	ln -s ../init.d/sendsigs $(prefix)/release/etc/rc.d/rc6.d/S20sendsigs
 	ln -s ../init.d/umountfs $(prefix)/release/etc/rc.d/rc6.d/S40umountfs
 	ln -s ../init.d/reboot $(prefix)/release/etc/rc.d/rc6.d/S90reboot
+	ln -fs init $(prefix)/release/sbin/telinit
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/smartcard/smartcard.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/lnb/lnb.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release/lib/modules/
@@ -209,8 +210,13 @@ release_spark:
 	cp $(targetprefix)/boot/video_7111.elf $(prefix)/release/boot/video.elf
 	cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
+if STM23
 	cp -f $(buildprefix)/root/release/vfd_spark$(KERNELSTMLABEL)_noptk.ko $(prefix)/release/lib/modules/vfd.ko
-	cp -f $(buildprefix)/root/release/encrypt_spark$(KERNELSTMLABEL)_noptk.ko $(prefix)/release/lib/modules/encrypt.ko
+else
+	cp -f $(buildprefix)/root/release/vfd_spark$(KERNELSTMLABEL).ko $(prefix)/release/lib/modules/vfd.ko
+endif
+	cp -f $(buildprefix)/root/release/encrypt_spark$(KERNELSTMLABEL).ko $(prefix)/release/lib/modules/encrypt.ko
+
 
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
@@ -856,10 +862,10 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/tuxbox && \
 	$(INSTALL_DIR) $(prefix)/release/etc/enigma2 && \
-	$(INSTALL_DIR) $(prefix)/release/hdd && \
-	$(INSTALL_DIR) $(prefix)/release/hdd/movie && \
-	$(INSTALL_DIR) $(prefix)/release/hdd/music && \
-	$(INSTALL_DIR) $(prefix)/release/hdd/picture && \
+	$(INSTALL_DIR) $(prefix)/release/media/hdd && \
+	$(INSTALL_DIR) $(prefix)/release/media/hdd/movie && \
+	$(INSTALL_DIR) $(prefix)/release/media/hdd/music && \
+	$(INSTALL_DIR) $(prefix)/release/media/hdd/picture && \
 	$(INSTALL_DIR) $(prefix)/release/lib && \
 	$(INSTALL_DIR) $(prefix)/release/lib/modules && \
 	$(INSTALL_DIR) $(prefix)/release/ram && \
@@ -1128,7 +1134,7 @@ endif
 	rm -rf $(prefix)/release/lib/modules/$(KERNELVERSION)
 
 	$(INSTALL_DIR) $(prefix)/release/media
-	ln -s /hdd $(prefix)/release/media/hdd
+	ln -s /media/hdd $(prefix)/release/hdd
 	$(INSTALL_DIR) $(prefix)/release/media/dvd
 
 	$(INSTALL_DIR) $(prefix)/release/mnt
