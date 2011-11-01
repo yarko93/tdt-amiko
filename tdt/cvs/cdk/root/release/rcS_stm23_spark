@@ -126,16 +126,16 @@ done
 	var=${var##*STB_ID=}
 	var=${var:0:8}
 	if [ $var = "09:00:0B" ]; then
-	/bin/evremote1 spark &
+	/bin/evremote1 05 30 &
 	fi
 	if [ $var = "09:00:0A" ]; then
-	/bin/evremote2 spark &
+	/bin/evremote2 05 30 &
 	fi
 	if [ $var = "09:00:07" ]; then
-	/bin/evremote3 spark &
+	/bin/evremote3 05 30 &
 	fi
 	if [ $var = "09:00:08" ]; then
-	/bin/evremote4 spark &
+	/bin/evremote4 05 30 &
 	fi
 	stfbcontrol a 255
 	echo " e2 "

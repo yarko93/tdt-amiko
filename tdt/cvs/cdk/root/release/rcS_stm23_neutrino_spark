@@ -13,7 +13,7 @@ if [ -e /var/etc/.firstboot ]; then
    rm /var/etc/.firstboot
    touch /dev/.devfsd
 fi
-
+echo "AR-P" > /dev/vfd
 /etc/init.d/mountvirtfs start
 /etc/init.d/portmap start
 
@@ -94,15 +94,29 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "init lircd"
    /usr/bin/lircd
-
+   mknod /dev/lnb c 149 0
    mknod /dev/rc c 147 1 
    mknod /dev/sci0 c 169 0
-   mknod /dev/sci1 c 169 1
    major=$(awk "\$2==\"sparkid\" {print \$1}" /proc/devices)
    rm -f /dev/sparkid
    mknod /dev/sparkid c $major 0 
 
-   /bin/evremote2 spark &
+   	var=`cat /proc/cmdline`
+	var=${var##*STB_ID=}
+	var=${var:0:8}
+	if [ $var = "09:00:0B" ]; then
+	/bin/evremote1 05 30 &
+	fi
+	if [ $var = "09:00:0A" ]; then
+	/bin/evremote2 05 30 &
+	fi
+	if [ $var = "09:00:07" ]; then
+	/bin/evremote3 05 30 &
+	fi
+	if [ $var = "09:00:08" ]; then
+	/bin/evremote4 05 30 &
+	fi
+	stfbcontrol a 255
 
    /etc/init.d/mountall start
    /etc/init.d/hostname start
@@ -129,8 +143,10 @@ if [ ! -e /var/etc/.firstboot ]; then
    fi
 
    echo "run" > /dev/vfd
+   # cron daemon
+   (sleep 60; /usr/sbin/crond) & 
    echo "LOADING neutrino"
-
+   crontab /var/spool/cron/crontabs/root
    until false
    do
       echo "starting neutrino ->"

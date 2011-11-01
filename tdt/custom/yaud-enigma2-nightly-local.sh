@@ -16,14 +16,7 @@ echo config.usage.multiepg_ask_bouquet=true >> $NRELDIR/etc/enigma2/settings
 echo config.skin.primary_skin=AmikoSkin/skin.xml >> $NRELDIR/etc/enigma2/settings
 echo config.audio.volume=30 >> $NRELDIR/etc/enigma2/settings
 echo config.misc.epgcache_filename=/var/epg.dat >> $NRELDIR/etc/enigma2/settings
-rm  $NRELDIR/usr/local/share/enigma2/keymap_adb_box.xml
-rm  $NRELDIR/usr/local/share/enigma2/keymap_cube.xml
-rm  $NRELDIR/usr/local/share/enigma2/keymap_cube_small.xml
-rm  $NRELDIR/usr/local/share/enigma2/keymap_hl101.xml
-rm  $NRELDIR/usr/local/share/enigma2/keymap_ufs910.xml
-rm  $NRELDIR/usr/local/share/enigma2/keymap_ufs912.xml
-rm  $NRELDIR/usr/local/share/enigma2/keymap_vip2.xml
-rm  $NRELDIR/usr/local/share/enigma2/keymap_ipbox.xml
+rm  $NRELDIR/usr/local/share/enigma2/keymap_*.xml
 cp -RP ~/enigma2-amiko/enigma2/* $NRELDIR/
 echo "--- Erledigt ---"
 exit

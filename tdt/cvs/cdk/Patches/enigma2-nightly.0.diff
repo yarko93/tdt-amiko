@@ -4614,8 +4614,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
  				physdev = path.realpath('/sys/block/' + dev + '/device')[4:]
  			except OSError:
  				physdev = dev
--				print "couldn't determine blockdev physdev for device", device
-+				print "couldn't determine blockdev physdev for device", device	
+				print "couldn't determine blockdev physdev for device", device	
 +		else:
 +			dev, part = self.splitDeviceName(device)
 +		if part is not 0:
@@ -7444,6 +7443,10 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/main/enigma.cp
 +#endif 
  #include "bsod.h"
  #include "version_info.h"
+ #include <gst/gst.h>
+ #ifdef OBJECT_DEBUG
+ int object_total_remaining;
+
  
 @@ -124,6 +132,11 @@
  
