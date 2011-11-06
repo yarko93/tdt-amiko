@@ -44,7 +44,9 @@ $(DEPDIR)/%release_enigma1_hd:
 	cp -dp $(targetprefix)/sbin/sfdisk $(prefix)/release_enigma1_hd/sbin/ && \
 	cp -dp $(targetprefix)/etc/init.d/portmap $(prefix)/release_enigma1_hd/etc/init.d/ && \
 	cp -dp $(buildprefix)/root/etc/init.d/udhcpc $(prefix)/release_enigma1_hd/etc/init.d/ && \
-	cp -dp $(targetprefix)/sbin/MAKEDEV$(if $(TF7700),_dual_tuner)$(if $(FORTIS_HDBOX),_dual_tuner)$(if $(ATEVIO7500),_dual_tuner)$(if $(CUBEREVO),_dual_tuner)$(if $(CUBEREVO_9500HD),_dual_tuner)$(if $(UFS922),_dual_tuner)$(if $(CUBEREVO_MINI_FTA),_no_CI)$(if $(CUBEREVO_250HD),_no_CI)$(if $(CUBEREVO_2000HD),_no_CI)$(if $(ADB_BOX),_adb_box) $(prefix)/release_enigma1_hd/sbin/MAKEDEV && \
+cp -dp $(targetprefix)/sbin/MAKEDEV$(if $(TF7700),_dual_tuner)$(if $(FORTIS_HDBOX),_dual_tuner)$(if $(ATEVIO7500),_dual_tuner)$(if $(CUBEREVO),_dual_tuner)$(if $(CUBEREVO_9500HD),_dual_tuner)$(if $(UFS922),_dual_tuner)$(if $(CUBEREVO_MINI_FTA),_no_CI)$(if $(CUBEREVO_250HD),_no_CI)$(if $(CUBEREVO_2000HD),_no_CI)$(if $(ADB_BOX),_adb_box) $(prefix)/release_enigma1_hd/sbin/MAKEDEV && \
+	cp -dp $(targetprefix)/usr/bin/grep $(prefix)/release_enigma1_hd/bin/ && \
+	cp -dp $(targetprefix)/usr/bin/egrep $(prefix)/release_enigma1_hd/bin/ && \
 	cp $(targetprefix)/boot/video_7100.elf $(prefix)/release_enigma1_hd/boot/video.elf && \
 	$(if $(TF7700),cp $(targetprefix)/boot/video_7109.elf $(prefix)/release_enigma1_hd/boot/video.elf &&) \
 	$(if $(UFS922),cp $(targetprefix)/boot/video_7109.elf $(prefix)/release_enigma1_hd/boot/video.elf &&) \
@@ -435,12 +437,29 @@ endif
 	rm -f $(prefix)/release_enigma1_hd/lib/firmware/dvb-fe-cx21143.fw
 	rm -f $(prefix)/release_enigma1_hd/bin/evremote
 else
+if ENABLE_HS7110
+
+	echo "hs7110" > $(prefix)/release_enigma1_hd/etc/hostname
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/vfd_hs7110/vfd.ko $(prefix)/release_enigma1_hd/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release_enigma1_hd/lib/modules/
+if STM23
+	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/ftdi_sio.ko $(prefix)/release_enigma1_hd/lib/modules/ftdi.ko
+	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/pl2303.ko $(prefix)/release_enigma1_hd/lib/modules
+	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/usbserial.ko $(prefix)/release_enigma1_hd/lib/modules
+	cp $(kernelprefix)/linux-sh4/fs/autofs4/autofs4.ko $(prefix)/release_enigma1_hd/lib/modules
+endif
+
+	rm -f $(prefix)/release_enigma1_hd/lib/firmware/dvb-fe-cx24116.fw
+	rm -f $(prefix)/release_enigma1_hd/lib/firmware/dvb-fe-cx21143.fw
+	rm -f $(prefix)/release_enigma1_hd/bin/evremote
+else
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/button/button.ko $(prefix)/release_enigma1_hd/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/led/led.ko $(prefix)/release_enigma1_hd/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/vfd/vfd.ko $(prefix)/release_enigma1_hd/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7100.ko $(prefix)/release_enigma1_hd/lib/modules/
 
 	rm -f $(prefix)/release_enigma1_hd/lib/firmware/dvb-fe-cx21143.fw
+endif
 endif
 endif
 endif
