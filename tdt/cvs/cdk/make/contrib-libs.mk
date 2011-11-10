@@ -1644,7 +1644,6 @@ $(DEPDIR)/libflac.do_compile: $(DEPDIR)/libflac.do_prepare
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
-		--disable-ogg \
 		--disable-oggtest \
 		--disable-id3libtest \
 		--disable-asm-optimizations \
@@ -1654,8 +1653,7 @@ $(DEPDIR)/libflac.do_compile: $(DEPDIR)/libflac.do_prepare
 		--without-xmms-exec-prefix \
 		--without-libiconv-prefix \
 		--without-id3lib \
-		--with-ogg-includes=. \
-		--disable-cpplibs
+		--with-ogg-includes=. 
 	touch $@
 
 $(DEPDIR)/min-libflac $(DEPDIR)/std-libflac $(DEPDIR)/max-libflac \
@@ -1695,7 +1693,7 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 # GST-PLUGINS-BASE
-$(DEPDIR)/gst_plugins_base.do_prepare: bootstrap glib2 gstreamer libogg libalsa @DEPENDS_gst_plugins_base@
+$(DEPDIR)/gst_plugins_base.do_prepare: bootstrap glib2 gstreamer libogg @DEPENDS_gst_plugins_base@
 	@PREPARE_gst_plugins_base@
 	touch $@
 
@@ -1970,36 +1968,4 @@ $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 		CC=sh4-linux-gcc
 	@TUXBOX_YAUD_CUSTOMIZE@
 
-#
-# alsa-lib
-#
-$(DEPDIR)/libalsa.do_prepare:  @DEPENDS_libalsa@
-	@PREPARE_libalsa@
-	touch $@
-
-$(DEPDIR)/libalsa.do_compile: $(DEPDIR)/libalsa.do_prepare
-	export PATH=$(hostprefix)/bin:$(PATH) && \
-	cd @DIR_libalsa@ && \
-	aclocal -I $(hostprefix)/share/aclocal -I m4 && \
-	autoheader && \
-	autoconf && \
-	automake --foreign && \
-	libtoolize --force && \
-	$(BUILDENV) \
-	./configure \
-		--host=$(target) \
-		--prefix=/usr \
-		--with-debug=no \
-		--enable-static \
-		--disable-python && \
-	$(MAKE) all
-	touch $@
-
-$(DEPDIR)/min-libalsa $(DEPDIR)/std-libalsa $(DEPDIR)/max-libalsa \
-$(DEPDIR)/libalsa: \
-$(DEPDIR)/%libalsa: $(DEPDIR)/libalsa.do_compile
-	@[ "x$*" = "x" ] && touch $@ || true
-	cd @DIR_libalsa@ && \
-		@INSTALL_libalsa@
-	@TUXBOX_YAUD_CUSTOMIZE@
 

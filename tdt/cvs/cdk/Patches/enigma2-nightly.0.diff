@@ -7444,10 +7444,6 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/main/enigma.cp
 +#endif 
  #include "bsod.h"
  #include "version_info.h"
- #include <gst/gst.h>
- #ifdef OBJECT_DEBUG
- int object_total_remaining;
-
  
 @@ -124,6 +132,11 @@
  

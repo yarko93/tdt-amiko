@@ -1262,15 +1262,6 @@ endif
 	$(INSTALL_DIR) $(prefix)/release/usr/share/udhcpc
 	cp -aR $(buildprefix)/root/usr/share/udhcpc/* $(prefix)/release/usr/share/udhcpc/
 
-	if [ -e $(targetprefix)/usr/share/alsa ]; then \
-		mkdir $(prefix)/release/usr/share/alsa/; \
-		mkdir $(prefix)/release/usr/share/alsa/cards/; \
-		mkdir $(prefix)/release/usr/share/alsa/pcm/; \
-		cp $(targetprefix)/usr/share/alsa/alsa.conf          $(prefix)/release/usr/share/alsa/alsa.conf; \
-		cp $(targetprefix)/usr/share/alsa/cards/aliases.conf $(prefix)/release/usr/share/alsa/cards/; \
-		cp $(targetprefix)/usr/share/alsa/pcm/default.conf   $(prefix)/release/usr/share/alsa/pcm/; \
-		cp $(targetprefix)/usr/share/alsa/pcm/dmix.conf      $(prefix)/release/usr/share/alsa/pcm/; fi
-
 	ln -s /usr/local/share/keymaps $(prefix)/release/usr/share/keymaps
 
 	$(INSTALL_DIR) $(prefix)/release/usr/local
