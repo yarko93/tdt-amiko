@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/home/schpuntik/tdt-amiko/tdt/tufsbox/devkit/sh4/bin/python
 import sys
 import os
 import string

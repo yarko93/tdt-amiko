@@ -6,11 +6,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-18 15:07+0300\n"
+"POT-Creation-Date: 2011-11-11 16:43+0100\n"
 "PO-Revision-Date: 2009-08-18 12:36+0200\n"
 "Last-Translator: Hendrik Gross <h_gross@neti.ee> ja Arvo Järve "
 "<arvo@softshark.ee>. Tõlkel abiks oli Raivo\n"
 "Language-Team: none\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -118,13 +119,58 @@ msgstr "Laiendused"
 msgid "#000000"
 msgstr ""
 
+msgid "#00081226"
+msgstr ""
+
 msgid "#0064c7"
+msgstr ""
+
+msgid "#0099ff"
+msgstr ""
+
+msgid "#00f0f0f0"
+msgstr ""
+
+msgid "#00fcc000"
+msgstr ""
+
+msgid "#08001E4B"
+msgstr ""
+
+msgid "#08004C00"
+msgstr ""
+
+msgid "#084B4B00"
+msgstr ""
+
+msgid "#084C0000"
+msgstr ""
+
+msgid "#0f0f0f"
 msgstr ""
 
 msgid "#25062748"
 msgstr ""
 
+msgid "#294a6b"
+msgstr ""
+
+msgid "#32000000"
+msgstr ""
+
 msgid "#389416"
+msgstr ""
+
+msgid "#42000000"
+msgstr ""
+
+msgid "#44444a"
+msgstr ""
+
+msgid "#56C856"
+msgstr ""
+
+msgid "#65000000"
 msgstr ""
 
 msgid "#80000000"
@@ -133,10 +179,34 @@ msgstr ""
 msgid "#80ffffff"
 msgstr ""
 
+msgid "#999999"
+msgstr ""
+
+msgid "#FCC000"
+msgstr ""
+
 msgid "#bab329"
 msgstr ""
 
+msgid "#cfcfcf"
+msgstr ""
+
+msgid "#e5e5e5"
+msgstr ""
+
+msgid "#f0f0f0"
+msgstr ""
+
 msgid "#f23d21"
+msgstr ""
+
+msgid "#f3ca09"
+msgstr ""
+
+msgid "#ff000000"
+msgstr ""
+
+msgid "#ff4A3C"
 msgstr ""
 
 msgid "#ffffff"
@@ -190,8 +260,14 @@ msgstr "* Enam kui ühe aktiivse liidese puhul"
 msgid "* Only available when entering hidden SSID or network key"
 msgstr "* Ainult SSID ja võrguvõtme sisestamiseks"
 
+msgid "-"
+msgstr ""
+
 msgid "---------------------- bookmarks -------------------"
 msgstr "---------------------järjehoidja ----------------------"
+
+msgid "..."
+msgstr ""
 
 msgid ".NFI Download failed:"
 msgstr ".NFI Allalaadimine nurjus:"
@@ -568,6 +644,9 @@ msgstr "Helisätted"
 msgid "Audio Source"
 msgstr "Heli allikas"
 
+msgid "Audio/Subservices"
+msgstr ""
+
 msgid "Author: "
 msgstr "Automaatne"
 
@@ -696,8 +775,14 @@ msgstr "C-sagedusala"
 msgid "CF Drive"
 msgstr "CompactFlash-kaart"
 
+msgid "CI Assignment"
+msgstr ""
+
 msgid "CI assignment"
 msgstr "CI määrangud"
+
+msgid "CRYPT"
+msgstr ""
 
 msgid "CVBS"
 msgstr "Komposiit (CVBS)"
@@ -975,6 +1060,9 @@ msgstr "Tšehhi"
 msgid "D"
 msgstr "D"
 
+msgid "DD"
+msgstr ""
+
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -983,6 +1071,9 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
+
+msgid "DVD File Browser"
+msgstr ""
 
 msgid "DVD Player"
 msgstr "DVD-mängija"
@@ -995,6 +1086,9 @@ msgstr "Taani"
 
 msgid "Date"
 msgstr "Kuupäev"
+
+msgid "Daylight"
+msgstr ""
 
 msgid "Deep Standby"
 msgstr "Sügavootele"
@@ -1452,8 +1546,14 @@ msgstr "Laiendatud seaded"
 msgid "Extensions"
 msgstr "Laiendused"
 
+msgid "F"
+msgstr ""
+
 msgid "FEC"
 msgstr "FEC"
+
+msgid "FILE LIST"
+msgstr ""
 
 msgid "Factory reset"
 msgstr "Algseadistuse taaste"
@@ -1603,8 +1703,17 @@ msgstr "Kaitsevahemik"
 msgid "Guard interval mode"
 msgstr "Kaitsevahemiku seaded"
 
+msgid "H"
+msgstr ""
+
+msgid "HDTV"
+msgstr ""
+
 msgid "Harddisk"
 msgstr "Kõvaketas"
+
+msgid "Harddisk Wait"
+msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Kõvaketta seaded"
@@ -1694,6 +1803,9 @@ msgstr "Suurendatud pinge"
 
 msgid "Index"
 msgstr "Indeks"
+
+msgid "Info"
+msgstr ""
 
 msgid "InfoBar"
 msgstr "Inforiba"
@@ -1798,6 +1910,9 @@ msgstr "Ipkg"
 
 msgid "Italian"
 msgstr "Itaalia"
+
+msgid "J"
+msgstr ""
 
 msgid "Job View"
 msgstr "Töövaade"
@@ -1915,8 +2030,14 @@ msgstr "Pikk klahvivajutus"
 msgid "Longitude"
 msgstr "Pikkuskraad"
 
+msgid "M"
+msgstr ""
+
 msgid "MMC Card"
 msgstr "MMC-kaart"
+
+msgid "MMIDialog"
+msgstr ""
 
 msgid "MORE"
 msgstr "VEEL"
@@ -2002,6 +2123,15 @@ msgstr "Esmaspäev"
 msgid "Mount failed"
 msgstr "Ühendamine nurjus"
 
+msgid "MountEdit"
+msgstr ""
+
+msgid "MountManager"
+msgstr ""
+
+msgid "MountView"
+msgstr ""
+
 msgid "Move Picture in Picture"
 msgstr "Liiguta PIP-pilt"
 
@@ -2011,8 +2141,17 @@ msgstr "Liiguta itta"
 msgid "Move west"
 msgstr "Liiguta läände"
 
+msgid "MoviePlayer"
+msgstr ""
+
 msgid "Movielist menu"
 msgstr "Salvestiste menüü"
+
+msgid "Movieplayer"
+msgstr ""
+
+msgid "Movies"
+msgstr ""
 
 msgid "Multi EPG"
 msgstr "Kanalite saatekava"
@@ -2072,6 +2211,9 @@ msgstr "Võrgu häälestamine"
 msgid "Network Mount"
 msgstr "Võrgu külgehaakimine"
 
+msgid "Network Neighbourhood"
+msgstr ""
+
 msgid "Network SSID"
 msgstr "Võrgu SSID"
 
@@ -2095,6 +2237,9 @@ msgstr "Võrk"
 
 msgid "Network:"
 msgstr "Võrk:"
+
+msgid "NetworkBrowser"
+msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Võrguhäälestus "
@@ -2239,6 +2384,9 @@ msgstr "Ei, käivita minu vastuvõtja"
 msgid "No, scan later manually"
 msgstr "Ei, kanalid otsitakse hiljem käsitsi"
 
+msgid "NoGfx Skin (c)2009 - by benutzername"
+msgstr ""
+
 msgid "None"
 msgstr "Pole"
 
@@ -2309,6 +2457,9 @@ msgstr "Ainult vabade otsimine"
 msgid "Orbital Position"
 msgstr "Orbitaalpositsioon"
 
+msgid "P"
+msgstr ""
+
 msgid "PAL"
 msgstr "PAL"
 
@@ -2317,6 +2468,9 @@ msgstr "PCM"
 
 msgid "PIDs"
 msgstr "PIDs"
+
+msgid "PLAY LIST"
+msgstr ""
 
 msgid "Package details for: "
 msgstr "Paketi detailid: "
@@ -2343,6 +2497,9 @@ msgstr "Ülemkataloog"
 msgid "Parental control"
 msgstr "Lapselukk"
 
+msgid "Parental control Editor"
+msgstr ""
+
 msgid "Parental control services Editor"
 msgstr "Lapseluku kanali muutmine"
 
@@ -2357,6 +2514,9 @@ msgstr "Pane film lõpus seisma"
 
 msgid "PiPSetup"
 msgstr "PiP-pildi seaded"
+
+msgid "Picture Player"
+msgstr ""
 
 msgid "PicturePlayer"
 msgstr "PildiMängija"
@@ -2465,6 +2625,9 @@ msgstr "Vali kustutatav playlist"
 
 msgid "Please select a playlist..."
 msgstr "Vali playlist"
+
+msgid "Please select a resolution..."
+msgstr ""
 
 msgid "Please select a subservice to record..."
 msgstr "Palun vali alamteenus salvestamiseks"
@@ -2651,11 +2814,17 @@ msgstr "Kiire kanalivalik"
 msgid "Quickzap"
 msgstr "Kiire kanalivalik"
 
+msgid "R"
+msgstr ""
+
 msgid "RC Menu"
 msgstr "Puldi menüü"
 
 msgid "RC command set"
 msgstr "Käskude järjekord"
+
+msgid "RECORD"
+msgstr ""
 
 msgid "RF output"
 msgstr "RF-väljund"
@@ -2876,6 +3045,9 @@ msgstr "Kasutusel"
 msgid "Russian"
 msgstr "Vene"
 
+msgid "S"
+msgstr ""
+
 msgid "S-Video"
 msgstr "S-video (Y/C)"
 
@@ -2887,6 +3059,9 @@ msgstr "SNR:"
 
 msgid "SPDIF"
 msgstr "SPDIF"
+
+msgid "SUB"
+msgstr ""
 
 msgid "Sat"
 msgstr "L"
@@ -2929,6 +3104,9 @@ msgstr "Otsi"
 
 msgid "Scan Files..."
 msgstr "Kontrollin failisüsteemi..."
+
+msgid "Scan IP"
+msgstr ""
 
 msgid "Scan QAM128"
 msgstr "Otsi QAM128"
@@ -3138,6 +3316,9 @@ msgstr ""
 "Pole kanalit!\n"
 "Kontrolli tüüneri seadeid"
 
+msgid "Service-Info"
+msgstr ""
+
 msgid "Serviceinfo"
 msgstr "Kanaliinfo"
 
@@ -3150,8 +3331,14 @@ msgstr "Vali pinge ja 22 KHz"
 msgid "Set as default Interface"
 msgstr "Määra vaikimisi võrguliideseks"
 
+msgid "Set fan"
+msgstr ""
+
 msgid "Set interface as default Interface"
 msgstr "Määra vaikimisi võrguliideseks"
+
+msgid "Set led"
+msgstr ""
 
 msgid "Set limits"
 msgstr "Seadista limiidid"
@@ -3236,6 +3423,9 @@ msgstr "Pilt-pildilt (GOP)"
 
 msgid "Skin..."
 msgstr "Välimus"
+
+msgid "SkinSelector"
+msgstr ""
 
 msgid "Skins"
 msgstr "Välimus"
@@ -3434,6 +3624,9 @@ msgstr "Symbolrate"
 msgid "System"
 msgstr "Seaded"
 
+msgid "System-Info"
+msgstr ""
+
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr "TÕLKE_INFO"
@@ -3443,6 +3636,9 @@ msgstr "TS fail on liiga suur ISO9660/1-le!"
 
 msgid "TV System"
 msgstr "TV-süsteem"
+
+msgid "TXT"
+msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Sisutabel kogumiseks"
@@ -3722,6 +3918,9 @@ msgstr "Neljapäev"
 msgid "Time"
 msgstr "Aeg"
 
+msgid "Time mode"
+msgstr ""
+
 msgid "Time/Date Input"
 msgstr "Aeg/Kuupäev"
 
@@ -3871,6 +4070,9 @@ msgstr "Tüüneri olek"
 msgid "Turkish"
 msgstr "Türgi"
 
+msgid "TuxTXT"
+msgstr ""
+
 msgid "Two"
 msgstr "Kaks"
 
@@ -3885,6 +4087,9 @@ msgstr "Tippimise viivitus"
 
 msgid "Typematic rate"
 msgstr "Tippimise kiirus"
+
+msgid "U"
+msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -4020,6 +4225,15 @@ msgstr "Kasutatud skaneerimise tüüp"
 msgid "User defined"
 msgstr "Kasutaja määratud"
 
+msgid "UserDialog"
+msgstr ""
+
+msgid "UserManager"
+msgstr ""
+
+msgid "V"
+msgstr ""
+
 msgid "VCR scart"
 msgstr "VCR SCART"
 
@@ -4066,6 +4280,9 @@ msgstr "Töövaade"
 
 msgid "View Movies..."
 msgstr "Näita salvestisi"
+
+msgid "View Photos..."
+msgstr ""
 
 msgid "View Rass interactive..."
 msgstr "Vaata Rass interactive"
@@ -4117,6 +4334,12 @@ msgstr "Kuva teksti-TV"
 
 msgid "Virtual KeyBoard"
 msgstr "Virtuaalklahvistik"
+
+msgid "Vol"
+msgstr ""
+
+msgid "Vol off"
+msgstr ""
 
 msgid "Voltage mode"
 msgstr "Pinge valik"
@@ -4573,9 +4796,6 @@ msgstr "sinine"
 msgid "burn audio track (%s)"
 msgstr "Kirjuta audio rada/rajad (%s)"
 
-msgid "by Exif"
-msgstr "EXIF-andmete järgi"
-
 msgid "change recording (duration)"
 msgstr "Muuda salvestuse kestus"
 
@@ -4922,9 +5142,6 @@ msgstr "moodulit ei leitud"
 
 msgid "no HDD found"
 msgstr "kõvaketast ei leitud"
-
-msgid "no Picture found"
-msgstr "pilti ei leitud"
 
 msgid "no module found"
 msgstr "moodulit ei leitud"
@@ -5335,3 +5552,9 @@ msgstr "kanalivahetus"
 
 msgid "zapped"
 msgstr "vahetatud"
+
+#~ msgid "by Exif"
+#~ msgstr "EXIF-andmete järgi"
+
+#~ msgid "no Picture found"
+#~ msgstr "pilti ei leitud"

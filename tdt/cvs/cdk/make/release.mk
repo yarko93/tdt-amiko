@@ -202,7 +202,6 @@ release_spark:
 	ln -s ../init.d/sendsigs $(prefix)/release/etc/rc.d/rc6.d/S20sendsigs
 	ln -s ../init.d/umountfs $(prefix)/release/etc/rc.d/rc6.d/S40umountfs
 	ln -s ../init.d/reboot $(prefix)/release/etc/rc.d/rc6.d/S90reboot
-	ln -fs init $(prefix)/release/sbin/telinit
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/smartcard/smartcard.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/lnb/lnb.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release/lib/modules/
@@ -1263,6 +1262,16 @@ endif
 	cp -aR $(buildprefix)/root/usr/share/udhcpc/* $(prefix)/release/usr/share/udhcpc/
 
 	ln -s /usr/local/share/keymaps $(prefix)/release/usr/share/keymaps
+	if [ -e $(targetprefix)/usr/share/alsa ]; then \
+	mkdir $(prefix)/release/usr/share/alsa/; \
+	mkdir $(prefix)/release/usr/share/alsa/cards/; \
+	mkdir $(prefix)/release/usr/share/alsa/pcm/; \
+	cp $(targetprefix)/usr/share/alsa/alsa.conf          $(prefix)/release/usr/share/alsa/alsa.conf; \
+	cp $(targetprefix)/usr/share/alsa/cards/aliases.conf $(prefix)/release/usr/share/alsa/cards/; \
+	cp $(targetprefix)/usr/share/alsa/pcm/default.conf   $(prefix)/release/usr/share/alsa/pcm/; \
+	cp $(targetprefix)/usr/share/alsa/pcm/dmix.conf      $(prefix)/release/usr/share/alsa/pcm/; fi
+
+
 
 	$(INSTALL_DIR) $(prefix)/release/usr/local
 	$(INSTALL_DIR) $(prefix)/release/usr/local/bin
@@ -1297,7 +1306,6 @@ endif
 	rm -f $(prefix)/release/usr/lib/*.a
 	rm -f $(prefix)/release/usr/lib/*.o
 	rm -f $(prefix)/release/usr/lib/*.la
-	chmod 755 -R $(prefix)/release/usr/lib/
 	find $(prefix)/release/usr/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/enigma2

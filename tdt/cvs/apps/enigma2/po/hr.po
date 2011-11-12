@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-18 23:40+0200\n"
+"POT-Creation-Date: 2011-11-11 16:43+0100\n"
 "PO-Revision-Date: 2008-01-27 23:38+0100\n"
 "Last-Translator: Jurica <jurica@clarkdigital.com>\n"
 "Language-Team:  <jurica@dream-multimedia.eu>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -83,17 +84,65 @@ msgstr ""
 msgid " "
 msgstr ""
 
+msgid " extensions."
+msgstr ""
+
 msgid "#000000"
 msgstr "#ffffff"
+
+msgid "#00081226"
+msgstr ""
 
 msgid "#0064c7"
 msgstr "#0064c7"
 
+msgid "#0099ff"
+msgstr ""
+
+msgid "#00f0f0f0"
+msgstr ""
+
+msgid "#00fcc000"
+msgstr ""
+
+msgid "#08001E4B"
+msgstr ""
+
+msgid "#08004C00"
+msgstr ""
+
+msgid "#084B4B00"
+msgstr ""
+
+msgid "#084C0000"
+msgstr ""
+
+msgid "#0f0f0f"
+msgstr ""
+
 msgid "#25062748"
 msgstr "#25062748"
 
+msgid "#294a6b"
+msgstr ""
+
+msgid "#32000000"
+msgstr ""
+
 msgid "#389416"
 msgstr "#389416"
+
+msgid "#42000000"
+msgstr ""
+
+msgid "#44444a"
+msgstr ""
+
+msgid "#56C856"
+msgstr ""
+
+msgid "#65000000"
+msgstr ""
 
 msgid "#80000000"
 msgstr "#80000000"
@@ -101,11 +150,35 @@ msgstr "#80000000"
 msgid "#80ffffff"
 msgstr "#80ffffff"
 
+msgid "#999999"
+msgstr ""
+
+msgid "#FCC000"
+msgstr ""
+
 msgid "#bab329"
 msgstr "#bab329"
 
+msgid "#cfcfcf"
+msgstr ""
+
+msgid "#e5e5e5"
+msgstr ""
+
+msgid "#f0f0f0"
+msgstr ""
+
 msgid "#f23d21"
 msgstr "#f23d21"
+
+msgid "#f3ca09"
+msgstr ""
+
+msgid "#ff000000"
+msgstr ""
+
+msgid "#ff4A3C"
+msgstr ""
 
 msgid "#ffffff"
 msgstr "#ffffff"
@@ -156,6 +229,15 @@ msgid "* Only available if more than one interface is active."
 msgstr ""
 
 msgid "* Only available when entering hidden SSID or network key"
+msgstr ""
+
+msgid "-"
+msgstr ""
+
+msgid "---------------------- bookmarks -------------------"
+msgstr ""
+
+msgid "..."
 msgstr ""
 
 msgid ".NFI Download failed:"
@@ -224,6 +306,9 @@ msgstr "30 minuta"
 
 msgid "4"
 msgstr "4"
+
+msgid "422"
+msgstr ""
 
 msgid "4:3"
 msgstr ""
@@ -444,6 +529,9 @@ msgstr "Svi"
 msgid "All Satellites"
 msgstr ""
 
+msgid "All caps"
+msgstr ""
+
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -499,11 +587,20 @@ msgstr ""
 msgid "Aspect Ratio"
 msgstr "Omjer slike"
 
+msgid "Aspect list..."
+msgstr ""
+
 msgid "Audio"
 msgstr "Zvuk"
 
 msgid "Audio Options..."
 msgstr "Zvučne opcije..."
+
+msgid "Audio Source"
+msgstr ""
+
+msgid "Audio/Subservices"
+msgstr ""
 
 msgid "Author: "
 msgstr ""
@@ -635,7 +732,13 @@ msgstr "C-Band"
 msgid "CF Drive"
 msgstr "CF Disk"
 
+msgid "CI Assignment"
+msgstr ""
+
 msgid "CI assignment"
+msgstr ""
+
+msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -914,6 +1017,9 @@ msgstr "Češki"
 msgid "D"
 msgstr ""
 
+msgid "DD"
+msgstr ""
+
 msgid "DHCP"
 msgstr ""
 
@@ -922,6 +1028,9 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
+
+msgid "DVD File Browser"
+msgstr ""
 
 msgid "DVD Player"
 msgstr ""
@@ -934,6 +1043,9 @@ msgstr "Danski"
 
 msgid "Date"
 msgstr "Datum"
+
+msgid "Daylight"
+msgstr ""
 
 msgid "Deep Standby"
 msgstr "Isključi Dreambox"
@@ -958,6 +1070,10 @@ msgstr "Obriši unos"
 
 msgid "Delete failed!"
 msgstr "Brisanje neuspješno!"
+
+#, python-format
+msgid "Delete failed!, %s"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -1068,6 +1184,9 @@ msgid ""
 "Do you really want to download\n"
 "the plugin \"%s\"?"
 msgstr ""
+
+msgid "Do you really want to exit?"
+msgstr "Želite li stvarno izaći?"
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1194,6 +1313,9 @@ msgstr "Nizozemski"
 msgid "E"
 msgstr "E"
 
+msgid "EJECT DVD"
+msgstr ""
+
 msgid "EPG Selection"
 msgstr "EPG selektor "
 
@@ -1291,6 +1413,7 @@ msgstr ""
 "\n"
 "© 2006 - Stephan Reichholf"
 
+#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1324,6 +1447,9 @@ msgstr ""
 msgid ""
 "Error: %s\n"
 "Retry?"
+msgstr ""
+
+msgid "Estonian"
 msgstr ""
 
 msgid "Eventview"
@@ -1365,8 +1491,14 @@ msgstr "Proširene postavke..."
 msgid "Extensions"
 msgstr "Ekstenzije"
 
+msgid "F"
+msgstr ""
+
 msgid "FEC"
 msgstr "FEC"
+
+msgid "FILE LIST"
+msgstr ""
 
 msgid "Factory reset"
 msgstr ""
@@ -1515,8 +1647,17 @@ msgstr "Interval Zaštite"
 msgid "Guard interval mode"
 msgstr "Mod zaštitnog intervala"
 
+msgid "H"
+msgstr ""
+
+msgid "HDTV"
+msgstr ""
+
 msgid "Harddisk"
 msgstr "Tvrdi disk"
+
+msgid "Harddisk Wait"
+msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Postavke tvrdog diska"
@@ -1599,6 +1740,9 @@ msgstr "Povećani napon"
 
 msgid "Index"
 msgstr "Index"
+
+msgid "Info"
+msgstr ""
 
 msgid "InfoBar"
 msgstr "InfoBar "
@@ -1702,6 +1846,9 @@ msgstr ""
 msgid "Italian"
 msgstr "Talijanski"
 
+msgid "J"
+msgstr ""
+
 msgid "Job View"
 msgstr ""
 
@@ -1726,6 +1873,9 @@ msgstr ""
 
 msgid "LNB"
 msgstr "LNB"
+
+msgid "LOAD DVD"
+msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -1815,8 +1965,14 @@ msgstr "Dugi pritis tipke"
 msgid "Longitude"
 msgstr "Longituda"
 
+msgid "M"
+msgstr ""
+
 msgid "MMC Card"
 msgstr "MMC Kartica"
+
+msgid "MMIDialog"
+msgstr ""
 
 msgid "MORE"
 msgstr "VIŠE"
@@ -1902,6 +2058,15 @@ msgstr "Ponedeljak"
 msgid "Mount failed"
 msgstr "Mount neuspješan"
 
+msgid "MountEdit"
+msgstr ""
+
+msgid "MountManager"
+msgstr ""
+
+msgid "MountView"
+msgstr ""
+
 msgid "Move Picture in Picture"
 msgstr "Premjesti Sliku u Slici"
 
@@ -1911,8 +2076,17 @@ msgstr "Pokreći na istok"
 msgid "Move west"
 msgstr "Pokreći na zapad"
 
+msgid "MoviePlayer"
+msgstr ""
+
 msgid "Movielist menu"
 msgstr "Meni izbornika filmova"
+
+msgid "Movieplayer"
+msgstr ""
+
+msgid "Movies"
+msgstr ""
 
 msgid "Multi EPG"
 msgstr "Multi EPG"
@@ -1972,6 +2146,9 @@ msgstr ""
 msgid "Network Mount"
 msgstr "Montiranje mreže"
 
+msgid "Network Neighbourhood"
+msgstr ""
+
 msgid "Network SSID"
 msgstr ""
 
@@ -1994,6 +2171,9 @@ msgid "Network..."
 msgstr "Mreža..."
 
 msgid "Network:"
+msgstr ""
+
+msgid "NetworkBrowser"
 msgstr ""
 
 msgid "NetworkWizard"
@@ -2130,6 +2310,9 @@ msgstr "Ne, samo pokreni moj dreambox"
 msgid "No, scan later manually"
 msgstr "Ne, skeniraj ručno kasnije"
 
+msgid "NoGfx Skin (c)2009 - by benutzername"
+msgstr ""
+
 msgid "None"
 msgstr "Prazno"
 
@@ -2195,11 +2378,20 @@ msgstr ""
 msgid "Orbital Position"
 msgstr "Orbitalna Pozicija"
 
+msgid "P"
+msgstr ""
+
 msgid "PAL"
 msgstr "PAL"
 
+msgid "PCM"
+msgstr ""
+
 msgid "PIDs"
 msgstr "PIDs"
+
+msgid "PLAY LIST"
+msgstr ""
 
 msgid "Package details for: "
 msgstr ""
@@ -2226,6 +2418,9 @@ msgstr ""
 msgid "Parental control"
 msgstr "Roditeljska zaštita"
 
+msgid "Parental control Editor"
+msgstr ""
+
 msgid "Parental control services Editor"
 msgstr "Editor Usluga za roditeljsku zaštitu"
 
@@ -2240,6 +2435,9 @@ msgstr ""
 
 msgid "PiPSetup"
 msgstr "PiPPostavke"
+
+msgid "Picture Player"
+msgstr ""
 
 msgid "PicturePlayer"
 msgstr ""
@@ -2345,11 +2543,17 @@ msgstr "Molim odaberite playlistu za brisanje..."
 msgid "Please select a playlist..."
 msgstr "Molim odaberite playlistu..."
 
+msgid "Please select a resolution..."
+msgstr ""
+
 msgid "Please select a subservice to record..."
 msgstr "Molim odaberite uslugu za snimanje..."
 
 msgid "Please select a subservice..."
 msgstr "Molim odaberite poduslugu..."
+
+msgid "Please select an aspect ratio..."
+msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr ""
@@ -2361,6 +2565,12 @@ msgid "Please select target directory or medium"
 msgstr ""
 
 msgid "Please select the movie path..."
+msgstr ""
+
+msgid "Please select the path for the Startdirectory"
+msgstr ""
+
+msgid "Please select the path..."
 msgstr ""
 
 msgid "Please set up tuner B"
@@ -2519,8 +2729,17 @@ msgstr "Brzo"
 msgid "Quickzap"
 msgstr "Brzizap"
 
+msgid "R"
+msgstr ""
+
 msgid "RC Menu"
 msgstr "RC Izbornik"
+
+msgid "RC command set"
+msgstr ""
+
+msgid "RECORD"
+msgstr ""
 
 msgid "RF output"
 msgstr "RF Izlaz"
@@ -2742,6 +2961,9 @@ msgstr "Pokrenuto"
 msgid "Russian"
 msgstr "Ruski"
 
+msgid "S"
+msgstr ""
+
 msgid "S-Video"
 msgstr "S-Video"
 
@@ -2750,6 +2972,12 @@ msgstr "SNR"
 
 msgid "SNR:"
 msgstr "SNR:"
+
+msgid "SPDIF"
+msgstr ""
+
+msgid "SUB"
+msgstr ""
 
 msgid "Sat"
 msgstr "Sat"
@@ -2791,6 +3019,9 @@ msgid "Scan "
 msgstr "Skeniraj"
 
 msgid "Scan Files..."
+msgstr ""
+
+msgid "Scan IP"
 msgstr ""
 
 msgid "Scan QAM128"
@@ -2863,6 +3094,15 @@ msgstr ""
 
 msgid ""
 "Scans default lamedbs sorted by satellite with a connected dish positioner"
+msgstr ""
+
+msgid "Scroll delay"
+msgstr ""
+
+msgid "Scroll long strings"
+msgstr ""
+
+msgid "Scroll pause"
 msgstr ""
 
 msgid "Search east"
@@ -2988,6 +3228,9 @@ msgstr ""
 "Usluga nije dostupna!\n"
 "Provjerite konfiguraciju tunera"
 
+msgid "Service-Info"
+msgstr ""
+
 msgid "Serviceinfo"
 msgstr "Info Usluge"
 
@@ -3000,7 +3243,13 @@ msgstr ""
 msgid "Set as default Interface"
 msgstr ""
 
+msgid "Set fan"
+msgstr ""
+
 msgid "Set interface as default Interface"
+msgstr ""
+
+msgid "Set led"
 msgstr ""
 
 msgid "Set limits"
@@ -3015,6 +3264,9 @@ msgstr "Postavi"
 msgid "Setup Mode"
 msgstr "Mod Postavki"
 
+msgid "Show Ethernet activity"
+msgstr ""
+
 msgid "Show Info"
 msgstr ""
 
@@ -3023,6 +3275,9 @@ msgstr ""
 
 msgid "Show blinking clock in display during recording"
 msgstr "Prikaži treperući sat na prednjem zaslonu tijekom snimanja"
+
+msgid "Show clock"
+msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Prikaži infobar na promjeni kanala"
@@ -3079,6 +3334,9 @@ msgid "Singlestep (GOP)"
 msgstr ""
 
 msgid "Skin..."
+msgstr ""
+
+msgid "SkinSelector"
 msgstr ""
 
 msgid "Skins"
@@ -3272,6 +3530,9 @@ msgstr "Simbolrata"
 msgid "System"
 msgstr "Sistem "
 
+msgid "System-Info"
+msgstr ""
+
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr ""
@@ -3281,6 +3542,9 @@ msgstr ""
 
 msgid "TV System"
 msgstr "TV Sistem"
+
+msgid "TXT"
+msgstr ""
 
 msgid "Table of content for collection"
 msgstr ""
@@ -3518,6 +3782,9 @@ msgstr "Četvrtak"
 msgid "Time"
 msgstr "Vrijeme"
 
+msgid "Time mode"
+msgstr ""
+
 msgid "Time/Date Input"
 msgstr "Unos Vremena/Datuma"
 
@@ -3662,6 +3929,9 @@ msgstr "Status tunera"
 msgid "Turkish"
 msgstr "Turski"
 
+msgid "TuxTXT"
+msgstr ""
+
 msgid "Two"
 msgstr "Dva"
 
@@ -3670,6 +3940,15 @@ msgstr ""
 
 msgid "Type of scan"
 msgstr "Tip skeniranja"
+
+msgid "Typematic delay"
+msgstr ""
+
+msgid "Typematic rate"
+msgstr ""
+
+msgid "U"
+msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -3754,6 +4033,7 @@ msgstr "Koristi Mjerenje Snage"
 msgid "Use a gateway"
 msgstr "Koristi gateway"
 
+#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -3802,6 +4082,15 @@ msgstr "Vrste korištenih usluga za skeniranje"
 
 msgid "User defined"
 msgstr "Korisnički def"
+
+msgid "UserDialog"
+msgstr ""
+
+msgid "UserManager"
+msgstr ""
+
+msgid "V"
+msgstr ""
 
 msgid "VCR scart"
 msgstr "VCR skart"
@@ -3854,6 +4143,9 @@ msgstr "Gledaj Rass interaktivno..."
 msgid "View Video CD..."
 msgstr ""
 
+msgid "View list of available "
+msgstr ""
+
 msgid "View list of available CommonInterface extensions"
 msgstr ""
 
@@ -3894,6 +4186,12 @@ msgid "View teletext..."
 msgstr "Pregled teleteksta..."
 
 msgid "Virtual KeyBoard"
+msgstr ""
+
+msgid "Vol"
+msgstr ""
+
+msgid "Vol off"
 msgstr ""
 
 msgid "Voltage mode"
@@ -4011,6 +4309,9 @@ msgstr ""
 
 msgid "YPbPr"
 msgstr "YPbPr"
+
+msgid "YUV"
+msgstr ""
 
 msgid "Year"
 msgstr "Godina"
@@ -4277,6 +4578,9 @@ msgstr "dodaj uslugu u favorite"
 msgid "add to parental protection"
 msgstr "dodaj u roditeljsku zaštitu"
 
+msgid "add/remove bookmarks (locationbox)"
+msgstr ""
+
 msgid "advanced"
 msgstr "napredno"
 
@@ -4289,6 +4593,9 @@ msgid ""
 msgstr ""
 "Želite li stvarno vratiti sljedeću\n"
 "sigurnosnu kopiju:\n"
+
+msgid "ask on exit"
+msgstr ""
 
 msgid "assigned CAIds"
 msgstr ""
@@ -4551,6 +4858,9 @@ msgstr "sati"
 msgid "immediate shutdown"
 msgstr "odmah isključi"
 
+msgid "immediate standby"
+msgstr ""
+
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -4745,7 +5055,13 @@ msgstr "pokreni unos"
 msgid "play from next mark or playlist entry"
 msgstr ""
 
+msgid "play from next playlist entry"
+msgstr ""
+
 msgid "play from previous mark or playlist entry"
+msgstr ""
+
+msgid "play from previous playlist entry"
 msgstr ""
 
 msgid "please press OK when ready"
@@ -4822,6 +5138,9 @@ msgstr ""
 
 msgid "save playlist"
 msgstr "pohrani playlistu"
+
+msgid "save playlist before exit?"
+msgstr ""
 
 msgid "save playlist on exit"
 msgstr ""
@@ -5007,6 +5326,9 @@ msgstr "ovo snimanje"
 msgid "this service is protected by a parental control pin"
 msgstr "usluga je zaštićena s pin kodom roditeljske kontrole"
 
+msgid "toggels betwenn tv and radio..."
+msgstr ""
+
 msgid "toggle a cut mark at the current position"
 msgstr "aktiviraj rezanje na trenutno označenoj poziciji"
 
@@ -5179,9 +5501,6 @@ msgstr "prebačen"
 #~ msgstr ""
 #~ "Želite li stvarno skinuti\n"
 #~ "dodatak \""
-
-#~ msgid "Do you really want to exit?"
-#~ msgstr "Želite li stvarno izaći?"
 
 #~ msgid "Do you want to view a cutlist tutorial?"
 #~ msgstr "Želite li pregledati skraćeni vodič?"

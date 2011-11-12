@@ -7,11 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-28 15:43+0200\n"
+"POT-Creation-Date: 2011-11-11 16:43+0100\n"
 "PO-Revision-Date: 2010-03-09 21:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: HDTV ROMANIA(superonic,costel_mbc,neutrin,otheitis,cipy_1982,"
 "neutrin,runcanion)\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1087,6 +1088,9 @@ msgstr "Daneza"
 msgid "Date"
 msgstr "Data"
 
+msgid "Daylight"
+msgstr ""
+
 msgid "Deep Standby"
 msgstr "Oprire completa"
 
@@ -1791,6 +1795,9 @@ msgstr "Voltaj marit"
 
 msgid "Index"
 msgstr "Index"
+
+msgid "Info"
+msgstr ""
 
 msgid "InfoBar"
 msgstr "Bara de informatii"
@@ -3322,8 +3329,14 @@ msgstr "Setare Voltaj si 22KHz"
 msgid "Set as default Interface"
 msgstr "Setare ca interfata implicita"
 
+msgid "Set fan"
+msgstr ""
+
 msgid "Set interface as default Interface"
 msgstr "Setare interfata ca interfata implicita"
+
+msgid "Set led"
+msgstr ""
 
 msgid "Set limits"
 msgstr "Setare limite"
@@ -3914,6 +3927,9 @@ msgstr "Joi"
 msgid "Time"
 msgstr "Ora"
 
+msgid "Time mode"
+msgstr ""
+
 msgid "Time/Date Input"
 msgstr "Intrare Ora/Data"
 
@@ -4272,6 +4288,9 @@ msgstr "Vezi"
 
 msgid "View Movies..."
 msgstr "Vezi filmele..."
+
+msgid "View Photos..."
+msgstr "Vezi Pozele..."
 
 msgid "View Rass interactive..."
 msgstr "Vezi Rass interactive..."
@@ -4799,9 +4818,6 @@ msgstr "albastru"
 msgid "burn audio track (%s)"
 msgstr "burn track audio (%s)"
 
-msgid "by Exif"
-msgstr ""
-
 msgid "change recording (duration)"
 msgstr "schimba inregistrare (durata)"
 
@@ -5148,9 +5164,6 @@ msgstr "niciun slot CI gasit"
 
 msgid "no HDD found"
 msgstr "niciun HDD gasit"
-
-msgid "no Picture found"
-msgstr ""
 
 msgid "no module found"
 msgstr "niciun modul gasit"
@@ -5561,6 +5574,3 @@ msgstr "zap"
 
 msgid "zapped"
 msgstr "zapped"
-
-#~ msgid "View Photos..."
-#~ msgstr "Vezi Pozele..."

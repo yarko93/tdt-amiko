@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2 Turkish Locale\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-18 23:40+0200\n"
+"POT-Creation-Date: 2011-11-11 16:43+0100\n"
 "PO-Revision-Date: 2009-04-28 19:49+0200\n"
 "Last-Translator: Zülfikar VEYİSOĞLU <z.veyisoglu@hobiagaci.com>\n"
 "Language-Team: http://hobiagaci.com <z.veyisoglu@hobiagaci.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -108,17 +109,65 @@ msgstr ""
 msgid " "
 msgstr " "
 
+msgid " extensions."
+msgstr ""
+
 msgid "#000000"
 msgstr "#000000"
+
+msgid "#00081226"
+msgstr ""
 
 msgid "#0064c7"
 msgstr "#0064c7"
 
+msgid "#0099ff"
+msgstr ""
+
+msgid "#00f0f0f0"
+msgstr ""
+
+msgid "#00fcc000"
+msgstr ""
+
+msgid "#08001E4B"
+msgstr ""
+
+msgid "#08004C00"
+msgstr ""
+
+msgid "#084B4B00"
+msgstr ""
+
+msgid "#084C0000"
+msgstr ""
+
+msgid "#0f0f0f"
+msgstr ""
+
 msgid "#25062748"
 msgstr "#25062748"
 
+msgid "#294a6b"
+msgstr ""
+
+msgid "#32000000"
+msgstr ""
+
 msgid "#389416"
 msgstr "#389416"
+
+msgid "#42000000"
+msgstr ""
+
+msgid "#44444a"
+msgstr ""
+
+msgid "#56C856"
+msgstr ""
+
+msgid "#65000000"
+msgstr ""
 
 msgid "#80000000"
 msgstr "#80000000"
@@ -126,11 +175,35 @@ msgstr "#80000000"
 msgid "#80ffffff"
 msgstr "#80ffffff"
 
+msgid "#999999"
+msgstr ""
+
+msgid "#FCC000"
+msgstr ""
+
 msgid "#bab329"
 msgstr "#bab329"
 
+msgid "#cfcfcf"
+msgstr ""
+
+msgid "#e5e5e5"
+msgstr ""
+
+msgid "#f0f0f0"
+msgstr ""
+
 msgid "#f23d21"
 msgstr "#f23d21"
+
+msgid "#f3ca09"
+msgstr ""
+
+msgid "#ff000000"
+msgstr ""
+
+msgid "#ff4A3C"
+msgstr ""
 
 msgid "#ffffff"
 msgstr "#ffffff"
@@ -182,6 +255,15 @@ msgstr "* Yalnızca birden fazla arayüz olduğunda kullanılabilir."
 
 msgid "* Only available when entering hidden SSID or network key"
 msgstr "* Yalnızca gizlenmiş SSID veya ağ anahtarı girildiğinde kullanılabilir"
+
+msgid "-"
+msgstr ""
+
+msgid "---------------------- bookmarks -------------------"
+msgstr ""
+
+msgid "..."
+msgstr ""
 
 msgid ".NFI Download failed:"
 msgstr ".NFI dosyası indirilirken hata oluştu:"
@@ -251,6 +333,9 @@ msgstr "30 dakika"
 
 msgid "4"
 msgstr "4"
+
+msgid "422"
+msgstr ""
 
 msgid "4:3"
 msgstr "4:3"
@@ -476,6 +561,9 @@ msgstr "Tümü"
 msgid "All Satellites"
 msgstr "Tüm uydular"
 
+msgid "All caps"
+msgstr ""
+
 msgid "Alpha"
 msgstr "Saydamlık"
 
@@ -541,11 +629,20 @@ msgstr "Sor"
 msgid "Aspect Ratio"
 msgstr "En boy oranı"
 
+msgid "Aspect list..."
+msgstr ""
+
 msgid "Audio"
 msgstr "Ses"
 
 msgid "Audio Options..."
 msgstr "Ses Ayarları..."
+
+msgid "Audio Source"
+msgstr ""
+
+msgid "Audio/Subservices"
+msgstr ""
 
 msgid "Author: "
 msgstr ""
@@ -675,7 +772,13 @@ msgstr "C-Band"
 msgid "CF Drive"
 msgstr "CF Sürücüsü"
 
+msgid "CI Assignment"
+msgstr ""
+
 msgid "CI assignment"
+msgstr ""
+
+msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -954,6 +1057,9 @@ msgstr "Çekçe"
 msgid "D"
 msgstr "D"
 
+msgid "DD"
+msgstr ""
+
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -962,6 +1068,9 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
+
+msgid "DVD File Browser"
+msgstr ""
 
 msgid "DVD Player"
 msgstr "DVD Oynatıcı"
@@ -974,6 +1083,9 @@ msgstr "Danca"
 
 msgid "Date"
 msgstr "Tarih"
+
+msgid "Daylight"
+msgstr ""
 
 msgid "Deep Standby"
 msgstr "Kapat"
@@ -998,6 +1110,10 @@ msgstr "Seçimi sil"
 
 msgid "Delete failed!"
 msgstr "Silme işlemi başarısız!"
+
+#, python-format
+msgid "Delete failed!, %s"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -1116,6 +1232,9 @@ msgid ""
 msgstr ""
 "\"%s\" eklentisini indirmek\n"
 "istiyor musunuz?"
+
+msgid "Do you really want to exit?"
+msgstr "Çıkmak istediğinizden emin misiniz?"
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1245,6 +1364,9 @@ msgstr "Flemenkçe"
 msgid "E"
 msgstr "D"
 
+msgid "EJECT DVD"
+msgstr ""
+
 msgid "EPG Selection"
 msgstr "EPG Seçimi"
 
@@ -1342,6 +1464,7 @@ msgstr ""
 "\n"
 "Â© 2006 - Stephan Reichholf"
 
+#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1378,6 +1501,9 @@ msgid ""
 msgstr ""
 "Hata: %s\n"
 "Tekrar denensin mi?"
+
+msgid "Estonian"
+msgstr ""
 
 msgid "Eventview"
 msgstr "Program detayı"
@@ -1418,8 +1544,14 @@ msgstr "Gelişmiş Kurulum..."
 msgid "Extensions"
 msgstr "Eklentiler"
 
+msgid "F"
+msgstr ""
+
 msgid "FEC"
 msgstr "FEC"
+
+msgid "FILE LIST"
+msgstr ""
 
 msgid "Factory reset"
 msgstr "Fabrika ayarlarına dön"
@@ -1570,8 +1702,17 @@ msgstr "Koruma Süresi"
 msgid "Guard interval mode"
 msgstr "Koruma süre kipi"
 
+msgid "H"
+msgstr ""
+
+msgid "HDTV"
+msgstr ""
+
 msgid "Harddisk"
 msgstr "Sabitdisk"
+
+msgid "Harddisk Wait"
+msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Sabitdisk kurulumu"
@@ -1664,6 +1805,9 @@ msgstr "Arttırılmış voltaj"
 
 msgid "Index"
 msgstr "Dizin"
+
+msgid "Info"
+msgstr ""
 
 msgid "InfoBar"
 msgstr "Bilgi çubuğu"
@@ -1767,6 +1911,9 @@ msgstr "Ipkg"
 msgid "Italian"
 msgstr "İtalyanca"
 
+msgid "J"
+msgstr ""
+
 msgid "Job View"
 msgstr "Görev Göster"
 
@@ -1791,6 +1938,9 @@ msgstr "LAN Donanımı"
 
 msgid "LNB"
 msgstr "LNB"
+
+msgid "LOAD DVD"
+msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -1880,8 +2030,14 @@ msgstr "Tuşa uzun süre basıldığında"
 msgid "Longitude"
 msgstr "Boylam"
 
+msgid "M"
+msgstr ""
+
 msgid "MMC Card"
 msgstr "MMC Kart"
+
+msgid "MMIDialog"
+msgstr ""
 
 msgid "MORE"
 msgstr "DAHA SONRA"
@@ -1967,6 +2123,15 @@ msgstr "Pazartesi"
 msgid "Mount failed"
 msgstr "Depolama aygıtı bağlama işlemi (mount) başarısız"
 
+msgid "MountEdit"
+msgstr ""
+
+msgid "MountManager"
+msgstr ""
+
+msgid "MountView"
+msgstr ""
+
 msgid "Move Picture in Picture"
 msgstr "Resim içinde resim (PiP)'i  taşı"
 
@@ -1976,8 +2141,17 @@ msgstr "Doğuya taşı"
 msgid "Move west"
 msgstr "Batıya taşı"
 
+msgid "MoviePlayer"
+msgstr ""
+
 msgid "Movielist menu"
 msgstr "Film Listesi Menüsü"
+
+msgid "Movieplayer"
+msgstr ""
+
+msgid "Movies"
+msgstr ""
 
 msgid "Multi EPG"
 msgstr "Çoklu EPG"
@@ -2038,6 +2212,9 @@ msgstr "Ağ Yapılandırması..."
 msgid "Network Mount"
 msgstr "Ağ Depolama Aygıtı Bağla"
 
+msgid "Network Neighbourhood"
+msgstr ""
+
 msgid "Network SSID"
 msgstr "Ağ SSID"
 
@@ -2061,6 +2238,9 @@ msgstr "Ağ ayarları"
 
 msgid "Network:"
 msgstr "Ağ:"
+
+msgid "NetworkBrowser"
+msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Ağ yapılandırma sihirbazı"
@@ -2205,6 +2385,9 @@ msgstr "Hayır, Dreambox'ımı şimdi başlat"
 msgid "No, scan later manually"
 msgstr "Hayır, taramayı daha sonra elle yapacağım"
 
+msgid "NoGfx Skin (c)2009 - by benutzername"
+msgstr ""
+
 msgid "None"
 msgstr "Yok"
 
@@ -2275,11 +2458,20 @@ msgstr "Yalnızca şifresiz"
 msgid "Orbital Position"
 msgstr "Uydu yörüngesi"
 
+msgid "P"
+msgstr ""
+
 msgid "PAL"
 msgstr "PAL"
 
+msgid "PCM"
+msgstr ""
+
 msgid "PIDs"
 msgstr "PID"
+
+msgid "PLAY LIST"
+msgstr ""
 
 msgid "Package details for: "
 msgstr "Belirtilen paketin detayları:"
@@ -2306,6 +2498,9 @@ msgstr "Üst Klasör"
 msgid "Parental control"
 msgstr "Ebeveyn kontrolü"
 
+msgid "Parental control Editor"
+msgstr ""
+
 msgid "Parental control services Editor"
 msgstr "Ebeveyn korumasındaki kanalları yönet"
 
@@ -2320,6 +2515,9 @@ msgstr "Bittiğinde filmi duraklat"
 
 msgid "PiPSetup"
 msgstr "PiP Kurulumu"
+
+msgid "Picture Player"
+msgstr ""
 
 msgid "PicturePlayer"
 msgstr "Resim Oynatıcı"
@@ -2427,11 +2625,17 @@ msgstr "Seçili oynatma listesini sil..."
 msgid "Please select a playlist..."
 msgstr "Lütfen bir oynatma listesi seçin..."
 
+msgid "Please select a resolution..."
+msgstr ""
+
 msgid "Please select a subservice to record..."
 msgstr "Lütfen kaydetmek istediğiniz alt servisi seçin..."
 
 msgid "Please select a subservice..."
 msgstr "Lütfen bir alt servis seçin..."
+
+msgid "Please select an aspect ratio..."
+msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr "Lütfen yedekleme konumu için medya seçin"
@@ -2444,6 +2648,12 @@ msgstr "Lütfen hedef klasörü veya medyayı seçin"
 
 msgid "Please select the movie path..."
 msgstr "Lütfen film yol adını seçin..."
+
+msgid "Please select the path for the Startdirectory"
+msgstr ""
+
+msgid "Please select the path..."
+msgstr ""
 
 msgid "Please set up tuner B"
 msgstr "Lütfen tuner B'yi yapılandırın"
@@ -2603,8 +2813,17 @@ msgstr "Hızlı"
 msgid "Quickzap"
 msgstr "Hızlızap"
 
+msgid "R"
+msgstr ""
+
 msgid "RC Menu"
 msgstr "UK Menüsü"
+
+msgid "RC command set"
+msgstr ""
+
+msgid "RECORD"
+msgstr ""
 
 msgid "RF output"
 msgstr "RF çıkışı"
@@ -2827,6 +3046,9 @@ msgstr "Çalıştırılıyor"
 msgid "Russian"
 msgstr "Rusça"
 
+msgid "S"
+msgstr ""
+
 msgid "S-Video"
 msgstr "S-Video"
 
@@ -2835,6 +3057,12 @@ msgstr "SNR"
 
 msgid "SNR:"
 msgstr "SNR:"
+
+msgid "SPDIF"
+msgstr ""
+
+msgid "SUB"
+msgstr ""
 
 msgid "Sat"
 msgstr "Ctesi"
@@ -2877,6 +3105,9 @@ msgstr "Ara : "
 
 msgid "Scan Files..."
 msgstr "Dosyaları ara..."
+
+msgid "Scan IP"
+msgstr ""
 
 msgid "Scan QAM128"
 msgstr "QAM128'i ara"
@@ -2952,6 +3183,15 @@ msgid ""
 msgstr ""
 "Bağlı pozisyoner üzerinden varsayılan lamedb dosyasıyla uydu sıralı arama "
 "yapar"
+
+msgid "Scroll delay"
+msgstr ""
+
+msgid "Scroll long strings"
+msgstr ""
+
+msgid "Scroll pause"
+msgstr ""
 
 msgid "Search east"
 msgstr "Doğu'yu ara"
@@ -3076,6 +3316,9 @@ msgstr ""
 "Kanal kullanılamaz!\n"
 "Tuner ayarlarınızı kontrol edin!"
 
+msgid "Service-Info"
+msgstr ""
+
 msgid "Serviceinfo"
 msgstr "Kanal bilgisi"
 
@@ -3088,8 +3331,14 @@ msgstr "Voltaj ve 22KHz ayarla"
 msgid "Set as default Interface"
 msgstr "Varsayılan arayüz olarak ata"
 
+msgid "Set fan"
+msgstr ""
+
 msgid "Set interface as default Interface"
 msgstr "Arayüzü varsayılan arayüz olarak ata"
+
+msgid "Set led"
+msgstr ""
 
 msgid "Set limits"
 msgstr "Limitleri belirle"
@@ -3103,6 +3352,9 @@ msgstr "Kurulum"
 msgid "Setup Mode"
 msgstr "Kullanıcı tecrübesi"
 
+msgid "Show Ethernet activity"
+msgstr ""
+
 msgid "Show Info"
 msgstr "Bilgiyi Göster"
 
@@ -3111,6 +3363,9 @@ msgstr "WLAN Durumunu Göster"
 
 msgid "Show blinking clock in display during recording"
 msgstr "OLED, kayıt esnasında yanıp sönsün"
+
+msgid "Show clock"
+msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Kanal değiştirildiğinde bilgi çubuğunu göster"
@@ -3168,6 +3423,9 @@ msgstr "Tekadım (GOP)"
 
 msgid "Skin..."
 msgstr "Arayüz"
+
+msgid "SkinSelector"
+msgstr ""
 
 msgid "Skins"
 msgstr "Arayüzler"
@@ -3365,6 +3623,9 @@ msgstr "Sembol oranı"
 msgid "System"
 msgstr "Sistem"
 
+msgid "System-Info"
+msgstr ""
+
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr "ÇEVİRMEN HAKKINDA"
@@ -3374,6 +3635,9 @@ msgstr "TS dosyası ISO9660 level 1 standartları için çok büyük!"
 
 msgid "TV System"
 msgstr "TV Sistemi"
+
+msgid "TXT"
+msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Koleksiyonun içerik tablosu (TOC)"
@@ -3663,6 +3927,9 @@ msgstr "Perşembe"
 msgid "Time"
 msgstr "Süre"
 
+msgid "Time mode"
+msgstr ""
+
 msgid "Time/Date Input"
 msgstr "Tarih/Saat Girişi"
 
@@ -3815,6 +4082,9 @@ msgstr "Tuner durumu"
 msgid "Turkish"
 msgstr "Türkçe"
 
+msgid "TuxTXT"
+msgstr ""
+
 msgid "Two"
 msgstr "İki"
 
@@ -3823,6 +4093,15 @@ msgstr "Tip"
 
 msgid "Type of scan"
 msgstr "Tarama tipi"
+
+msgid "Typematic delay"
+msgstr ""
+
+msgid "Typematic rate"
+msgstr ""
+
+msgid "U"
+msgstr ""
 
 msgid "USALS"
 msgstr "DiSEqC 1.3 (USALS) (Uluslararası Oto. Uydu Kon. Sist)"
@@ -3910,6 +4189,7 @@ msgstr "Güç Ölçümünü Kullan"
 msgid "Use a gateway"
 msgstr "Ağ geçidi kullan"
 
+#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -3958,6 +4238,15 @@ msgstr "Kullanılan kanal arama tipi"
 
 msgid "User defined"
 msgstr "Kullanıcı tanımlı"
+
+msgid "UserDialog"
+msgstr ""
+
+msgid "UserManager"
+msgstr ""
+
+msgid "V"
+msgstr ""
 
 msgid "VCR scart"
 msgstr "VCR scart"
@@ -4016,6 +4305,9 @@ msgstr "Etkileşimli Rass'ı (Radio acoustic sounding system) göster"
 msgid "View Video CD..."
 msgstr "Video CD izle..."
 
+msgid "View list of available "
+msgstr ""
+
 msgid "View list of available CommonInterface extensions"
 msgstr "Ortak arayüz eklentileri listesine bak"
 
@@ -4057,6 +4349,12 @@ msgstr "Teleteksi aç..."
 
 msgid "Virtual KeyBoard"
 msgstr "Sanal Klavye"
+
+msgid "Vol"
+msgstr ""
+
+msgid "Vol off"
+msgstr ""
 
 msgid "Voltage mode"
 msgstr "Voltaj kipi"
@@ -4189,6 +4487,9 @@ msgstr "NFI bellenimin flaşa yazımı tamamlandı"
 
 msgid "YPbPr"
 msgstr "YPbPr"
+
+msgid "YUV"
+msgstr ""
 
 msgid "Year"
 msgstr "Yıl"
@@ -4477,6 +4778,9 @@ msgstr "kanalı favorilere ekle"
 msgid "add to parental protection"
 msgstr "ebeveyn korumasına ekle"
 
+msgid "add/remove bookmarks (locationbox)"
+msgstr ""
+
 msgid "advanced"
 msgstr "gelişmiş"
 
@@ -4489,6 +4793,9 @@ msgid ""
 msgstr ""
 "Belirtilen yedeği geri yüklemek\n"
 "istediğinizden emin misiniz?:\n"
+
+msgid "ask on exit"
+msgstr ""
 
 msgid "assigned CAIds"
 msgstr "Atanmış CAId'ler"
@@ -4751,6 +5058,9 @@ msgstr "saat"
 msgid "immediate shutdown"
 msgstr "hemen kapat"
 
+msgid "immediate standby"
+msgstr ""
+
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -4945,8 +5255,14 @@ msgstr "seçimi oynat"
 msgid "play from next mark or playlist entry"
 msgstr "sonraki işareti veya oynatma listesi seçimini oynat"
 
+msgid "play from next playlist entry"
+msgstr ""
+
 msgid "play from previous mark or playlist entry"
 msgstr "önceki işareti veya oynatma listesi seçimini oynat"
+
+msgid "play from previous playlist entry"
+msgstr ""
 
 msgid "please press OK when ready"
 msgstr "Lütfen hazır olduğunuzda OK'a basın"
@@ -5022,6 +5338,9 @@ msgstr "çıkarken, son klasörü kaydet"
 
 msgid "save playlist"
 msgstr "oynatma listesini kaydet"
+
+msgid "save playlist before exit?"
+msgstr ""
 
 msgid "save playlist on exit"
 msgstr "çıkarken, oynatma listesini kaydet"
@@ -5207,6 +5526,9 @@ msgstr "bu kaydın"
 msgid "this service is protected by a parental control pin"
 msgstr "bu kanal ebeveyn kontrol şifresiyle korunuyor"
 
+msgid "toggels betwenn tv and radio..."
+msgstr ""
+
 msgid "toggle a cut mark at the current position"
 msgstr "geçerli pozisyona kesme işareti ekle/kaldır"
 
@@ -5389,9 +5711,6 @@ msgstr "kanal değiştirildi"
 #~ msgstr ""
 #~ "%s programını indirmek\n"
 #~ "istediğinizden emin misiniz? \""
-
-#~ msgid "Do you really want to exit?"
-#~ msgstr "Çıkmak istediğinizden emin misiniz?"
 
 #~ msgid "Downloading image description..."
 #~ msgstr "İmaj açıklaması indiriliyor..."
