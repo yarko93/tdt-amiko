@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 16:43+0100\n"
+"POT-Creation-Date: 2009-05-18 23:40+0200\n"
 "PO-Revision-Date: 2009-03-25 10:11+0300\n"
 "Last-Translator:  <peter@dreambox.org.ua>\n"
 "Language-Team: Russian / enigma(c) Ukraine, Kiev>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -111,64 +110,16 @@ msgstr ""
 msgid " "
 msgstr ""
 
-msgid " extensions."
-msgstr ""
-
 msgid "#000000"
-msgstr ""
-
-msgid "#00081226"
 msgstr ""
 
 msgid "#0064c7"
 msgstr ""
 
-msgid "#0099ff"
-msgstr ""
-
-msgid "#00f0f0f0"
-msgstr ""
-
-msgid "#00fcc000"
-msgstr ""
-
-msgid "#08001E4B"
-msgstr ""
-
-msgid "#08004C00"
-msgstr ""
-
-msgid "#084B4B00"
-msgstr ""
-
-msgid "#084C0000"
-msgstr ""
-
-msgid "#0f0f0f"
-msgstr ""
-
 msgid "#25062748"
 msgstr ""
 
-msgid "#294a6b"
-msgstr ""
-
-msgid "#32000000"
-msgstr ""
-
 msgid "#389416"
-msgstr ""
-
-msgid "#42000000"
-msgstr ""
-
-msgid "#44444a"
-msgstr ""
-
-msgid "#56C856"
-msgstr ""
-
-msgid "#65000000"
 msgstr ""
 
 msgid "#80000000"
@@ -177,34 +128,10 @@ msgstr ""
 msgid "#80ffffff"
 msgstr ""
 
-msgid "#999999"
-msgstr ""
-
-msgid "#FCC000"
-msgstr ""
-
 msgid "#bab329"
 msgstr ""
 
-msgid "#cfcfcf"
-msgstr ""
-
-msgid "#e5e5e5"
-msgstr ""
-
-msgid "#f0f0f0"
-msgstr ""
-
 msgid "#f23d21"
-msgstr ""
-
-msgid "#f3ca09"
-msgstr ""
-
-msgid "#ff000000"
-msgstr ""
-
-msgid "#ff4A3C"
 msgstr ""
 
 msgid "#ffffff"
@@ -257,15 +184,6 @@ msgstr "* Доступно если активно более одного ин�
 
 msgid "* Only available when entering hidden SSID or network key"
 msgstr "* Доступно только при введенном скрытом SSID или ключе сети"
-
-msgid "-"
-msgstr ""
-
-msgid "---------------------- bookmarks -------------------"
-msgstr ""
-
-msgid "..."
-msgstr ""
 
 msgid ".NFI Download failed:"
 msgstr ".NFI Download failed:"
@@ -333,9 +251,6 @@ msgid "30 minutes"
 msgstr "30 минут"
 
 msgid "4"
-msgstr ""
-
-msgid "422"
 msgstr ""
 
 msgid "4:3"
@@ -559,9 +474,6 @@ msgstr "Все"
 msgid "All Satellites"
 msgstr "Все Спутники"
 
-msgid "All caps"
-msgstr ""
-
 msgid "Alpha"
 msgstr "Прозрачность"
 
@@ -625,20 +537,11 @@ msgstr "Спросить пользователя"
 msgid "Aspect Ratio"
 msgstr "Сотношение сторон"
 
-msgid "Aspect list..."
-msgstr ""
-
 msgid "Audio"
 msgstr "Аудио"
 
 msgid "Audio Options..."
 msgstr "Аудио опции..."
-
-msgid "Audio Source"
-msgstr ""
-
-msgid "Audio/Subservices"
-msgstr ""
 
 msgid "Author: "
 msgstr ""
@@ -768,13 +671,7 @@ msgstr "C-Диапазон"
 msgid "CF Drive"
 msgstr "CF карта"
 
-msgid "CI Assignment"
-msgstr ""
-
 msgid "CI assignment"
-msgstr ""
-
-msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -1053,9 +950,6 @@ msgstr "Чешский"
 msgid "D"
 msgstr "D"
 
-msgid "DD"
-msgstr ""
-
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -1064,9 +958,6 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
-
-msgid "DVD File Browser"
-msgstr ""
 
 msgid "DVD Player"
 msgstr "DVD плеер"
@@ -1079,9 +970,6 @@ msgstr "Датский"
 
 msgid "Date"
 msgstr "Дата"
-
-msgid "Daylight"
-msgstr ""
 
 msgid "Deep Standby"
 msgstr "Выключить"
@@ -1106,10 +994,6 @@ msgstr "Удалить выбранное"
 
 msgid "Delete failed!"
 msgstr "Нельзя удалить!"
-
-#, python-format
-msgid "Delete failed!, %s"
-msgstr ""
 
 #, python-format
 msgid ""
@@ -1228,9 +1112,6 @@ msgid ""
 msgstr ""
 "Вы действительно хотите загрузить\n"
 "плагин \"%s\"?"
-
-msgid "Do you really want to exit?"
-msgstr ""
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1357,9 +1238,6 @@ msgstr "Нидерландский"
 msgid "E"
 msgstr "E"
 
-msgid "EJECT DVD"
-msgstr ""
-
 msgid "EPG Selection"
 msgstr "Выбор EPG"
 
@@ -1457,7 +1335,6 @@ msgstr ""
 "\n"
 "© 2006 - Stephan Reichholf"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1494,9 +1371,6 @@ msgid ""
 msgstr ""
 "Ошибка: %s\n"
 "Повторить?"
-
-msgid "Estonian"
-msgstr ""
 
 msgid "Eventview"
 msgstr "Просмотр событий"
@@ -1537,14 +1411,8 @@ msgstr "Расширенные настройки..."
 msgid "Extensions"
 msgstr "Расширения"
 
-msgid "F"
-msgstr ""
-
 msgid "FEC"
 msgstr "FEC"
-
-msgid "FILE LIST"
-msgstr ""
 
 msgid "Factory reset"
 msgstr "Заводские установки"
@@ -1693,17 +1561,8 @@ msgstr "Интервал защиты"
 msgid "Guard interval mode"
 msgstr "Guard interval mode"
 
-msgid "H"
-msgstr ""
-
-msgid "HDTV"
-msgstr ""
-
 msgid "Harddisk"
 msgstr "Жесткий диск"
-
-msgid "Harddisk Wait"
-msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Настройка диска"
@@ -1793,9 +1652,6 @@ msgstr "Повышенное напряжение"
 
 msgid "Index"
 msgstr "Индекс"
-
-msgid "Info"
-msgstr ""
 
 msgid "InfoBar"
 msgstr "ИнфоПанель"
@@ -1899,9 +1755,6 @@ msgstr "Ipkg"
 msgid "Italian"
 msgstr "Итальянский"
 
-msgid "J"
-msgstr ""
-
 msgid "Job View"
 msgstr "Просмотр задания"
 
@@ -1926,9 +1779,6 @@ msgstr "Сетевой адаптер"
 
 msgid "LNB"
 msgstr "LNB"
-
-msgid "LOAD DVD"
-msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -2018,14 +1868,8 @@ msgstr "Длинное нажатие"
 msgid "Longitude"
 msgstr "Долгота"
 
-msgid "M"
-msgstr ""
-
 msgid "MMC Card"
 msgstr "MMC карта"
-
-msgid "MMIDialog"
-msgstr ""
 
 msgid "MORE"
 msgstr "БОЛЬШЕ"
@@ -2111,15 +1955,6 @@ msgstr "Понедельник"
 msgid "Mount failed"
 msgstr "Ошибка подключения"
 
-msgid "MountEdit"
-msgstr ""
-
-msgid "MountManager"
-msgstr ""
-
-msgid "MountView"
-msgstr ""
-
 msgid "Move Picture in Picture"
 msgstr "Переместить PiP"
 
@@ -2129,17 +1964,8 @@ msgstr "Переместить на восток"
 msgid "Move west"
 msgstr "Переместить на запад"
 
-msgid "MoviePlayer"
-msgstr ""
-
 msgid "Movielist menu"
 msgstr "Меню списка видео"
-
-msgid "Movieplayer"
-msgstr ""
-
-msgid "Movies"
-msgstr ""
 
 msgid "Multi EPG"
 msgstr "Граф. EPG"
@@ -2199,9 +2025,6 @@ msgstr "Конфигурация сети..."
 msgid "Network Mount"
 msgstr "Сетевые подключения"
 
-msgid "Network Neighbourhood"
-msgstr ""
-
 msgid "Network SSID"
 msgstr "SSID сети"
 
@@ -2225,9 +2048,6 @@ msgstr "Сеть..."
 
 msgid "Network:"
 msgstr "Сеть:"
-
-msgid "NetworkBrowser"
-msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Мастер настройки сети"
@@ -2374,9 +2194,6 @@ msgstr "Нет, включить мой dreamdox"
 msgid "No, scan later manually"
 msgstr "Нет, найти позже вручную."
 
-msgid "NoGfx Skin (c)2009 - by benutzername"
-msgstr ""
-
 msgid "None"
 msgstr "Никакой"
 
@@ -2448,20 +2265,11 @@ msgstr "Только бесплатные"
 msgid "Orbital Position"
 msgstr "Орбитальная позиция"
 
-msgid "P"
-msgstr ""
-
 msgid "PAL"
 msgstr "PAL"
 
-msgid "PCM"
-msgstr ""
-
 msgid "PIDs"
 msgstr "ПИДы"
-
-msgid "PLAY LIST"
-msgstr ""
 
 msgid "Package details for: "
 msgstr ""
@@ -2488,9 +2296,6 @@ msgstr "Родительский каталог"
 msgid "Parental control"
 msgstr "Родительский контроль"
 
-msgid "Parental control Editor"
-msgstr ""
-
 msgid "Parental control services Editor"
 msgstr "Редактор сервисов родительского контроля"
 
@@ -2505,9 +2310,6 @@ msgstr "Пауза в конце фильма"
 
 msgid "PiPSetup"
 msgstr "PiP установка"
-
-msgid "Picture Player"
-msgstr ""
 
 msgid "PicturePlayer"
 msgstr "Просмотр фото"
@@ -2619,17 +2421,11 @@ msgstr "Пожалуйста, выберите плейлист для удал�
 msgid "Please select a playlist..."
 msgstr "Пожалуйста, выберите плейлист..."
 
-msgid "Please select a resolution..."
-msgstr ""
-
 msgid "Please select a subservice to record..."
 msgstr "Пожалуйста, выберите подсервис для записи..."
 
 msgid "Please select a subservice..."
 msgstr "Пожалуйста, выберите подсервис..."
-
-msgid "Please select an aspect ratio..."
-msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr "Пожалуйста, выберите носитель для резерного копирования"
@@ -2642,12 +2438,6 @@ msgstr "Пожалуйста, выберите целевой каталог и�
 
 msgid "Please select the movie path..."
 msgstr "Пожалуйста, выберите путь ..."
-
-msgid "Please select the path for the Startdirectory"
-msgstr ""
-
-msgid "Please select the path..."
-msgstr ""
 
 msgid "Please set up tuner B"
 msgstr "Пожалуйста, настройте тюнер B."
@@ -2807,17 +2597,8 @@ msgstr "Быстро"
 msgid "Quickzap"
 msgstr "Quickzap"
 
-msgid "R"
-msgstr ""
-
 msgid "RC Menu"
 msgstr "RC меню"
-
-msgid "RC command set"
-msgstr ""
-
-msgid "RECORD"
-msgstr ""
 
 msgid "RF output"
 msgstr "ВЧ выход"
@@ -3038,9 +2819,6 @@ msgstr "Запущено"
 msgid "Russian"
 msgstr "Русский"
 
-msgid "S"
-msgstr ""
-
 msgid "S-Video"
 msgstr "S-Video"
 
@@ -3049,12 +2827,6 @@ msgstr "SNR"
 
 msgid "SNR:"
 msgstr "SNR:"
-
-msgid "SPDIF"
-msgstr ""
-
-msgid "SUB"
-msgstr ""
 
 msgid "Sat"
 msgstr "Сб"
@@ -3097,9 +2869,6 @@ msgstr "Сканирование"
 
 msgid "Scan Files..."
 msgstr "Сканировать файлы..."
-
-msgid "Scan IP"
-msgstr ""
 
 msgid "Scan QAM128"
 msgstr "Сканировать QAM128"
@@ -3174,15 +2943,6 @@ msgstr ""
 msgid ""
 "Scans default lamedbs sorted by satellite with a connected dish positioner"
 msgstr "Сканировать lamedb по спутникам с подключенным мотоподвесом"
-
-msgid "Scroll delay"
-msgstr ""
-
-msgid "Scroll long strings"
-msgstr ""
-
-msgid "Scroll pause"
-msgstr ""
 
 msgid "Search east"
 msgstr "Поиск восток"
@@ -3307,9 +3067,6 @@ msgstr ""
 "Сервис недоступен!\n"
 "Проверьте конфигурацию тюнера!"
 
-msgid "Service-Info"
-msgstr ""
-
 msgid "Serviceinfo"
 msgstr "Сервис"
 
@@ -3322,14 +3079,8 @@ msgstr "Установить напряжение и 22КГц"
 msgid "Set as default Interface"
 msgstr "Установить как интерфейс по умолчанию"
 
-msgid "Set fan"
-msgstr ""
-
 msgid "Set interface as default Interface"
 msgstr "Установить интерфейс по умолчанию"
-
-msgid "Set led"
-msgstr ""
 
 msgid "Set limits"
 msgstr "Набор ограничений"
@@ -3343,9 +3094,6 @@ msgstr "Настройка"
 msgid "Setup Mode"
 msgstr "Режим настроек"
 
-msgid "Show Ethernet activity"
-msgstr ""
-
 msgid "Show Info"
 msgstr "Показать инфо"
 
@@ -3354,9 +3102,6 @@ msgstr "Показать состояние WLAN"
 
 msgid "Show blinking clock in display during recording"
 msgstr "Показать мигать часы на дисплее во время записи"
-
-msgid "Show clock"
-msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Показать инфопанель при смене каналов"
@@ -3414,9 +3159,6 @@ msgstr "Один шаг (GOP)"
 
 msgid "Skin..."
 msgstr "Скин..."
-
-msgid "SkinSelector"
-msgstr ""
 
 msgid "Skins"
 msgstr ""
@@ -3613,9 +3355,6 @@ msgstr "Символьная скорость"
 msgid "System"
 msgstr "Система"
 
-msgid "System-Info"
-msgstr ""
-
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr "TRANSLATOR_INFO"
@@ -3625,9 +3364,6 @@ msgstr "TS файл слишком большой для ISO9660 level 1!"
 
 msgid "TV System"
 msgstr "TV система"
-
-msgid "TXT"
-msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Содержание коллекции"
@@ -3916,9 +3652,6 @@ msgstr "Четверг"
 msgid "Time"
 msgstr "Время"
 
-msgid "Time mode"
-msgstr ""
-
 msgid "Time/Date Input"
 msgstr "Ввод Время/Дата "
 
@@ -4071,9 +3804,6 @@ msgstr "Состояние тюнера"
 msgid "Turkish"
 msgstr "Турецкий"
 
-msgid "TuxTXT"
-msgstr ""
-
 msgid "Two"
 msgstr "Два"
 
@@ -4082,15 +3812,6 @@ msgstr "Тип"
 
 msgid "Type of scan"
 msgstr "Тип сканирования"
-
-msgid "Typematic delay"
-msgstr ""
-
-msgid "Typematic rate"
-msgstr ""
-
-msgid "U"
-msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -4178,7 +3899,6 @@ msgstr "Использовать измерение мощности"
 msgid "Use a gateway"
 msgstr "Использовать шлюз"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -4227,15 +3947,6 @@ msgstr "Используемый тип сканирования"
 
 msgid "User defined"
 msgstr "Определены пользователем"
-
-msgid "UserDialog"
-msgstr ""
-
-msgid "UserManager"
-msgstr ""
-
-msgid "V"
-msgstr ""
 
 msgid "VCR scart"
 msgstr "Видеомагнитофон"
@@ -4294,9 +4005,6 @@ msgstr "Интерактивный просмотр RASS"
 msgid "View Video CD..."
 msgstr "Смотреть Video CD..."
 
-msgid "View list of available "
-msgstr ""
-
 msgid "View list of available CommonInterface extensions"
 msgstr ""
 
@@ -4338,12 +4046,6 @@ msgstr "Смотреть телетекст"
 
 msgid "Virtual KeyBoard"
 msgstr "Виртуальная клавиатура"
-
-msgid "Vol"
-msgstr ""
-
-msgid "Vol off"
-msgstr ""
 
 msgid "Voltage mode"
 msgstr "Режим напряжения"
@@ -4473,9 +4175,6 @@ msgstr "Запись NFI образа во влешь-память заверш�
 
 msgid "YPbPr"
 msgstr "YPbPr"
-
-msgid "YUV"
-msgstr ""
 
 msgid "Year"
 msgstr "Год"
@@ -4755,9 +4454,6 @@ msgstr "добавить сервис к избранному"
 msgid "add to parental protection"
 msgstr "добавить в родительский контроль"
 
-msgid "add/remove bookmarks (locationbox)"
-msgstr ""
-
 msgid "advanced"
 msgstr "Расширенный"
 
@@ -4770,9 +4466,6 @@ msgid ""
 msgstr ""
 "Вы действительно хотите восстановить\n"
 "следующий б:\n"
-
-msgid "ask on exit"
-msgstr ""
 
 msgid "assigned CAIds"
 msgstr ""
@@ -5035,9 +4728,6 @@ msgstr "часов"
 msgid "immediate shutdown"
 msgstr "немедленное выключение"
 
-msgid "immediate standby"
-msgstr ""
-
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -5232,14 +4922,8 @@ msgstr "воспроизвести запись"
 msgid "play from next mark or playlist entry"
 msgstr "воспроизвести начиная со следующей метки или записи в плейлисте"
 
-msgid "play from next playlist entry"
-msgstr ""
-
 msgid "play from previous mark or playlist entry"
 msgstr "воспроизвести начиная с предыдущей метки или записи в плейлисте"
-
-msgid "play from previous playlist entry"
-msgstr ""
 
 msgid "please press OK when ready"
 msgstr "пожалуйста, нажмите OK когда будете готовы"
@@ -5315,9 +4999,6 @@ msgstr "сохранить последний каталог при выходе
 
 msgid "save playlist"
 msgstr "сохранить плейлист"
-
-msgid "save playlist before exit?"
-msgstr ""
 
 msgid "save playlist on exit"
 msgstr "сохранить плейлист при выходе"
@@ -5502,9 +5183,6 @@ msgstr "это записано"
 
 msgid "this service is protected by a parental control pin"
 msgstr "этот сервис защищен PIN-кодом родительского контроля"
-
-msgid "toggels betwenn tv and radio..."
-msgstr ""
 
 msgid "toggle a cut mark at the current position"
 msgstr "расположить метку редактирования в этой позициим"

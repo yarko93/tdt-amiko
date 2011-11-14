@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 16:43+0100\n"
+"POT-Creation-Date: 2009-05-18 23:40+0200\n"
 "PO-Revision-Date: 2009-05-06 21:55+0200\n"
 "Last-Translator: Timo Jarvenpaa <timojarvenpaa@hotmail.com>\n"
 "Language-Team: none\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -111,64 +110,16 @@ msgstr ""
 msgid " "
 msgstr " "
 
-msgid " extensions."
-msgstr ""
-
 msgid "#000000"
-msgstr ""
-
-msgid "#00081226"
 msgstr ""
 
 msgid "#0064c7"
 msgstr ""
 
-msgid "#0099ff"
-msgstr ""
-
-msgid "#00f0f0f0"
-msgstr ""
-
-msgid "#00fcc000"
-msgstr ""
-
-msgid "#08001E4B"
-msgstr ""
-
-msgid "#08004C00"
-msgstr ""
-
-msgid "#084B4B00"
-msgstr ""
-
-msgid "#084C0000"
-msgstr ""
-
-msgid "#0f0f0f"
-msgstr ""
-
 msgid "#25062748"
 msgstr ""
 
-msgid "#294a6b"
-msgstr ""
-
-msgid "#32000000"
-msgstr ""
-
 msgid "#389416"
-msgstr ""
-
-msgid "#42000000"
-msgstr ""
-
-msgid "#44444a"
-msgstr ""
-
-msgid "#56C856"
-msgstr ""
-
-msgid "#65000000"
 msgstr ""
 
 msgid "#80000000"
@@ -177,34 +128,10 @@ msgstr ""
 msgid "#80ffffff"
 msgstr ""
 
-msgid "#999999"
-msgstr ""
-
-msgid "#FCC000"
-msgstr ""
-
 msgid "#bab329"
 msgstr ""
 
-msgid "#cfcfcf"
-msgstr ""
-
-msgid "#e5e5e5"
-msgstr ""
-
-msgid "#f0f0f0"
-msgstr ""
-
 msgid "#f23d21"
-msgstr ""
-
-msgid "#f3ca09"
-msgstr ""
-
-msgid "#ff000000"
-msgstr ""
-
-msgid "#ff4A3C"
 msgstr ""
 
 msgid "#ffffff"
@@ -257,15 +184,6 @@ msgstr "* Käytettävissä vain kun useampi kuin yksi sovitin on aktiivinen."
 
 msgid "* Only available when entering hidden SSID or network key"
 msgstr "* Käytettävissä vain kun syötetään piilotettu SSID tai verkkoavain."
-
-msgid "-"
-msgstr ""
-
-msgid "---------------------- bookmarks -------------------"
-msgstr ""
-
-msgid "..."
-msgstr ""
 
 msgid ".NFI Download failed:"
 msgstr ".NFI lataus epäonnistui:"
@@ -334,9 +252,6 @@ msgid "30 minutes"
 msgstr "30 minuuttia"
 
 msgid "4"
-msgstr ""
-
-msgid "422"
 msgstr ""
 
 msgid "4:3"
@@ -565,9 +480,6 @@ msgstr "Kaikki"
 msgid "All Satellites"
 msgstr "Kaikki satelliitit"
 
-msgid "All caps"
-msgstr ""
-
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -633,20 +545,11 @@ msgstr "Kysy käyttäjältä"
 msgid "Aspect Ratio"
 msgstr "Kuvasuhde"
 
-msgid "Aspect list..."
-msgstr ""
-
 msgid "Audio"
 msgstr "Ääni"
 
 msgid "Audio Options..."
 msgstr "Äänivalinnat"
-
-msgid "Audio Source"
-msgstr ""
-
-msgid "Audio/Subservices"
-msgstr ""
 
 msgid "Author: "
 msgstr "Tekijä:"
@@ -776,13 +679,7 @@ msgstr "C-taajuusalue"
 msgid "CF Drive"
 msgstr "CompactFlash-kortti"
 
-msgid "CI Assignment"
-msgstr ""
-
 msgid "CI assignment"
-msgstr ""
-
-msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -1063,9 +960,6 @@ msgstr "Tšekki"
 msgid "D"
 msgstr ""
 
-msgid "DD"
-msgstr ""
-
 msgid "DHCP"
 msgstr ""
 
@@ -1074,9 +968,6 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
-
-msgid "DVD File Browser"
-msgstr ""
 
 msgid "DVD Player"
 msgstr "DVD-soitin"
@@ -1089,9 +980,6 @@ msgstr "Tanska"
 
 msgid "Date"
 msgstr "Päiväys"
-
-msgid "Daylight"
-msgstr ""
 
 msgid "Deep Standby"
 msgstr "Virransäästötila"
@@ -1116,10 +1004,6 @@ msgstr "Poista valinta"
 
 msgid "Delete failed!"
 msgstr "Poisto epäonnistui!"
-
-#, python-format
-msgid "Delete failed!, %s"
-msgstr ""
 
 #, python-format
 msgid ""
@@ -1237,9 +1121,6 @@ msgid ""
 msgstr ""
 "Haluatko ladata\n"
 "lisäosan \"%s\"?"
-
-msgid "Do you really want to exit?"
-msgstr ""
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1377,9 +1258,6 @@ msgstr "Hollanti"
 msgid "E"
 msgstr "E"
 
-msgid "EJECT DVD"
-msgstr ""
-
 msgid "EPG Selection"
 msgstr "Ohjelman valinta"
 
@@ -1475,7 +1353,6 @@ msgid ""
 "© 2006 - Stephan Reichholf"
 msgstr ""
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1512,9 +1389,6 @@ msgid ""
 msgstr ""
 "Virhe: %s\n"
 "Yritä uudelleen?"
-
-msgid "Estonian"
-msgstr ""
 
 msgid "Eventview"
 msgstr "Ohjelmatiedot"
@@ -1557,14 +1431,8 @@ msgstr "Laajat asetukset..."
 msgid "Extensions"
 msgstr "Laajennukset"
 
-msgid "F"
-msgstr ""
-
 msgid "FEC"
 msgstr "FEC"
-
-msgid "FILE LIST"
-msgstr ""
 
 msgid "Factory reset"
 msgstr "Palauta tehdasasetukset"
@@ -1716,17 +1584,8 @@ msgstr "Suojaväli"
 msgid "Guard interval mode"
 msgstr "Suojaväli-tila"
 
-msgid "H"
-msgstr ""
-
-msgid "HDTV"
-msgstr ""
-
 msgid "Harddisk"
 msgstr "Kiintolevy..."
-
-msgid "Harddisk Wait"
-msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Kiintolevyn asetukset"
@@ -1820,9 +1679,6 @@ msgstr "Korotettu LNB-jännite"
 
 msgid "Index"
 msgstr "Indeksi"
-
-msgid "Info"
-msgstr ""
 
 msgid "InfoBar"
 msgstr "Tietopalkki"
@@ -1929,9 +1785,6 @@ msgstr ""
 msgid "Italian"
 msgstr "Italia"
 
-msgid "J"
-msgstr ""
-
 msgid "Job View"
 msgstr "Työnäkymä"
 
@@ -1956,9 +1809,6 @@ msgstr "Verkkosovitin"
 
 msgid "LNB"
 msgstr "LNB"
-
-msgid "LOAD DVD"
-msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -2048,14 +1898,8 @@ msgstr "Pitkä painallus"
 msgid "Longitude"
 msgstr "Pituusaste"
 
-msgid "M"
-msgstr ""
-
 msgid "MMC Card"
 msgstr "MMC-kortti"
-
-msgid "MMIDialog"
-msgstr ""
 
 msgid "MORE"
 msgstr "LISÄÄ"
@@ -2141,15 +1985,6 @@ msgstr "Maanantai"
 msgid "Mount failed"
 msgstr "Liittäminen epäonnistui"
 
-msgid "MountEdit"
-msgstr ""
-
-msgid "MountManager"
-msgstr ""
-
-msgid "MountView"
-msgstr ""
-
 msgid "Move Picture in Picture"
 msgstr "Siirrä PIP-kuvaa"
 
@@ -2159,17 +1994,8 @@ msgstr "Liikuta itään"
 msgid "Move west"
 msgstr "Liikuta länteen"
 
-msgid "MoviePlayer"
-msgstr ""
-
 msgid "Movielist menu"
 msgstr "Tallenneluettelon valikko"
-
-msgid "Movieplayer"
-msgstr ""
-
-msgid "Movies"
-msgstr ""
 
 msgid "Multi EPG"
 msgstr "Kanavaopas"
@@ -2231,9 +2057,6 @@ msgstr "Verkon asetukset"
 msgid "Network Mount"
 msgstr "Verkkojaon nimi"
 
-msgid "Network Neighbourhood"
-msgstr ""
-
 msgid "Network SSID"
 msgstr "Verkon SSID"
 
@@ -2257,9 +2080,6 @@ msgstr "Lähiverkko..."
 
 msgid "Network:"
 msgstr "Sovitin:"
-
-msgid "NetworkBrowser"
-msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Verkkovelho"
@@ -2413,9 +2233,6 @@ msgstr "Ei, käynnistä vain Dreambox"
 msgid "No, scan later manually"
 msgstr "Ei, kanavat haetaan myöhemmin manuaalisesti"
 
-msgid "NoGfx Skin (c)2009 - by benutzername"
-msgstr ""
-
 msgid "None"
 msgstr "Ei mitään"
 
@@ -2488,20 +2305,11 @@ msgstr "Hae vain salaamattomat"
 msgid "Orbital Position"
 msgstr "Sijainti"
 
-msgid "P"
-msgstr ""
-
 msgid "PAL"
 msgstr "PAL"
 
-msgid "PCM"
-msgstr ""
-
 msgid "PIDs"
 msgstr "PIDit"
-
-msgid "PLAY LIST"
-msgstr ""
 
 msgid "Package details for: "
 msgstr "Ohjelmapaketin tiedot:"
@@ -2528,9 +2336,6 @@ msgstr "Päähakemisto"
 msgid "Parental control"
 msgstr "Lapsilukko"
 
-msgid "Parental control Editor"
-msgstr ""
-
 msgid "Parental control services Editor"
 msgstr "Lapsilukon kanavaeditori"
 
@@ -2545,9 +2350,6 @@ msgstr "Pysähdy tallenteen loppuun"
 
 msgid "PiPSetup"
 msgstr "PiP-kuvan asetukset"
-
-msgid "Picture Player"
-msgstr ""
 
 msgid "PicturePlayer"
 msgstr "Kuvien katselu"
@@ -2655,17 +2457,11 @@ msgstr "Valitse poistettava soittolista..."
 msgid "Please select a playlist..."
 msgstr "Valitse soittolista..."
 
-msgid "Please select a resolution..."
-msgstr ""
-
 msgid "Please select a subservice to record..."
 msgstr "Valitse tallennettava alipalvelu..."
 
 msgid "Please select a subservice..."
 msgstr "Valitse alipalvelu..."
-
-msgid "Please select an aspect ratio..."
-msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr "Valitse tallennuspaikka varmuuskopiolle"
@@ -2678,12 +2474,6 @@ msgstr "Valitse kohdehakemisto tai levy"
 
 msgid "Please select the movie path..."
 msgstr "Valitse tallennehakemisto..."
-
-msgid "Please select the path for the Startdirectory"
-msgstr ""
-
-msgid "Please select the path..."
-msgstr ""
 
 #  Ohjatun asennuksen (Startup Wizard) nelosruudun ohjeteksti
 msgid "Please set up tuner B"
@@ -2842,17 +2632,8 @@ msgstr "Nopea"
 msgid "Quickzap"
 msgstr "Pikavaihto"
 
-msgid "R"
-msgstr ""
-
 msgid "RC Menu"
 msgstr "Kauko-ohjaimen asetukset"
-
-msgid "RC command set"
-msgstr ""
-
-msgid "RECORD"
-msgstr ""
 
 msgid "RF output"
 msgstr "RF-ulostulo"
@@ -3076,9 +2857,6 @@ msgstr "Käytössä"
 msgid "Russian"
 msgstr "Venäjä"
 
-msgid "S"
-msgstr ""
-
 msgid "S-Video"
 msgstr "S-video (Y/C)"
 
@@ -3087,12 +2865,6 @@ msgstr "SNR"
 
 msgid "SNR:"
 msgstr "SNR:"
-
-msgid "SPDIF"
-msgstr ""
-
-msgid "SUB"
-msgstr ""
 
 msgid "Sat"
 msgstr "la"
@@ -3135,9 +2907,6 @@ msgstr "Hae "
 
 msgid "Scan Files..."
 msgstr "Hae tiedostoja..."
-
-msgid "Scan IP"
-msgstr ""
 
 msgid "Scan QAM128"
 msgstr "Hae QAM128"
@@ -3212,15 +2981,6 @@ msgid ""
 msgstr ""
 "Hakee oletuskanavalistan satelliittijärjestyksessä käyttäen kytkettyä "
 "antennimoottoria"
-
-msgid "Scroll delay"
-msgstr ""
-
-msgid "Scroll long strings"
-msgstr ""
-
-msgid "Scroll pause"
-msgstr ""
 
 msgid "Search east"
 msgstr "Etsintä itään"
@@ -3347,9 +3107,6 @@ msgstr ""
 "Ei kanavaa,\n"
 "tarkista virittimen asetukset"
 
-msgid "Service-Info"
-msgstr ""
-
 msgid "Serviceinfo"
 msgstr "Kanavatiedot"
 
@@ -3362,14 +3119,8 @@ msgstr "Aseta jännite ja 22KHz"
 msgid "Set as default Interface"
 msgstr "Aseta oletukseksi"
 
-msgid "Set fan"
-msgstr ""
-
 msgid "Set interface as default Interface"
 msgstr "Määritä sovitin oletussovittimeksi"
-
-msgid "Set led"
-msgstr ""
 
 msgid "Set limits"
 msgstr "Aseta rajat"
@@ -3383,9 +3134,6 @@ msgstr "Asetukset"
 msgid "Setup Mode"
 msgstr "Mukautusvalintojen laajuus"
 
-msgid "Show Ethernet activity"
-msgstr ""
-
 msgid "Show Info"
 msgstr "Näytä tiedot"
 
@@ -3394,9 +3142,6 @@ msgstr "Näytä WLAN:in tila"
 
 msgid "Show blinking clock in display during recording"
 msgstr "Näytä vilkkuva kello tallennusten aikana"
-
-msgid "Show clock"
-msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Näytä tietopalkki kanavaa vaihdettaessa"
@@ -3454,9 +3199,6 @@ msgstr "Kuva-kuvalta (GOP)"
 
 msgid "Skin..."
 msgstr "Teema..."
-
-msgid "SkinSelector"
-msgstr ""
 
 msgid "Skins"
 msgstr "Teema"
@@ -3655,9 +3397,6 @@ msgstr "Symbolinopeus"
 msgid "System"
 msgstr "Järjestelmä"
 
-msgid "System-Info"
-msgstr ""
-
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr ""
@@ -3667,9 +3406,6 @@ msgstr "TS-tiedosto on liian suuri ISO9660 1-tasolle!"
 
 msgid "TV System"
 msgstr "TV-järjestelmä"
-
-msgid "TXT"
-msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Kokoelman hakemisto"
@@ -3966,9 +3702,6 @@ msgstr "Torstai"
 msgid "Time"
 msgstr "Aika"
 
-msgid "Time mode"
-msgstr ""
-
 msgid "Time/Date Input"
 msgstr "Aika/Päivä"
 
@@ -4113,9 +3846,6 @@ msgstr "Virittimen tila"
 msgid "Turkish"
 msgstr "Turkki"
 
-msgid "TuxTXT"
-msgstr ""
-
 msgid "Two"
 msgstr "Kaksi"
 
@@ -4124,15 +3854,6 @@ msgstr ""
 
 msgid "Type of scan"
 msgstr "Hakutapa"
-
-msgid "Typematic delay"
-msgstr ""
-
-msgid "Typematic rate"
-msgstr ""
-
-msgid "U"
-msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -4220,7 +3941,6 @@ msgstr "Käytä virran mittausta"
 msgid "Use a gateway"
 msgstr "Käytä yhdyskäytävää"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -4286,15 +4006,6 @@ msgstr "Käytetty kanavahakutyyppi"
 msgid "User defined"
 msgstr "Käyttäjän määrittelemä"
 
-msgid "UserDialog"
-msgstr ""
-
-msgid "UserManager"
-msgstr ""
-
-msgid "V"
-msgstr ""
-
 #  Päävalikon VCR-SCART-toiminnon nimi
 msgid "VCR scart"
 msgstr "SCART-läpivienti"
@@ -4353,9 +4064,6 @@ msgstr ""
 msgid "View Video CD..."
 msgstr "Katso Video-CD..."
 
-msgid "View list of available "
-msgstr ""
-
 msgid "View list of available CommonInterface extensions"
 msgstr "Näytä saatavilla olevat CI-laajennukset"
 
@@ -4397,12 +4105,6 @@ msgstr "Näytä teksti-tv..."
 
 msgid "Virtual KeyBoard"
 msgstr "Virtuaalinen näppäimistö"
-
-msgid "Vol"
-msgstr ""
-
-msgid "Vol off"
-msgstr ""
 
 msgid "Voltage mode"
 msgstr "13/18V-jännite"
@@ -4539,9 +4241,6 @@ msgstr "NFI-päivityksen asennus suoritetti"
 
 msgid "YPbPr"
 msgstr "Komponentti (YPbPr)"
-
-msgid "YUV"
-msgstr ""
 
 msgid "Year"
 msgstr "Vuosi"
@@ -4819,9 +4518,6 @@ msgstr "Lisää kanava suosikkeihin"
 msgid "add to parental protection"
 msgstr "lisää lapsilukkoon"
 
-msgid "add/remove bookmarks (locationbox)"
-msgstr ""
-
 msgid "advanced"
 msgstr "Laaja"
 
@@ -4834,9 +4530,6 @@ msgid ""
 msgstr ""
 "haluatko varmasti palauttaa\n"
 "seuraavan varmuuskopion:\n"
-
-msgid "ask on exit"
-msgstr ""
 
 msgid "assigned CAIds"
 msgstr "Määritetyt CAId:t"
@@ -5104,9 +4797,6 @@ msgstr "tuntia"
 msgid "immediate shutdown"
 msgstr "Sammuta heti"
 
-msgid "immediate standby"
-msgstr ""
-
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -5299,14 +4989,8 @@ msgstr "toista"
 msgid "play from next mark or playlist entry"
 msgstr "toista seuraavasta merkistä tai valinnasta"
 
-msgid "play from next playlist entry"
-msgstr ""
-
 msgid "play from previous mark or playlist entry"
 msgstr "toista edellisestä merkistä tai valinnasta"
-
-msgid "play from previous playlist entry"
-msgstr ""
 
 msgid "please press OK when ready"
 msgstr "paina OK kun olet valmis"
@@ -5382,9 +5066,6 @@ msgstr "tallenna viimeisin hakemisto suljettaessa"
 
 msgid "save playlist"
 msgstr "tallenna soittolista"
-
-msgid "save playlist before exit?"
-msgstr ""
 
 msgid "save playlist on exit"
 msgstr "tallenna soittolista suljettaessa"
@@ -5569,9 +5250,6 @@ msgstr "tämä tallennus"
 
 msgid "this service is protected by a parental control pin"
 msgstr "tämä kanava on suojattu lapsilukolla"
-
-msgid "toggels betwenn tv and radio..."
-msgstr ""
 
 msgid "toggle a cut mark at the current position"
 msgstr "aseta leikkausmerkki nykyiseen kohtaan"

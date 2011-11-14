@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 16:43+0100\n"
+"POT-Creation-Date: 2009-05-18 23:40+0200\n"
 "PO-Revision-Date: 2009-05-01 12:46+0200\n"
 "Last-Translator: Audronis, Grincevicius <audrgrin@takas.lt>\n"
 "Language-Team: Adga / enigma2 (c) <audrgrin@takas.lt>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -110,65 +109,17 @@ msgstr ""
 msgid " "
 msgstr " "
 
-msgid " extensions."
-msgstr ""
-
 msgid "#000000"
 msgstr "#000000"
-
-msgid "#00081226"
-msgstr ""
 
 msgid "#0064c7"
 msgstr "#0064c7"
 
-msgid "#0099ff"
-msgstr ""
-
-msgid "#00f0f0f0"
-msgstr ""
-
-msgid "#00fcc000"
-msgstr ""
-
-msgid "#08001E4B"
-msgstr ""
-
-msgid "#08004C00"
-msgstr ""
-
-msgid "#084B4B00"
-msgstr ""
-
-msgid "#084C0000"
-msgstr ""
-
-msgid "#0f0f0f"
-msgstr ""
-
 msgid "#25062748"
 msgstr "#25062748"
 
-msgid "#294a6b"
-msgstr ""
-
-msgid "#32000000"
-msgstr ""
-
 msgid "#389416"
 msgstr "#389416"
-
-msgid "#42000000"
-msgstr ""
-
-msgid "#44444a"
-msgstr ""
-
-msgid "#56C856"
-msgstr ""
-
-msgid "#65000000"
-msgstr ""
 
 msgid "#80000000"
 msgstr "#80000000"
@@ -176,35 +127,11 @@ msgstr "#80000000"
 msgid "#80ffffff"
 msgstr "#80ffffff"
 
-msgid "#999999"
-msgstr "#999999"
-
-msgid "#FCC000"
-msgstr ""
-
 msgid "#bab329"
 msgstr "#bab329"
 
-msgid "#cfcfcf"
-msgstr ""
-
-msgid "#e5e5e5"
-msgstr ""
-
-msgid "#f0f0f0"
-msgstr ""
-
 msgid "#f23d21"
 msgstr "#f23d21"
-
-msgid "#f3ca09"
-msgstr ""
-
-msgid "#ff000000"
-msgstr ""
-
-msgid "#ff4A3C"
-msgstr ""
 
 msgid "#ffffff"
 msgstr "#ffffff"
@@ -256,15 +183,6 @@ msgstr "Pasiekiamas tiktai, jei daugiau kaip viena sąsaja yra aktyvi."
 
 msgid "* Only available when entering hidden SSID or network key"
 msgstr "* Pasiekiamas tiktai, surinkus paslėptą SSID ar tinklo raktą"
-
-msgid "-"
-msgstr ""
-
-msgid "---------------------- bookmarks -------------------"
-msgstr ""
-
-msgid "..."
-msgstr "..."
 
 msgid ".NFI Download failed:"
 msgstr ".NFI parsisiuntimas klaidingas:"
@@ -334,9 +252,6 @@ msgstr "30 minučių"
 
 msgid "4"
 msgstr "4"
-
-msgid "422"
-msgstr ""
 
 msgid "4:3"
 msgstr "4:3"
@@ -562,9 +477,6 @@ msgstr "Visi"
 msgid "All Satellites"
 msgstr "Visi palydovai"
 
-msgid "All caps"
-msgstr ""
-
 msgid "Alpha"
 msgstr "Permatoma"
 
@@ -630,20 +542,11 @@ msgstr "Klausti vartotojo"
 msgid "Aspect Ratio"
 msgstr "Vaizdo formatas"
 
-msgid "Aspect list..."
-msgstr ""
-
 msgid "Audio"
 msgstr "Garsas"
 
 msgid "Audio Options..."
 msgstr "Garso nustatymai..."
-
-msgid "Audio Source"
-msgstr ""
-
-msgid "Audio/Subservices"
-msgstr ""
 
 msgid "Author: "
 msgstr "Autorius:"
@@ -773,13 +676,7 @@ msgstr "C-juosta"
 msgid "CF Drive"
 msgstr "CF kortelė"
 
-msgid "CI Assignment"
-msgstr ""
-
 msgid "CI assignment"
-msgstr ""
-
-msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -1058,9 +955,6 @@ msgstr "Čekų"
 msgid "D"
 msgstr "D"
 
-msgid "DD"
-msgstr ""
-
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -1069,9 +963,6 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
-
-msgid "DVD File Browser"
-msgstr "DVD failų naršyklė"
 
 msgid "DVD Player"
 msgstr "DVD grotuvas"
@@ -1084,9 +975,6 @@ msgstr "Danų"
 
 msgid "Date"
 msgstr "Data"
-
-msgid "Daylight"
-msgstr ""
 
 msgid "Deep Standby"
 msgstr "Visiškai išjungti"
@@ -1111,10 +999,6 @@ msgstr "Pašalinti "
 
 msgid "Delete failed!"
 msgstr "Trinimas klaidingas!"
-
-#, python-format
-msgid "Delete failed!, %s"
-msgstr ""
 
 #, python-format
 msgid ""
@@ -1233,9 +1117,6 @@ msgid ""
 msgstr ""
 "Jūs iš tikrųjų norite parsisiųsti\n"
 "priedą \"%s \"?"
-
-msgid "Do you really want to exit?"
-msgstr "Jūs tikrai norite išeiti?"
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1363,9 +1244,6 @@ msgstr "Olandų"
 msgid "E"
 msgstr "E"
 
-msgid "EJECT DVD"
-msgstr ""
-
 msgid "EPG Selection"
 msgstr "EPG pasirinkimas"
 
@@ -1463,7 +1341,6 @@ msgstr ""
 "\n"
 "© 2006 - Stephan Reichholf"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1500,9 +1377,6 @@ msgid ""
 msgstr ""
 "Klaida: %s\n"
 "Kartoti?"
-
-msgid "Estonian"
-msgstr ""
 
 msgid "Eventview"
 msgstr "Įvykių peržiūra"
@@ -1543,14 +1417,8 @@ msgstr "Išplėstiniai nustatymai..."
 msgid "Extensions"
 msgstr "Ekstra meniu"
 
-msgid "F"
-msgstr ""
-
 msgid "FEC"
 msgstr "FEC"
-
-msgid "FILE LIST"
-msgstr ""
 
 msgid "Factory reset"
 msgstr "Gamykliniai nustatymai"
@@ -1699,17 +1567,8 @@ msgstr "Apsaugos intervalas"
 msgid "Guard interval mode"
 msgstr "Apsaugos intervalo režimas"
 
-msgid "H"
-msgstr ""
-
-msgid "HDTV"
-msgstr ""
-
 msgid "Harddisk"
 msgstr "Kietas diskas"
-
-msgid "Harddisk Wait"
-msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Kieto disko nustatymas"
@@ -1802,9 +1661,6 @@ msgstr "Padidinta įtampa"
 
 msgid "Index"
 msgstr "Indeksas"
-
-msgid "Info"
-msgstr "Informacija"
 
 msgid "InfoBar"
 msgstr "Infojuosta"
@@ -1910,9 +1766,6 @@ msgstr "Ipkg"
 msgid "Italian"
 msgstr "Italų"
 
-msgid "J"
-msgstr ""
-
 msgid "Job View"
 msgstr "Darbo vaizdas"
 
@@ -1937,9 +1790,6 @@ msgstr "Tinklo adapteris"
 
 msgid "LNB"
 msgstr "LNB konverteris"
-
-msgid "LOAD DVD"
-msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -2029,14 +1879,8 @@ msgstr "Ilgas mygtuko spaudimas"
 msgid "Longitude"
 msgstr "Ilguma"
 
-msgid "M"
-msgstr ""
-
 msgid "MMC Card"
 msgstr "MMC kortelė"
-
-msgid "MMIDialog"
-msgstr ""
 
 msgid "MORE"
 msgstr "DAUGIAU"
@@ -2122,15 +1966,6 @@ msgstr "Pirmadienis"
 msgid "Mount failed"
 msgstr "Pajungimo klaida"
 
-msgid "MountEdit"
-msgstr ""
-
-msgid "MountManager"
-msgstr ""
-
-msgid "MountView"
-msgstr ""
-
 msgid "Move Picture in Picture"
 msgstr "Perkelti paveikslėlį į paveikslėlį"
 
@@ -2140,17 +1975,8 @@ msgstr "Sukti į rytus"
 msgid "Move west"
 msgstr "Sukti į vakarus"
 
-msgid "MoviePlayer"
-msgstr ""
-
 msgid "Movielist menu"
 msgstr "Filmų sąrašo meniu"
-
-msgid "Movieplayer"
-msgstr ""
-
-msgid "Movies"
-msgstr ""
 
 msgid "Multi EPG"
 msgstr "Kanalų EPG"
@@ -2212,9 +2038,6 @@ msgstr "Tinklo konfigūracija..."
 msgid "Network Mount"
 msgstr "Pajungti tinklą"
 
-msgid "Network Neighbourhood"
-msgstr ""
-
 msgid "Network SSID"
 msgstr "Tinklo SSID"
 
@@ -2238,9 +2061,6 @@ msgstr "Tinklas..."
 
 msgid "Network:"
 msgstr "Tinklas:"
-
-msgid "NetworkBrowser"
-msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Tinklo vedlys"
@@ -2388,9 +2208,6 @@ msgstr "Ne, įjungti mano imtuvą"
 msgid "No, scan later manually"
 msgstr "Ne, skanuoti vėliau rankiniu būdu"
 
-msgid "NoGfx Skin (c)2009 - by benutzername"
-msgstr ""
-
 msgid "None"
 msgstr "Joks"
 
@@ -2461,20 +2278,11 @@ msgstr "Tik nekoduotus"
 msgid "Orbital Position"
 msgstr "Pozicija orbitoje"
 
-msgid "P"
-msgstr ""
-
 msgid "PAL"
 msgstr "PAL"
 
-msgid "PCM"
-msgstr ""
-
 msgid "PIDs"
 msgstr "PIDs"
-
-msgid "PLAY LIST"
-msgstr ""
 
 msgid "Package details for: "
 msgstr "Paketo detalės: "
@@ -2501,9 +2309,6 @@ msgstr "Pagrindinė direktorija"
 msgid "Parental control"
 msgstr "Tėvų kontrolė"
 
-msgid "Parental control Editor"
-msgstr ""
-
 msgid "Parental control services Editor"
 msgstr "Tėvų kontrolės kanalų redaktorius"
 
@@ -2518,9 +2323,6 @@ msgstr "Filmo pauzė pabaigoje"
 
 msgid "PiPSetup"
 msgstr "PiP nustatymas"
-
-msgid "Picture Player"
-msgstr "Paveikslėlių grotuvas"
 
 msgid "PicturePlayer"
 msgstr "Paveikslėlių grotuvas"
@@ -2631,17 +2433,11 @@ msgstr "Prašome išsirinkti ką norite trinti iš grojaraščio..."
 msgid "Please select a playlist..."
 msgstr "Prašome išsirinkti grojaraštį"
 
-msgid "Please select a resolution..."
-msgstr ""
-
 msgid "Please select a subservice to record..."
 msgstr "Prašome išsirinkti subkanalą dėl įrašymo..."
 
 msgid "Please select a subservice..."
 msgstr "Prašome išsirinkti subkanalą..."
-
-msgid "Please select an aspect ratio..."
-msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr "Prašome pasirinkti tai, kaip atsarginės kopijos vietą"
@@ -2654,12 +2450,6 @@ msgstr "Prašome išsirinkti direktoriją arba diską"
 
 msgid "Please select the movie path..."
 msgstr "Prašome išsirinkti filmo kelią..."
-
-msgid "Please select the path for the Startdirectory"
-msgstr ""
-
-msgid "Please select the path..."
-msgstr ""
 
 msgid "Please set up tuner B"
 msgstr "Prašome nustatyti imtuvą B"
@@ -2819,17 +2609,8 @@ msgstr "Greitas"
 msgid "Quickzap"
 msgstr "Greitas perjungimas"
 
-msgid "R"
-msgstr ""
-
 msgid "RC Menu"
 msgstr "Valdymo pulto meniu"
-
-msgid "RC command set"
-msgstr ""
-
-msgid "RECORD"
-msgstr ""
 
 msgid "RF output"
 msgstr "RF išėjimas"
@@ -3051,9 +2832,6 @@ msgstr "Veikiantis"
 msgid "Russian"
 msgstr "Rusų"
 
-msgid "S"
-msgstr ""
-
 msgid "S-Video"
 msgstr "S-Video"
 
@@ -3062,12 +2840,6 @@ msgstr "SNR"
 
 msgid "SNR:"
 msgstr "SNR:"
-
-msgid "SPDIF"
-msgstr ""
-
-msgid "SUB"
-msgstr ""
 
 msgid "Sat"
 msgstr "Šeš"
@@ -3110,9 +2882,6 @@ msgstr "Skanuoti"
 
 msgid "Scan Files..."
 msgstr "Skanuoti failus..."
-
-msgid "Scan IP"
-msgstr ""
 
 msgid "Scan QAM128"
 msgstr "Skanuoti QAM128"
@@ -3189,15 +2958,6 @@ msgid ""
 msgstr ""
 "Skanuokite numatytą lamedbs, surūšiuotą pagal palydovą su prijungta prie "
 "pozicionieriaus antena"
-
-msgid "Scroll delay"
-msgstr ""
-
-msgid "Scroll long strings"
-msgstr ""
-
-msgid "Scroll pause"
-msgstr ""
 
 msgid "Search east"
 msgstr "Ieškokite rytų"
@@ -3322,9 +3082,6 @@ msgstr ""
 "Kanalas nepasiekiamas!\n"
 "Patikrinkite imtuvo nustatymus!"
 
-msgid "Service-Info"
-msgstr ""
-
 msgid "Serviceinfo"
 msgstr "Kanalo informacija"
 
@@ -3337,14 +3094,8 @@ msgstr "Nustatyti įtampą ir 22 KHZ"
 msgid "Set as default Interface"
 msgstr "Pasirinkti numatytą sąsają"
 
-msgid "Set fan"
-msgstr ""
-
 msgid "Set interface as default Interface"
 msgstr "Nustatykite sąsają kaip numatytą sąsają"
-
-msgid "Set led"
-msgstr ""
 
 msgid "Set limits"
 msgstr "Nustatykite ribas"
@@ -3358,9 +3109,6 @@ msgstr "Nustatymai"
 msgid "Setup Mode"
 msgstr "Valdymo būdas"
 
-msgid "Show Ethernet activity"
-msgstr ""
-
 msgid "Show Info"
 msgstr "Rodyti informaciją"
 
@@ -3369,9 +3117,6 @@ msgstr "Rodyti belaidžio tinklo būseną"
 
 msgid "Show blinking clock in display during recording"
 msgstr "Rodyti mirksintį laikrodį monitoriuje, įrašymo metu"
-
-msgid "Show clock"
-msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Rodyti infojuostą perjungiant kanalą"
@@ -3429,9 +3174,6 @@ msgstr "Vienpakopis (GOP)"
 
 msgid "Skin..."
 msgstr "Tema..."
-
-msgid "SkinSelector"
-msgstr ""
 
 msgid "Skins"
 msgstr "Temos"
@@ -3629,9 +3371,6 @@ msgstr "Simbolių greitis"
 msgid "System"
 msgstr "Sistema"
 
-msgid "System-Info"
-msgstr ""
-
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr "Audronis Grincevičius (ADGA) Pasvalys, Lietuva"
@@ -3641,9 +3380,6 @@ msgstr "TS failas yra per didelis ISO9660 lygmeniui 1!"
 
 msgid "TV System"
 msgstr "TV sistema"
-
-msgid "TXT"
-msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Turinio lentelė dėl kolekcijos"
@@ -3936,9 +3672,6 @@ msgstr "Ketvirtadienis"
 msgid "Time"
 msgstr "Laikas"
 
-msgid "Time mode"
-msgstr ""
-
 msgid "Time/Date Input"
 msgstr "Laikas / Data"
 
@@ -4089,9 +3822,6 @@ msgstr "Imtuvo būsena  "
 msgid "Turkish"
 msgstr "Turkų"
 
-msgid "TuxTXT"
-msgstr ""
-
 msgid "Two"
 msgstr "Du"
 
@@ -4100,15 +3830,6 @@ msgstr "Tipas"
 
 msgid "Type of scan"
 msgstr "Skanavimo būdas"
-
-msgid "Typematic delay"
-msgstr ""
-
-msgid "Typematic rate"
-msgstr ""
-
-msgid "U"
-msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -4196,7 +3917,6 @@ msgstr "Naudoti įtampos matavimą"
 msgid "Use a gateway"
 msgstr "Naudoti šliuzą"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -4245,15 +3965,6 @@ msgstr "Naudojamas kanalo skanavimo būdas"
 
 msgid "User defined"
 msgstr "Vartotojo pasirinktas"
-
-msgid "UserDialog"
-msgstr ""
-
-msgid "UserManager"
-msgstr ""
-
-msgid "V"
-msgstr ""
 
 msgid "VCR scart"
 msgstr "Vaizdo grotuvas"
@@ -4312,9 +4023,6 @@ msgstr "Žiūrėti Rass interaktyviai..."
 msgid "View Video CD..."
 msgstr "Žiūrėti vaizdo CD..."
 
-msgid "View list of available "
-msgstr ""
-
 msgid "View list of available CommonInterface extensions"
 msgstr "Peržiūrėti sąrašą galimam Įstatomų modulių papildymui"
 
@@ -4356,12 +4064,6 @@ msgstr "Žiūrėti teletekstą..."
 
 msgid "Virtual KeyBoard"
 msgstr "Virtuali Klaviatūra"
-
-msgid "Vol"
-msgstr ""
-
-msgid "Vol off"
-msgstr ""
 
 msgid "Voltage mode"
 msgstr "Įtampa"
@@ -4494,9 +4196,6 @@ msgstr "NFI atvaizdo failo įrašymas į vidinę atmintį užbaigtas"
 
 msgid "YPbPr"
 msgstr "YPbPr"
-
-msgid "YUV"
-msgstr ""
 
 msgid "Year"
 msgstr "Metai"
@@ -4780,9 +4479,6 @@ msgstr "pridėti kanalą į mėgstamiausi"
 msgid "add to parental protection"
 msgstr "pridėti į tėvų kontrolę"
 
-msgid "add/remove bookmarks (locationbox)"
-msgstr ""
-
 msgid "advanced"
 msgstr "Išplėstas"
 
@@ -4795,9 +4491,6 @@ msgid ""
 msgstr ""
 "Jūs tikrai norite atkurti\n"
 "atsarginė kopija:\n"
-
-msgid "ask on exit"
-msgstr ""
 
 msgid "assigned CAIds"
 msgstr "paskirtas CAIds"
@@ -5060,9 +4753,6 @@ msgstr "valandos"
 msgid "immediate shutdown"
 msgstr "neatidėliotinas išjungimas"
 
-msgid "immediate standby"
-msgstr ""
-
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -5257,14 +4947,8 @@ msgstr "leisti įrašą"
 msgid "play from next mark or playlist entry"
 msgstr "leisti nuo kito žymeklio arba grojaraščio užduoties"
 
-msgid "play from next playlist entry"
-msgstr ""
-
 msgid "play from previous mark or playlist entry"
 msgstr "leisti nuo buvusio žymeklio arba grojaraščio užduoties"
-
-msgid "play from previous playlist entry"
-msgstr ""
 
 msgid "please press OK when ready"
 msgstr "prašome paspausti OK, kai būsite pasiruošę"
@@ -5340,9 +5024,6 @@ msgstr "išsaugoti paskutinę direktoriją išeinant"
 
 msgid "save playlist"
 msgstr "išsaugoti grojaraštį"
-
-msgid "save playlist before exit?"
-msgstr ""
 
 msgid "save playlist on exit"
 msgstr "išsaugoti grojaraštį išeinant"
@@ -5528,9 +5209,6 @@ msgstr "tai įrašyta"
 msgid "this service is protected by a parental control pin"
 msgstr "šis kanalas apsaugotas tėvų kontrolės PIN kodu"
 
-msgid "toggels betwenn tv and radio..."
-msgstr ""
-
 msgid "toggle a cut mark at the current position"
 msgstr "Iškirpti žymeklį dabartinėje pozicijoje"
 
@@ -5633,11 +5311,17 @@ msgstr "įjungta"
 #~ msgid "#77ffffff"
 #~ msgstr "#77ffffff"
 
+#~ msgid "#999999"
+#~ msgstr "#999999"
+
 #~ msgid "#cccccc"
 #~ msgstr "#cccccc"
 
 #~ msgid "#dddddd"
 #~ msgstr "#dddddd"
+
+#~ msgid "..."
+#~ msgstr "..."
 
 #~ msgid ".NFI Flasher bootable USB stick successfully created."
 #~ msgstr ".NFI diegėjo paleidimo USB raktelis sėkmingai sukurtas."
@@ -5817,6 +5501,9 @@ msgstr "įjungta"
 #~ msgid "DVD ENTER key"
 #~ msgstr "DVD SURINKTI raktą"
 
+#~ msgid "DVD File Browser"
+#~ msgstr "DVD failų naršyklė"
+
 #~ msgid "DVD down key"
 #~ msgstr "DVD žemyn raktas"
 
@@ -5881,6 +5568,9 @@ msgstr "įjungta"
 #~ msgstr ""
 #~ "Jūs tikrai norite parsisiųsti\n"
 #~ "priedą \""
+
+#~ msgid "Do you really want to exit?"
+#~ msgstr "Jūs tikrai norite išeiti?"
 
 #~ msgid "Do you want to reboot you DreamBox?"
 #~ msgstr "Jūs norite paleisti iš naujo DreamBox?"
@@ -6033,6 +5723,9 @@ msgstr "įjungta"
 
 #~ msgid "Immediately"
 #~ msgstr "Nedelsiant"
+
+#~ msgid "Info"
+#~ msgstr "Informacija"
 
 #~ msgid "Initialization"
 #~ msgstr "Inicializavimas"
@@ -6192,6 +5885,9 @@ msgstr "įjungta"
 
 #~ msgid "Pause"
 #~ msgstr "Pauzė"
+
+#~ msgid "Picture Player"
+#~ msgstr "Paveikslėlių grotuvas"
 
 #~ msgid "Picture player"
 #~ msgstr "Paveikslėlių grotuvas"

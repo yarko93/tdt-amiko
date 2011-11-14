@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 16:43+0100\n"
+"POT-Creation-Date: 2009-05-18 23:40+0200\n"
 "PO-Revision-Date: 2008-10-15 12:10+0100\n"
 "Last-Translator: mimi74 <remi.jarrige0293@wanadoo.fr>\n"
 "Language-Team: french\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -84,64 +83,16 @@ msgstr ""
 msgid " "
 msgstr ""
 
-msgid " extensions."
-msgstr ""
-
 msgid "#000000"
-msgstr ""
-
-msgid "#00081226"
 msgstr ""
 
 msgid "#0064c7"
 msgstr ""
 
-msgid "#0099ff"
-msgstr ""
-
-msgid "#00f0f0f0"
-msgstr ""
-
-msgid "#00fcc000"
-msgstr ""
-
-msgid "#08001E4B"
-msgstr ""
-
-msgid "#08004C00"
-msgstr ""
-
-msgid "#084B4B00"
-msgstr ""
-
-msgid "#084C0000"
-msgstr ""
-
-msgid "#0f0f0f"
-msgstr ""
-
 msgid "#25062748"
 msgstr ""
 
-msgid "#294a6b"
-msgstr ""
-
-msgid "#32000000"
-msgstr ""
-
 msgid "#389416"
-msgstr ""
-
-msgid "#42000000"
-msgstr ""
-
-msgid "#44444a"
-msgstr ""
-
-msgid "#56C856"
-msgstr ""
-
-msgid "#65000000"
 msgstr ""
 
 msgid "#80000000"
@@ -150,34 +101,10 @@ msgstr ""
 msgid "#80ffffff"
 msgstr ""
 
-msgid "#999999"
-msgstr ""
-
-msgid "#FCC000"
-msgstr ""
-
 msgid "#bab329"
 msgstr ""
 
-msgid "#cfcfcf"
-msgstr ""
-
-msgid "#e5e5e5"
-msgstr ""
-
-msgid "#f0f0f0"
-msgstr ""
-
 msgid "#f23d21"
-msgstr ""
-
-msgid "#f3ca09"
-msgstr ""
-
-msgid "#ff000000"
-msgstr ""
-
-msgid "#ff4A3C"
 msgstr ""
 
 msgid "#ffffff"
@@ -230,15 +157,6 @@ msgstr "* Seulement disponible si plus d'une interface active."
 
 msgid "* Only available when entering hidden SSID or network key"
 msgstr "* Seulement disponible en entrant SSID caché ou clé réseau"
-
-msgid "-"
-msgstr ""
-
-msgid "---------------------- bookmarks -------------------"
-msgstr ""
-
-msgid "..."
-msgstr ""
 
 msgid ".NFI Download failed:"
 msgstr "Téléchargement .NFI échoué:"
@@ -307,9 +225,6 @@ msgid "30 minutes"
 msgstr ""
 
 msgid "4"
-msgstr ""
-
-msgid "422"
 msgstr ""
 
 msgid "4:3"
@@ -537,9 +452,6 @@ msgstr "Toutes"
 msgid "All Satellites"
 msgstr "Tous satellites"
 
-msgid "All caps"
-msgstr ""
-
 msgid "Alpha"
 msgstr "Transparence"
 
@@ -599,20 +511,11 @@ msgstr "Demande utilisateur"
 msgid "Aspect Ratio"
 msgstr "Format d'image"
 
-msgid "Aspect list..."
-msgstr ""
-
 msgid "Audio"
 msgstr "Audio"
 
 msgid "Audio Options..."
 msgstr "options audio..."
-
-msgid "Audio Source"
-msgstr ""
-
-msgid "Audio/Subservices"
-msgstr ""
 
 msgid "Author: "
 msgstr ""
@@ -744,13 +647,7 @@ msgstr "Bande C"
 msgid "CF Drive"
 msgstr "Lecteur CF"
 
-msgid "CI Assignment"
-msgstr ""
-
 msgid "CI assignment"
-msgstr ""
-
-msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -1029,9 +926,6 @@ msgstr "Tchèque"
 msgid "D"
 msgstr ""
 
-msgid "DD"
-msgstr ""
-
 msgid "DHCP"
 msgstr ""
 
@@ -1040,9 +934,6 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
-
-msgid "DVD File Browser"
-msgstr ""
 
 msgid "DVD Player"
 msgstr "Lecteur DVD"
@@ -1055,9 +946,6 @@ msgstr "Danois"
 
 msgid "Date"
 msgstr "Date"
-
-msgid "Daylight"
-msgstr ""
 
 msgid "Deep Standby"
 msgstr "Veille profonde"
@@ -1082,10 +970,6 @@ msgstr "Retire entrée"
 
 msgid "Delete failed!"
 msgstr "L'effacement a échoué!"
-
-#, python-format
-msgid "Delete failed!, %s"
-msgstr ""
 
 #, python-format
 msgid ""
@@ -1204,9 +1088,6 @@ msgid ""
 msgstr ""
 "Voulez-vous vraiment télécharger\n"
 "le plugin \"%s\"?"
-
-msgid "Do you really want to exit?"
-msgstr "Voulez-vous vraiment quitter?"
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1333,9 +1214,6 @@ msgstr "Hollandais"
 msgid "E"
 msgstr "E"
 
-msgid "EJECT DVD"
-msgstr ""
-
 msgid "EPG Selection"
 msgstr "Sélection EPG"
 
@@ -1433,7 +1311,6 @@ msgstr ""
 "\n"
 "© 2006 - Stephan Reichholf"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1470,9 +1347,6 @@ msgid ""
 msgstr ""
 "Erreur: %s\n"
 "Réessayer?"
-
-msgid "Estonian"
-msgstr ""
 
 msgid "Eventview"
 msgstr "Programme TV"
@@ -1513,13 +1387,7 @@ msgstr "Paramètre avancé..."
 msgid "Extensions"
 msgstr "Extensions"
 
-msgid "F"
-msgstr ""
-
 msgid "FEC"
-msgstr ""
-
-msgid "FILE LIST"
 msgstr ""
 
 msgid "Factory reset"
@@ -1671,17 +1539,8 @@ msgstr "Intervalle garde"
 msgid "Guard interval mode"
 msgstr "Mode intervalle garde"
 
-msgid "H"
-msgstr ""
-
-msgid "HDTV"
-msgstr ""
-
 msgid "Harddisk"
 msgstr "Disque dur..."
-
-msgid "Harddisk Wait"
-msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Paramètres disque dur..."
@@ -1774,9 +1633,6 @@ msgstr "Augmenter la tension"
 
 msgid "Index"
 msgstr "Index"
-
-msgid "Info"
-msgstr ""
 
 msgid "InfoBar"
 msgstr "Barre d'infos"
@@ -1880,9 +1736,6 @@ msgstr ""
 msgid "Italian"
 msgstr "Italien"
 
-msgid "J"
-msgstr ""
-
 msgid "Job View"
 msgstr "Vue travail"
 
@@ -1906,9 +1759,6 @@ msgid "LAN Adapter"
 msgstr "Adaptateur réseau local"
 
 msgid "LNB"
-msgstr ""
-
-msgid "LOAD DVD"
 msgstr ""
 
 msgid "LOF"
@@ -1999,14 +1849,8 @@ msgstr "Appui long touche"
 msgid "Longitude"
 msgstr "Longitude"
 
-msgid "M"
-msgstr ""
-
 msgid "MMC Card"
 msgstr "Carte MMC"
-
-msgid "MMIDialog"
-msgstr ""
 
 msgid "MORE"
 msgstr "PLUS"
@@ -2092,15 +1936,6 @@ msgstr "Lundi"
 msgid "Mount failed"
 msgstr "Echec montage"
 
-msgid "MountEdit"
-msgstr ""
-
-msgid "MountManager"
-msgstr ""
-
-msgid "MountView"
-msgstr ""
-
 msgid "Move Picture in Picture"
 msgstr "Déplacer l'incrustation d'image"
 
@@ -2110,17 +1945,8 @@ msgstr "Déplacer vers l'est"
 msgid "Move west"
 msgstr "Déplacer vers l'ouest"
 
-msgid "MoviePlayer"
-msgstr ""
-
 msgid "Movielist menu"
 msgstr "Menu liste film"
-
-msgid "Movieplayer"
-msgstr ""
-
-msgid "Movies"
-msgstr ""
 
 msgid "Multi EPG"
 msgstr "Multi EPG"
@@ -2180,9 +2006,6 @@ msgstr "Configuration réseau..."
 msgid "Network Mount"
 msgstr "Monter réseau"
 
-msgid "Network Neighbourhood"
-msgstr ""
-
 msgid "Network SSID"
 msgstr "Réseau SSID"
 
@@ -2206,9 +2029,6 @@ msgstr "Réseau..."
 
 msgid "Network:"
 msgstr "Réseau:"
-
-msgid "NetworkBrowser"
-msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Assistant réseau"
@@ -2352,9 +2172,6 @@ msgstr "Non, juste démarrer ma Dreambox"
 msgid "No, scan later manually"
 msgstr "Non, analyser manuellement plus tard"
 
-msgid "NoGfx Skin (c)2009 - by benutzername"
-msgstr ""
-
 msgid "None"
 msgstr "Aucun"
 
@@ -2426,20 +2243,11 @@ msgstr "Scanner seulement libre"
 msgid "Orbital Position"
 msgstr "Position orbitale"
 
-msgid "P"
-msgstr ""
-
 msgid "PAL"
 msgstr "PAL"
 
-msgid "PCM"
-msgstr ""
-
 msgid "PIDs"
 msgstr "PIDs"
-
-msgid "PLAY LIST"
-msgstr ""
 
 msgid "Package details for: "
 msgstr ""
@@ -2466,9 +2274,6 @@ msgstr "Répertoire parent"
 msgid "Parental control"
 msgstr "Contrôle parental"
 
-msgid "Parental control Editor"
-msgstr ""
-
 msgid "Parental control services Editor"
 msgstr "Editeur des contrôles services parentals"
 
@@ -2483,9 +2288,6 @@ msgstr "Pause film à la fin"
 
 msgid "PiPSetup"
 msgstr "Paramètres PiP"
-
-msgid "Picture Player"
-msgstr ""
 
 msgid "PicturePlayer"
 msgstr ""
@@ -2593,17 +2395,11 @@ msgstr "Veuillez choisir une liste lecture à effacer..."
 msgid "Please select a playlist..."
 msgstr "Veuillez choisir une liste lecture..."
 
-msgid "Please select a resolution..."
-msgstr ""
-
 msgid "Please select a subservice to record..."
 msgstr "Veuillez choisir un sous-service à enregistrer..."
 
 msgid "Please select a subservice..."
 msgstr "Veuillez choisir un sous-service..."
-
-msgid "Please select an aspect ratio..."
-msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr ""
@@ -2616,12 +2412,6 @@ msgstr "Veuillez sélectionner le répertoire ou support cible"
 
 msgid "Please select the movie path..."
 msgstr "Veuillez choisir le chemin du film..."
-
-msgid "Please select the path for the Startdirectory"
-msgstr ""
-
-msgid "Please select the path..."
-msgstr ""
 
 msgid "Please set up tuner B"
 msgstr "Veuillez paramétrer le tuner B"
@@ -2781,17 +2571,8 @@ msgstr ""
 msgid "Quickzap"
 msgstr "Zap rapide"
 
-msgid "R"
-msgstr ""
-
 msgid "RC Menu"
 msgstr "Menu télécommande"
-
-msgid "RC command set"
-msgstr ""
-
-msgid "RECORD"
-msgstr ""
 
 msgid "RF output"
 msgstr "Sortie RF"
@@ -3016,9 +2797,6 @@ msgstr "tourne"
 msgid "Russian"
 msgstr "Russe"
 
-msgid "S"
-msgstr ""
-
 msgid "S-Video"
 msgstr "S-Vidéo"
 
@@ -3026,12 +2804,6 @@ msgid "SNR"
 msgstr ""
 
 msgid "SNR:"
-msgstr ""
-
-msgid "SPDIF"
-msgstr ""
-
-msgid "SUB"
 msgstr ""
 
 msgid "Sat"
@@ -3075,9 +2847,6 @@ msgstr "Analyser"
 
 msgid "Scan Files..."
 msgstr "Parcourir fichiers..."
-
-msgid "Scan IP"
-msgstr ""
 
 msgid "Scan QAM128"
 msgstr "Analyser QAM128"
@@ -3154,15 +2923,6 @@ msgid ""
 msgstr ""
 "Scanner lamedbs standards triés par satellite avec un positionneur parabole "
 "connecté"
-
-msgid "Scroll delay"
-msgstr ""
-
-msgid "Scroll long strings"
-msgstr ""
-
-msgid "Scroll pause"
-msgstr ""
 
 msgid "Search east"
 msgstr "Rechercher à l'est"
@@ -3287,9 +3047,6 @@ msgstr ""
 "Service indisponible!\n"
 "Vérifier la configuration tuner!"
 
-msgid "Service-Info"
-msgstr ""
-
 msgid "Serviceinfo"
 msgstr "Info service"
 
@@ -3302,14 +3059,8 @@ msgstr "Utiliser Voltage et 22KHz"
 msgid "Set as default Interface"
 msgstr "Utiliser comme interface défaut"
 
-msgid "Set fan"
-msgstr ""
-
 msgid "Set interface as default Interface"
 msgstr "Utiliser interface comme interface par défaut"
-
-msgid "Set led"
-msgstr ""
 
 msgid "Set limits"
 msgstr "Fixer les limites"
@@ -3323,9 +3074,6 @@ msgstr "Paramètrer"
 msgid "Setup Mode"
 msgstr "Mode configuration"
 
-msgid "Show Ethernet activity"
-msgstr ""
-
 msgid "Show Info"
 msgstr "Montrer infos"
 
@@ -3334,9 +3082,6 @@ msgstr "Montrer status WLAN"
 
 msgid "Show blinking clock in display during recording"
 msgstr "Montrer clignotement horloge en enregistrement"
-
-msgid "Show clock"
-msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Montrer infobar en changeant de chaîne"
@@ -3394,9 +3139,6 @@ msgstr "Pas unique (GOP)"
 
 msgid "Skin..."
 msgstr "Thème..."
-
-msgid "SkinSelector"
-msgstr ""
 
 msgid "Skins"
 msgstr ""
@@ -3589,9 +3331,6 @@ msgstr "FréquenceSymbole"
 msgid "System"
 msgstr "Système"
 
-msgid "System-Info"
-msgstr ""
-
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr ""
@@ -3606,9 +3345,6 @@ msgstr "Fichier TS trop grand pour le niveau 1 ISO9660!"
 
 msgid "TV System"
 msgstr "Système TV"
-
-msgid "TXT"
-msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Table des matières pour la collection"
@@ -3900,9 +3636,6 @@ msgstr "Jeudi"
 msgid "Time"
 msgstr "Heure"
 
-msgid "Time mode"
-msgstr ""
-
 msgid "Time/Date Input"
 msgstr "Entrée Date/Heure"
 
@@ -4049,9 +3782,6 @@ msgstr "Status tuner"
 msgid "Turkish"
 msgstr "Turke"
 
-msgid "TuxTXT"
-msgstr ""
-
 msgid "Two"
 msgstr "Deux"
 
@@ -4060,15 +3790,6 @@ msgstr ""
 
 msgid "Type of scan"
 msgstr "Type d'analyse"
-
-msgid "Typematic delay"
-msgstr ""
-
-msgid "Typematic rate"
-msgstr ""
-
-msgid "U"
-msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -4157,7 +3878,6 @@ msgstr "Utiliser mesure puissance"
 msgid "Use a gateway"
 msgstr "Utiliser passerelle"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -4206,15 +3926,6 @@ msgstr "Type analyse service utilisé"
 
 msgid "User defined"
 msgstr "Défini par l'utilisateur"
-
-msgid "UserDialog"
-msgstr ""
-
-msgid "UserManager"
-msgstr ""
-
-msgid "V"
-msgstr ""
 
 msgid "VCR scart"
 msgstr "Péritel magnétoscope"
@@ -4273,9 +3984,6 @@ msgstr "Afficher Rass interactif..."
 msgid "View Video CD..."
 msgstr ""
 
-msgid "View list of available "
-msgstr ""
-
 msgid "View list of available CommonInterface extensions"
 msgstr ""
 
@@ -4317,12 +4025,6 @@ msgstr "Afficher télétexte..."
 
 msgid "Virtual KeyBoard"
 msgstr "Clavier virtuel"
-
-msgid "Vol"
-msgstr ""
-
-msgid "Vol off"
-msgstr ""
 
 msgid "Voltage mode"
 msgstr "Mode voltage"
@@ -4456,9 +4158,6 @@ msgstr "Ecriture du fichier image NFI vers flash terminée"
 
 msgid "YPbPr"
 msgstr "YPbPr"
-
-msgid "YUV"
-msgstr ""
 
 msgid "Year"
 msgstr "Année"
@@ -4739,9 +4438,6 @@ msgstr "ajouter ce service aux favoris"
 msgid "add to parental protection"
 msgstr "ajouter à la protection parentale"
 
-msgid "add/remove bookmarks (locationbox)"
-msgstr ""
-
 msgid "advanced"
 msgstr "avancé"
 
@@ -4754,9 +4450,6 @@ msgid ""
 msgstr ""
 "êtes-vous sûr de vouloir restaurer\n"
 "la sauvegarde suivante :\n"
-
-msgid "ask on exit"
-msgstr ""
 
 msgid "assigned CAIds"
 msgstr ""
@@ -5019,9 +4712,6 @@ msgstr "heures"
 msgid "immediate shutdown"
 msgstr "extinction immédiate"
 
-msgid "immediate standby"
-msgstr ""
-
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -5216,14 +4906,8 @@ msgstr "jouer entrée"
 msgid "play from next mark or playlist entry"
 msgstr "jouer depuis marque suivante ou entrée liste lecture"
 
-msgid "play from next playlist entry"
-msgstr ""
-
 msgid "play from previous mark or playlist entry"
 msgstr "jouer depuis marque précédente ou entrée liste lecture"
-
-msgid "play from previous playlist entry"
-msgstr ""
 
 msgid "please press OK when ready"
 msgstr "veuillez appuyer sur OK quand vous êtes prêt(e)"
@@ -5299,9 +4983,6 @@ msgstr ""
 
 msgid "save playlist"
 msgstr "sauver liste lecture"
-
-msgid "save playlist before exit?"
-msgstr ""
 
 msgid "save playlist on exit"
 msgstr ""
@@ -5487,9 +5168,6 @@ msgstr "cet enregistrement"
 msgid "this service is protected by a parental control pin"
 msgstr "ce service est protégé par un pin contrôle parental"
 
-msgid "toggels betwenn tv and radio..."
-msgstr ""
-
 msgid "toggle a cut mark at the current position"
 msgstr "commuter un marqueur coupé à cette position"
 
@@ -5595,6 +5273,9 @@ msgstr "zappé"
 
 #~ msgid "Do not show video preview"
 #~ msgstr "ne pas montrer prévue film"
+
+#~ msgid "Do you really want to exit?"
+#~ msgstr "Voulez-vous vraiment quitter?"
 
 #~ msgid "Downloading image description..."
 #~ msgstr "Téléchargement description image..."

@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 16:43+0100\n"
+"POT-Creation-Date: 2009-05-18 23:40+0200\n"
 "PO-Revision-Date: 2009-02-25 20:35+0200\n"
 "Last-Translator: Ivo Grinbergs <ivog@apollo.lv>\n"
 "Language-Team: Ivo / enigma2 (c) <ivog@apolllo.lv>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -110,65 +109,17 @@ msgstr ""
 msgid " "
 msgstr " "
 
-msgid " extensions."
-msgstr ""
-
 msgid "#000000"
 msgstr "#000000"
-
-msgid "#00081226"
-msgstr ""
 
 msgid "#0064c7"
 msgstr "#0064c7"
 
-msgid "#0099ff"
-msgstr ""
-
-msgid "#00f0f0f0"
-msgstr ""
-
-msgid "#00fcc000"
-msgstr ""
-
-msgid "#08001E4B"
-msgstr ""
-
-msgid "#08004C00"
-msgstr ""
-
-msgid "#084B4B00"
-msgstr ""
-
-msgid "#084C0000"
-msgstr ""
-
-msgid "#0f0f0f"
-msgstr ""
-
 msgid "#25062748"
 msgstr "#25062748"
 
-msgid "#294a6b"
-msgstr ""
-
-msgid "#32000000"
-msgstr ""
-
 msgid "#389416"
 msgstr "#389416"
-
-msgid "#42000000"
-msgstr ""
-
-msgid "#44444a"
-msgstr ""
-
-msgid "#56C856"
-msgstr ""
-
-msgid "#65000000"
-msgstr ""
 
 msgid "#80000000"
 msgstr "#80000000"
@@ -176,35 +127,11 @@ msgstr "#80000000"
 msgid "#80ffffff"
 msgstr "#80ffffff"
 
-msgid "#999999"
-msgstr ""
-
-msgid "#FCC000"
-msgstr ""
-
 msgid "#bab329"
 msgstr "#bab329"
 
-msgid "#cfcfcf"
-msgstr ""
-
-msgid "#e5e5e5"
-msgstr ""
-
-msgid "#f0f0f0"
-msgstr ""
-
 msgid "#f23d21"
 msgstr "#f23d21"
-
-msgid "#f3ca09"
-msgstr ""
-
-msgid "#ff000000"
-msgstr ""
-
-msgid "#ff4A3C"
-msgstr ""
 
 msgid "#ffffff"
 msgstr "#ffffff"
@@ -257,15 +184,6 @@ msgstr "* Pieejams ja ir aktīvs vairāk nekā viens interfeiss."
 
 msgid "* Only available when entering hidden SSID or network key"
 msgstr "* Pieejams tikai ievadot slēptu SSID vai tīkla atslēgu"
-
-msgid "-"
-msgstr ""
-
-msgid "---------------------- bookmarks -------------------"
-msgstr ""
-
-msgid "..."
-msgstr ""
 
 msgid ".NFI Download failed:"
 msgstr ".NFI lejuplāde neizdevās:"
@@ -334,9 +252,6 @@ msgstr "30 minūtēm"
 
 msgid "4"
 msgstr "4"
-
-msgid "422"
-msgstr ""
 
 msgid "4:3"
 msgstr "4:3"
@@ -566,9 +481,6 @@ msgstr "Visi"
 msgid "All Satellites"
 msgstr "Visi pavadoņi"
 
-msgid "All caps"
-msgstr ""
-
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -633,20 +545,11 @@ msgstr "Jautāt"
 msgid "Aspect Ratio"
 msgstr "Malu attiecība"
 
-msgid "Aspect list..."
-msgstr ""
-
 msgid "Audio"
 msgstr "Skaņa"
 
 msgid "Audio Options..."
 msgstr "Skaņas opcijas..."
-
-msgid "Audio Source"
-msgstr ""
-
-msgid "Audio/Subservices"
-msgstr ""
 
 msgid "Author: "
 msgstr ""
@@ -778,13 +681,7 @@ msgstr "C-josla"
 msgid "CF Drive"
 msgstr "CF lasītājs"
 
-msgid "CI Assignment"
-msgstr ""
-
 msgid "CI assignment"
-msgstr ""
-
-msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -1067,9 +964,6 @@ msgstr "Čehu"
 msgid "D"
 msgstr "D"
 
-msgid "DD"
-msgstr ""
-
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -1078,9 +972,6 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
-
-msgid "DVD File Browser"
-msgstr ""
 
 msgid "DVD Player"
 msgstr "DVD atskaņotājs"
@@ -1093,9 +984,6 @@ msgstr "Dāņu"
 
 msgid "Date"
 msgstr "Datums"
-
-msgid "Daylight"
-msgstr ""
 
 msgid "Deep Standby"
 msgstr "Dziļā gaidstāve"
@@ -1120,10 +1008,6 @@ msgstr "Dzēst ierakstu "
 
 msgid "Delete failed!"
 msgstr "Dzēšana neizdevās!"
-
-#, python-format
-msgid "Delete failed!, %s"
-msgstr ""
 
 # ???
 #, python-format
@@ -1246,9 +1130,6 @@ msgid ""
 msgstr ""
 "Vai tiešām vēlaties lejuplādēt\n"
 "spraudni \"%s \"?"
-
-msgid "Do you really want to exit?"
-msgstr ""
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1378,9 +1259,6 @@ msgstr "Holandiešu"
 msgid "E"
 msgstr "E"
 
-msgid "EJECT DVD"
-msgstr ""
-
 msgid "EPG Selection"
 msgstr "EPG izvēle"
 
@@ -1479,7 +1357,6 @@ msgstr ""
 "\n"
 "© 2006 - Stephan Reichholf"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1516,9 +1393,6 @@ msgid ""
 msgstr ""
 "Kļūda: %s\n"
 "Atkārtot??"
-
-msgid "Estonian"
-msgstr ""
 
 msgid "Eventview"
 msgstr "Notikumu skats"
@@ -1559,14 +1433,8 @@ msgstr "Paplašinātā iestatne..."
 msgid "Extensions"
 msgstr "Paplašinājumi"
 
-msgid "F"
-msgstr ""
-
 msgid "FEC"
 msgstr "FEC"
-
-msgid "FILE LIST"
-msgstr ""
 
 msgid "Factory reset"
 msgstr "Rūpnīcas uzstādījumi"
@@ -1717,17 +1585,8 @@ msgstr "Sardzes intervāls"
 msgid "Guard interval mode"
 msgstr "Sardzes intervāla režīms"
 
-msgid "H"
-msgstr ""
-
-msgid "HDTV"
-msgstr ""
-
 msgid "Harddisk"
 msgstr "Cietais disks"
-
-msgid "Harddisk Wait"
-msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Cietā diska iestatne"
@@ -1818,9 +1677,6 @@ msgstr "Palielināt spriegumu"
 
 msgid "Index"
 msgstr "Indekss"
-
-msgid "Info"
-msgstr ""
 
 msgid "InfoBar"
 msgstr "Infojosla"
@@ -1924,9 +1780,6 @@ msgstr "Ipkg"
 msgid "Italian"
 msgstr "Itāļu"
 
-msgid "J"
-msgstr ""
-
 msgid "Job View"
 msgstr "Darbu skats"
 
@@ -1951,9 +1804,6 @@ msgstr "Tīkla adapteris"
 
 msgid "LNB"
 msgstr "LNB konvertors"
-
-msgid "LOAD DVD"
-msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -2043,14 +1893,8 @@ msgstr "Ilgstošs taustiņa nospiediens"
 msgid "Longitude"
 msgstr "Garums"
 
-msgid "M"
-msgstr ""
-
 msgid "MMC Card"
 msgstr "MMC karte"
-
-msgid "MMIDialog"
-msgstr ""
 
 msgid "MORE"
 msgstr "VAIRĀK"
@@ -2136,15 +1980,6 @@ msgstr "Pirmdiena"
 msgid "Mount failed"
 msgstr "Montēšana neizdevās"
 
-msgid "MountEdit"
-msgstr ""
-
-msgid "MountManager"
-msgstr ""
-
-msgid "MountView"
-msgstr ""
-
 msgid "Move Picture in Picture"
 msgstr "Pārvietot attēlu attēlā"
 
@@ -2154,17 +1989,8 @@ msgstr "Griezt uz austrumiem"
 msgid "Move west"
 msgstr "Griezt uz rietumiem"
 
-msgid "MoviePlayer"
-msgstr ""
-
 msgid "Movielist menu"
 msgstr "Filmu saraksta izvēlne"
-
-msgid "Movieplayer"
-msgstr ""
-
-msgid "Movies"
-msgstr ""
 
 msgid "Multi EPG"
 msgstr "Daudzkanālu EPG"
@@ -2224,9 +2050,6 @@ msgstr "Tīkla konfigurācija..."
 msgid "Network Mount"
 msgstr "Tīkla montēšana"
 
-msgid "Network Neighbourhood"
-msgstr ""
-
 msgid "Network SSID"
 msgstr "Tīkla SSID"
 
@@ -2250,9 +2073,6 @@ msgstr "Tīkls..."
 
 msgid "Network:"
 msgstr "Tīkls:"
-
-msgid "NetworkBrowser"
-msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Tīkla vednis"
@@ -2395,9 +2215,6 @@ msgstr "Nē, vienkārši startēt dreambox"
 msgid "No, scan later manually"
 msgstr "Nē, vēlāk meklēt manuāli"
 
-msgid "NoGfx Skin (c)2009 - by benutzername"
-msgstr ""
-
 msgid "None"
 msgstr "nē"
 
@@ -2468,20 +2285,11 @@ msgstr "Tikai nekodētos"
 msgid "Orbital Position"
 msgstr "Pozīcija orbītā"
 
-msgid "P"
-msgstr ""
-
 msgid "PAL"
 msgstr "PAL"
 
-msgid "PCM"
-msgstr ""
-
 msgid "PIDs"
 msgstr "PIDs"
-
-msgid "PLAY LIST"
-msgstr ""
 
 msgid "Package details for: "
 msgstr ""
@@ -2508,9 +2316,6 @@ msgstr "Vecākdirektorija"
 msgid "Parental control"
 msgstr "Vecāku kontrole"
 
-msgid "Parental control Editor"
-msgstr ""
-
 msgid "Parental control services Editor"
 msgstr "Vecāku kontroles kanālu redaktors"
 
@@ -2525,9 +2330,6 @@ msgstr "Apturēt filmu beigās"
 
 msgid "PiPSetup"
 msgstr "PiP iestatne"
-
-msgid "Picture Player"
-msgstr ""
 
 msgid "PicturePlayer"
 msgstr "Attēlu rādītājs"
@@ -2639,17 +2441,11 @@ msgstr "Lūdzu izvēlieties repertuāru dzēšanai..."
 msgid "Please select a playlist..."
 msgstr "Lūdzu izvēlieties repertuāru..."
 
-msgid "Please select a resolution..."
-msgstr ""
-
 msgid "Please select a subservice to record..."
 msgstr "Lūdzu izvēlieties papildkanālu ierakstam..."
 
 msgid "Please select a subservice..."
 msgstr "Lūdzu izvēlieties papildkanālu..."
-
-msgid "Please select an aspect ratio..."
-msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr "Lūdzu izvēlieties datu nesēju dublējumkopijas veidošanai"
@@ -2662,12 +2458,6 @@ msgstr "Lūdzu izvēlieties mērķa mapi vai datu nesēju"
 
 msgid "Please select the movie path..."
 msgstr "Lūdzu izvēlieties ceļu filmām..."
-
-msgid "Please select the path for the Startdirectory"
-msgstr ""
-
-msgid "Please select the path..."
-msgstr ""
 
 msgid "Please set up tuner B"
 msgstr "Lūdzu iestatiet B uztvērēju"
@@ -2828,17 +2618,8 @@ msgstr "Ātrais"
 msgid "Quickzap"
 msgstr "Ātrā pārslēgšana"
 
-msgid "R"
-msgstr ""
-
 msgid "RC Menu"
 msgstr "Tālvadības pults izvēlne"
-
-msgid "RC command set"
-msgstr ""
-
-msgid "RECORD"
-msgstr ""
 
 msgid "RF output"
 msgstr "RF izeja"
@@ -3061,9 +2842,6 @@ msgstr "Darbojas"
 msgid "Russian"
 msgstr "Krievu"
 
-msgid "S"
-msgstr ""
-
 msgid "S-Video"
 msgstr "S-Video"
 
@@ -3072,12 +2850,6 @@ msgstr "SNR"
 
 msgid "SNR:"
 msgstr "SNR:"
-
-msgid "SPDIF"
-msgstr ""
-
-msgid "SUB"
-msgstr ""
 
 msgid "Sat"
 msgstr "Se"
@@ -3119,9 +2891,6 @@ msgid "Scan "
 msgstr "Meklēt "
 
 msgid "Scan Files..."
-msgstr ""
-
-msgid "Scan IP"
 msgstr ""
 
 msgid "Scan QAM128"
@@ -3199,15 +2968,6 @@ msgid ""
 msgstr ""
 "Meklē noklusētos lamedbs, sakārtotus pēc pavadoņiem ar pievienotu "
 "pozicioniera antenu"
-
-msgid "Scroll delay"
-msgstr ""
-
-msgid "Scroll long strings"
-msgstr ""
-
-msgid "Scroll pause"
-msgstr ""
 
 msgid "Search east"
 msgstr "Meklēt austrumos"
@@ -3334,9 +3094,6 @@ msgstr ""
 "Kanāls nav pieejams!\n"
 "Pārbaudiet uztvērēja konfigurāciju!"
 
-msgid "Service-Info"
-msgstr ""
-
 msgid "Serviceinfo"
 msgstr "Kanāla info"
 
@@ -3349,14 +3106,8 @@ msgstr "Iestatīt spriegumu un 22 KHZ"
 msgid "Set as default Interface"
 msgstr "Iestatīt kā noklusēto interfeisu"
 
-msgid "Set fan"
-msgstr ""
-
 msgid "Set interface as default Interface"
 msgstr "Iestatīt interfeisu kā noklusēto"
-
-msgid "Set led"
-msgstr ""
 
 msgid "Set limits"
 msgstr "Iestatīt robežas"
@@ -3370,9 +3121,6 @@ msgstr "Iestatne"
 msgid "Setup Mode"
 msgstr "Iestatnes režīms"
 
-msgid "Show Ethernet activity"
-msgstr ""
-
 msgid "Show Info"
 msgstr "Rādīt informāciju"
 
@@ -3381,9 +3129,6 @@ msgstr "Rādīt bezvadu tīkla statusu"
 
 msgid "Show blinking clock in display during recording"
 msgstr "Ieraksta laikā displejā rādīt mirgojošu pulksteni"
-
-msgid "Show clock"
-msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Rādīt infojoslu, mainot kanālu"
@@ -3444,9 +3189,6 @@ msgstr "Viensolis (GOP)"
 
 msgid "Skin..."
 msgstr "Ādiņa..."
-
-msgid "SkinSelector"
-msgstr ""
 
 msgid "Skins"
 msgstr ""
@@ -3641,9 +3383,6 @@ msgstr "Simbolātrums"
 msgid "System"
 msgstr "Sistēma"
 
-msgid "System-Info"
-msgstr ""
-
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr "Ivo Grinbergs Jelgava, Latvija"
@@ -3653,9 +3392,6 @@ msgstr "TS datne ir par lielu priekš ISO9660 līmeņa 1!"
 
 msgid "TV System"
 msgstr "TV sistēma"
-
-msgid "TXT"
-msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Satura rādītājs kolekcijai"
@@ -3944,9 +3680,6 @@ msgstr "Ceturtdiena"
 msgid "Time"
 msgstr "Laiks"
 
-msgid "Time mode"
-msgstr ""
-
 msgid "Time/Date Input"
 msgstr "Laiks / Datums"
 
@@ -4095,9 +3828,6 @@ msgstr "Uztvērēja statuss"
 msgid "Turkish"
 msgstr "Turku"
 
-msgid "TuxTXT"
-msgstr ""
-
 msgid "Two"
 msgstr "Divi"
 
@@ -4106,15 +3836,6 @@ msgstr "Tips"
 
 msgid "Type of scan"
 msgstr "Meklēšanas veids"
-
-msgid "Typematic delay"
-msgstr ""
-
-msgid "Typematic rate"
-msgstr ""
-
-msgid "U"
-msgstr ""
 
 #, fuzzy
 msgid "USALS"
@@ -4203,7 +3924,6 @@ msgstr "Lietot sprieguma mērīšanu"
 msgid "Use a gateway"
 msgstr "Lietot vārteju"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -4253,15 +3973,6 @@ msgstr "Lietotais kanālu meklēšanas veids"
 
 msgid "User defined"
 msgstr "Lietotāja definēts"
-
-msgid "UserDialog"
-msgstr ""
-
-msgid "UserManager"
-msgstr ""
-
-msgid "V"
-msgstr ""
 
 msgid "VCR scart"
 msgstr "VCR scart savienojums"
@@ -4320,9 +4031,6 @@ msgstr "Skatīt Rass interaktīvi..."
 msgid "View Video CD..."
 msgstr ""
 
-msgid "View list of available "
-msgstr ""
-
 msgid "View list of available CommonInterface extensions"
 msgstr ""
 
@@ -4364,12 +4072,6 @@ msgstr "Skatīt teletekstu..."
 
 msgid "Virtual KeyBoard"
 msgstr "Virtuālā klaviatūra"
-
-msgid "Vol"
-msgstr ""
-
-msgid "Vol off"
-msgstr ""
 
 msgid "Voltage mode"
 msgstr "Sprieguma režīms"
@@ -4500,9 +4202,6 @@ msgstr "NFI imidža datnes rakstīšana iekšējā atmiņā pabeigta"
 
 msgid "YPbPr"
 msgstr "YPbPr"
-
-msgid "YUV"
-msgstr ""
 
 msgid "Year"
 msgstr "Gads"
@@ -4786,9 +4485,6 @@ msgstr "pievienot kanālu favorītiem"
 msgid "add to parental protection"
 msgstr "pievienot vecāku kontrolei"
 
-msgid "add/remove bookmarks (locationbox)"
-msgstr ""
-
 msgid "advanced"
 msgstr "paplašināts"
 
@@ -4801,9 +4497,6 @@ msgid ""
 msgstr ""
 "vai tiešām vēlaties atjaunot\n"
 "šī dublējumkopija:\n"
-
-msgid "ask on exit"
-msgstr ""
 
 msgid "assigned CAIds"
 msgstr ""
@@ -5066,9 +4759,6 @@ msgstr "stundas"
 msgid "immediate shutdown"
 msgstr "tūlītēja izslēgšana"
 
-msgid "immediate standby"
-msgstr ""
-
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -5265,14 +4955,8 @@ msgstr "atskaņot ierakstu"
 msgid "play from next mark or playlist entry"
 msgstr "atskaņot no nākamās iezīmes vai repertuāra ieraksta"
 
-msgid "play from next playlist entry"
-msgstr ""
-
 msgid "play from previous mark or playlist entry"
 msgstr "atskaņot no iepriekšējās iezīmes vai repertuāra ieraksta"
-
-msgid "play from previous playlist entry"
-msgstr ""
 
 msgid "please press OK when ready"
 msgstr "lūdzu spiediet OK, kad esiet gatavs"
@@ -5348,9 +5032,6 @@ msgstr "saglabāt pēdējo mapi, izejot"
 
 msgid "save playlist"
 msgstr "saglabāt repertuāru"
-
-msgid "save playlist before exit?"
-msgstr ""
 
 msgid "save playlist on exit"
 msgstr "saglabāt repertuāru, izejot"
@@ -5535,9 +5216,6 @@ msgstr "šis ieraksts"
 
 msgid "this service is protected by a parental control pin"
 msgstr "šis kanāls ir aizsargāts ar vecāku kontroles PIN kodu"
-
-msgid "toggels betwenn tv and radio..."
-msgstr ""
 
 msgid "toggle a cut mark at the current position"
 msgstr "Ie-/iz-slēgt griešanas iezīmi pašreizējā pozīcijā"

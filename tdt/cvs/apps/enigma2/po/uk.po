@@ -7,11 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 16:43+0100\n"
+"POT-Creation-Date: 2009-05-18 23:40+0200\n"
 "PO-Revision-Date: 2008-09-28 14:03+0200\n"
 "Last-Translator: stepan_kv <stepan_kv@mail.ru>\n"
 "Language-Team: http://sat-ukraine.info/\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -91,64 +90,16 @@ msgstr ""
 msgid " "
 msgstr ""
 
-msgid " extensions."
-msgstr ""
-
 msgid "#000000"
-msgstr ""
-
-msgid "#00081226"
 msgstr ""
 
 msgid "#0064c7"
 msgstr ""
 
-msgid "#0099ff"
-msgstr ""
-
-msgid "#00f0f0f0"
-msgstr ""
-
-msgid "#00fcc000"
-msgstr ""
-
-msgid "#08001E4B"
-msgstr ""
-
-msgid "#08004C00"
-msgstr ""
-
-msgid "#084B4B00"
-msgstr ""
-
-msgid "#084C0000"
-msgstr ""
-
-msgid "#0f0f0f"
-msgstr ""
-
 msgid "#25062748"
 msgstr ""
 
-msgid "#294a6b"
-msgstr ""
-
-msgid "#32000000"
-msgstr ""
-
 msgid "#389416"
-msgstr ""
-
-msgid "#42000000"
-msgstr ""
-
-msgid "#44444a"
-msgstr ""
-
-msgid "#56C856"
-msgstr ""
-
-msgid "#65000000"
 msgstr ""
 
 msgid "#80000000"
@@ -157,34 +108,10 @@ msgstr ""
 msgid "#80ffffff"
 msgstr ""
 
-msgid "#999999"
-msgstr ""
-
-msgid "#FCC000"
-msgstr ""
-
 msgid "#bab329"
 msgstr ""
 
-msgid "#cfcfcf"
-msgstr ""
-
-msgid "#e5e5e5"
-msgstr ""
-
-msgid "#f0f0f0"
-msgstr ""
-
 msgid "#f23d21"
-msgstr ""
-
-msgid "#f3ca09"
-msgstr ""
-
-msgid "#ff000000"
-msgstr ""
-
-msgid "#ff4A3C"
 msgstr ""
 
 msgid "#ffffff"
@@ -236,15 +163,6 @@ msgid "* Only available if more than one interface is active."
 msgstr ""
 
 msgid "* Only available when entering hidden SSID or network key"
-msgstr ""
-
-msgid "-"
-msgstr ""
-
-msgid "---------------------- bookmarks -------------------"
-msgstr ""
-
-msgid "..."
 msgstr ""
 
 msgid ".NFI Download failed:"
@@ -312,9 +230,6 @@ msgid "30 minutes"
 msgstr "30 хвилин"
 
 msgid "4"
-msgstr ""
-
-msgid "422"
 msgstr ""
 
 msgid "4:3"
@@ -536,9 +451,6 @@ msgstr "Всі канали"
 msgid "All Satellites"
 msgstr ""
 
-msgid "All caps"
-msgstr ""
-
 msgid "Alpha"
 msgstr "Прозорість"
 
@@ -596,20 +508,11 @@ msgstr "Запитувати користувача"
 msgid "Aspect Ratio"
 msgstr "Співвідношення сторін:"
 
-msgid "Aspect list..."
-msgstr ""
-
 msgid "Audio"
 msgstr "Аудіо"
 
 msgid "Audio Options..."
 msgstr "вибір аудіо-доріжки..."
-
-msgid "Audio Source"
-msgstr ""
-
-msgid "Audio/Subservices"
-msgstr ""
 
 msgid "Author: "
 msgstr ""
@@ -739,13 +642,7 @@ msgstr "С-Діапазон"
 msgid "CF Drive"
 msgstr "Карта CF"
 
-msgid "CI Assignment"
-msgstr ""
-
 msgid "CI assignment"
-msgstr ""
-
-msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -1024,9 +921,6 @@ msgstr "Чешська"
 msgid "D"
 msgstr ""
 
-msgid "DD"
-msgstr ""
-
 msgid "DHCP"
 msgstr ""
 
@@ -1035,9 +929,6 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
-
-msgid "DVD File Browser"
-msgstr ""
 
 msgid "DVD Player"
 msgstr "DVD Програвач"
@@ -1050,9 +941,6 @@ msgstr "Данська"
 
 msgid "Date"
 msgstr "Дата"
-
-msgid "Daylight"
-msgstr ""
 
 msgid "Deep Standby"
 msgstr "Вимкнути Dreambox"
@@ -1077,10 +965,6 @@ msgstr "Відмінити завдання"
 
 msgid "Delete failed!"
 msgstr "Видалення невдале!"
-
-#, python-format
-msgid "Delete failed!, %s"
-msgstr ""
 
 #, python-format
 msgid ""
@@ -1195,9 +1079,6 @@ msgid ""
 "Do you really want to download\n"
 "the plugin \"%s\"?"
 msgstr ""
-
-msgid "Do you really want to exit?"
-msgstr "Ви дійсно хочете вийти?"
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1324,9 +1205,6 @@ msgstr "Данська"
 msgid "E"
 msgstr "O"
 
-msgid "EJECT DVD"
-msgstr ""
-
 msgid "EPG Selection"
 msgstr "Вибір EPG"
 
@@ -1424,7 +1302,6 @@ msgstr ""
 "\n"
 "© 2006 - Stephan Reichholf"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1461,9 +1338,6 @@ msgid ""
 msgstr ""
 "Помилка: %s\n"
 "Повторити?"
-
-msgid "Estonian"
-msgstr ""
 
 msgid "Eventview"
 msgstr "Перегдяд завдань"
@@ -1504,14 +1378,8 @@ msgstr "Розширені налаштування..."
 msgid "Extensions"
 msgstr "Розширення"
 
-msgid "F"
-msgstr ""
-
 msgid "FEC"
 msgstr "FEC"
-
-msgid "FILE LIST"
-msgstr ""
 
 msgid "Factory reset"
 msgstr "Скидання до заводських налаштувань"
@@ -1661,17 +1529,8 @@ msgstr ""
 msgid "Guard interval mode"
 msgstr "Режим Guard Interval"
 
-msgid "H"
-msgstr ""
-
-msgid "HDTV"
-msgstr ""
-
 msgid "Harddisk"
 msgstr "Жорсткий диск..."
-
-msgid "Harddisk Wait"
-msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Налаштування HDD"
@@ -1762,9 +1621,6 @@ msgstr "Збільшена напруга"
 
 msgid "Index"
 msgstr "Індекс"
-
-msgid "Info"
-msgstr ""
 
 msgid "InfoBar"
 msgstr "Інфо панель"
@@ -1868,9 +1724,6 @@ msgstr ""
 msgid "Italian"
 msgstr "Італійська"
 
-msgid "J"
-msgstr ""
-
 msgid "Job View"
 msgstr "Перегляд завдань"
 
@@ -1895,9 +1748,6 @@ msgstr "LAN Адаптер"
 
 msgid "LNB"
 msgstr "LNB"
-
-msgid "LOAD DVD"
-msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -1987,14 +1837,8 @@ msgstr "Утримування кнопки"
 msgid "Longitude"
 msgstr "Довгота"
 
-msgid "M"
-msgstr ""
-
 msgid "MMC Card"
 msgstr "Карта ММС"
-
-msgid "MMIDialog"
-msgstr ""
 
 msgid "MORE"
 msgstr "Більше"
@@ -2080,15 +1924,6 @@ msgstr "Понеділок"
 msgid "Mount failed"
 msgstr "Монтування невдале"
 
-msgid "MountEdit"
-msgstr ""
-
-msgid "MountManager"
-msgstr ""
-
-msgid "MountView"
-msgstr ""
-
 msgid "Move Picture in Picture"
 msgstr "Перемістити PiP"
 
@@ -2098,17 +1933,8 @@ msgstr "Перемістити на схід"
 msgid "Move west"
 msgstr "Перемістити на захід"
 
-msgid "MoviePlayer"
-msgstr ""
-
 msgid "Movielist menu"
 msgstr "Меню списку фільмів"
-
-msgid "Movieplayer"
-msgstr ""
-
-msgid "Movies"
-msgstr ""
 
 msgid "Multi EPG"
 msgstr "Multi-EPG"
@@ -2168,9 +1994,6 @@ msgstr "Конфігурація мережі..."
 msgid "Network Mount"
 msgstr "Network Mount"
 
-msgid "Network Neighbourhood"
-msgstr ""
-
 msgid "Network SSID"
 msgstr "Мережевий SSID"
 
@@ -2194,9 +2017,6 @@ msgstr "Мережа..."
 
 msgid "Network:"
 msgstr "Мережа:"
-
-msgid "NetworkBrowser"
-msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Майстер налаштувань мережі"
@@ -2336,9 +2156,6 @@ msgstr "Ні, тільки ввімкнути мого Dreambox'a"
 msgid "No, scan later manually"
 msgstr "Ні, сканувати вручну пізніше"
 
-msgid "NoGfx Skin (c)2009 - by benutzername"
-msgstr ""
-
 msgid "None"
 msgstr "Нічого"
 
@@ -2410,20 +2227,11 @@ msgstr ""
 msgid "Orbital Position"
 msgstr "Орбітальна позиція"
 
-msgid "P"
-msgstr ""
-
 msgid "PAL"
 msgstr "PAL"
 
-msgid "PCM"
-msgstr ""
-
 msgid "PIDs"
 msgstr "Піди"
-
-msgid "PLAY LIST"
-msgstr ""
 
 msgid "Package details for: "
 msgstr ""
@@ -2450,9 +2258,6 @@ msgstr "Початкова директорія"
 msgid "Parental control"
 msgstr "Батьківський контроль"
 
-msgid "Parental control Editor"
-msgstr ""
-
 msgid "Parental control services Editor"
 msgstr "Редактор каналів батьківського контролю"
 
@@ -2467,9 +2272,6 @@ msgstr "Затримати фільм в кінці"
 
 msgid "PiPSetup"
 msgstr "Налаштування PiP"
-
-msgid "Picture Player"
-msgstr ""
 
 msgid "PicturePlayer"
 msgstr ""
@@ -2578,17 +2380,11 @@ msgstr "Виберіть плейлист для видалення..."
 msgid "Please select a playlist..."
 msgstr "Виберіть плейлист..."
 
-msgid "Please select a resolution..."
-msgstr ""
-
 msgid "Please select a subservice to record..."
 msgstr "Виберіть підсервіс для запису..."
 
 msgid "Please select a subservice..."
 msgstr "Виберіть підсервіс..."
-
-msgid "Please select an aspect ratio..."
-msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr ""
@@ -2601,12 +2397,6 @@ msgstr ""
 
 msgid "Please select the movie path..."
 msgstr "Виберіть шлях до фільму..."
-
-msgid "Please select the path for the Startdirectory"
-msgstr ""
-
-msgid "Please select the path..."
-msgstr ""
 
 msgid "Please set up tuner B"
 msgstr "Налаштуйте тюнер B"
@@ -2766,17 +2556,8 @@ msgstr ""
 msgid "Quickzap"
 msgstr "Швидке перемикання"
 
-msgid "R"
-msgstr ""
-
 msgid "RC Menu"
 msgstr "Меню ДУ"
-
-msgid "RC command set"
-msgstr ""
-
-msgid "RECORD"
-msgstr ""
 
 msgid "RF output"
 msgstr "RF вихід"
@@ -3000,9 +2781,6 @@ msgstr "Швидкість обертання ротора"
 msgid "Russian"
 msgstr "Російська"
 
-msgid "S"
-msgstr ""
-
 msgid "S-Video"
 msgstr "S-Відео"
 
@@ -3010,12 +2788,6 @@ msgid "SNR"
 msgstr ""
 
 msgid "SNR:"
-msgstr ""
-
-msgid "SPDIF"
-msgstr ""
-
-msgid "SUB"
 msgstr ""
 
 msgid "Sat"
@@ -3058,9 +2830,6 @@ msgid "Scan "
 msgstr "Пошук "
 
 msgid "Scan Files..."
-msgstr ""
-
-msgid "Scan IP"
 msgstr ""
 
 msgid "Scan QAM128"
@@ -3136,15 +2905,6 @@ msgstr ""
 msgid ""
 "Scans default lamedbs sorted by satellite with a connected dish positioner"
 msgstr "Просканувати снандартні супутники записані в позиціонері"
-
-msgid "Scroll delay"
-msgstr ""
-
-msgid "Scroll long strings"
-msgstr ""
-
-msgid "Scroll pause"
-msgstr ""
 
 msgid "Search east"
 msgstr "Пошук на схід"
@@ -3269,9 +3029,6 @@ msgstr ""
 "Канал не доступний!\n"
 "Перевірте налаштування тюнера!"
 
-msgid "Service-Info"
-msgstr ""
-
 msgid "Serviceinfo"
 msgstr "Інформація"
 
@@ -3284,13 +3041,7 @@ msgstr ""
 msgid "Set as default Interface"
 msgstr "Встановити як Інтерфейс за замовчуванням"
 
-msgid "Set fan"
-msgstr ""
-
 msgid "Set interface as default Interface"
-msgstr ""
-
-msgid "Set led"
 msgstr ""
 
 msgid "Set limits"
@@ -3305,9 +3056,6 @@ msgstr "Налаштування"
 msgid "Setup Mode"
 msgstr "Режим Налаштування"
 
-msgid "Show Ethernet activity"
-msgstr ""
-
 msgid "Show Info"
 msgstr "Показати інформацію"
 
@@ -3316,9 +3064,6 @@ msgstr "Показати WLAN статус"
 
 msgid "Show blinking clock in display during recording"
 msgstr "Показувати блимаючий годинник під час запису"
-
-msgid "Show clock"
-msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Показувати інфопанель при зміні каналу"
@@ -3375,9 +3120,6 @@ msgid "Singlestep (GOP)"
 msgstr "Однокроковий (GOP)"
 
 msgid "Skin..."
-msgstr ""
-
-msgid "SkinSelector"
 msgstr ""
 
 msgid "Skins"
@@ -3571,9 +3313,6 @@ msgstr "Символ. швидкість"
 msgid "System"
 msgstr "Система"
 
-msgid "System-Info"
-msgstr ""
-
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr ""
@@ -3583,9 +3322,6 @@ msgstr ""
 
 msgid "TV System"
 msgstr "TV Система"
-
-msgid "TXT"
-msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Таблиця вмісту для колекції"
@@ -3855,9 +3591,6 @@ msgstr "Четвер"
 msgid "Time"
 msgstr "Час"
 
-msgid "Time mode"
-msgstr ""
-
 msgid "Time/Date Input"
 msgstr "Час / Дата"
 
@@ -4002,9 +3735,6 @@ msgstr "Статус тюнера"
 msgid "Turkish"
 msgstr "Турецька"
 
-msgid "TuxTXT"
-msgstr ""
-
 msgid "Two"
 msgstr "Два"
 
@@ -4013,15 +3743,6 @@ msgstr ""
 
 msgid "Type of scan"
 msgstr "Тип сканування"
-
-msgid "Typematic delay"
-msgstr ""
-
-msgid "Typematic rate"
-msgstr ""
-
-msgid "U"
-msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -4109,7 +3830,6 @@ msgstr "Використовувати вимірювання потужност
 msgid "Use a gateway"
 msgstr "Використовувати шлюз"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -4158,15 +3878,6 @@ msgstr "Тип пошуку каналів"
 
 msgid "User defined"
 msgstr "Визначені користувачем"
-
-msgid "UserDialog"
-msgstr ""
-
-msgid "UserManager"
-msgstr ""
-
-msgid "V"
-msgstr ""
 
 msgid "VCR scart"
 msgstr "VCR скарт"
@@ -4225,9 +3936,6 @@ msgstr "Показати інтерактивний Rass..."
 msgid "View Video CD..."
 msgstr ""
 
-msgid "View list of available "
-msgstr ""
-
 msgid "View list of available CommonInterface extensions"
 msgstr ""
 
@@ -4268,12 +3976,6 @@ msgid "View teletext..."
 msgstr "показати телетекст..."
 
 msgid "Virtual KeyBoard"
-msgstr ""
-
-msgid "Vol"
-msgstr ""
-
-msgid "Vol off"
 msgstr ""
 
 msgid "Voltage mode"
@@ -4392,9 +4094,6 @@ msgstr ""
 
 msgid "YPbPr"
 msgstr "YPbPr"
-
-msgid "YUV"
-msgstr ""
 
 msgid "Year"
 msgstr "Рік"
@@ -4667,9 +4366,6 @@ msgstr "додати канал до фаворитів"
 msgid "add to parental protection"
 msgstr "додати в батьківський контроль"
 
-msgid "add/remove bookmarks (locationbox)"
-msgstr ""
-
 msgid "advanced"
 msgstr "додати в батьківський контроль"
 
@@ -4682,9 +4378,6 @@ msgid ""
 msgstr ""
 "Ви дійсно бажаєте відновити\n"
 "наступну копію:\n"
-
-msgid "ask on exit"
-msgstr ""
 
 msgid "assigned CAIds"
 msgstr ""
@@ -4947,9 +4640,6 @@ msgstr "годин"
 msgid "immediate shutdown"
 msgstr "миттєве вимкнення"
 
-msgid "immediate standby"
-msgstr ""
-
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -5144,14 +4834,8 @@ msgstr "відтворити вибране"
 msgid "play from next mark or playlist entry"
 msgstr "слід. закладка або запис плейлиста"
 
-msgid "play from next playlist entry"
-msgstr ""
-
 msgid "play from previous mark or playlist entry"
 msgstr "попер. закладка або запис плейлиста"
-
-msgid "play from previous playlist entry"
-msgstr ""
 
 msgid "please press OK when ready"
 msgstr "Натисніть ОК коли буде виконано"
@@ -5227,9 +4911,6 @@ msgstr ""
 
 msgid "save playlist"
 msgstr "зберегти плейлист"
-
-msgid "save playlist before exit?"
-msgstr ""
 
 msgid "save playlist on exit"
 msgstr ""
@@ -5415,9 +5096,6 @@ msgstr "цей запис"
 msgid "this service is protected by a parental control pin"
 msgstr "цей канал захищений PIN кодом"
 
-msgid "toggels betwenn tv and radio..."
-msgstr ""
-
 msgid "toggle a cut mark at the current position"
 msgstr "додати мітку вирізання в цю позицію"
 
@@ -5555,6 +5233,9 @@ msgstr "Переключений"
 #~ msgstr ""
 #~ "Ви дійсно хочете завантажити\n"
 #~ "додаток \""
+
+#~ msgid "Do you really want to exit?"
+#~ msgstr "Ви дійсно хочете вийти?"
 
 #~ msgid "Enable WLAN Support"
 #~ msgstr "Активувати підтримку WLAN"

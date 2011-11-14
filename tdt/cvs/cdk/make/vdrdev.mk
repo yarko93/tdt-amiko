@@ -1,4 +1,3 @@
-#vdrdev
 URLVDR="ftp://ftp.tvdr.de/vdr/Developer/"
 
 $(DEPDIR)/vdrdev.do_prepare: bootstrap freetype libxml2 fontconfig libcap

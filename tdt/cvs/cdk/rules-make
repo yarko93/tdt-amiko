@@ -147,7 +147,6 @@ gst_ffmpeg;0.10.11;gst-ffmpeg-0.10.11;gst-ffmpeg-0.10.11.tar.bz2;extract:gst-ffm
 gst_plugins_dvbmediasink;0.10.1;gst-plugins-dvbmediasink-0.10.1;;link:../apps/misc/tools/gst-plugins-dvbmediasink:gst-plugins-dvbmediasink-0.10.1
 #gst_plugins_dvbmediasink;0.10.1;gst-plugins-dvbmediasink-0.10.1;gst-plugins-dvbmediasink-0.10.1;link:../apps/misc/tools/gst-plugins-dvbmediasink:gst-plugins-dvbmediasink-0.10.1
 
-
 evebrowser;0.0.1;evebrowser-0.0.1
 dvbdata;0.6;dvbdata-0.6;dvbdata-0.6.tar.gz;extract:dvbdata-0.6.tar.gz
 brofs;1.2;BroFS1.2;BroFS1.2.tgz;extract:BroFS1.2.tgz

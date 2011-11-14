@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 16:43+0100\n"
+"POT-Creation-Date: 2009-05-18 22:43+0200\n"
 "PO-Revision-Date: 2008-12-29 16:22+0100\n"
 "Last-Translator: gerrit <gerrit@nedlinux.nl>\n"
 "Language-Team: gerrit <fy@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -94,65 +93,17 @@ msgstr ""
 msgid " "
 msgstr " "
 
-msgid " extensions."
-msgstr ""
-
 msgid "#000000"
 msgstr "#000000"
-
-msgid "#00081226"
-msgstr ""
 
 msgid "#0064c7"
 msgstr "#0064c7"
 
-msgid "#0099ff"
-msgstr ""
-
-msgid "#00f0f0f0"
-msgstr ""
-
-msgid "#00fcc000"
-msgstr ""
-
-msgid "#08001E4B"
-msgstr ""
-
-msgid "#08004C00"
-msgstr ""
-
-msgid "#084B4B00"
-msgstr ""
-
-msgid "#084C0000"
-msgstr ""
-
-msgid "#0f0f0f"
-msgstr ""
-
 msgid "#25062748"
 msgstr "#25062748"
 
-msgid "#294a6b"
-msgstr ""
-
-msgid "#32000000"
-msgstr ""
-
 msgid "#389416"
 msgstr "#389416"
-
-msgid "#42000000"
-msgstr ""
-
-msgid "#44444a"
-msgstr ""
-
-msgid "#56C856"
-msgstr ""
-
-msgid "#65000000"
-msgstr ""
 
 msgid "#80000000"
 msgstr "#80000000"
@@ -160,35 +111,11 @@ msgstr "#80000000"
 msgid "#80ffffff"
 msgstr "#80ffffff"
 
-msgid "#999999"
-msgstr ""
-
-msgid "#FCC000"
-msgstr ""
-
 msgid "#bab329"
 msgstr "#bab329"
 
-msgid "#cfcfcf"
-msgstr ""
-
-msgid "#e5e5e5"
-msgstr ""
-
-msgid "#f0f0f0"
-msgstr ""
-
 msgid "#f23d21"
 msgstr "#f23d21"
-
-msgid "#f3ca09"
-msgstr ""
-
-msgid "#ff000000"
-msgstr ""
-
-msgid "#ff4A3C"
-msgstr ""
 
 msgid "#ffffff"
 msgstr "#ffffff"
@@ -240,15 +167,6 @@ msgstr "* Allinne beskikber by meer dan ien aktieve ynterfaces"
 
 msgid "* Only available when entering hidden SSID or network key"
 msgstr "* Allinne bekikber by ynfieren ferberche SSID of netwurk kaai"
-
-msgid "-"
-msgstr ""
-
-msgid "---------------------- bookmarks -------------------"
-msgstr ""
-
-msgid "..."
-msgstr ""
 
 msgid ".NFI Download failed:"
 msgstr "flater by it binnenhelje fan .NFI triem."
@@ -318,9 +236,6 @@ msgstr "30 minuten"
 
 msgid "4"
 msgstr "4"
-
-msgid "422"
-msgstr ""
 
 msgid "4:3"
 msgstr "4:3"
@@ -544,9 +459,6 @@ msgstr "Alles"
 msgid "All Satellites"
 msgstr "Alle Satellyten"
 
-msgid "All caps"
-msgstr ""
-
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -606,20 +518,11 @@ msgstr "freechje gebrûker"
 msgid "Aspect Ratio"
 msgstr "Aspect ratio"
 
-msgid "Aspect list..."
-msgstr ""
-
 msgid "Audio"
 msgstr "Lûd"
 
 msgid "Audio Options..."
 msgstr "Lûd opsjes..."
-
-msgid "Audio Source"
-msgstr ""
-
-msgid "Audio/Subservices"
-msgstr ""
 
 msgid "Author: "
 msgstr ""
@@ -749,13 +652,7 @@ msgstr "C-Bân"
 msgid "CF Drive"
 msgstr "CF Drive"
 
-msgid "CI Assignment"
-msgstr ""
-
 msgid "CI assignment"
-msgstr ""
-
-msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -1034,9 +931,6 @@ msgstr "Tsjechysk"
 msgid "D"
 msgstr "D"
 
-msgid "DD"
-msgstr ""
-
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -1045,9 +939,6 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
-
-msgid "DVD File Browser"
-msgstr ""
 
 msgid "DVD Player"
 msgstr "DVD Spieler"
@@ -1060,9 +951,6 @@ msgstr "Deensk"
 
 msgid "Date"
 msgstr "Datum"
-
-msgid "Daylight"
-msgstr ""
 
 msgid "Deep Standby"
 msgstr "Sliip stand"
@@ -1087,10 +975,6 @@ msgstr "Ferwiderje ynfier"
 
 msgid "Delete failed!"
 msgstr "Ferwiderjen mislearre!"
-
-#, python-format
-msgid "Delete failed!, %s"
-msgstr ""
 
 #, python-format
 msgid ""
@@ -1203,9 +1087,6 @@ msgid ""
 "Do you really want to download\n"
 "the plugin \"%s\"?"
 msgstr "Wolle jo wier de plugin \"%s\" binnenhelje ?"
-
-msgid "Do you really want to exit?"
-msgstr ""
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1332,9 +1213,6 @@ msgstr "Nederlansk"
 msgid "E"
 msgstr "E"
 
-msgid "EJECT DVD"
-msgstr ""
-
 msgid "EPG Selection"
 msgstr "EPG Seleksje"
 
@@ -1431,7 +1309,6 @@ msgstr ""
 "probearje te beriken\n"
 "© 2006 - Stephan Reichholf"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1468,9 +1345,6 @@ msgid ""
 msgstr ""
 "Flater: %s\n"
 "Opnei ?"
-
-msgid "Estonian"
-msgstr ""
 
 msgid "Eventview"
 msgstr "Barren oersjoch"
@@ -1511,14 +1385,8 @@ msgstr "Utwreide Ynstellingen..."
 msgid "Extensions"
 msgstr "Utwreidingen"
 
-msgid "F"
-msgstr ""
-
 msgid "FEC"
 msgstr "FEC"
-
-msgid "FILE LIST"
-msgstr ""
 
 msgid "Factory reset"
 msgstr "Fabryks ynstellingen"
@@ -1668,17 +1536,8 @@ msgstr "ynterfal yn 'e gaten halde"
 msgid "Guard interval mode"
 msgstr "Ynterfal modus yn 'e gaten halde"
 
-msgid "H"
-msgstr ""
-
-msgid "HDTV"
-msgstr ""
-
 msgid "Harddisk"
 msgstr "Hurde skiif"
-
-msgid "Harddisk Wait"
-msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Hurde skiif ynstellingen"
@@ -1767,9 +1626,6 @@ msgstr "Ferheeche spanning"
 
 msgid "Index"
 msgstr "Yndex"
-
-msgid "Info"
-msgstr ""
 
 msgid "InfoBar"
 msgstr "Ynfobalke"
@@ -1873,9 +1729,6 @@ msgstr ""
 msgid "Italian"
 msgstr "Italiaansk"
 
-msgid "J"
-msgstr ""
-
 msgid "Job View"
 msgstr "Opdracht oansjoch"
 
@@ -1900,9 +1753,6 @@ msgstr "LAN oanslúting"
 
 msgid "LNB"
 msgstr "LNB"
-
-msgid "LOAD DVD"
-msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -1992,14 +1842,8 @@ msgstr "Lang taste yndrukken"
 msgid "Longitude"
 msgstr "Lingtegraad"
 
-msgid "M"
-msgstr ""
-
 msgid "MMC Card"
 msgstr "MMC kaart"
-
-msgid "MMIDialog"
-msgstr ""
 
 msgid "MORE"
 msgstr "MEER"
@@ -2085,15 +1929,6 @@ msgstr "Moandei"
 msgid "Mount failed"
 msgstr "Oankeppeljen mislearre"
 
-msgid "MountEdit"
-msgstr ""
-
-msgid "MountManager"
-msgstr ""
-
-msgid "MountView"
-msgstr ""
-
 msgid "Move Picture in Picture"
 msgstr "Ferpleats Byld yn Byld"
 
@@ -2103,17 +1938,8 @@ msgstr "Draai nei east"
 msgid "Move west"
 msgstr "Draai nei west"
 
-msgid "MoviePlayer"
-msgstr ""
-
 msgid "Movielist menu"
 msgstr "Filmlyst menu"
-
-msgid "Movieplayer"
-msgstr ""
-
-msgid "Movies"
-msgstr ""
 
 msgid "Multi EPG"
 msgstr "Multi EPG"
@@ -2173,9 +1999,6 @@ msgstr "Netwurk configuraasje"
 msgid "Network Mount"
 msgstr "Netwurk oankeppelingen"
 
-msgid "Network Neighbourhood"
-msgstr ""
-
 msgid "Network SSID"
 msgstr "Netwurk SSID"
 
@@ -2199,9 +2022,6 @@ msgstr "Netwurk..."
 
 msgid "Network:"
 msgstr "Netwurk:"
-
-msgid "NetworkBrowser"
-msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Netwurk gûcheler"
@@ -2342,9 +2162,6 @@ msgstr "Nee, allinne myn box starte"
 msgid "No, scan later manually"
 msgstr "Nee, letter mei de hân sykje"
 
-msgid "NoGfx Skin (c)2009 - by benutzername"
-msgstr ""
-
 msgid "None"
 msgstr "Gjin"
 
@@ -2363,8 +2180,8 @@ msgid ""
 "Not enough diskspace. Please free up some diskspace and try again. (%d MB "
 "required, %d MB available)"
 msgstr ""
-"Net genôch diskrûmte. Rûmje wat rotzooi op en besykje opnei. (%d MB nedich, "
-"%d oanwêzich)"
+"Net genôch diskrûmte. Rûmje wat rotzooi op en besykje opnei. (%d MB nedich, %"
+"d oanwêzich)"
 
 msgid ""
 "Nothing to scan!\n"
@@ -2415,20 +2232,11 @@ msgstr "Allinne Freie útstjoeringen"
 msgid "Orbital Position"
 msgstr "Rumtelyke posisje"
 
-msgid "P"
-msgstr ""
-
 msgid "PAL"
 msgstr "PAL"
 
-msgid "PCM"
-msgstr ""
-
 msgid "PIDs"
 msgstr "PIDs"
-
-msgid "PLAY LIST"
-msgstr ""
 
 msgid "Package details for: "
 msgstr ""
@@ -2455,9 +2263,6 @@ msgstr "Boppelizzende map"
 msgid "Parental control"
 msgstr "Alderlik tasjoch"
 
-msgid "Parental control Editor"
-msgstr ""
-
 msgid "Parental control services Editor"
 msgstr "Alderlik tasjoch bewurker"
 
@@ -2472,9 +2277,6 @@ msgstr "Film op pause by ein"
 
 msgid "PiPSetup"
 msgstr "PIP Ynstellingen"
-
-msgid "Picture Player"
-msgstr ""
 
 msgid "PicturePlayer"
 msgstr "Plaatsje spieler"
@@ -2584,17 +2386,11 @@ msgstr "Selektearje in ofspiellyst om te ferwiderjen..."
 msgid "Please select a playlist..."
 msgstr "Selektearje in ofspiellyst"
 
-msgid "Please select a resolution..."
-msgstr ""
-
 msgid "Please select a subservice to record..."
 msgstr "Jou in undersender op, om op te nimmen."
 
 msgid "Please select a subservice..."
 msgstr "Selektearje in undersender..."
-
-msgid "Please select an aspect ratio..."
-msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr ""
@@ -2607,12 +2403,6 @@ msgstr "Selektearje doel map of medium"
 
 msgid "Please select the movie path..."
 msgstr "Selektearje it paad nei de film"
-
-msgid "Please select the path for the Startdirectory"
-msgstr ""
-
-msgid "Please select the path..."
-msgstr ""
 
 msgid "Please set up tuner B"
 msgstr "ynstelle fan tuner B"
@@ -2769,17 +2559,8 @@ msgstr ""
 msgid "Quickzap"
 msgstr "Rapzappe"
 
-msgid "R"
-msgstr ""
-
 msgid "RC Menu"
 msgstr "Ofstandsbetsjinnings menu"
-
-msgid "RC command set"
-msgstr ""
-
-msgid "RECORD"
-msgstr ""
 
 msgid "RF output"
 msgstr "RF Ynstellingen"
@@ -3001,9 +2782,6 @@ msgstr "Dwaande"
 msgid "Russian"
 msgstr "Russysk"
 
-msgid "S"
-msgstr ""
-
 msgid "S-Video"
 msgstr "S Video"
 
@@ -3012,12 +2790,6 @@ msgstr "SNR"
 
 msgid "SNR:"
 msgstr "SNR:"
-
-msgid "SPDIF"
-msgstr ""
-
-msgid "SUB"
-msgstr ""
 
 msgid "Sat"
 msgstr "Sneon"
@@ -3059,9 +2831,6 @@ msgid "Scan "
 msgstr "Sykje"
 
 msgid "Scan Files..."
-msgstr ""
-
-msgid "Scan IP"
 msgstr ""
 
 msgid "Scan QAM128"
@@ -3138,15 +2907,6 @@ msgid ""
 "Scans default lamedbs sorted by satellite with a connected dish positioner"
 msgstr ""
 "Sykje standert lame dbs, neffens de sattelyt mei in oanslúten panne ôfsteller"
-
-msgid "Scroll delay"
-msgstr ""
-
-msgid "Scroll long strings"
-msgstr ""
-
-msgid "Scroll pause"
-msgstr ""
 
 msgid "Search east"
 msgstr "Sykje east"
@@ -3269,9 +3029,6 @@ msgid ""
 "Check tuner configuration!"
 msgstr "Kanaal net beskikber!<br> Sjoch tuner ynstellingen nei."
 
-msgid "Service-Info"
-msgstr ""
-
 msgid "Serviceinfo"
 msgstr "Kanaal ynformaasje"
 
@@ -3284,14 +3041,8 @@ msgstr "Set spanning en 22 kHz"
 msgid "Set as default Interface"
 msgstr "Ynstelle as standert ynterface"
 
-msgid "Set fan"
-msgstr ""
-
 msgid "Set interface as default Interface"
 msgstr "Set ynterface as standerd ynterface"
-
-msgid "Set led"
-msgstr ""
 
 msgid "Set limits"
 msgstr "Set limyten"
@@ -3305,9 +3056,6 @@ msgstr "Ynstelle"
 msgid "Setup Mode"
 msgstr "Ynstellingen Moadus"
 
-msgid "Show Ethernet activity"
-msgstr ""
-
 msgid "Show Info"
 msgstr "Ynformaasje sjen litte"
 
@@ -3316,9 +3064,6 @@ msgstr "WLAN status sjen litte"
 
 msgid "Show blinking clock in display during recording"
 msgstr "Lit klok knipperje yn display by opnimmen"
-
-msgid "Show clock"
-msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Ynfobalke sjen litte by kanaal wiksel"
@@ -3376,9 +3121,6 @@ msgstr "Ien stap (GOP)"
 
 msgid "Skin..."
 msgstr "Oanklaaiing"
-
-msgid "SkinSelector"
-msgstr ""
 
 msgid "Skins"
 msgstr ""
@@ -3571,9 +3313,6 @@ msgstr "Symboolfaasje"
 msgid "System"
 msgstr "Systeem"
 
-msgid "System-Info"
-msgstr ""
-
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr "Oersetter ynfo"
@@ -3583,9 +3322,6 @@ msgstr "TS triem is te grut foar ISO 9660 level 1!"
 
 msgid "TV System"
 msgstr "TV Systeem"
-
-msgid "TXT"
-msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Ynhalds tabel foar kolleksje"
@@ -3870,9 +3606,6 @@ msgstr "Tongersdei"
 msgid "Time"
 msgstr "Tiid"
 
-msgid "Time mode"
-msgstr ""
-
 msgid "Time/Date Input"
 msgstr "Tiid / Dei ynjefte"
 
@@ -4021,9 +3754,6 @@ msgstr "Tuner status"
 msgid "Turkish"
 msgstr "Turks"
 
-msgid "TuxTXT"
-msgstr ""
-
 msgid "Two"
 msgstr "Twa"
 
@@ -4032,15 +3762,6 @@ msgstr ""
 
 msgid "Type of scan"
 msgstr "Type fan sykjen"
-
-msgid "Typematic delay"
-msgstr ""
-
-msgid "Typematic rate"
-msgstr ""
-
-msgid "U"
-msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -4128,7 +3849,6 @@ msgstr "Bruk Enerzy behear"
 msgid "Use a gateway"
 msgstr "In gateway brûke"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -4175,15 +3895,6 @@ msgstr "Brukte type kanaal sykjen"
 
 msgid "User defined"
 msgstr "Gebruker ynstelling"
-
-msgid "UserDialog"
-msgstr ""
-
-msgid "UserManager"
-msgstr ""
-
-msgid "V"
-msgstr ""
 
 msgid "VCR scart"
 msgstr "VCR scart"
@@ -4241,9 +3952,6 @@ msgstr "Rass interaktief sjen litte"
 msgid "View Video CD..."
 msgstr ""
 
-msgid "View list of available "
-msgstr ""
-
 msgid "View list of available CommonInterface extensions"
 msgstr ""
 
@@ -4285,12 +3993,6 @@ msgstr "tiletekst toane..."
 
 msgid "Virtual KeyBoard"
 msgstr "Virtueel Toetseboerd"
-
-msgid "Vol"
-msgstr ""
-
-msgid "Vol off"
-msgstr ""
 
 msgid "Voltage mode"
 msgstr "Spanning mode"
@@ -4412,9 +4114,6 @@ msgstr "Skriuwen fan NFI byld nei flash is klear"
 
 msgid "YPbPr"
 msgstr "YPbPr"
-
-msgid "YUV"
-msgstr ""
 
 msgid "Year"
 msgstr "Jier"
@@ -4691,9 +4390,6 @@ msgstr "kanaal tafoegje oan favorieten"
 msgid "add to parental protection"
 msgstr "âlderlik tasjoch tafoegje "
 
-msgid "add/remove bookmarks (locationbox)"
-msgstr ""
-
 msgid "advanced"
 msgstr "afansjearre"
 
@@ -4706,9 +4402,6 @@ msgid ""
 msgstr ""
 "witte jo seker dizze werom te setten\n"
 "de extra kopie:\n"
-
-msgid "ask on exit"
-msgstr ""
 
 msgid "assigned CAIds"
 msgstr ""
@@ -4971,9 +4664,6 @@ msgstr "oeren"
 msgid "immediate shutdown"
 msgstr "direkt útskeakelje"
 
-msgid "immediate standby"
-msgstr ""
-
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -5168,14 +4858,8 @@ msgstr "rigele ofspielje"
 msgid "play from next mark or playlist entry"
 msgstr "Spielje fanôf it folgende punt of ôfspiellyst rigele"
 
-msgid "play from next playlist entry"
-msgstr ""
-
 msgid "play from previous mark or playlist entry"
 msgstr "Spielje fanôf it foarige punt of ôfspiellyst rigele"
-
-msgid "play from previous playlist entry"
-msgstr ""
 
 msgid "please press OK when ready"
 msgstr "druk Ok wanneer klear"
@@ -5251,9 +4935,6 @@ msgstr "Lêste map opslaan by ôfsluten"
 
 msgid "save playlist"
 msgstr "ofspiellyst opslaan"
-
-msgid "save playlist before exit?"
-msgstr ""
 
 msgid "save playlist on exit"
 msgstr "Ofspiellyst opslaan by ôfsluten"
@@ -5438,9 +5119,6 @@ msgstr "dit opnimmen"
 
 msgid "this service is protected by a parental control pin"
 msgstr "dit kanaal is net beskikber troch it alderlik tasjoch."
-
-msgid "toggels betwenn tv and radio..."
-msgstr ""
 
 msgid "toggle a cut mark at the current position"
 msgstr "merker oan/út op dizze posysje"

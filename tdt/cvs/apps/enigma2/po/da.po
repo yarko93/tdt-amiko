@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 16:43+0100\n"
+"POT-Creation-Date: 2009-05-18 23:40+0200\n"
 "PO-Revision-Date: 2009-03-08 13:07+0100\n"
 "Last-Translator: Ingmar Jørgensen <dreambox@ingmar.dk>\n"
 "Language-Team: jazzydane <dreambox@ingmar.dk>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -111,65 +110,17 @@ msgstr ""
 msgid " "
 msgstr " "
 
-msgid " extensions."
-msgstr ""
-
 msgid "#000000"
 msgstr "#000000"
-
-msgid "#00081226"
-msgstr ""
 
 msgid "#0064c7"
 msgstr "#0064c7"
 
-msgid "#0099ff"
-msgstr ""
-
-msgid "#00f0f0f0"
-msgstr ""
-
-msgid "#00fcc000"
-msgstr ""
-
-msgid "#08001E4B"
-msgstr ""
-
-msgid "#08004C00"
-msgstr ""
-
-msgid "#084B4B00"
-msgstr ""
-
-msgid "#084C0000"
-msgstr ""
-
-msgid "#0f0f0f"
-msgstr ""
-
 msgid "#25062748"
 msgstr "#25062748"
 
-msgid "#294a6b"
-msgstr ""
-
-msgid "#32000000"
-msgstr ""
-
 msgid "#389416"
 msgstr "#389416"
-
-msgid "#42000000"
-msgstr ""
-
-msgid "#44444a"
-msgstr ""
-
-msgid "#56C856"
-msgstr ""
-
-msgid "#65000000"
-msgstr ""
 
 msgid "#80000000"
 msgstr "#80000000"
@@ -177,35 +128,11 @@ msgstr "#80000000"
 msgid "#80ffffff"
 msgstr "#80ffffff"
 
-msgid "#999999"
-msgstr ""
-
-msgid "#FCC000"
-msgstr ""
-
 msgid "#bab329"
 msgstr "#bab329"
 
-msgid "#cfcfcf"
-msgstr ""
-
-msgid "#e5e5e5"
-msgstr ""
-
-msgid "#f0f0f0"
-msgstr ""
-
 msgid "#f23d21"
 msgstr "#f23d21"
-
-msgid "#f3ca09"
-msgstr ""
-
-msgid "#ff000000"
-msgstr ""
-
-msgid "#ff4A3C"
-msgstr ""
 
 msgid "#ffffff"
 msgstr "#ffffff"
@@ -257,15 +184,6 @@ msgstr "* Kun tilgængelig hvis mere end et interface er aktivt."
 
 msgid "* Only available when entering hidden SSID or network key"
 msgstr "* Kun tilgængelig ved indtastning af skjult SSID eller netværks nøgle"
-
-msgid "-"
-msgstr ""
-
-msgid "---------------------- bookmarks -------------------"
-msgstr ""
-
-msgid "..."
-msgstr ""
 
 msgid ".NFI Download failed:"
 msgstr ".NFI download fejlede:"
@@ -335,9 +253,6 @@ msgstr "30 minutter"
 
 msgid "4"
 msgstr "4"
-
-msgid "422"
-msgstr ""
 
 msgid "4:3"
 msgstr "4:3"
@@ -561,9 +476,6 @@ msgstr "Alle"
 msgid "All Satellites"
 msgstr "Alle satellitter"
 
-msgid "All caps"
-msgstr ""
-
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -627,20 +539,11 @@ msgstr "Spørg bruger"
 msgid "Aspect Ratio"
 msgstr "Billed Format"
 
-msgid "Aspect list..."
-msgstr ""
-
 msgid "Audio"
 msgstr "Lyd"
 
 msgid "Audio Options..."
 msgstr "Lyd Valg..."
-
-msgid "Audio Source"
-msgstr ""
-
-msgid "Audio/Subservices"
-msgstr ""
 
 msgid "Author: "
 msgstr ""
@@ -770,13 +673,7 @@ msgstr "C-Bånd"
 msgid "CF Drive"
 msgstr "CF Disk"
 
-msgid "CI Assignment"
-msgstr ""
-
 msgid "CI assignment"
-msgstr ""
-
-msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -1055,9 +952,6 @@ msgstr "Tjekkisk"
 msgid "D"
 msgstr "D"
 
-msgid "DD"
-msgstr ""
-
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -1066,9 +960,6 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
-
-msgid "DVD File Browser"
-msgstr ""
 
 msgid "DVD Player"
 msgstr "DVD Afspiller"
@@ -1081,9 +972,6 @@ msgstr "Dansk"
 
 msgid "Date"
 msgstr "Dato"
-
-msgid "Daylight"
-msgstr ""
 
 msgid "Deep Standby"
 msgstr "Afbryde"
@@ -1108,10 +996,6 @@ msgstr "Slet indgang"
 
 msgid "Delete failed!"
 msgstr "Slette fejl!"
-
-#, python-format
-msgid "Delete failed!, %s"
-msgstr ""
 
 #, python-format
 msgid ""
@@ -1230,9 +1114,6 @@ msgid ""
 msgstr ""
 "Vil du virkelig downloade\n"
 "pluginet \"%s\"?"
-
-msgid "Do you really want to exit?"
-msgstr "Ønsker du virkelig at afslutte?"
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1359,9 +1240,6 @@ msgstr "Hollandsk"
 msgid "E"
 msgstr "Ø"
 
-msgid "EJECT DVD"
-msgstr ""
-
 msgid "EPG Selection"
 msgstr "EPG Valg"
 
@@ -1459,7 +1337,6 @@ msgstr ""
 "\n"
 "© 2006 - Stephan Reichholf"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1496,9 +1373,6 @@ msgid ""
 msgstr ""
 "Fejl: %s\n"
 "Prøve igen?"
-
-msgid "Estonian"
-msgstr ""
 
 msgid "Eventview"
 msgstr "Programoversigt"
@@ -1539,14 +1413,8 @@ msgstr "Udvidet Opsætning..."
 msgid "Extensions"
 msgstr "Ekstra Menu"
 
-msgid "F"
-msgstr ""
-
 msgid "FEC"
 msgstr "FEC"
-
-msgid "FILE LIST"
-msgstr ""
 
 msgid "Factory reset"
 msgstr "Fabriks Genindstilling"
@@ -1695,17 +1563,8 @@ msgstr "Guard Interval"
 msgid "Guard interval mode"
 msgstr "Sikkerheds Interval Type"
 
-msgid "H"
-msgstr ""
-
-msgid "HDTV"
-msgstr ""
-
 msgid "Harddisk"
 msgstr "Harddisk..."
-
-msgid "Harddisk Wait"
-msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Harddisk Opsætning"
@@ -1794,9 +1653,6 @@ msgstr "Øget spænding"
 
 msgid "Index"
 msgstr "Oversigt"
-
-msgid "Info"
-msgstr ""
 
 msgid "InfoBar"
 msgstr "InfoBjælke"
@@ -1900,9 +1756,6 @@ msgstr "Ipkg"
 msgid "Italian"
 msgstr "Italiensk"
 
-msgid "J"
-msgstr ""
-
 msgid "Job View"
 msgstr "Job Oversigt"
 
@@ -1927,9 +1780,6 @@ msgstr "LAN Adapter"
 
 msgid "LNB"
 msgstr "LNB"
-
-msgid "LOAD DVD"
-msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -2019,14 +1869,8 @@ msgstr "Langt Tastetryk"
 msgid "Longitude"
 msgstr "Længdegrad"
 
-msgid "M"
-msgstr ""
-
 msgid "MMC Card"
 msgstr "MMC Kort"
-
-msgid "MMIDialog"
-msgstr ""
 
 msgid "MORE"
 msgstr "MERE"
@@ -2112,15 +1956,6 @@ msgstr "Mandag"
 msgid "Mount failed"
 msgstr "Mount fejlede"
 
-msgid "MountEdit"
-msgstr ""
-
-msgid "MountManager"
-msgstr ""
-
-msgid "MountView"
-msgstr ""
-
 msgid "Move Picture in Picture"
 msgstr "Flytte Billed i Billed"
 
@@ -2130,17 +1965,8 @@ msgstr "Drej mod Øst"
 msgid "Move west"
 msgstr "Drej mod Vest"
 
-msgid "MoviePlayer"
-msgstr ""
-
 msgid "Movielist menu"
 msgstr "Filmliste Menu"
-
-msgid "Movieplayer"
-msgstr ""
-
-msgid "Movies"
-msgstr ""
 
 msgid "Multi EPG"
 msgstr "Multi EPG"
@@ -2200,9 +2026,6 @@ msgstr "Netværks Konfiguration..."
 msgid "Network Mount"
 msgstr "Netværks Indstilling"
 
-msgid "Network Neighbourhood"
-msgstr ""
-
 msgid "Network SSID"
 msgstr "Netværks SSID"
 
@@ -2226,9 +2049,6 @@ msgstr "Netværk..."
 
 msgid "Network:"
 msgstr "Netværk:"
-
-msgid "NetworkBrowser"
-msgstr ""
 
 msgid "NetworkWizard"
 msgstr "NetværksHjælp"
@@ -2374,9 +2194,6 @@ msgstr "Nej, bare start min Dreambox"
 msgid "No, scan later manually"
 msgstr "Nej, søg senere manuelt"
 
-msgid "NoGfx Skin (c)2009 - by benutzername"
-msgstr ""
-
 msgid "None"
 msgstr "Ingen"
 
@@ -2447,20 +2264,11 @@ msgstr "Søg kun ukodet"
 msgid "Orbital Position"
 msgstr "Omløbs Position"
 
-msgid "P"
-msgstr ""
-
 msgid "PAL"
 msgstr "PAL"
 
-msgid "PCM"
-msgstr ""
-
 msgid "PIDs"
 msgstr "PIDs"
-
-msgid "PLAY LIST"
-msgstr ""
 
 msgid "Package details for: "
 msgstr ""
@@ -2487,9 +2295,6 @@ msgstr "Aktuel mappe"
 msgid "Parental control"
 msgstr "Forældre Kontrol"
 
-msgid "Parental control Editor"
-msgstr ""
-
 msgid "Parental control services Editor"
 msgstr "Forældre Kanal Kontrol Redigering"
 
@@ -2504,9 +2309,6 @@ msgstr "Pause ved filmslutning"
 
 msgid "PiPSetup"
 msgstr "PiP Opsætning"
-
-msgid "Picture Player"
-msgstr ""
 
 msgid "PicturePlayer"
 msgstr "Billed afspiller"
@@ -2616,17 +2418,11 @@ msgstr "Vælg venligst en spilleliste til sletning..."
 msgid "Please select a playlist..."
 msgstr "Vælg venligst en spilleliste..."
 
-msgid "Please select a resolution..."
-msgstr ""
-
 msgid "Please select a subservice to record..."
 msgstr "Vælg en underkanal til at optagelse..."
 
 msgid "Please select a subservice..."
 msgstr "Vælg venligst en underkanal..."
-
-msgid "Please select an aspect ratio..."
-msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr "Vælg venligst medie der skal benyttes som backup placering"
@@ -2639,12 +2435,6 @@ msgstr "Vælg venligst destinations mappe eller media"
 
 msgid "Please select the movie path..."
 msgstr "Venligst vælg en film sti..."
-
-msgid "Please select the path for the Startdirectory"
-msgstr ""
-
-msgid "Please select the path..."
-msgstr ""
 
 msgid "Please set up tuner B"
 msgstr "Venligst indstil Tuner B"
@@ -2804,17 +2594,8 @@ msgstr "Kvik"
 msgid "Quickzap"
 msgstr "Hurtigskift"
 
-msgid "R"
-msgstr ""
-
 msgid "RC Menu"
 msgstr "Fjernbetjenings Menu"
-
-msgid "RC command set"
-msgstr ""
-
-msgid "RECORD"
-msgstr ""
 
 msgid "RF output"
 msgstr "RF Udgang"
@@ -3034,9 +2815,6 @@ msgstr "Aktiveret"
 msgid "Russian"
 msgstr "Russisk"
 
-msgid "S"
-msgstr ""
-
 msgid "S-Video"
 msgstr "S-Video"
 
@@ -3045,12 +2823,6 @@ msgstr "SNR"
 
 msgid "SNR:"
 msgstr "SNR:"
-
-msgid "SPDIF"
-msgstr ""
-
-msgid "SUB"
-msgstr ""
 
 msgid "Sat"
 msgstr "Lør"
@@ -3092,9 +2864,6 @@ msgid "Scan "
 msgstr "Søgning"
 
 msgid "Scan Files..."
-msgstr ""
-
-msgid "Scan IP"
 msgstr ""
 
 msgid "Scan QAM128"
@@ -3171,15 +2940,6 @@ msgid ""
 "Scans default lamedbs sorted by satellite with a connected dish positioner"
 msgstr ""
 "Søge standard lamedbs sorteret efter satelit med tilsluttet Parabol Motor"
-
-msgid "Scroll delay"
-msgstr ""
-
-msgid "Scroll long strings"
-msgstr ""
-
-msgid "Scroll pause"
-msgstr ""
 
 msgid "Search east"
 msgstr "Søg Øst"
@@ -3304,9 +3064,6 @@ msgstr ""
 "Kanal ikke fundet!\n"
 "Kontroler tuner konfigurationen!"
 
-msgid "Service-Info"
-msgstr ""
-
 msgid "Serviceinfo"
 msgstr "Kanalinfo"
 
@@ -3319,14 +3076,8 @@ msgstr "Sætter Spænding og 22KHz"
 msgid "Set as default Interface"
 msgstr "Sæt som standard interface"
 
-msgid "Set fan"
-msgstr ""
-
 msgid "Set interface as default Interface"
 msgstr "Sætter interfacet om standard interface"
-
-msgid "Set led"
-msgstr ""
 
 msgid "Set limits"
 msgstr "Indstil limits"
@@ -3340,9 +3091,6 @@ msgstr "Indstillinger"
 msgid "Setup Mode"
 msgstr "Opsætnings Type"
 
-msgid "Show Ethernet activity"
-msgstr ""
-
 msgid "Show Info"
 msgstr "Vis Info"
 
@@ -3351,9 +3099,6 @@ msgstr "Vis WLAN Status"
 
 msgid "Show blinking clock in display during recording"
 msgstr "Vis blinkende klokke i display under optagelse"
-
-msgid "Show clock"
-msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Vis Infobar ved kanal skifte"
@@ -3411,9 +3156,6 @@ msgstr "Enkelt trin (GOB)"
 
 msgid "Skin..."
 msgstr "Skin..."
-
-msgid "SkinSelector"
-msgstr ""
 
 msgid "Skins"
 msgstr ""
@@ -3611,9 +3353,6 @@ msgstr "Symbolrate"
 msgid "System"
 msgstr "System"
 
-msgid "System-Info"
-msgstr ""
-
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr ""
@@ -3630,9 +3369,6 @@ msgstr "TS filen er for stor til ISO9660 level 1!"
 
 msgid "TV System"
 msgstr "TV System"
-
-msgid "TXT"
-msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Indholdsfortegnelse for kollektion"
@@ -3920,9 +3656,6 @@ msgstr "Torsdag"
 msgid "Time"
 msgstr "Tid"
 
-msgid "Time mode"
-msgstr ""
-
 msgid "Time/Date Input"
 msgstr "Tid/Dato Input"
 
@@ -4071,9 +3804,6 @@ msgstr "Tuner Status"
 msgid "Turkish"
 msgstr "Tyrkisk"
 
-msgid "TuxTXT"
-msgstr ""
-
 msgid "Two"
 msgstr "To"
 
@@ -4082,15 +3812,6 @@ msgstr "Type"
 
 msgid "Type of scan"
 msgstr "Søge type"
-
-msgid "Typematic delay"
-msgstr ""
-
-msgid "Typematic rate"
-msgstr ""
-
-msgid "U"
-msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -4178,7 +3899,6 @@ msgstr "Brug Strøm Måling"
 msgid "Use a gateway"
 msgstr "Brug af Router"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -4226,15 +3946,6 @@ msgstr "Brugt kanal søgnings type"
 
 msgid "User defined"
 msgstr "Brugerdefineret"
-
-msgid "UserDialog"
-msgstr ""
-
-msgid "UserManager"
-msgstr ""
-
-msgid "V"
-msgstr ""
 
 msgid "VCR scart"
 msgstr "Scart / Video"
@@ -4293,9 +4004,6 @@ msgstr "Se Rass interaktivi..."
 msgid "View Video CD..."
 msgstr ""
 
-msgid "View list of available "
-msgstr ""
-
 msgid "View list of available CommonInterface extensions"
 msgstr ""
 
@@ -4337,12 +4045,6 @@ msgstr "Se teletekst..."
 
 msgid "Virtual KeyBoard"
 msgstr "Virtuelt tastatur"
-
-msgid "Vol"
-msgstr ""
-
-msgid "Vol off"
-msgstr ""
 
 msgid "Voltage mode"
 msgstr "Spændings type"
@@ -4470,9 +4172,6 @@ msgstr "Skrivning af NFI image til flash tilendebragt"
 
 msgid "YPbPr"
 msgstr "Komponent"
-
-msgid "YUV"
-msgstr ""
 
 msgid "Year"
 msgstr "År"
@@ -4753,9 +4452,6 @@ msgstr "Tilføj kanal til favoritter"
 msgid "add to parental protection"
 msgstr "Tilføj til forældre beskyttelse"
 
-msgid "add/remove bookmarks (locationbox)"
-msgstr ""
-
 msgid "advanced"
 msgstr "Avanceret"
 
@@ -4768,9 +4464,6 @@ msgid ""
 msgstr ""
 "Er du sikker på at du vil gendanne\n"
 "følgende backup:\n"
-
-msgid "ask on exit"
-msgstr ""
 
 msgid "assigned CAIds"
 msgstr ""
@@ -5033,9 +4726,6 @@ msgstr "Timer"
 msgid "immediate shutdown"
 msgstr "Omgående afbrydelse"
 
-msgid "immediate standby"
-msgstr ""
-
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -5230,14 +4920,8 @@ msgstr "Afspil denne"
 msgid "play from next mark or playlist entry"
 msgstr "Afspil fra næste mærke eller spilleliste indgang"
 
-msgid "play from next playlist entry"
-msgstr ""
-
 msgid "play from previous mark or playlist entry"
 msgstr "Afspil fra forrige mærke eller spilleliste indgang"
-
-msgid "play from previous playlist entry"
-msgstr ""
 
 msgid "please press OK when ready"
 msgstr "Tryk venligst OK når du er klar"
@@ -5313,9 +4997,6 @@ msgstr "gem seneste mappe ved afbrydelse"
 
 msgid "save playlist"
 msgstr "Gem spilleliste"
-
-msgid "save playlist before exit?"
-msgstr ""
 
 msgid "save playlist on exit"
 msgstr "gem afspilningsliste ved afbrydelse"
@@ -5500,9 +5181,6 @@ msgstr "Denne optagelse"
 
 msgid "this service is protected by a parental control pin"
 msgstr "Denne service er beskyttet af forældre kontrol "
-
-msgid "toggels betwenn tv and radio..."
-msgstr ""
 
 msgid "toggle a cut mark at the current position"
 msgstr "Flytte en klippe markør til nuværende position"
@@ -5714,6 +5392,9 @@ msgstr "Zappet"
 #~ msgstr ""
 #~ "Vil du virkelig downloade\n"
 #~ "dette plugin \""
+
+#~ msgid "Do you really want to exit?"
+#~ msgstr "Ønsker du virkelig at afslutte?"
 
 #~ msgid "Downloading image description..."
 #~ msgstr "Downloader image beskrivelse..."

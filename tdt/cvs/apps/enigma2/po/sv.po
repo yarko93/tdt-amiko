@@ -7,11 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 16:43+0100\n"
+"POT-Creation-Date: 2009-05-18 23:40+0200\n"
 "PO-Revision-Date: 2009-04-02 14:14+0100\n"
 "Last-Translator: WeeGull <weegull@hotmail.com>\n"
 "Language-Team: WeeGull <weegull@hotmail.com>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -116,64 +115,16 @@ msgstr ""
 msgid " "
 msgstr " "
 
-msgid " extensions."
-msgstr ""
-
 msgid "#000000"
-msgstr ""
-
-msgid "#00081226"
 msgstr ""
 
 msgid "#0064c7"
 msgstr ""
 
-msgid "#0099ff"
-msgstr ""
-
-msgid "#00f0f0f0"
-msgstr ""
-
-msgid "#00fcc000"
-msgstr ""
-
-msgid "#08001E4B"
-msgstr ""
-
-msgid "#08004C00"
-msgstr ""
-
-msgid "#084B4B00"
-msgstr ""
-
-msgid "#084C0000"
-msgstr ""
-
-msgid "#0f0f0f"
-msgstr ""
-
 msgid "#25062748"
 msgstr ""
 
-msgid "#294a6b"
-msgstr ""
-
-msgid "#32000000"
-msgstr ""
-
 msgid "#389416"
-msgstr ""
-
-msgid "#42000000"
-msgstr ""
-
-msgid "#44444a"
-msgstr ""
-
-msgid "#56C856"
-msgstr ""
-
-msgid "#65000000"
 msgstr ""
 
 msgid "#80000000"
@@ -182,34 +133,10 @@ msgstr ""
 msgid "#80ffffff"
 msgstr ""
 
-msgid "#999999"
-msgstr ""
-
-msgid "#FCC000"
-msgstr ""
-
 msgid "#bab329"
 msgstr ""
 
-msgid "#cfcfcf"
-msgstr ""
-
-msgid "#e5e5e5"
-msgstr ""
-
-msgid "#f0f0f0"
-msgstr ""
-
 msgid "#f23d21"
-msgstr ""
-
-msgid "#f3ca09"
-msgstr ""
-
-msgid "#ff000000"
-msgstr ""
-
-msgid "#ff4A3C"
 msgstr ""
 
 msgid "#ffffff"
@@ -262,15 +189,6 @@ msgstr "* Enbart tillgänglig om mer än ett kort är aktivt."
 
 msgid "* Only available when entering hidden SSID or network key"
 msgstr "* Enbart tillgänglig vid angiven dold SSID eller nätverksnyckel"
-
-msgid "-"
-msgstr ""
-
-msgid "---------------------- bookmarks -------------------"
-msgstr ""
-
-msgid "..."
-msgstr ""
 
 msgid ".NFI Download failed:"
 msgstr ".NFI Nedladdning misslyckades:"
@@ -338,9 +256,6 @@ msgid "30 minutes"
 msgstr "30 minuter"
 
 msgid "4"
-msgstr ""
-
-msgid "422"
 msgstr ""
 
 msgid "4:3"
@@ -566,9 +481,6 @@ msgstr "Alla"
 msgid "All Satellites"
 msgstr "Alla Satelliter"
 
-msgid "All caps"
-msgstr ""
-
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -632,20 +544,11 @@ msgstr "Fråga"
 msgid "Aspect Ratio"
 msgstr "Bildformat"
 
-msgid "Aspect list..."
-msgstr ""
-
 msgid "Audio"
 msgstr "Ljud"
 
 msgid "Audio Options..."
 msgstr "Ljudval..."
-
-msgid "Audio Source"
-msgstr ""
-
-msgid "Audio/Subservices"
-msgstr ""
 
 msgid "Author: "
 msgstr ""
@@ -775,13 +678,7 @@ msgstr "C-Band"
 msgid "CF Drive"
 msgstr "CF Disk"
 
-msgid "CI Assignment"
-msgstr ""
-
 msgid "CI assignment"
-msgstr ""
-
-msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -1060,9 +957,6 @@ msgstr "Tjeckiska"
 msgid "D"
 msgstr "D"
 
-msgid "DD"
-msgstr ""
-
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -1071,9 +965,6 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
-
-msgid "DVD File Browser"
-msgstr ""
 
 msgid "DVD Player"
 msgstr "DVD Spelare"
@@ -1086,9 +977,6 @@ msgstr "Danska"
 
 msgid "Date"
 msgstr "Datum"
-
-msgid "Daylight"
-msgstr ""
 
 msgid "Deep Standby"
 msgstr "Stäng av"
@@ -1113,10 +1001,6 @@ msgstr "Ta bort post"
 
 msgid "Delete failed!"
 msgstr "Borttagning misslyckades!"
-
-#, python-format
-msgid "Delete failed!, %s"
-msgstr ""
 
 #, python-format
 msgid ""
@@ -1235,9 +1119,6 @@ msgid ""
 msgstr ""
 "Vill du verkligen ladda ner\n"
 "pluginet \"%s\"?"
-
-msgid "Do you really want to exit?"
-msgstr "Vill du verkligen avsluta?"
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1365,9 +1246,6 @@ msgstr "Holländska"
 msgid "E"
 msgstr "Ö"
 
-msgid "EJECT DVD"
-msgstr ""
-
 msgid "EPG Selection"
 msgstr "EPG val"
 
@@ -1465,7 +1343,6 @@ msgstr ""
 "\n"
 "© 2006 - Stephan Reichholf"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1502,9 +1379,6 @@ msgid ""
 msgstr ""
 "Fel: %s\n"
 "Försöka igen?"
-
-msgid "Estonian"
-msgstr ""
 
 msgid "Eventview"
 msgstr "Programöversikt"
@@ -1545,14 +1419,8 @@ msgstr "Utökad installation..."
 msgid "Extensions"
 msgstr "Utökningar"
 
-msgid "F"
-msgstr ""
-
 msgid "FEC"
 msgstr "FEC"
-
-msgid "FILE LIST"
-msgstr ""
 
 msgid "Factory reset"
 msgstr "Fabriksåterställning"
@@ -1701,17 +1569,8 @@ msgstr "Guard intervall"
 msgid "Guard interval mode"
 msgstr "Guard intervalläge"
 
-msgid "H"
-msgstr ""
-
-msgid "HDTV"
-msgstr ""
-
 msgid "Harddisk"
 msgstr "Hårddisk"
-
-msgid "Harddisk Wait"
-msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Hårddisk installation"
@@ -1800,9 +1659,6 @@ msgstr "Ökad spänning"
 
 msgid "Index"
 msgstr "Index"
-
-msgid "Info"
-msgstr ""
 
 msgid "InfoBar"
 msgstr "Infobalk"
@@ -1906,9 +1762,6 @@ msgstr "Ipkg"
 msgid "Italian"
 msgstr "Italienska"
 
-msgid "J"
-msgstr ""
-
 msgid "Job View"
 msgstr "Arbets Vy"
 
@@ -1933,9 +1786,6 @@ msgstr "LAN Adapter"
 
 msgid "LNB"
 msgstr "LNB"
-
-msgid "LOAD DVD"
-msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -2025,14 +1875,8 @@ msgstr "Lång knapptryckning"
 msgid "Longitude"
 msgstr "Longitud"
 
-msgid "M"
-msgstr ""
-
 msgid "MMC Card"
 msgstr "MMC kort"
-
-msgid "MMIDialog"
-msgstr ""
 
 msgid "MORE"
 msgstr "MER"
@@ -2118,15 +1962,6 @@ msgstr "Måndag"
 msgid "Mount failed"
 msgstr "Montering misslyckades"
 
-msgid "MountEdit"
-msgstr ""
-
-msgid "MountManager"
-msgstr ""
-
-msgid "MountView"
-msgstr ""
-
 msgid "Move Picture in Picture"
 msgstr "Flytta Bild i Bild"
 
@@ -2136,17 +1971,8 @@ msgstr "Flytta öst"
 msgid "Move west"
 msgstr "Flytta väst"
 
-msgid "MoviePlayer"
-msgstr ""
-
 msgid "Movielist menu"
 msgstr "Filmlista meny"
-
-msgid "Movieplayer"
-msgstr ""
-
-msgid "Movies"
-msgstr ""
 
 msgid "Multi EPG"
 msgstr "Multi EPG"
@@ -2206,9 +2032,6 @@ msgstr "Nätverk Konfiguration..."
 msgid "Network Mount"
 msgstr "Nätverksmonteringar"
 
-msgid "Network Neighbourhood"
-msgstr ""
-
 msgid "Network SSID"
 msgstr "Nätverk SSID"
 
@@ -2232,9 +2055,6 @@ msgstr "Nätverk..."
 
 msgid "Network:"
 msgstr "Nätverk:"
-
-msgid "NetworkBrowser"
-msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Nätverksguide"
@@ -2377,9 +2197,6 @@ msgstr "Nej, starta bara dreamboxen"
 msgid "No, scan later manually"
 msgstr "Nej, sök manuellt senare"
 
-msgid "NoGfx Skin (c)2009 - by benutzername"
-msgstr ""
-
 msgid "None"
 msgstr "Inga"
 
@@ -2450,20 +2267,11 @@ msgstr "Bara Fri sökning"
 msgid "Orbital Position"
 msgstr "Orbital position"
 
-msgid "P"
-msgstr ""
-
 msgid "PAL"
 msgstr "PAL"
 
-msgid "PCM"
-msgstr ""
-
 msgid "PIDs"
 msgstr "PIDs"
-
-msgid "PLAY LIST"
-msgstr ""
 
 msgid "Package details for: "
 msgstr ""
@@ -2490,9 +2298,6 @@ msgstr "Föräldrarbibliotek"
 msgid "Parental control"
 msgstr "Föräldrakontroll"
 
-msgid "Parental control Editor"
-msgstr ""
-
 msgid "Parental control services Editor"
 msgstr "Föräldrakontroll kanaleditor"
 
@@ -2507,9 +2312,6 @@ msgstr "Pausa filmen"
 
 msgid "PiPSetup"
 msgstr "BiB konfiguration"
-
-msgid "Picture Player"
-msgstr ""
 
 msgid "PicturePlayer"
 msgstr "Bildspelare"
@@ -2619,17 +2421,11 @@ msgstr "Vänligen välj en spellista för borttagning..."
 msgid "Please select a playlist..."
 msgstr "Vänligen välj en spellista..."
 
-msgid "Please select a resolution..."
-msgstr ""
-
 msgid "Please select a subservice to record..."
 msgstr "Vänligen välj en underkanal för inspelning..."
 
 msgid "Please select a subservice..."
 msgstr "Vänligen välj en underkanal..."
-
-msgid "Please select an aspect ratio..."
-msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr "Vänligen välj media som ska användas som backupdestination"
@@ -2642,12 +2438,6 @@ msgstr "Vänligen välj målbibliotek eller media"
 
 msgid "Please select the movie path..."
 msgstr "Vänligen ange filmens sökväg..."
-
-msgid "Please select the path for the Startdirectory"
-msgstr ""
-
-msgid "Please select the path..."
-msgstr ""
 
 msgid "Please set up tuner B"
 msgstr "Vänligen installera tuner B"
@@ -2808,17 +2598,8 @@ msgstr "Snabb"
 msgid "Quickzap"
 msgstr "Snabbzap"
 
-msgid "R"
-msgstr ""
-
 msgid "RC Menu"
 msgstr "Fjärrkontroll meny"
-
-msgid "RC command set"
-msgstr ""
-
-msgid "RECORD"
-msgstr ""
 
 msgid "RF output"
 msgstr "RF ut"
@@ -3040,9 +2821,6 @@ msgstr "Körandes"
 msgid "Russian"
 msgstr "Ryska"
 
-msgid "S"
-msgstr ""
-
 msgid "S-Video"
 msgstr "S-Video"
 
@@ -3051,12 +2829,6 @@ msgstr "SNR"
 
 msgid "SNR:"
 msgstr "SNR:"
-
-msgid "SPDIF"
-msgstr ""
-
-msgid "SUB"
-msgstr ""
 
 msgid "Sat"
 msgstr "Lör"
@@ -3099,9 +2871,6 @@ msgstr "Söka "
 
 msgid "Scan Files..."
 msgstr "Sök Filer..."
-
-msgid "Scan IP"
-msgstr ""
 
 msgid "Scan QAM128"
 msgstr "Söka QAM128"
@@ -3176,15 +2945,6 @@ msgstr ""
 msgid ""
 "Scans default lamedbs sorted by satellite with a connected dish positioner"
 msgstr "Sök grund lamedbs sorterat på satellite med en "
-
-msgid "Scroll delay"
-msgstr ""
-
-msgid "Scroll long strings"
-msgstr ""
-
-msgid "Scroll pause"
-msgstr ""
 
 msgid "Search east"
 msgstr "Sök öst"
@@ -3309,9 +3069,6 @@ msgstr ""
 "Tjänsten kunde inte hittas!\n"
 "Kontrollera tunerinställningar"
 
-msgid "Service-Info"
-msgstr ""
-
 msgid "Serviceinfo"
 msgstr "Kanalinfo"
 
@@ -3324,14 +3081,8 @@ msgstr "Ange Volt och 22KHz"
 msgid "Set as default Interface"
 msgstr "Använd som standard Interface"
 
-msgid "Set fan"
-msgstr ""
-
 msgid "Set interface as default Interface"
 msgstr "Använd kort som standard kort"
-
-msgid "Set led"
-msgstr ""
 
 msgid "Set limits"
 msgstr "Ange gräns"
@@ -3345,9 +3096,6 @@ msgstr "Installation"
 msgid "Setup Mode"
 msgstr "Installationsläge"
 
-msgid "Show Ethernet activity"
-msgstr ""
-
 msgid "Show Info"
 msgstr "Visa Info"
 
@@ -3356,9 +3104,6 @@ msgstr "Visa WLAN Status"
 
 msgid "Show blinking clock in display during recording"
 msgstr "Visa blinkande klocka i display under inspelning"
-
-msgid "Show clock"
-msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Visa infobalk vid kanalbyte"
@@ -3416,9 +3161,6 @@ msgstr "Enkelsteg (GOP)"
 
 msgid "Skin..."
 msgstr "Utseende..."
-
-msgid "SkinSelector"
-msgstr ""
 
 msgid "Skins"
 msgstr ""
@@ -3616,9 +3358,6 @@ msgstr "Symbolrate"
 msgid "System"
 msgstr "System"
 
-msgid "System-Info"
-msgstr ""
-
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr ""
@@ -3631,9 +3370,6 @@ msgstr "TS fil för stor för ISO9660 level 1!"
 
 msgid "TV System"
 msgstr "TV System"
-
-msgid "TXT"
-msgstr ""
 
 msgid "Table of content for collection"
 msgstr "Index över innehållet av samligen"
@@ -3921,9 +3657,6 @@ msgstr "Torsdag"
 msgid "Time"
 msgstr "Tid"
 
-msgid "Time mode"
-msgstr ""
-
 msgid "Time/Date Input"
 msgstr "Tid/Datum inmatning"
 
@@ -4072,9 +3805,6 @@ msgstr "Tuner status"
 msgid "Turkish"
 msgstr "Turkiska"
 
-msgid "TuxTXT"
-msgstr ""
-
 msgid "Two"
 msgstr "Två"
 
@@ -4083,15 +3813,6 @@ msgstr "Typ"
 
 msgid "Type of scan"
 msgstr "Typ av sökning"
-
-msgid "Typematic delay"
-msgstr ""
-
-msgid "Typematic rate"
-msgstr ""
-
-msgid "U"
-msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -4179,7 +3900,6 @@ msgstr "Använd Strömmätning"
 msgid "Use a gateway"
 msgstr "Använd en gateway"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -4227,15 +3947,6 @@ msgstr "Använd kanal söktyp"
 
 msgid "User defined"
 msgstr "Användardefinierat"
-
-msgid "UserDialog"
-msgstr ""
-
-msgid "UserManager"
-msgstr ""
-
-msgid "V"
-msgstr ""
 
 msgid "VCR scart"
 msgstr "VCR Scart"
@@ -4294,9 +4005,6 @@ msgstr "Visa Rass interaktivitet..."
 msgid "View Video CD..."
 msgstr "Visa Video CD..."
 
-msgid "View list of available "
-msgstr ""
-
 msgid "View list of available CommonInterface extensions"
 msgstr ""
 
@@ -4338,12 +4046,6 @@ msgstr "Visa teletext..."
 
 msgid "Virtual KeyBoard"
 msgstr "Virtuellt tangentbord"
-
-msgid "Vol"
-msgstr ""
-
-msgid "Vol off"
-msgstr ""
 
 msgid "Voltage mode"
 msgstr "Spännings läge"
@@ -4472,9 +4174,6 @@ msgstr "Skrivning av NFI image fil till flash klart"
 
 msgid "YPbPr"
 msgstr "YPbPr"
-
-msgid "YUV"
-msgstr ""
 
 msgid "Year"
 msgstr "År"
@@ -4763,9 +4462,6 @@ msgstr "lägg till kanal i favoriter"
 msgid "add to parental protection"
 msgstr "lägg till föräldraskydd"
 
-msgid "add/remove bookmarks (locationbox)"
-msgstr ""
-
 msgid "advanced"
 msgstr "avancerad"
 
@@ -4778,9 +4474,6 @@ msgid ""
 msgstr ""
 "vill du verkligen återställa\n"
 "med följande backup:\n"
-
-msgid "ask on exit"
-msgstr ""
 
 msgid "assigned CAIds"
 msgstr "tilldelad CAIds"
@@ -5043,9 +4736,6 @@ msgstr "timmar"
 msgid "immediate shutdown"
 msgstr "omedelbar avstängning"
 
-msgid "immediate standby"
-msgstr ""
-
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -5240,14 +4930,8 @@ msgstr "spela angivet"
 msgid "play from next mark or playlist entry"
 msgstr "Spela upp från nästa markering eller post i spellista"
 
-msgid "play from next playlist entry"
-msgstr ""
-
 msgid "play from previous mark or playlist entry"
 msgstr "Spela upp från föregående markering eller post i spellista"
-
-msgid "play from previous playlist entry"
-msgstr ""
 
 msgid "please press OK when ready"
 msgstr "tryck OK när du är klar"
@@ -5323,9 +5007,6 @@ msgstr "spara sista biblioteket vid avslut"
 
 msgid "save playlist"
 msgstr "spara spellista"
-
-msgid "save playlist before exit?"
-msgstr ""
 
 msgid "save playlist on exit"
 msgstr "spara spellista vid avslut"
@@ -5510,9 +5191,6 @@ msgstr "denna inspelning"
 
 msgid "this service is protected by a parental control pin"
 msgstr "denna kanal är föräldraskyddad"
-
-msgid "toggels betwenn tv and radio..."
-msgstr ""
 
 msgid "toggle a cut mark at the current position"
 msgstr "skifta en klippmarkering på nuvarande position"
@@ -5709,6 +5387,9 @@ msgstr "zapped"
 #~ msgstr ""
 #~ "Vill du verkligen ladda ner\n"
 #~ "pluginen \""
+
+#~ msgid "Do you really want to exit?"
+#~ msgstr "Vill du verkligen avsluta?"
 
 #~ msgid "Downloading image description..."
 #~ msgstr "Ladda ner image beskrivning..."

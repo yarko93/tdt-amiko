@@ -7,11 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-11 16:43+0100\n"
+"POT-Creation-Date: 2009-05-18 23:40+0200\n"
 "PO-Revision-Date: 2008-09-28 18:09+0100\n"
 "Last-Translator: ws79 <ws79@centrum.cz>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -87,65 +86,17 @@ msgstr ""
 msgid " "
 msgstr " "
 
-msgid " extensions."
-msgstr ""
-
 msgid "#000000"
 msgstr "#000000"
-
-msgid "#00081226"
-msgstr ""
 
 msgid "#0064c7"
 msgstr "#0064c7"
 
-msgid "#0099ff"
-msgstr ""
-
-msgid "#00f0f0f0"
-msgstr ""
-
-msgid "#00fcc000"
-msgstr ""
-
-msgid "#08001E4B"
-msgstr ""
-
-msgid "#08004C00"
-msgstr ""
-
-msgid "#084B4B00"
-msgstr ""
-
-msgid "#084C0000"
-msgstr ""
-
-msgid "#0f0f0f"
-msgstr ""
-
 msgid "#25062748"
 msgstr "#25062748"
 
-msgid "#294a6b"
-msgstr ""
-
-msgid "#32000000"
-msgstr ""
-
 msgid "#389416"
 msgstr "#389416"
-
-msgid "#42000000"
-msgstr ""
-
-msgid "#44444a"
-msgstr ""
-
-msgid "#56C856"
-msgstr ""
-
-msgid "#65000000"
-msgstr ""
 
 msgid "#80000000"
 msgstr "#80000000"
@@ -153,35 +104,11 @@ msgstr "#80000000"
 msgid "#80ffffff"
 msgstr "#80ffffff"
 
-msgid "#999999"
-msgstr ""
-
-msgid "#FCC000"
-msgstr ""
-
 msgid "#bab329"
 msgstr "#bab329"
 
-msgid "#cfcfcf"
-msgstr ""
-
-msgid "#e5e5e5"
-msgstr ""
-
-msgid "#f0f0f0"
-msgstr ""
-
 msgid "#f23d21"
 msgstr "#f23d21"
-
-msgid "#f3ca09"
-msgstr ""
-
-msgid "#ff000000"
-msgstr ""
-
-msgid "#ff4A3C"
-msgstr ""
 
 msgid "#ffffff"
 msgstr "#ffffff"
@@ -232,15 +159,6 @@ msgid "* Only available if more than one interface is active."
 msgstr ""
 
 msgid "* Only available when entering hidden SSID or network key"
-msgstr ""
-
-msgid "-"
-msgstr ""
-
-msgid "---------------------- bookmarks -------------------"
-msgstr ""
-
-msgid "..."
 msgstr ""
 
 msgid ".NFI Download failed:"
@@ -309,9 +227,6 @@ msgstr "30 minut"
 
 msgid "4"
 msgstr "4"
-
-msgid "422"
-msgstr ""
 
 msgid "4:3"
 msgstr "4:3"
@@ -527,9 +442,6 @@ msgstr "Vše"
 msgid "All Satellites"
 msgstr ""
 
-msgid "All caps"
-msgstr ""
-
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -587,20 +499,11 @@ msgstr "Zeptat se"
 msgid "Aspect Ratio"
 msgstr "Poměr"
 
-msgid "Aspect list..."
-msgstr ""
-
 msgid "Audio"
 msgstr "Zvuk"
 
 msgid "Audio Options..."
 msgstr "Nastavení zvuku..."
-
-msgid "Audio Source"
-msgstr ""
-
-msgid "Audio/Subservices"
-msgstr ""
 
 msgid "Author: "
 msgstr ""
@@ -730,13 +633,7 @@ msgstr "C-Band"
 msgid "CF Drive"
 msgstr "CF čtečka"
 
-msgid "CI Assignment"
-msgstr ""
-
 msgid "CI assignment"
-msgstr ""
-
-msgid "CRYPT"
 msgstr ""
 
 msgid "CVBS"
@@ -1015,9 +912,6 @@ msgstr "Česky"
 msgid "D"
 msgstr ""
 
-msgid "DD"
-msgstr ""
-
 msgid "DHCP"
 msgstr "DHCP"
 
@@ -1026,9 +920,6 @@ msgstr "DVB-S"
 
 msgid "DVB-S2"
 msgstr "DVB-S2"
-
-msgid "DVD File Browser"
-msgstr ""
 
 msgid "DVD Player"
 msgstr "DVD přehrávač"
@@ -1041,9 +932,6 @@ msgstr "Dánsky"
 
 msgid "Date"
 msgstr "Datum"
-
-msgid "Daylight"
-msgstr ""
 
 msgid "Deep Standby"
 msgstr "Hluboký spánek"
@@ -1068,10 +956,6 @@ msgstr "Vymazat záznam"
 
 msgid "Delete failed!"
 msgstr "Vymazání selhalo!"
-
-#, python-format
-msgid "Delete failed!, %s"
-msgstr ""
 
 #, python-format
 msgid ""
@@ -1186,9 +1070,6 @@ msgid ""
 "Do you really want to download\n"
 "the plugin \"%s\"?"
 msgstr ""
-
-msgid "Do you really want to exit?"
-msgstr "Opravdu chcete ukončit?"
 
 msgid ""
 "Do you really want to initialize the harddisk?\n"
@@ -1315,9 +1196,6 @@ msgstr "Holandsky"
 msgid "E"
 msgstr "Východní"
 
-msgid "EJECT DVD"
-msgstr ""
-
 msgid "EPG Selection"
 msgstr "EPG Výběr"
 
@@ -1415,7 +1293,6 @@ msgstr ""
 "\n"
 "© 2006 - Stephan Reichholf"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: Note that "Enter" in the two strings below should *not*
 #.       be interpreted as "Give speed as input". The intended meaning is
 #.       instead "Initial speed when starting winding", i.e. the speed at
@@ -1449,9 +1326,6 @@ msgstr ""
 msgid ""
 "Error: %s\n"
 "Retry?"
-msgstr ""
-
-msgid "Estonian"
 msgstr ""
 
 msgid "Eventview"
@@ -1493,14 +1367,8 @@ msgstr "Rozšířené nastavení..."
 msgid "Extensions"
 msgstr "Rozšíření"
 
-msgid "F"
-msgstr ""
-
 msgid "FEC"
 msgstr "FEC"
-
-msgid "FILE LIST"
-msgstr ""
 
 msgid "Factory reset"
 msgstr "Tovární nastavení"
@@ -1649,17 +1517,8 @@ msgstr "Hlídat interval"
 msgid "Guard interval mode"
 msgstr "Hlídat interval mód"
 
-msgid "H"
-msgstr ""
-
-msgid "HDTV"
-msgstr ""
-
 msgid "Harddisk"
 msgstr "Pevný disk ..."
-
-msgid "Harddisk Wait"
-msgstr ""
 
 msgid "Harddisk setup"
 msgstr "Nastavení hardisku"
@@ -1749,9 +1608,6 @@ msgstr "Zvýšit napětí"
 
 msgid "Index"
 msgstr "Index"
-
-msgid "Info"
-msgstr ""
 
 msgid "InfoBar"
 msgstr "InfoBar"
@@ -1855,9 +1711,6 @@ msgstr ""
 msgid "Italian"
 msgstr "Italsky"
 
-msgid "J"
-msgstr ""
-
 msgid "Job View"
 msgstr ""
 
@@ -1882,9 +1735,6 @@ msgstr "Síťová karta"
 
 msgid "LNB"
 msgstr "LNB"
-
-msgid "LOAD DVD"
-msgstr ""
 
 msgid "LOF"
 msgstr "LOF"
@@ -1974,14 +1824,8 @@ msgstr "Dlouhé stlačení klávesy"
 msgid "Longitude"
 msgstr "Zeměpsiná délka"
 
-msgid "M"
-msgstr ""
-
 msgid "MMC Card"
 msgstr "MMC karta"
-
-msgid "MMIDialog"
-msgstr ""
 
 msgid "MORE"
 msgstr "VÍCE"
@@ -2067,15 +1911,6 @@ msgstr "Pondělí"
 msgid "Mount failed"
 msgstr "Mount selhalo"
 
-msgid "MountEdit"
-msgstr ""
-
-msgid "MountManager"
-msgstr ""
-
-msgid "MountView"
-msgstr ""
-
 msgid "Move Picture in Picture"
 msgstr "Posunout obraz v obraze"
 
@@ -2085,17 +1920,8 @@ msgstr "Posun východně"
 msgid "Move west"
 msgstr "Posun západně"
 
-msgid "MoviePlayer"
-msgstr ""
-
 msgid "Movielist menu"
 msgstr "Filmové menu"
-
-msgid "Movieplayer"
-msgstr ""
-
-msgid "Movies"
-msgstr ""
 
 msgid "Multi EPG"
 msgstr "Multi EPG"
@@ -2155,9 +1981,6 @@ msgstr "Nastavení sítě..."
 msgid "Network Mount"
 msgstr "Síťové připojení"
 
-msgid "Network Neighbourhood"
-msgstr ""
-
 msgid "Network SSID"
 msgstr "Síťový SSID"
 
@@ -2181,9 +2004,6 @@ msgstr "Nastavení sítě..."
 
 msgid "Network:"
 msgstr "Síť..."
-
-msgid "NetworkBrowser"
-msgstr ""
 
 msgid "NetworkWizard"
 msgstr "Průvodce nastavením sítě"
@@ -2319,9 +2139,6 @@ msgstr "Ne, jen pusť můj dreambox"
 msgid "No, scan later manually"
 msgstr "Ne, prohledám později manuálně"
 
-msgid "NoGfx Skin (c)2009 - by benutzername"
-msgstr ""
-
 msgid "None"
 msgstr "Žádný"
 
@@ -2390,20 +2207,11 @@ msgstr ""
 msgid "Orbital Position"
 msgstr "Orbitální pozice"
 
-msgid "P"
-msgstr ""
-
 msgid "PAL"
 msgstr "PAL"
 
-msgid "PCM"
-msgstr ""
-
 msgid "PIDs"
 msgstr "PIDy"
-
-msgid "PLAY LIST"
-msgstr ""
 
 msgid "Package details for: "
 msgstr ""
@@ -2430,9 +2238,6 @@ msgstr ""
 msgid "Parental control"
 msgstr "Rodičovský zámek"
 
-msgid "Parental control Editor"
-msgstr ""
-
 msgid "Parental control services Editor"
 msgstr "Nastavení rodičovského zámku"
 
@@ -2447,9 +2252,6 @@ msgstr "Zastavit film na konci"
 
 msgid "PiPSetup"
 msgstr "Nastavení PiP"
-
-msgid "Picture Player"
-msgstr ""
 
 msgid "PicturePlayer"
 msgstr ""
@@ -2555,17 +2357,11 @@ msgstr "Prosím, vybeberte playlist ke smazání..."
 msgid "Please select a playlist..."
 msgstr "Prosím, vyberte playlist"
 
-msgid "Please select a resolution..."
-msgstr ""
-
 msgid "Please select a subservice to record..."
 msgstr "Prosím vyberte podprogram pro nahrávání..."
 
 msgid "Please select a subservice..."
 msgstr "Prosím vyberte podprogram..."
-
-msgid "Please select an aspect ratio..."
-msgstr ""
 
 msgid "Please select medium to use as backup location"
 msgstr ""
@@ -2578,12 +2374,6 @@ msgstr ""
 
 msgid "Please select the movie path..."
 msgstr "Vyberte cestu k filmům..."
-
-msgid "Please select the path for the Startdirectory"
-msgstr ""
-
-msgid "Please select the path..."
-msgstr ""
 
 msgid "Please set up tuner B"
 msgstr "Prosím, nastav tuner B"
@@ -2741,17 +2531,8 @@ msgstr ""
 msgid "Quickzap"
 msgstr "Rychlé přepínání"
 
-msgid "R"
-msgstr ""
-
 msgid "RC Menu"
 msgstr "RC Menu"
-
-msgid "RC command set"
-msgstr ""
-
-msgid "RECORD"
-msgstr ""
 
 msgid "RF output"
 msgstr "RF výstup"
@@ -2972,9 +2753,6 @@ msgstr "Zobrazuji"
 msgid "Russian"
 msgstr "Rusky"
 
-msgid "S"
-msgstr ""
-
 msgid "S-Video"
 msgstr "S-Video"
 
@@ -2983,12 +2761,6 @@ msgstr "SNR"
 
 msgid "SNR:"
 msgstr "SNR:"
-
-msgid "SPDIF"
-msgstr ""
-
-msgid "SUB"
-msgstr ""
 
 msgid "Sat"
 msgstr "So"
@@ -3030,9 +2802,6 @@ msgid "Scan "
 msgstr "Proskenuj"
 
 msgid "Scan Files..."
-msgstr ""
-
-msgid "Scan IP"
 msgstr ""
 
 msgid "Scan QAM128"
@@ -3109,15 +2878,6 @@ msgid ""
 "Scans default lamedbs sorted by satellite with a connected dish positioner"
 msgstr ""
 "Prohldá standardní lamedbs srovnaný dle stalitu a připojeného positioneru"
-
-msgid "Scroll delay"
-msgstr ""
-
-msgid "Scroll long strings"
-msgstr ""
-
-msgid "Scroll pause"
-msgstr ""
 
 msgid "Search east"
 msgstr "Hledej východ"
@@ -3242,9 +3002,6 @@ msgstr ""
 "Služba nedostupná!\n"
 "Ověřte nastavení tuneru!"
 
-msgid "Service-Info"
-msgstr ""
-
 msgid "Serviceinfo"
 msgstr "Informace o programu"
 
@@ -3257,13 +3014,7 @@ msgstr ""
 msgid "Set as default Interface"
 msgstr ""
 
-msgid "Set fan"
-msgstr ""
-
 msgid "Set interface as default Interface"
-msgstr ""
-
-msgid "Set led"
 msgstr ""
 
 msgid "Set limits"
@@ -3278,9 +3029,6 @@ msgstr "Nastavení"
 msgid "Setup Mode"
 msgstr "Nastavovací mód"
 
-msgid "Show Ethernet activity"
-msgstr ""
-
 msgid "Show Info"
 msgstr "Zobrazit info"
 
@@ -3289,9 +3037,6 @@ msgstr "Zobrazit status WLAN"
 
 msgid "Show blinking clock in display during recording"
 msgstr "Zobrazit blikající hodiny při nahrávání"
-
-msgid "Show clock"
-msgstr ""
 
 msgid "Show infobar on channel change"
 msgstr "Zobrazit infobar při přepnutí programu"
@@ -3348,9 +3093,6 @@ msgid "Singlestep (GOP)"
 msgstr ""
 
 msgid "Skin..."
-msgstr ""
-
-msgid "SkinSelector"
 msgstr ""
 
 msgid "Skins"
@@ -3544,9 +3286,6 @@ msgstr "Symbolová rychlost"
 msgid "System"
 msgstr "Systém"
 
-msgid "System-Info"
-msgstr ""
-
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr ""
@@ -3562,9 +3301,6 @@ msgstr ""
 
 msgid "TV System"
 msgstr "TV systém"
-
-msgid "TXT"
-msgstr ""
 
 msgid "Table of content for collection"
 msgstr ""
@@ -3827,9 +3563,6 @@ msgstr "Čtvrtek"
 msgid "Time"
 msgstr "Čas"
 
-msgid "Time mode"
-msgstr ""
-
 msgid "Time/Date Input"
 msgstr "Nastavení času / datumu"
 
@@ -3972,9 +3705,6 @@ msgstr "Status tuneru"
 msgid "Turkish"
 msgstr "Turecky"
 
-msgid "TuxTXT"
-msgstr ""
-
 msgid "Two"
 msgstr "Dva"
 
@@ -3983,15 +3713,6 @@ msgstr ""
 
 msgid "Type of scan"
 msgstr "Typ prohledávání"
-
-msgid "Typematic delay"
-msgstr ""
-
-msgid "Typematic rate"
-msgstr ""
-
-msgid "U"
-msgstr ""
 
 msgid "USALS"
 msgstr "USALS"
@@ -4079,7 +3800,6 @@ msgstr "Použít měření výkonu"
 msgid "Use a gateway"
 msgstr "Použít bránu (gateway)"
 
-#. #-#-#-#-#  enigma2.pot (PACKAGE VERSION)  #-#-#-#-#
 #.   TRANSLATORS: The effect of "Non-smooth winding" is that rather
 #.       than using ordinary "continuous" or "smooth" winding, a fast
 #.       sequence of stills is shown when winding at high speeds. This
@@ -4127,15 +3847,6 @@ msgstr "Použítý scan podle služby (?)"
 
 msgid "User defined"
 msgstr "Uživatelsky definované"
-
-msgid "UserDialog"
-msgstr ""
-
-msgid "UserManager"
-msgstr ""
-
-msgid "V"
-msgstr ""
 
 msgid "VCR scart"
 msgstr "VCR scart"
@@ -4194,9 +3905,6 @@ msgstr "Prohlíže Rass interaktivně..."
 msgid "View Video CD..."
 msgstr ""
 
-msgid "View list of available "
-msgstr ""
-
 msgid "View list of available CommonInterface extensions"
 msgstr ""
 
@@ -4237,12 +3945,6 @@ msgid "View teletext..."
 msgstr "Zobrazit teletext..."
 
 msgid "Virtual KeyBoard"
-msgstr ""
-
-msgid "Vol"
-msgstr ""
-
-msgid "Vol off"
 msgstr ""
 
 msgid "Voltage mode"
@@ -4361,9 +4063,6 @@ msgstr ""
 
 msgid "YPbPr"
 msgstr "YPbPr"
-
-msgid "YUV"
-msgstr ""
 
 msgid "Year"
 msgstr "Rok"
@@ -4633,9 +4332,6 @@ msgstr "Přidat kanál do oblíbených"
 msgid "add to parental protection"
 msgstr "Přidat rodičovský zámek"
 
-msgid "add/remove bookmarks (locationbox)"
-msgstr ""
-
 msgid "advanced"
 msgstr "rozšířené"
 
@@ -4648,9 +4344,6 @@ msgid ""
 msgstr ""
 "jste si jistý, že chcete obnovit\n"
 "následující zálohu:\n"
-
-msgid "ask on exit"
-msgstr ""
 
 msgid "assigned CAIds"
 msgstr ""
@@ -4913,9 +4606,6 @@ msgstr "hodiny"
 msgid "immediate shutdown"
 msgstr "ihned vypnout"
 
-msgid "immediate standby"
-msgstr ""
-
 #, python-format
 msgid ""
 "incoming call!\n"
@@ -5110,14 +4800,8 @@ msgstr "Přehrát"
 msgid "play from next mark or playlist entry"
 msgstr "přehrát od další značky nebo položky v playlistu"
 
-msgid "play from next playlist entry"
-msgstr ""
-
 msgid "play from previous mark or playlist entry"
 msgstr "přehrát od předchozí značky nebo položky v playlistu"
-
-msgid "play from previous playlist entry"
-msgstr ""
 
 msgid "please press OK when ready"
 msgstr "stiskněte OK až budete připraveni"
@@ -5193,9 +4877,6 @@ msgstr ""
 
 msgid "save playlist"
 msgstr "uložit playlist"
-
-msgid "save playlist before exit?"
-msgstr ""
 
 msgid "save playlist on exit"
 msgstr ""
@@ -5381,9 +5062,6 @@ msgstr "toto nahrávání"
 msgid "this service is protected by a parental control pin"
 msgstr "tento programl je chráněný rodičovským zámkem"
 
-msgid "toggels betwenn tv and radio..."
-msgstr ""
-
 msgid "toggle a cut mark at the current position"
 msgstr "prohodit střihovou značku na této pozici"
 
@@ -5558,6 +5236,9 @@ msgstr "přepnutý"
 #~ msgstr ""
 #~ "Opravdu chcete stáhnout\n"
 #~ "tento plugin \""
+
+#~ msgid "Do you really want to exit?"
+#~ msgstr "Opravdu chcete ukončit?"
 
 #~ msgid "Do you want to view a cutlist tutorial?"
 #~ msgstr "Chcete zobrazit tutorial pro střih?"
