@@ -17,7 +17,7 @@
  static int usb_stor_scan_thread(void * __us)
  {
  	struct us_data *us = (struct us_data *)__us;
-+	unsigned char usbwait=5;
++	unsigned char usbwait=0;
 +	char cur[9], *delim, *delim1;
 +
 +	strcpy(cur, usbwait123);

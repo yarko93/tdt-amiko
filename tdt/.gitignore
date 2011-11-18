@@ -128,6 +128,12 @@ cvs/apps/misc/tools/libmme_host/Makefile
 cvs/apps/misc/tools/libmmeimage/Makefile
 cvs/apps/misc/tools/vfdctl/Makefile
 cvs/apps/misc/tools/vfdctl/vfdctl
+cvs/apps/misc/tools/gst-plugins-dvbmediasink/Makefile
+cvs/apps/misc/tools/gst-plugins-dvbmediasink/m4/Makefile
+cvs/apps/misc/tools/gst-plugins-dvbmediasink/src/Makefile
+cvs/apps/misc/tools/gst-plugins-dvbmediasink/src/gstdvbsink-marshal.c
+cvs/apps/misc/tools/gst-plugins-dvbmediasink/src/gstdvbsink-marshal.h
+cvs/apps/misc/tools/gst-plugins-dvbmediasink/stamp-h1
 
 
 cvs/cdk/Makefile
