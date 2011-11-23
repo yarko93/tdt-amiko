@@ -78,7 +78,7 @@ static int CurrentTrack = -1; //no as default.
 
 static int ManagerAdd(Context_t  *context, Track_t track) {
 
-    subtitle_mgr_printf(10, "%s::%s %s %s %d\n", FILENAME, __FUNCTION__, track.Name, track.Encoding, track.Id);
+    //subtitle_mgr_printf(10, "%s::%s %s %s %d\n", FILENAME, __FUNCTION__, track.Name, track.Encoding, track.Id);
 
     if (Tracks == NULL) {
         Tracks = malloc(sizeof(Track_t) * TRACKWRAP);
@@ -102,7 +102,7 @@ static int ManagerAdd(Context_t  *context, Track_t track) {
     if (TrackCount > 0)
         context->playback->isSubtitle = 1;
 
-    subtitle_mgr_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
+    //subtitle_mgr_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
 
     return cERR_SUBTITLE_MGR_NO_ERROR;
 }
@@ -111,7 +111,7 @@ static char ** ManagerList(Context_t  *context) {
     char ** tracklist = NULL;
     int i = 0, j = 0;
 
-    subtitle_mgr_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
+    //subtitle_mgr_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
 
     if (Tracks != NULL) {
         tracklist = malloc(sizeof(char *) * ((TrackCount*2) + 1));
@@ -130,7 +130,7 @@ static char ** ManagerList(Context_t  *context) {
         tracklist[j] = NULL;
     }
 
-    subtitle_mgr_printf(10, "%s::%s return %p (%d - %d)\n", FILENAME, __FUNCTION__, tracklist, j, TrackCount);
+    //subtitle_mgr_printf(10, "%s::%s return %p (%d - %d)\n", FILENAME, __FUNCTION__, tracklist, j, TrackCount);
 
     return tracklist;
 }
@@ -139,7 +139,7 @@ static int ManagerDel(Context_t * context) {
 
     int i = 0;
 
-    subtitle_mgr_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
+    //subtitle_mgr_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
 
     if(Tracks != NULL) {
         for (i = 0; i < TrackCount; i++) {
@@ -158,7 +158,7 @@ static int ManagerDel(Context_t * context) {
     CurrentTrack = -1;
     context->playback->isSubtitle = 0;
 
-    subtitle_mgr_printf(10, "%s::%s return no error\n", FILENAME, __FUNCTION__);
+    //subtitle_mgr_printf(10, "%s::%s return no error\n", FILENAME, __FUNCTION__);
 
     return cERR_SUBTITLE_MGR_NO_ERROR;
 }
@@ -167,7 +167,7 @@ static int Command(void  *_context, ManagerCmd_t command, void * argument) {
     Context_t  *context = (Context_t*) _context;
     int ret = cERR_SUBTITLE_MGR_NO_ERROR;
 
-    subtitle_mgr_printf(50, "%s::%s %d\n", FILENAME, __FUNCTION__, command);
+    //subtitle_mgr_printf(50, "%s::%s %d\n", FILENAME, __FUNCTION__, command);
 
     switch(command) {
     case MANAGER_ADD: {
@@ -187,16 +187,16 @@ static int Command(void  *_context, ManagerCmd_t command, void * argument) {
         break;
     }
     case MANAGER_GET_TRACK: {
-        subtitle_mgr_printf(20, "%s::%s MANAGER_GET_TRACK\n", FILENAME, __FUNCTION__);
+        //subtitle_mgr_printf(20, "%s::%s MANAGER_GET_TRACK\n", FILENAME, __FUNCTION__);
 
         if ((TrackCount > 0) && (CurrentTrack >=0))
         {
-             subtitle_mgr_printf(120, "return %d, %p\n", CurrentTrack, &Tracks[CurrentTrack]);
+             //subtitle_mgr_printf(120, "return %d, %p\n", CurrentTrack, &Tracks[CurrentTrack]);
             *((Track_t**)argument) = (Track_t*) &Tracks[CurrentTrack];
         }
         else
         {
-             subtitle_mgr_printf(20, "return NULL\n");
+             //subtitle_mgr_printf(20, "return NULL\n");
             *((Track_t**)argument) = NULL;
         }
         break;
@@ -218,7 +218,7 @@ static int Command(void  *_context, ManagerCmd_t command, void * argument) {
     case MANAGER_SET: {
         int id = *((int*)argument);
 
-        subtitle_mgr_printf(20, "%s::%s MANAGER_SET id=%d\n", FILENAME, __FUNCTION__, id);
+        //subtitle_mgr_printf(20, "%s::%s MANAGER_SET id=%d\n", FILENAME, __FUNCTION__, id);
 
         if (id < TrackCount)
             CurrentTrack = id;
@@ -239,7 +239,7 @@ static int Command(void  *_context, ManagerCmd_t command, void * argument) {
         break;
     }
 
-    subtitle_mgr_printf(50, "%s:%s: returning %d\n", FILENAME, __FUNCTION__,ret);
+    //subtitle_mgr_printf(50, "%s:%s: returning %d\n", FILENAME, __FUNCTION__,ret);
 
     return ret;
 }

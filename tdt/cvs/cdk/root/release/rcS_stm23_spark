@@ -95,7 +95,12 @@ done
       fi
       insmod $MODDIR/stm_monitor.ko
       insmod $MODDIR/stmsysfs.ko
-      insmod $MODDIR/stmdvb.ko TSsource0=0;
+      whichSTM=`uname -a | grep stm23`
+	if [ -z "$whichSTM" ]; then
+	insmod $MODDIR/stmdvb.ko TSsource0=0
+	else
+	insmod $MODDIR/stmdvb.ko
+	fi
    else
       insmod $MODDIR/stmdvb.ko
       insmod $MODDIR/stm_monitor.ko

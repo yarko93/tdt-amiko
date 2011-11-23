@@ -523,7 +523,7 @@ int main(int argc,char* argv[]) {
                 break;
             }
             default: {
-                printf("Control:\n");
+/*                printf("Control:\n");
                 printf("al:       List audio tracks\n");
                 printf("ac:       List current audio track\n");
                 printf("a[id]     Select audio track\n");
@@ -539,7 +539,7 @@ int main(int argc,char* argv[]) {
                 printf("j:        Print current PTS\n");
                 printf("k[1,4,7]: Jump back [15,60,300] seconds\n");
                 printf("k[3,6,9]: Jump forward [15,60,300] seconds\n");
-                printf("i:        Print Info\n");
+                printf("i:        Print Info\n"); */
                 break;
             }
             }

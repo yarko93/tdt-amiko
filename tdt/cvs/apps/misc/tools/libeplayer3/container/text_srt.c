@@ -103,7 +103,7 @@ static int hasThreadStarted = 0;
 
 void data_to_manager(Context_t *context, char* Text, unsigned long long int Pts, double Duration)
 {
-    srt_printf(20, "--> Text= \"%s\"\n", Text);
+    //srt_printf(20, "--> Text= \"%s\"\n", Text);
 
     if( context &&
         context->playback &&
@@ -111,8 +111,8 @@ void data_to_manager(Context_t *context, char* Text, unsigned long long int Pts,
             int sl = strlen(Text)-1;
             while(sl && (Text[sl]=='\n' || Text[sl]=='\r')) Text[sl--]='\0'; /*Delete last \n or \r */
             unsigned char* line = text_to_ass(Text, Pts, Duration);
-            srt_printf(50,"Sub text is %s\n",Text);
-            srt_printf(50,"Sub line is %s\n",line);
+            //srt_printf(50,"Sub text is %s\n",Text);
+            //srt_printf(50,"Sub line is %s\n",line);
             SubtitleData_t data;
             data.data      = line;
             data.len       = strlen((char*)line);
@@ -125,7 +125,7 @@ void data_to_manager(Context_t *context, char* Text, unsigned long long int Pts,
             free(line);
     }
 
-    srt_printf(20, "<-- Text= \"%s\"\n", Text);
+    //srt_printf(20, "<-- Text= \"%s\"\n", Text);
 }
 
 /* ***************************** */
@@ -141,10 +141,10 @@ static void* SrtSubtitleThread(void *data) {
      
     Context_t *context = (Context_t*) data;
 
-    srt_printf(10, "\n");
+    //srt_printf(10, "\n");
 
     while(context && context->playback && context->playback->isPlaying && fsub && fgets(Data, MAXLINELENGTH, fsub)) {
-        srt_printf(20, "pos=%d\n", pos);
+        //srt_printf(20, "pos=%d\n", pos);
 
         if(pos == 0) 
         {
@@ -164,7 +164,7 @@ static void* SrtSubtitleThread(void *data) {
             pos++;
 
         } else if(pos == 2) {
-            srt_printf(20, "Data[0] = %d \'%c\'\n", Data[0], Data[0]);
+            //srt_printf(20, "Data[0] = %d \'%c\'\n", Data[0], Data[0]);
 
             if(Data[0] == '\n' || Data[0] == '\0' || Data[0] == 13 /* ^M */) {
                 if(Text == NULL)
@@ -203,7 +203,7 @@ static void* SrtSubtitleThread(void *data) {
         Text = NULL;
     }
 
-    srt_printf(0, "thread has ended\n");
+    //srt_printf(0, "thread has ended\n");
 
     return NULL;
 }
@@ -213,7 +213,7 @@ static void* SrtSubtitleThread(void *data) {
 /* ***************************** */
 
 static void SrtManagerAdd(Context_t  *context, SrtTrack_t track) {
-    srt_printf(10, "%s %d\n",track.File, track.Id);
+    //srt_printf(10, "%s %d\n",track.File, track.Id);
 
     if (Tracks == NULL) {
         Tracks = malloc(sizeof(SrtTrack_t) * TRACKWRAP);
@@ -229,7 +229,7 @@ static void SrtManagerAdd(Context_t  *context, SrtTrack_t track) {
 static char ** SrtManagerList(Context_t  *context) {
     char ** tracklist = NULL;
 
-    srt_printf(10, "\n");
+    //srt_printf(10, "\n");
 
     if (Tracks != NULL) {
         char help[256];
@@ -252,7 +252,7 @@ static char ** SrtManagerList(Context_t  *context) {
 static void SrtManagerDel(Context_t * context) {
     int i = 0;
 
-    srt_printf(10, "\n");
+    //srt_printf(10, "\n");
 
     if(Tracks != NULL) {
         for (i = 0; i < TrackCount; i++) {
@@ -278,7 +278,7 @@ static int SrtGetSubtitle(Context_t  *context, char * Filename) {
     char *  FilenameFolder       = NULL;
     char *  FilenameShort        = NULL;
 
-    srt_printf(10, "\n");
+    //srt_printf(10, "\n");
 
     if (Filename == NULL)
     {
@@ -286,7 +286,7 @@ static int SrtGetSubtitle(Context_t  *context, char * Filename) {
        return cERR_SRT_ERROR;
     }
     
-    srt_printf(10, "file: %s\n", Filename);
+    //srt_printf(10, "file: %s\n", Filename);
 
     copyFilename = strdup(Filename);
 
@@ -298,7 +298,7 @@ static int SrtGetSubtitle(Context_t  *context, char * Filename) {
        return cERR_SRT_ERROR;
     }
     
-    srt_printf(10, "folder: %s\n", FilenameFolder);
+    //srt_printf(10, "folder: %s\n", FilenameFolder);
 
     getExtension(copyFilename, &FilenameExtension);
 
@@ -309,22 +309,22 @@ static int SrtGetSubtitle(Context_t  *context, char * Filename) {
        return cERR_SRT_ERROR;
     }
 
-    srt_printf(10, "ext: %s\n", FilenameExtension);
+    //srt_printf(10, "ext: %s\n", FilenameExtension);
 
     FilenameShort = basename(copyFilename);
     
     /* cut extension */
     FilenameShort[strlen(FilenameShort) - strlen(FilenameExtension) - 1] = '\0';
     
-    srt_printf(10, "basename: %s\n", FilenameShort);
-    srt_printf(10, "%s\n%s | %s | %s\n", copyFilename, FilenameFolder, FilenameShort, FilenameExtension);
+    //srt_printf(10, "basename: %s\n", FilenameShort);
+    //srt_printf(10, "%s\n%s | %s | %s\n", copyFilename, FilenameFolder, FilenameShort, FilenameExtension);
 
     if((dir = opendir(FilenameFolder)) != NULL) {
         while((dirzeiger = readdir(dir)) != NULL) {
             char subtitleFilename[PATH_MAX];
             char *subtitleExtension = NULL;
 
-            srt_printf(20, "%s\n",(*dirzeiger).d_name);
+            //srt_printf(20, "%s\n",(*dirzeiger).d_name);
 
             strcpy(subtitleFilename, (*dirzeiger).d_name);
 
@@ -343,7 +343,7 @@ static int SrtGetSubtitle(Context_t  *context, char * Filename) {
             /* cut extension */
             subtitleFilename[strlen(subtitleFilename) - strlen(subtitleExtension) - 1] = '\0';
 
-            srt_printf(10, "%s %s\n", FilenameShort, subtitleFilename);
+            //srt_printf(10, "%s %s\n", FilenameShort, subtitleFilename);
 
             if (strncmp(FilenameShort, subtitleFilename,strlen(FilenameShort)) == 0)
             {
@@ -352,8 +352,8 @@ static int SrtGetSubtitle(Context_t  *context, char * Filename) {
                 
                 sprintf(absSubtitleFileName, "%s/%s.%s", FilenameFolder, subtitleFilename, subtitleExtension);
                 
-                srt_printf(10, "SRT: %s [%s]\n", subtitleExtension, subtitleFilename);
-                srt_printf(10, "\t->%s\n", absSubtitleFileName);
+                //srt_printf(10, "SRT: %s [%s]\n", subtitleExtension, subtitleFilename);
+                //srt_printf(10, "\t->%s\n", absSubtitleFileName);
 
                 SrtTrack_t SrtSubtitle = {
                         absSubtitleFileName,
@@ -378,12 +378,12 @@ static int SrtGetSubtitle(Context_t  *context, char * Filename) {
     free(FilenameExtension);
     free(copyFilename);
 
-    srt_printf(10, "<\n");
+    //srt_printf(10, "<\n");
     return cERR_SRT_NO_ERROR;
 }
 
 static int SrtOpenSubtitle(Context_t *context, int trackid) {
-    srt_printf(10, "\n");
+    //srt_printf(10, "\n");
 
     if(trackid < TEXTSRTOFFSET || (trackid % TEXTSRTOFFSET) >= TrackCount) {
         srt_err("trackid not for us\n");
@@ -392,11 +392,11 @@ static int SrtOpenSubtitle(Context_t *context, int trackid) {
 
     trackid %= TEXTSRTOFFSET;
 
-    srt_printf(10, "%s\n", Tracks[trackid].File);
+    //srt_printf(10, "%s\n", Tracks[trackid].File);
 
     fsub = fopen(Tracks[trackid].File, "rb");
 
-    srt_printf(10, "%s\n", fsub ? "fsub!=NULL" : "fsub==NULL");
+    //srt_printf(10, "%s\n", fsub ? "fsub!=NULL" : "fsub==NULL");
 
     if(!fsub)
     {
@@ -407,7 +407,7 @@ static int SrtOpenSubtitle(Context_t *context, int trackid) {
 }
 
 static int SrtCloseSubtitle(Context_t *context) {
-    srt_printf(10, "\n");
+    //srt_printf(10, "\n");
 
     if(fsub)
         fclose(fsub);
@@ -424,7 +424,7 @@ static int SrtCloseSubtitle(Context_t *context) {
 static int SrtSwitchSubtitle(Context_t *context, int* arg) {
     int ret = cERR_SRT_NO_ERROR;
     
-    srt_printf(10, "arg:%d\n", *arg);
+    //srt_printf(10, "arg:%d\n", *arg);
 
     ret = SrtCloseSubtitle(context);
 
@@ -443,7 +443,7 @@ static int SrtSwitchSubtitle(Context_t *context, int* arg) {
 static int SrtDel(Context_t *context) {
     int ret = cERR_SRT_NO_ERROR;
   
-    srt_printf(10, "\n");
+    //srt_printf(10, "\n");
 
     ret = SrtCloseSubtitle(context);
     SrtManagerDel(context);
@@ -455,7 +455,7 @@ static int Command(void  *_context, ContainerCmd_t command, void * argument) {
     Context_t  *context = (Context_t*) _context;
     int ret = cERR_SRT_NO_ERROR;
     
-    srt_printf(10, "\n");
+    //srt_printf(10, "\n");
 
     switch(command) {
     case CONTAINER_INIT: {
@@ -476,7 +476,7 @@ static int Command(void  *_context, ContainerCmd_t command, void * argument) {
         break;
     }
 
-    srt_printf(10, "ret = %d\n", ret);
+    //srt_printf(10, "ret = %d\n", ret);
 
     return 0;
 }
