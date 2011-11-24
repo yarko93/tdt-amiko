@@ -1,9 +1,8 @@
-diff -rcN linux-sh4-2.6.32.10_stm24_0201_orig/kernel/time/timekeeping.c linux-sh4/kernel/time/timekeeping.c
-*** linux-sh4-2.6.32.10_stm24_0201_orig/kernel/time/timekeeping.c	Mon May  3 15:59:19 2010
---- linux-sh4/kernel/time/timekeeping.c	Tue May  4 00:55:58 2010
+*** linux-sh4-2.6.32.46_stm24_0209.orig/kernel/time/timekeeping.c	2011-11-24 22:22:25.000000000 +0200
+--- linux-sh4/kernel/time/timekeeping.c	2011-11-25 00:38:33.758560158 +0200
 ***************
-*** 137,142 ****
---- 137,144 ----
+*** 141,146 ****
+--- 141,148 ----
    */
   __cacheline_aligned_in_smp DEFINE_SEQLOCK(xtime_lock);
   
@@ -13,8 +12,8 @@ diff -rcN linux-sh4-2.6.32.10_stm24_0201_orig/kernel/time/timekeeping.c linux-sh
   /*
    * The current time
 ***************
-*** 156,161 ****
---- 158,165 ----
+*** 160,165 ****
+--- 162,169 ----
   struct timespec xtime __attribute__ ((aligned (16)));
   struct timespec wall_to_monotonic __attribute__ ((aligned (16)));
   static struct timespec total_sleep_time;

@@ -1,59 +1,204 @@
-*** a/include/linux/dvb/video.h	2009-12-03 04:51:21.000000000 +0100
---- b/include/linux/dvb/video.h	2010-05-01 12:59:35.277995147 +0200
+*** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/media/dvb/dvb-core/dmxdev.c	2011-11-24 22:22:24.000000000 +0200
+--- linux-sh4/drivers/media/dvb/dvb-core/dmxdev.c	2011-11-24 23:02:30.636994000 +0200
 ***************
-*** 120,125 ****
---- 120,131 ----
-  		struct {
-  			__u32 data[16];
-  		} raw;
-+ 
-+ 		struct {
-+ 			unsigned int    option; /* really dvb_option_t but like this so don't modify kernel sources too much */
-+ 			unsigned int    value;
-+ 		} option;
-+ 
-  	};
+*** 132,142 ****
+  	if (mutex_lock_interruptible(&dmxdev->mutex))
+  		return -ERESTARTSYS;
+  
+- 	if (dmxdev->exit) {
+- 		mutex_unlock(&dmxdev->mutex);
+- 		return -ENODEV;
+- 	}
+- 
+  	if ((file->f_flags & O_ACCMODE) == O_RDWR) {
+  		if (!(dmxdev->capabilities & DMXDEV_CAP_DUPLEX)) {
+  			mutex_unlock(&dmxdev->mutex);
+--- 132,137 ----
+***************
+*** 176,182 ****
+  		dmxdev->demux->disconnect_frontend(dmxdev->demux);
+  		dmxdev->demux->connect_frontend(dmxdev->demux, front);
+  	}
+- 	dvbdev->users++;
+  	mutex_unlock(&dmxdev->mutex);
+  	return 0;
+  }
+--- 171,176 ----
+***************
+*** 204,219 ****
+  			vfree(mem);
+  		}
+  	}
+! 	/* TODO */
+! 	dvbdev->users--;
+! 	if(dvbdev->users==-1 && dmxdev->exit==1) {
+! 		fops_put(file->f_op);
+! 		file->f_op = NULL;
+! 		mutex_unlock(&dmxdev->mutex);
+! 		wake_up(&dvbdev->wait_queue);
+! 	} else
+! 		mutex_unlock(&dmxdev->mutex);
+! 
+  	return 0;
+  }
+  
+--- 198,204 ----
+  			vfree(mem);
+  		}
+  	}
+! 	mutex_unlock(&dmxdev->mutex);
+  	return 0;
+  }
+  
+***************
+*** 230,240 ****
+  		return -EINVAL;
+  	if (mutex_lock_interruptible(&dmxdev->mutex))
+  		return -ERESTARTSYS;
+- 
+- 	if (dmxdev->exit) {
+- 		mutex_unlock(&dmxdev->mutex);
+- 		return -ENODEV;
+- 	}
+  	ret = dmxdev->demux->write(dmxdev->demux, buf, count);
+  	mutex_unlock(&dmxdev->mutex);
+  	return ret;
+--- 215,220 ----
+***************
+*** 246,254 ****
+  	struct dvb_device *dvbdev = file->private_data;
+  	struct dmxdev *dmxdev = dvbdev->priv;
+  
+- 	if (dmxdev->exit)
+- 		return -ENODEV;
+- 
+  	return dvb_dmxdev_buffer_read(&dmxdev->dvr_buffer,
+  				      file->f_flags & O_NONBLOCK,
+  				      buf, count, ppos);
+--- 226,231 ----
+***************
+*** 763,770 ****
+  	dvb_dmxdev_filter_state_set(dmxdevfilter, DMXDEV_STATE_ALLOCATED);
+  	init_timer(&dmxdevfilter->timer);
+  
+- 	dvbdev->users++;
+- 
+  	mutex_unlock(&dmxdev->mutex);
+  	return 0;
+  }
+--- 740,745 ----
+***************
+*** 949,965 ****
+  	struct dmxdev_filter *dmxdevfilter = file->private_data;
+  	int ret;
+  
+! 	if (mutex_lock_interruptible(&dmxdevfilter->mutex))
+! 		return -ERESTARTSYS;
+  
+- 	if (dmxdevfilter->type == DMXDEV_TYPE_SEC)
+  		ret = dvb_dmxdev_read_sec(dmxdevfilter, file, buf, count, ppos);
+  	else
+  		ret = dvb_dmxdev_buffer_read(&dmxdevfilter->buffer,
+  					     file->f_flags & O_NONBLOCK,
+  					     buf, count, ppos);
+  
+- 	mutex_unlock(&dmxdevfilter->mutex);
+  	return ret;
+  }
+  
+--- 924,941 ----
+  	struct dmxdev_filter *dmxdevfilter = file->private_data;
+  	int ret;
+  
+! 	if (dmxdevfilter->type == DMXDEV_TYPE_SEC) {
+! 		if (mutex_lock_interruptible(&dmxdevfilter->mutex))
+! 			return -ERESTARTSYS;
+  
+  		ret = dvb_dmxdev_read_sec(dmxdevfilter, file, buf, count, ppos);
++ 		mutex_unlock(&dmxdevfilter->mutex);
++ 	}
+  	else
+  		ret = dvb_dmxdev_buffer_read(&dmxdevfilter->buffer,
+  					     file->f_flags & O_NONBLOCK,
+  					     buf, count, ppos);
+  
+  	return ret;
+  }
+  
+***************
+*** 1119,1139 ****
+  	struct dmxdev_filter *dmxdevfilter = file->private_data;
+  	struct dmxdev *dmxdev = dmxdevfilter->dev;
+  
+! 	int ret;
+! 
+! 	ret = dvb_dmxdev_filter_free(dmxdev, dmxdevfilter);
+! 
+! 	mutex_lock(&dmxdev->mutex);
+! 	dmxdev->dvbdev->users--;
+! 	if(dmxdev->dvbdev->users==1 && dmxdev->exit==1) {
+! 		fops_put(file->f_op);
+! 		file->f_op = NULL;
+! 		mutex_unlock(&dmxdev->mutex);
+! 		wake_up(&dmxdev->dvbdev->wait_queue);
+! 	} else
+! 		mutex_unlock(&dmxdev->mutex);
+! 
+! 	return ret;
+  }
+  
+  static const struct file_operations dvb_demux_fops = {
+--- 1095,1101 ----
+  	struct dmxdev_filter *dmxdevfilter = file->private_data;
+  	struct dmxdev *dmxdev = dmxdevfilter->dev;
+  
+! 	return dvb_dmxdev_filter_free(dmxdev, dmxdevfilter);
+  }
+  
+  static const struct file_operations dvb_demux_fops = {
+***************
+*** 1217,1223 ****
+  static struct dvb_device dvbdev_dvr = {
+  	.priv = NULL,
+  	.readers = 1,
+- 	.users = 1,
+  	.fops = &dvb_dvr_fops
   };
   
-*** a/drivers/media/dvb/dvb-core/dvbdev.c	2009-12-03 04:51:21.000000000 +0100
---- b/drivers/media/dvb/dvb-core/dvbdev.c	2010-05-02 10:42:04.117818853 +0200
+--- 1179,1184 ----
 ***************
-*** 45,53 ****
-  static LIST_HEAD(dvb_adapter_list);
-  static DEFINE_MUTEX(dvbdev_register_lock);
+*** 1255,1270 ****
   
-  static const char * const dnames[] = {
-  	"video", "audio", "sec", "frontend", "demux", "dvr", "ca",
-! 	"net", "osd"
-  };
+  void dvb_dmxdev_release(struct dmxdev *dmxdev)
+  {
+- 	dmxdev->exit=1;
+- 	if (dmxdev->dvbdev->users > 1) {
+- 		wait_event(dmxdev->dvbdev->wait_queue,
+- 				dmxdev->dvbdev->users==1);
+- 	}
+- 	if (dmxdev->dvr_dvbdev->users > 1) {
+- 		wait_event(dmxdev->dvr_dvbdev->wait_queue,
+- 				dmxdev->dvr_dvbdev->users==1);
+- 	}
+- 
+  	dvb_unregister_device(dmxdev->dvbdev);
+  	dvb_unregister_device(dmxdev->dvr_dvbdev);
   
-  #ifdef CONFIG_DVB_DYNAMIC_MINORS
---- 45,54 ----
-  static LIST_HEAD(dvb_adapter_list);
-  static DEFINE_MUTEX(dvbdev_register_lock);
-  
-+ /* Dagobert: Add ci */
-  static const char * const dnames[] = {
-  	"video", "audio", "sec", "frontend", "demux", "dvr", "ca",
-! 	"net", "osd", "ci"
-  };
-  
-  #ifdef CONFIG_DVB_DYNAMIC_MINORS
-*** a/drivers/media/dvb/dvb-core/dvbdev.h	2009-12-03 04:51:21.000000000 +0100
---- b/drivers/media/dvb/dvb-core/dvbdev.h	2010-05-02 10:41:14.809818852 +0200
+--- 1216,1221 ----
+*** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/media/dvb/dvb-core/dmxdev.h	2009-12-03 05:51:21.000000000 +0200
+--- linux-sh4/drivers/media/dvb/dvb-core/dmxdev.h	2011-11-24 23:02:30.567871000 +0200
 ***************
-*** 47,52 ****
---- 47,54 ----
-  #define DVB_DEVICE_CA         6
-  #define DVB_DEVICE_NET        7
-  #define DVB_DEVICE_OSD        8
-+ /* Dagobert: Add ci */
-+ #define DVB_DEVICE_CI         9
+*** 99,105 ****
+  	int filternum;
+  	int capabilities;
   
-  #define DVB_DEFINE_MOD_OPT_ADAPTER_NR(adapter_nr) \
-  	static short adapter_nr[] = \
-*** a/drivers/media/dvb/dvb-core/dvb_ca_en50221.c	2009-12-03 04:51:21.000000000 +0100
---- b/dvb_ca_en50221.c	2011-02-21 12:40:47.667471451 +0100
+- 	unsigned int exit:1;
+  #define DMXDEV_CAP_DUPLEX 1
+  	struct dmx_frontend *dvr_orig_fe;
+  
+--- 99,104 ----
+*** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/media/dvb/dvb-core/dvb_ca_en50221.c	2009-12-03 05:51:21.000000000 +0200
+--- linux-sh4/drivers/media/dvb/dvb-core/dvb_ca_en50221.c	2011-11-24 23:02:30.528633000 +0200
 ***************
 *** 41,54 ****
   #include "dvb_ca_en50221.h"
@@ -88,7 +233,7 @@
   
 ***************
 *** 117,124 ****
---- 118,135 ----
+--- 118,134 ----
   	/* buffer for incoming packets */
   	struct dvb_ringbuffer rx_buffer;
   
@@ -98,7 +243,6 @@
   	/* timer used during various states of the slot */
   	unsigned long timeout;
 + 
-+ /* Dagobert */
 + 	int	pollTime;
 + 
 + 	int	waitWrite;
@@ -109,11 +253,11 @@
   /* Private CA-interface information */
 ***************
 *** 130,135 ****
---- 141,150 ----
+--- 140,149 ----
   	/* the DVB device */
   	struct dvb_device *dvbdev;
   
-+ 	/* Dagobert: the DVB CI devices */
++ 	/* the DVB CI devices */
 + 	struct dvb_device *dvbdev_ci[2];
 + 	int slot_states[2];
 + 
@@ -122,13 +266,11 @@
   
 ***************
 *** 145,150 ****
---- 160,170 ----
+--- 159,167 ----
   	/* PID of the monitoring thread */
   	struct task_struct *thread;
   
-+ 	/* dagobert: since we have multiple (logical) devices
-+ 	 * we should protect them
-+ 	 */
++ 	/* since we have multiple (logical) devices, we should protect them */
 + 	struct mutex io_mutex;
 + 
   	/* Flag indicating if the CA device is open */
@@ -136,11 +278,11 @@
   
 ***************
 *** 162,167 ****
---- 182,192 ----
+--- 179,189 ----
   static int dvb_ca_en50221_read_data(struct dvb_ca_private *ca, int slot, u8 * ebuf, int ecount);
   static int dvb_ca_en50221_write_data(struct dvb_ca_private *ca, int slot, u8 * ebuf, int ecount);
   
-+ //Dagobert: Hack
++ // Hack
 + struct proc_dir_entry*  ci_dir;
 + 
 + struct dvb_ca_slot *ci0;
@@ -150,19 +292,18 @@
    * Safely find needle in haystack.
 ***************
 *** 592,597 ****
---- 617,625 ----
+--- 614,621 ----
   
   	dprintk("%s\n", __func__);
   
-+ 	/* dagobert */
-+         mutex_lock(&ca->io_mutex);
++     mutex_lock(&ca->io_mutex);
 + 
   	/* check if we have space for a link buf in the rx_buffer */
   	if (ebuf == NULL) {
   		int buf_free;
 ***************
 *** 664,669 ****
---- 692,698 ----
+--- 688,694 ----
   	if ((status = ca->pub->read_cam_control(ca->pub, slot, CTRLIF_STATUS)) < 0)
   		goto exit;
   	if (status & STATUSREG_RE) {
@@ -172,7 +313,7 @@
   		goto exit;
 ***************
 *** 685,695 ****
---- 714,728 ----
+--- 710,722 ----
   
   	/* wake up readers when a last_fragment is received */
   	if ((buf[1] & 0x80) == 0x00) {
@@ -182,27 +323,24 @@
   	status = bytes_read;
   
   exit:
-+ 	/* dagobert */
-+         mutex_unlock(&ca->io_mutex);
-+ 
++     mutex_unlock(&ca->io_mutex);
   	return status;
   }
   
 ***************
 *** 718,723 ****
---- 751,759 ----
+--- 745,752 ----
   	if (bytes_write > ca->slot_info[slot].link_buf_size)
   		return -EINVAL;
   
-+ 	/* dagobert */
-+         mutex_lock(&ca->io_mutex);
++     mutex_lock(&ca->io_mutex);
 + 
   	/* it is possible we are dealing with a single buffer implementation,
   	   thus if there is data available for read or if there is even a read
   	   already in progress, we do nothing but awake the kernel thread to
 ***************
 *** 763,768 ****
---- 799,805 ----
+--- 792,798 ----
   	if ((status = ca->pub->read_cam_control(ca->pub, slot, CTRLIF_STATUS)) < 0)
   		goto exit;
   	if (status & STATUSREG_WE) {
@@ -212,19 +350,17 @@
   		goto exit;
 ***************
 *** 776,781 ****
---- 813,821 ----
+--- 806,812 ----
   	ca->pub->write_cam_control(ca->pub, slot, CTRLIF_COMMAND, IRQEN);
   
   exitnowrite:
-+ 	/* dagobert */
-+         mutex_unlock(&ca->io_mutex);
-+ 
++     mutex_unlock(&ca->io_mutex);
   	return status;
   }
   EXPORT_SYMBOL(dvb_ca_en50221_camchange_irq);
 ***************
 *** 801,806 ****
---- 841,847 ----
+--- 832,838 ----
   
   	/* need to wake up all processes to check if they're now
   	   trying to write to a defunct CAM */
@@ -234,7 +370,7 @@
   	dprintk("Slot %i shutdown\n", slot);
 ***************
 *** 1039,1044 ****
---- 1080,1093 ----
+--- 1071,1084 ----
   				break;
   
   			case DVB_CA_SLOTSTATE_VALIDATE:
@@ -251,7 +387,7 @@
   					if ((!(ca->flags & DVB_CA_EN50221_FLAG_IRQ_CAMCHANGE)) &&
 ***************
 *** 1138,1143 ****
---- 1187,1196 ----
+--- 1178,1187 ----
   				// poll slots for data
   				pktcount = 0;
   				while ((status = dvb_ca_en50221_read_data(ca, slot, NULL, 0)) > 0) {
@@ -264,7 +400,7 @@
   
 ***************
 *** 1155,1160 ****
---- 1208,1230 ----
+--- 1199,1221 ----
   						break;
   					}
   				}
@@ -290,19 +426,19 @@
   
 ***************
 *** 1193,1198 ****
---- 1263,1271 ----
+--- 1254,1262 ----
   
   	switch (cmd) {
   	case CA_RESET:
 + 
-+ //Dagobert: resetting only requested slot is good idea maybe :-/
++ // Resetting only requested slot is good idea maybe :-/
 + #ifdef alt
   		for (slot = 0; slot < ca->slot_count; slot++) {
   			mutex_lock(&ca->slot_info[slot].slot_lock);
   			if (ca->slot_info[slot].slot_state != DVB_CA_SLOTSTATE_NONE) {
 ***************
 *** 1204,1209 ****
---- 1277,1297 ----
+--- 1268,1288 ----
   			}
   			mutex_unlock(&ca->slot_info[slot].slot_lock);
   		}
@@ -326,7 +462,7 @@
   		break;
 ***************
 *** 1345,1353 ****
---- 1433,1474 ----
+--- 1424,1464 ----
   	status = count + 2;
   
   exit:
@@ -334,7 +470,6 @@
   	return status;
   }
   
-+ //Dagobert
 + static int dvb_ca_en50221_io_read_condition_for_slot(struct dvb_ca_private *ca, int slot)
 + {
 + 	int idx;
@@ -371,22 +506,20 @@
    * Condition for waking up in dvb_ca_en50221_io_read_condition
 ***************
 *** 1421,1426 ****
---- 1542,1549 ----
+--- 1532,1538 ----
   	size_t fraglen;
   	int pktlen;
   	int dispose = 0;
-+ 	/* Dagobert */
 + 	int ci_slot = -1;
   
   	dprintk("%s\n", __func__);
   
 ***************
 *** 1428,1433 ****
---- 1551,1642 ----
+--- 1540,1630 ----
   	if (count < 2)
   		return -EINVAL;
   
-+ 	/* Dagobert */
 +         if (dvbdev == ca->dvbdev_ci[0])
 + 		ci_slot = 0;
 + 	else
@@ -476,22 +609,11 @@
   	if ((status = dvb_ca_en50221_io_read_condition(ca, &result, &slot)) == 0) {
   
 ***************
-*** 1582,1589 ****
-  	struct dvb_device *dvbdev = file->private_data;
-  	struct dvb_ca_private *ca = dvbdev->priv;
+*** 1584,1589 ****
+--- 1781,1907 ----
   	unsigned int mask = 0;
-- 	int slot;
+  	int slot;
   	int result = 0;
-  
-  	dprintk("%s\n", __func__);
-  
---- 1791,1920 ----
-  	struct dvb_device *dvbdev = file->private_data;
-  	struct dvb_ca_private *ca = dvbdev->priv;
-  	unsigned int mask = 0;
-  	int result = 0;
-+ 	int slot;
-+ 	/* Dagobert */
 + 	int ci_slot = -1;
 + 
 + #ifdef x_debug
@@ -618,11 +740,10 @@
   
 ***************
 *** 1625,1630 ****
---- 1956,1978 ----
+--- 1943,1964 ----
   	.fops = &dvb_ca_fops,
   };
   
-+ /* Dagobert */
 + static struct dvb_device dvbdev_ci[2] = {
 + {
 + 	.priv = NULL,
@@ -644,20 +765,19 @@
   /* Initialisation/shutdown functions */
 ***************
 *** 1664,1669 ****
---- 2012,2021 ----
+--- 1998,2006 ----
   		ret = -ENOMEM;
   		goto error;
   	}
 + 
-+ 	/* dagobert */
-+         mutex_init(&ca->io_mutex);
++     mutex_init(&ca->io_mutex);
 + 
   	init_waitqueue_head(&ca->wait_queue);
   	ca->open = 0;
   	ca->wakeup = 0;
 ***************
 *** 1678,1687 ****
---- 2030,2048 ----
+--- 2015,2033 ----
   	/* now initialise each slot */
   	for (i = 0; i < slot_count; i++) {
   		memset(&ca->slot_info[i], 0, sizeof(struct dvb_ca_slot));
@@ -668,7 +788,7 @@
   		ca->slot_info[i].camchange_type = DVB_CA_EN50221_CAMCHANGE_REMOVED;
   		mutex_init(&ca->slot_info[i].slot_lock);
 + 
-+ 		/* Dagobert and add a ci device entry */
++ 		/* add a ci device entry */
 + 	        ret = dvb_register_device(dvb_adapter, &ca->dvbdev_ci[i], &dvbdev_ci[i], ca, DVB_DEVICE_CI);
 + 		ca->slot_states[i] = DVB_CA_EN50221_CAMCHANGE_REMOVED;
 + 	        if (ret)
@@ -677,155 +797,51 @@
   	}
   
   	if (signal_pending(current)) {
---- a/drivers/media/dvb/dvb-core/dmxdev.c	2011-07-09 17:10:01.000000000 +0200
-+++ b/dmxdev.c	2011-07-17 13:46:24.439224902 +0200
-@@ -132,11 +132,6 @@
- 	if (mutex_lock_interruptible(&dmxdev->mutex))
- 		return -ERESTARTSYS;
- 
--	if (dmxdev->exit) {
--		mutex_unlock(&dmxdev->mutex);
--		return -ENODEV;
--	}
--
- 	if ((file->f_flags & O_ACCMODE) == O_RDWR) {
- 		if (!(dmxdev->capabilities & DMXDEV_CAP_DUPLEX)) {
- 			mutex_unlock(&dmxdev->mutex);
-@@ -176,7 +171,6 @@
- 		dmxdev->demux->disconnect_frontend(dmxdev->demux);
- 		dmxdev->demux->connect_frontend(dmxdev->demux, front);
- 	}
--	dvbdev->users++;
- 	mutex_unlock(&dmxdev->mutex);
- 	return 0;
- }
-@@ -204,16 +198,7 @@
- 			vfree(mem);
- 		}
- 	}
--	/* TODO */
--	dvbdev->users--;
--	if(dvbdev->users==-1 && dmxdev->exit==1) {
--		fops_put(file->f_op);
--		file->f_op = NULL;
--		mutex_unlock(&dmxdev->mutex);
--		wake_up(&dvbdev->wait_queue);
--	} else
--		mutex_unlock(&dmxdev->mutex);
--
-+	mutex_unlock(&dmxdev->mutex);
- 	return 0;
- }
- 
-@@ -230,11 +215,6 @@
- 		return -EINVAL;
- 	if (mutex_lock_interruptible(&dmxdev->mutex))
- 		return -ERESTARTSYS;
--
--	if (dmxdev->exit) {
--		mutex_unlock(&dmxdev->mutex);
--		return -ENODEV;
--	}
- 	ret = dmxdev->demux->write(dmxdev->demux, buf, count);
- 	mutex_unlock(&dmxdev->mutex);
- 	return ret;
-@@ -246,9 +226,6 @@
- 	struct dvb_device *dvbdev = file->private_data;
- 	struct dmxdev *dmxdev = dvbdev->priv;
- 
--	if (dmxdev->exit)
--		return -ENODEV;
--
- 	return dvb_dmxdev_buffer_read(&dmxdev->dvr_buffer,
- 				      file->f_flags & O_NONBLOCK,
- 				      buf, count, ppos);
-@@ -763,8 +740,6 @@
- 	dvb_dmxdev_filter_state_set(dmxdevfilter, DMXDEV_STATE_ALLOCATED);
- 	init_timer(&dmxdevfilter->timer);
- 
--	dvbdev->users++;
--
- 	mutex_unlock(&dmxdev->mutex);
- 	return 0;
- }
-@@ -949,17 +924,18 @@
- 	struct dmxdev_filter *dmxdevfilter = file->private_data;
- 	int ret;
- 
--	if (mutex_lock_interruptible(&dmxdevfilter->mutex))
--		return -ERESTARTSYS;
-+	if (dmxdevfilter->type == DMXDEV_TYPE_SEC) {
-+		if (mutex_lock_interruptible(&dmxdevfilter->mutex))
-+			return -ERESTARTSYS;
- 
--	if (dmxdevfilter->type == DMXDEV_TYPE_SEC)
- 		ret = dvb_dmxdev_read_sec(dmxdevfilter, file, buf, count, ppos);
-+		mutex_unlock(&dmxdevfilter->mutex);
-+	}
- 	else
- 		ret = dvb_dmxdev_buffer_read(&dmxdevfilter->buffer,
- 					     file->f_flags & O_NONBLOCK,
- 					     buf, count, ppos);
- 
--	mutex_unlock(&dmxdevfilter->mutex);
- 	return ret;
- }
- 
-@@ -1119,21 +1095,7 @@
- 	struct dmxdev_filter *dmxdevfilter = file->private_data;
- 	struct dmxdev *dmxdev = dmxdevfilter->dev;
- 
--	int ret;
--
--	ret = dvb_dmxdev_filter_free(dmxdev, dmxdevfilter);
--
--	mutex_lock(&dmxdev->mutex);
--	dmxdev->dvbdev->users--;
--	if(dmxdev->dvbdev->users==1 && dmxdev->exit==1) {
--		fops_put(file->f_op);
--		file->f_op = NULL;
--		mutex_unlock(&dmxdev->mutex);
--		wake_up(&dmxdev->dvbdev->wait_queue);
--	} else
--		mutex_unlock(&dmxdev->mutex);
--
--	return ret;
-+	return dvb_dmxdev_filter_free(dmxdev, dmxdevfilter);
- }
- 
- static const struct file_operations dvb_demux_fops = {
-@@ -1217,7 +1179,6 @@
- static struct dvb_device dvbdev_dvr = {
- 	.priv = NULL,
- 	.readers = 1,
--	.users = 1,
- 	.fops = &dvb_dvr_fops
- };
- 
-@@ -1255,16 +1216,6 @@
- 
- void dvb_dmxdev_release(struct dmxdev *dmxdev)
- {
--	dmxdev->exit=1;
--	if (dmxdev->dvbdev->users > 1) {
--		wait_event(dmxdev->dvbdev->wait_queue,
--				dmxdev->dvbdev->users==1);
--	}
--	if (dmxdev->dvr_dvbdev->users > 1) {
--		wait_event(dmxdev->dvr_dvbdev->wait_queue,
--				dmxdev->dvr_dvbdev->users==1);
--	}
--
- 	dvb_unregister_device(dmxdev->dvbdev);
- 	dvb_unregister_device(dmxdev->dvr_dvbdev);
- 
---- a/drivers/media/dvb/dvb-core/dmxdev.h	2009-12-03 04:51:21.000000000 +0100
-+++ b/dmxdev.h	2011-07-17 13:46:24.439224902 +0200
-@@ -99,7 +99,6 @@
- 	int filternum;
- 	int capabilities;
- 
--	unsigned int exit:1;
- #define DMXDEV_CAP_DUPLEX 1
- 	struct dmx_frontend *dvr_orig_fe;
- 
+*** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/media/dvb/dvb-core/dvbdev.c	2009-12-03 05:51:21.000000000 +0200
+--- linux-sh4/drivers/media/dvb/dvb-core/dvbdev.c	2011-11-24 23:02:30.594870000 +0200
+***************
+*** 47,53 ****
+  
+  static const char * const dnames[] = {
+  	"video", "audio", "sec", "frontend", "demux", "dvr", "ca",
+! 	"net", "osd"
+  };
+  
+  #ifdef CONFIG_DVB_DYNAMIC_MINORS
+--- 47,53 ----
+  
+  static const char * const dnames[] = {
+  	"video", "audio", "sec", "frontend", "demux", "dvr", "ca",
+! 	"net", "osd", "ci"
+  };
+  
+  #ifdef CONFIG_DVB_DYNAMIC_MINORS
+*** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/media/dvb/dvb-core/dvbdev.h	2009-12-03 05:51:21.000000000 +0200
+--- linux-sh4/drivers/media/dvb/dvb-core/dvbdev.h	2011-11-24 23:02:30.602870000 +0200
+***************
+*** 47,52 ****
+--- 47,53 ----
+  #define DVB_DEVICE_CA         6
+  #define DVB_DEVICE_NET        7
+  #define DVB_DEVICE_OSD        8
++ #define DVB_DEVICE_CI         9
+  
+  #define DVB_DEFINE_MOD_OPT_ADAPTER_NR(adapter_nr) \
+  	static short adapter_nr[] = \
+*** linux-sh4-2.6.32.46_stm24_0209.orig/include/linux/dvb/video.h	2009-12-03 05:51:21.000000000 +0200
+--- linux-sh4/include/linux/dvb/video.h	2011-11-25 00:08:20.462597435 +0200
+***************
+*** 120,125 ****
+--- 120,131 ----
+  		struct {
+  			__u32 data[16];
+  		} raw;
++ 
++ 		struct {
++ 			unsigned int    option; /* really dvb_option_t but like this so don't modify kernel sources too much */
++ 			unsigned int    value;
++ 		} option;
++ 
+  	};
+  };
+  
