@@ -359,7 +359,6 @@ endif
 
 else
 if ENABLE_SPARK
-
 	echo "Amiko" > $(prefix)/release_neutrino/etc/hostname
 	rm -f $(prefix)/release_neutrino/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_neutrino/sbin/
@@ -382,6 +381,8 @@ if ENABLE_SPARK
 	ln -s ../init.d/sendsigs $(prefix)/release_neutrino/etc/rc.d/rc6.d/S20sendsigs
 	ln -s ../init.d/umountfs $(prefix)/release_neutrino/etc/rc.d/rc6.d/S40umountfs
 	ln -s ../init.d/reboot $(prefix)/release_neutrino/etc/rc.d/rc6.d/S90reboot
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/aotom/aotom.ko $(prefix)/release_neutrino/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release_neutrino/lib/modules/
 	cp $(targetprefix)/boot/video_7111.elf $(prefix)/release_neutrino/boot/video.elf
 	cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release_neutrino/boot/audio.elf
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release_neutrino/etc/lircd.conf
@@ -395,7 +396,6 @@ if STM23
 	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/usbserial.ko $(prefix)/release_neutrino/lib/modules
 	cp $(kernelprefix)/linux-sh4/fs/autofs4/autofs4.ko $(prefix)/release_neutrino/lib/modules
 endif
-
 	mv $(prefix)/release_neutrino/lib/firmware/component_7111_mb618.fw $(prefix)/release_neutrino/lib/firmware/component.fw
 	rm $(prefix)/release_neutrino/lib/firmware/component_7105_pdk7105.fw
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/aotom/aotom.ko $(prefix)/release_neutrino/lib/modules/
