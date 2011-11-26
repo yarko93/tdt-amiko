@@ -25,7 +25,7 @@ if [ -e $OUTFILE ]; then
   rm -f $OUTFILE
 fi
 
-mv $TMPFWDIR/uImage $OUTDIR/uImage
+cp $TMPFWDIR/uImage $OUTDIR/uImage
 
 # Create a kathrein update file for fw's 
 # Offset on NAND Disk = 0x00400000

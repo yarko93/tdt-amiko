@@ -13,11 +13,11 @@ echo config.usage.multibouquet=true >> $NRELDIR/etc/enigma2/settings
 echo config.usage.setup_level=expert >> $NRELDIR/etc/enigma2/settings
 echo config.usage.quickzap_bouquet_change=true >> $NRELDIR/etc/enigma2/settings
 echo config.usage.multiepg_ask_bouquet=true >> $NRELDIR/etc/enigma2/settings
-echo config.skin.primary_skin=AmikoSkin/skin.xml >> $NRELDIR/etc/enigma2/settings
+#echo config.skin.primary_skin=AmikoSkin/skin.xml >> $NRELDIR/etc/enigma2/settings
 echo config.audio.volume=30 >> $NRELDIR/etc/enigma2/settings
 echo config.misc.epgcache_filename=/var/epg.dat >> $NRELDIR/etc/enigma2/settings
 rm  $NRELDIR/usr/local/share/enigma2/keymap_*.xml
-cp -RP ~/enigma2-amiko/enigma2/* $NRELDIR/
+#cp -RP ~/enigma2-amiko/enigma2/* $NRELDIR/
 # make sure defines have not already been defined
 #UBUNTU=
 #FEDORA=
