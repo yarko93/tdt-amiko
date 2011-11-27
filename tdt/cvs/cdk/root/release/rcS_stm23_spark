@@ -41,12 +41,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    if [ ! -e /boot/audio.elf ]; then
       echo "FW MISSING!!!"
    fi
-
-   if [ -e /var/config/DTS_ON ]; then
-      /bin/ustslave /dev/st231-1 /boot/audio_dts.elf
-    else   
       /bin/ustslave /dev/st231-1 /boot/audio.elf
-    fi
    echo "load v firmware"
       /bin/ustslave /dev/st231-0 /boot/video.elf
 
@@ -58,17 +53,6 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "init AVS"
    insmod $MODDIR/avs.ko type=avs_pio
-
-   usropt="DTS_downmix_ON DiscardLateFrame SWTS HighSR"
-
-   for z in $usropt
- do
- if [ -e /var/config/options/$z ]; then
-  export $z="1"
- else
-  export $z="0"
- fi
-done
    player=`cat /proc/stb/player/version | awk '{ print substr( $0, length($0) - 2, length($0) ) }'`
    echo "init player $player"
 
@@ -83,7 +67,7 @@ done
    insmod $MODDIR/pseudocard.ko
 
    insmod $MODDIR/stv090x.ko
-   insmod $MODDIR/lnb.ko
+#  insmod $MODDIR/lnb.ko
    if [ $player -gt 131 ]; then
       # Full feature pti
       insmod $MODDIR/pti.ko waitMS=20 videoMem=4096
@@ -95,6 +79,7 @@ done
       insmod $MODDIR/stmsysfs.ko
       insmod $MODDIR/stmdvb.ko
    else
+      insmod $MODDIR/pti.ko
       insmod $MODDIR/stmdvb.ko
       insmod $MODDIR/stm_monitor.ko
    fi
@@ -110,12 +95,11 @@ done
 
    showiframe -p /boot/bootlogo.mvi &
    stfbcontrol a 0
-
    echo "init lircd"
    /usr/bin/lircd
-   mknod /dev/lnb c 149 0
    mknod /dev/rc c 147 1 
    mknod /dev/sci0 c 169 0
+   mknod /dev/sci1 c 169 1
    major=$(awk "\$2==\"sparkid\" {print \$1}" /proc/devices)
    rm -f /dev/sparkid
    mknod /dev/sparkid c $major 0 
@@ -189,16 +173,9 @@ done
 		   echo "E2 RESTART"
 		   echo "0" > /proc/progress
 		   showiframe -p /boot/bootlogo.mvi &;;
-		4) echo "4"
-		   echo "Moderate E2 standby"
-		   sync
-		   /bin/vdstandby -n
-		   echo "0" > /proc/progress
-		   showiframe -p /boot/bootlogo.mvi &;;
 		*) echo "*"
 		   echo "ERROR"
-		   echo "0" > /proc/progress
-		  showiframe -p /boot/bootlogo.mvi &;;
+		   init 6;;
       esac
    done 
 fi

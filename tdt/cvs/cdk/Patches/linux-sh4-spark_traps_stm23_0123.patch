@@ -1,0 +1,30 @@
+diff -rcN a/arch//sh/kernel/traps.c b/arch//sh/kernel/traps.c
+*** a/arch//sh/kernel/traps.c	2011-11-04 12:38:35.000000000 +0100
+--- b/arch//sh/kernel/traps.c	2011-11-05 22:50:35.621622293 +0100
+***************
+*** 705,716 ****
+  	} else {
+  		se_sys += 1;
+  
+! 		if (se_kernmode_warn)
+  			printk("Unaligned kernel access "
+  			       "on behalf of \"%s\" pid=%d pc=0x%p ins=0x%04hx\n",
+  			       current->comm,current->pid,(u16*)regs->pc,
+  			       instruction);
+! 
+  		if (regs->pc & 1)
+  			die("unaligned program counter", regs, error_code);
+  
+--- 705,716 ----
+  	} else {
+  		se_sys += 1;
+  
+! /*		if (se_kernmode_warn)
+  			printk("Unaligned kernel access "
+  			       "on behalf of \"%s\" pid=%d pc=0x%p ins=0x%04hx\n",
+  			       current->comm,current->pid,(u16*)regs->pc,
+  			       instruction);
+! */
+  		if (regs->pc & 1)
+  			die("unaligned program counter", regs, error_code);
+  

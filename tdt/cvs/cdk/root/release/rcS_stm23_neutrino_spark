@@ -92,9 +92,10 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "init lircd"
    /usr/bin/lircd
-   mknod /dev/lnb c 149 0
+#   mknod /dev/lnb c 149 0
    mknod /dev/rc c 147 1 
    mknod /dev/sci0 c 169 0
+   mknod /dev/sci1 c 169 1
    major=$(awk "\$2==\"sparkid\" {print \$1}" /proc/devices)
    rm -f /dev/sparkid
    mknod /dev/sparkid c $major 0 
