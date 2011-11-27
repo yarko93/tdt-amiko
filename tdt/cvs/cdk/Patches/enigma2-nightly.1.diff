@@ -1023,7 +1023,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/vfd.cpp
 +	//ioctl(fpc, FRONTPANELSCROLLMODE, &scrollMode);
 +	
 +	// display string
-+	char str[] = "        AAF DEV-TEAM ENIGMA2";
++	char str[] = "        AR-P DEV-TEAM ENIGMA2";
 +	int length = strlen(str);
 +	char dispData[MAX_CHARS + 1];
 +	int offset = 0;
@@ -1087,7 +1087,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/vfd.cpp
 +	evfd vfd;
 +	blocked = true;
 +	//vfd.vfd_clear_icons();
-+	vfd.vfd_write_string("AAF DEV-TEAM", true);
++	vfd.vfd_write_string("AR-P DEV-TEAM", true);
 +	//run 2 times through all icons 
 +	for  (int vloop = 0; vloop < 128; vloop++) {
 +		/*if (vloop%14 == 0 )
