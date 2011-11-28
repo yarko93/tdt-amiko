@@ -83,7 +83,7 @@ if [ ! -e /var/etc/.firstboot ]; then
       insmod $MODDIR/stmdvb.ko
       insmod $MODDIR/stm_monitor.ko
    fi
-   insmod $MODDIR/player2.ko
+   insmod $MODDIR/player2.ko discardlateframe=0
    insmod $MODDIR/sth264pp.ko
    insmod $MODDIR/stmalloc.ko
    insmod $MODDIR/platform.ko
