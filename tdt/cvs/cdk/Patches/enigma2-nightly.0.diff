@@ -6095,10 +6095,10 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
 +SUBDIRS = SoftwareManager PositionerSetup Satfinder \
  	SkinSelector SatelliteEquipmentControl Videomode VideoTune Hotplug \
 -	DefaultServicesScanner NFIFlash DiseqcTester CommonInterfaceAssignment \
--	CrashlogAutoSubmit CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
+-	CrashlogAutoSubmit CleanupWizard VideoEnhancement NetworkWizard \
 -	TempFanControl
 +	DefaultServicesScanner DiseqcTester CommonInterfaceAssignment \
-+	CrashlogAutoSubmit CleanupWizard VideoEnhancement NetworkWizard \
++	CrashlogAutoSubmit CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
 +	TempFanControl VFD-Icons Tuxtxt
  
  install_PYTHON =	\
