@@ -1,16 +1,6 @@
---- stm-cross-gcc.spec.orig	2011-11-24 16:20:20.137193151 +0100
-+++ stm-cross-gcc.spec.new	2011-11-24 16:25:24.457200782 +0100
-@@ -57,6 +57,9 @@
- %define _libgcc_pkgname %{_stm_pkg_prefix}-cross-%{_stm_target_arch}-libgcc
- 
- %define _gccdir %{_stm_cross_lib_dir}/gcc/%{_stm_target_config}/%{version}
-+ 
-+# Quick and dirty workaround. RPM complains about unpackaged files.
-+%define _unpackaged_files_terminate_build 0
- 
- %description
- This is the GNU C compiler, a fairly portable optimizing compiler which
-@@ -183,6 +186,7 @@
+--- stm-cross-gcc.spec.org	2011-03-22 02:05:02.000000000 +0100
++++ stm-cross-gcc.spec	2011-10-01 15:06:08.000000000 +0200
+@@ -183,6 +183,7 @@
  
  %build
  %cross_setup
@@ -18,7 +8,7 @@
  
  %cross_configure \
          --disable-checking \
-@@ -221,7 +225,7 @@
+@@ -221,7 +222,7 @@
          --with-mpfr=%{_stm_cross_dir} \
          --with-libelf=%{_stm_cross_dir} \
          --without-ppl \
@@ -27,7 +17,7 @@
          --enable-__cxa_atexit \
  %if "%{_stm_target_fpu}" == "no"
  %if_target_arch sh4_uclibc
-@@ -257,13 +261,6 @@
+@@ -257,13 +258,6 @@
  %cross_setup
  %cross_makeinstall
  
@@ -41,7 +31,7 @@
  
  cd ..
  
-@@ -334,14 +331,16 @@
+@@ -334,14 +328,16 @@
  	xargs --no-run-if-empty --verbose rm
  # Remove some installed files we don't ship, to keep rpm happy
  rm %{buildroot}%{_stm_cross_bin_dir}/%{_stm_target_toolprefix}gccbug
@@ -56,14 +46,14 @@
  rm -r %{buildroot}%{_stm_cross_lib_dir}/gcc/%{_stm_target_config}/%{version}/install-tools
  rm -f %{buildroot}%{_stm_cross_lib_dir}/libiberty.a
 -rm -f  %{buildroot}%{_stm_cross_dir}/lib64/libiberty.a
-+rm -f  %{buildroot}%{_stm_devkit_dir}/lib{32,64}/libiberty.a || true
++rm -f  %{buildroot}%{_stm_cross_dir}/lib{32,64}/libiberty.a || true
  rm -r %{buildroot}%{_stm_cross_libexec_dir}/gcc/%{_stm_target_config}/%{version}/install-tools
 +rm %{buildroot}%{_stm_cross_info_dir}/cpp.info* || true
 +rm %{buildroot}%{_stm_cross_info_dir}/gcc.info* || true
  
  %unfixincludes  %{buildroot}%{_gccdir}
  
-@@ -586,10 +585,6 @@
+@@ -586,10 +582,6 @@
  %{_stm_cross_targetconf_dir}/bin/cpp
  %{_stm_cross_sharedstate_dir}/locale/*/LC_MESSAGES/cpplib.mo
  
@@ -74,7 +64,7 @@
  %files -n %{_gpp_pkgname}
  %defattr(-,root,root)
  %{_stm_cross_bin_dir}/%{_stm_target_toolprefix}g++
-@@ -604,7 +599,6 @@
+@@ -604,7 +596,6 @@
  
  %files -n %{_gcc_pkgname}-doc
  %defattr(-,root,root)
@@ -82,7 +72,7 @@
  %{_stm_cross_man_dir}/man7/*
  
  %if_target_arch sh4 sh4_uclibc
-@@ -621,22 +615,6 @@
+@@ -621,22 +612,6 @@
  %{_stm_cross_target_dir}/lib/m4-nofpu/libgcc_s-%{version}.so.1
  %endif
  
