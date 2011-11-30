@@ -20,6 +20,8 @@ rm  $NRELDIR/usr/local/share/enigma2/keymap_*.xml
 cp -RP ~/enigma2-amiko/enigma2/* $NRELDIR/
 rm $NRELDIR/lib/modules/pti.ko
 mv $NRELDIR/lib/modules/pti_123.ko $NRELDIR/lib/modules/pti.ko
+#rm $NRELDIR/lib/modules/pti.ko
+#mv $NRELDIR/lib/modules/pti_207.ko $NRELDIR/lib/modules/pti.ko
 exit
 echo "--- Erledigt ---"
 exit
