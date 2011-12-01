@@ -6088,17 +6088,15 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Makefile.am enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Makefile.am
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Makefile.am	2011-09-03 18:23:26.930022982 +0200
 +++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Makefile.am	2011-09-03 18:23:47.380033063 +0200
-@@ -1,10 +1,10 @@
+@@ -1,10 +1,9 @@
  installdir = $(pkglibdir)/python/Plugins/SystemPlugins
  
 -SUBDIRS = SoftwareManager FrontprocessorUpgrade PositionerSetup Satfinder \
 +SUBDIRS = SoftwareManager PositionerSetup Satfinder \
  	SkinSelector SatelliteEquipmentControl Videomode VideoTune Hotplug \
 -	DefaultServicesScanner NFIFlash DiseqcTester CommonInterfaceAssignment \
--	CrashlogAutoSubmit CleanupWizard VideoEnhancement NetworkWizard \
+ 	CrashlogAutoSubmit CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
 -	TempFanControl
-+	DefaultServicesScanner DiseqcTester CommonInterfaceAssignment \
-+	CrashlogAutoSubmit CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
 +	TempFanControl VFD-Icons Tuxtxt
  
  install_PYTHON =	\
