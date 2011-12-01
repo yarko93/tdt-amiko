@@ -148,7 +148,7 @@ cvs/cdk/curl-*
 cvs/cdk/depcomp
 cvs/cdk/e2fsprogs-1.40.2/
 cvs/cdk/ethtool-6/
-cvs/cdk/freetype-2.3.5/
+cvs/cdk/freetype-*/
 cvs/cdk/giflib-4.1.6/
 cvs/cdk/grep-2.5.1/
 cvs/cdk/host-python-2.6/
