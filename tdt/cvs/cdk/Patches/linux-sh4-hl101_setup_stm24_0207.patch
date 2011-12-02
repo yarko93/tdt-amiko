@@ -452,5 +452,3 @@
   	ret = sysdev_class_register(&stm_gpio_sysdev_class);
   	if (ret)
   		return ret;
-
-
