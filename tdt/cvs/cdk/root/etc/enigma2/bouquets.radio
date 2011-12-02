@@ -1,1 +1,2 @@
-#NAME Bouquets (Radio)
+#NAME User - bouquets (Radio)
+#SERVICE: 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.favourites.radio" ORDER BY bouquet

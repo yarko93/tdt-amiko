@@ -227,6 +227,9 @@ endif
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
+	cp -f $(buildprefix)/root/usr/lib/lib* $(prefix)/release/usr/lib
+	cp -f $(buildprefix)/root/usr/sbin/iw* $(prefix)/release/usr/sbin
+	cp -f $(buildprefix)/root/usr/sbin/wpa* $(prefix)/release/usr/sbin
 
 	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts
 	cp $(targetprefix)/usr/local/share/fonts/* $(prefix)/release/usr/share/fonts/
@@ -249,6 +252,8 @@ endif
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-stv6306.fw
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-cx24116.fw
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-cx21143.fw
+	mv $(prefix)/release/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+	rm $(prefix)/release/lib/firmware/component_7105_pdk7105.fw
 	rm -f $(prefix)/release/bin/evremote
 	rm -f $(prefix)/release/bin/gotosleep
 	rm -f $(prefix)/release/bin/vdstandby
@@ -1294,6 +1299,7 @@ endif
 	$(INSTALL_DIR) $(prefix)/release/usr/local/share/enigma2
 	cp -a $(targetprefix)/usr/local/share/enigma2/* $(prefix)/release/usr/local/share/enigma2
 	cp -a $(targetprefix)/etc/enigma2/* $(prefix)/release/etc/enigma2
+	cp -a $(targetprefix)/etc/Wireless $(prefix)/release/etc
 
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_ufs910.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 
