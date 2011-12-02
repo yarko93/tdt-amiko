@@ -1304,7 +1304,7 @@ endif
 	$(INSTALL_DIR) $(prefix)/release/usr/local/share/enigma2
 	cp -a $(targetprefix)/usr/local/share/enigma2/* $(prefix)/release/usr/local/share/enigma2
 	cp -a $(targetprefix)/etc/enigma2/* $(prefix)/release/etc/enigma2
-	cp -a $(targetprefix)/etc/Wireless $(prefix)/release/etc
+	cp -a $(buildprefix)/root/etc/Wireless $(prefix)/release/etc
 
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_ufs910.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 
