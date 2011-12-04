@@ -12,10 +12,10 @@ echo "OUTDIR       = $OUTDIR"
 echo "TMPBOOTDIR   = $TMPBOOTDIR"
 echo "TMPFWDIR     = $TMPFWDIR"
 
-MKFSJFFS2=$TUFSBOXDIR/host/bin/mkfs.jffs2  
+MKFSYAFFS2=$CURDIR/mkyaffs2  
 #MUP=$CURDIR/mup
 
-OUTFILE=$OUTDIR/e2jffs2.img 
+OUTFILE=$OUTDIR/e2yaffs2.img 
 
 if [ ! -e $OUTDIR ]; then
   mkdir $OUTDIR
@@ -29,7 +29,7 @@ cp $TMPBOOTDIR/uImage $OUTDIR/uImage
 
 # Create a kathrein update file for fw's 
 # Offset on NAND Disk = 0x00400000
-$MKFSJFFS2 -l -e0x20000 -n -pv -d $TMPFWDIR  -o $OUTFILE << EOF
+$MKFSYAFFS2 -o spark_oob.img $TMPFWDIR $OUTFILE << EOF
 
 EOF
 

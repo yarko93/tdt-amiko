@@ -230,6 +230,7 @@ endif
 	cp -f $(buildprefix)/root/usr/lib/lib* $(prefix)/release/usr/lib
 	cp -f $(buildprefix)/root/usr/sbin/iw* $(prefix)/release/usr/sbin
 	cp -f $(buildprefix)/root/usr/sbin/wpa* $(prefix)/release/usr/sbin
+	cp -f $(buildprefix)/root/firmware/rt73.bin $(prefix)/release/lib/firmware
 
 	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts
 	cp $(targetprefix)/usr/local/share/fonts/* $(prefix)/release/usr/share/fonts

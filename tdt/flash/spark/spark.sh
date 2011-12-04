@@ -8,8 +8,8 @@ RELASEDIR=$BASEDIR/relase
 
 SCRIPTDIR=$CURDIR/scripts
 TMPDIR=$CURDIR/tmp
-TMPROOTDIR=$TMPDIR/ROOT
-TMPFWDIR=$TMPROOTDIR/boot
+TMPFWDIR=$TMPDIR/ROOT
+TMPBOOTDIR=$TMPFWDIR/boot
 
 OUTDIR=$CURDIR/out
 
@@ -19,7 +19,6 @@ else
   mkdir $TMPDIR
 fi
 
-mkdir $TMPROOTDIR
 mkdir $TMPFWDIR
 echo "CURDIR       = $CURDIR"
 echo "TUFSBOXDIR   = $TUFSBOXDIR"
@@ -28,7 +27,7 @@ echo "TMPKERNELDIR = $TMPKERNELDIR"
 echo "BASEDIR      = $BASEDIR"
 echo "TMPDIR       = $TMPDIR"
 echo "TMPFWDIR     = $TMPFWDIR"
-echo "TMPROOTDIR   = $TMPROOTDIR"
+echo "TMPBOOTDIR   = $TMPBOOTDIR"
 echo "RELASEDIR    = $RELASEDIR"
 
 
@@ -75,16 +74,16 @@ echo "Root prepared"
 echo "-----------------------------------------------------------------------"
 echo "Checking targets..."
 echo "Found flashtarget:"
-echo "   1) KERNEL with ROOT"
-#echo "   2) KERNEL with ROOT and FW"
+echo "   1) KERNEL vor JFFS2"
+echo "   2) KERNEL vor YAFFS2"
 #echo "   3) KERNEL"
 #echo "   4) FW"
 read -p "Select flashtarget (1-4)? "
 case "$REPLY" in
-	1)  echo "Creating KERNEL with ROOT..."
-		$SCRIPTDIR/flash_part_kernel.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPROOTDIR $TMPFWDIR;;
-#	2)  echo "Creating KERNEL with ROOT and FW..."
-#		$SCRIPTDIR/flash_part_w_fw.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPKERNELDIR $TMPFWDIR $TMPROOTDIR;;
+	1)  echo "Creating KERNEL jffs2..."
+		$SCRIPTDIR/flash_part_kernel.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPBOOTDIR $TMPFWDIR;;
+	2)  echo "Creating KERNEL yaffs2..."
+		$SCRIPTDIR/flash_part_yaffs.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPBOOTDIR $TMPFWDIR ;;
 #	3)  echo "Creating KERNEL..."
 #		$SCRIPTDIR/flash_part_kernel.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPKERNELDIR;;
 #	4)  echo "Creating FW..."

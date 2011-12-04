@@ -67,6 +67,8 @@ cvs/apps/misc/tools/ustslave/Makefile
 cvs/apps/misc/tools/ustslave/ustslave
 cvs/apps/misc/tools/ustslave_stm23/Makefile
 cvs/apps/misc/tools/ustslave_stm23/ustslave_stm23
+cvs/apps/misc/tools/ipbox_eeprom/Makefile
+cvs/apps/misc/tools/ipbox_eeprom/eeprom
 cvs/apps/neutrino/Makefile
 cvs/apps/neutrino/data/Makefile
 cvs/apps/neutrino/data/fonts/Makefile
