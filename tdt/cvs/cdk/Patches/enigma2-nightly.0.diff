@@ -6101,6 +6101,111 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
  
  install_PYTHON =	\
  	__init__.py
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py	2011-12-05 00:46:00.505062996 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py	2011-12-05 00:46:00.505062996 +0100
+@@ -1,4 +1,4 @@
+-from enigma import eTimer, eTPM, eEnv
++from enigma import eTimer, eEnv
+ from Screens.Screen import Screen
+ from Components.ActionMap import ActionMap, NumberActionMap
+ from Components.Pixmap import Pixmap,MultiPixmap
+@@ -16,9 +16,8 @@
+ from Tools.LoadPixmap import LoadPixmap
+ from Tools.HardwareInfo import HardwareInfo
+ from Wlan import iWlan, wpaSupplicant, iStatus, getWlanConfigName
+-import hashlib
+ from time import time
+-from os import urandom, system
++from os import system
+ from re import escape as re_escape
+ 
+ plugin_path = eEnv.resolve("${libdir}/enigma2/python/Plugins/SystemPlugins/WirelessLan")
+@@ -383,47 +382,6 @@
+ 		return self.WlanList
+ 
+ 
+-def bin2long(s):
+-	return reduce( lambda x,y:(x<<8L)+y, map(ord, s))
+-
+-def long2bin(l):
+-	res = ""
+-	for byte in range(128):
+-		res += chr((l >> (1024 - (byte + 1) * 8)) & 0xff)
+-	return res
+-
+-def rsa_pub1024(src, mod):
+-	return long2bin(pow(bin2long(src), 65537, bin2long(mod)))
+-	
+-def decrypt_block(src, mod):
+-	if len(src) != 128 and len(src) != 202:
+-		return None
+-	dest = rsa_pub1024(src[:128], mod)
+-	hash = hashlib.sha1(dest[1:107])
+-	if len(src) == 202:
+-		hash.update(src[131:192])	
+-	result = hash.digest()
+-	if result == dest[107:127]:
+-		return dest
+-	return None
+-
+-def validate_certificate(cert, key):
+-	buf = decrypt_block(cert[8:], key) 
+-	if buf is None:
+-		return None
+-	return buf[36:107] + cert[139:196]
+-
+-def get_random():
+-	try:
+-		xor = lambda a,b: ''.join(chr(ord(c)^ord(d)) for c,d in zip(a,b*100))
+-		random = urandom(8)
+-		x = str(time())[-8:]
+-		result = xor(random, x)
+-				
+-		return result
+-	except:
+-		return None
+-
+ def WlanStatusScreenMain(session, iface):
+ 	session.open(WlanStatus, iface)
+ 
+@@ -437,35 +395,7 @@
+ 	return None
+ 
+ def configStrings(iface):
+-	try:
+-		device = open("/proc/stb/info/model", "r").readline().strip()
+-	except:
+-		device = ""	
+-	if device != "dm7025":
+-		rootkey = ['\x9f', '|', '\xe4', 'G', '\xc9', '\xb4', '\xf4', '#', '&', '\xce', '\xb3', '\xfe', '\xda', '\xc9', 'U', '`', '\xd8', '\x8c', 's', 'o', '\x90', '\x9b', '\\', 'b', '\xc0', '\x89', '\xd1', '\x8c', '\x9e', 'J', 'T', '\xc5', 'X', '\xa1', '\xb8', '\x13', '5', 'E', '\x02', '\xc9', '\xb2', '\xe6', 't', '\x89', '\xde', '\xcd', '\x9d', '\x11', '\xdd', '\xc7', '\xf4', '\xe4', '\xe4', '\xbc', '\xdb', '\x9c', '\xea', '}', '\xad', '\xda', 't', 'r', '\x9b', '\xdc', '\xbc', '\x18', '3', '\xe7', '\xaf', '|', '\xae', '\x0c', '\xe3', '\xb5', '\x84', '\x8d', '\r', '\x8d', '\x9d', '2', '\xd0', '\xce', '\xd5', 'q', '\t', '\x84', 'c', '\xa8', ')', '\x99', '\xdc', '<', '"', 'x', '\xe8', '\x87', '\x8f', '\x02', ';', 'S', 'm', '\xd5', '\xf0', '\xa3', '_', '\xb7', 'T', '\t', '\xde', '\xa7', '\xf1', '\xc9', '\xae', '\x8a', '\xd7', '\xd2', '\xcf', '\xb2', '.', '\x13', '\xfb', '\xac', 'j', '\xdf', '\xb1', '\x1d', ':', '?']
+-		etpm = eTPM()
+-		l2cert = etpm.getCert(eTPM.TPMD_DT_LEVEL2_CERT)
+-		if l2cert is None:
+-			return
+-		l2key = validate_certificate(l2cert, rootkey)
+-		if l2key is None:
+-			return
+-		l3cert = etpm.getCert(eTPM.TPMD_DT_LEVEL3_CERT)
+-		if l3cert is None:
+-			return
+-		l3key = validate_certificate(l3cert, l2key)
+-		if l3key is None:
+-			return
+-		rnd = get_random()
+-		if rnd is None:
+-			return
+-		val = etpm.challenge(rnd)
+-		result = decrypt_block(val, l3key)
+-	if device == "dm7025" or result[80:88] == rnd:
+-		driver = iNetwork.detectWlanModule(iface)
+-	else:
+-		driver = 'dreambox'
+-	print 'Using "%s" as wpa-supplicant driver' % (driver)
++	driver = iNetwork.detectWlanModule(iface)
+ 	ret = ""
+ 	if driver == 'madwifi' and config.plugins.wlan.hiddenessid.value:
+ 		ret += "\tpre-up iwconfig " + iface + " essid \"" + re_escape(config.plugins.wlan.essid.value) + "\" || true\n"
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py	2011-09-03 18:23:27.250023288 +0200
 +++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py	2011-09-03 18:23:47.380033063 +0200
