@@ -295,6 +295,8 @@ release_spark7162:
 	cp $(targetprefix)/boot/audio_7105.elf $(prefix)/release/boot/audio.elf
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 	cp -f $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/spark7162.ko
+	cp -f $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/i2c_spi/i2s.ko $(prefix)/release/lib/modules/
+	cp -f $(buildprefix)/root/sbin/flashcp $(prefix)/release/sbin
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
 
@@ -1526,3 +1528,10 @@ endif
 		rm -rf $(prefix)/release/usr/lib/enchant; \
 	fi
 
+#graphlcd Stuff
+	if [ -e $(prefix)/release/usr/lib/libglcddrivers.so ]; then \
+	    ln -s /usr/lib/libglcddrivers.so $(prefix)/release/usr/lib/libglcddrivers.so.2; \
+	    ln -s /usr/lib/libglcdgraphics.so $(prefix)/release/usr/lib/libglcdgraphics.so.2; \
+	    ln -s /usr/lib/libglcdskin.so $(prefix)/release/usr/lib/libglcdskin.so.2; \
+		cp -f $(targetprefix)/etc/graphlcd.conf $(prefix)/release/etc/graphlcd.conf; \
+	fi

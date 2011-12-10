@@ -1880,6 +1880,69 @@ $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compi
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
+################ EXTERNAL_CLD #############################
+
+if STM24
+
+# libusb 
+# 
+$(DEPDIR)/libusb.do_prepare:  @DEPENDS_libusb@ 
+	@PREPARE_libusb@ 
+	touch $@ 
+ 
+$(DEPDIR)/libusb.do_compile: $(DEPDIR)/libusb.do_prepare 
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libusb@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+		$(MAKE) all
+	touch $@
+ 
+$(DEPDIR)/min-libusb $(DEPDIR)/std-libusb $(DEPDIR)/max-libusb \
+$(DEPDIR)/libusb: \
+$(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
+	@[ "x$*" = "x" ] && touch $@ || true
+	cd @DIR_libusb@ && \
+		@INSTALL_libusb@
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+# graphlcd
+$(DEPDIR)/graphlcd.do_prepare:	libusb
+	[ -d graphlcd-base ] && \
+    rm -rf graphlcd-base;
+	git clone git://projects.vdr-developer.org/graphlcd-base.git --branch touchcol graphlcd-base;
+	cd graphlcd-base && \
+    patch -p0 <../Patches/graphlcd.patch
+	touch $@
+
+$(DEPDIR)/graphlcd.do_compile: $(DEPDIR)/graphlcd.do_prepare
+	cd graphlcd-base && \
+	$(BUILDENV) && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-graphlcd $(DEPDIR)/std-graphlcd $(DEPDIR)/max-graphlcd \
+$(DEPDIR)/graphlcd: \
+$(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
+	@[ "x$*" = "x" ] && touch $@ || true
+	cd graphlcd-base && \
+		cp glcddrivers/*.so* $(targetprefix)/usr/lib/ && \
+		cp glcdgraphics/*.so* $(targetprefix)/usr/lib/ && \
+		cp glcdskin/*.so* $(targetprefix)/usr/lib/ && \
+		cp tools/showpic/showpic $(targetprefix)/usr/bin/ && \
+		cp tools/showtext/showtext $(targetprefix)/usr/bin/ && \
+		cp graphlcd.conf $(targetprefix)/etc/
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+#$(DEPDIR)/graphlcd: graphlcd.do_compile
+#	touch $@
+
+endif
+
+################ END EXTERNAL_CLD #############################
+
 #
 # eve-browser
 #
