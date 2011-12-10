@@ -10,7 +10,8 @@ SCRIPTDIR=$CURDIR/scripts
 TMPDIR=$CURDIR/tmp
 TMPFWDIR=$TMPDIR/ROOT
 TMPBOOTDIR=$TMPFWDIR/boot
-
+NFSDIR=/nfs
+TARGET=$NFSDIR/target
 OUTDIR=$CURDIR/out
 
 if [  -e $TMPDIR ]; then
@@ -29,8 +30,8 @@ echo "TMPDIR       = $TMPDIR"
 echo "TMPFWDIR     = $TMPFWDIR"
 echo "TMPBOOTDIR   = $TMPBOOTDIR"
 echo "RELASEDIR    = $RELASEDIR"
-
-
+echo "NFSDIR       = $NFSDIR"
+echo "TARGET       = $TARGET"
 echo "This script creates flashable images Spark"
 echo "Author: Schischu modified by schpuntik"
 echo "Date: 01-31-2011"
@@ -76,7 +77,7 @@ echo "Checking targets..."
 echo "Found flashtarget:"
 echo "   1) KERNEL vor JFFS2"
 echo "   2) KERNEL vor YAFFS2"
-#echo "   3) KERNEL"
+echo "   3) KERNEL vor NFS"
 #echo "   4) FW"
 read -p "Select flashtarget (1-4)? "
 case "$REPLY" in
@@ -84,8 +85,8 @@ case "$REPLY" in
 		$SCRIPTDIR/flash_part_kernel.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPBOOTDIR $TMPFWDIR;;
 	2)  echo "Creating KERNEL yaffs2..."
 		$SCRIPTDIR/flash_part_yaffs.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPBOOTDIR $TMPFWDIR ;;
-#	3)  echo "Creating KERNEL..."
-#		$SCRIPTDIR/flash_part_kernel.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPKERNELDIR;;
+	3)  echo "Creating KERNEL..."
+		$SCRIPTDIR/flash_part_nfs.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPKERNELDIR;;
 #	4)  echo "Creating FW..."
 #		$SCRIPTDIR/flash_part_fw.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPFWDIR;;
 	*)  "Invalid Input! Exiting..."
