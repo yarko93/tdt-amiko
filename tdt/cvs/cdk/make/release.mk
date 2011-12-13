@@ -210,11 +210,9 @@ release_spark:
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt3070sta/rt3070sta.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu/8192cu.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko $(prefix)/release/lib/modules/
-if STM24
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt2x00/rt73usb.ko $(prefix)/release/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt2x00/rt2500usb.ko $(prefix)/release/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt2x00/rt2800usb.ko $(prefix)/release/lib/modules/
-endif
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt5370sta/rt5370sta.ko $(prefix)/release/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt73/rt73.ko $(prefix)/release/lib/modules/
+
 	cp $(targetprefix)/boot/video_7111.elf $(prefix)/release/boot/video.elf
 	cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
@@ -227,18 +225,14 @@ endif
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
-	cp -f $(buildprefix)/root/usr/lib/lib* $(prefix)/release/usr/lib
+	cp -f $(buildprefix)/root/usr/lib/* $(prefix)/release/usr/lib
 	cp -f $(buildprefix)/root/usr/sbin/iw* $(prefix)/release/usr/sbin
 	cp -f $(buildprefix)/root/usr/sbin/wpa* $(prefix)/release/usr/sbin
 	cp -f $(buildprefix)/root/firmware/rt73.bin $(prefix)/release/lib/firmware
 
 	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts
 	cp $(targetprefix)/usr/local/share/fonts/* $(prefix)/release/usr/share/fonts
-
-if !ENABLE_P0209
-	cp $(buildprefix)/root/release/encrypt_spark$(KERNELSTMLABEL).ko $(prefix)/release/lib/modules/encrypt.ko
-	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/usbserial.ko $(prefix)/release/lib/modules
-endif
+#	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/usbserial.ko $(prefix)/release/lib/modules
 	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/ftdi_sio.ko $(prefix)/release/lib/modules/ftdi.ko
 	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/pl2303.ko $(prefix)/release/lib/modules
 	cp $(kernelprefix)/linux-sh4/fs/autofs4/autofs4.ko $(prefix)/release/lib/modules
