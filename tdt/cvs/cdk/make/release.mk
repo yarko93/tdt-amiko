@@ -184,6 +184,7 @@ release_spark:
 	cp $(buildprefix)/root/release/umountfs $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/rc $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/sendsigs $(prefix)/release/etc/init.d/
+	cp -dp $(targetprefix)/etc/network/wlanscan.py $(prefix)/release/etc/network/ && \
 	chmod 755 $(prefix)/release/etc/init.d/umountfs
 	chmod 755 $(prefix)/release/etc/init.d/rc
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
@@ -1360,13 +1361,13 @@ endif
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/zope.interface-3.3.0-py2.6.egg-info
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/test
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/conch
-#	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/mail
+	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/mail
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/manhole
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/names
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/news
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/trial
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/words
-#	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/application
+	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/application
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/enterprise
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/flow
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/lore
@@ -1382,7 +1383,7 @@ endif
 	rm -rf $(prefix)/release/usr/lib/python2.6/ctypes
 	rm -rf $(prefix)/release/usr/lib/python2.6/curses
 	rm -rf $(prefix)/release/usr/lib/python2.6/distutils
-#	rm -rf $(prefix)/release/usr/lib/python2.6/email
+	rm -rf $(prefix)/release/usr/lib/python2.6/email
 
 #	Dont remove pyo files, remove pyc instead
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.pyc' -exec rm -f {} \;
