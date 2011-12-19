@@ -184,7 +184,7 @@ release_spark:
 	cp $(buildprefix)/root/release/umountfs $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/rc $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/sendsigs $(prefix)/release/etc/init.d/
-	cp -dp $(targetprefix)/etc/network/wlanscan.py $(prefix)/release/etc/network/ && \
+	cp $(buildprefix)/root/etc/network/wlanscan.py $(prefix)/release/etc/network/ && \
 	chmod 755 $(prefix)/release/etc/init.d/umountfs
 	chmod 755 $(prefix)/release/etc/init.d/rc
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
