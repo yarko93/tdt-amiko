@@ -15,7 +15,6 @@ python-*
 readline-*
 setuptools-*
 zope.interface-*
-busybox-*
 e2fsprogs-*
 sqlite-*
 glib-*
@@ -23,3 +22,4 @@ gst-plugins-*
 gstreamer-*
 libogg-*
 libsoup-*
+boost_*

@@ -47,7 +47,6 @@ cvs/apps/misc/tools/gitVCInfo/gitVCInfo
 cvs/apps/misc/tools/hotplug/Makefile
 cvs/apps/misc/tools/hotplug/hotplug
 cvs/apps/misc/tools/install-sh
-cvs/apps/misc/tools/libcoolstream/Makefile
 cvs/apps/misc/tools/libdreamdvd/Makefile
 cvs/apps/misc/tools/libdreamdvd/libdreamdvd.pc
 cvs/apps/misc/tools/libeplayer2/Makefile
@@ -84,6 +83,7 @@ cvs/apps/neutrino/lib/Makefile
 cvs/apps/neutrino/lib/connection/Makefile
 cvs/apps/neutrino/lib/controldclient/Makefile
 cvs/apps/neutrino/lib/libconfigfile/Makefile
+cvs/apps/neutrino/lib/libcoolstream/Makefile
 cvs/apps/neutrino/lib/libdvbsub/Makefile
 cvs/apps/neutrino/lib/libeventserver/Makefile
 cvs/apps/neutrino/lib/libmd5sum/Makefile
@@ -137,14 +137,13 @@ cvs/apps/misc/tools/gst-plugins-dvbmediasink/src/gstdvbsink-marshal.c
 cvs/apps/misc/tools/gst-plugins-dvbmediasink/src/gstdvbsink-marshal.h
 cvs/apps/misc/tools/gst-plugins-dvbmediasink/stamp-h1
 
-
 cvs/cdk/Makefile
 cvs/cdk/Makefile-archive
 cvs/cdk/RPMS/
 cvs/cdk/SRPMS/
 cvs/cdk/autofs-4.1.4/
 cvs/cdk/boost_1_40_0/
-cvs/cdk/busybox-1.11.2/
+cvs/cdk/busybox-1.19.3/
 cvs/cdk/config
 cvs/cdk/curl-*
 cvs/cdk/depcomp
@@ -201,4 +200,3 @@ cvs/driver/include/stmfb
 cvs/driver/multicom
 cvs/driver/player2
 cvs/driver/stgfb/stmfb
-
