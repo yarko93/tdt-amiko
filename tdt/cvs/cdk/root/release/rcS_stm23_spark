@@ -126,6 +126,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    /etc/init.d/hostname start
 
    echo "starting telnetd"
+    /etc/init.d/wlan &
    /usr/sbin/telnetd -l /bin/login
    /etc/init.d/vsftpd start
    /usr/sbin/inetd
