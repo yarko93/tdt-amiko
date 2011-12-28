@@ -28,7 +28,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/configure.ac e
  AC_CHECK_LIB([dl], [dlopen], [LIBDL_LIBS="-ldl"], [AC_MSG_ERROR([Could not find libdl])])
  AC_SUBST(LIBDL_LIBS)
  AC_CHECK_LIB([jpeg], [jpeg_set_defaults], [LIBJPEG_LIBS="-ljpeg"], [AC_MSG_ERROR([Could not find libjpeg])])
-@@ -135,9 +155,6 @@
+@@ -135,16 +155,8 @@
  lib/python/Components/Sources/Makefile
  lib/python/Screens/Makefile
  lib/python/Plugins/Makefile
@@ -37,8 +37,15 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/configure.ac e
 -lib/python/Plugins/DemoPlugins/TestPlugin/Makefile
  lib/python/Plugins/Extensions/CutListEditor/Makefile
  lib/python/Plugins/Extensions/CutListEditor/meta/Makefile
- lib/python/Plugins/Extensions/DVDBurn/Makefile
-@@ -152,15 +169,12 @@
+-lib/python/Plugins/Extensions/DVDBurn/Makefile
+-lib/python/Plugins/Extensions/DVDBurn/meta/Makefile
+-lib/python/Plugins/Extensions/DVDPlayer/Makefile
+-lib/python/Plugins/Extensions/DVDPlayer/meta/Makefile
+-lib/python/Plugins/Extensions/DVDPlayer/src/Makefile
+ lib/python/Plugins/Extensions/GraphMultiEPG/Makefile
+ lib/python/Plugins/Extensions/GraphMultiEPG/meta/Makefile
+ lib/python/Plugins/Extensions/Makefile
+@@ -152,21 +164,16 @@
  lib/python/Plugins/Extensions/MediaPlayer/meta/Makefile
  lib/python/Plugins/Extensions/MediaScanner/Makefile
  lib/python/Plugins/Extensions/MediaScanner/meta/Makefile
@@ -54,6 +61,12 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/configure.ac e
  lib/python/Plugins/SystemPlugins/CleanupWizard/Makefile
  lib/python/Plugins/SystemPlugins/CleanupWizard/meta/Makefile
  lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/Makefile
+ lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/meta/Makefile
+-lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/Makefile
+-lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/meta/Makefile
+ lib/python/Plugins/SystemPlugins/DefaultServicesScanner/Makefile
+ lib/python/Plugins/SystemPlugins/DefaultServicesScanner/meta/Makefile
+ lib/python/Plugins/SystemPlugins/DiseqcTester/Makefile
 @@ -200,6 +214,12 @@
  lib/python/Plugins/SystemPlugins/Videomode/meta/Makefile
  lib/python/Plugins/SystemPlugins/WirelessLan/Makefile
@@ -5484,22 +5497,23 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/Makefile.am enigma2-nightly.patched/lib/python/Plugins/Extensions/Makefile.am
 --- enigma2-nightly.org/lib/python/Plugins/Extensions/Makefile.am	2011-09-03 18:23:26.480022162 +0200
 +++ enigma2-nightly.patched/lib/python/Plugins/Extensions/Makefile.am	2011-09-03 18:23:47.350032808 +0200
-@@ -1,6 +1,14 @@
+@@ -1,9 +1,13 @@
  installdir = $(pkglibdir)/python/Plugins/Extensions
  
 -SUBDIRS = TuxboxPlugins CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI DVDBurn Modem
-+SUBDIRS = CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI DVDBurn
++SUBDIRS = CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI 
 + 
 +if ENABLE_TF7700
 +SUBDIRS += TopfieldVFD
 +endif
-+
+ 
+-if HAVE_LIBDDVD
+-SUBDIRS += DVDPlayer
 +if ENABLE_CUBEREVO
 +SUBDIRS += CuberevoVFD
-+endif
+ endif
  
- if HAVE_LIBDDVD
- SUBDIRS += DVDPlayer
+ install_PYTHON =	\
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py
 --- enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py	1970-01-01 01:00:00.000000000 +0100
 +++ enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py	2011-09-03 18:23:47.350032808 +0200
@@ -6095,8 +6109,9 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
 +SUBDIRS = SoftwareManager PositionerSetup Satfinder \
  	SkinSelector SatelliteEquipmentControl Videomode VideoTune Hotplug \
 -	DefaultServicesScanner NFIFlash DiseqcTester CommonInterfaceAssignment \
- 	CrashlogAutoSubmit CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
+-	CrashlogAutoSubmit CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
 -	TempFanControl
++	CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
 +	TempFanControl VFD-Icons Tuxtxt
  
  install_PYTHON =	\
