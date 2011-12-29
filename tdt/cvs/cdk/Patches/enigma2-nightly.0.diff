@@ -6451,7 +6451,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
  
  	def getLength(self):
  		return self.listLength		
-@@ -382,96 +374,37 @@
+@@ -382,96 +374,27 @@
  			self.buildWlanList()
  		return self.WlanList
  
@@ -6554,17 +6554,8 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
 +	ret += "\tpre-up wpa_supplicant -i" + iface + " -c/etc/wpa_supplicant.conf -B -dd -D" + driver + " || true\n"
  	ret += "\tpre-down wpa_cli -i" + iface + " terminate || true\n"
  	return ret
-+#def configStrings(iface):
-+#	driver = iNetwork.detectWlanModule(iface)
-+#	print "Found WLAN-Driver:",driver
-+#	if driver  in ('ralink', 'zydas'):
-+#		return "	/usr/sbin/wpa_supplicant -i"+iface+" -c/etc/wpa_supplicant.conf -B -D"+driver+"\n	/usr/sbin/wpa_cli terminate"
-+#	else:
-+#		if config.plugins.wlan.essid.value == "hidden...":
-+#			return 'iwconfig '+iface+' essid "'+config.plugins.wlan.hiddenessid.value+'"\n	/usr/sbin/wpa_supplicant -i'+iface+' -c/etc/wpa_supplicant.conf -B -dd -D'+driver+'\n	/usr/sbin/wpa_cli terminate'
-+#		else:
-+#			return 'iwconfig '+iface+' essid "'+config.plugins.wlan.essid.value+'"\n /usr/sbin/wpa_supplicant -i'+iface+' -c/etc/wpa_supplicant.conf -B -dd -D'+driver+'\n	/usr/sbin/wpa_cli terminate'
- 
+-
++	
  def Plugins(**kwargs):
  	return PluginDescriptor(name=_("Wireless LAN"), description=_("Connect to a Wireless Network"), where = PluginDescriptor.WHERE_NETWORKSETUP, needsRestart = False, fnc={"ifaceSupported": callFunction, "configStrings": configStrings, "WlanPluginEntry": lambda x: "Wireless Network Configuartion..."})
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/Wlan.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/Wlan.py
@@ -7687,7 +7678,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 +							self.wlanmodule = 'madwifi'
 +					if os_path.realpath(driverdir).endswith('rt73'):
 +						if len(driverfiles) == 2 or len(driverfiles) == 5:
-+							self.wlanmodule = 'ralink'					
++							self.wlanmodule = 'wext'					
 +					if os_path.realpath(driverdir).endswith('zd1211b'):
 +						if len(driverfiles) == 1 or len(driverfiles) == 5:
 +							self.wlanmodule = 'zydas'

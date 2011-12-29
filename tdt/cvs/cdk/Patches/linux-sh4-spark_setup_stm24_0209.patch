@@ -1,4 +1,4 @@
-*** linux-sh4-2.6.32.46_stm24_0209.orig/arch/sh/boards/mach-sat7111/setup.c	2011-11-24 22:22:25.000000000 +0200
+f>>*** linux-sh4-2.6.32.46_stm24_0209.orig/arch/sh/boards/mach-sat7111/setup.c	2011-11-24 22:22:25.000000000 +0200
 --- linux-sh4/arch/sh/boards/mach-sat7111/setup.c	2011-11-24 23:06:54.479869987 +0200
 ***************
 *** 33,51 ****
@@ -416,12 +416,24 @@
   	*cmdline_p = command_line;
 *** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/net/stmmac/dwmac_lib.c	2011-11-24 22:22:25.000000000 +0200
 --- linux-sh4/drivers/net/stmmac/dwmac_lib.c	2011-11-24 23:33:55.732873713 +0200
-@@ -213,7 +213,7 @@
- 		     (DMA_STATUS_GPI | DMA_STATUS_GMI | DMA_STATUS_GLI)))
+@@ -210,7 +210,7 @@
+ 	}
+ 	/* Optional hardware blocks, interrupts should be disabled */
+ 	if (unlikely(intr_status &
+-		     (DMA_STATUS_GPI | DMA_STATUS_GMI | DMA_STATUS_GLI)))
++		     (DMA_STATUS_GPI | DMA_STATUS_GMI | DMA_STATUS_GLI)) && printk_ratelimit())
  		pr_info("%s: unexpected status %08x\n", __func__, intr_status);
  	/* Clear the interrupt by writing a logic 1 to the CSR5[15-0] */
--	writel((intr_status & 0x1ffff), ioaddr + DMA_STATUS);
-+	writel((intr_status | 0x1ffff), ioaddr + DMA_STATUS);
+ 	writel((intr_status & 0x1ffff), ioaddr + DMA_STATUS);
+
+*** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/net/stmmac/stmmac_main.c	2011-12-27 11:58:10.718838549 +0100
+--- linux-sh4/drivers/net/stmmac/stmmac_main.c	2011-12-27 11:58:45.139009163 +0100
+@@ -964,7 +964,7 @@
+ 	memset(&priv->xstats, 0, sizeof(struct stmmac_extra_stats));
+ 	priv->xstats.threshold = tc;
  
- 	DWMAC_LIB_DBG(KERN_INFO "\n\n");
- 	return ret;
+-	if (priv->dma_cap.rmon)
++	// if (priv->dma_cap.rmon)
+ 		stmmac_mmc_setup(priv);
+ 
+ 	/* Start the ball rolling... */
