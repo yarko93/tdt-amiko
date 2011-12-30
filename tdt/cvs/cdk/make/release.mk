@@ -184,7 +184,6 @@ release_spark:
 	cp $(buildprefix)/root/release/umountfs $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/rc $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/sendsigs $(prefix)/release/etc/init.d/
-	cp $(buildprefix)/root/etc/network/wlanscan.py $(prefix)/release/etc/network/ && \
 	chmod 755 $(prefix)/release/etc/init.d/umountfs
 	chmod 755 $(prefix)/release/etc/init.d/rc
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
@@ -224,7 +223,6 @@ endif
 if STM23
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt73/rt73.ko $(prefix)/release/lib/modules/
 	cp -f $(buildprefix)/root/release/encrypt_spark$(KERNELSTMLABEL)_noptk.ko $(prefix)/release/lib/modules/encrypt.ko
-	[ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cpu_frequ/cpu_frequ.ko ] && cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cpu_frequ/cpu_frequ.ko $(prefix)/release/lib/modules || true
 endif
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
