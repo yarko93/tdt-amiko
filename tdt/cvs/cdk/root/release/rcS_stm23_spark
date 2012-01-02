@@ -89,12 +89,13 @@ if [ ! -e /var/etc/.firstboot ]; then
    insmod $MODDIR/platform.ko
    insmod $MODDIR/silencegen.ko
    insmod $MODDIR/smartcard.ko
-   /etc/init.d/wlan 
+   /etc/init.d/wlan
    insmod $MODDIR/bpamem.ko
    mknod /dev/bpamem c 153 0 
 
    showiframe -p /boot/bootlogo.mvi &
    stfbcontrol a 0
+
    echo "init lircd"
    /usr/bin/lircd
    mknod /dev/rc c 147 1 
@@ -130,19 +131,24 @@ if [ ! -e /var/etc/.firstboot ]; then
    /etc/init.d/vsftpd start
    /usr/sbin/inetd
 
-   NFS=`grep -c nfs /proc/cmdline`
+NFS=`grep -c nfs /proc/cmdline`
    if [ "$NFS" -eq "1" ]; then 
       echo "Booting from nfs, don't set network" 
    else 
       if [ -e /etc/network/interfaces ]; then 
-	 ip addr flush eth0 
-	 /etc/init.d/networking stop 
-	 DHCP=`grep -c dhcp /etc/network/interfaces`
-	 if [ "$DHCP" -eq "1" ]; then 
-	    echo "Starting dhcp"
-            /etc/init.d/udhcpc start 
+	  ip addr flush eth0
+	 /etc/init.d/networking stop
+	 DHCP1=`grep -c 'auto wlan0' /etc/network/interfaces`
+	 DHCP2=`grep -c 'auto eth0' /etc/network/interfaces`
+	 if [ "$DHCP1" -eq "1" ]; then 
+	    echo "Starting wlan0 dhcp"
+         /etc/init.d/networking start
+	  /etc/init.d/avahi-daemon start
+	 ifconfig eth0 down
+	 elif [ "$DHCP2" -eq "1" ]; then 
+	    echo "Starting eth0 dhcp"
+            /etc/init.d/networking start
 	 fi 
-	 /etc/init.d/networking start 
       fi 
    fi
 
