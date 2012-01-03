@@ -5,7 +5,7 @@ CHANGEDIR='../../tufsbox'
 TARGET=`cat $CURDIR/lastChoice | awk -F '--enable-' '{print $7}' | cut -d ' ' -f 1`
 BUILDDIR='../../cvs/cdk'
 
-echo "src/gz AR-P http://amiko.sat-universum.de" | cat - $NRELDIR/etc/opkg/official-feed.conf > $NRELDIR/etc/opkg/official-feed
+echo "src/gz AR-P http://vip.sat-universum.de" | cat - $NRELDIR/etc/opkg/official-feed.conf > $NRELDIR/etc/opkg/official-feed
 mv $NRELDIR/etc/opkg/official-feed $NRELDIR/etc/opkg/official-feed.conf
 echo config.usage.blinking_display_clock_during_recording=true >> $NRELDIR/etc/enigma2/settings
 echo config.usage.e1like_radio_mode=true >> $NRELDIR/etc/enigma2/settings
