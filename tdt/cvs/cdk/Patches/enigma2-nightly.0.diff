@@ -6549,7 +6549,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
 -	if driver == 'madwifi' and config.plugins.wlan.hiddenessid.value:
 -		ret += "\tpre-up iwconfig " + iface + " essid \"" + re_escape(config.plugins.wlan.essid.value) + "\" || true\n"
 -	ret += "\tpre-up wpa_supplicant -i" + iface + " -c" + getWlanConfigName(iface) + " -B -dd -D" + driver + " || true\n"
-+	if driver == 'madwifi' and config.plugins.wlan.essid.value == "hidden...":
++	if driver == 'wext' and config.plugins.wlan.essid.value == "hidden...":
 +		ret += "\tpre-up iwconfig " + iface + " essid \"" + config.plugins.wlan.hiddenessid.value + "\" || true\n"
 +	ret += "\tpre-up wpa_supplicant -i" + iface + " -c/etc/wpa_supplicant.conf -B -dd -D" + driver + " || true\n"
  	ret += "\tpre-down wpa_cli -i" + iface + " terminate || true\n"
@@ -7675,13 +7675,13 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 +					driverfiles = listdir(driverdir)
 +					if os_path.realpath(driverdir).endswith('ath_pci'):
 +						if len(driverfiles) >= 1:
-+							self.wlanmodule = 'madwifi'
++							self.wlanmodule = 'wext'
 +					if os_path.realpath(driverdir).endswith('rt73'):
 +						if len(driverfiles) == 2 or len(driverfiles) == 5:
 +							self.wlanmodule = 'wext'					
 +					if os_path.realpath(driverdir).endswith('zd1211b'):
 +						if len(driverfiles) == 1 or len(driverfiles) == 5:
-+							self.wlanmodule = 'zydas'
++							self.wlanmodule = 'wext'
 +			if self.wlanmodule is None:
 +				self.wlanmodule = "wext"
 +			print 'Using "%s" as wpa-supplicant driver' % (self.wlanmodule)
