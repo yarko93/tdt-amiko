@@ -189,6 +189,7 @@ release_spark:
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release/etc/init.d/halt
 	mkdir -p $(prefix)/release/etc/opkg
+	mkdir -p $(prefix)/release/usr/lib/locale
 	cp $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
 	cp $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
 	mkdir -p $(prefix)/release/etc/rc.d/rc0.d
@@ -204,6 +205,7 @@ release_spark:
 	ln -s ../init.d/reboot $(prefix)/release/etc/rc.d/rc6.d/S90reboot
 	ln -s /etc $(prefix)/release/var/etc
 	ln -s /usr $(prefix)/release/var/usr
+	ln -s /usr/lib/locale/po $(prefix)/release/usr/local/share/titan/po
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/smartcard/smartcard.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/lnb/lnb.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release/lib/modules/
