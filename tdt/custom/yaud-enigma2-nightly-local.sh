@@ -26,6 +26,8 @@ elif [ $TARGET == p0207 ]; then
 elif [ $TARGET == p0123 ]; then
     mv $NRELDIR/lib/modules/pti_123.ko $NRELDIR/lib/modules/pti.ko
 fi
+cd $NRELDIR/usr/lib/locale
+ln -s /usr/local/share/titan/po po
 exit
 echo "--- Erledigt ---"
 exit

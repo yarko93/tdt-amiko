@@ -205,7 +205,6 @@ release_spark:
 	ln -s ../init.d/reboot $(prefix)/release/etc/rc.d/rc6.d/S90reboot
 	ln -s /etc $(prefix)/release/var/etc
 	ln -s /usr $(prefix)/release/var/usr
-	ln -s /usr/lib/locale/po $(prefix)/release/usr/local/share/titan/po
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/smartcard/smartcard.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/lnb/lnb.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release/lib/modules/

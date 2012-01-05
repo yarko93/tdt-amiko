@@ -162,7 +162,12 @@ NFS=`grep -c nfs /proc/cmdline`
       crontab /var/spool/cron/crontabs/root
       /usr/lib/enigma2/python/Plugins/Extensions/AR-P/automount.sh
 
+      STARTUP=`grep -c 'titan' /etc/init.d/start`
+      if [ "$STARTUP" -eq "1" ]; then
+      /usr/local/bin/titan /etc/titan/titan.cfg
+      else
       /usr/local/bin/enigma2
+      fi
       rtv=$?
       echo "e2 ended <- RTV: " $rtv
       case "$rtv" in
