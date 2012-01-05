@@ -68,7 +68,7 @@ echo "-----------------------------------------------------------------------"
 $BASEDIR/flash/common/common.sh $BASEDIR/flash/common/
 
 echo "-----------------------------------------------------------------------"
->>>>>>> duckbox/master
+
 echo "Checking targets..."
 echo "Found targets:"
 if [  -e $TUFSBOXDIR/release ]; then
@@ -143,7 +143,6 @@ clear
 #  echo "IF YOUR ARE CREATING THE ROOT PART MAKE SURE THAT YOU USE A CORRECT DEV.TAR"
 #  echo "-----------------------------------------------------------------------"
 #fi
-=======
 
 echo "Flashtool fup exists"
 echo "-----------------------------------------------------------------------"
