@@ -37,7 +37,6 @@ echo "Date: 01-31-2011"
 echo "-----------------------------------------------------------------------"
 echo "It's expected that a images was already build prior to this execution!"
 echo "-----------------------------------------------------------------------"
-=======
 CDKDIR=$BASEDIR/cvs/cdk
 
 SCRIPTDIR=$CURDIR/scripts
