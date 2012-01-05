@@ -294,8 +294,8 @@ static tButton cButtonsSparDefault[] = {
     {"9BUTTON"        , "F5", KEY_9},
     {"TV/RADIO"       , "CD", KEY_TV2}, //WE USE TV2 AS TV/RADIO SWITCHB
     {"RECALL"         , "CF", KEY_BACK},
-    {"PAGE+"          , "ED", KEY_CHANNELDOWN},
-    {"PAGE-"          , "DD", KEY_CHANNELUP},
+    {"PAGE+"          , "ED", KEY_PAGEUP},
+    {"PAGE-"          , "DD", KEY_PAGEDOWN},
     {"FIND"           , "C5", KEY_FIND},
     {"FOLDER"	      , "67", KEY_ARCHIVE},
     {"VOL+"           , "AF", KEY_VOLUMEDOWN},
@@ -374,7 +374,7 @@ static int pInit(Context_t* context, int argc, char* argv[]) {
     int vHandle;
 
     vAddr.sun_family = AF_UNIX;
-    strcpy(vAddr.sun_path, "/dev/lircd");
+    strcpy(vAddr.sun_path, "/var/run/lirc/lircd");
 
     vHandle = socket(AF_UNIX,SOCK_STREAM, 0);
 
