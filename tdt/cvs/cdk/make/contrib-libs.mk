@@ -138,7 +138,7 @@ $(DEPDIR)/lirc.do_compile: $(DEPDIR)/lirc.do_prepare
 	cd @DIR_lirc@ && \
 		$(BUILDENV) \
 		ac_cv_path_LIBUSB_CONFIG= \
-		CFLAGS="$(TARGET_CFLAGS) -Os" \
+		CFLAGS="$(TARGET_CFLAGS) -Os -D__KERNEL_STRICT_NAMES" \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
@@ -695,6 +695,10 @@ $(DEPDIR)/directfb.do_compile: bootstrap freetype directfb.do_prepare
 			--disable-devmem \
 			--disable-multi \
 			--with-gfxdrivers=stgfx \
+			--with-inputdrivers=linuxinput \
+			--without-software \
+			--enable-stmfbdev \
+			--disable-fbdev \
 			--enable-mme=yes && \
 			export top_builddir=`pwd` && \
 		$(MAKE) LD=$(target)-ld

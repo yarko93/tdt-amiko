@@ -23,5 +23,14 @@ gstreamer-*
 libogg-*
 libsoup-*
 boost_*
-graphlcd-base
+mc-*
+lirc-*
 libusb-*
+libsoup-*
+libogg-*
+gstreamer-*
+gst-*
+graphlcd-*
+glib-*
+flac-*
+alsa-*
