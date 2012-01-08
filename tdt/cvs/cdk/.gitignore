@@ -34,3 +34,5 @@ graphlcd-*
 glib-*
 flac-*
 alsa-*
+DirectFB-*
+freetype-*
