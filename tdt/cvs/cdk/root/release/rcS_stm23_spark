@@ -110,14 +110,11 @@ if [ ! -e /var/.firstboot ]; then
 	var=${var:0:8}
 	if [ $var = "09:00:0B" ]; then
 	/bin/evremote1 spark &
-	fi
-	if [ $var = "09:00:0A" ]; then
+	elif [ $var = "09:00:0A" ]; then
 	/bin/evremote2 spark &
-	fi
-	if [ $var = "09:00:07" ]; then
+	elif [ $var = "09:00:07" ]; then
 	/bin/evremote3 spark &
-	fi
-	if [ $var = "09:00:08" ]; then
+	elif [ $var = "09:00:08" ]; then
 	/bin/evremote4 spark &
 	fi
 	stfbcontrol a 255
@@ -166,7 +163,7 @@ NFS=`grep -c nfs /proc/cmdline`
       if [ "$STARTUP" -eq "1" ]; then
       /usr/local/bin/titan /etc/titan/titan.cfg
       else
-      if ls /hdd/enigma2_crash_??????????.log >/dev/null 2>&1; then
+      if [ ls /hdd/enigma2_crash_??????????.log >/dev/null 2>&1 ]; then
         mv /hdd/enigma2_crash_??????????.log /hdd/enigma2_crash_??????????_.log
         cd /etc/enigma2
         sed -i "/$config.skin./d" "settings"
