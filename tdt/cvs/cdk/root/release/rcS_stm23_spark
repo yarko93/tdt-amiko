@@ -166,6 +166,11 @@ NFS=`grep -c nfs /proc/cmdline`
       if [ "$STARTUP" -eq "1" ]; then
       /usr/local/bin/titan /etc/titan/titan.cfg
       else
+      if ls /hdd/enigma2_crash_??????????.log >/dev/null 2>&1; then
+        mv /hdd/enigma2_crash_??????????.log /hdd/enigma2_crash_??????????_.log
+        cd /etc/enigma2
+        sed -i "/$config.skin./d" "settings"
+      fi
       /usr/local/bin/enigma2
       fi
       rtv=$?

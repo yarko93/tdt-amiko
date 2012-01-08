@@ -135,11 +135,6 @@ if [ ! -e /var/etc/.firstboot ]; then
 	 /etc/init.d/networking start 
       fi 
    fi
-   if ls /hdd/enigma2_crash_??????????.log >/dev/null 2>&1; then
-	mv /hdd/enigma2_crash_??????????.log /hdd/enigma2_crash_??????????_.log
-	cd /etc/enigma2
-	sed -i "/$config.skin./d" "settings"
-   fi
 
    echo "run" > /dev/vfd
    echo "LOADING E2"
