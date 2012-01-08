@@ -3695,9 +3695,20 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/epng.c
  		eDebug("error :/");
  		png_destroy_write_struct(&png_ptr, &info_ptr);
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp enigma2-nightly.patched/lib/gdi/fb.cpp
---- enigma2-nightly.org/lib/gdi/fb.cpp	2011-09-03 18:23:25.380022383 +0200
-+++ enigma2-nightly.patched/lib/gdi/fb.cpp	2011-09-03 18:23:47.240032937 +0200
-@@ -70,6 +70,15 @@
+--- enigma2-nightly.org/lib/gdi/fb.cpp	2012-01-04 13:29:30.765042999 -0800
++++ enigma2-nightly.patched/lib/gdi/fb.cpp	2012-01-06 10:55:26.667043953 -0800
+@@ -9,6 +9,10 @@
+ 
+ #include <lib/gdi/fb.h>
+ 
++#ifdef __sh__
++#include <linux/stmfb.h>
++#endif
++
+ #ifndef FBIO_WAITFORVSYNC
+ #define FBIO_WAITFORVSYNC _IOW('F', 0x20, __u32)
+ #endif
+@@ -70,6 +74,15 @@
  		perror("mmap");
  		goto nolfb;
  	}
@@ -3713,7 +3724,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  
  	showConsole(0);
  
-@@ -83,6 +92,9 @@
+@@ -83,6 +96,9 @@
  
  int fbClass::showConsole(int state)
  {
@@ -3723,7 +3734,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	int fd=open("/dev/tty0", O_RDWR);
  	if(fd>=0)
  	{
-@@ -92,13 +104,18 @@
+@@ -92,13 +108,18 @@
  		}
  		close(fd);
  	}
@@ -3742,7 +3753,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	screeninfo.height=0;
  	screeninfo.width=0;
  	screeninfo.xoffset=screeninfo.yoffset=0;
-@@ -129,6 +146,7 @@
+@@ -129,6 +150,7 @@
  		break;
  	}
  
@@ -3750,7 +3761,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	if (ioctl(fd, FBIOPUT_VSCREENINFO, &screeninfo)<0)
  	{
  		// try single buffering
-@@ -143,6 +161,7 @@
+@@ -143,6 +165,7 @@
  		eDebug(" - double buffering not available.");
  	} else
  		eDebug(" - double buffering available!");
@@ -3758,7 +3769,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	
  	m_number_of_pages = screeninfo.yres_virtual / nyRes;
  	
-@@ -154,6 +173,10 @@
+@@ -154,6 +177,10 @@
  			nxRes, nyRes, nbpp,
  			screeninfo.xres, screeninfo.yres, screeninfo.bits_per_pixel);
  	}
@@ -3769,7 +3780,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	xRes=screeninfo.xres;
  	yRes=screeninfo.yres;
  	bpp=screeninfo.bits_per_pixel;
-@@ -164,7 +187,9 @@
+@@ -164,7 +191,9 @@
  		printf("fb failed\n");
  	}
  	stride=fix.line_length;
@@ -3779,7 +3790,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	return 0;
  }
  
-@@ -183,10 +208,81 @@
+@@ -183,10 +212,86 @@
  
  void fbClass::blit()
  {
@@ -3852,6 +3863,11 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
 +	
 +	}
 +
++	if(ioctl(fd, STMFBIO_SYNC_BLITTER) < 0)
++	{ 
++		perror("STMFBIO_SYNC_BLITTER"); 
++	}
++
 +#else 
  	if (m_manual_blit == 1) {
  		if (ioctl(fd, FBIO_BLIT) < 0)
@@ -3861,7 +3877,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  }
  
  fbClass::~fbClass()
-@@ -231,19 +327,62 @@
+@@ -231,19 +336,62 @@
  
  void fbClass::enableManualBlit()
  {
@@ -6116,6 +6132,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
  
  install_PYTHON =	\
  	__init__.py
+
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py	2011-12-05 00:46:00.505062996 +0100
 +++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py	2011-12-05 00:46:00.505062996 +0100
@@ -8261,6 +8278,27 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Scr
  						self["Network"].setText(_("disconnected"))
  						self["NetworkInfo_Check"].setPixmapNum(1)
 
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2011-09-03 18:23:27.250023288 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2011-09-03 18:23:47.380033063 +0200
+@@ -10,7 +10,7 @@
+ from Components.MenuList import MenuList
+ from Plugins.Plugin import PluginDescriptor
+ from Components.config import config
+-from Tools.Directories import resolveFilename, SCOPE_PLUGINS
++from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN
+ from os import path, walk
+ from enigma import eEnv
+ 
+@@ -85,7 +85,7 @@
+ 		for x in names:
+ 			if x == "skin.xml":
+ 				if dirname <> self.root:
+-					subdir = dirname[19:]
++					subdir = dirname[len(resolveFilename(SCOPE_SKIN)):]
+ 					self.skinlist.append(subdir)
+ 				else:
+ 					subdir = "Default Skin"
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py	2011-09-03 18:23:27.250023288 +0200
 +++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py	2011-09-03 18:23:47.380033063 +0200
@@ -8472,18 +8510,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
  						self.NotifierCallback = callback
  						self.startIpkgListAvailable()
  				else:	
-diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py		2011-05-16 06:52:32.585842342 +0200
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2011-05-16 06:52:32.585842342 +0200
-@@ -85,7 +85,7 @@
- 		for x in names:
- 			if x == "skin.xml":
- 				if dirname <> self.root:
--					subdir = dirname[19:]
-+					subdir = dirname[25:]
- 					self.skinlist.append(subdir)
- 				else:
- 					subdir = "Default Skin" 
+ 
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	1970-01-01 01:00:00.000000000 +0100
 +++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	2011-09-03 18:23:47.390032997 +0200
