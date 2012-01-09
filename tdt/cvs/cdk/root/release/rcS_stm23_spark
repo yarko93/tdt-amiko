@@ -116,6 +116,8 @@ if [ ! -e /var/.firstboot ]; then
 	/bin/evremote3 spark &
 	elif [ $var = "09:00:08" ]; then
 	/bin/evremote4 spark &
+	else
+        /bin/evremote2 spark &
 	fi
 	stfbcontrol a 255
 	echo " e2 "
