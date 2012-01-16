@@ -39,6 +39,10 @@ ${MAKEDEV} lp par audio video fb rtc lirc st200 alsasnd mme bpamem
 ${MAKEDEV} ppp busmice
 ${MAKEDEV} input i2c mtd
 ${MAKEDEV} dvb
+rm -rf  $TMPROOTDIR/dev/dvb/adapter0/ca1 
+	  cd $TMPROOTDIR/dev/dvb/adapter0 
+	   pwd
+	  ln -s   ca0 $TMPROOTDIR/dev/dvb/adapter0/ca1
 cd -
 #>>>>>>> duckbox/master
 
