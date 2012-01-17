@@ -204,8 +204,6 @@ release_spark:
 	ln -s ../init.d/sendsigs $(prefix)/release/etc/rc.d/rc6.d/S20sendsigs
 	ln -s ../init.d/umountfs $(prefix)/release/etc/rc.d/rc6.d/S40umountfs
 	ln -s ../init.d/reboot $(prefix)/release/etc/rc.d/rc6.d/S90reboot
-	ln -s /etc $(prefix)/release/var/etc
-	ln -s /usr $(prefix)/release/var/usr
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/smartcard/smartcard.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/lnb/lnb.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release/lib/modules/
@@ -225,7 +223,6 @@ endif
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 if STM23
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt73/rt73.ko $(prefix)/release/lib/modules/
-	cp -f $(buildprefix)/root/release/encrypt_spark$(KERNELSTMLABEL)_noptk.ko $(prefix)/release/lib/modules/encrypt.ko
 endif
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
@@ -294,8 +291,6 @@ release_spark7162:
 	ln -s ../init.d/sendsigs $(prefix)/release/etc/rc.d/rc6.d/S20sendsigs
 	ln -s ../init.d/umountfs $(prefix)/release/etc/rc.d/rc6.d/S40umountfs
 	ln -s ../init.d/reboot $(prefix)/release/etc/rc.d/rc6.d/S90reboot
-	ln -s /etc $(prefix)/release/var/etc
-	ln -s /usr $(prefix)/release/var/usr
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/smartcard/smartcard.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7105.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/aotom/aotom.ko $(prefix)/release/lib/modules/
@@ -988,7 +983,9 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/opkg && \
 	export CROSS_COMPILE=$(target)- && \
 		$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/release && \
-	touch $(prefix)/release/var/etc/.firstboot && \
+	ln -s /etc $(prefix)/release/var/etc
+	ln -s /usr $(prefix)/release/var/usr
+	touch $(prefix)/release/etc/.firstboot && \
 	cp -a $(targetprefix)/bin/* $(prefix)/release/bin/ && \
 	ln -s /bin/showiframe $(prefix)/release/usr/bin/showiframe && \
 	cp -dp $(targetprefix)/bin/hotplug $(prefix)/release/sbin/ && \

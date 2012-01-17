@@ -11,18 +11,7 @@ cp -a $RELEASEDIR/* $TMPROOTDIR
 # --- BOOT ---
 mv $TMPROOTDIR/boot/uImage $TMPKERNELDIR/uImage
 
-
-#<<<<<<< HEAD
 # --- ROOT ---
-#if [  -e $CURDIR/extras/dev_ufs910.tar.gz ]; then
-#  sudo tar -xzf $CURDIR/extras/dev_ufs910.tar.gz -C $TMPROOTDIR/dev/
-#fi
-#rm -rf  $TMPROOTDIR/dev/dvb/adapter0/ca1 
-#	  cd $TMPROOTDIR/dev/dvb/adapter0 
-#	   pwd
-#	  ln -s   ca0 $TMPROOTDIR/dev/dvb/adapter0/ca1
-#=======
-# --- ROOT ---i
 cd $TMPROOTDIR/dev/
 MAKEDEV="sudo $TMPROOTDIR/sbin/MAKEDEV -p $TMPROOTDIR/etc/passwd -g $TMPROOTDIR/etc/group"
 ${MAKEDEV} std
@@ -39,10 +28,8 @@ ${MAKEDEV} lp par audio video fb rtc lirc st200 alsasnd mme bpamem
 ${MAKEDEV} ppp busmice
 ${MAKEDEV} input i2c mtd
 ${MAKEDEV} dvb
-rm -rf  $TMPROOTDIR/dev/dvb/adapter0/ca1 
-	  cd $TMPROOTDIR/dev/dvb/adapter0 
-	   pwd
-	  ln -s   ca0 $TMPROOTDIR/dev/dvb/adapter0/ca1
+mkdir pts
+mkdir shm
 cd -
-#>>>>>>> duckbox/master
+
 
