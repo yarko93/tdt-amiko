@@ -20,9 +20,9 @@ CONFIGPARAM=" \
  --prefix=$KATIDIR/tufsbox \
  --with-cvsdir=$KATIDIR/cvs \
  --with-customizationsdir=$KATIDIR/custom \
+ --with-archivedir=$HOME/Archive \
  --enable-ccache \
- --enable-flashrules \
- --with-stockdir=$KATIDIR/stock"
+ --enable-flashrules"
 
 ##############################################
 
@@ -444,5 +444,6 @@ echo "make yaud-enigma2"
 echo "make yaud-enigma2-nightly"
 echo "make yaud-neutrino"
 echo "make yaud-vdr"
+echo "make yaud-vdrdev2"
 echo "make yaud-enigma1-hd"
 echo "-----------------------"

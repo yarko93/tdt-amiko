@@ -1,7 +1,7 @@
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/configure.ac enigma2-nightly.patched/configure.ac
 --- enigma2-nightly.org/configure.ac	2011-09-03 18:23:23.590021783 +0200
 +++ enigma2-nightly.patched/configure.ac	2011-09-03 18:23:47.060032502 +0200
-@@ -33,6 +34,26 @@
+@@ -34,6 +34,26 @@
  PKG_CHECK_MODULES(LIBDDVD, libdreamdvd, HAVE_LIBDDVD="yes", HAVE_LIBDDVD="no")
  AM_CONDITIONAL(HAVE_LIBDDVD, test "$HAVE_LIBDDVD" = "yes")
  
@@ -28,7 +28,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/configure.ac e
  AC_CHECK_LIB([dl], [dlopen], [LIBDL_LIBS="-ldl"], [AC_MSG_ERROR([Could not find libdl])])
  AC_SUBST(LIBDL_LIBS)
  AC_CHECK_LIB([jpeg], [jpeg_set_defaults], [LIBJPEG_LIBS="-ljpeg"], [AC_MSG_ERROR([Could not find libjpeg])])
-@@ -135,9 +155,6 @@
+@@ -135,16 +155,8 @@
  lib/python/Components/Sources/Makefile
  lib/python/Screens/Makefile
  lib/python/Plugins/Makefile
@@ -37,8 +37,15 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/configure.ac e
 -lib/python/Plugins/DemoPlugins/TestPlugin/Makefile
  lib/python/Plugins/Extensions/CutListEditor/Makefile
  lib/python/Plugins/Extensions/CutListEditor/meta/Makefile
- lib/python/Plugins/Extensions/DVDBurn/Makefile
-@@ -152,15 +169,12 @@
+-lib/python/Plugins/Extensions/DVDBurn/Makefile
+-lib/python/Plugins/Extensions/DVDBurn/meta/Makefile
+-lib/python/Plugins/Extensions/DVDPlayer/Makefile
+-lib/python/Plugins/Extensions/DVDPlayer/meta/Makefile
+-lib/python/Plugins/Extensions/DVDPlayer/src/Makefile
+ lib/python/Plugins/Extensions/GraphMultiEPG/Makefile
+ lib/python/Plugins/Extensions/GraphMultiEPG/meta/Makefile
+ lib/python/Plugins/Extensions/Makefile
+@@ -152,21 +164,16 @@
  lib/python/Plugins/Extensions/MediaPlayer/meta/Makefile
  lib/python/Plugins/Extensions/MediaScanner/Makefile
  lib/python/Plugins/Extensions/MediaScanner/meta/Makefile
@@ -54,6 +61,12 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/configure.ac e
  lib/python/Plugins/SystemPlugins/CleanupWizard/Makefile
  lib/python/Plugins/SystemPlugins/CleanupWizard/meta/Makefile
  lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/Makefile
+ lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/meta/Makefile
+-lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/Makefile
+-lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/meta/Makefile
+ lib/python/Plugins/SystemPlugins/DefaultServicesScanner/Makefile
+ lib/python/Plugins/SystemPlugins/DefaultServicesScanner/meta/Makefile
+ lib/python/Plugins/SystemPlugins/DiseqcTester/Makefile
 @@ -200,6 +214,12 @@
  lib/python/Plugins/SystemPlugins/Videomode/meta/Makefile
  lib/python/Plugins/SystemPlugins/WirelessLan/Makefile
@@ -3682,9 +3695,20 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/epng.c
  		eDebug("error :/");
  		png_destroy_write_struct(&png_ptr, &info_ptr);
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp enigma2-nightly.patched/lib/gdi/fb.cpp
---- enigma2-nightly.org/lib/gdi/fb.cpp	2011-09-03 18:23:25.380022383 +0200
-+++ enigma2-nightly.patched/lib/gdi/fb.cpp	2011-09-03 18:23:47.240032937 +0200
-@@ -70,6 +70,15 @@
+--- enigma2-nightly.org/lib/gdi/fb.cpp	2012-01-04 13:29:30.765042999 -0800
++++ enigma2-nightly.patched/lib/gdi/fb.cpp	2012-01-06 10:55:26.667043953 -0800
+@@ -9,6 +9,10 @@
+ 
+ #include <lib/gdi/fb.h>
+ 
++#ifdef __sh__
++#include <linux/stmfb.h>
++#endif
++
+ #ifndef FBIO_WAITFORVSYNC
+ #define FBIO_WAITFORVSYNC _IOW('F', 0x20, __u32)
+ #endif
+@@ -70,6 +74,15 @@
  		perror("mmap");
  		goto nolfb;
  	}
@@ -3700,7 +3724,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  
  	showConsole(0);
  
-@@ -83,6 +92,9 @@
+@@ -83,6 +96,9 @@
  
  int fbClass::showConsole(int state)
  {
@@ -3710,7 +3734,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	int fd=open("/dev/tty0", O_RDWR);
  	if(fd>=0)
  	{
-@@ -92,13 +104,18 @@
+@@ -92,13 +108,18 @@
  		}
  		close(fd);
  	}
@@ -3729,7 +3753,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	screeninfo.height=0;
  	screeninfo.width=0;
  	screeninfo.xoffset=screeninfo.yoffset=0;
-@@ -129,6 +146,7 @@
+@@ -129,6 +150,7 @@
  		break;
  	}
  
@@ -3737,7 +3761,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	if (ioctl(fd, FBIOPUT_VSCREENINFO, &screeninfo)<0)
  	{
  		// try single buffering
-@@ -143,6 +161,7 @@
+@@ -143,6 +165,7 @@
  		eDebug(" - double buffering not available.");
  	} else
  		eDebug(" - double buffering available!");
@@ -3745,7 +3769,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	
  	m_number_of_pages = screeninfo.yres_virtual / nyRes;
  	
-@@ -154,6 +173,10 @@
+@@ -154,6 +177,10 @@
  			nxRes, nyRes, nbpp,
  			screeninfo.xres, screeninfo.yres, screeninfo.bits_per_pixel);
  	}
@@ -3756,7 +3780,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	xRes=screeninfo.xres;
  	yRes=screeninfo.yres;
  	bpp=screeninfo.bits_per_pixel;
-@@ -164,7 +187,9 @@
+@@ -164,7 +191,9 @@
  		printf("fb failed\n");
  	}
  	stride=fix.line_length;
@@ -3766,7 +3790,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  	return 0;
  }
  
-@@ -183,10 +208,81 @@
+@@ -183,10 +212,86 @@
  
  void fbClass::blit()
  {
@@ -3839,6 +3863,11 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
 +	
 +	}
 +
++	if(ioctl(fd, STMFBIO_SYNC_BLITTER) < 0)
++	{ 
++		perror("STMFBIO_SYNC_BLITTER"); 
++	}
++
 +#else 
  	if (m_manual_blit == 1) {
  		if (ioctl(fd, FBIO_BLIT) < 0)
@@ -3848,7 +3877,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
  }
  
  fbClass::~fbClass()
-@@ -231,19 +327,62 @@
+@@ -231,19 +336,62 @@
  
  void fbClass::enableManualBlit()
  {
@@ -5484,22 +5513,23 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/Makefile.am enigma2-nightly.patched/lib/python/Plugins/Extensions/Makefile.am
 --- enigma2-nightly.org/lib/python/Plugins/Extensions/Makefile.am	2011-09-03 18:23:26.480022162 +0200
 +++ enigma2-nightly.patched/lib/python/Plugins/Extensions/Makefile.am	2011-09-03 18:23:47.350032808 +0200
-@@ -1,6 +1,14 @@
+@@ -1,9 +1,13 @@
  installdir = $(pkglibdir)/python/Plugins/Extensions
  
 -SUBDIRS = TuxboxPlugins CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI DVDBurn Modem
-+SUBDIRS = CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI DVDBurn
++SUBDIRS = CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI 
 + 
 +if ENABLE_TF7700
 +SUBDIRS += TopfieldVFD
 +endif
-+
+ 
+-if HAVE_LIBDDVD
+-SUBDIRS += DVDPlayer
 +if ENABLE_CUBEREVO
 +SUBDIRS += CuberevoVFD
-+endif
+ endif
  
- if HAVE_LIBDDVD
- SUBDIRS += DVDPlayer
+ install_PYTHON =	\
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py
 --- enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py	1970-01-01 01:00:00.000000000 +0100
 +++ enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py	2011-09-03 18:23:47.350032808 +0200
@@ -6095,12 +6125,14 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
 +SUBDIRS = SoftwareManager PositionerSetup Satfinder \
  	SkinSelector SatelliteEquipmentControl Videomode VideoTune Hotplug \
 -	DefaultServicesScanner NFIFlash DiseqcTester CommonInterfaceAssignment \
- 	CrashlogAutoSubmit CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
+-	CrashlogAutoSubmit CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
 -	TempFanControl
++	CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
 +	TempFanControl VFD-Icons Tuxtxt
  
  install_PYTHON =	\
  	__init__.py
+
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py	2011-12-05 00:46:00.505062996 +0100
 +++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py	2011-12-05 00:46:00.505062996 +0100
@@ -6436,7 +6468,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
  
  	def getLength(self):
  		return self.listLength		
-@@ -382,96 +374,37 @@
+@@ -382,96 +374,27 @@
  			self.buildWlanList()
  		return self.WlanList
  
@@ -6534,22 +6566,13 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
 -	if driver == 'madwifi' and config.plugins.wlan.hiddenessid.value:
 -		ret += "\tpre-up iwconfig " + iface + " essid \"" + re_escape(config.plugins.wlan.essid.value) + "\" || true\n"
 -	ret += "\tpre-up wpa_supplicant -i" + iface + " -c" + getWlanConfigName(iface) + " -B -dd -D" + driver + " || true\n"
-+	if driver == 'madwifi' and config.plugins.wlan.essid.value == "hidden...":
++	if driver == 'wext' and config.plugins.wlan.essid.value == "hidden...":
 +		ret += "\tpre-up iwconfig " + iface + " essid \"" + config.plugins.wlan.hiddenessid.value + "\" || true\n"
 +	ret += "\tpre-up wpa_supplicant -i" + iface + " -c/etc/wpa_supplicant.conf -B -dd -D" + driver + " || true\n"
  	ret += "\tpre-down wpa_cli -i" + iface + " terminate || true\n"
  	return ret
-+#def configStrings(iface):
-+#	driver = iNetwork.detectWlanModule(iface)
-+#	print "Found WLAN-Driver:",driver
-+#	if driver  in ('ralink', 'zydas'):
-+#		return "	/usr/sbin/wpa_supplicant -i"+iface+" -c/etc/wpa_supplicant.conf -B -D"+driver+"\n	/usr/sbin/wpa_cli terminate"
-+#	else:
-+#		if config.plugins.wlan.essid.value == "hidden...":
-+#			return 'iwconfig '+iface+' essid "'+config.plugins.wlan.hiddenessid.value+'"\n	/usr/sbin/wpa_supplicant -i'+iface+' -c/etc/wpa_supplicant.conf -B -dd -D'+driver+'\n	/usr/sbin/wpa_cli terminate'
-+#		else:
-+#			return 'iwconfig '+iface+' essid "'+config.plugins.wlan.essid.value+'"\n /usr/sbin/wpa_supplicant -i'+iface+' -c/etc/wpa_supplicant.conf -B -dd -D'+driver+'\n	/usr/sbin/wpa_cli terminate'
- 
+-
++	
  def Plugins(**kwargs):
  	return PluginDescriptor(name=_("Wireless LAN"), description=_("Connect to a Wireless Network"), where = PluginDescriptor.WHERE_NETWORKSETUP, needsRestart = False, fnc={"ifaceSupported": callFunction, "configStrings": configStrings, "WlanPluginEntry": lambda x: "Wireless Network Configuartion..."})
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/Wlan.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/Wlan.py
@@ -7669,13 +7692,13 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 +					driverfiles = listdir(driverdir)
 +					if os_path.realpath(driverdir).endswith('ath_pci'):
 +						if len(driverfiles) >= 1:
-+							self.wlanmodule = 'madwifi'
++							self.wlanmodule = 'wext'
 +					if os_path.realpath(driverdir).endswith('rt73'):
 +						if len(driverfiles) == 2 or len(driverfiles) == 5:
-+							self.wlanmodule = 'ralink'					
++							self.wlanmodule = 'wext'					
 +					if os_path.realpath(driverdir).endswith('zd1211b'):
 +						if len(driverfiles) == 1 or len(driverfiles) == 5:
-+							self.wlanmodule = 'zydas'
++							self.wlanmodule = 'wext'
 +			if self.wlanmodule is None:
 +				self.wlanmodule = "wext"
 +			print 'Using "%s" as wpa-supplicant driver' % (self.wlanmodule)
@@ -8255,6 +8278,27 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Scr
  						self["Network"].setText(_("disconnected"))
  						self["NetworkInfo_Check"].setPixmapNum(1)
 
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2011-09-03 18:23:27.250023288 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2011-09-03 18:23:47.380033063 +0200
+@@ -10,7 +10,7 @@
+ from Components.MenuList import MenuList
+ from Plugins.Plugin import PluginDescriptor
+ from Components.config import config
+-from Tools.Directories import resolveFilename, SCOPE_PLUGINS
++from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN
+ from os import path, walk
+ from enigma import eEnv
+ 
+@@ -85,7 +85,7 @@
+ 		for x in names:
+ 			if x == "skin.xml":
+ 				if dirname <> self.root:
+-					subdir = dirname[19:]
++					subdir = dirname[len(resolveFilename(SCOPE_SKIN)):]
+ 					self.skinlist.append(subdir)
+ 				else:
+ 					subdir = "Default Skin"
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py	2011-09-03 18:23:27.250023288 +0200
 +++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py	2011-09-03 18:23:47.380033063 +0200
@@ -8466,18 +8510,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
  						self.NotifierCallback = callback
  						self.startIpkgListAvailable()
  				else:	
-diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py		2011-05-16 06:52:32.585842342 +0200
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2011-05-16 06:52:32.585842342 +0200
-@@ -85,7 +85,7 @@
- 		for x in names:
- 			if x == "skin.xml":
- 				if dirname <> self.root:
--					subdir = dirname[19:]
-+					subdir = dirname[25:]
- 					self.skinlist.append(subdir)
- 				else:
- 					subdir = "Default Skin" 
+ 
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	1970-01-01 01:00:00.000000000 +0100
 +++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	2011-09-03 18:23:47.390032997 +0200
@@ -9963,7 +9996,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/RecordTimer.py
  void evfd::vfd_clear_string()
  {
  	vfd_write_string("                ");
-@@ -374,3 +487,13 @@
+@@ -374,3 +510,13 @@
  	close (file_vfd);
  	return;
  }

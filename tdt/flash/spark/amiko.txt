@@ -6,7 +6,7 @@ setenv monitor_len 0x00080000
 setenv monitor_sec 0xa0000000    0xa007ffff
 setenv load_addr 0x80000000
 setenv unprot protect off ${monitor_sec}
-setenv update protect off ${monitor_sec;erase $monitor_sec;cp.b $load_addr $monitor_base $monitor_len;protect on $monitor_sec
+setenv update protect off ${monitor_sec;erase $monitor_sec;cp.b $load_addr $monitor_base $monitor_len;protect on $monitor_sec}
 setenv hostname spark
 setenv ethaddr 00:80:E1:12:06:38
 setenv ipaddr 192.168.40.63
@@ -35,7 +35,7 @@ setenv kernel_name_enigma2 enigma2/uImage
 setenv userfs_name spark/userfsub.img
 setenv userfs_name_spark spark/userfsub.img
 setenv userfs_name_enigma2 enigma2/e2jffs2.img
-setenv userfs_base=800000
+setenv userfs_base 800000
 setenv userfs_base_spark 800000
 setenv userfs_base_enigma2 18800000
 setenv userfs_len 17800000

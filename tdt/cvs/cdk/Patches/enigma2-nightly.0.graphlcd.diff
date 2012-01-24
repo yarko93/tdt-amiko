@@ -81,15 +81,15 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/main/Makefile.
  
  AM_CXXFLAGS = \
  	$(LIBSDL_CFLAGS)
-@@ -51,7 +52,7 @@
- 	@LIBXMLCCWRAP_LIBS@ \
- 	@PTHREAD_LIBS@ \
- 	@PYTHON_LDFLAGS@ \
--	-ldl -lpthread -lcrypt -lresolv -lrt -lmmeimage -leplayer3
-+	-ldl -lpthread -lcrypt -lresolv -lrt -lmmeimage -leplayer3 -lglcddrivers -lglcdgraphics -lglcdskin
+@@ -55,6 +55,8 @@
  
  enigma2_LDFLAGS = -Wl,--export-dynamic
  
++enigma2_LDADD += -lglcddrivers -lglcdgraphics -lglcdskin
++ 
+ if HAVE_GIT_DIR
+ GIT_DIR = $(top_srcdir)/.git
+ GIT = git --git-dir=$(GIT_DIR)
 --- enigma2-nightly/main/enigma.cpp	2011-12-11 15:18:31.286513516 +0100
 +++ enigma2-nightly.patched/main/enigma.cpp	2011-12-11 15:19:36.656544176 +0100
 @@ -182,7 +182,12 @@
@@ -356,8 +356,8 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/main/Makefile.
  	default:
  		gDC::exec(o);
  		break;
---- enigma2-nightly.org/lib//gdi/lcd.cpp	2011-12-11 17:59:48.309448280 +0100
-+++ enigma2-nightly.patched/lib//gdi/lcd.cpp	2011-12-11 18:01:52.069506886 +0100
+--- enigma2-nightly.org/lib/gdi/lcd.cpp	2012-01-11 22:37:39.806742760 +0100
++++ enigma2-nightly.patched/lib/gdi/lcd.cpp	2012-01-11 22:39:37.016800845 +0100
 @@ -16,6 +16,18 @@
  #include <lib/base/init_num.h>
  #include <lib/gdi/glcddc.h>
@@ -386,7 +386,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/main/Makefile.
  eDBoxLCD::eDBoxLCD()
  {
  	int xres=132, yres=64, bpp=8;
-@@ -226,3 +240,131 @@
+@@ -226,3 +240,142 @@
  	}
  }
  
@@ -474,7 +474,14 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/main/Makefile.
 +eDBoxLCD::~eDBoxLCD()
 +{
 +	eDebug("eDBoxLCD::~eDBoxLCD");
-+    delete lcd;
++
++    if (lcd)
++    {
++	   lcd->DeInit();
++       delete lcd;
++    }
++    if (bitmap)
++      delete bitmap;
 +}
 +
 +eDBoxLCD *eDBoxLCD::getInstance()
@@ -485,36 +492,40 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/main/Makefile.
 +
 +void eDBoxLCD::update()
 +{
-+    bitmap->Clear();
++    if (lcdfd == 1)
++    {
 +
-+    for (int x = 0; x < width; x++)
-+       for (int y = 0; y < height; y++)
-+       { 
-+          __u16 *buf16  = (__u16*) _buffer;
++       bitmap->Clear();
++
++       for (int x = 0; x < width; x++)
++          for (int y = 0; y < height; y++)
++          { 
++             __u16 *buf16  = (__u16*) _buffer;
 +
 +#if BYTE_ORDER == LITTLE_ENDIAN
-+          __u16 col16   = bswap_16(*((__u16*)(((__u16*)buf16) + y * width + x)));
++             __u16 col16   = bswap_16(*((__u16*)(((__u16*)buf16) + y * width + x)));
 +#else
-+          __u16 col16   = *((__u16*)(((__u16*)buf16) + y  * width + x));
++             __u16 col16   = *((__u16*)(((__u16*)buf16) + y  * width + x));
 +#endif
-+          __u8 red, green, blue, alpha; 
-+          __u32 color32;
-+          
-+          /* BBBBB GGGGGG RRRRR */
-+ 		  blue  = ((col16 & 0xF800) >> 11) * ( 255 / 31);
-+          green = ((col16 & 0x7E0) >> 5) * (255 / 63);
-+          red   = (col16 & 0x1f) * (255 / 31);
-+          alpha = 255;
-+          
-+          color32 = alpha << 24 | red << 16 | green << 8 | blue;
++             __u8 red, green, blue, alpha; 
++             __u32 color32;
 +
-+		  if (inverted)
-+			  color32 = 0xFFFFFF - color32;
-+          
-+		  bitmap->DrawPixel(x, y, color32);
-+       }
-+	lcd->SetScreen(bitmap->Data(), bitmap->Width(), bitmap->Height());
-+    lcd->Refresh(false); /* partial update */
++             /* BBBBB GGGGGG RRRRR */
++ 		     blue  = ((col16 & 0xF800) >> 11) * ( 255 / 31);
++             green = ((col16 & 0x7E0) >> 5) * (255 / 63);
++             red   = (col16 & 0x1f) * (255 / 31);
++             alpha = 255;
++
++             color32 = alpha << 24 | red << 16 | green << 8 | blue;
++
++		     if (inverted)
++			     color32 = 0xFFFFFF - color32;
++
++		     bitmap->DrawPixel(x, y, color32);
++          }
++	   lcd->SetScreen(bitmap->Data(), bitmap->Width(), bitmap->Height());
++       lcd->Refresh(false); /* partial update */
++   }
 +}
 +
 +#endif    

@@ -80,7 +80,7 @@ include make/neutrino.mk
 # Include vdr gui targets
 include make/vdr.mk
 include make/vdrdev.mk
-
+include make/vdrdev2.mk
 # Include enigma1-hd gui targets
 include make/enigma1-hd.mk
 
@@ -92,9 +92,6 @@ include make/libtuxbox.mk
 
 # Include yaud targets
 include make/yaud.mk
-
-# Include record targets
-include make/record.mk
 
 # Include prog targets
 include make/prog.mk

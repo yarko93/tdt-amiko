@@ -138,7 +138,7 @@ $(DEPDIR)/lirc.do_compile: $(DEPDIR)/lirc.do_prepare
 	cd @DIR_lirc@ && \
 		$(BUILDENV) \
 		ac_cv_path_LIBUSB_CONFIG= \
-		CFLAGS="$(TARGET_CFLAGS) -Os" \
+		CFLAGS="$(TARGET_CFLAGS) -Os -D__KERNEL_STRICT_NAMES" \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
@@ -147,7 +147,11 @@ $(DEPDIR)/lirc.do_compile: $(DEPDIR)/lirc.do_prepare
 			--mandir=\$${prefix}/share/man \
 			--with-kerneldir=$(buildprefix)/$(KERNEL_DIR) \
 			--without-x \
+			--with-devdir=/dev \
+			--with-moduledir=/lib/modules \
+			--with-major=61 \
 			--with-driver=userspace \
+			--enable-debug \
 			--with-syslog=LOG_DAEMON \
 			--enable-sandboxed && \
 		$(MAKE) all
@@ -691,6 +695,10 @@ $(DEPDIR)/directfb.do_compile: bootstrap freetype directfb.do_prepare
 			--disable-devmem \
 			--disable-multi \
 			--with-gfxdrivers=stgfx \
+			--with-inputdrivers=linuxinput \
+			--without-software \
+			--enable-stmfbdev \
+			--disable-fbdev \
 			--enable-mme=yes && \
 			export top_builddir=`pwd` && \
 		$(MAKE) LD=$(target)-ld
@@ -1224,7 +1232,7 @@ $(flashprefix)/root-enigma2/usr/lib/python2.6/site-packages/OpenSSL: \
 #
 # ffmpeg
 #
-$(DEPDIR)/ffmpeg.do_prepare: bootstrap libass @DEPENDS_ffmpeg@
+$(DEPDIR)/ffmpeg.do_prepare: bootstrap libass rtmpdump @DEPENDS_ffmpeg@
 	@PREPARE_ffmpeg@
 	cd @DIR_ffmpeg@ && \
 	patch -p1 < ../Patches/ffmpeg.patch;
@@ -1250,7 +1258,7 @@ $(DEPDIR)/ffmpeg.do_prepare: bootstrap libass @DEPENDS_ffmpeg@
 #		--prefix=/usr
 #	touch $@
 
-$(DEPDIR)/ffmpeg.do_compile: bootstrap libass $(DEPDIR)/ffmpeg.do_prepare
+$(DEPDIR)/ffmpeg.do_compile: bootstrap libass rtmpdump $(DEPDIR)/ffmpeg.do_prepare
 	cd @DIR_ffmpeg@ && \
 	$(BUILDENV) \
 	./configure \
@@ -1317,6 +1325,8 @@ $(DEPDIR)/ffmpeg.do_compile: bootstrap libass $(DEPDIR)/ffmpeg.do_prepare
 		--enable-decoder=iff_byterun1 \
 		--enable-pthreads \
 		--enable-bzlib \
+		--enable-librtmp \
+		--pkg-config=pkg-config \
 		--cross-prefix=$(target)- \
 		--target-os=linux \
 		--arch=sh4 \
@@ -1685,7 +1695,9 @@ $(DEPDIR)/gstreamer.do_compile: $(DEPDIR)/gstreamer.do_prepare
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
-		--prefix=/usr
+		--prefix=/usr \
+		--disable-docs-build --disable-dependency-tracking --with-check=no \
+		ac_cv_func_register_printf_function=no
 	touch $@
 
 $(DEPDIR)/min-gstreamer $(DEPDIR)/std-gstreamer $(DEPDIR)/max-gstreamer \
@@ -1708,7 +1720,7 @@ $(DEPDIR)/gst_plugins_base.do_compile: $(DEPDIR)/gst_plugins_base.do_prepare
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
-		--disable-theora --disable-pango --disable-vorbis
+		--disable-theora --disable-pango --disable-vorbis --disable-x  --with-audioresample-format=int --with-check=no
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_base $(DEPDIR)/std-gst_plugins_base $(DEPDIR)/max-gst_plugins_base \
@@ -1732,7 +1744,7 @@ $(DEPDIR)/gst_plugins_good.do_compile: $(DEPDIR)/gst_plugins_good.do_prepare
 		--host=$(target) \
 		--prefix=/usr \
 		--disable-esd --disable-esdtest \
-		--disable-shout2 --disable-shout2test
+		--disable-shout2 --disable-shout2test --disable-x --with-check=no
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_good $(DEPDIR)/std-gst_plugins_good $(DEPDIR)/max-gst_plugins_good \
@@ -1754,7 +1766,8 @@ $(DEPDIR)/gst_plugins_bad.do_compile: $(DEPDIR)/gst_plugins_bad.do_prepare
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
-		--prefix=/usr
+		--prefix=/usr \
+		 ac_cv_openssldir=no --with-check=no
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_bad $(DEPDIR)/std-gst_plugins_bad $(DEPDIR)/max-gst_plugins_bad \
@@ -1776,7 +1789,7 @@ $(DEPDIR)/gst_plugins_ugly.do_compile: $(DEPDIR)/gst_plugins_ugly.do_prepare
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
-		--prefix=/usr
+		--prefix=/usr --with-check=no
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_ugly $(DEPDIR)/std-gst_plugins_ugly $(DEPDIR)/max-gst_plugins_ugly \
@@ -1833,14 +1846,9 @@ $(DEPDIR)/gst_ffmpeg.do_compile: $(DEPDIR)/gst_ffmpeg.do_prepare
 		--enable-demuxer=ogg \
 		--enable-demuxer=vorbis \
 		--enable-demuxer=flac \
-		\
-		--disable-parsers \
-		--enable-parser=ogg \
-		--enable-parser=vorbis \
-		--enable-parser=flac \
+		--enable-demuxer=mpegts \
 		\
 		--disable-bsfs \
-		--enable-small \
 		--enable-pthreads \
 		--enable-bzlib"
 	touch $@
@@ -1850,6 +1858,28 @@ $(DEPDIR)/gst_ffmpeg: \
 $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 	cd @DIR_gst_ffmpeg@ && \
 		@INSTALL_gst_ffmpeg@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+# GST-PLUGINS-FLUENDO-MPEGDEMUX
+$(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_fluendo_mpegdemux@
+	@PREPARE_gst_plugins_fluendo_mpegdemux@
+	touch $@
+
+$(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_gst_plugins_fluendo_mpegdemux@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr --with-check=no
+	touch $@
+
+$(DEPDIR)/min-gst_plugins_fluendo_mpegdemux $(DEPDIR)/std-gst_plugins_fluendo_mpegdemux $(DEPDIR)/max-gst_plugins_fluendo_mpegdemux \
+$(DEPDIR)/gst_plugins_fluendo_mpegdemux: \
+$(DEPDIR)/%gst_plugins_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile
+	cd @DIR_gst_plugins_fluendo_mpegdemux@ && \
+		@INSTALL_gst_plugins_fluendo_mpegdemux@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
@@ -2064,3 +2094,26 @@ $(DEPDIR)/%libalsa: $(DEPDIR)/libalsa.do_compile
 		@INSTALL_libalsa@
 	@TUXBOX_YAUD_CUSTOMIZE@
 
+#
+# rtmpdump
+#
+$(DEPDIR)/rtmpdump.do_prepare: bootstrap openssl openssl-dev @DEPENDS_rtmpdump@
+	@PREPARE_rtmpdump@
+	touch $@
+
+$(DEPDIR)/rtmpdump.do_compile: $(DEPDIR)/rtmpdump.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_rtmpdump@ && \
+	cp $(hostprefix)/share/libtool/config/ltmain.sh .. && \
+	libtoolize -f -c && \
+	$(BUILDENV) \
+		make CROSS_COMPILE=$(target)-
+	touch $@
+
+$(DEPDIR)/min-rtmpdump $(DEPDIR)/std-rtmpdump $(DEPDIR)/max-rtmpdump \
+$(DEPDIR)/rtmpdump: \
+$(DEPDIR)/%rtmpdump: $(DEPDIR)/rtmpdump.do_compile
+	cd @DIR_rtmpdump@ && \
+		@INSTALL_rtmpdump@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@

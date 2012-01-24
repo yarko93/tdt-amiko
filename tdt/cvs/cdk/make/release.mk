@@ -184,12 +184,13 @@ release_spark:
 	cp $(buildprefix)/root/release/umountfs $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/rc $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/sendsigs $(prefix)/release/etc/init.d/
-	cp $(buildprefix)/root/etc/network/wlanscan.py $(prefix)/release/etc/network/ && \
+	cp $(targetprefix)/etc/init.d/makedev $(prefix)/release/etc/init.d/
 	chmod 755 $(prefix)/release/etc/init.d/umountfs
 	chmod 755 $(prefix)/release/etc/init.d/rc
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release/etc/init.d/halt
 	mkdir -p $(prefix)/release/etc/opkg
+	mkdir -p $(prefix)/release/usr/lib/locale
 	cp $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
 	cp $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
 	mkdir -p $(prefix)/release/etc/rc.d/rc0.d
@@ -212,17 +213,16 @@ release_spark:
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu/8192cu.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt5370sta/rt5370sta.ko $(prefix)/release/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt73/rt73.ko $(prefix)/release/lib/modules/
 if STM24
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/usb/serial/usb_wwan.ko $(prefix)/release/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt2x00/rt73usb.ko $(prefix)/release/lib/modules/rt73.ko
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt2x00/rt2x00lib.ko $(prefix)/release/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt2x00/rt2x00usb.ko $(prefix)/release/lib/modules/
 endif
 	cp $(targetprefix)/boot/video_7111.elf $(prefix)/release/boot/video.elf
 	cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 if STM23
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt73/rt73.ko $(prefix)/release/lib/modules/
-	cp -f $(buildprefix)/root/release/encrypt_spark$(KERNELSTMLABEL)_noptk.ko $(prefix)/release/lib/modules/encrypt.ko
-	[ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cpu_frequ/cpu_frequ.ko ] && cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cpu_frequ/cpu_frequ.ko $(prefix)/release/lib/modules || true
 endif
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
@@ -233,6 +233,7 @@ endif
 	cp -f $(buildprefix)/root/usr/sbin/wpa* $(prefix)/release/usr/sbin
 	cp -f $(buildprefix)/root/firmware/rt73.bin $(prefix)/release/lib/firmware
 	cp -f $(buildprefix)/root/firmware/rt2870.bin $(prefix)/release/lib/firmware
+	mkdir -p $(prefix)/release/var/run/lirc
 
 	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts
 	cp $(targetprefix)/usr/local/share/fonts/* $(prefix)/release/usr/share/fonts
@@ -266,10 +267,15 @@ release_spark7162:
 	rm -f $(prefix)/release/sbin/halt
 	cp $(buildprefix)/root/release/halt_spark $(prefix)/release/etc/init.d/halt
 	chmod 777 $(prefix)/release/etc/init.d/halt
+	mkdir -p $(prefix)/release/etc/opkg
+	mkdir -p $(prefix)/release/usr/lib/locale
+	cp $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
+	cp $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release/sbin/
 	cp $(buildprefix)/root/release/umountfs $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/rc $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/sendsigs $(prefix)/release/etc/init.d/
+	cp $(targetprefix)/etc/init.d/makedev $(prefix)/release/etc/init.d/
 	chmod 755 $(prefix)/release/etc/init.d/umountfs
 	chmod 755 $(prefix)/release/etc/init.d/rc
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
@@ -285,10 +291,13 @@ release_spark7162:
 	ln -s ../init.d/sendsigs $(prefix)/release/etc/rc.d/rc6.d/S20sendsigs
 	ln -s ../init.d/umountfs $(prefix)/release/etc/rc.d/rc6.d/S40umountfs
 	ln -s ../init.d/reboot $(prefix)/release/etc/rc.d/rc6.d/S90reboot
-
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/smartcard/smartcard.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7105.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/aotom/aotom.ko $(prefix)/release/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt3070sta/rt3070sta.ko $(prefix)/release/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu/8192cu.ko $(prefix)/release/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko $(prefix)/release/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt5370sta/rt5370sta.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/boot/video_7105.elf $(prefix)/release/boot/video.elf
 	cp $(targetprefix)/boot/audio_7105.elf $(prefix)/release/boot/audio.elf
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
@@ -299,10 +308,15 @@ release_spark7162:
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
 
 	cp -dp $(buildprefix)/root/etc/lircd_spark7162.conf $(prefix)/release/etc/lircd.conf
+	cp -f $(buildprefix)/root/usr/sbin/iw* $(prefix)/release/usr/sbin
+	cp -f $(buildprefix)/root/usr/sbin/wpa* $(prefix)/release/usr/sbin
+	cp -f $(buildprefix)/root/firmware/rt73.bin $(prefix)/release/lib/firmware
+	cp -f $(buildprefix)/root/firmware/rt2870.bin $(prefix)/release/lib/firmware
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
+	mkdir -p $(prefix)/release/var/run/lirc
 
-	$(INSTALL_DIR) $(prefix)/release/usr/local/share/fonts
-	cp $(targetprefix)/usr/local/share/fonts/* $(prefix)/release/usr/share/fonts/
+	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts
+	cp $(targetprefix)/usr/local/share/fonts/* $(prefix)/release/usr/share/fonts
 
 	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/ftdi_sio.ko $(prefix)/release/lib/modules/ftdi.ko
 	cp $(kernelprefix)/linux-sh4/drivers/usb/serial/pl2303.ko $(prefix)/release/lib/modules
@@ -317,11 +331,14 @@ release_spark7162:
 	echo 'sda1   -fstype=auto,noatime,nodiratime          :/dev/sda1' >> $(prefix)/release/etc/auto.usb
 	echo 'sda2   -fstype=auto,noatime,nodiratime          :/dev/sda2' >> $(prefix)/release/etc/auto.usb
 	echo 'sda3   -fstype=auto,noatime,nodiratime          :/dev/sda3' >> $(prefix)/release/etc/auto.usb
+	echo 'sr0   -fstype=auto,noatime,nodiratime          :/dev/sr0' >> $(prefix)/release/etc/auto.usb
 
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-avl2108.fw
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-stv6306.fw
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-cx24116.fw
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-cx21143.fw
+	mv $(prefix)/release/lib/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw
+	rm $(prefix)/release/lib/firmware/component_7111_mb618.fw
 	rm -f $(prefix)/release/bin/evremote
 	rm -f $(prefix)/release/bin/gotosleep
 	rm -f $(prefix)/release/bin/vdstandby
@@ -610,6 +627,7 @@ release_ufs910:
 
 	cp -dp $(targetprefix)/etc/lircd.conf $(prefix)/release/etc/
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
+	mkdir -p $(prefix)/release/var/run/lirc
 
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-avl2108.fw
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-stv6306.fw
@@ -654,6 +672,7 @@ release_hl101:
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_hl101.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 	cp -dp $(buildprefix)/root/etc/lircd_hl101.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
+	mkdir -p $(prefix)/release/var/run/lirc
 
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-cx24116.fw
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-cx21143.fw
@@ -716,6 +735,7 @@ release_adb_box:
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_adb_box.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 	cp -dp $(buildprefix)/root/etc/lircd_adb_box.conf $(prefix)/release/etc/lircd.conf
 	cp -dp $(buildprefix)/root/usr/bin/lircd_adb $(prefix)/release/usr/bin/lircd
+	mkdir -p $(prefix)/release/var/run/lirc
 	cp -dp $(buildprefix)/root/etc/boxtype $(prefix)/release/etc/boxtype
 
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-cx24116.fw
@@ -753,6 +773,7 @@ if STM23
 endif
 	cp -dp $(targetprefix)/etc/lircd.conf $(prefix)/release/etc/
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
+	mkdir -p $(prefix)/release/var/run/lirc
 
 	$(INSTALL_DIR) $(prefix)/release/usr/local/share/fonts
 	cp $(targetprefix)/usr/local/share/fonts/* $(prefix)/release/usr/local/share/fonts/
@@ -776,6 +797,7 @@ release_hs5101:
 
 	cp -dp $(targetprefix)/etc/lircd.conf $(prefix)/release/etc/
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
+	mkdir -p $(prefix)/release/var/run/lirc
 
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-avl2108.fw
 	rm -f $(prefix)/release/lib/firmware/dvb-fe-stv6306.fw
@@ -812,6 +834,7 @@ release_ipbox9900: release_common_utils
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_ipbox.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 	cp -dp $(buildprefix)/root/etc/lircd_ipbox.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(buildprefix)/root/release/lircd_ipbox $(prefix)/release/usr/bin/lircd
+	mkdir -p $(prefix)/release/var/run/lirc
 	cp -p $(buildprefix)/root/release/tvmode_ipbox $(prefix)/release/usr/bin/tvmode
 
 if STM22
@@ -848,6 +871,7 @@ release_ipbox99: release_common_utils
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_ipbox.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 	cp -dp $(buildprefix)/root/etc/lircd_ipbox.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(buildprefix)/root/release/lircd_ipbox $(prefix)/release/usr/bin/lircd
+	mkdir -p $(prefix)/release/var/run/lirc
 	cp -p $(buildprefix)/root/release/tvmode_ipbox $(prefix)/release/usr/bin/tvmode
 
 if STM22
@@ -884,6 +908,7 @@ release_ipbox55: release_common_utils
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_ipbox.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 	cp -dp $(buildprefix)/root/etc/lircd_ipbox.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(buildprefix)/root/release/lircd_ipbox $(prefix)/release/usr/bin/lircd
+	mkdir -p $(prefix)/release/var/run/lirc
 	cp -p $(buildprefix)/root/release/tvmode_ipbox55 $(prefix)/release/usr/bin/tvmode
 
 if STM22
@@ -955,11 +980,12 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/lib/modules && \
 	$(INSTALL_DIR) $(prefix)/release/ram && \
 	$(INSTALL_DIR) $(prefix)/release/var && \
-	$(INSTALL_DIR) $(prefix)/release/var/etc && \
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/opkg && \
 	export CROSS_COMPILE=$(target)- && \
 		$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/release && \
-	touch $(prefix)/release/var/etc/.firstboot && \
+	ln -s /etc $(prefix)/release/var/etc
+	ln -s /usr $(prefix)/release/var/usr
+	touch $(prefix)/release/etc/.firstboot && \
 	cp -a $(targetprefix)/bin/* $(prefix)/release/bin/ && \
 	ln -s /bin/showiframe $(prefix)/release/usr/bin/showiframe && \
 	cp -dp $(targetprefix)/bin/hotplug $(prefix)/release/sbin/ && \
@@ -987,7 +1013,7 @@ release_base:
 	cp -dp $(targetprefix)/sbin/tune2fs $(prefix)/release/sbin/ && \
 	cp -dp $(targetprefix)/etc/init.d/portmap $(prefix)/release/etc/init.d/ && \
 	cp -dp $(buildprefix)/root/etc/init.d/udhcpc $(prefix)/release/etc/init.d/ && \
-	cp -dp $(targetprefix)/sbin/MAKEDEV$(if $(TF7700),_dual_tuner)$(if $(FORTIS_HDBOX),_dual_tuner)$(if $(ATEVIO7500),_dual_tuner)$(if $(VIP2_V1),_dual_tuner)$(if $(CUBEREVO),_dual_tuner)$(if $(CUBEREVO_9500HD),_dual_tuner)$(if $(UFS922),_dual_tuner)$(if $(CUBEREVO_MINI_FTA),_no_CI)$(if $(CUBEREVO_250HD),_no_CI)$(if $(CUBEREVO_2000HD),_no_CI)$(if $(IPBOX9900),_dual_tuner)$(if $(IPBOX99),_no_CI)$(if $(IPBOX55),_no_CI)$(if $(ADB_BOX),_adb_box) $(prefix)/release/sbin/MAKEDEV && \
+	cp -dp $(targetprefix)/sbin/MAKEDEV$(if $(TF7700),_dual_tuner)$(if $(FORTIS_HDBOX),_dual_tuner)$(if $(ATEVIO7500),_dual_tuner)$(if $(VIP2_V1),_dual_tuner)$(if $(CUBEREVO),_dual_tuner)$(if $(CUBEREVO_9500HD),_dual_tuner)$(if $(UFS922),_dual_tuner)$(if $(CUBEREVO_MINI_FTA),_no_CI)$(if $(CUBEREVO_250HD),_no_CI)$(if $(CUBEREVO_2000HD),_no_CI)$(if $(IPBOX9900),_dual_tuner)$(if $(IPBOX99),_no_CI)$(if $(IPBOX55),_no_CI)$(if $(ADB_BOX),_adb_box)$(if $(SPARK),_no_CI)$(if $(SPARK7162),_twin_no_ci) $(prefix)/release/sbin/MAKEDEV && \
 	cp -dp $(targetprefix)/usr/bin/grep $(prefix)/release/bin/ && \
 	cp -dp $(targetprefix)/usr/bin/egrep $(prefix)/release/bin/ && \
 	cp $(targetprefix)/boot/audio.elf $(prefix)/release/boot/audio.elf && \
@@ -1035,6 +1061,7 @@ release_base:
 	cp $(buildprefix)/root/release/bootclean.sh $(prefix)/release/etc/init.d/ && \
 	cp $(buildprefix)/root/release/networking $(prefix)/release/etc/init.d/ && \
 	cp $(buildprefix)/root/bootscreen/bootlogo.mvi $(prefix)/release/boot/ && \
+	cp $(buildprefix)/root/bin/autologin $(prefix)/release/bin/ && \
 	cp $(buildprefix)/root/bin/vdstandby $(prefix)/release/bin/ && \
 	cp -rd $(targetprefix)/lib/* $(prefix)/release/lib/ && \
 	rm -f $(prefix)/release/lib/*.a && \
@@ -1344,12 +1371,15 @@ endif
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/FrontprocessorUpgrade
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/NFIFlash
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/Extensions/FileManager
+	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/Extensions/DVDBurn
+	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/TempFanControl
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/DefaultServicesScanner
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/DiseqcTester
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/SoftwareManager
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/CommonInterfaceAssignment
+	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/CrashlogAutoSubmit
 
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/python2.6
 	cp -a $(targetprefix)/usr/lib/python2.6/* $(prefix)/release/usr/lib/python2.6/
@@ -1446,6 +1476,8 @@ endif
 	if [ -d $(prefix)/release/usr/lib/gstreamer-0.10 ]; then \
 		rm -rf $(prefix)/release/usr/lib/libgstfft*; \
 		rm -rf $(prefix)/release/usr/lib/gstreamer-0.10/*; \
+		cp -a $(targetprefix)/usr/bin/gst-launch* $(prefix)/release/usr/bin/; \
+		sh4-linux-strip --strip-unneeded $(prefix)/release/usr/bin/gst-launch*; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstalsa.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstapp.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstasf.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
@@ -1465,8 +1497,10 @@ endif
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstdvdsub.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstflac.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstflv.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
+		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstfragmented.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgsticydemux.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstid3demux.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
+		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstisomp4.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstmad.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstmatroska.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstmpegaudioparse.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
@@ -1492,7 +1526,9 @@ endif
 
 #DFB Stuff
 	if [ -d $(prefix)/release/usr/lib/directfb-1.4-5 ]; then \
-		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/gfxdrivers; \
+		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/gfxdrivers/*.a; \
+		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/gfxdrivers/*.la; \
+		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/gfxdrivers/*.o; \
 		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/inputdrivers/*; \
 		cp -a $(targetprefix)/usr/lib/directfb-1.4-5/inputdrivers/libdirectfb_ps2mouse.so $(prefix)/release/usr/lib/directfb-1.4-5/inputdrivers/; \
 		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/systems/*.a; \
