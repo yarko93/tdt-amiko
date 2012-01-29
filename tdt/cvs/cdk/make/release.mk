@@ -184,7 +184,6 @@ release_spark:
 	cp $(buildprefix)/root/release/umountfs $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/rc $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/sendsigs $(prefix)/release/etc/init.d/
-	cp $(targetprefix)/etc/init.d/makedev $(prefix)/release/etc/init.d/
 	chmod 755 $(prefix)/release/etc/init.d/umountfs
 	chmod 755 $(prefix)/release/etc/init.d/rc
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
@@ -275,7 +274,6 @@ release_spark7162:
 	cp $(buildprefix)/root/release/umountfs $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/rc $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/sendsigs $(prefix)/release/etc/init.d/
-	cp $(targetprefix)/etc/init.d/makedev $(prefix)/release/etc/init.d/
 	chmod 755 $(prefix)/release/etc/init.d/umountfs
 	chmod 755 $(prefix)/release/etc/init.d/rc
 	chmod 755 $(prefix)/release/etc/init.d/sendsigs
