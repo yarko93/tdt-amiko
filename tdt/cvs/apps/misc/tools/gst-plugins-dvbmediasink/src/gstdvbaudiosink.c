@@ -178,6 +178,8 @@ GST_STATIC_PAD_TEMPLATE ( \
 		"framed = (boolean) true; " \
 		"audio/x-ac3, " \
 		"framed = (boolean) true; " \
+		"audio/x-eac3, " \
+		"framed = (boolean) true; " \
 		"audio/x-private1-ac3, " \
 		"framed = (boolean) true; " \
 		"audio/x-dts, " \
@@ -192,11 +194,37 @@ GST_STATIC_PAD_TEMPLATE ( \
 		"framed = (boolean) true") \
 )
 
+#define SINK_FACTORY_STM_BASE_EXTENDED \
+GST_STATIC_PAD_TEMPLATE ( \
+	"sink", \
+	GST_PAD_SINK, \
+	GST_PAD_ALWAYS, \
+	GST_STATIC_CAPS ("audio/mpeg, " \
+		"framed = (boolean) true; " \
+		"audio/x-ac3, " \
+		"framed = (boolean) true; " \
+		"audio/x-eac3, " \
+		"framed = (boolean) true; " \
+		"audio/x-private1-ac3, " \
+		"framed = (boolean) true; " \
+		"audio/x-dts, " \
+		"framed = (boolean) true; " \
+		"audio/x-private1-dts, " \
+		"framed = (boolean) true; " \
+		"audio/x-raw-int; " \
+		"audio/x-private1-lpcm, " \
+		"framed = (boolean) true; " \
+		"audio/x-wma, " \
+		"framed = (boolean) true; " \
+		"audio/x-ms-wma, " \
+		"framed = (boolean) true") \
+)
+
 //TODO: Check if there are differences between the capabilities
 // FIRST GENERATION
-static GstStaticPadTemplate sink_factory_stm_stx7100 = SINK_FACTORY_STM_BASE;
-static GstStaticPadTemplate sink_factory_stm_stx7101 = SINK_FACTORY_STM_BASE;
-static GstStaticPadTemplate sink_factory_stm_stx7109 = SINK_FACTORY_STM_BASE;
+static GstStaticPadTemplate sink_factory_stm_stx7100 = SINK_FACTORY_STM_BASE_EXTENDED;
+static GstStaticPadTemplate sink_factory_stm_stx7101 = SINK_FACTORY_STM_BASE_EXTENDED;
+static GstStaticPadTemplate sink_factory_stm_stx7109 = SINK_FACTORY_STM_BASE_EXTENDED;
 
 // SECOND GENERATION
 static GstStaticPadTemplate sink_factory_stm_stx7105 = SINK_FACTORY_STM_BASE;
@@ -242,6 +270,8 @@ static platform_type_t pftype = PF_UNKNOWN;
 #define BYPASS_AC3      0x00
 #define BYPASS_MPEG1    0x01
 #define BYPASS_DTS      0x02
+#define BYPASS_PCMB     0x04
+#define BYPASS_PCML     0x05
 #define BYPASS_LPCM     0x06
 #define BYPASS_MPEG1_L3 0x0A
 #define BYPASS_AAC      0x0B
@@ -262,6 +292,8 @@ unsigned int bypass_to_encoding (unsigned int bypass)
 		return AUDIO_ENCODING_MPEG1;
 	case BYPASS_DTS:
 		return AUDIO_ENCODING_DTS;
+	case BYPASS_PCMB:
+	case BYPASS_PCML:
 	case BYPASS_LPCM:
 		return AUDIO_ENCODING_LPCMA;
 	case BYPASS_MPEG1_L3:
@@ -487,6 +519,12 @@ gst_dvbaudiosink_init (GstDVBAudioSink *klass, GstDVBAudioSinkClass * gclass)
 	klass->aac_adts_header_valid = FALSE;
 
 	klass->initial_header        = TRUE;
+
+	klass->runtime_header_data_size = 0;
+	klass->pcm_bits_per_sample      = 0;
+	klass->pcm_sub_frame_len        = 0;
+	klass->pcm_sub_frame_per_pes    = 0;
+	klass->pcm_break_buffer_size    = 0;
 
 	klass->no_write              = 0;
 	klass->queue                 = NULL;
@@ -746,7 +784,7 @@ gst_dvbaudiosink_set_caps (GstBaseSink * basesink, GstCaps * caps)
 				break;
 		}
 	}
-	else if (!strcmp(type, "audio/x-ac3")) {
+	else if (!strcmp(type, "audio/x-ac3") || !strcmp(type, "audio/x-eac3")) {
 		GST_INFO_OBJECT (self, "MIMETYPE %s",type);
 		bypass = BYPASS_AC3;
 	}
@@ -763,6 +801,96 @@ gst_dvbaudiosink_set_caps (GstBaseSink * basesink, GstCaps * caps)
 	else if (!strcmp(type, "audio/x-private1-lpcm")) {
 		GST_INFO_OBJECT (self, "MIMETYPE %s (DVD Audio)",type);
 		bypass = BYPASS_LPCM;
+	}
+	else if (!strcmp(type, "audio/x-raw-int")) {
+		printf("X-RAW-INT ->\n");
+		GST_INFO_OBJECT (self, "MIMETYPE %s", type);
+		gint endianess = G_BIG_ENDIAN;
+		gst_structure_get_int (structure, "endianness", &endianess);
+
+		gint number_of_channels;
+		gst_structure_get_int (structure, "channels", &number_of_channels);
+
+		gint samples_per_second;
+		gst_structure_get_int (structure, "rate", &samples_per_second);
+
+		gst_structure_get_int (structure, "depth", &self->pcm_bits_per_sample);
+
+		const unsigned char clpcm_prv[14] = {
+			0xA0,   //sub_stream_id
+			0, 0,   //resvd and UPC_EAN_ISRC stuff, unused
+			0x0A,   //private header length
+			0, 9,   //first_access_unit_pointer
+			0x00,   //emph,rsvd,stereo,downmix
+			0x0F,   //quantisation word length 1,2
+			0x0F,   //audio sampling freqency 1,2
+			0,      //resvd, multi channel type
+			0,      //bit shift on channel GR2, assignment
+			0x80,   //dynamic range control
+			0, 0    //resvd for copyright management
+		};
+
+		self->runtime_header_data_size = sizeof(clpcm_prv);
+		self->runtime_header_data = 
+			(guint8*) malloc(sizeof(guint8) * self->runtime_header_data_size);
+
+		memcpy(self->runtime_header_data, clpcm_prv, self->runtime_header_data_size);
+
+		//figure out size of subframe
+		//and set up sample rate
+		switch(samples_per_second) {
+			case 48000:             self->pcm_sub_frame_len = 40;
+					                break;
+			case 96000:             self->runtime_header_data[8] |= 0x10;
+					                self->pcm_sub_frame_len = 80;
+					                break;
+			case 192000:            self->runtime_header_data[8] |= 0x20;
+					                self->pcm_sub_frame_len = 160;
+					                break;
+			case 44100:             self->runtime_header_data[8] |= 0x80;
+					                self->pcm_sub_frame_len = 40;
+					                break;
+			case 88200:             self->runtime_header_data[8] |= 0x90;
+					                self->pcm_sub_frame_len = 80;
+					                break;
+			case 176400:            self->runtime_header_data[8] |= 0xA0;
+					                self->pcm_sub_frame_len = 160;
+					                break;
+			default:                break;
+		}
+
+		self->pcm_sub_frame_len *= number_of_channels;
+		self->pcm_sub_frame_len *= (self->pcm_bits_per_sample / 8);
+
+		//rewrite PES size to have as many complete subframes per PES as we can
+		self->pcm_sub_frame_per_pes = ((2048-18/*sizeof(lpcm_pes)*/)-14/*sizeof(lpcm_prv)*/)/self->pcm_sub_frame_len;
+		self->pcm_sub_frame_len *= self->pcm_sub_frame_per_pes;
+
+		//set number of channels
+		self->runtime_header_data[10]  = number_of_channels - 1;
+
+		printf("X-RAW-INT - BITS %d\n", self->pcm_bits_per_sample);
+
+		switch(self->pcm_bits_per_sample) {
+			case    16:      break;
+			case    24:     self->runtime_header_data[7] |= 0x20;
+					        break;
+			default:        printf("inappropriate bits per sample (%d) - must be 16 or 24\n", self->pcm_bits_per_sample);
+					        break;
+		}
+
+		if (endianess == G_BIG_ENDIAN) {
+			printf("X-RAW-INT - BIG_ENDIAN\n");
+			bypass = BYPASS_PCMB;
+		}
+		else if (endianess == G_LITTLE_ENDIAN) {
+			printf("X-RAW-INT - LITTLE_ENDIAN\n");
+			bypass = BYPASS_PCML;
+		}
+		else 
+			return FALSE;
+
+		printf("X-RAW-INT <-\n");
 	}
 	else if (!strcmp(type, "audio/x-dts")) {
 		GST_INFO_OBJECT (self, "MIMETYPE %s",type);
@@ -871,6 +999,10 @@ gst_dvbaudiosink_set_caps (GstBaseSink * basesink, GstCaps * caps)
 		self->initial_header_private_data_valid = TRUE;
 		bypass = BYPASS_WMA;
 	}
+	else if (!strcmp(type, "audio/x-flac")) {
+		GST_INFO_OBJECT (self, "MIMETYPE %s",type);
+		bypass = BYPASS_FLAC;
+	}
 	else {
 		GST_ELEMENT_ERROR (self, STREAM, TYPE_NOT_FOUND, (NULL), ("unimplemented stream type %s", type));
 		return FALSE;
@@ -898,6 +1030,8 @@ gst_dvbaudiosink_set_caps (GstBaseSink * basesink, GstCaps * caps)
 		}
 	}
 	self->bypass = bypass;
+	
+	printf("[A] SET_CAPS <- TRUE\n");
 	return TRUE;
 }
 
@@ -1081,11 +1215,15 @@ loop_start:
 		}
 		else
 			GST_LOG_OBJECT (self, "going into poll, have %d bytes to write", len - written);
+#if CHECK_DRAIN
 		if (poll(pfd, 2, -1) == -1) {
 			if (errno == EINTR)
 				continue;
 			return -1;
 		}
+#else
+		pfd[1].revents = POLLOUT;
+#endif
 		if (pfd[0].revents & POLLIN) {
 			/* read all stop commands */
 			while (TRUE) {
@@ -1148,17 +1286,70 @@ loop_start:
 	return 0;
 }
 
+static inline void Hexdump(unsigned char *Data, int length)
+{
 
-static size_t
-buildPesHeader(unsigned char *data, int size, unsigned long long int timestamp, unsigned char stream_id)
+    int k;
+    for (k = 0; k < length; k++)
+    {
+        printf("%02x ", Data[k]);
+        if (((k+1)&31)==0)
+            printf("\n");
+    }
+    printf("\n");
+
+}
+
+#define WRITE_COMPLETE_PACKAGE
+
+static inline size_t
+buildPesHeader(unsigned char *data, int size, unsigned long long int timestamp, unsigned char stream_id, gboolean late_initial_header, unsigned int pcm_sub_frame_len)
 {
 	unsigned char *pes_header = data;
 	size_t pes_header_size;
-	
+
 	pes_header[0] = 0x00;
 	pes_header[1] = 0x00;
 	pes_header[2] = 0x01;
 	pes_header[3] = stream_id;
+
+	if (stream_id == 0xBD && pcm_sub_frame_len > 0) { //PCM
+		//pes_header[4] = 0x07; //pes length
+		//pes_header[5] = 0xF1; //pes length
+		pes_header[4] =  ((pcm_sub_frame_len+26)>>8) & 0xFF; // ((pcm_sub_frame_len+(18/*sizeof(lpcm_pes)*/-6)+14/*sizeof(lpcm_prv)*/)>>8) & 0xFF;
+		pes_header[5] =   (pcm_sub_frame_len+26)    & 0xFF; // (pcm_sub_frame_len+(18/*sizeof(lpcm_pes)*/-6)+14/*sizeof(lpcm_prv)*/)     & 0xFF;
+		
+		pes_header[6] = 0x81; //fixed
+		
+		//printf("[A] LATE_INITIAL_HEADER = %d\n", late_initial_header);
+		
+		pes_header[7] = 0x01;
+		pes_header[8] = 0x09; //fixed
+		
+		pes_header[9] = 0x21; //PTS marker bits
+		pes_header[10] = 0x00; //PTS marker bits
+		pes_header[11] = 0x01; //PTS marker bits
+		pes_header[12] = 0x00; //PTS marker bits
+		pes_header[13] = 0x01; //PTS marker bits
+		
+		pes_header[14] = 0xFF; //first pes only, 0xFF after
+		pes_header[15] = 0xFF; //first pes only, 0xFF after
+		pes_header[16] = 0xFF; //first pes only, 0xFF after
+		
+		if (late_initial_header) {
+			pes_header[7] = 0x81; //fixed
+			
+			pes_header[14] = 0x1E; //first pes only, 0xFF after
+			pes_header[15] = 0x60; //first pes only, 0xFF after
+			pes_header[16] = 0x0A; //first pes only, 0xFF after
+		}
+		
+		pes_header[17] = 0xFF;
+		
+		pes_header_size = 18;
+		
+		return pes_header_size;
+	}
 
 	pes_header[7] = 0x00;
 	pes_header[8] = 0x00;
@@ -1205,18 +1396,23 @@ buildPesHeader(unsigned char *data, int size, unsigned long long int timestamp, 
 
 #define MPEG_AUDIO_PES_START_CODE           0xc0
 #define PRIVATE_STREAM_1_PES_START_CODE         0xbd
+#define MAX_PES_PACKET_SIZE                     65400
+
+//#define DEBUG_EXT
 
 static GstFlowReturn
 gst_dvbaudiosink_render (GstBaseSink * sink, GstBuffer * buffer)
 {
-	unsigned char    pes_header[PES_MAX_HEADER_SIZE];
 	GstDVBAudioSink *self      = GST_DVBAUDIOSINK (sink);
-	unsigned int     size      = GST_BUFFER_SIZE (buffer) - self->skip;
+	unsigned int     data_len  = GST_BUFFER_SIZE (buffer) - self->skip;
 	unsigned char   *data      = GST_BUFFER_DATA (buffer) + self->skip;
 	long long        timestamp = GST_BUFFER_TIMESTAMP(buffer);
 	long long        duration  = GST_BUFFER_DURATION(buffer);
+	gboolean         late_initial_header = FALSE;
 
-	size_t pes_header_size;
+#ifdef DEBUG_EXT
+	printf("gst_dvbvideosink_render 0\n");
+#endif
 
 	if (self->bypass == BYPASS_UNKNOWN) {
 		GST_ELEMENT_ERROR (self, STREAM, FORMAT, (NULL), ("hardware decoder not setup (no caps in pipeline?)"));
@@ -1240,18 +1436,40 @@ gst_dvbaudiosink_render (GstBaseSink * sink, GstBuffer * buffer)
 	if (self->bypass == BYPASS_AC3) {
 		start_code = PRIVATE_STREAM_1_PES_START_CODE;
 	}
+	else if (self->bypass == BYPASS_PCML || self->bypass == BYPASS_PCMB) {
+		start_code = PRIVATE_STREAM_1_PES_START_CODE;
+	}
 
+#ifdef DEBUG_EXT
+	printf("gst_dvbvideosink_render 1\n");
+#endif
 
 	if (self->initial_header)
 	{
-		if (self->bypass == BYPASS_WMA && self->initial_header_private_data_valid == TRUE)
+		if (self->bypass == BYPASS_PCML || self->bypass == BYPASS_PCMB)
+		{
+			late_initial_header = TRUE;
+		}
+		else if (self->bypass == BYPASS_WMA && self->initial_header_private_data_valid == TRUE)
 		{
 			unsigned char pes_header_initial[PES_MAX_HEADER_SIZE];
 			size_t pes_header_size_initial;
 			
-			pes_header_size_initial = buildPesHeader(pes_header_initial, self->initial_header_private_data_size, 0, 0);
+			pes_header_size_initial = buildPesHeader(pes_header_initial, self->initial_header_private_data_size, 0, 0, FALSE/*late_initial_header*/, 0/*pcm_sub_frame_len*/);
+
+#ifdef WRITE_COMPLETE_PACKAGE
+			//printf("--> %d bytes\n", pes_header_size_initial + self->initial_header_private_data_size);
+			int write_buffer_size = pes_header_size_initial + self->initial_header_private_data_size;
+			unsigned char *write_buffer = 
+				(unsigned char*) malloc(sizeof(unsigned char) * (write_buffer_size));
+			memcpy(write_buffer, pes_header_initial, pes_header_size_initial);
+			memcpy(write_buffer + pes_header_size_initial, self->initial_header_private_data, self->initial_header_private_data_size);
+			ASYNC_WRITE(write_buffer, write_buffer_size);
+			free(write_buffer);
+#else
 			ASYNC_WRITE(pes_header_initial, pes_header_size_initial);
 			ASYNC_WRITE(self->initial_header_private_data, self->initial_header_private_data_size);
+#endif
 			
 			free(self->initial_header_private_data);
 			self->initial_header_private_data_valid = FALSE;
@@ -1259,20 +1477,25 @@ gst_dvbaudiosink_render (GstBaseSink * sink, GstBuffer * buffer)
 		self->initial_header = FALSE;
 	}
 
+#ifdef DEBUG_EXT
+	printf("gst_dvbvideosink_render - initial header written\n");
+	printf("gst_dvbvideosink_render - write pes packages\n");
+#endif
+
 	/* LPCM workaround.. we also need the first two byte of the lpcm header.. (substreamid and num of frames) 
 	   i dont know why the mpegpsdemux strips out this two bytes... */
 	if (self->bypass == BYPASS_LPCM && (data[0] < 0xA0 || data[0] > 0xAF)) {
 		if (data[-2] >= 0xA0 && data[-2] <= 0xAF) {
 			data -= 2;
-			size += 2;
+			data_len += 2;
 		}
 	}
 
 	if (self->bypass == BYPASS_DTS) {  // dts
 		int pos=0;
-		while((pos+3) < size) {
+		while((pos+3) < data_len) {
 			if (!strcmp((char*)(data+pos), "\x64\x58\x20\x25")) {  // is DTS-HD ?
-				size = pos;
+				data_len = pos;
 				break;
 			}
 			++pos;
@@ -1280,7 +1503,7 @@ gst_dvbaudiosink_render (GstBaseSink * sink, GstBuffer * buffer)
 	}
 
 	if (self->aac_adts_header_valid)
-		size += 7;
+		data_len += 7;
 
 #if 0
 	printf("->Timestamp: %lld\n", timestamp);
@@ -1291,28 +1514,192 @@ gst_dvbaudiosink_render (GstBaseSink * sink, GstBuffer * buffer)
 	if (self->bypass == BYPASS_WMA) 
 		timestamp = 0;
 
-	pes_header_size = buildPesHeader(pes_header, size, timestamp, start_code);
+	unsigned char pes_header[PES_MAX_HEADER_SIZE];
+	//memset (pes_header, '0', PES_MAX_HEADER_SIZE);
+	int pes_header_size = 0;
 
-	if (self->aac_adts_header_valid) {
-		self->aac_adts_header[3] &= 0xC0;
-		/* frame size over last 2 bits */
-		self->aac_adts_header[3] |= (size & 0x1800) >> 11;
-		/* frame size continued over full byte */
-		self->aac_adts_header[4] = (size & 0x1FF8) >> 3;
-		/* frame size continued first 3 bits */
-		self->aac_adts_header[5] = (size & 7) << 5;
-		/* buffer fullness (0x7FF for VBR) over 5 last bits */
-		self->aac_adts_header[5] |= 0x1F;
-		/* buffer fullness (0x7FF for VBR) continued over 6 first bits + 2 zeros for
-		 * number of raw data blocks */
-		self->aac_adts_header[6] = 0xFC;
-		memcpy(pes_header + pes_header_size, self->aac_adts_header, 7);
-		pes_header_size += 7;
-		size -= 7;
+	unsigned int data_position = 0;
+	//int i = 0;
+	//printf("L ->\n");
+	while (data_position < data_len) {
+	//printf("L\n");
+#define SPLIT_TO_BIG_PACKETS
+#ifdef SPLIT_TO_BIG_PACKETS
+		unsigned int pes_packet_size = (data_len - data_position) <= MAX_PES_PACKET_SIZE ?
+										(data_len - data_position) : MAX_PES_PACKET_SIZE;
+#else
+		unsigned int pes_packet_size = (data_len - data_position);
+#endif
+
+		// For PCM the max package size is not the pes size but the subframelen
+		if (self->bypass == BYPASS_PCML || self->bypass == BYPASS_PCMB) {
+			if (self->pcm_break_buffer_size > 0)
+			{ // The breakbuffer is full, this means we have to attach the buffer in front of the normale data block
+				// Create a new buffer, not we have to free this on our own
+				// To detect if we have to free it, lets do not reset the pcm_break_buffer_Size
+				//  here, but after writing the bytes
+#if USE_DATA_TMP
+				unsigned char   *tmp_data = (unsigned char*) malloc(self->pcm_sub_frame_len * sizeof(unsigned char));
+				memcpy(tmp_data, self->pcm_break_buffer, self->pcm_break_buffer_size);
+				memcpy(tmp_data + self->pcm_break_buffer_size, data, self->pcm_sub_frame_len - self->pcm_break_buffer_size);
+				data = tmp_data; // TODO: actually we could reuse the breakbuffer for this, will spare us malloc and free calls
+#else
+				memcpy(self->pcm_break_buffer + self->pcm_break_buffer_size, data, self->pcm_sub_frame_len - self->pcm_break_buffer_size);
+				data = self->pcm_break_buffer;
+#endif
+				pes_packet_size = self->pcm_sub_frame_len;
+			}
+			
+			if (pes_packet_size < self->pcm_sub_frame_len)
+			{ //If we dont have enough frames left than save them to the breakbuffer
+				self->pcm_break_buffer_size = pes_packet_size;
+				memcpy(self->pcm_break_buffer, data + data_position, self->pcm_break_buffer_size);
+#ifdef DEBUG_EXT
+				printf("PCM %s - Unplayed=%d\n", __FUNCTION__, pes_packet_size);
+#endif
+				break;
+			}
+			else
+			{ // We have enough data so set the package size to subframelen
+				pes_packet_size = self->pcm_sub_frame_len;
+			}
+		}
+
+		//unsigned char pes_header[PES_MAX_HEADER_SIZE];
+		//memset (pes_header, '0', PES_MAX_HEADER_SIZE);
+		//int pes_header_size = 0;
+
+#ifdef DEBUG_EXT
+		printf("gst_dvbvideosink_render - build PESHeader\n");
+#endif
+		pes_header_size = buildPesHeader(pes_header, pes_packet_size, 
+			timestamp, start_code, late_initial_header, self->pcm_sub_frame_len);
+
+		if (self->aac_adts_header_valid) {
+			self->aac_adts_header[3] &= 0xC0;
+			/* frame size over last 2 bits */
+			self->aac_adts_header[3] |= (pes_packet_size & 0x1800) >> 11;
+			/* frame size continued over full byte */
+			self->aac_adts_header[4] = (pes_packet_size & 0x1FF8) >> 3;
+			/* frame size continued first 3 bits */
+			self->aac_adts_header[5] = (pes_packet_size & 7) << 5;
+			/* buffer fullness (0x7FF for VBR) over 5 last bits */
+			self->aac_adts_header[5] |= 0x1F;
+			/* buffer fullness (0x7FF for VBR) continued over 6 first bits + 2 zeros for
+			 * number of raw data blocks */
+			self->aac_adts_header[6] = 0xFC;
+			memcpy(pes_header + pes_header_size, self->aac_adts_header, 7);
+			pes_header_size += 7;
+			pes_packet_size -= 7;
+		}
+
+#if 0
+			printf("--> BEFORE %d\n", pes_header_size + self->runtime_header_data_size + pes_packet_size);
+			Hexdump(pes_header, pes_header_size);
+			if (self->runtime_header_data_size > 0)
+				Hexdump(self->runtime_header_data, self->runtime_header_data_size);
+			Hexdump(data + data_position, /*128*/ pes_packet_size);
+			printf("<--\n");
+#endif
+
+		if (self->bypass == BYPASS_PCML) {
+			if (self->pcm_bits_per_sample == 16) {
+				int i;
+				for(i=0; i<pes_packet_size; i+=2) {
+					int n = data_position + i;
+					unsigned char tmp;
+					tmp=data[n];
+					data[n]=data[n+1];
+					data[n+1]=tmp;
+				}
+			} else {
+				int i;
+				//A1cA1bA1a-B1cB1bB1a-A2cA2bA2a-B2cB2bB2a to A1aA1bB1aB1b.A2aA2bB2aB2b-A1cB1cA2cB2c
+				for(i=0; i<pes_packet_size; i+=12) {
+					int n = data_position + i;
+					unsigned char tmp[12];
+					tmp[ 0]=data[n+2];
+					tmp[ 1]=data[n+1];
+					tmp[ 8]=data[n+0];
+					tmp[ 2]=data[n+5];
+					tmp[ 3]=data[n+4];
+					tmp[ 9]=data[n+3];
+					tmp[ 4]=data[n+8];
+					tmp[ 5]=data[n+7];
+					tmp[10]=data[n+6];
+					tmp[ 7]=data[n+11];
+					tmp[ 8]=data[n+10];
+					tmp[11]=data[n+9];
+					memcpy(&data[n],tmp,12);
+				}
+			}
+		}
+
+#if 0
+			printf("--> %d\n", pes_header_size + self->runtime_header_data_size + pes_packet_size);
+			Hexdump(pes_header, pes_header_size);
+			if (self->runtime_header_data_size > 0)
+				Hexdump(self->runtime_header_data, self->runtime_header_data_size);
+			Hexdump(data + data_position, /*128*/ pes_packet_size);
+			printf("<--\n");
+#endif
+
+//printf("W\n");
+
+#ifdef WRITE_COMPLETE_PACKAGE
+		int write_buffer_size = pes_header_size + self->runtime_header_data_size + pes_packet_size;
+		unsigned char *write_buffer = 
+			(unsigned char*) malloc(sizeof(unsigned char) * (write_buffer_size));
+		memcpy(write_buffer, pes_header, pes_header_size);
+		if (self->runtime_header_data_size > 0)
+			memcpy(write_buffer + pes_header_size, self->runtime_header_data, self->runtime_header_data_size);
+		memcpy(write_buffer + pes_header_size + self->runtime_header_data_size, data + data_position, pes_packet_size);
+		ASYNC_WRITE(write_buffer, write_buffer_size);
+		free(write_buffer);
+#else
+		ASYNC_WRITE(pes_header, pes_header_size);
+		if (self->runtime_header_data_size > 0)
+			ASYNC_WRITE(self->runtime_header_data, self->runtime_header_data_size);
+		ASYNC_WRITE(data + data_position, pes_packet_size);
+#endif
+
+#ifdef DEBUG_EXT
+	printf("gst_dvbvideosink_render - pes package written\n");
+#endif
+
+		if (late_initial_header) {
+			if (self->bypass == BYPASS_PCML || self->bypass == BYPASS_PCMB) {
+				late_initial_header = FALSE;
+			}
+		}
+		
+		data_position += pes_packet_size;
+		
+		if (self->bypass == BYPASS_PCML || self->bypass == BYPASS_PCMB) {
+		
+			//increment err... subframe count?
+			self->runtime_header_data[1] = ((self->runtime_header_data[1]+self->pcm_sub_frame_per_pes) & 0x1F);
+		
+			if (self->pcm_break_buffer_size > 0)
+			{
+#if USE_DATA_TMP
+				free(data);
+#endif
+				// Reset data pointer
+				data      = GST_BUFFER_DATA (buffer) + self->skip;
+				
+				data_position -= self->pcm_break_buffer_size;
+				
+				self->pcm_break_buffer_size = 0;
+			}
+		}
 	}
+	//printf("L <-\n");
 
-	ASYNC_WRITE(pes_header, pes_header_size);
-	ASYNC_WRITE(data, size);
+#ifdef DEBUG_EXT
+	printf("gst_dvbvideosink_render - all pes packages written\n");
+#endif
+
 
 	return GST_FLOW_OK;
 poll_error:

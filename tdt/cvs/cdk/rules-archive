@@ -89,7 +89,7 @@ giflib-4.1.6.tar.bz2;http://heanet.dl.sourceforge.net/sourceforge/giflib
 curl-7.23.1.tar.gz;http://curl.haxx.se/download
 libvorbisidec_1.0.2+svn16259.orig.tar.gz;http://ftp.debian.org/debian/pool/main/libv/libvorbisidec
 fribidi-0.10.4.tar.bz2
-libsigc++-1.2.5.tar.gz;http://dietmarw.trale.de/Archive
+libsigc++-1.2.5.tar.gz;http://ftp.gnome.org/pub/GNOME/sources/libsigc++/1.2/
 libmad-0.15.1b.tar.gz;ftp://ftp.mars.org/pub/mpeg
 libid3tag-0.15.1b.tar.gz;http://bent.latency.net/bent/darcs/libid3tag-0.15.1b/src
 libxml2-2.6.30.tar.gz;ftp://ftp.gnome.org/pub/GNOME/sources/libxml2/2.6
@@ -134,6 +134,7 @@ flac-1.2.1.tar.gz;http://ignum.dl.sourceforge.net/project/flac/flac-src/flac-1.2
 BroFS1.2.tgz;http://www.avalpa.com/assets/freesoft/other/
 alsa-lib-1.0.21a.tar.bz2;ftp://ftp.alsa-project.org/pub/lib/
 libusb-0.1.12.tar.gz;http://downloads.sourceforge.net/libusb/
+rtmpdump-2.3.tgz;http://rtmpdump.mplayerhq.hu/download/
 
 #
 # GSTREAMER
@@ -144,6 +145,7 @@ gst-plugins-good-0.10.30.2.tar.bz2;http://gstreamer.freedesktop.org/src/gst-plug
 gst-plugins-bad-0.10.22.2.tar.bz2;http://gstreamer.freedesktop.org/src/gst-plugins-bad/pre
 gst-plugins-ugly-0.10.18.2.tar.bz2;http://gstreamer.freedesktop.org/src/gst-plugins-ugly/pre
 gst-ffmpeg-0.10.13.tar.bz2;http://gstreamer.freedesktop.org/src/gst-ffmpeg/
+gst-fluendo-mpegdemux-0.10.69.tar.gz;http://core.fluendo.com/gstreamer/src/gst-fluendo-mpegdemux/
 
 #
 # net apps

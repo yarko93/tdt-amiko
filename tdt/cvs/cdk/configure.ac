@@ -517,7 +517,13 @@ AC_ARG_ENABLE(ipbox55,
 AM_CONDITIONAL(ENABLE_IPBOX55,test "$enable_ipbox55" = "yes")
 AC_SUBST(IPBOX55)
 
-
+AC_ARG_ENABLE(vdr1722,
+	AS_HELP_STRING(--enable-vdr1722,    enable vdr-1.7.22 stuff),
+	[case "${enableval}" in
+		yes) VDR1722=vdr1722 ;;
+	esac],[enable_vdr1722=no])
+AM_CONDITIONAL(ENABLE_VDR1722,test "$enable_vdr1722" = "yes")
+AC_SUBST(VDR1722)
 
 AC_SUBST(CFLAGS)
 AC_SUBST(TARGET_CFLAGS)
@@ -1012,9 +1018,11 @@ TUXBOX_RULES_MAKE(gst_plugins_good)
 TUXBOX_RULES_MAKE(gst_plugins_bad)
 TUXBOX_RULES_MAKE(gst_plugins_ugly)
 TUXBOX_RULES_MAKE(gst_ffmpeg)
+TUXBOX_RULES_MAKE(gst_plugins_fluendo_mpegdemux)
 TUXBOX_RULES_MAKE(gst_plugins_dvbmediasink)
 TUXBOX_RULES_MAKE(libalsa)
 TUXBOX_RULES_MAKE(libusb)
+TUXBOX_RULES_MAKE(rtmpdump)
 
 #
 # GUI
@@ -1170,6 +1178,7 @@ Patchlevel P0207            : $enable_p0207
 Patchlevel P0209            : $enable_p0209
 HAVANA Patchlevel P0207_5   : $enable_havana_p0207_5
 vdr VDR 1.7.11              : $enable_vdr1711
+vdr VDR 1.7.22              : $enable_vdr1722
 flash rules                 : $enable_flashrules
 ccache                      : $enable_ccache
 target prefix               : $targetprefix
