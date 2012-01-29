@@ -190,7 +190,7 @@ NFS=`grep -c nfs /proc/cmdline`
 		   showiframe -p /boot/bootlogo.mvi &;;
 		*) echo "*"
 		   echo "ERROR"
-		   init 6;;
+		   killall -9 enigma2;;
       esac
    done 
 fi

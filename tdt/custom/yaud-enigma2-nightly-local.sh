@@ -18,14 +18,14 @@ echo config.audio.volume=30 >> $NRELDIR/etc/enigma2/settings
 echo config.misc.epgcache_filename=/hdd/epg.dat >> $NRELDIR/etc/enigma2/settings
 rm  $NRELDIR/usr/local/share/enigma2/keymap_*.xml
 cp -RP ~/enigma2-amiko/enigma2/* $NRELDIR/
-#rm $NRELDIR/lib/modules/pti.ko
-#if [ $TARGET == p0209 ]; then
-#  mv $NRELDIR/lib/modules/pti_209.ko $NRELDIR/lib/modules/pti.ko
-#elif [ $TARGET == p0207 ]; then
-#    mv $NRELDIR/lib/modules/pti_207.ko $NRELDIR/lib/modules/pti.ko
-#elif [ $TARGET == p0123 ]; then
-#    mv $NRELDIR/lib/modules/pti_123.ko $NRELDIR/lib/modules/pti.ko
-#fi
+rm $NRELDIR/lib/modules/pti.ko
+if [ $TARGET == p0209 ]; then
+  mv $NRELDIR/lib/modules/pti_209.ko $NRELDIR/lib/modules/pti.ko
+elif [ $TARGET == p0207 ]; then
+    mv $NRELDIR/lib/modules/pti_207.ko $NRELDIR/lib/modules/pti.ko
+elif [ $TARGET == p0123 ]; then
+    mv $NRELDIR/lib/modules/pti_123.ko $NRELDIR/lib/modules/pti.ko
+fi
 cd $NRELDIR/usr/lib/locale
 ln -s /usr/local/share/titan/po po
 exit

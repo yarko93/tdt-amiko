@@ -973,7 +973,6 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/etc/tuxbox && \
 	$(INSTALL_DIR) $(prefix)/release/etc/enigma2 && \
 	$(INSTALL_DIR) $(prefix)/release/media/hdd && \
-	$(INSTALL_DIR) $(prefix)/release/media/hdd/movie && \
 	$(INSTALL_DIR) $(prefix)/release/media/hdd/music && \
 	$(INSTALL_DIR) $(prefix)/release/media/hdd/picture && \
 	$(INSTALL_DIR) $(prefix)/release/lib && \
