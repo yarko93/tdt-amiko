@@ -4,10 +4,11 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
  echo "Parameter 1: target system (1-26)"
  echo "Parameter 2: kernel (1-9)"
  echo "Parameter 3: debug (Y/N)"
- echo "Parameter 4: player(1-2)"
- echo "Parameter 5: Multicom(1-2)"
- echo "Parameter 6: Media Framwork(1-2)"
- echo "Parameter 7: External LCD support(1-2)"
+ echo "Parameter 4: player (1-2)"
+ echo "Parameter 5: Multicom (1-2)"
+ echo "Parameter 6: Media Framwork (1-2)"
+ echo "Parameter 7: External LCD support (1-2)"
+ echo "Parameter 8: VDR (1-2)"
  exit
 fi
 
@@ -409,10 +410,27 @@ case "$REPLY" in
 	*) EXTERNAL_LCD="";;
 esac
 
-
 ##############################################
 
-CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $EXTERNAL_LCD"
+echo -e "\nVDR-1.7.22:"
+echo "   1) No"
+echo "   2) Yes"
+case $8 in
+        [1-2]) REPLY=$8
+        echo -e "\nSelected VDR-1.7.22: $REPLY\n"
+        ;;
+        *)
+        read -p "Select VDR-1.7.22 (1-2)? ";;
+esac
+
+case "$REPLY" in
+	1) VDR="";;
+	2) VDR="--enable-vdr1722";;
+	*) VDR="";;
+esac
+##############################################
+
+CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $EXTERNAL_LCD $VDR"
 
 ##############################################
 
