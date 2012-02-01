@@ -8,7 +8,7 @@
 	<!-- LCD/OLED -->
 	<screen name="InfoBarSummary" position="0,0" size="320,240" id="1">
 	        <!-- Channellogo (Picon) -->
-		<widget source="session.CurrentService" render="Picon" position="10,10" zPosition="1" size="100,60" alphatest="on">
+		<widget source="session.CurrentService" render="Picon" position="5,5" zPosition="1" size="100,60" alphatest="on">
 			<convert type="ServiceName">Reference</convert>
 		</widget>
 	  	<widget source="global.CurrentTime" render="Label" position="115,5" size="173,70" font="AmikoSkin_UserSkinFont;70" halign="left" valign="top">
@@ -17,13 +17,13 @@
 		<widget source="global.CurrentTime" render="Label" position="280,10" zPosition="1" size="34,34" font="AmikoSkin_UserSkinFont;32" valign="top" foregroundColor="#d20808">
 			<convert type="ClockToText">Format:%S</convert>
 		</widget>
-		<widget source="session.CurrentService" render="Label" position="2,70" size="316,85" font="AmikoSkin_UserSkinFont;48" halign="center" valign="center" >
+		<widget source="session.CurrentService" render="Label" position="2,70" size="316,88" font="AmikoSkin_UserSkinFont;48" halign="center" valign="center" >
 			<convert type="ServiceName">Name</convert>
 		</widget>
 		<widget source="session.Event_Now" render="Progress" position="2,160" size="316,15" borderWidth="1" >
 			<convert type="EventTime">Progress</convert>
 		</widget>
-		<widget source="session.Event_Now" render="Label" position="2,180" size="318,38" font="AmikoSkin_UserSkinFont;19" halign="center" valign="center" >
+		<widget source="session.Event_Now" render="Label" position="2,177" size="318,40" font="AmikoSkin_UserSkinFont;19" halign="center" valign="center" >
 			<convert type="EventName">Name</convert>
 		</widget>
 		<widget source="session.Event_Now" render="Label" position="4,215" size="69,25" font="AmikoSkin_UserSkinFont;24" halign="left" >
@@ -41,13 +41,13 @@
 	</screen>
 	<!-- LCD/OLED ChannelSelection-->		
 	<screen name="ChannelSelection_summary" 	position="0,0" 		size="320,240" id="1">
-		<widget source="parent.ServiceEvent" render="Label" position="4,0" size="312,19" font="AmikoSkin_UserSkinFont;19" noWrap="1" >
+		<widget source="parent.ServiceEvent" render="Label" position="4,0" size="316,19" font="AmikoSkin_UserSkinFont;19" noWrap="1" >
 			<convert type="ServiceName">Name</convert>
 		</widget>
-		<widget source="parent.ServiceEvent" render="Label" position="4,20" size="312,19" font="AmikoSkin_UserSkinFont;19" noWrap="1" >
+		<widget source="parent.ServiceEvent" render="Label" position="4,20" size="316,19" font="AmikoSkin_UserSkinFont;19" noWrap="1" >
 			<convert type="EventName">Name</convert>
 		</widget>
-		<widget source="parent.ServiceEvent" render="Progress" position="4,41" size="312,6" borderWidth="1" >
+		<widget source="parent.ServiceEvent" render="Progress" position="4,39" size="316,7" borderWidth="1" >
 			<convert type="EventTime">Progress</convert>
 		</widget>
 		<widget source="global.CurrentTime" render="Label" position="4,47" size="60,17" font="AmikoSkin_UserSkinFont;20" halign="left" >
@@ -61,19 +61,22 @@
 			<convert type="EventTime">Remaining</convert>
 			<convert type="RemainingToText">NoSeconds</convert>
 		</widget>
-		<!--<widget name="list" position="6,70" scrollbarMode="showOnDemand" size="316,170" />
-	      </widget>-->
 	</screen>
 	<!-- LCD screen (menus) -->
 	<screen name="MenuSummary" position="0,0" size="320,240" id="1">
-		<widget source="parent.title" render="Label" position="6,0" size="316,30" font="Display;28" halign="center" valign="center"/>
+		<widget source="parent.title" render="Label" position="6,0" size="316,30" font="AmikoSkin_UserSkinFont;28" halign="center" valign="center"/>
 		<widget source="parent.menu" render="Listbox" position="6,29" scrollbarMode="showOnDemand" size="316,218" foregroundColorSelected="#3e3ef3" >
 			<convert type="StringList" />
 		</widget>
 	</screen> 
 		<!-- LCD screen (ChoiceBox) -->
 	<screen name="ChoiceBox_summary" position="0,0" size="320,240" id="1">
-		<widget source="parent.summary_list" render="Label" position="2,0" size="316,200" font="Display;28" foregroundColor="#3e3ef3" />
+		<widget source="parent.summary_list" render="Label" position="2,0" size="316,200" font="AmikoSkin_UserSkinFont;18" foregroundColor="#3e3ef3" />
+	</screen>
+	<!-- LCD screen (MessageBox) -->
+	<screen name="MessageBox_summary" position="0,0" size="320,240" id="1">
+		<widget source="parent.Text" render="Label" position="2,0" size="316,120" font="AmikoSkin_UserSkinFont;38" halign="center" valign="center" />
+		<widget source="parent.selectedChoice" render="Label" position="6,120" size="316,120" font="AmikoSkin_UserSkinFont;28" halign="center" valign="center"/>
 	</screen>
 	<!-- LCD/OLED Movie Player-->
 	<screen name="InfoBarMoviePlayerSummary" position="0,0" size="320,240" id="1" >

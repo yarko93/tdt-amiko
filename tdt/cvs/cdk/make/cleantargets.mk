@@ -85,6 +85,7 @@ distclean-local:
 	-rm -f Makefile-archive
 	-rm -f rules-downcheck.pl
 	-rm -f linux
+	-rm -rf graphlcd-base
 	-rm -rf $(DEPDIR)
 #	-rm -rf $(targetprefix)
 	-rm -rf $(hostprefix)
