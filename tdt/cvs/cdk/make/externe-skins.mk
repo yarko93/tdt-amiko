@@ -4,25 +4,28 @@
 #
 enigma2-skins-sh4:
 $(DEPDIR)/enigma2-skins-sh4.do_prepare:
+	rm -rf $(appsdir)/skins; \
+	clear; \
 	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
-		git clone -b git://github.com/schpuntik/enigma2-skins-sh4.git  $(appsdir)/skins
+		git clone git://github.com/schpuntik/enigma2-skins-sh4.git $(appsdir)/skins; \
 	fi
+	git clone git://github.com/schpuntik/enigma2-skins-sh4.git $(appsdir)/skins
+	cd $(appsdir)/skins; git checkout master; cd "$(buildprefix)"; \
 	touch $@
 
-$(appsdir)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline \
-		libdvbsi++ python libxml2 libxslt elementtree zope-interface twisted pyopenssl lxml libxmlccwrap ncurses-dev $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
-	cd $(appsdir) && \
+#$(appsdir)/skins/config.status: 
+	cd $(appsdir)/skins && \
 		./autogen.sh && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \
 		./configure \
-			--host=$(target) \
-			--without-libsdl \
-			--with-datadir=/usr/local/share \
-			--with-libdir=/usr/lib \
-			--with-plugindir=/usr/lib/tuxbox/plugins \
-			--prefix=/usr \
-			--datadir=/usr/local/share \
-			--sysconfdir=/etc \
+			#--host=$(target) \
+			#--without-libsdl \
+			#--with-datadir=/usr/local/share \
+			#--with-libdir=/usr/lib \
+			#--with-plugindir=/usr/lib/tuxbox/plugins \
+			#--prefix=/usr \
+			#--datadir=/usr/local/share \
+			#--sysconfdir=/etc \
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
 			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
@@ -54,7 +57,7 @@ $(appsdir)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif
 			$(if $(IPBOX9900),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX9900 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(IPBOX99),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX99 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
-		    
+	touch $@	    
 
 $(DEPDIR)/enigma2-skins-sh4.do_compile: $(skinsdir)/config.status
 	cd $(appsdir)/skins && \

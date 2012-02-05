@@ -4,14 +4,17 @@
 #
 enigma2-plugins-sh4:
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
+	rm -rf $(appsdir)/plugins; \
+	clear; \
 	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
-		git clone -b git://github.com/schpuntik/enigma2-plugins-sh4.git  $(appsdir)/plugins
+		git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins;\
 	fi
+	git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins
+	cd $(appsdir)/plugins; git checkout master; cd "$(buildprefix)"; \
 	touch $@
 
-$(appsdir)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline \
-		libdvbsi++ python libxml2 libxslt elementtree zope-interface twisted pyopenssl lxml libxmlccwrap ncurses-dev $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
-	cd $(appsdir) && \
+$(appsdir)/plugins/config.status:
+	cd $(appsdir)/plugins && \
 		./autogen.sh && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \
 		./configure \
