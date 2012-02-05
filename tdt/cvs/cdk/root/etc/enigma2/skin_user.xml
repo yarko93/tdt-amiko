@@ -75,7 +75,7 @@
 	</screen>
 	<!-- LCD screen (MessageBox) -->
 	<screen name="MessageBox_summary" position="0,0" size="320,240" id="1">
-		<widget source="parent.Text" render="Label" position="2,0" size="316,120" font="AmikoSkin_UserSkinFont;38" halign="center" valign="center" />
+		<widget source="parent.Text" render="Label" position="2,0" size="316,120" font="AmikoSkin_UserSkinFont;28" halign="center" valign="center" />
 		<widget source="parent.selectedChoice" render="Label" position="6,120" size="316,120" font="AmikoSkin_UserSkinFont;28" halign="center" valign="center"/>
 	</screen>
 	<!-- LCD/OLED Movie Player-->
@@ -103,7 +103,7 @@
 	</screen>
 	<!-- LCD/OLED StandBy-Clock-->
 	<screen name="StandbySummary" position="0,0" size="320,240" id="1">
-		<widget source="global.CurrentTime" render="Label" position="0,20" size="320,160" font="AmikoSkin_Digital;160" valign="top" halign="center" >
+		<widget source="global.CurrentTime" render="Label" position="0,20" size="320,160" font="AmikoSkin_Digital;150" valign="top" halign="center" >
 			<convert type="ClockToText">Default</convert>
 		</widget>
 		<widget source="session.RecordState" render="FixedLabel" text="record" position="110,215" size="120,25" font="AmikoSkin_UserSkinFont;24" foregroundColor="#d20808" halign="center" zPosition="1" >
@@ -130,15 +130,35 @@
 		<widget source="session.CurrentService" render="Label" position="60,47" size="69,17" font="AmikoSkin_UserSkinFont;20" halign="right" >
 			<convert type="ServicePosition">Remaining,Negate,ShowHours,ShowNoSeconds</convert>
 		</widget>
-		<widget source="session.CurrentService" render="Progress" position="6,41" size="120,6" borderWidth="1" >
+		<widget source="session.CurrentService" render="Progress" position="6,41" size="316,6" borderWidth="1" >
 			<convert type="ServicePosition">Position</convert>
+		</widget>
+	</screen>
+	<!-- LCD screen (JobView) -->
+	<screen name="JobView_summary" position="0,0" size="320,240" id="1">
+		<widget source="parent.summary_job_name" render="Label" position="6,4" size="316,19" font="AmikoSkin_UserSkinFont;16" />
+		<widget source="parent.summary_job_task" render="Label" position="6,22" size="316,19" font="AmikoSkin_UserSkinFont;12" />
+		<widget source="parent.summary_job_progress" render="Progress" position="4,39" size="316,7" borderWidth="1" zPosition="1" />
+		<widget source="parent.summary_job_progress" render="Label" position="66,50" size="316,12" font="AmikoSkin_UserSkinFont;12" zPosition="2" halign="center" transparent="1"  >
+			<convert type="ProgressToText" />
+		</widget>
+	</screen>
+	<!-- LCD screen (misc) -->
+	<screen name="SimpleSummary" position="0,0" size="320,240" id="1">
+		<widget source="parent.Title" render="Label" position="6,0" size="316,64" font="AmikoSkin_UserSkinFont;16" halign="center" valign="center" />
+	</screen>
+	<!-- LCD screen (Wizard) -->
+	<screen name="WizardSummary" position="0,0" size="320,240" id="1">
+		<widget source="text" render="Label" position="6,0" size="316,16" font="AmikoSkin_UserSkinFont;16" transparent="1" />
+		<widget source="parent.list" render="Label" position="6,18" size="316,46" font="AmikoSkin_UserSkinFont;12">
+			<convert type="StringListSelection" />
 		</widget>
 	</screen>
 	<!-- LCD screen (ServiceScan) -->
 	<screen name="ServiceScanSummary" position="0,0" size="320,240" id="1">
 		<widget name="Title" position="6,4" size="316,42" font="AmikoSkin_UserSkinFont;26" transparent="1" />
 		<widget name="Service" position="6,22" size="316,26" font="AmikoSkin_UserSkinFont;18" transparent="1" />
-		<widget name="scan_progress" position="6,50" zPosition="1" borderWidth="1" size="318,20" backgroundColor="dark" />
+		<widget name="scan_progress" position="6,50" zPosition="1" borderWidth="1" size="316,20" backgroundColor="dark" />
 	</screen>
 	<subtitles>
 		<sub name="Subtitle_TTX" 		font="Regular;34" 		foregroundColor="#ffffff" shadowColor="#40101010" shadowOffset="-3,-3" />
