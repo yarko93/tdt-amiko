@@ -16,13 +16,13 @@ $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
 $(appsdir)/plugins/config.status:
 	cd $(appsdir)/plugins && \
 		./autogen.sh && \
-		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \
+		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i $(appsdir)/plugins/xml2po.py && \
 		./configure \
 			--host=$(target) \
 			--without-libsdl \
 			--with-datadir=/usr/local/share \
 			--with-libdir=/usr/lib \
-			--with-plugindir=/usr/lib/tuxbox/plugins \
+			--with-plugindir=/usr/lib/enigma2/python/Plugins \
 			--prefix=/usr \
 			--datadir=/usr/local/share \
 			--sysconfdir=/etc \

@@ -13,19 +13,18 @@ $(DEPDIR)/enigma2-skins-sh4.do_prepare:
 	cd $(appsdir)/skins; git checkout master; cd "$(buildprefix)"; \
 	touch $@
 
-#$(appsdir)/skins/config.status: 
+$(appsdir)/skins/config.status: 
 	cd $(appsdir)/skins && \
 		./autogen.sh && \
-		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \
 		./configure \
-			#--host=$(target) \
-			#--without-libsdl \
-			#--with-datadir=/usr/local/share \
-			#--with-libdir=/usr/lib \
-			#--with-plugindir=/usr/lib/tuxbox/plugins \
-			#--prefix=/usr \
-			#--datadir=/usr/local/share \
-			#--sysconfdir=/etc \
+			--host=$(target) \
+			--without-libsdl \
+			--with-datadir=/usr/local/share \
+			--with-libdir=/usr/lib \
+			--with-plugindir=/usr/lib/enigma2/python/Plugins \
+			--prefix=/usr \
+			--datadir=/usr/local/share \
+			--sysconfdir=/etc \
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
 			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
@@ -59,7 +58,7 @@ $(DEPDIR)/enigma2-skins-sh4.do_prepare:
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
 	touch $@	    
 
-$(DEPDIR)/enigma2-skins-sh4.do_compile: $(skinsdir)/config.status
+$(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
 	cd $(appsdir)/skins && \
 		$(MAKE) all
 	touch $@

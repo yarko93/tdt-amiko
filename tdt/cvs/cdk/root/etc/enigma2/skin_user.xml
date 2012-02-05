@@ -32,7 +32,7 @@
 		</widget>
 		<widget source="session.Event_Now" render="Label" position="245,215" size="69,25" font="AmikoSkin_UserSkinFont;24" halign="right" >
 			<convert type="EventTime">Remaining</convert>
-			<convert type="RemainingToText">NoSeconds</convert>
+			<convert type="RemainingToText">InMinutes</convert>
 		</widget>
 		<widget source="session.RecordState" render="FixedLabel" text="record" position="110,215" size="120,25" font="AmikoSkin_UserSkinFont;24" foregroundColor="#d20808" halign="center" zPosition="1" >
 			<convert type="ConfigEntryTest">config.usage.blinking_display_clock_during_recording,True,CheckSourceBoolean</convert>
