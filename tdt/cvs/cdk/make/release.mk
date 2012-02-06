@@ -228,7 +228,7 @@ endif
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
-	cp -f $(buildprefix)/root/usr/lib/* $(prefix)/release/usr/lib
+	cp -f $(buildprefix)/root/usr/lib/lib* $(prefix)/release/usr/lib
 	cp -f $(buildprefix)/root/usr/sbin/iw* $(prefix)/release/usr/sbin
 	cp -f $(buildprefix)/root/usr/sbin/wpa* $(prefix)/release/usr/sbin
 	cp -f $(buildprefix)/root/firmware/rt73.bin $(prefix)/release/lib/firmware
@@ -308,6 +308,7 @@ release_spark7162:
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
 
 	cp -dp $(buildprefix)/root/etc/lircd_spark7162.conf $(prefix)/release/etc/lircd.conf
+	cp -f $(buildprefix)/root/usr/lib/lib* $(prefix)/release/usr/lib
 	cp -f $(buildprefix)/root/usr/sbin/iw* $(prefix)/release/usr/sbin
 	cp -f $(buildprefix)/root/usr/sbin/wpa* $(prefix)/release/usr/sbin
 	cp -f $(buildprefix)/root/firmware/rt73.bin $(prefix)/release/lib/firmware
@@ -1510,7 +1511,7 @@ endif
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstrtmp.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstrtp.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstrtpmanager.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
-		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstrtsp.so $(prefix)/release/usr/lib/gstreamer-0.10/; \					
+		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstrtsp.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstsouphttpsrc.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstsubparse.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgsttypefindfunctions.so $(prefix)/release/usr/lib/gstreamer-0.10/; \

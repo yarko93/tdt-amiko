@@ -74,6 +74,12 @@ include make/enigma2.mk
 # Include enigma2-nightly gui targets
 include make/enigma2-nightly.mk
 
+# ExternePlugins
+include make/externe-plugins.mk
+
+# ExterneSkins
+include make/externe-skins.mk
+
 # Include neutrino gui targets
 include make/neutrino.mk
 
