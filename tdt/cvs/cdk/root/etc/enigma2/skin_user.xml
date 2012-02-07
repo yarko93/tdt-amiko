@@ -28,7 +28,7 @@
 		</widget>
 		<widget source="session.Event_Now" render="Label" position="4,215" size="69,25" font="AmikoSkin_UserSkinFont;24" halign="left" >
 			<convert type="EventTime">Duration</convert>
-			<convert type="ClockToText">Format:%H:%M</convert>
+			<convert type="ClockToText">InMinutes</convert>
 		</widget>
 		<widget source="session.Event_Now" render="Label" position="245,215" size="69,25" font="AmikoSkin_UserSkinFont;24" halign="right" >
 			<convert type="EventTime">Remaining</convert>
