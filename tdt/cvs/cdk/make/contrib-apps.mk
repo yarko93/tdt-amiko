@@ -86,6 +86,49 @@ $(flashprefix)/root/usr/bin/grep: $(DEPDIR)/grep.do_compile | $(flashprefix)/roo
 	@FLASHROOTDIR_MODIFIED@
 	@TUXBOX_CUSTOMIZE@
 endif
+#
+# PPPD
+#
+$(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
+	@PREPARE_pppd@
+	cd @DIR_pppd@ && \
+		gunzip -cd $(lastword $^) 
+	touch $@
+
+$(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
+	cd @DIR_pppd@  && \
+		$(BUILDENV) \
+		CFLAGS="$(TARGET_CFLAGS) -Os" \
+		./configure \
+	export CP_D
+	export CP_P
+	export CP_RD
+			--host=$(target) \
+			--libdir=$(targetprefix)/usr/lib \
+			--prefix=/usr && \
+		$(MAKE)
+	touch $@
+
+$(DEPDIR)/min-pppd $(DEPDIR)/std-pppd $(DEPDIR)/max-pppd \
+$(DEPDIR)/pppd: \
+$(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
+	cd @DIR_pppd@  && \
+		@INSTALL_pppd@
+#	@DISTCLEANUP_pppd@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+if TARGETRULESET_FLASH
+
+flash-pppd: $(flashprefix)/root/usr/bin/pppd
+
+$(flashprefix)/root/usr/bin/pppd: $(DEPDIR)/pppd.do_compile | $(flashprefix)/root
+	cd @DIR_pppd@  && \
+		for i in src/{grep,egrep,fgrep} ; do \
+			$(INSTALL) -m 755 $$i $(@D) ; done
+	@FLASHROOTDIR_MODIFIED@
+	@TUXBOX_CUSTOMIZE@
+endif
 
 #
 # LSB

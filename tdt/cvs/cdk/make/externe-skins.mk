@@ -56,7 +56,7 @@ $(appsdir)/skins/config.status:
 			$(if $(IPBOX9900),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX9900 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(IPBOX99),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX99 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
-	touch $@	    
+			touch $@
 
 $(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
 	cd $(appsdir)/skins && \
