@@ -67,11 +67,11 @@ enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
 	$(MAKE) -C $(appsdir)/skins install DESTDIR=$(ipkprefix)
 	cd $(appsdir)/skins && \
 		./split-packages.py
-	
-/home/tech/build_dir/*: enigma2-skins-sh4-package
-	ipkg-build -c -o root -g root $@
+	for p in `ls $(ipkgbuilddir)`; do \
+		ipkg-build -c -o root -g root $(ipkgbuilddir)/$$p $(ipkprefix); \
+	done
 
-$(DEPDIR)/enigma2-skins-sh4: enigma2-skins-sh4.do_prepare enigma2-skins-sh4.do_compile /home/tech/build_dir/*
+$(DEPDIR)/enigma2-skins-sh4: enigma2-skins-sh4.do_prepare enigma2-skins-sh4.do_compile enigma2-skins-sh4-package
 	touch $@
 
 enigma2-skins-sh4-clean enigma2-skins-sh4-distclean:
