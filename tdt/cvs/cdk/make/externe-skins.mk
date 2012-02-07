@@ -7,7 +7,7 @@ $(DEPDIR)/enigma2-skins-sh4.do_prepare:
 	rm -rf $(appsdir)/skins; \
 	clear; \
 	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
-		git clone git://github.com/schpuntik/enigma2-skins-sh4.git $(appsdir)/skins; \
+		git clone -b bbhack-test git://github.com/schpuntik/enigma2-skins-sh4.git $(appsdir)/skins; \
 	fi
 	git clone git://github.com/schpuntik/enigma2-skins-sh4.git $(appsdir)/skins
 	cd $(appsdir)/skins; git checkout master; cd "$(buildprefix)"; \
