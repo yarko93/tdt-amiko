@@ -69,9 +69,7 @@ pngquant-1.0-src.tgz;ftp://ftp.simplesystems.org/pub/libpng/png/applications
 mplayer-export-snapshot.tar.bz2;ftp://ftp.mplayerhq.hu/MPlayer/releases
 jfsutils-1.1.14.tar.gz;http://jfs.sourceforge.net/project/pub
 opkg-0.1.8.tar.gz;http://opkg.googlecode.com/files
-#ppp-2.4.5.tar.gz;http://fossies.org/linux/misc
-ppp-2.4.3.tar.gz;http://wcoserver.googlecode.com/files
-#
+ppp-2.4.5.tar.gz;ftp://ftp.samba.org/pub/ppp
 # contrib libs
 #
 ncurses-5.5.tar.gz;http://ftp.gnu.org/pub/gnu/ncurses

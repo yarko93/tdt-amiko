@@ -78,5 +78,5 @@ enigma2-skins-sh4-clean enigma2-skins-sh4-distclean:
 	rm -f $(DEPDIR)/enigma2-skins-sh4
 	rm -f $(DEPDIR)/enigma2-skins-sh4.do_compile
 	rm -f $(DEPDIR)/enigma2-skins-sh4.do_prepare
-	rm -rf $(prefix)/Packages
+	rm -rf $(prefix)/ipk
 	rm -rf $(appsdir)/skins
