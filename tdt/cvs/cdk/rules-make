@@ -69,8 +69,8 @@ mplayer;1.0;mplayer-export-*;mplayer-export-snapshot.tar.bz2;extract:mplayer-exp
 mencoder;1.0;mplayer-export-*;mplayer-export-snapshot.tar.bz2;extract:mplayer-export-snapshot.tar.bz2
 jfsutils;1.1.14;jfsutils-1.1.14;jfsutils-1.1.14.tar.gz;extract:jfsutils-1.1.14.tar.gz
 opkg;0.1.8;opkg-0.1.8;opkg-0.1.8.tar.gz;extract:opkg-0.1.8.tar.gz
-pppd;2.4.5;ppp-2.4.5;ppp-2.4.5.tar.gz;extract:ppp-2.4.5.tar.gz
-#pppd;2.4.3;ppp-2.4.3;ppp-2.4.3.tar.gz;extract:ppp-2.4.3.tar.gz
+#pppd;2.4.5;ppp-2.4.5;ppp-2.4.5.tar.gz;extract:ppp-2.4.5.tar.gz
+pppd;2.4.3;ppp-2.4.3;ppp-2.4.3.tar.gz;extract:ppp-2.4.3.tar.gz
 #
 # contrib libs
 #

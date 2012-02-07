@@ -100,9 +100,11 @@ $(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
 		./configure \
-	export CP_D
-	export CP_P
-	export CP_RD
+			STAGING_INCDIR=$(hostprefix)/usr/include \
+			STAGING_LIBDIR=$(hostprefix)/usr/lib \
+			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
+			PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
+			PY_PATH=$(targetprefix)/usr \
 			--host=$(target) \
 			--libdir=$(targetprefix)/usr/lib \
 			--prefix=/usr && \

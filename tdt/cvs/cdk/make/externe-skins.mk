@@ -3,17 +3,17 @@
 #
 #
 enigma2-skins-sh4:
-$(DEPDIR)/enigma2-skins-sh4.do_prepare:
+  $(DEPDIR)/enigma2-skins-sh4.do_prepare:
 	rm -rf $(appsdir)/skins; \
 	clear; \
 	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
 		git clone git://github.com/schpuntik/enigma2-skins-sh4.git $(appsdir)/skins; \
 	fi
 	git clone git://github.com/schpuntik/enigma2-skins-sh4.git $(appsdir)/skins
-	cd $(appsdir)/skins; git checkout master; cd "$(buildprefix)"; \
+	cd $(appsdir)/skins; git checkout bbhack-test; cd "$(buildprefix)"; \
 	touch $@
 
-$(appsdir)/skins/config.status: 
+  $(appsdir)/skins/config.status: 
 	cd $(appsdir)/skins && \
 		./autogen.sh && \
 		./configure \
@@ -58,7 +58,7 @@ $(appsdir)/skins/config.status:
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
 			touch $@
 
-$(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
+  $(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
 	cd $(appsdir)/skins && \
 		$(MAKE) all
 	touch $@
@@ -67,15 +67,16 @@ enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
 	$(MAKE) -C $(appsdir)/skins install DESTDIR=$(ipkprefix)
 	cd $(appsdir)/skins && \
 		./split-packages.py
-	
-/home/tech/build_dir/*: enigma2-skins-sh4-package
+	mkdir $(prefix)/Packages
+  $(prefix)/Packages: enigma2-skins-sh4-package
 	ipkg-build -c -o root -g root $@
 
-$(DEPDIR)/enigma2-skins-sh4: enigma2-skins-sh4.do_prepare enigma2-skins-sh4.do_compile /home/tech/build_dir/*
+  $(DEPDIR)/enigma2-skins-sh4: enigma2-skins-sh4.do_prepare enigma2-skins-sh4.do_compile $(prefix)/Packages
 	touch $@
 
 enigma2-skins-sh4-clean enigma2-skins-sh4-distclean:
 	rm -f $(DEPDIR)/enigma2-skins-sh4
 	rm -f $(DEPDIR)/enigma2-skins-sh4.do_compile
 	rm -f $(DEPDIR)/enigma2-skins-sh4.do_prepare
+	rm -rf $(prefix)/Packages
 	rm -rf $(appsdir)/skins
