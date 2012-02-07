@@ -68,7 +68,7 @@ enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
 	cd $(appsdir)/skins && \
 		./split-packages.py
 	for p in `ls $(ipkgbuilddir)`; do \
-		ipkg-build -c -o root -g root $(ipkgbuilddir)/$$p $(ipkprefix); \
+		ipkg-build -o root -g root $(ipkgbuilddir)/$$p $(ipkprefix); \
 	done
 
 $(DEPDIR)/enigma2-skins-sh4: enigma2-skins-sh4.do_prepare enigma2-skins-sh4.do_compile enigma2-skins-sh4-package
