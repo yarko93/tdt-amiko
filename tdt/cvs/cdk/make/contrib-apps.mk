@@ -98,13 +98,14 @@ $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 $(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
 	cd @DIR_pppd@  && \
 		$(BUILDENV) \
-		CFLAGS="$(TARGET_CFLAGS) -I$(buildprefix)/linux/arch/sh" \
+	      CFLAGS="$(TARGET_CFLAGS) -I$(buildprefix)/linux/arch/sh" \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
 			--target=$(target) \
+			--with-kernel=$(buildprefix)/$(KERNEL_DIR) \
+			--disable-kernel-module \
 			--prefix=/usr && \
-			--disable-strip \
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
