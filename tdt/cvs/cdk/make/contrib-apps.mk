@@ -86,6 +86,49 @@ $(flashprefix)/root/usr/bin/grep: $(DEPDIR)/grep.do_compile | $(flashprefix)/roo
 	@FLASHROOTDIR_MODIFIED@
 	@TUXBOX_CUSTOMIZE@
 endif
+#
+# PPPD
+#
+$(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
+	@PREPARE_pppd@
+	cd @DIR_pppd@ && \
+		patch -p1 < ../Patches/pppd.patch
+	touch $@
+
+$(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
+	cd @DIR_pppd@  && \
+		$(BUILDENV) \
+	      CFLAGS="$(TARGET_CFLAGS) -I$(buildprefix)/linux/arch/sh" \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--target=$(target) \
+			--with-kernel=$(buildprefix)/$(KERNEL_DIR) \
+			--disable-kernel-module \
+			--prefix=/usr && \
+		$(MAKE) $(MAKE_OPTS)
+	touch $@
+
+$(DEPDIR)/min-pppd $(DEPDIR)/std-pppd $(DEPDIR)/max-pppd \
+$(DEPDIR)/pppd: \
+$(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
+	cd @DIR_pppd@  && \
+		@INSTALL_pppd@
+#	@DISTCLEANUP_pppd@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+if TARGETRULESET_FLASH
+
+flash-pppd: $(flashprefix)/root/usr/bin/pppd
+
+$(flashprefix)/root/usr/bin/pppd: $(DEPDIR)/pppd.do_compile | $(flashprefix)/root
+	cd @DIR_pppd@  && \
+		for i in src/{grep,egrep,fgrep} ; do \
+			$(INSTALL) -m 755 $$i $(@D) ; done
+	@FLASHROOTDIR_MODIFIED@
+	@TUXBOX_CUSTOMIZE@
+endif
 
 #
 # LSB

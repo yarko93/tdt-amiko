@@ -38,3 +38,4 @@ DirectFB-*
 freetype-*
 !*.diff
 !*.patch
+rtmpdump-*
