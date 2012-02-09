@@ -92,7 +92,7 @@ endif
 $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 	@PREPARE_pppd@
 	cd @DIR_pppd@ && \
-		gunzip -cd $(lastword $^) 
+		patch -p1 < ../Patches/pppd.patch
 	touch $@
 
 $(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
