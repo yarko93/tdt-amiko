@@ -10,7 +10,10 @@ $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
 		git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins;\
 	fi
 	git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins
-	cd $(appsdir)/plugins; git checkout master; cd "$(buildprefix)"; \
+	cd $(appsdir)/plugins ; ln -s ../../../tufsbox/cdkroot/usr/include/enigma2/lib lib ; \
+	ln -s ../../../tufsbox/cdkroot/usr/include/enigma2/connection.h connection.h ; \
+	ln -s ../../../tufsbox/cdkroot/usr/include/enigma2/libsig_comp.h libsig_comp.h ; \
+	git checkout master; cd "$(buildprefix)"; \
 	touch $@
 
 $(appsdir)/plugins/config.status:
