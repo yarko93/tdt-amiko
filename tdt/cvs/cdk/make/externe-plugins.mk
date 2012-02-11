@@ -2,7 +2,7 @@
 # Make Extern-Plugins
 #
 #
-enigma2-plugins-sh4:
+enigma2-plugins-sh4: 
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
 	rm -rf $(appsdir)/plugins; \
 	clear; \
