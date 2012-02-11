@@ -3,7 +3,7 @@
 #
 #
 enigma2-skins-sh4:
-$(DEPDIR)/enigma2-skins-sh4.do_prepare:
+$(DEPDIR)/enigma2-skins-sh4.do_prepare:ipkg-utils ipkg
 	rm -rf $(appsdir)/skins; \
 	clear; \
 	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
@@ -18,10 +18,6 @@ $(appsdir)/skins/config.status:
 		./autogen.sh && \
 		./configure \
 			--host=$(target) \
-			--without-libsdl \
-			--with-datadir=/usr/local/share \
-			--with-libdir=/usr/lib \
-			--with-plugindir=/usr/lib/enigma2/python/Plugins \
 			--prefix=/usr \
 			--datadir=/usr/local/share \
 			--sysconfdir=/etc \

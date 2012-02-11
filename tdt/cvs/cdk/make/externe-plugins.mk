@@ -3,14 +3,14 @@
 #
 #
 enigma2-plugins-sh4:
-$(DEPDIR)/enigma2-plugins-sh4.do_prepare:
+$(DEPDIR)/enigma2-plugins-sh4.do_prepare: ipkg-utils ipkg
 	rm -rf $(appsdir)/plugins; \
 	clear; \
 	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
 		git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins;\
 	fi
-	git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins
-	cd $(appsdir)/plugins; ln -s ../../../tufsbox/cdkroot/usr/include/enigma2/lib lib; git checkout master; cd "$(buildprefix)"; \
+	git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins 
+	cd $(appsdir)/plugins; git checkout master; cd "$(buildprefix)"; \
 	touch $@
 
 $(appsdir)/plugins/config.status:
@@ -19,10 +19,6 @@ $(appsdir)/plugins/config.status:
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i $(appsdir)/plugins/xml2po.py && \
 		./configure \
 			--host=$(target) \
-			--without-libsdl \
-			--with-datadir=/usr/local/share \
-			--with-libdir=/usr/lib \
-			--with-plugindir=/usr/lib/enigma2/python/Plugins \
 			--prefix=/usr \
 			--datadir=/usr/local/share \
 			--sysconfdir=/etc \
@@ -57,7 +53,7 @@ $(appsdir)/plugins/config.status:
 			$(if $(IPBOX9900),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX9900 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(IPBOX99),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX99 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
-		    
+		touch $@
 
 $(DEPDIR)/enigma2-plugins-sh4.do_compile: $(appsdir)/plugins/config.status
 	cd $(appsdir)/plugins && \
