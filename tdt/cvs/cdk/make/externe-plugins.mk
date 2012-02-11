@@ -9,7 +9,7 @@ $(DEPDIR)/enigma2-plugins-sh4.do_prepare: ipkg-utils ipkg
 	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
 		git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins;\
 	fi
-	git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins 
+	git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins
 	cd $(appsdir)/plugins; git checkout master; cd "$(buildprefix)"; \
 	touch $@
 
