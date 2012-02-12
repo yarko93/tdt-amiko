@@ -92,23 +92,21 @@ endif
 $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 	@PREPARE_pppd@
 	cd @DIR_pppd@ && \
-		gunzip -cd $(lastword $^) 
+		patch -p1 < ../Patches/pppd.patch
 	touch $@
 
 $(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
 	cd @DIR_pppd@  && \
 		$(BUILDENV) \
-		CFLAGS="$(TARGET_CFLAGS) -Os" \
+	      CFLAGS="$(TARGET_CFLAGS) -I$(buildprefix)/linux/arch/sh" \
 		./configure \
-			STAGING_INCDIR=$(hostprefix)/usr/include \
-			STAGING_LIBDIR=$(hostprefix)/usr/lib \
-			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
-			PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
-			PY_PATH=$(targetprefix)/usr \
+			--build=$(build) \
 			--host=$(target) \
-			--libdir=$(targetprefix)/usr/lib \
+			--target=$(target) \
+			--with-kernel=$(buildprefix)/$(KERNEL_DIR) \
+			--disable-kernel-module \
 			--prefix=/usr && \
-		$(MAKE)
+		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
 $(DEPDIR)/min-pppd $(DEPDIR)/std-pppd $(DEPDIR)/max-pppd \

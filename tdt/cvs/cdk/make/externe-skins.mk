@@ -16,7 +16,7 @@ PACKAGES = metapk
 include packaging.mk
 
 enigma2-skins-sh4:
-$(DEPDIR)/enigma2-skins-sh4.do_prepare:
+$(DEPDIR)/enigma2-skins-sh4.do_prepare:ipkg-utils ipkg
 	rm -rf $(appsdir)/skins;
 	if [ -e $(targetprefix)/usr/bin/enigma2 ]; then \
 		git clone $(REPO) $(appsdir)/skins; \
@@ -29,10 +29,6 @@ $(appsdir)/skins/config.status:
 		./autogen.sh && \
 		./configure \
 			--host=$(target) \
-			--without-libsdl \
-			--with-datadir=/usr/local/share \
-			--with-libdir=/usr/lib \
-			--with-plugindir=/usr/lib/enigma2/python/Plugins \
 			--prefix=/usr \
 			--datadir=/usr/local/share \
 			--sysconfdir=/etc \
@@ -98,5 +94,6 @@ enigma2-skins-sh4-clean enigma2-skins-sh4-distclean:
 	rm -f $(DEPDIR)/enigma2-skins-sh4
 	rm -f $(DEPDIR)/enigma2-skins-sh4.do_compile
 	rm -f $(DEPDIR)/enigma2-skins-sh4.do_prepare
-	rm -rf $(prefix)/Packages
+	rm -rf $(ipkgbuilddir)
+	rm -rf $(ipkprefix)
 	rm -rf $(appsdir)/skins
