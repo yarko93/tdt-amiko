@@ -2,15 +2,26 @@
 # Make Extern-Skins
 #
 #
+
+DESCRIPTION := "Skins for Enigma2"
+MAINTAINER := "Ar-P team"
+BRANCH := bbhack-test
+REPO := git://github.com/schpuntik/enigma2-skins-sh4.git
+SRC_URI := '$(REPO);branch=$(BRANCH)'
+PACKAGE_ARCH := "all"
+NAME_metapk := enigma2-skins-meta
+FILES_metapk := /usr/local/share/meta
+DESCRIPTION_metapk := "Enigma2 skins metadata"
+PACKAGES = metapk
+include packaging.mk
+
 enigma2-skins-sh4:
 $(DEPDIR)/enigma2-skins-sh4.do_prepare:
-	rm -rf $(appsdir)/skins; \
-	clear; \
-	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
-		git clone -b bbhack-test git://github.com/schpuntik/enigma2-skins-sh4.git $(appsdir)/skins; \
+	rm -rf $(appsdir)/skins;
+	if [ -e $(targetprefix)/usr/bin/enigma2 ]; then \
+		git clone $(REPO) $(appsdir)/skins; \
 	fi
-	git clone git://github.com/schpuntik/enigma2-skins-sh4.git $(appsdir)/skins
-	cd $(appsdir)/skins; git checkout bbhack-test; cd "$(buildprefix)"; \
+	cd $(appsdir)/skins; git checkout $(BRANCH);
 	touch $@
 
 $(appsdir)/skins/config.status: 
@@ -58,15 +69,24 @@ $(appsdir)/skins/config.status:
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
 	touch $@	    
 
-  $(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
+$(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
 	cd $(appsdir)/skins && \
 		$(MAKE) all
 	touch $@
 
+GIT_DATE = $(shell cd $(appsdir)/skins && git log -1 --format=%cd --date=short |sed s/-//g)
+PKGV = 3.2git$(GIT_DATE)
+PKGR = 0
+enigma2_skindir = '/usr/local/share/enigma2'
 enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
 	$(MAKE) -C $(appsdir)/skins install DESTDIR=$(ipkprefix)
-	cd $(appsdir)/skins && \
-		./split-packages.py
+	rm -rf $(ipkgbuilddir)
+	@echo 'next variables are exported to enviroment:'
+	@echo $(EXPORT_ENV) | tr ' ' '\n'
+	$(crossprefix)/bin/python -c "from split_packages import *; \
+	print bb_data; \
+	do_split_packages(bb_data, $(enigma2_skindir), '(.*?)/.*', 'enigma2-skin-%s', 'Enigma2 Skin: %s', recursive=True, match_path=True, prepend=True); \
+	do_finish()"
 	for p in `ls $(ipkgbuilddir)`; do \
 		ipkg-build -o root -g root $(ipkgbuilddir)/$$p $(ipkprefix); \
 	done
