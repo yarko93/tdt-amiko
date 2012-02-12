@@ -2,6 +2,18 @@
 # Make Extern-Plugins
 #
 #
+
+DESCRIPTION := Additional plugins for Enigma2
+MAINTAINER := Ar-P team
+REPO := git://github.com/schpuntik/enigma2-plugins-sh4.git
+SRC_URI := $(REPO)
+PACKAGE_ARCH := sh4
+NAME_metapk := enigma2-plugins-meta
+FILES_metapk := /usr/local/share/meta
+DESCRIPTION_metapk := Enigma2 plugins metadata
+PACKAGES = metapk
+RDEPENDS := enigma2
+
 enigma2-plugins-sh4:
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
 
@@ -64,7 +76,33 @@ $(DEPDIR)/enigma2-plugins-sh4.do_compile: $(appsdir)/plugins/config.status
 		$(MAKE) all
 	touch $@
 
-$(DEPDIR)/enigma2-plugins-sh4: enigma2-plugins-sh4.do_prepare enigma2-plugins-sh4.do_compile
+GIT_DATE = $(shell cd $(appsdir)/plugins && git log -1 --format=%cd --date=short |sed s/-//g)
+PKGV = 3.2git$(GIT_DATE)
+PKGR = r0
+enigma2_plugindir = /usr/lib/enigma2/python/Plugins
+enigma2-plugins-sh4-package: enigma2-plugins-sh4.do_compile
+	$(MAKE) -C $(appsdir)/plugins install DESTDIR=$(ipkprefix)
+	rm -rf $(ipkgbuilddir)
+	@echo 'next variables are exported to enviroment:'
+	@echo $(EXPORT_ENV) | tr ' ' '\n'
+	@echo $(enigma2_plugindir)
+	echo -e "\
+	from split_packages import * \n\
+	print bb_data \n\
+	do_split_packages(bb_data, '$(enigma2_plugindir)', '(.*?/.*?)/.*', 'enigma2-plugin-%s', 'Enigma2 Plugin: %s', recursive=True, match_path=True, prepend=True) \n\
+	for package in bb_get('PACKAGES').split(): \n\
+		pk = bb_get('NAME_' + package).split('-')[-1] \n\
+		try: \n\
+			read_control_file('$(appsdir)/plugins/' + pk + '/CONTROL/control') \n\
+		except IOError: \n\
+			print 'skipping', pk \n\
+	do_finish() \n\
+	" | $(crossprefix)/bin/python
+	for p in `ls $(ipkgbuilddir)`; do \
+		ipkg-build -o root -g root $(ipkgbuilddir)/$$p $(ipkprefix); \
+	done
+
+$(DEPDIR)/enigma2-plugins-sh4: enigma2-plugins-sh4.do_prepare enigma2-plugins-sh4.do_compile enigma2-plugins-sh4-package
 	$(MAKE) -C $(appsdir)/plugins install DESTDIR=$(ipkprefix)
 	touch $@
 
