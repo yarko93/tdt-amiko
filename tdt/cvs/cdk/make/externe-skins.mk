@@ -3,15 +3,15 @@
 #
 #
 
-DESCRIPTION := "Skins for Enigma2"
-MAINTAINER := "Ar-P team"
+DESCRIPTION := Skins for Enigma2
+MAINTAINER := Ar-P team
 BRANCH := bbhack-test
 REPO := git://github.com/schpuntik/enigma2-skins-sh4.git
-SRC_URI := '$(REPO);branch=$(BRANCH)'
-PACKAGE_ARCH := "all"
+SRC_URI := $(REPO);branch=$(BRANCH)
+PACKAGE_ARCH := all
 NAME_metapk := enigma2-skins-meta
 FILES_metapk := /usr/local/share/meta
-DESCRIPTION_metapk := "Enigma2 skins metadata"
+DESCRIPTION_metapk := Enigma2 skins metadata
 PACKAGES = metapk
 include packaging.mk
 
@@ -72,7 +72,7 @@ $(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
 
 GIT_DATE = $(shell cd $(appsdir)/skins && git log -1 --format=%cd --date=short |sed s/-//g)
 PKGV = 3.2git$(GIT_DATE)
-PKGR = 0
+PKGR = r0
 enigma2_skindir = '/usr/local/share/enigma2'
 enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
 	$(MAKE) -C $(appsdir)/skins install DESTDIR=$(ipkprefix)
