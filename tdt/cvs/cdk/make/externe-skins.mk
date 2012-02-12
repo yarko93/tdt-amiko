@@ -10,7 +10,7 @@ REPO := git://github.com/schpuntik/enigma2-skins-sh4.git
 SRC_URI := $(REPO);branch=$(BRANCH)
 PACKAGE_ARCH := all
 NAME_metapk := enigma2-skins-meta
-FILES_metapk := /usr/local/share/meta
+FILES_metapk := $(datadir)/meta
 DESCRIPTION_metapk := Enigma2 skins metadata
 PACKAGES = metapk
 include packaging.mk
