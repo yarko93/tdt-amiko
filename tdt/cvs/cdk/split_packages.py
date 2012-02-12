@@ -8,10 +8,16 @@ import os
 global bb_data
 bb_data = {}
 
+def str_check(s):
+	if not isinstance(s, str):
+		raise("bb_data got non str " + s)
+
 def bb_set(var, val, *args):
+	str_check(var)
 	bb_data[var] = val
 
 def bb_get(var, *args):
+	str_check(var)
 	try:
 		return bb_data[var]
 	except KeyError:
@@ -233,8 +239,10 @@ def read_control_file(fname):
 		if line.startswith('Maintainer: '):
 			bb_set('MAINTAINER_' + full_package, line[12:])
 		if line.startswith('Version: '):
-			bb_set('PKGV_' + full_package, line[9:].split('-')[0])
-			bb_set('PKGR_' + full_package, line[9:].split('-')[1])
+			ll = line[9:].split('-')
+			bb_set('PKGV_' + full_package, ll[0])
+			if len(ll) > 1:
+				bb_set('PKGR_' + full_package, ll[1])
 		if line.startswith('Section: '):
 			bb_set('SECTION_' + full_package, line[9:])
 		if line.startswith('Priority: '):
@@ -252,8 +260,16 @@ def read_control_file(fname):
 def write_control_file(fname, full_package):
 	s = ''
 	p = []
+	def ext(param):
+		return "%s_%s" % (param, full_package)
+	pkgv = bb_get(ext('PKGV'))
+	pkgr = bb_get(ext('PKGR'))
+	if pkgr:
+		bb_set(ext('PKGF'), '%s-%s' % (pkgv, pkgr))
+	else:
+		bb_set(ext('PKGF'), pkgv)
 	p.append(["Package: %s\n", ['NAME']])
-	p.append(["Version: %s-%s\n", ['PKGV', 'PKGR']])
+	p.append(["Version: %s\n", ['PKGF']])
 	p.append(["Description: %s\n", ['DESCRIPTION']])
 	p.append(["Section: %s\n", ['SECTION']])
 	p.append(["Priority: %s\n", ['PRIORITY']])
@@ -267,16 +283,9 @@ def write_control_file(fname, full_package):
 	p.append(["Source: %s\n", ['SRC_URI']])
 	
 	for l in p:
-		def ext(param):
-			return "%s_%s" % (param, full_package)
-		var = map(bb_get, map(ext, l[1]))
-		chck = 0
-		for param in var:
-			if not param:
-				chck = 1
-				break
-		if chck: continue
-		var = l[0] % tuple(var)
+		var = bb_get(ext(l[1][0]))
+		if not var: continue
+		var = l[0] % var
 		s += var
 	print 'Write control file to', fname
 	open(fname, 'w').write(s)
