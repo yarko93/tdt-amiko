@@ -3,7 +3,7 @@
 #
 #
 enigma2-plugins-sh4:
-$(DEPDIR)/enigma2-plugins-sh4.do_prepare: ipkg-utils ipkg
+$(DEPDIR)/enigma2-plugins-sh4.do_prepare:
 
 	rm -rf $(appsdir)/plugins; \
 	clear; \
