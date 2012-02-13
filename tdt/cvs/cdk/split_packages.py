@@ -23,36 +23,44 @@ def bb_get(var, *args):
 	except KeyError:
 		return ""
 
-DATAS_STR = 'PKGV PKGR DESCRIPTION SECTION PRIORITY MAINTAINER LICENSE PACKAGE_ARCH HOMEPAGE RDEPENDS RREPLACES RCONFLICTS SRC_URI FILES'
+def bb_checkset(var, val):
+	str_check(var)
+	if not bb_data.has_key(var):
+		bb_set(var, val)
+
+DATAS_STR = 'PKGV PKGR DESCRIPTION SECTION PRIORITY MAINTAINER LICENSE PACKAGE_ARCH HOMEPAGE RDEPENDS RREPLACES RCONFLICTS SRC_URI FILES NAME'
 DATAS = DATAS_STR.split()
-
-VAR_STR = 'FILES NAME'
-VAR = VAR_STR.split()
-
-parent_pkg = "defaultpackage"
 
 #######################################################################
 #Load enviroment variables
+
+parent_pkg = os.environ['PARENT_PK']
+bb_set('PARENT_PK', os.environ['PARENT_PK'])
+
+DEFAULT_DATAS = [ 
+	['SECTION', 'base'],
+	['PRIORITY', 'optional'],
+	['LICENSE', 'unknown'],
+	['HOMEPAGE', 'unknown']]
+
+for x in DEFAULT_DATAS:
+	bb_checkset('%s_%s' % (x[0], parent_pkg), x[1])
 
 global work_dir
 work_dir = os.getcwd()
 print "Building in", work_dir
 
-bb_set('PACKAGES', os.environ['PACKAGES'])
+bb_set('PACKAGES', os.environ['PACKAGES_' + parent_pkg])
+bb_set('PACKAGES_' + parent_pkg, os.environ['PACKAGES_' + parent_pkg])
 import re
 
-extdatas = map("^{0}_.*".format, DATAS + VAR)
+extdatas = map("^{0}_.*".format, DATAS)
 regexp = '|'.join(extdatas)
 reg = re.compile(regexp)
-regexp2 = '|'.join(DATAS)
-reg2 = re.compile(regexp2)
-#print regexp
 
 for x in os.environ.keys():
 	if reg.match(x):
 		bb_set(x, os.environ[x])
-	elif reg2.match(x):
-		bb_set("%s_%s" % (x, parent_pkg), os.environ[x])
 
 #print bb_data
 

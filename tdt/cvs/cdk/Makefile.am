@@ -80,6 +80,9 @@ include make/externe-plugins.mk
 # ExterneSkins
 include make/externe-skins.mk
 
+#Some staff for building and splitting ipk packages with python
+include packaging.mk
+
 # Include neutrino gui targets
 include make/neutrino.mk
 
