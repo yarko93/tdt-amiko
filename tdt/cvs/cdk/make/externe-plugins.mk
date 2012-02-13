@@ -3,16 +3,16 @@
 #
 #
 
-DESCRIPTION := Additional plugins for Enigma2
-MAINTAINER := Ar-P team
-REPO := git://github.com/schpuntik/enigma2-plugins-sh4.git
-SRC_URI := $(REPO)
-PACKAGE_ARCH := sh4
-NAME_metapk := enigma2-plugins-meta
-FILES_metapk := /usr/local/share/meta
-DESCRIPTION_metapk := Enigma2 plugins metadata
-PACKAGES = metapk
-RDEPENDS := enigma2
+DESCRIPTION_e2plugin := Additional plugins for Enigma2
+MAINTAINER_e2plugin := Ar-P team
+REPO_e2plugin = git://github.com/schpuntik/enigma2-plugins-sh4.git
+SRC_URI_e2plugin = $(REPO_e2plugin)
+PACKAGE_ARCH_e2plugin := sh4
+NAME_e2plugin_meta := enigma2-plugins-meta
+FILES_e2plugin_meta := /usr/local/share/meta
+DESCRIPTION_e2plugin_meta := Enigma2 plugins metadata
+PACKAGES_e2plugin = e2plugin_meta
+RDEPENDS_e2plugin := enigma2
 
 enigma2-plugins-sh4:
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
@@ -76,10 +76,11 @@ $(DEPDIR)/enigma2-plugins-sh4.do_compile: $(appsdir)/plugins/config.status
 		$(MAKE) all
 	touch $@
 
-GIT_DATE = $(shell cd $(appsdir)/plugins && git log -1 --format=%cd --date=short |sed s/-//g)
-PKGV = 3.2git$(GIT_DATE)
-PKGR = r0
+PKGV_e2plugin = 3.2git$(shell cd $(appsdir)/plugins && git log -1 --format=%cd --date=short |sed s/-//g)
+PKGR_e2plugin = r0
 enigma2_plugindir = /usr/lib/enigma2/python/Plugins
+
+enigma2-plugins-sh4-package: export PARENT_PK = e2plugin
 enigma2-plugins-sh4-package: enigma2-plugins-sh4.do_compile
 	$(MAKE) -C $(appsdir)/plugins install DESTDIR=$(ipkprefix)
 	rm -rf $(ipkgbuilddir)
@@ -103,7 +104,6 @@ enigma2-plugins-sh4-package: enigma2-plugins-sh4.do_compile
 	done
 
 $(DEPDIR)/enigma2-plugins-sh4: enigma2-plugins-sh4.do_prepare enigma2-plugins-sh4.do_compile enigma2-plugins-sh4-package
-	$(MAKE) -C $(appsdir)/plugins install DESTDIR=$(ipkprefix)
 	touch $@
 
 enigma2-plugins-sh4-clean enigma2-plugins-sh4-distclean:

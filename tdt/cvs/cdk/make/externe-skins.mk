@@ -3,25 +3,24 @@
 #
 #
 
-DESCRIPTION := Skins for Enigma2
-MAINTAINER := Ar-P team
-BRANCH := bbhack-test
-REPO := git://github.com/schpuntik/enigma2-skins-sh4.git
-SRC_URI := $(REPO);branch=$(BRANCH)
-PACKAGE_ARCH := all
-NAME_metapk := enigma2-skins-meta
-FILES_metapk := $(datadir)/meta
-DESCRIPTION_metapk := Enigma2 skins metadata
-PACKAGES = metapk
-include packaging.mk
+DESCRIPTION_e2skin := Skins for Enigma2
+MAINTAINER_e2skin := Ar-P team
+BRANCH_e2skin := bbhack-test
+REPO_e2skin := git://github.com/schpuntik/enigma2-skins-sh4.git
+SRC_URI_e2skin := $(REPO_e2skin);branch=$(BRANCH_e2skin)
+PACKAGE_ARCH_e2skin := all
+NAME_e2skin_meta := enigma2-skins-meta
+FILES_e2skin_meta := /usr/local/share/meta
+DESCRIPTION_e2skin_meta := Enigma2 skins metadata
+PACKAGES_e2skin = e2skin_meta
 
 enigma2-skins-sh4:
 $(DEPDIR)/enigma2-skins-sh4.do_prepare:
 	rm -rf $(appsdir)/skins;
 	if [ -e $(targetprefix)/usr/bin/enigma2 ]; then \
-		git clone $(REPO) $(appsdir)/skins; \
+		git clone $(REPO_e2skin) $(appsdir)/skins; \
 	fi
-	cd $(appsdir)/skins; git checkout $(BRANCH);
+	cd $(appsdir)/skins; git checkout $(BRANCH_e2skin);
 	touch $@
 
 $(appsdir)/skins/config.status: 
@@ -70,10 +69,10 @@ $(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
 		$(MAKE) all
 	touch $@
 
-GIT_DATE = $(shell cd $(appsdir)/skins && git log -1 --format=%cd --date=short |sed s/-//g)
-PKGV = 3.2git$(GIT_DATE)
-PKGR = r0
+PKGV_e2skin = 3.2git$(shell cd $(appsdir)/skins && git log -1 --format=%cd --date=short |sed s/-//g)
+PKGR_e2skin = r0
 enigma2_skindir = '/usr/local/share/enigma2'
+enigma2-skins-sh4-package: export PARENT_PK = e2skin
 enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
 	$(MAKE) -C $(appsdir)/skins install DESTDIR=$(ipkprefix)
 	rm -rf $(ipkgbuilddir)
@@ -95,5 +94,5 @@ enigma2-skins-sh4-clean enigma2-skins-sh4-distclean:
 	rm -f $(DEPDIR)/enigma2-skins-sh4.do_compile
 	rm -f $(DEPDIR)/enigma2-skins-sh4.do_prepare
 	rm -rf $(ipkgbuilddir)
-	rm -rf $(ipkprefix)
+#	rm -rf $(ipkprefix)
 	rm -rf $(appsdir)/skins
