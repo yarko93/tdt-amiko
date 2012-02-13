@@ -69,7 +69,6 @@ $(appsdir)/plugins/config.status:
 			$(if $(IPBOX9900),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX9900 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(IPBOX99),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX99 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
-		touch $@
 
 $(DEPDIR)/enigma2-plugins-sh4.do_compile: $(appsdir)/plugins/config.status
 	cd $(appsdir)/plugins && \
@@ -111,4 +110,6 @@ enigma2-plugins-sh4-clean enigma2-plugins-sh4-distclean:
 	rm -f $(DEPDIR)/enigma2-plugins-sh4.do_compile
 	rm -f $(DEPDIR)/enigma2-plugins-sh4.do_prepare
 	rm -rf $(appsdir)/plugins
-
+enigma2-sh4-package-distclean:
+	rm -rf $(ipkgbuilddir)
+	rm -rf $(ipkprefix)
