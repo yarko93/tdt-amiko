@@ -17,9 +17,10 @@ PACKAGES_e2skin = e2skin_meta
 enigma2-skins-sh4:
 $(DEPDIR)/enigma2-skins-sh4.do_prepare:
 	rm -rf $(appsdir)/skins;
-	if [ -e $(targetprefix)/usr/bin/enigma2 ]; then \
-		git clone $(REPO_e2skin) $(appsdir)/skins; \
+	if [ ! -e $(targetprefix)/usr/bin/enigma2 ]; then \
+		echo Enigma2 not builded; \
 	fi
+	git clone $(REPO_e2skin) $(appsdir)/skins
 	cd $(appsdir)/skins; git checkout $(BRANCH_e2skin);
 	touch $@
 
@@ -74,7 +75,9 @@ PKGR_e2skin = r0
 enigma2_skindir = '/usr/local/share/enigma2'
 enigma2-skins-sh4-package: export PARENT_PK = e2skin
 enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
-	$(MAKE) -C $(appsdir)/skins install DESTDIR=$(ipkprefix)
+	rm -rf $(packagingtmpdir)
+	mkdir -p $(packagingtmpdir)
+	$(MAKE) -C $(appsdir)/skins install DESTDIR=$(packagingtmpdir)
 	rm -rf $(ipkgbuilddir)
 	@echo 'next variables are exported to enviroment:'
 	@echo $(EXPORT_ENV) | tr ' ' '\n'
