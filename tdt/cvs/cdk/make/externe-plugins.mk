@@ -19,7 +19,6 @@ $(appsdir)/plugins/config.status:
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i $(appsdir)/plugins/xml2po.py && \
 		./configure \
 			--host=$(target) \
-			--without-libsdl \
 			--with-datadir=/usr/local/share \
 			--with-libdir=/usr/lib \
 			--with-plugindir=/usr/lib/enigma2/python/Plugins \
