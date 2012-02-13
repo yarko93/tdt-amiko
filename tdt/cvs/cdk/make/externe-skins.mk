@@ -64,7 +64,7 @@ $(appsdir)/skins/config.status:
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
 	touch $@	    
 
-$(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
+$(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status $(IPKG_BUILD_BIN)
 	cd $(appsdir)/skins && \
 		$(MAKE) all
 	touch $@
@@ -89,7 +89,10 @@ enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
 $(DEPDIR)/enigma2-skins-sh4: enigma2-skins-sh4.do_prepare enigma2-skins-sh4.do_compile enigma2-skins-sh4-package
 	touch $@
 
-enigma2-skins-sh4-clean enigma2-skins-sh4-distclean:
+enigma2-skins-sh4-clean:
+	rm -f $(DEPDIR)/enigma2-skins-sh4
+	rm -f $(DEPDIR)/enigma2-skins-sh4.do_compile
+enigma2-skins-sh4-distclean:
 	rm -f $(DEPDIR)/enigma2-skins-sh4
 	rm -f $(DEPDIR)/enigma2-skins-sh4.do_compile
 	rm -f $(DEPDIR)/enigma2-skins-sh4.do_prepare

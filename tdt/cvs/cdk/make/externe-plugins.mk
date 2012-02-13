@@ -70,7 +70,7 @@ $(appsdir)/plugins/config.status:
 			$(if $(IPBOX99),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX99 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
 
-$(DEPDIR)/enigma2-plugins-sh4.do_compile: $(appsdir)/plugins/config.status
+$(DEPDIR)/enigma2-plugins-sh4.do_compile: $(appsdir)/plugins/config.status $(IPKG_BUILD_BIN)
 	cd $(appsdir)/plugins && \
 		$(MAKE) all
 	touch $@
@@ -105,11 +105,16 @@ enigma2-plugins-sh4-package: enigma2-plugins-sh4.do_compile
 $(DEPDIR)/enigma2-plugins-sh4: enigma2-plugins-sh4.do_prepare enigma2-plugins-sh4.do_compile enigma2-plugins-sh4-package
 	touch $@
 
-enigma2-plugins-sh4-clean enigma2-plugins-sh4-distclean:
+enigma2-plugins-sh4-clean:
+	rm -f $(DEPDIR)/enigma2-plugins-sh4
+	rm -f $(DEPDIR)/enigma2-plugins-sh4.do_compile
+
+enigma2-plugins-sh4-distclean:
 	rm -f $(DEPDIR)/enigma2-plugins-sh4
 	rm -f $(DEPDIR)/enigma2-plugins-sh4.do_compile
 	rm -f $(DEPDIR)/enigma2-plugins-sh4.do_prepare
 	rm -rf $(appsdir)/plugins
+
 enigma2-sh4-package-distclean:
 	rm -rf $(ipkgbuilddir)
 	rm -rf $(ipkprefix)
