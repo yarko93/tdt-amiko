@@ -17,9 +17,10 @@ PACKAGES_e2skin = e2skin_meta
 enigma2-skins-sh4:
 $(DEPDIR)/enigma2-skins-sh4.do_prepare:
 	rm -rf $(appsdir)/skins;
-	if [ -e $(targetprefix)/usr/bin/enigma2 ]; then \
-		git clone $(REPO_e2skin) $(appsdir)/skins; \
+	if [ ! -e $(targetprefix)/usr/bin/enigma2 ]; then \
+		echo Enigma2 not builded; \
 	fi
+	git clone $(REPO_e2skin) $(appsdir)/skins
 	cd $(appsdir)/skins; git checkout $(BRANCH_e2skin);
 	touch $@
 
