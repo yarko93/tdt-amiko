@@ -110,4 +110,6 @@ enigma2-plugins-sh4-clean enigma2-plugins-sh4-distclean:
 	rm -f $(DEPDIR)/enigma2-plugins-sh4.do_compile
 	rm -f $(DEPDIR)/enigma2-plugins-sh4.do_prepare
 	rm -rf $(appsdir)/plugins
-
+enigma2-sh4-package-distclean:
+	rm -rf $(ipkgbuilddir)
+	rm -rf $(ipkprefix)
