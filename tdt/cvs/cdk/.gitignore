@@ -39,3 +39,4 @@ freetype-*
 !*.diff
 !*.patch
 rtmpdump-*
+*.pyc

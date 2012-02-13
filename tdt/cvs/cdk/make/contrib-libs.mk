@@ -1909,7 +1909,7 @@ $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compi
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
-################ EXTERNAL_CLD #############################
+################ EXTERNAL_LCD #############################
 
 # libusb 
 # 
@@ -1966,7 +1966,7 @@ $(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
 #$(DEPDIR)/graphlcd: graphlcd.do_compile
 #	touch $@
 
-################ END EXTERNAL_CLD #############################
+################ END EXTERNAL_LCD #############################
 
 #
 # eve-browser
