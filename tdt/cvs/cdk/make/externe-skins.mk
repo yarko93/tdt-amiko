@@ -16,7 +16,7 @@ PACKAGES = metapk
 include packaging.mk
 
 enigma2-skins-sh4:
-$(DEPDIR)/enigma2-skins-sh4.do_prepare:ipkg-utils ipkg
+$(DEPDIR)/enigma2-skins-sh4.do_prepare:
 	rm -rf $(appsdir)/skins;
 	if [ -e $(targetprefix)/usr/bin/enigma2 ]; then \
 		git clone $(REPO) $(appsdir)/skins; \
