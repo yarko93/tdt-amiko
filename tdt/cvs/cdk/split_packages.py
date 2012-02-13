@@ -66,7 +66,7 @@ for x in os.environ.keys():
 
 #install DEST_DIR
 global pkgs_dir
-pkgs_dir = os.environ['IPKPREFIX']
+pkgs_dir = os.environ['packagingtmpdir']
 print "searching for files in", pkgs_dir
 
 #where this script will build packages

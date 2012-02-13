@@ -81,7 +81,9 @@ enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 
 enigma2-plugins-sh4-package: export PARENT_PK = e2plugin
 enigma2-plugins-sh4-package: enigma2-plugins-sh4.do_compile
-	$(MAKE) -C $(appsdir)/plugins install DESTDIR=$(ipkprefix)
+	rm -rf $(packagingtmpdir)
+	mkdir -p $(packagingtmpdir)
+	$(MAKE) -C $(appsdir)/plugins install DESTDIR=$(packagingtmpdir)
 	rm -rf $(ipkgbuilddir)
 	@echo 'next variables are exported to enviroment:'
 	@echo $(EXPORT_ENV) | tr ' ' '\n'
