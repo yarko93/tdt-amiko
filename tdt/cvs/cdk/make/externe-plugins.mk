@@ -2,7 +2,6 @@
 # Make Extern-Plugins
 #
 #
-
 DESCRIPTION_e2plugin := Additional plugins for Enigma2
 MAINTAINER_e2plugin := Ar-P team
 REPO_e2plugin = git://github.com/schpuntik/enigma2-plugins-sh4.git
@@ -16,14 +15,13 @@ RDEPENDS_e2plugin := enigma2
 
 enigma2-plugins-sh4:
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
-
 	rm -rf $(appsdir)/plugins; \
 	clear; \
 	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
 		git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins;\
 	fi
-	git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins
-	cd $(appsdir)/plugins ; ln -s ../../../tufsbox/cdkroot/usr/include/enigma2/lib lib ; \
+	git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins && \
+	cd $(appsdir)/plugins && ln -s ../../../tufsbox/cdkroot/usr/include/enigma2/lib lib ; \
 	ln -s ../../../tufsbox/cdkroot/usr/include/enigma2/connection.h connection.h ; \
 	ln -s ../../../tufsbox/cdkroot/usr/include/enigma2/libsig_comp.h libsig_comp.h ; \
 	git checkout master; cd "$(buildprefix)"; \
@@ -70,7 +68,7 @@ $(appsdir)/plugins/config.status:
 			$(if $(IPBOX99),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX99 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
 
-$(DEPDIR)/enigma2-plugins-sh4.do_compile: $(appsdir)/plugins/config.status $(IPKG_BUILD_BIN)
+$(DEPDIR)/enigma2-plugins-sh4.do_compile: $(appsdir)/plugins/config.status
 	cd $(appsdir)/plugins && \
 		$(MAKE) all
 	touch $@

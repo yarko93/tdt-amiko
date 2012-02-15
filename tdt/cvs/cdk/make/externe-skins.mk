@@ -21,7 +21,7 @@ $(DEPDIR)/enigma2-skins-sh4.do_prepare:
 		echo Enigma2 not builded; \
 	fi
 	git clone $(REPO_e2skin) $(appsdir)/skins
-	cd $(appsdir)/skins; git checkout $(BRANCH_e2skin);
+	cd $(appsdir)/skins && git checkout $(BRANCH_e2skin);
 	touch $@
 
 $(appsdir)/skins/config.status: 
@@ -65,7 +65,7 @@ $(appsdir)/skins/config.status:
 			$(if $(IPBOX55),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_IPBOX55 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
 	touch $@	    
 
-$(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status $(IPKG_BUILD_BIN)
+$(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
 	cd $(appsdir)/skins && \
 		$(MAKE) all
 	touch $@
