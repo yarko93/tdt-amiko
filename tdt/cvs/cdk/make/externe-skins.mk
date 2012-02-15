@@ -70,7 +70,7 @@ $(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
 		$(MAKE) all
 	touch $@
 
-PKGV_e2skin = 3.2git$(shell cd $(appsdir)/skins && git log -1 --format=%cd --date=short |sed s/-//g)
+enigma2-skins-sh4-package: export PKGV_e2skin = 3.2git$(shell cd $(appsdir)/skins && git log -1 --format=%cd --date=short |sed s/-//g)
 PKGR_e2skin = r0
 enigma2_skindir = '/usr/local/share/enigma2'
 enigma2-skins-sh4-package: export PARENT_PK = e2skin
