@@ -75,7 +75,7 @@ $(DEPDIR)/enigma2-plugins-sh4.do_compile: $(appsdir)/plugins/config.status $(IPK
 		$(MAKE) all
 	touch $@
 
-PKGV_e2plugin = 3.2git$(shell cd $(appsdir)/plugins && git log -1 --format=%cd --date=short |sed s/-//g)
+enigma2-plugins-sh4-package: export PKGV_e2plugin = 3.2git$(shell cd $(appsdir)/plugins && git log -1 --format=%cd --date=short |sed s/-//g)
 PKGR_e2plugin = r0
 enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 
