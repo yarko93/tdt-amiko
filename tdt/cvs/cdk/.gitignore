@@ -40,3 +40,9 @@ freetype-*
 !*.patch
 rtmpdump-*
 *.pyc
+packagingtmpdir
+busybox-*
+ipkg-host
+ipkg-utils-*
+libpng-*
+ipkgbuild

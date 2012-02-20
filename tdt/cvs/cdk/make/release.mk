@@ -1357,7 +1357,6 @@ endif
 		cp -a $(targetprefix)/usr/local/lib/enigma2/* $(prefix)/release/usr/lib/enigma2/; fi
 
 #	Dont remove pyo files, remove pyc instead
-	find $(prefix)/release/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.pyo' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
@@ -1374,8 +1373,6 @@ endif
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/TempFanControl
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/DefaultServicesScanner
-	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/DiseqcTester
-	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/SoftwareManager
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/CommonInterfaceAssignment
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/CrashlogAutoSubmit
 
@@ -1417,7 +1414,6 @@ endif
 	rm -rf $(prefix)/release/usr/lib/python2.6/email
 
 #	Dont remove pyo files, remove pyc instead
-	find $(prefix)/release/usr/lib/python2.6/ -name '*.pyc' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.pyo' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.a' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.o' -exec rm -f {} \;
