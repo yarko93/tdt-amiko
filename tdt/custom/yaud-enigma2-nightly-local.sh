@@ -3,6 +3,7 @@ CURDIR=`pwd`
 NRELDIR='../../tufsbox/release'
 CHANGEDIR='../../tufsbox'
 TARGET=`cat $CURDIR/lastChoice | awk -F '--enable-' '{print $7}' | cut -d ' ' -f 1`
+DIST=`cat $CURDIR/lastChoice | awk -F '--enable-' '{print $5}' | cut -d ' ' -f 1`
 BUILDDIR='../../cvs/cdk'
 
 echo "src/gz AR-P http://vip.sat-universum.de" | cat - $NRELDIR/etc/opkg/official-feed.conf > $NRELDIR/etc/opkg/official-feed
@@ -19,11 +20,13 @@ echo config.misc.epgcache_filename=/hdd/epg.dat >> $NRELDIR/etc/enigma2/settings
 rm  $NRELDIR/usr/local/share/enigma2/keymap_*.xml
 cp -RP ~/enigma2-amiko/enigma2/* $NRELDIR/
 rm $NRELDIR/lib/modules/pti.ko
-if [ $TARGET == p0209 ]; then
+if [ $TARGET == p0209 ]; [ $DIST == spark ]; then
   mv $NRELDIR/lib/modules/pti_209.ko $NRELDIR/lib/modules/pti.ko
-elif [ $TARGET == p0207 ]; then
+elif [ $TARGET == p0207 ]; [ $DIST == spark ]; then
     mv $NRELDIR/lib/modules/pti_207.ko $NRELDIR/lib/modules/pti.ko
-elif [ $TARGET == p0123 ]; then
+elif [ $TARGET == p0207 ]; [ $DIST == spark7162 ]; then
+    mv $NRELDIR/lib/modules/pti_207s2.ko $NRELDIR/lib/modules/pti.ko
+elif [ $TARGET == p0123 ]; [ $DIST == spark ]; then
     mv $NRELDIR/lib/modules/pti_123.ko $NRELDIR/lib/modules/pti.ko
 fi
 cd $NRELDIR/usr/lib/locale
