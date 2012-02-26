@@ -1,4 +1,4 @@
-f>>*** linux-sh4-2.6.32.46_stm24_0209.orig/arch/sh/boards/mach-sat7111/setup.c	2011-11-24 22:22:25.000000000 +0200
+*** linux-sh4-2.6.32.46_stm24_0209.orig/arch/sh/boards/mach-sat7111/setup.c	2011-11-24 22:22:25.000000000 +0200
 --- linux-sh4/arch/sh/boards/mach-sat7111/setup.c	2011-11-24 23:06:54.479869987 +0200
 ***************
 *** 33,51 ****
