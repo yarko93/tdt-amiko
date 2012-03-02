@@ -1,219 +1,3 @@
-COMMONPATCHES_41 = \
-		linux-nosquashfs3.1_stm22.patch \
-		linux-squashfs3.0_stm22.patch \
-		linux-squashfs3.0_lzma_stm22.patch \
-		linux-mini_fo_stm22.patch \
-		linux-do-printk_stm22.patch \
-		linux-ufs922_ktime_stm22.patch \
-		linux-ufs922_hrtimer_stm22.patch \
-		linux-ufs922_linuxdvb_stm22.patch \
-		linux-ufs922_sound_stm22.patch \
-		linux-ufs922_copo_stm22.patch \
-		linux-ufs922_stm-dma_stm22.patch \
-		linux-sched_stm22.patch \
-		linux-timer_stm22.patch \
-		linux-cmdline_printk_stm22.patch \
-		linux-2.6.17.14-0041_make-3.82_fix.patch \
-		linux-strcpy_stm22.patch
-
-FORTISPATCHES_41 = $(COMMONPATCHES_41) \
-		linux-fortis_hdbox_setup_stm22.patch \
-		linux-fortis_hdbox_dvb_stm22.patch \
-		linux-fortis_hdbox_sound_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch \
-		linux-fortis_stboards_stm22.patch
-
-ATEVIO7500_41 = $(COMMONPATCHES_41) \
-		linux-atevio7500_setup_stm22.patch \
-		linux-fortis_hdbox_dvb_stm22.patch \
-		linux-fortis_hdbox_sound_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch \
-		linux-atevio7500_stboards_stm22.patch
-
-OCTAGON1008PATCHES_41 = $(COMMONPATCHES_41) \
-		octagon1008_setup_p0041.diff \
-		linux-fortis_hdbox_dvb_stm22.patch \
-		linux-fortis_hdbox_sound_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch \
-		linux-octagon1008_stboards_stm22.patch
-
-UFS922PATCHES_41 = $(COMMONPATCHES_41) \
-		linux-ufs922_stasc_stm22.patch \
-		linux-ufs922_stmmac_stm22.patch \
-		linux-ufs922_setup_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch \
-		linux-ufs922_stboards_stm22.patch
-
-TF7700PATCHES_41 = $(COMMONPATCHES_41) \
-		linux-ufs922_stasc_stm22.patch \
-		linux-tf7700_setup_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch
-
-HL101PATCHES_41 = $(COMMONPATCHES_41) \
-		linux-ufs922_stasc_stm22.patch \
-		linux-hl101_setup_stm22.patch \
-		linux-linuxdvb_api5_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch
-
-VIP2PATCHES_41 = $(COMMONPATCHES_41) \
-		linux-ufs922_stasc_stm22.patch \
-		linux-vip2_setup_stm22.patch \
-		linux-linuxdvb_api5_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch
-
-UFS910PATCHES_41 = $(COMMONPATCHES_41) \
-		linux-ufs910_smsc_stm22.patch \
-		linux-ufs910_i2c_stm22.patch \
-		linux-ufs910_setup_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch \
-		linux-ufs910_stboards_stm22.patch
-
-FLASHUFS910PATCHES_41 = $(COMMONPATCHES_41) \
-		linux-ufs910_smsc_stm22.patch \
-		linux-ufs910_i2c_stm22.patch \
-		linux-ufs910_setup_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch \
-		linux-ufs910_stboards_stm22.patch
-
-IPBOX9900PATCHES_41 = $(COMMONPATCHES_41) \
-		linux-ipbox_patches_stm22.patch \
-		linux-ipbox_setup_stm22.patch \
-		linux-linuxdvb_api5_stm22.patch \
-		linux-ipbox_fdma_stm22.patch \
-		linux-ipbox_i2c_stm22.patch \
-		linux-ipbox_rtl8201_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch \
-		linux-ipbox_lirc_stm22.patch
-
-IPBOX99PATCHES_41 = $(COMMONPATCHES_41) \
-		linux-ipbox_patches_stm22.patch \
-		linux-ipbox_setup_stm22.patch \
-		linux-linuxdvb_api5_stm22.patch \
-		linux-ipbox_fdma_stm22.patch \
-		linux-ipbox_i2c_stm22.patch \
-		linux-ipbox_rtl8201_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch \
-		linux-ipbox_lirc_stm22.patch
-
-IPBOX55PATCHES_41 = $(COMMONPATCHES_41) \
-		linux-ipbox_patches_stm22.patch \
-		linux-ipbox_setup_stm22.patch \
-		linux-linuxdvb_api5_stm22.patch \
-		linux-ipbox_fdma_stm22.patch \
-		linux-ipbox_i2c_stm22.patch \
-		linux-ipbox_rtl8201_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch \
-		linux-ipbox_lirc_stm22.patch
-
-# IMPORTANT: it is expected that only one define is set
-CUBEMOD=$(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)
-CUBEPATCHES_041 = $(COMMONPATCHES_41) \
-		linux-cuberevo_patches_stm22.patch \
-		linux-cuberevo_fdma_stm22.patch \
-		linux-cuberevo_i2c_stm22.patch \
-		linux-cuberevo_rtl8201_stm22.patch \
-		linux-$(CUBEMOD)_setup_stm22.patch \
-		linux-fat_stm22.patch \
-		linux-fuse_stm22.patch \
-		linux-net_stm22.patch \
-		linux-tune_stm22.patch \
-		linux-usbwait123_stm22.patch \
-		linux-jffs2-lzma_stm22.patch \
-		linux-ftdi_sio.c_stm22.patch
-
-HS5101PATCHES_41 = $(COMMONPATCHES_41) \
-		$(UFS910PATCHES_41) \
-		linux-hs5101_setup_stm22.patch \
-		linux-hs5101_stasc_stm22.patch
-
-KERNELPATCHES_41 = \
-		$(if $(TF7700),$(TF7700PATCHES_41)) \
-		$(if $(HL101),$(HL101PATCHES_41)) \
-		$(if $(VIP1_V2),$(VIP2PATCHES_41)) \
-		$(if $(VIP2_V1),$(VIP2PATCHES_41)) \
-		$(if $(UFS922),$(UFS922PATCHES_41)) \
-		$(if $(CUBEMOD),$(CUBEPATCHES_041)) \
-		$(if $(UFS910),$(UFS910PATCHES_41)) \
-		$(if $(FLASH_UFS910),$(FLASHUFS910PATCHES_41)) \
-		$(if $(FORTIS_HDBOX),$(FORTISPATCHES_41)) \
-		$(if $(ATEVIO7500),$(ATEVIO7500_41)) \
-		$(if $(OCTAGON1008),$(OCTAGON1008PATCHES_41)) \
-		$(if $(HOMECAST5101),$(HS5101PATCHES_41)) \
-		$(if $(IPBOX9900),$(IPBOX9900PATCHES_41)) \
-		$(if $(IPBOX99),$(IPBOX99PATCHES_41)) \
-		$(if $(IPBOX55),$(IPBOX55PATCHES_41)) \
-		$(if $(PLAYER179),linux-v4l.patch)
-
 ############ Patches Kernel 23 ###############
 
 if ENABLE_P0119
@@ -678,8 +462,6 @@ $(DEPDIR)/kernel-headers: linux-kernel.do_prepare
 		cp -a include/mtd $(targetprefix)/usr/include
 	touch $@
 
-if STM22
-else !STM22
 KERNELHEADERS := linux-kernel-headers
 if STM23
 if ENABLE_P0119
@@ -743,7 +525,6 @@ $(DEPDIR)/%$(KERNELHEADERS): $(KERNELHEADERS_RPM)
 	@rpm $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	touch $@
-endif !STM22
 
 #
 # HOST-KERNEL
@@ -758,15 +539,6 @@ DEBUG_STR=
 endif !DEBUG
 
 HOST_KERNEL := host-kernel
-if STM22
-HOST_KERNEL_VERSION := 2.6.17.14_stm22_0041-41
-HOST_KERNEL_SPEC := stm-$(HOST_KERNEL).spec
-HOST_KERNEL_SPEC_PATCH :=
-HOST_KERNEL_PATCHES := $(KERNELPATCHES_41)
-HOST_KERNEL_CONFIG := linux-$(subst _stm22_,-,$(KERNELVERSION))_$(MODNAME).config$(DEBUG_STR)
-HOST_KERNEL_SRC_RPM := $(STLINUX)-$(HOST_KERNEL)-source-$(HOST_KERNEL_VERSION).src.rpm
-HOST_KERNEL_RPM := RPMS/noarch/$(STLINUX)-$(HOST_KERNEL)-source-$(HOST_KERNEL_VERSION).noarch.rpm
-else !STM22
 if STM23
 HOST_KERNEL_VERSION := 2.6.23.17$(KERNELSTMLABEL)-$(KERNELLABEL)
 HOST_KERNEL_SPEC := stm-$(HOST_KERNEL)-sh4.spec
@@ -815,7 +587,6 @@ endif
 
 # endif STM24
 endif !STM23
-endif !STM22
 
 if ENABLE_HAVANA_P0207_5
 
@@ -989,37 +760,6 @@ $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 	$(INSTALL) -m644 $(KERNEL_DIR)/System.map $(prefix)/$*cdkroot/boot/System.map-sh4-$(KERNELVERSION) && \
 	$(INSTALL) -m644 $(KERNEL_DIR)/COPYING $(prefix)/$*cdkroot/boot/LICENSE
 	cp $(KERNEL_DIR)/arch/sh/boot/uImage $(prefix)/$*cdkroot/boot/
-#if STM22
-	echo -e "ST Linux Distribution - Binary Kernel\n \
-	CPU: sh4\n \
-	$(if $(FORTIS_HDBOX),PLATFORM: stb7109ref\n) \
-	$(if $(ATEVIO7500),PLATFORM: stb7105ref\n) \
-	$(if $(OCTAGON1008),PLATFORM: stb7109ref\n) \
-	$(if $(UFS922),PLATFORM: stb7109ref\n) \
-	$(if $(TF7700),PLATFORM: stb7109ref\n) \
-	$(if $(HL101),PLATFORM: stb7109ref\n) \
-	$(if $(VIP1_V2),PLATFORM: stb7109ref\n) \
-	$(if $(VIP2_V1),PLATFORM: stb7109ref\n) \
-	$(if $(UFS910),PLATFORM: stb7100ref\n) \
-	$(if $(FLASH_UFS910),PLATFORM: stb7100ref\n) \
-	$(if $(CUBEREVO),PLATFORM: stb7109ref\n) \
-	$(if $(CUBEREVO_MINI),PLATFORM: stb7109ref\n) \
-	$(if $(CUBEREVO_MINI2),PLATFORM: stb7109ref\n) \
-	$(if $(CUBEREVO_MINI_FTA),PLATFORM: stb7109ref\n) \
-	$(if $(CUBEREVO_250HD),PLATFORM: stb7109ref\n) \
-	$(if $(CUBEREVO_2000HD),PLATFORM: stb7109ref\n) \
-	$(if $(CUBEREVO_9500HD),PLATFORM: stb7109ref\n) \
-	$(if $(HOMECAST5101),PLATFORM: stb7109ref\n) \
-	$(if $(ADB_BOX),PLATFORM: stb7100ref\n) \
-	$(if $(IPBOX9900),PLATFORM: stb7109ref\n) \
-	$(if $(IPBOX99),PLATFORM: stb7109ref\n) \
-	$(if $(IPBOX55),PLATFORM: stb7109ref\n) \
-	KERNEL VERSION: $(KERNELVERSION)\n" > $(prefix)/$*cdkroot/README.ST && \
-	$(MAKE) -C $(KERNEL_DIR) ARCH=sh INSTALL_MOD_PATH=$(prefix)/$*cdkroot modules_install && \
-	rm $(prefix)/$*cdkroot/lib/modules/$(KERNELVERSION)/build || true && \
-	rm $(prefix)/$*cdkroot/lib/modules/$(KERNELVERSION)/source || true
-#else
-#endif
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
