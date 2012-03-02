@@ -1,0 +1,51 @@
+# These rules are smarter ;)
+# semicolumn eaquals line break, rules are separated by one of them
+# all traling whitespaces are ignored, use them for pretier indetation
+# so this:
+#   megaproject; v2.0; file://hello_world.c;
+# and this:
+#   megaproject
+#     v2.0
+#     file://hello_world.c;
+# are the same
+# 
+# double semicolumn or semicolumn + linebreak or double linebreak or even linebreak + semicolumn
+# can be used for separating packages
+#
+# first three rules are not exactly "rules" they are corresponding to package name, package version
+# and build subdirectory.
+#
+# each next rule is in "command:argument" format
+# for example
+#   extract:http://someserver.com/pacakge-2.1.tar.gz
+# by the way, extract is the default command, so you can type just
+#   http://someserver.com/pacakge-2.1.tar.gz
+# if you want only to copy a file to the build directory use
+#   nothing:http://someserver/logo.png
+# other available commands are
+#   dirextract - first cd to build directory, than extract
+#   patch - apply as patch
+#   rpmbuild - building from rpm package
+# these are most common tasks, see smart-rules.pl for details and feel free to add more..
+# However, some special rules is better to write directly to .mk file
+#
+# To make rules quite you can use two special words, {PN} and {PV} which refers to package name and version.
+#
+# Now consider sources that are suppored:
+#  http:// - http wget download
+#  ftp:// - ftp wget download
+#  file:// - look for file in Pathes directory
+# svn and git coming soon...
+#
+# if rule command doesn't match ones listed above, this is treated as install/uninstall rule.
+# 
+# below you can see mew lirc rule, which replaces corresponding entries in rules-make, rules-install and rules-archive
+# It is much less complicated !
+# lirc
+#   0.9.0
+#   {PN}-{PV}
+#   extract:http://prdownloads.sourceforge.net/lirc/{PN}-{PV}.tar.gz
+#   patch:file://{PN}-{PV}-try_first_last_remote.diff
+#   make:install:DESTDIR=TARGETS
+#   rewrite-libtool:TARGETS/usr/lib/liblirc_client.la
+# ;

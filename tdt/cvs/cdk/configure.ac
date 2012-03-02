@@ -1153,6 +1153,10 @@ AC_MSG_NOTICE([creating Makefile-archive])
 ${srcdir}/rules-archive.pl ${srcdir}/rules-archive > Makefile-archive
 ])
 
+AC_SUBST(DOWNLOAD_FOR_SMART)
+AC_SUBST(SMART_DOWNLOAD_RULES)
+AM_SUBST_NOTMAKE(SMART_DOWNLOAD_RULES)
+
 #
 # summary
 #
