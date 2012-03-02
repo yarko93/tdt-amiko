@@ -77,7 +77,8 @@ INSTALL_$1=`${srcdir}/smart-rules.pl install ${srcdir}/smart-rules $1`
 UNINSTALL_$1=`${srcdir}/smart-rules.pl uninstall ${srcdir}/smart-rules $1`
 DOWNLOAD_$1=`${srcdir}/smart-rules.pl download ${srcdir}/smart-rules $1`
 DOWNLOAD_FOR_SMART="$DOWNLOAD_FOR_SMART $DEPENDS_$1"
-SMART_DOWNLOAD_RULES="$SMART_DOWNLOAD_RULES $DOWNLOAD_$1"
+SMART_DOWNLOAD_RULES="$SMART_DOWNLOAD_RULES
+$DOWNLOAD_$1"
 PKGV_$1=$VERSION_$1
 SRC_URI_$1="$SOURCES_$1"
 DEPSCLEANUP_$1="rm .deps/$1"

@@ -955,6 +955,11 @@ TUXBOX_RULES_MAKE(opkg)
 TUXBOX_RULES_MAKE(pppd)
 
 #
+# contrib apps with smart rules
+#
+SMART_RULES_MAKE(ntpclient)
+
+#
 # contrib libs
 #
 TUXBOX_RULES_MAKE(libboost)
