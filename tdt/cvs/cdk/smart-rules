@@ -59,3 +59,11 @@ ntpclient
   http://doolittle.icarus.com/ntpclient/{PN}_{PV}.tar.gz
   nothing:file://{PN}-init.file
 ;
+
+udpxy
+  1.0.21-2
+  {PN}-{PV}
+  http://sourceforge.net/projects/udpxy/files/udpxy/Chipmunk-1.0/udpxy.{PV}-prod.tgz
+  #for patch -p0 use the follwing
+  patch-0:file://udpxy-makefile.patch
+;

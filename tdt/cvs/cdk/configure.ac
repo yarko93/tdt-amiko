@@ -958,6 +958,7 @@ TUXBOX_RULES_MAKE(pppd)
 # contrib apps with smart rules
 #
 SMART_RULES_MAKE(ntpclient)
+SMART_RULES_MAKE(udpxy)
 
 #
 # contrib libs

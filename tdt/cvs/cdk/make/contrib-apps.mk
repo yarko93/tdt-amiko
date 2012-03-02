@@ -1090,7 +1090,6 @@ $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
 # PARENT_PK defined as per rule variable below is main postfix
 # at first split_packages.py searches for variable PACKAGES_ + PARENT_PK
 PACKAGES_ntpclient = ntpclient
-# PARENT_PK package is automaticaly appended to the list.
 # secondly for each package in the list it looks for control fields.
 # the default control field is PARENT_PK one.
 
@@ -1133,5 +1132,37 @@ $(DEPDIR)/ntpclient: $(DEPDIR)/ntpclient.do_compile
 	install -D -m 0755 Patches/ntpclient-init.file $(PKDIR)/etc/init.d/ntpclient
 	python split_packages.py
 	ipkg-build -o root -g root $(ipkgbuilddir)/ntpclient $(ipkprefix);
+	touch $@
+
+#
+# udpxy
+#
+PACKAGES_udpxy = udpxy
+DESCRIPTION_udpxy := udp to http stream proxy
+MAINTAINER_udpxy := Ar-P team
+PACKAGE_ARCH_udpxy := sh4
+NAME_udpxy := udpxy
+FILES_udpxy := /
+PKGR_udpxy = r0
+
+$(DEPDIR)/udpxy.do_prepare: @DEPENDS_udpxy@
+	@PREPARE_udpxy@
+	touch $@
+
+$(DEPDIR)/udpxy.do_compile: $(DEPDIR)/udpxy.do_prepare
+	cd $(DIR_udpxy) && \
+		export CC=sh4-linux-gcc && \
+		$(MAKE)
+	touch $@
+
+$(DEPDIR)/udpxy: PARENT_PK = udpxy
+$(DEPDIR)/udpxy: $(DEPDIR)/udpxy.do_compile
+	rm -rf $(PKDIR)
+	rm -rf $(ipkgbuilddir)/$(@F)
+	cd $(DIR_$(@F))  && \
+		export INSTALLROOT=$(PKDIR)/usr && \
+		$(MAKE) install
+	python split_packages.py
+	ipkg-build -o root -g root $(ipkgbuilddir)/$(@F) $(ipkprefix);
 	touch $@
 
