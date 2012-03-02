@@ -49,3 +49,13 @@
 #   make:install:DESTDIR=TARGETS
 #   rewrite-libtool:TARGETS/usr/lib/liblirc_client.la
 # ;
+
+ntpclient
+  #second param is version
+  2007_365
+  #third is buid dir
+  {PN}-2007
+  #sources goes below
+  http://doolittle.icarus.com/ntpclient/{PN}_{PV}.tar.gz
+  nothing:file://{PN}-init.file
+;

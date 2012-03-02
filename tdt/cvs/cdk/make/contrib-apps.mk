@@ -1083,3 +1083,55 @@ $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
+#
+# ntpclient
+#
+
+# PARENT_PK defined as per rule variable below is main postfix
+# at first split_packages.py searches for variable PACKAGES_ + PARENT_PK
+PACKAGES_ntpclient = ntpclient
+# PARENT_PK package is automaticaly appended to the list.
+# secondly for each package in the list it looks for control fields.
+# the default control field is PARENT_PK one.
+
+DESCRIPTION_ntpclient := time sync over ntp protocol
+MAINTAINER_ntpclient := Ar-P team
+#Source: are handled by smart-rules
+#SRC_URI_ntpclient =
+PACKAGE_ARCH_ntpclient := sh4
+#the Package: field in control file
+NAME_ntpclient := ntpclient
+#mask for files to package
+FILES_ntpclient := /sbin /etc
+#version is handled by smart-rules
+#PKGV_ntpclient =
+PKGR_ntpclient = r0
+
+#@DEPENDS_ntpclient@ is list of all files to built package from, so changing one of them invokes rebuild
+#@PREPARE_ntpclient@ rules for download, extract and patch files above.
+#@DIR_ntpclient@ directory where sources are extracted
+
+$(DEPDIR)/ntpclient.do_prepare: @DEPENDS_ntpclient@
+	@PREPARE_ntpclient@
+	touch $@
+
+$(DEPDIR)/ntpclient.do_compile: $(DEPDIR)/ntpclient.do_prepare
+	cd @DIR_ntpclient@  && \
+		export CC=sh4-linux-gcc CFLAGS="$(TARGET_CFLAGS)"; \
+		$(MAKE) ntpclient; \
+		$(MAKE) adjtimex
+	touch $@
+
+$(DEPDIR)/ntpclient: PARENT_PK = ntpclient
+$(DEPDIR)/ntpclient: $(DEPDIR)/ntpclient.do_compile
+	rm -rf $(PKDIR)
+	rm -rf $(ipkgbuilddir)/ntpclient
+	cd @DIR_ntpclient@  && \
+		install -D -m 0755 ntpclient $(PKDIR)/sbin/ntpclient; \
+		install -D -m 0755 adjtimex $(PKDIR)/sbin/adjtimex; \
+		install -D -m 0755 rate.awk $(PKDIR)/sbin/ntpclient-drift-rate.awk
+	install -D -m 0755 Patches/ntpclient-init.file $(PKDIR)/etc/init.d/ntpclient
+	python split_packages.py
+	ipkg-build -o root -g root $(ipkgbuilddir)/ntpclient $(ipkprefix);
+	touch $@
+
