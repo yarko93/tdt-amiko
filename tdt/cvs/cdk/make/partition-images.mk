@@ -301,11 +301,8 @@ $(flashprefix)/mtdblock2.root-stock.%: $(flashprefix)/root-stock-% $(MKSQUASHFS)
 #######NEW NEUTRINO ROOT PARTITION SIZE:
 #ROOT_PARTITION_SIZE=0x8e0000 ####look at ufs910_stboards_p0041_flash.patch
 #ROOT_PARTITION_SIZE= (via configure)
-if !STM22
-LZMACOMP=-comp lzma
-else
+
 LZMACOMP=
-endif
 	rm $@* >/dev/null 2>&1 || true
 	( dir=$(flashprefix) && \
 		echo "cd $</dev" > $$dir/.fakeroot && \
