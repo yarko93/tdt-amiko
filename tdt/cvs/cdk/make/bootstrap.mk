@@ -426,7 +426,6 @@ $(CROSS_DISTRIBUTIONUTILS_RPM): \
 $(CROSS_DISTRIBUTIONUTILS): $(CROSS_DISTRIBUTIONUTILS_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
 	touch .deps/$(notdir $@)
-endif
 
 #
 # CROSS BINUTILS
