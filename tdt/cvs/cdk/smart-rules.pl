@@ -218,6 +218,7 @@ sub process_make_prepare (@)
     }
     elsif ( $cmd =~ m/patch(time)?(-(\d+))?/ )
     {
+      local $_;
       $_ = "-p1 ";
       $_ = "-p$3 " if defined $3;
       $_ .= "-Z " if defined $1;

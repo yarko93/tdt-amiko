@@ -1,0 +1,11 @@
+--- Makefile.orig	2012-03-02 22:51:02.726537052 +0200
++++ Makefile	2012-03-02 22:51:26.969739047 +0200
+@@ -94,7 +94,7 @@
+ 
+ DOCFILES := doc/udpxy-manual-RU.rtf
+ 
+-INSTALLROOT := /usr/local
++INSTALLROOT ?= /usr/local
+ 
+ ARCDIR = ..
+ ARCFILE := $(ARCDIR)/$(EXEC).$(VERSION).$(BUILDNO)-$(PATCHNO)-$(BTYPE).tgz

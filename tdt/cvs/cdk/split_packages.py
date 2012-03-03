@@ -82,6 +82,9 @@ print "temporary files goes in", build_dir
 #Copied from bitbake (portage based) (c)
 import bb
 
+if not os.path.isdir(pkgs_dir):
+	bb.mkdirhier(pkgs_dir)
+
 def install_files(files, root):
 	import glob, errno, re,os
 	
