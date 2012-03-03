@@ -12,7 +12,9 @@ $(DEPDIR)/libboost: bootstrap @DEPENDS_libboost@
 #
 # LIBZ
 #
+if !STM22
 LIBZ_ORDER = binutils-dev
+endif !STM22
 
 $(DEPDIR)/libz.do_prepare: bootstrap @DEPENDS_libz@ $(if $(LIBZ_ORDER),| $(LIBZ_ORDER))
 	@PREPARE_libz@

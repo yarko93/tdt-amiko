@@ -42,6 +42,13 @@ $(DEPDIR)/%filesystem: bootstrap-cross
 #
 GLIBC := glibc
 GLIBC_DEV := glibc-dev
+if STM22
+GLIBC_VERSION := 2.5-27
+GLIBC_RAWVERSION := $(firstword $(subst -, ,$(GLIBC_VERSION)))
+GLIBC_SPEC := stm-target-$(GLIBC)-sh4processed.spec
+GLIBC_SPEC_PATCH := $(GLIBC_SPEC)22.diff
+GLIBC_PATCHES := glibc-2.5.patch
+else !STM22
 if STM23
 GLIBC_VERSION := $(if $(STABLE),2.6.1-53,2.6.1-61)
 GLIBC_RAWVERSION := $(firstword $(subst -, ,$(GLIBC_VERSION)))
@@ -57,6 +64,7 @@ GLIBC_SPEC_PATCH :=
 GLIBC_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 GLIBC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GLIBC)-$(GLIBC_VERSION).sh4.rpm
 GLIBC_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GLIBC_DEV)-$(GLIBC_VERSION).sh4.rpm
 
@@ -103,6 +111,7 @@ $(flashprefix)/root/lib/libc-$(GLIBC_RAWVERSION).so: $(GLIBC_RPM)
 #
 # GMP
 #
+if !STM22
 GMP := gmp
 if STM23
 # Due to libtool errors of target-gcc, the stm24 version is used instead of stm23
@@ -134,9 +143,12 @@ $(DEPDIR)/$(GMP): $(GMP_RPM)
 	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/libgmp.la
 	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libgmp.la
 	touch $@
+endif !STM22
+
 #
 # MPFR
 #
+if !STM22
 MPFR := mpfr
 if STM23
 # Due to libtool errors of target-gcc, the stm24 version is used instead of stm23
@@ -169,6 +181,8 @@ $(DEPDIR)/$(MPFR): $(MPFR_RPM)
 	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/libmpfr.la
 	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libmpfr.la
 	touch .deps/$(notdir $@)
+endif !STM22
+
 #
 # MPC
 #
@@ -229,6 +243,12 @@ GCC := gcc
 LIBSTDC := libstdc++
 LIBSTDC_DEV := libstdc++-dev
 LIBGCC := libgcc
+if STM22
+GCC_VERSION := 4.1.1-26
+GCC_SPEC := stm-target-$(GCC)-sh4processed.spec
+GCC_SPEC_PATCH := $(GCC_SPEC)22.diff
+GCC_PATCHES :=
+else !STM22
 if STM23
 # Due to libtool errors of target-gcc, the stm24 version is used instead of stm23
 GCC_VERSION := 4.3.4-66
@@ -243,6 +263,7 @@ GCC_SPEC_PATCH := $(GCC_SPEC).$(GCC_VERSION).diff
 GCC_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 GCC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GCC)-$(GCC_VERSION).sh4.rpm
 LIBSTDC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBSTDC)-$(GCC_VERSION).sh4.rpm
 LIBSTDC_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBSTDC_DEV)-$(GCC_VERSION).sh4.rpm
@@ -305,6 +326,13 @@ $(DEPDIR)/%$(LIBGCC): $(LIBGCC_RPM)
 LIBTERMCAP := libtermcap
 LIBTERMCAP_DEV := libtermcap-dev
 LIBTERMCAP_DOC := libtermcap-doc
+if STM22
+LIBTERMCAP_VERSION := 2.0.8-8
+LIBTERMCAP_RAWVERSION := $(firstword $(subst -, ,$(LIBTERMCAP_VERSION)))
+LIBTERMCAP_SPEC := stm-target-$(LIBTERMCAP).spec
+LIBTERMCAP_SPEC_PATCH :=
+LIBTERMCAP_PATCHES :=
+else !STM22
 if STM23
 LIBTERMCAP_VERSION := $(if $(STABLE),2.0.8-8,2.0.8-9)
 LIBTERMCAP_RAWVERSION := $(firstword $(subst -, ,$(LIBTERMCAP_VERSION)))
@@ -320,6 +348,7 @@ LIBTERMCAP_SPEC_PATCH :=
 LIBTERMCAP_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 LIBTERMCAP_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBTERMCAP)-$(LIBTERMCAP_VERSION).sh4.rpm
 LIBTERMCAP_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBTERMCAP_DEV)-$(LIBTERMCAP_VERSION).sh4.rpm
 LIBTERMCAP_DOC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBTERMCAP_DOC)-$(LIBTERMCAP_VERSION).sh4.rpm
@@ -378,6 +407,12 @@ endif TARGETRULESET_FLASH
 NCURSES := ncurses
 NCURSES_BASE := ncurses-base
 NCURSES_DEV := ncurses-dev
+if STM22
+NCURSES_VERSION := 5.5-9
+NCURSES_SPEC := stm-target-$(NCURSES).spec
+NCURSES_SPEC_PATCH :=
+NCURSES_PATCHES :=
+else !STM22
 if STM23
 NCURSES_VERSION := 5.5-9
 NCURSES_SPEC := stm-target-$(NCURSES).spec
@@ -391,6 +426,7 @@ NCURSES_SPEC_PATCH :=
 NCURSES_PATCHES :=
 endif STM24
 endif !STM23
+endif !STM22
 NCURSES_RPM := RPMS/sh4/$(STLINUX)-sh4-$(NCURSES)-$(NCURSES_VERSION).sh4.rpm
 NCURSES_BASE_RPM := RPMS/sh4/$(STLINUX)-sh4-$(NCURSES_BASE)-$(NCURSES_VERSION).sh4.rpm
 NCURSES_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(NCURSES_DEV)-$(NCURSES_VERSION).sh4.rpm
@@ -460,6 +496,12 @@ $(eval $(call Packages,ncurses))
 # BASE-PASSWD
 #
 BASE_PASSWD := base-passwd
+if STM22
+BASE_PASSWD_VERSION := 3.5.9-6
+BASE_PASSWD_SPEC := stm-target-$(BASE_PASSWD).spec
+BASE_PASSWD_SPEC_PATCH :=
+BASE_PASSWD_PATCHES :=
+else !STM22
 if STM23
 BASE_PASSWD_VERSION := 3.5.9-7
 BASE_PASSWD_SPEC := stm-target-$(BASE_PASSWD).spec
@@ -473,6 +515,7 @@ BASE_PASSWD_SPEC_PATCH :=
 BASE_PASSWD_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 BASE_PASSWD_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BASE_PASSWD)-$(BASE_PASSWD_VERSION).sh4.rpm
 
 $(BASE_PASSWD_RPM): \
@@ -520,6 +563,12 @@ endif TARGETRULESET_FLASH
 # MAKEDEV
 #
 MAKEDEV := makedev
+if STM22
+MAKEDEV_VERSION := 2.3.1-15
+MAKEDEV_SPEC := stm-target-$(MAKEDEV).spec
+MAKEDEV_SPEC_PATCH :=
+MAKEDEV_PATCHES :=
+else !STM22
 if STM23
 MAKEDEV_VERSION := $(if $(STABLE),2.3.1-24,2.3.1-25)
 MAKEDEV_SPEC := stm-target-$(MAKEDEV).spec
@@ -533,6 +582,7 @@ MAKEDEV_SPEC_PATCH :=
 MAKEDEV_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 MAKEDEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(MAKEDEV)-$(MAKEDEV_VERSION).sh4.rpm
 
 $(MAKEDEV_RPM): \
@@ -573,6 +623,12 @@ endif TARGETRULESET_FLASH
 # BASE-FILES
 #
 BASE_FILES := base-files
+if STM22
+BASE_FILES_VERSION := 2.0-4
+BASE_FILES_SPEC := stm-target-$(BASE_FILES).spec
+BASE_FILES_SPEC_PATCH :=
+BASE_FILES_PATCHES :=
+else !STM22
 if STM23
 BASE_FILES_VERSION := 2.0-7
 BASE_FILES_SPEC := stm-target-$(BASE_FILES).spec
@@ -586,6 +642,7 @@ BASE_FILES_SPEC_PATCH :=
 BASE_FILES_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 BASE_FILES_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BASE_FILES)-$(BASE_FILES_VERSION).sh4.rpm
 
 $(BASE_FILES_RPM): \
@@ -673,6 +730,12 @@ endif TARGETRULESET_FLASH
 # UDEV
 #
 UDEV := udev
+if STM22
+UDEV_VERSION := 054-6
+UDEV_SPEC := stm-target-$(UDEV).spec
+UDEV_SPEC_PATCH :=
+UDEV_PATCHES :=
+else !STM22
 if STM23
 UDEV_VERSION := $(if $(STABLE),116-23,116-25)
 UDEV_SPEC := stm-target-$(UDEV).spec
@@ -686,6 +749,7 @@ UDEV_SPEC_PATCH :=
 UDEV_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 UDEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV)-$(UDEV_VERSION).sh4.rpm
 
 $(UDEV_RPM): \
@@ -714,6 +778,7 @@ $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 #
 # HOTPLUG
 #
+if STM22
 HOTPLUG := hotplug
 HOTPLUG_VERSION := 2004_09_23-4
 HOTPLUG_SPEC := stm-target-$(HOTPLUG).spec
@@ -752,4 +817,5 @@ $(flashprefix)/root/sbin/hotplug: $(HOTPLUG_RPM)
 	@FLASHROOTDIR_MODIFIED@
 endif TARGETRULESET_FLASH
 
+endif STM22
 
