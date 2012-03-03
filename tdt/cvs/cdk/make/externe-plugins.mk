@@ -16,7 +16,6 @@ RDEPENDS_e2plugin := enigma2
 enigma2-plugins-sh4:
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
 	rm -rf $(appsdir)/plugins; \
-	clear; \
 	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
 		git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins;\
 	fi
