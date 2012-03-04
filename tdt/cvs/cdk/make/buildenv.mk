@@ -1,4 +1,6 @@
-﻿export CFLAGS
+﻿#
+#
+export CFLAGS
 export CXXFLAGS
 
 export DRPM

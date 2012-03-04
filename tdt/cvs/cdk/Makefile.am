@@ -133,7 +133,7 @@ include make/partition-update-images.mk
 include make/partition-images.mk
 
 # Create root and var filesystems, ready for image creation
-# include make/flashable-dirs.mk
+include make/flashable-dirs.mk
 
 # Strip libraries of symbols not needed.
 include make/reduce-libs.mk
@@ -167,11 +167,11 @@ include make/release_neutrino.mk
 
 include make/release_neutrino_nightly.mk
 
-#include make/release_vdr.mk
+include make/release_vdr.mk
 
-#include make/release_vdrdev2.mk
+include make/release_vdrdev2.mk
 
-# include make/release_enigma1_hd.mk
+include make/release_enigma1_hd.mk
 
 # New static folder
 include make/release_neutrino_static.mk
@@ -185,5 +185,4 @@ include make/release_neutrino_static.mk
 include make/tfinstaller.mk
 
 download-for-smart: @DOWNLOAD_FOR_SMART@
-
 @SMART_DOWNLOAD_RULES@

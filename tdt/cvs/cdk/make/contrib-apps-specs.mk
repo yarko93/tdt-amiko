@@ -1,4 +1,4 @@
-#
+﻿#
 # CONSOLE_DATA
 #
 $(DEPDIR)/console_data: bootstrap @DEPENDS_console_data@

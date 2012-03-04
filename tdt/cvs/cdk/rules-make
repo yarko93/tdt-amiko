@@ -1,4 +1,4 @@
-﻿# make rules for cdk
+# make rules for cdk
 #
 # fields (separated by ';')
 #   name
@@ -73,7 +73,7 @@ pppd;2.4.5;ppp-2.4.5;ppp-2.4.5.tar.gz;extract:ppp-2.4.5.tar.gz
 #
 # contrib libs
 #
-libboost;boost-1.48.0;boost_1_48_0;boost_1_48_0.tar.bz2;extract:boost_1_48_0.tar.bz2;patch:libboost.diff
+libboost;boost-1.49.0;boost_1_49_0;boost_1_49_0.tar.bz2;extract:boost_1_49_0.tar.bz2;patch:libboost.diff
 ncurses;5.5;ncurses-5.5;ncurses-5.5.tar.gz;extract:ncurses-5.5.tar.gz
 libz;1.2.3;zlib-1.2.3;zlib-1.2.3.tar.bz2;extract:zlib-1.2.3.tar.bz2
 libreadline;5.2;readline-5.2;readline-5.2.tar.gz;extract:readline-5.2.tar.gz
@@ -151,7 +151,7 @@ gst_plugins_bad;0.10.22.2;gst-plugins-bad-0.10.22.2;gst-plugins-bad-0.10.22.2.ta
 gst_plugins_ugly;0.10.18.2;gst-plugins-ugly-0.10.18.2;gst-plugins-ugly-0.10.18.2.tar.bz2;extract:gst-plugins-ugly-0.10.18.2.tar.bz2
 gst_ffmpeg;0.10.13;gst-ffmpeg-0.10.13;gst-ffmpeg-0.10.13.tar.bz2;extract:gst-ffmpeg-0.10.13.tar.bz2;patch:gst-ffmpeg-0.10.12_lower_rank.patch
 gst_plugins_fluendo_mpegdemux;0.10.69;gst-fluendo-mpegdemux-0.10.69;gst-fluendo-mpegdemux-0.10.69.tar.gz:gst-plugins-fluendo-mpegdemux-0.10.69-add_dts_hd_detection.diff;extract:gst-fluendo-mpegdemux-0.10.69.tar.gz;patch:gst-plugins-fluendo-mpegdemux-0.10.69-add_dts_hd_detection.diff
-gst_plugins_dvbmediasink;0.10.1;gst-plugins-dvbmediasink-0.10.1;link:../apps/misc/tools/gst-plugins-dvbmediasink:gst-plugins-dvbmediasink-0.10.1
+gst_plugins_dvbmediasink;0.10.1;gst-plugins-dvbmediasink-0.10.1;;link:../apps/misc/tools/gst-plugins-dvbmediasink:gst-plugins-dvbmediasink-0.10.1
 #gst_plugins_dvbmediasink;0.10.1;gst-plugins-dvbmediasink-0.10.1;gst-plugins-dvbmediasink-0.10.1;link:../apps/misc/tools/gst-plugins-dvbmediasink:gst-plugins-dvbmediasink-0.10.1
 
 #
