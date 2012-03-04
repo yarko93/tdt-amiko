@@ -28,7 +28,7 @@ def bb_checkset(var, val):
 	if not bb_data.has_key(var):
 		bb_set(var, val)
 
-DATAS_STR = 'PKGV PKGR DESCRIPTION SECTION PRIORITY MAINTAINER LICENSE PACKAGE_ARCH HOMEPAGE RDEPENDS RREPLACES RCONFLICTS SRC_URI FILES NAME'
+DATAS_STR = 'PKGV PKGR DESCRIPTION SECTION PRIORITY MAINTAINER LICENSE PACKAGE_ARCH HOMEPAGE RDEPENDS RREPLACES RCONFLICTS SRC_URI FILES NAME preinst postinst prerm postrm'
 DATAS = DATAS_STR.split()
 
 #######################################################################
@@ -41,7 +41,11 @@ DEFAULT_DATAS = [
 	['SECTION', 'base'],
 	['PRIORITY', 'optional'],
 	['LICENSE', 'unknown'],
-	['HOMEPAGE', 'unknown']]
+	['HOMEPAGE', 'unknown'],
+	['preinst', ''],
+	['postinst', ''],
+	['prerm', ''],
+	['postrm', '']]
 
 for x in DEFAULT_DATAS:
 	bb_checkset('%s_%s' % (x[0], parent_pkg), x[1])
@@ -211,9 +215,9 @@ def do_split_packages(d, root, file_regex, output_pattern, description, postinst
 			bb_set('DESCRIPTION_' + pkg, description % on, d)
 			
 			if postinst:
-				bb_set('pkg_postinst_' + pkg, postinst, d)
+				bb_set('postinst_' + pkg, postinst, d)
 			if postrm:
-				bb_set('pkg_postrm_' + pkg, postrm, d)
+				bb_set('postrm_' + pkg, postrm, d)
 		else:			
 			oldfiles = bb_get('FILES_' + pkg, d, True)			
 			if not oldfiles:
@@ -268,9 +272,10 @@ def read_control_file(fname):
 			bb_set('SRC_URI_' + full_package, line[8:])
 	return full_package
 
-def write_control_file(fname, full_package):
+def write_control_file(fdir, full_package):
 	s = ''
 	p = []
+	fname = pjoin(fdir, 'control')
 	def ext(param):
 		return "%s_%s" % (param, full_package)
 	pkgv = bb_get(ext('PKGV'))
@@ -300,6 +305,15 @@ def write_control_file(fname, full_package):
 		s += var
 	print 'Write control file to', fname
 	open(fname, 'w').write(s)
+	
+	scr = ['preinst', 'postinst', 'prerm', 'postrm']
+	for s in scr:
+		script = bb_get(ext(s))
+		if script:
+			fd = open(pjoin(fdir, s), 'w')
+			fd.write(script)
+			fd.close()
+			os.chmod(pjoin(fdir, s), 0755)
 
 def pjoin(*args):
 	#TODO: make it more clean. remove '/' dublicates. Do it with re, it would be faster..
@@ -328,7 +342,7 @@ def do_finish():
 				bb_set(data+'_'+p, bb_get(data+'_'+parent_pkg))
 		
 		bb.mkdirhier(pjoin(pack_dir, 'CONTROL'))
-		write_control_file(pjoin(pack_dir, 'CONTROL', 'control'), p)
+		write_control_file(pjoin(pack_dir, 'CONTROL'), p)
 	
 	#print 'QQQ', bb_get("PKGV_" + parent_pkg)
 
