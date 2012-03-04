@@ -1,4 +1,4 @@
-#
+﻿#
 # CONSOLE_DATA
 #
 $(DEPDIR)/console_data: bootstrap @DEPENDS_console_data@
@@ -19,6 +19,12 @@ $(DEPDIR)/console_data: bootstrap @DEPENDS_console_data@
 #
 SYSVINIT := sysvinit
 INITSCRIPTS := initscripts
+if STM22
+SYSVINIT_VERSION := 2.86-6
+SYSVINIT_SPEC := stm-target-$(SYSVINIT).spec
+SYSVINIT_SPEC_PATCH :=
+SYSVINIT_PATCHES :=
+else !STM22
 if STM23
 SYSVINIT_VERSION := 2.86-9
 SYSVINIT_SPEC := stm-target-$(SYSVINIT).spec
@@ -32,6 +38,7 @@ SYSVINIT_SPEC_PATCH :=
 SYSVINIT_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 SYSVINIT_RPM := RPMS/sh4/$(STLINUX)-sh4-$(SYSVINIT)-$(SYSVINIT_VERSION).sh4.rpm
 INITSCRIPTS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(INITSCRIPTS)-$(SYSVINIT_VERSION).sh4.rpm
 
@@ -143,6 +150,12 @@ endif TARGETRULESET_FLASH
 #
 #ftp://ftp.stlinux.com/pub/stlinux/2.3/SRPMS/stlinux23-target-netbase-4.07-5.src.rpm
 NETBASE := netbase
+if STM22
+NETBASE_VERSION := 4.07-4
+NETBASE_SPEC := stm-target-$(NETBASE).spec
+NETBASE_SPEC_PATCHES :=
+NETBASE_PATCHES :=
+else !STM22
 if STM23
 NETBASE_VERSION := 4.34-7
 NETBASE_SPEC := stm-target-$(NETBASE).spec
@@ -156,6 +169,7 @@ NETBASE_SPEC_PATCHES :=
 NETBASE_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 NETBASE_RPM := RPMS/sh4/$(STLINUX)-sh4-$(NETBASE)-$(NETBASE_VERSION).sh4.rpm
 
 $(NETBASE_RPM): \
@@ -215,6 +229,12 @@ endif TARGETRULESET_FLASH
 #
 #ftp://ftp.stlinux.com/pub/stlinux/2.3/SRPMS/stlinux23-target-bc-1.06-4.src.rpm
 BC := bc
+if STM22
+BC_VERSION := 1.06-3
+BC_SPEC := stm-target-$(BC).spec
+BC_SPEC_PATCH :=
+BC_PATCHES :=
+else !STM22
 if STM23
 BC_VERSION := 1.06-4
 BC_SPEC := stm-target-$(BC).spec
@@ -228,6 +248,7 @@ BC_SPEC_PATCH :=
 BC_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 BC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BC)-$(BC_VERSION).sh4.rpm
 
 $(BC_RPM): \
@@ -262,6 +283,12 @@ endif TARGETRULESET_FLASH
 # FINDUTILS
 #
 FINDUTILS := findutils
+if STM22
+FINDUTILS_VERSION := 4.1.7-4
+FINDUTILS_SPEC := stm-target-$(FINDUTILS).spec
+FINDUTILS_SPEC_PATCH :=
+FINDUTILS_PATCHES := 
+else !STM22
 if STM23
 FINDUTILS_VERSION := 4.1.7-4
 FINDUTILS_SPEC := stm-target-$(FINDUTILS).spec
@@ -275,6 +302,7 @@ FINDUTILS_SPEC_PATCH :=
 FINDUTILS_PATCHES := 
 # endif STM24
 endif !STM23
+endif !STM22
 FINDUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(FINDUTILS)-$(FINDUTILS_VERSION).sh4.rpm
 
 $(FINDUTILS_RPM): \
@@ -308,6 +336,12 @@ $(flashprefix)/root/usr/bin/find: RPMS/sh4/$(STLINUX)-sh4-$(FINDUTILS)-$(FINDUTI
 #
 DISTRIBUTIONUTILS := distributionutils
 DISTRIBUTIONUTILS_DOC := distributionutils-doc
+if STM22
+DISTRIBUTIONUTILS_VERSION := 2.17-6
+DISTRIBUTIONUTILS_SPEC := stm-target-$(DISTRIBUTIONUTILS).spec
+DISTRIBUTIONUTILS_SPEC_PATCH := $(DISTRIBUTIONUTILS_SPEC)22.diff
+DISTRIBUTIONUTILS_PATCHES :=
+else !STM22
 if STM23
 DISTRIBUTIONUTILS_VERSION := 2.17-7
 DISTRIBUTIONUTILS_SPEC := stm-target-$(DISTRIBUTIONUTILS).spec
@@ -321,6 +355,7 @@ DISTRIBUTIONUTILS_SPEC_PATCH :=
 DISTRIBUTIONUTILS_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 DISTRIBUTIONUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(DISTRIBUTIONUTILS)-$(DISTRIBUTIONUTILS_VERSION).sh4.rpm
 DISTRIBUTIONUTILS_DOC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(DISTRIBUTIONUTILS_DOC)-$(DISTRIBUTIONUTILS_VERSION).sh4.rpm
 
@@ -365,6 +400,12 @@ endif TARGETRULESET_FLASH
 # HOST-MTD-UTILS
 #
 MTD_UTILS := mtd-utils
+if STM22
+MTD_UTILS_VERSION := 1.0.1-9
+MTD_UTILS_SPEC := stm-target-$(MTD_UTILS).spec
+MTD_UTILS_SPEC_PATCH :=
+MTD_UTILS_PATCHES :=
+else !STM22
 if STM23
 MTD_UTILS_VERSION := 1.0.1-9
 MTD_UTILS_SPEC := stm-target-$(MTD_UTILS).spec
@@ -378,6 +419,7 @@ MTD_UTILS_SPEC_PATCH :=
 MTD_UTILS_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 MTD_UTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(MTD_UTILS)-$(MTD_UTILS_VERSION).sh4.rpm
 
 $(MTD_UTILS_RPM): \
@@ -418,6 +460,12 @@ endif TARGETRULESET_FLASH
 # BASH
 #
 BASH := bash
+if STM22
+BASH_VERSION := 3.0-6
+BASH_SPEC := stm-target-$(BASH).spec
+BASH_SPEC_PATCH := $(BASH_SPEC).diff
+BASH_PATCHES :=
+else !STM22
 if STM23
 BASH_VERSION := 3.0-6
 BASH_SPEC := stm-target-$(BASH).spec
@@ -431,6 +479,7 @@ BASH_SPEC_PATCH :=
 BASH_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 BASH_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BASH)-$(BASH_VERSION).sh4.rpm
 
 $(BASH_RPM): \
@@ -465,6 +514,12 @@ min-$(BASH).do_clean std-$(BASH).do_clean max-$(BASH).do_clean $(BASH).do_clean:
 # COREUTILS
 #
 COREUTILS := coreutils
+if STM22
+COREUTILS_VERSION := 5.2.1-9
+COREUTILS_SPEC := stm-target-$(COREUTILS).spec 
+COREUTILS_SPEC_PATCH := $(COREUTILS_SPEC).diff
+COREUTILS_PATCHES := 
+else !STM22
 if STM23
 COREUTILS_VERSION := 5.2.1-9
 COREUTILS_SPEC := stm-target-$(COREUTILS).spec 
@@ -478,6 +533,7 @@ COREUTILS_SPEC_PATCH :=
 COREUTILS_PATCHES := 
 # endif STM24
 endif !STM23
+endif !STM22
 COREUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(COREUTILS)-$(COREUTILS_VERSION).sh4.rpm
 
 $(COREUTILS_RPM): \
@@ -502,6 +558,12 @@ $(DEPDIR)/%$(COREUTILS): $(DEPDIR)/%$(GLIBC) $(COREUTILS_RPM)
 # NET-TOOLS
 #
 NET_TOOLS := net-tools
+if STM22
+NET_TOOLS_VERSION := 1.60-4
+NET_TOOLS_SPEC := stm-target-$(NET_TOOLS).spec
+NET_TOOLS_SPEC_PATCH :=
+NET_TOOLS_PATCHES :=
+else !STM22
 if STM23
 NET_TOOLS_VERSION := 1.60-4
 NET_TOOLS_SPEC := stm-target-$(NET_TOOLS).spec
@@ -515,6 +577,7 @@ NET_TOOLS_SPEC_PATCH :=
 NET_TOOLS_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 NET_TOOLS_RPM = RPMS/sh4/$(STLINUX)-sh4-$(NET_TOOLS)-$(NET_TOOLS_VERSION).sh4.rpm
 
 $(NET_TOOLS_RPM): \
@@ -539,6 +602,12 @@ $(DEPDIR)/%$(NET_TOOLS): $(DEPDIR)/%$(GLIBC) $(NET_TOOLS_RPM)
 # SED
 #
 SEDX := sed
+if STM22
+SED_VERSION := 4.0.7-6
+SED_SPEC := stm-target-$(SEDX).spec
+SED_SPEC_PATCH :=
+SED_PATCHES :=
+else !STM22
 if STM23
 SED_VERSION := 4.0.7-6
 SED_SPEC := stm-target-$(SEDX).spec
@@ -552,6 +621,7 @@ SED_SPEC_PATCH :=
 SED_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 SED_RPM = RPMS/sh4/$(STLINUX)-sh4-$(SEDX)-$(SED_VERSION).sh4.rpm
 
 $(SED_RPM): \
@@ -577,6 +647,12 @@ $(DEPDIR)/%$(SEDX): $(DEPDIR)/%$(GLIBC) $(SED_RPM)
 #
 DIFF := diff
 DIFF_DOC := diff-doc
+if STM22
+DIFF_VERSION := 2.7-3
+DIFF_SPEC := stm-target-$(DIFF).spec
+DIFF_SPEC_PATCH :=
+DIFF_PATCHES :=
+else !STM22
 if STM23
 DIFF_VERSION := 2.7-3
 DIFF_SPEC := stm-target-$(DIFF).spec
@@ -590,6 +666,7 @@ DIFF_SPEC_PATCH :=
 DIFF_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 DIFF_RPM := RPMS/sh4/$(STLINUX)-sh4-$(DIFF)-$(DIFF_VERSION).sh4.rpm
 DIFF_DOC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(DIFF)-doc-$(SED_VERSION).sh4.rpm
 
@@ -622,6 +699,12 @@ $(DEPDIR)/%$(DIFF_DOC): $(DIFF_DOC_RPM)
 # FILE
 #
 FILE := file
+if STM22
+FILE_VERSION := 4.17-3
+FILE_SPEC := stm-target-$(FILE).spec
+FILE_SPEC_PATCH := $(FILE_SPEC).diff
+FILE_PATCHES :=
+else !STM22
 if STM23
 FILE_VERSION := 4.17-3
 FILE_SPEC := stm-target-$(FILE).spec
@@ -635,6 +718,7 @@ FILE_SPEC_PATCH :=
 FILE_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 FILE_RPM := RPMS/sh4/stlinux20-sh4-file-4.17-3.sh4.rpm
 
 $(FILE_RPM): \
@@ -658,6 +742,12 @@ $(DEPDIR)/%$(FILE): $(FILE_RPM)
 # TAR
 #
 TAR := tar
+if STM22
+TAR_VERSION := 1.16.1-7
+TAR_SPEC := stm-target-$(TAR).spec
+TAR_SPEC_PATCH := $(TAR_SPEC).diff
+TAR_PATCHES :=
+else !STM22
 if STM23
 TAR_VERSION := 1.16.1-7
 TAR_SPEC := stm-target-$(TAR).spec
@@ -671,6 +761,7 @@ TAR_SPEC_PATCH :=
 TAR_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 TAR_RPM := RPMS/sh4/$(STLINUX)-sh4-$(TAR)-$(TAR_VERSION).sh4.rpm
 
 $(TAR_RPM): \
@@ -695,6 +786,12 @@ $(DEPDIR)/%$(TAR): $(DEPDIR)/%$(GLIBC) $(TAR_RPM)
 # STRACE
 #
 STRACE := strace
+if STM22
+STRACE_VERSION := 4.5.14-10
+STRACE_SPEC := stm-target-$(STRACE).spec
+STRACE_SPEC_PATCH :=
+STRACE_PATCHES :=
+else !STM22
 if STM23
 STRACE_VERSION := 4.5.14-10
 STRACE_SPEC := stm-target-$(STRACE).spec
@@ -708,6 +805,7 @@ STRACE_SPEC_PATCH :=
 STRACE_PATCHES :=
 # endif STM24
 endif !STM23
+endif !STM22
 STRACE_RPM := RPMS/sh4/$(STLINUX)-sh4-$(STRACE)-$(STRACE_VERSION).sh4.rpm
 
 $(STRACE_RPM): \

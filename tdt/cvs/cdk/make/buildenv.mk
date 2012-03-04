@@ -1,3 +1,5 @@
+﻿#
+#
 export CFLAGS
 export CXXFLAGS
 
@@ -30,6 +32,10 @@ MAKE_PATH := $(hostprefix)/bin:$(crossprefix)/bin:$(PATH)
 ADAPTED_ETC_FILES =
 ETC_RW_FILES =
 
+if STM22
+STLINUX := stlinux22
+STM_SRC := stlinux23
+else !STM22
 if STM23
 STLINUX := stlinux23
 STM_SRC := $(STLINUX)
@@ -38,6 +44,7 @@ else !STM23
 STLINUX := stlinux24
 STM_SRC := $(STLINUX)
 endif !STM23
+endif !STM22
 
 if BLEEDING_EDGE
 STABLE =

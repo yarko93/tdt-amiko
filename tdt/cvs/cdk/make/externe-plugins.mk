@@ -11,7 +11,6 @@ NAME_e2plugin_meta := enigma2-plugins-meta
 FILES_e2plugin_meta := /usr/local/share/meta
 DESCRIPTION_e2plugin_meta := Enigma2 plugins metadata
 PACKAGES_e2plugin = e2plugin_meta
-RDEPENDS_e2plugin := enigma2
 
 enigma2-plugins-sh4:
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
