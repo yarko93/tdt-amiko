@@ -1,0 +1,69 @@
+# These rules are smarter ;)
+# semicolon equals line break, rules are separated by one of them
+# all trailing white-spaces are ignored, use them for prettier indentation
+# so this:
+#   megaproject; v2.0; file://hello_world.c;
+# and this:
+#   megaproject
+#     v2.0
+#     file://hello_world.c;
+# are the same
+# 
+# double semicolon or semicolon + linebreak or double linebreak or even linebreak + semicolon
+# can be used for separating packages
+#
+# first three rules are not exactly "rules" they are corresponding to package name, package version
+# and build subdirectory.
+#
+# each next rule is in "command:argument" format
+# for example
+#   extract:http://someserver.com/pacakge-2.1.tar.gz
+# by the way, extract is the default command, so you can type just
+#   http://someserver.com/pacakge-2.1.tar.gz
+# if you want only to copy a file to the build directory use
+#   nothing:http://someserver/logo.png
+# other available commands are
+#   dirextract - first cd to build directory, than extract
+#   patch - apply as patch
+#   rpmbuild - building from rpm package
+# these are most common tasks, see smart-rules.pl for details and feel free to add more..
+# However, some special rules is better to write directly to .mk file
+#
+# To make rules quite you can use two special words, {PN} and {PV} which refers to package name and version.
+#
+# Now consider sources that are supported:
+#  http:// - http wget download
+#  ftp:// - ftp wget download
+#  file:// - look for file in Patches directory
+# svn and git coming soon...
+#
+# if rule command doesn't match ones listed above, this is treated as install/uninstall rule.
+# 
+# below you can see mew lirc rule, which replaces corresponding entries in rules-make, rules-install and rules-archive
+# It is much less complicated !
+# lirc
+#   0.9.0
+#   {PN}-{PV}
+#   extract:http://prdownloads.sourceforge.net/lirc/{PN}-{PV}.tar.gz
+#   patch:file://{PN}-{PV}-try_first_last_remote.diff
+#   make:install:DESTDIR=TARGETS
+#   rewrite-libtool:TARGETS/usr/lib/liblirc_client.la
+# ;
+
+ntpclient
+  #second param is version
+  2007_365
+  #third is buid dir
+  {PN}-2007
+  #sources goes below
+  http://doolittle.icarus.com/ntpclient/{PN}_{PV}.tar.gz
+  nothing:file://{PN}-init.file
+;
+
+udpxy
+  1.0.21-2
+  {PN}-{PV}
+  http://sourceforge.net/projects/udpxy/files/udpxy/Chipmunk-1.0/udpxy.{PV}-prod.tgz
+  #for patch -p0 use the following
+  patch-0:file://udpxy-makefile.patch
+;

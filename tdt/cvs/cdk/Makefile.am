@@ -183,3 +183,6 @@ include make/release_neutrino_static.mk
 
 # installer image for TF7700
 include make/tfinstaller.mk
+
+download-for-smart: @DOWNLOAD_FOR_SMART@
+@SMART_DOWNLOAD_RULES@

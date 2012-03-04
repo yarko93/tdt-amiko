@@ -15,7 +15,6 @@ PACKAGES_e2plugin = e2plugin_meta
 enigma2-plugins-sh4:
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
 	rm -rf $(appsdir)/plugins; \
-	clear; \
 	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
 		git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins;\
 	fi
