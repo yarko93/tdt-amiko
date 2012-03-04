@@ -955,6 +955,11 @@ TUXBOX_RULES_MAKE(opkg)
 TUXBOX_RULES_MAKE(pppd)
 
 #
+# contrib apps with smart rules
+#
+SMART_RULES_MAKE(ntpclient)
+SMART_RULES_MAKE(udpxy)
+#
 # contrib libs
 #
 TUXBOX_RULES_MAKE(libboost)
@@ -1152,6 +1157,10 @@ AC_CONFIG_COMMANDS_PRE([
 AC_MSG_NOTICE([creating Makefile-archive])
 ${srcdir}/rules-archive.pl ${srcdir}/rules-archive > Makefile-archive
 ])
+
+AC_SUBST(DOWNLOAD_FOR_SMART)
+AC_SUBST(SMART_DOWNLOAD_RULES)
+AM_SUBST_NOTMAKE(SMART_DOWNLOAD_RULES)
 
 #
 # summary
