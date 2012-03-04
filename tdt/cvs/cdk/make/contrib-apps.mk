@@ -1,4 +1,4 @@
-﻿#
+#
 # MODULE-INIT-TOOLS
 #
 $(DEPDIR)/module-init-tools.do_prepare: @DEPENDS_module_init_tools@
