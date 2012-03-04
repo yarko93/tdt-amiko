@@ -1105,6 +1105,16 @@ FILES_ntpclient := /sbin /etc
 #version is handled by smart-rules
 #PKGV_ntpclient =
 PKGR_ntpclient = r0
+# comment symbol '#' in define goes directly to split_packages.py. You do not need to escape it!
+# moreover line breaks are also correctly exported to python, enjoy!
+define postinst_ntpclient
+#!/bin/sh
+update-rc.d mgcamd_1.35 defaults 65
+endef
+define postrm_ntpclient
+#!/bin/sh
+update-rc.d mgcamd_1.35 remove
+endef
 
 #@DEPENDS_ntpclient@ is list of all files to built package from, so changing one of them invokes rebuild
 #@PREPARE_ntpclient@ rules for download, extract and patch files above.
