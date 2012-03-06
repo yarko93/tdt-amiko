@@ -37,7 +37,10 @@ DATAS = DATAS_STR.split()
 parent_pkg = os.environ['PARENT_PK']
 bb_set('PARENT_PK', os.environ['PARENT_PK'])
 
-DEFAULT_DATAS = [ 
+DEFAULT_DATAS = [
+	['MAINTAINER', 'Ar-P team'],
+	['PACKAGE_ARCH', 'sh4'],
+	['FILES', '/'],
 	['SECTION', 'base'],
 	['PRIORITY', 'optional'],
 	['LICENSE', 'unknown'],
@@ -50,12 +53,20 @@ DEFAULT_DATAS = [
 for x in DEFAULT_DATAS:
 	bb_checkset('%s_%s' % (x[0], parent_pkg), x[1])
 
+bb_checkset('NAME_' + parent_pkg, parent_pkg)
+
 global work_dir
 work_dir = os.getcwd()
 print "Building in", work_dir
 
-bb_set('PACKAGES', os.environ['PACKAGES_' + parent_pkg])
-bb_set('PACKAGES_' + parent_pkg, os.environ['PACKAGES_' + parent_pkg])
+if os.environ.has_key('PACKAGES_' + parent_pkg):
+	pkg_list = os.environ['PACKAGES_' + parent_pkg]
+else:
+	pkg_list = parent_pkg
+
+
+bb_set('PACKAGES', pkg_list)
+bb_set('PACKAGES_' + parent_pkg, pkg_list)
 import re
 
 extdatas = map("^{0}_.*".format, DATAS)
