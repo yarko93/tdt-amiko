@@ -103,14 +103,24 @@ $(DEPDIR)/enigma2-nightly.do_compile: $(appsdir)/enigma2-nightly/config.status
 		$(MAKE) all
 	touch $@
 
+DESCRIPTION_enigma2 := a framebuffer-based zapping application (GUI) for linux
+SRC_URI_enigma2 := git://gitorious.org/open-duckbox-project-sh4/guigit.git
+# neccecary for get_git_version:
+DIR_enigma2 := $(appsdir)/enigma2-nightly
+
+$(DEPDIR)/enigma2-nightly: PARENT_PK = enigma2
 $(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
-	$(MAKE) -C $(appsdir)/enigma2-nightly install DESTDIR=$(targetprefix)
-	if [ -e $(targetprefix)/usr/bin/enigma2 ]; then \
-		$(target)-strip $(targetprefix)/usr/bin/enigma2; \
+	$(get_git_version)
+	@echo $$PKGV_$(PARENT_PK)
+	$(start_build)
+	$(MAKE) -C $(appsdir)/enigma2-nightly install DESTDIR=$(PKDIR)
+	if [ -e $(PKDIR)/usr/bin/enigma2 ]; then \
+		$(target)-strip $(PKDIR)/usr/bin/enigma2; \
 	fi
-	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
-		$(target)-strip $(targetprefix)/usr/local/bin/enigma2; \
+	if [ -e $(PKDIR)/usr/local/bin/enigma2 ]; then \
+		$(target)-strip $(PKDIR)/usr/local/bin/enigma2; \
 	fi
+	$(toimage_build)
 	touch $@
 
 enigma2-nightly-clean enigma2-nightly-distclean:

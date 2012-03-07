@@ -70,24 +70,22 @@ $(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
 		$(MAKE) all
 	touch $@
 
-enigma2-skins-sh4-package: export PKGV_e2skin = 3.2git$(shell cd $(appsdir)/skins && git log -1 --format=%cd --date=short |sed s/-//g)
 PKGR_e2skin = r0
+DIR_e2skin = $(appsdir)/skins
 enigma2_skindir = '/usr/local/share/enigma2'
+
 enigma2-skins-sh4-package: export PARENT_PK = e2skin
 enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
-	rm -rf $(packagingtmpdir)
-	mkdir -p $(packagingtmpdir)
+	$(start_build)
+	$(get_git_version)
 	$(MAKE) -C $(appsdir)/skins install DESTDIR=$(packagingtmpdir)
-	rm -rf $(ipkgbuilddir)
 	@echo 'next variables are exported to enviroment:'
 	@echo $(EXPORT_ENV) | tr ' ' '\n'
 	$(crossprefix)/bin/python -c "from split_packages import *; \
 	print bb_data; \
 	do_split_packages(bb_data, $(enigma2_skindir), '(.*?)/.*', 'enigma2-skin-%s', 'Enigma2 Skin: %s', recursive=True, match_path=True, prepend=True); \
 	do_finish()"
-	for p in `ls $(ipkgbuilddir)`; do \
-		ipkg-build -o root -g root $(ipkgbuilddir)/$$p $(ipkprefix); \
-	done
+	$(extra_build)
 
 $(DEPDIR)/enigma2-skins-sh4: enigma2-skins-sh4.do_prepare enigma2-skins-sh4.do_compile enigma2-skins-sh4-package
 	touch $@
