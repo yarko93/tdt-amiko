@@ -11,3 +11,35 @@ packagingtmpdir := $(buildprefix)/packagingtmpdir
 PKDIR := $(packagingtmpdir)
 
 export packagingtmpdir
+
+define extra_build
+	python split_packages.py
+	$(call do_build_pkg,none)
+endef
+
+define toimage_build
+	python split_packages.py
+	$(call do_build_pkg,install)
+endef
+
+define do_build_pkg
+	for pkg in `ls $(ipkgbuilddir)`; do \
+		ipkg-build -o root -g root $(ipkgbuilddir)/$$pkg $(ipkprefix) |tee tmpname \
+		$(if $(filter install,$(1)), && \
+			pkgn=`cat tmpname |perl -ne 'if (m/Packaged contents/) { print ((split / /)[-1])}'` && \
+			ipkg install -f $(crossprefix)/etc/ipkg.conf $$pkgn \
+		); done
+endef
+
+define start_build
+	rm -rf $(PKDIR)
+	rm -rf $(ipkgbuilddir)/*
+	mkdir $(PKDIR)
+endef
+
+define prepare_pkginfo_for_flash
+	perl -pi -e "s,$(flashprefix)/root,," $(flashprefix)/root/usr/lib/ipkg/info/*.list
+endef
+
+git_version := git log -1 --format=%cd --date=short |sed s/-//g
+get_git_version = $(eval export PKGV_$(PARENT_PK) = $(shell cd $(DIR_$(PARENT_PK)) && $(git_version)))
