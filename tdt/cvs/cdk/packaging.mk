@@ -41,7 +41,7 @@ define do_build_pkg
 		ipkg-build -o root -g root $(ipkgbuilddir)/$$pkg $(if $(filter cdk,$(2)),$(ipkcdk),$(ipkprefix)) |tee tmpname \
 		$(if $(filter install,$(1)), && \
 			pkgn=`cat tmpname |perl -ne 'if (m/Packaged contents/) { print ((split / /)[-1])}'` && \
-			ipkg install -f $(crossprefix)/etc/ipkg$(if $(filter cdk,$(2)),-cdk).conf $$pkgn \
+			opkg install -f $(crossprefix)/etc/opkg$(if $(filter cdk,$(2)),-cdk).conf $$pkgn \
 		); done
 #FIXME: too frequent invokes
 	$(if $(filter flash,$(2)),
@@ -57,7 +57,7 @@ define start_build
 endef
 
 define prepare_pkginfo_for_flash
-	perl -pi -e "s,$(flashprefix)/root,," $(flashprefix)/root/usr/lib/ipkg/info/*.list
+	perl -pi -e "s,$(flashprefix)/root,," $(flashprefix)/root/usr/lib/opkg/info/*.list
 endef
 
 define rewrite_libtool
