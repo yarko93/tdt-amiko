@@ -19,12 +19,14 @@ $(ipkcdk):
 
 define extra_build
 	rm -rf $(ipkgbuilddir)/*
+	$(flash_prebuild)
 	python split_packages.py
 	$(call do_build_pkg,none,flash)
 endef
 
 define toflash_build
 	rm -rf $(ipkgbuilddir)/*
+	$(flash_prebuild)
 	python split_packages.py
 	$(call do_build_pkg,install,flash)
 endef
@@ -36,19 +38,18 @@ define tocdk_build
 	$(call do_build_pkg,install,cdk)
 endef
 
+flash_ipkg_args = -f $(crossprefix)/etc/opkg.conf -o $(flashprefix)/root
+cdk_ipkg_args = -f $(crossprefix)/etc/opkg-cdk.conf -o $(targetprefix)
+
 define do_build_pkg
 	for pkg in `ls $(ipkgbuilddir)`; do \
 		ipkg-build -o root -g root $(ipkgbuilddir)/$$pkg $(if $(filter cdk,$(2)),$(ipkcdk),$(ipkprefix)) |tee tmpname \
 		$(if $(filter install,$(1)), && \
 			pkgn=`cat tmpname |perl -ne 'if (m/Packaged contents/) { print ((split / /)[-1])}'` && \
-			opkg install -f $(crossprefix)/etc/opkg$(if $(filter cdk,$(2)),-cdk).conf $$pkgn \
+			opkg install $(if $(filter cdk,$(2)),$(cdk_ipkg_args),$(flash_ipkg_args)) $$pkgn \
 		); done
 #FIXME: too frequent invokes
-	$(if $(filter flash,$(2)),
-		$(prepare_pkginfo_for_flash),
-		$(rewrite_libtool)
-		$(rewrite_pkgconfig)
-	)
+#	$(if $(filter flash,$(2)),$(prepare_pkginfo_for_flash))
 endef
 
 define start_build
@@ -56,8 +57,40 @@ define start_build
 	mkdir $(PKDIR)
 endef
 
+define flash_prebuild
+	$(rewrite_libtool)
+	$(rewrite_pkgconfig)
+	$(remove_libs)
+	$(remove_pkgconfigs)
+	$(remove_includedir)
+endef
+
+define remove_libs
+	rm -f $(PKDIR)/lib/*.{a,so,la}
+	rm -f $(PKDIR)/usr/lib/*.{a,so,la}
+endef
+
+define remove_pkgconfigs
+	rm -rf $(PKDIR)/usr/lib/pkgconfig
+endef
+
+define remove_includedir
+	rm -rf $(PKDIR)/usr/include
+endef
+
+
 define prepare_pkginfo_for_flash
-	perl -pi -e "s,$(flashprefix)/root,," $(flashprefix)/root/usr/lib/opkg/info/*.list
+	export OPKG_OFFLINE_ROOT=$(flashprefix)/root/ \
+	for i in $(flashprefix)/root/usr/lib/opkg/info/*.preinst; do \
+		if [ -f $i ] && ! sh $i; then \
+			opkg-cl $(flash_ipkg_args) flag unpacked `basename $i .preinst` \
+		fi \
+	done \
+	for i in $(flashprefix)/root/usr/lib/opkg/info/*.postinst; do \
+		if [ -f $i ] && ! sh $i configure; then \
+			opkg-cl $(flash_ipkg_args) flag unpacked `basename $i .postinst` \
+		fi \
+	done
 endef
 
 define rewrite_libtool
