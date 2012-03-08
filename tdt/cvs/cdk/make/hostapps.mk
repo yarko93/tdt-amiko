@@ -89,27 +89,36 @@ $(crossprefix)/bin/ipkg-build: @DEPENDS_ipkg_utils@ | $(ipkprefix)
 #
 # IPKG-HOST
 #
-IPKG_BIN = $(crossprefix)/bin/ipkg
-IPKG_CONF = $(crossprefix)/etc/ipkg.conf
+OPKG_BIN = $(crossprefix)/bin/opkg
+OPKG_CONF = $(crossprefix)/etc/opkg.conf
+OPKG_CONFCDK = $(crossprefix)/etc/opkg-cdk.conf
 
-ipkg-host: $(IPKG_BIN)
+opkg-host: $(OPKG_BIN) $(ipkcdk)
 
-$(crossprefix)/bin/ipkg: @DEPENDS_ipkg_host@
-	@PREPARE_ipkg_host@
-	cd @DIR_ipkg_host@/ipkg-@VERSION_ipkg_host@ && \
+$(crossprefix)/bin/opkg: @DEPENDS_opkg_host@
+	@PREPARE_opkg_host@
+	cd @DIR_opkg_host@/opkg-@VERSION_opkg_host@ && \
 		./configure \
 			--prefix=$(crossprefix) && \
 		$(MAKE) && \
 		$(MAKE) install && \
-	$(LN_SF) ipkg-cl $@
-	echo "dest root $(flashprefix)/root" >$(IPKG_CONF)
-	( echo "lists_dir ext $(flashprefix)/root/usr/lib/ipkg"; \
+	$(LN_SF) opkg-cl $@
+	install -d $(crossprefix)/usr/lib/opkg
+	echo "dest root /" >$(OPKG_CONF)
+	( echo "lists_dir ext /usr/lib/opkg"; \
 	  echo "arch sh4 10"; \
 	  echo "arch all 1"; \
-	  echo "src/gz cross file://$(ipkprefix)" ) >>$(IPKG_CONF)
+	  echo "src/gz cross file://$(ipkprefix)" ) >>$(OPKG_CONF)
+	echo "dest cdkroot /" >$(OPKG_CONFCDK)
+	( echo "lists_dir ext /usr/lib/opkg"; \
+	  echo "arch sh4 10"; \
+	  echo "arch all 1"; \
+	  echo "src/gz cross file://$(ipkcdk)" ) >>$(OPKG_CONFCDK)
 
 #	$(INSTALL_DIR) $(crossprefix)/etc/ipkg
 #	echo "src/gz cross file://$(ipkprefix)" >$(crossprefix)/etc/ipkg/cross-feed.conf
+
+
 
 #
 # PYTHON-HOST

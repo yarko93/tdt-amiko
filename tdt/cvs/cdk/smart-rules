@@ -30,6 +30,7 @@
 # However, some special rules is better to write directly to .mk file
 #
 # To make rules quite you can use two special words, {PN} and {PV} which refers to package name and version.
+# Note: in {PN} all "_" symbols replaced with "-"
 #
 # Now consider sources that are supported:
 #  http:// - http wget download
@@ -66,4 +67,17 @@ udpxy
   http://sourceforge.net/projects/udpxy/files/udpxy/Chipmunk-1.0/udpxy.{PV}-prod.tgz
   #for patch -p0 use the following
   patch-0:file://udpxy-makefile.patch
+;
+
+#opkg-host
+opkg_host
+  0.1.8
+  {PN}
+  dirextract:http://opkg.googlecode.com/files/opkg-{PV}.tar.gz
+;
+#opkg-target
+opkg
+  0.1.8
+  {PN}-{PV}
+  extract:http://opkg.googlecode.com/files/{PN}-{PV}.tar.gz
 ;
