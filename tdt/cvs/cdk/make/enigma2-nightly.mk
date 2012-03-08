@@ -107,6 +107,7 @@ DESCRIPTION_enigma2 := a framebuffer-based zapping application (GUI) for linux
 SRC_URI_enigma2 := git://gitorious.org/open-duckbox-project-sh4/guigit.git
 # neccecary for get_git_version:
 DIR_enigma2 := $(appsdir)/enigma2-nightly
+FILES_enigma2 := /usr/bin /usr/lib/ /etc/enigma2 /usr/local/share
 
 $(DEPDIR)/enigma2-nightly: PARENT_PK = enigma2
 $(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
@@ -120,7 +121,9 @@ $(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
 	if [ -e $(PKDIR)/usr/local/bin/enigma2 ]; then \
 		$(target)-strip $(PKDIR)/usr/local/bin/enigma2; \
 	fi
-	$(toimage_build)
+	$(tocdk_build)
+	rm -rf $(PKDIR)/usr/local/share/meta
+	$(toflash_build)
 	touch $@
 
 enigma2-nightly-clean enigma2-nightly-distclean:
