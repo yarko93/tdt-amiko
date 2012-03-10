@@ -4712,113 +4712,33 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 +
  	def __init__(self, device):
  		self.device = device
- 
--		if access("/dev/.udev", 0):
--			self.type = DEVTYPE_UDEV
--		elif access("/dev/.devfsd", 0):
--			self.type = DEVTYPE_DEVFS
--		else:
--			print "Unable to determine structure of /dev"
--
-+#--->
-+#-		if access("/dev/.udev", 0):
-+#-			self.type = self.DEVTYPE_UDEV
-+#-		elif access("/dev/.devfsd", 0):
-+#-			self.type = self.DEVTYPE_DEVFS
-+#-		else:
-+#-			print "Unable to determine structure of /dev"
-+#+++>
-+		self.type = self.DEVTYPE_UDEV
-+#+++<
- 		self.max_idle_time = 0
- 		self.idle_running = False
- 		self.timer = None
-@@ -37,11 +53,11 @@
- 		self.disk_path = ''
- 		self.phys_path = path.realpath(self.sysfsPath('device'))
- 
--		if self.type == DEVTYPE_UDEV:
-+		if self.type == self.DEVTYPE_UDEV:
- 			self.dev_path = '/dev/' + self.device
+@@ -41,20 +59,8 @@
  			self.disk_path = self.dev_path
  
--		elif self.type == DEVTYPE_DEVFS:
-+		elif self.type == self.DEVTYPE_DEVFS:
- 			tmp = readFile(self.sysfsPath('dev')).split(':')
- 			s_major = int(tmp[0])
- 			s_minor = int(tmp[1])
-@@ -64,9 +80,9 @@
- 		return self.device < ob.device
+ 		elif self.type == DEVTYPE_DEVFS:
+-			tmp = readFile(self.sysfsPath('dev')).split(':')
+-			s_major = int(tmp[0])
+-			s_minor = int(tmp[1])
+-			for disc in listdir("/dev/discs"):
+-				dev_path = path.realpath('/dev/discs/' + disc)
+-				disk_path = dev_path + '/disc'
+-				try:
+-					rdev = stat(disk_path).st_rdev
+-				except OSError:
+-					continue
+-				if s_major == major(rdev) and s_minor == minor(rdev):
+-					self.dev_path = dev_path
+-					self.disk_path = disk_path
+-					break
++			self.dev_path = '/dev/' + self.device
++			self.disk_path = self.dev_path
  
- 	def partitionPath(self, n):
--		if self.type == DEVTYPE_UDEV:
-+		if self.type == self.DEVTYPE_UDEV:
- 			return self.dev_path + n
--		elif self.type == DEVTYPE_DEVFS:
-+		elif self.type == self.DEVTYPE_DEVFS:
- 			return self.dev_path + '/part' + n
- 
- 	def sysfsPath(self, filename):
-@@ -79,9 +95,9 @@
- 
- 	def bus(self):
- 		# CF (7025 specific)
--		if self.type == DEVTYPE_UDEV:
-+		if self.type == self.DEVTYPE_UDEV:
- 			ide_cf = False	# FIXME
--		elif self.type == DEVTYPE_DEVFS:
-+		elif self.type == self.DEVTYPE_DEVFS:
- 			ide_cf = self.device[:2] == "hd" and "host0" not in self.dev_path
- 
- 		internal = "pci" in self.phys_path
-@@ -129,20 +145,18 @@
- 
- 		for line in lines:
- 			parts = line.strip().split(" ")
--			real_path = path.realpath(parts[0])
--			if not real_path[-1].isdigit():
--				continue
--			try:
--				if MajorMinor(real_path) == MajorMinor(self.partitionPath(real_path[-1])):
-+			if path.realpath(parts[0]).startswith(self.dev_path):
-+				try:
- 					stat = statvfs(parts[1])
--					return stat.f_bfree/1000 * stat.f_bsize/1000
--			except OSError:
--				pass
-+				except OSError:
-+					continue
-+				return stat.f_bfree/1000 * stat.f_bsize/1000
-+
- 		return -1
- 
- 	def numPartitions(self):
- 		numPart = -1
--		if self.type == DEVTYPE_UDEV:
-+		if self.type == self.DEVTYPE_UDEV:
- 			try:
- 				devdir = listdir('/dev')
- 			except OSError:
-@@ -151,7 +165,7 @@
- 				if filename.startswith(self.device):
- 					numPart += 1
- 
--		elif self.type == DEVTYPE_DEVFS:
-+		elif self.type == self.DEVTYPE_DEVFS:
- 			try:
- 				idedir = listdir(self.dev_path)
- 			except OSError:
-@@ -174,23 +188,25 @@
- 
- 		cmd = "umount"
- 
--                for line in lines:                                                                          
--                        parts = line.strip().split(" ")                                                     
--                        real_path = path.realpath(parts[0])                                                 
--                        if not real_path[-1].isdigit():                                                     
--                                continue                                                                    
--                        try:                                                                                
--                                if MajorMinor(real_path) == MajorMinor(self.partitionPath(real_path[-1])):
+ 		print "new Harddisk", self.device, '->', self.dev_path, '->', self.disk_path
+ 		self.startIdle()
+@@ -181,7 +198,12 @@
+                                 continue                                                                    
+                         try:                                                                                
+                                 if MajorMinor(real_path) == MajorMinor(self.partitionPath(real_path[-1])):
 -					cmd = ' ' . join([cmd, parts[1]])
 -					break
 -			except OSError:
