@@ -81,3 +81,67 @@ opkg
   {PN}-{PV}
   extract:http://opkg.googlecode.com/files/{PN}-{PV}.tar.gz
 ;
+#
+# GSTREAMER
+#
+gstreamer
+  0.10.35.2
+  {PN}-{PV}
+  http://gstreamer.freedesktop.org/src/{PV}/pre/{PN}-{PV}.tar.bz2
+  rewrite-pkgconfig:pkgconfig/gstreamer.pc:pkgconfig/gstreamer-base.pc:pkgconfig/gstreamer-check.pc:pkgconfig/gstreamer-controller.pc:pkgconfig/gstreamer-dataprotocol.pc:pkgconfig/gstreamer-net.pc  
+  make:install:DESTDIR=TARGETS
+  rewrite-libtool:TARGETS/usr/lib/libgstreamer-0.10.la:TARGETS/usr/lib/libgstbase-0.10.la:TARGETS/usr/lib/libgstcheck-0.10.la:TARGETS/usr/lib/libgstcontroller-0.10.la:TARGETS/usr/lib/libgstdataprotocol-0.10.la:TARGETS/usr/lib/libgstnet-0.10.la  
+  rewrite-dependency:TARGETS/usr/lib/libgstbase-0.10.la::TARGETS/usr/lib/libgstcheck-0.10.la:TARGETS/usr/lib/libgstcontroller-0.10.la:TARGETS/usr/lib/libgstdataprotocol-0.10.la:TARGETS/usr/lib/libgstnet-0.10.la
+;
+gst_plugins_base
+  0.10.35.2
+  {PN}-{PV}
+  http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
+  rewrite-pkgconfig:pkgconfig/gstreamer-plugins-base.pc:pkgconfig/gstreamer-app.pc:pkgconfig/gstreamer-audio.pc:pkgconfig/gstreamer-cdda.pc:pkgconfig/gstreamer-fft.pc:pkgconfig/gstreamer-floatcast.pc:pkgconfig/gstreamer-interfaces.pc:pkgconfig/gstreamer-netbuffer.pc:pkgconfig/gstreamer-pbutils.pc:pkgconfig/gstreamer-riff.pc:pkgconfig/gstreamer-rtp.pc:pkgconfig/gstreamer-rtsp.pc:pkgconfig/gstreamer-sdp.pc:pkgconfig/gstreamer-tag.pc:pkgconfig/gstreamer-video.pc
+  make:install:DESTDIR=TARGETS
+  rewrite-libtool:TARGETS/usr/lib/libgstapp-0.10.la:TARGETS/usr/lib/libgstaudio-0.10.la:TARGETS/usr/lib/libgstcdda-0.10.la:TARGETS/usr/lib/libgstfft-0.10.la:TARGETS/usr/lib/libgstfloatcast-0.10.la:TARGETS/usr/lib/libgstinterfaces-0.10.la:TARGETS/usr/lib/libgstnetbuffer-0.10.la:TARGETS/usr/lib/libgstpbutils-0.10.la:TARGETS/usr/lib/libgstriff-0.10.la:TARGETS/usr/lib/libgstrtp-0.10.la:TARGETS/usr/lib/libgstrtsp-0.10.la:TARGETS/usr/lib/libgstsdp-0.10.la:TARGETS/usr/lib/libgsttag-0.10.la:TARGETS/usr/lib/libgstvideo-0.10.la  
+  rewrite-dependency:TARGETS/usr/lib/libgstaudio-0.10.la:TARGETS/usr/lib/libgstcdda-0.10.la:TARGETS/usr/lib/libgstpbutils-0.10.la:TARGETS/usr/lib/libgstriff-0.10.la
+;
+gst_plugins_good
+  0.10.30.2
+  {PN}-{PV}
+  http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
+  patch:file://gst-plugins-good-0.10.29_avidemux_only_send_pts_on_keyframe.patch
+  make:install:DESTDIR=TARGETS
+;
+gst_plugins_bad
+  0.10.22.2
+  {PN}-{PV}
+  http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
+  patch:file://gst-plugins-bad-0.10.22-mpegtsdemux_remove_bluray_pgs_detection.diff
+  patch:file://gst-plugins-bad-0.10.22-mpegtsdemux_speedup.diff
+  make:install:DESTDIR=TARGETS
+  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/gstreamer-plugins-bad-0.10.pc
+  rewrite-libtool:TARGETS/usr/lib/libogg.la:TARGETS/usr/lib/libgstbasevideo-0.10.la:TARGETS/usr/lib/libgstsignalprocessor-0.10.la:TARGETS/usr/lib/libgstphotography-0.10.la
+;
+gst_plugins_ugly
+  0.10.18.2
+  {PN}-{PV}
+  http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
+  make:install:DESTDIR=TARGETS
+;
+gst_ffmpeg
+  0.10.13
+  {PN}-{PV}
+  http://gstreamer.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
+  patch:file://gst-ffmpeg-0.10.12_lower_rank.patch
+  make:install:DESTDIR=TARGETS
+;
+gst_fluendo_mpegdemux
+  0.10.69
+  {PN}-{PV}
+  http://core.fluendo.com/gstreamer/src/{PN}/{PN}-{PV}.tar.gz
+  patch:file://gst-plugins-fluendo-mpegdemux-0.10.69-add_dts_hd_detection.diff
+  make:install:DESTDIR=TARGETS
+;
+gst_plugins_dvbmediasink
+  0.10.1
+  ../apps/misc/tools/{PN}-{PV}
+  make:install:DESTDIR=TARGETS
+  link:../apps/misc/tools/gst-plugins-dvbmediasink:gst-plugins-dvbmediasink-0.10.1
+;

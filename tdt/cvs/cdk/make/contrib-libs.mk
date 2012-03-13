@@ -1863,24 +1863,24 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
-$(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_fluendo_mpegdemux@
-	@PREPARE_gst_plugins_fluendo_mpegdemux@
+$(DEPDIR)/gst_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_fluendo_mpegdemux@
+	@PREPARE_gst_fluendo_mpegdemux@
 	touch $@
 
-$(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_prepare
+$(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
-	cd @DIR_gst_plugins_fluendo_mpegdemux@ && \
+	cd @DIR_gst_fluendo_mpegdemux@ && \
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
 		--prefix=/usr --with-check=no
 	touch $@
 
-$(DEPDIR)/min-gst_plugins_fluendo_mpegdemux $(DEPDIR)/std-gst_plugins_fluendo_mpegdemux $(DEPDIR)/max-gst_plugins_fluendo_mpegdemux \
-$(DEPDIR)/gst_plugins_fluendo_mpegdemux: \
-$(DEPDIR)/%gst_plugins_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile
-	cd @DIR_gst_plugins_fluendo_mpegdemux@ && \
-		@INSTALL_gst_plugins_fluendo_mpegdemux@
+$(DEPDIR)/min-gst_fluendo_mpegdemux $(DEPDIR)/std-gst_plugins_fluendo_mpegdemux $(DEPDIR)/max-gst_plugins_fluendo_mpegdemux \
+$(DEPDIR)/gst_fluendo_mpegdemux: \
+$(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile
+	cd @DIR_gst_fluendo_mpegdemux@ && \
+		@INSTALL_gst_fluendo_mpegdemux@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
