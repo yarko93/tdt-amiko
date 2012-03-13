@@ -1088,18 +1088,21 @@ $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
 #
 
 # PARENT_PK defined as per rule variable below is main postfix
-# at first split_packages.py searches for variable PACKAGES_ + PARENT_PK
-PACKAGES_ntpclient = ntpclient
+# at first split_packages.py searches for variable PACKAGES_ + $(PARENT_PK)
+# PACKAGES_ntpclient = ntpclient
+# this is the default.
+# PACKAGES_ntpclient = $(PARENT_PK)
 # secondly for each package in the list it looks for control fields.
 # the default control field is PARENT_PK one.
 
 DESCRIPTION_ntpclient := time sync over ntp protocol
-MAINTAINER_ntpclient := Ar-P team
+#this is default
+#MAINTAINER_ntpclient := Ar-P team
 #Source: are handled by smart-rules
 #SRC_URI_ntpclient =
-PACKAGE_ARCH_ntpclient := sh4
+#PACKAGE_ARCH_ntpclient := sh4
 #the Package: field in control file
-NAME_ntpclient := ntpclient
+#NAME_ntpclient := ntpclient
 #mask for files to package
 FILES_ntpclient := /sbin /etc
 #version is handled by smart-rules
