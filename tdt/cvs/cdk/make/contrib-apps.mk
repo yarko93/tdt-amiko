@@ -1133,15 +1133,12 @@ $(DEPDIR)/ntpclient.do_compile: $(DEPDIR)/ntpclient.do_prepare
 
 $(DEPDIR)/ntpclient: PARENT_PK = ntpclient
 $(DEPDIR)/ntpclient: $(DEPDIR)/ntpclient.do_compile
-	rm -rf $(PKDIR)
-	rm -rf $(ipkgbuilddir)/ntpclient
 	cd @DIR_ntpclient@  && \
 		install -D -m 0755 ntpclient $(PKDIR)/sbin/ntpclient; \
 		install -D -m 0755 adjtimex $(PKDIR)/sbin/adjtimex; \
 		install -D -m 0755 rate.awk $(PKDIR)/sbin/ntpclient-drift-rate.awk
 	install -D -m 0755 Patches/ntpclient-init.file $(PKDIR)/etc/init.d/ntpclient
-	python split_packages.py
-	ipkg-build -o root -g root $(ipkgbuilddir)/ntpclient $(ipkprefix);
+	$(extra_build)
 	touch $@
 
 #
@@ -1162,12 +1159,9 @@ $(DEPDIR)/udpxy.do_compile: $(DEPDIR)/udpxy.do_prepare
 
 $(DEPDIR)/udpxy: PARENT_PK = udpxy
 $(DEPDIR)/udpxy: $(DEPDIR)/udpxy.do_compile
-	rm -rf $(PKDIR)
-	rm -rf $(ipkgbuilddir)/$(@F)
 	cd $(DIR_$(@F))  && \
 		export INSTALLROOT=$(PKDIR)/usr && \
 		$(MAKE) install
-	python split_packages.py
-	ipkg-build -o root -g root $(ipkgbuilddir)/$(@F) $(ipkprefix);
+	$(extra_build)
 	touch $@
 
