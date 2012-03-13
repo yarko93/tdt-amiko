@@ -1147,12 +1147,7 @@ $(DEPDIR)/ntpclient: $(DEPDIR)/ntpclient.do_compile
 #
 # udpxy
 #
-PACKAGES_udpxy = udpxy
 DESCRIPTION_udpxy := udp to http stream proxy
-MAINTAINER_udpxy := Ar-P team
-PACKAGE_ARCH_udpxy := sh4
-NAME_udpxy := udpxy
-FILES_udpxy := /
 PKGR_udpxy = r0
 
 $(DEPDIR)/udpxy.do_prepare: @DEPENDS_udpxy@
