@@ -951,15 +951,15 @@ TUXBOX_RULES_MAKE(mplayer)
 TUXBOX_RULES_MAKE(mencoder)
 TUXBOX_RULES_MAKE(util_linux)
 TUXBOX_RULES_MAKE(jfsutils)
-SMART_RULES_MAKE(opkg)
-SMART_RULES_MAKE(opkg_host)
+TUXBOX_RULES_MAKE(opkg)
+TUXBOX_RULES_MAKE(opkg_host)
 TUXBOX_RULES_MAKE(pppd)
 
 #
 # contrib apps with smart rules
 #
-SMART_RULES_MAKE(ntpclient)
-SMART_RULES_MAKE(udpxy)
+TUXBOX_RULES_MAKE(ntpclient)
+TUXBOX_RULES_MAKE(udpxy)
 #
 # contrib libs
 #
@@ -1019,14 +1019,14 @@ TUXBOX_RULES_MAKE(libflac)
 TUXBOX_RULES_MAKE(libcap)
 TUXBOX_RULES_MAKE(evebrowser)
 TUXBOX_RULES_MAKE(brofs)
-SMART_RULES_MAKE(gstreamer)
-SMART_RULES_MAKE(gst_plugins_base)
-SMART_RULES_MAKE(gst_plugins_good)
-SMART_RULES_MAKE(gst_plugins_bad)
-SMART_RULES_MAKE(gst_plugins_ugly)
-SMART_RULES_MAKE(gst_ffmpeg)
-SMART_RULES_MAKE(gst_fluendo_mpegdemux)
-SMART_RULES_MAKE(gst_plugins_dvbmediasink)
+TUXBOX_RULES_MAKE(gstreamer)
+TUXBOX_RULES_MAKE(gst_plugins_base)
+TUXBOX_RULES_MAKE(gst_plugins_good)
+TUXBOX_RULES_MAKE(gst_plugins_bad)
+TUXBOX_RULES_MAKE(gst_plugins_ugly)
+TUXBOX_RULES_MAKE(gst_ffmpeg)
+TUXBOX_RULES_MAKE(gst_fluendo_mpegdemux)
+TUXBOX_RULES_MAKE(gst_plugins_dvbmediasink)
 TUXBOX_RULES_MAKE(libalsa)
 TUXBOX_RULES_MAKE(libusb)
 TUXBOX_RULES_MAKE(rtmpdump)
@@ -1152,12 +1152,7 @@ AC_SUBST(DRPMBUILD)
 #
 # internal
 #
-AC_SUBST_FILE(ARCHIVE)
-ARCHIVE=Makefile-archive
-AC_CONFIG_COMMANDS_PRE([
-AC_MSG_NOTICE([creating Makefile-archive])
-${srcdir}/rules-archive.pl ${srcdir}/rules-archive > Makefile-archive
-])
+
 
 AC_SUBST(DOWNLOAD_FOR_SMART)
 AC_SUBST(SMART_DOWNLOAD_RULES)
@@ -1272,7 +1267,7 @@ fi
 
 TUXBOX_TOUCH='[@[ "x$*" = "x" ] && touch $@ || true]'
 AC_SUBST(TUXBOX_TOUCH)
-TUXBOX_YAUD_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && $(customizationsdir)/$(notdir $@)-local.sh $(prefix)/$*cdkroot $(buildprefix) || true]'
+TUXBOX_YAUD_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && $(customizationsdir)/$(notdir $@)-local.sh $(prefix)/$*cdkroot $(buildprefix) || true; $(toimage_build)]'
 AC_SUBST(TUXBOX_YAUD_CUSTOMIZE)
 FLASHROOTDIR_MODIFIED='touch $(flashprefix)/root'
 AC_SUBST(FLASHROOTDIR_MODIFIED)
