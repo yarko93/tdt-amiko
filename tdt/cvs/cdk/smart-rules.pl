@@ -6,7 +6,7 @@ use IO::File;
 my $version;
 
 my $supported_protocols = "http|ftp|file";
-my $make_commands = "nothing|extract|dirextract|patch(time)?(-(\\d+))?";
+my $make_commands = "nothing|extract|dirextract|patch(time)?(-(\\d+))?|pmove|premove|plink|pdircreate";
 
 sub load ($$$);
 
@@ -59,7 +59,7 @@ sub load ($$$)
 
 sub process_rule($) {
 
-  #print "parse: " . $_ . "\n";
+  #warn "parse: " . $_ . "\n";
 
   my $f = "";
   my $l = $_;
@@ -80,7 +80,7 @@ sub process_rule($) {
   
   my $q = shift @l;
   #print "test $q \n";
-  if ( $q !~ m#^//.*# )
+  if ( not $q or $q !~ m#^//.*# )
   {
     $p = "none";
   }
@@ -91,7 +91,7 @@ sub process_rule($) {
     $f = $a[-1];
   }
       
-  #print "command: $cmd protocol: $p file: $f\n";
+  #warn "command: $cmd protocol: $p file: $f\n";
 
   return ($p, $f, $cmd);
 }
@@ -142,6 +142,7 @@ sub process_make_prepare (@)
 
   foreach ( @_ )
   {
+	my @args = split( /:/, $_ );
     my ($p, $f, $cmd) = process_rule($_);
     local @_ = ($p, $f);
 
@@ -155,7 +156,7 @@ sub process_make_prepare (@)
       $output .= " && ";
     }
     
-    if ( $cmd eq "" || $cmd eq "extract")
+    if ( $cmd eq "rpm" || $cmd eq "extract")
     {
       if ( $_[1] =~ m#\.tar\.bz2$# )
       {
@@ -175,7 +176,7 @@ sub process_make_prepare (@)
       }
       elsif ( $_[1] =~ m#\.zip$# )
       {
-        $output .= "unzip -d $_[2] \\\$(archivedir)/" . $_[1];
+        $output .= "unzip -d $dir \\\$(archivedir)/" . $_[1];
       }
       elsif ( $_[1] =~ m#\.src\.rpm$# )
       {
@@ -247,22 +248,22 @@ sub process_make_prepare (@)
     {
       $output .= "rpmbuild \${DRPMBUILD} -bb -v --clean --target=sh4-linux SPECS/stm-" . $f . ".spec ";
     }
-#     elsif ( $cmd eq "move" )
-#     {
-#       $output .= "mv " . $_[1] . " " . $_[2];
-#     }
-#     elsif ( $cmd eq "remove" )
-#     {
-#       $output .= "( rm -rf " . $_[1] . " || /bin/true )";
-#     }
-#     elsif ( $cmd eq "link" )
-#     {
-#       $output .= "( ln -sf " . $_[1] . " " . $_[2] . " || /bin/true )";
-#     }
-#     elsif ( $cmd eq "dircreate" )
-#     {
-#       $output .= "( mkdir -p $dir )";
-#     }
+    elsif ( $cmd eq "pmove" )
+    {
+      $output .= "mv " . $args[1] . " " . $args[2];
+    }
+    elsif ( $cmd eq "premove" )
+    {
+      $output .= "( rm -rf " . $args[1] . " || /bin/true )";
+    }
+    elsif ( $cmd eq "plink" )
+    {
+      $output .= "( ln -sf " . $args[1] . " " . $args[2] . " || /bin/true )";
+    }
+    elsif ( $cmd eq "pdircreate" )
+    {
+      $output .= "( mkdir -p" . $args[1] . " )";
+    }
     else
     {
       die "can't recognize command @_";
@@ -450,7 +451,7 @@ sub process_install ($$$)
 {
   my @rules = @{$_[1]};
   my $output = "";
-  shift @rules;
+  $version = shift @rules;
   shift @rules;
 
   foreach ( @rules )
@@ -500,7 +501,7 @@ sub process_download ($$$)
   process_make_version (@_);
 
   my $head;
-  my $output;
+  my $output = "";
 
   shift @_;
   shift @_;
