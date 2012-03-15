@@ -3967,7 +3967,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/fb.cpp eni
  	return 0;
  }
  
-@@ -183,10 +212,86 @@
+@@ -183,16 +212,94 @@
  
  void fbClass::blit()
  {
@@ -4054,6 +4054,14 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/fb.cpp eni
  }
  
  fbClass::~fbClass()
+ {
++#if not defined(__sh__) 
+ 	if (available)
+ 		ioctl(fd, FBIOPUT_VSCREENINFO, &oldscreen);
++#endif
+ 	if (lfb)
+ 		munmap(lfb, available);
+ 	showConsole(1);
 @@ -231,19 +336,62 @@
  
  void fbClass::enableManualBlit()
@@ -4656,10 +4664,25 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/stmfb.cpp 
 +//	printf("unimplemented bcm_accel_fill\n");
 +}
 +
-diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/Harddisk.py enigma2-nightly.patched/lib/python/Components/Harddisk.py
---- enigma2-nightly.org/lib/python/Components/Harddisk.py	2011-09-03 18:23:25.810022128 +0200
-+++ enigma2-nightly.patched/lib/python/Components/Harddisk.py	2011-09-03 18:23:47.290032918 +0200
-@@ -1,13 +1,26 @@
+
+diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Components/DreamInfoHandler.py enigma2-nightly.patched/lib/python/Components/DreamInfoHandler.py
+--- enigma2-nightly.org/lib/python/Components/DreamInfoHandler.py	2012-02-27 21:55:24.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Components/DreamInfoHandler.py	2012-03-06 19:40:12.000000000 +0100
+@@ -124,6 +124,10 @@
+			self.attributes["packagename"] = str(data)
+		if self.elements[-1] == "needsRestart":
+			self.attributes["needsRestart"] = str(data)
++#+++>
++		if self.elements[-1] == "details":
++			self.attributes["details"] = str(data)
++#+++<
+		if self.elements[-1] == "shortdescription":
+			self.attributes["shortdescription"] = str(data)
+		if self.elements[-1] == "description":
+diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Components/Harddisk.py enigma2-nightly.patched/lib/python/Components/Harddisk.py
+--- enigma2-nightly.org/lib/python/Components/Harddisk.py	2012-02-27 21:55:24.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Components/Harddisk.py	2012-03-06 19:40:12.000000000 +0100
+@@ -1,9 +1,26 @@
 -from os import system, listdir, statvfs, popen, makedirs, stat, major, minor, path, access
 -from Tools.Directories import SCOPE_HDD, resolveFilename
 +#--->
@@ -4704,6 +4727,29 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 +
  	def __init__(self, device):
  		self.device = device
+@@ -41,20 +59,8 @@
+ 			self.disk_path = self.dev_path
+ 
+ 		elif self.type == DEVTYPE_DEVFS:
+-			tmp = readFile(self.sysfsPath('dev')).split(':')
+-			s_major = int(tmp[0])
+-			s_minor = int(tmp[1])
+-			for disc in listdir("/dev/discs"):
+-				dev_path = path.realpath('/dev/discs/' + disc)
+-				disk_path = dev_path + '/disc'
+-				try:
+-					rdev = stat(disk_path).st_rdev
+-				except OSError:
+-					continue
+-				if s_major == major(rdev) and s_minor == minor(rdev):
+-					self.dev_path = dev_path
+-					self.disk_path = disk_path
+-					break
++			self.dev_path = '/dev/' + self.device
++			self.disk_path = self.dev_path
+ 
+ 		print "new Harddisk", self.device, '->', self.dev_path, '->', self.disk_path
+ 		self.startIdle()
 @@ -181,7 +198,12 @@
                                  continue                                                                    
                          try:                                                                                
@@ -10100,21 +10146,3 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/RecordTimer.py eni
  			return True
  
  	def setAutoincreaseEnd(self, entry = None):
-
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Components/Timezones.py enigma2-nightly.patched/lib/python/Components/Timezones.py
---- enigma2-nightly.org/lib/python/Components/Timezones.py	2012-03-14 11:08:56.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Components/Timezones.py	2012-03-14 11:16:19.000000000 +0100
-@@ -38,11 +38,11 @@
- 		
- 		environ['TZ'] = self.timezones[index][1]
- 		try:
--			unlink("/etc/localtime")
-+			unlink("/var/etc/localtime")
- 		except OSError:
- 			pass
- 		try:
--			symlink("/usr/share/zoneinfo/%s" %(self.timezones[index][1]), "/etc/localtime")
-+			symlink("/usr/share/zoneinfo/%s" %(self.timezones[index][1]), "/var/etc/localtime")
- 		except OSError:
- 			pass
- 		try:
