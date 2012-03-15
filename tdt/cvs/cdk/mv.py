@@ -13,6 +13,10 @@ cmd_tasks = ['dircreate', 'move', 'remove', 'link']
 global ret
 ret = ""
 
+import sys
+real_stdout = sys.stdout
+sys.stdout = sys.stderr
+
 def add2ret(s):
 	global ret
 	ret = ret + ('  '+s+'\n').replace(pn.replace('_','-'), '{PN}').replace(pv.replace('_','-'), '{PV}')
@@ -79,4 +83,5 @@ print ""
 print ""
 print "============================SMART========================="
 print ""
+sys.stdout = real_stdout
 print ret
