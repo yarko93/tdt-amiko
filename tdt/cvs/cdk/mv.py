@@ -3,9 +3,6 @@ fm = open('rules-make').readlines()
 fa = open('rules-archive').readlines()
 fi = open('rules-install').readlines()
 
-#? fix rpm urls
-#  fix if make empty but install not empty + add ; if empty
-#  rules-uninstall
 
 default_url = "ftp://ftp.stlinux.com/pub/stlinux/2.2/updates/SRPMS"
 cmd_tasks = ['dircreate', 'move', 'remove', 'link']
@@ -35,7 +32,7 @@ for lm in fm:
 	add2ret(pdir)
 	if len(rm) < 4:
 		print "Empty", pn
-		continue
+		rm += ['']
 	pdeps = rm[3].split(':')
 	ptasks = rm[4:]
 	print "  tasks are\n   ", '\n    '.join(ptasks)
