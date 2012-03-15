@@ -146,8 +146,7 @@ CONFIG_STATUS_DEPENDENCIES = \
 	$(top_srcdir)/rules-install $(top_srcdir)/rules-install-flash \
 	$(top_srcdir)/rules-make$(if $(STABLE),,.latest) \
 	$(top_srcdir)/smart-rules.pl \
-	$(top_srcdir)/smart-rules \
-	Makefile-archive
+	$(top_srcdir)/smart-rules
 
 min-query std-query max-query query: \
 %query:
