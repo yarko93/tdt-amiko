@@ -19,7 +19,7 @@ $(DEPDIR)/enigma2-nightly.do_prepare:
 	echo " 0) Newest (Can fail due to outdated patch)"; \
 	echo "---- REVISIONS ----"; \
 	echo "1) Sat, 29 Mar 2011 13:49 - E2 V3.0 e013d09af0e010f15e225a12dcc217abc052ee19"; \
-	echo "2) March 05 2012 - E2 gitgui branch master-patched"; \
+	echo "2) Current E2 gitgui arp-team no gstreamer"; \
 	echo "3) Current E2 gitgui arp-team"; \
 	echo "4) inactive"; \
 	echo "5) Fri,  5 Nov 2010 00:16 - E2 V2.4 libplayer3 7fd4241a1d7b8d7c36385860b24882636517473b"; \
@@ -29,7 +29,7 @@ $(DEPDIR)/enigma2-nightly.do_prepare:
 	echo "Selection: " $$REPLY; \
 	[ "$$REPLY" == "0" ] && DIFF="0" && HEAD="experimental"; \
 	[ "$$REPLY" == "1" ] && DIFF="1" && HEAD="experimental" && REVISION="e013d09af0e010f15e225a12dcc217abc052ee19"; \
-	[ "$$REPLY" == "2" ] && DIFF="2" && HEAD="master-patched"; \
+	[ "$$REPLY" == "2" ] && DIFF="2" && HEAD="arp-no_gst"; \
 	[ "$$REPLY" == "3" ] && DIFF="3" && HEAD="arp-team"; \
 	[ "$$REPLY" == "4" ] && DIFF="4" && HEAD="master" && REVISION="be8ccc9f63c4cd79f8dba84087c7348c23657865"; \
 	[ "$$REPLY" == "5" ] && DIFF="5" && HEAD="master" && REVISION="7fd4241a1d7b8d7c36385860b24882636517473b"; \
