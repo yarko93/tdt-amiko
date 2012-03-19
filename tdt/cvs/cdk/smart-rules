@@ -75,12 +75,6 @@ opkg_host
   {PN}
   dirextract:http://opkg.googlecode.com/files/opkg-{PV}.tar.gz
 ;
-#opkg-target
-opkg
-  0.1.8
-  {PN}-{PV}
-  extract:http://opkg.googlecode.com/files/{PN}-{PV}.tar.gz
-;
 
 linux
   2.6.17.14_stm22_0037
@@ -133,22 +127,22 @@ linuxp0201
 linuxp0205
   2.6.32.16_stm24_0205
   linux-sh4-2.6.32.16_stm24_0205
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.2/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.16_stm24_0205-205.src.rpm
+  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.16_stm24_0205-205.src.rpm
 ;
 linuxp0206
   2.6.32.28_stm24_0206
   linux-sh4-2.6.32.28_stm24_0206
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.2/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.28_stm24_0206-206.src.rpm
+  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.28_stm24_0206-206.src.rpm
 ;
 linuxp0207
   2.6.32.28_stm24_0207
   linux-sh4-2.6.32.28_stm24_0207
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.2/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.28_stm24_0207-207.src.rpm
+  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.28_stm24_0207-207.src.rpm
 ;
 linuxp0209
   2.6.32.46_stm24_0209
   linux-sh4-2.6.32.46_stm24_0209
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.2/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.46_stm24_0209-209.src.rpm
+  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.46_stm24_0209-209.src.rpm
 ;
 squashfs
   3.0
@@ -847,7 +841,7 @@ libalsa
 libusb
   0.1.12
   {PN}-{PV}
-  extract:http://downloads.sourceforge.net/{PN}//{PN}-{PV}.tar.gz
+  extract:http://sourceforge.net/projects/{PN}/files/{PN}-0.1%20%28LEGACY%29/{PV}/{PN}-{PV}.tar.gz
   make:install:DESTDIR=TARGETS
 ;
 rtmpdump
