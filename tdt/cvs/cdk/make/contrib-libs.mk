@@ -1,4 +1,3 @@
-
 #
 # LIBBOOST
 #
@@ -115,7 +114,7 @@ $(DEPDIR)/freetype.do_compile: $(DEPDIR)/freetype.do_prepare
 define freetype/install/post
 	cd @DIR_freetype@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < builds/unix/freetype-config > $(crossprefix)/bin/freetype-config && \
-		ln -sf freetype-config $(target)-freetype-config && \
+		ln -sf $(crossprefix)/bin/freetype-config $(crossprefix)/bin/$(target)-freetype-config && \
 		chmod 755 $(crossprefix)/bin/freetype-config
 		ln -sf $(targetprefix)/usr/include/freetype2/freetype $(targetprefix)/usr/include/freetype
 endef
@@ -695,7 +694,7 @@ $(DEPDIR)/directfb.do_compile: bootstrap freetype directfb.do_prepare
 			--disable-devmem \
 			--disable-multi \
 			--with-gfxdrivers=stgfx \
-			--with-inputdrivers=linuxinput \
+			--with-inputdrivers=linuxinput,enigma2remote \
 			--without-software \
 			--enable-stmfbdev \
 			--disable-fbdev \
@@ -1235,7 +1234,7 @@ $(flashprefix)/root-enigma2/usr/lib/python2.6/site-packages/OpenSSL: \
 $(DEPDIR)/ffmpeg.do_prepare: bootstrap libass rtmpdump @DEPENDS_ffmpeg@
 	@PREPARE_ffmpeg@
 	cd @DIR_ffmpeg@ && \
-	patch -p1 < ../Patches/ffmpeg.patch;
+	patch -p1 < $(buildprefix)/Patches/ffmpeg.patch;
 	touch $@
 
 #$(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
@@ -1356,9 +1355,9 @@ $(DEPDIR)/libass.do_compile: $(DEPDIR)/libass.do_prepare
 	$(BUILDENV) \
 	CFLAGS="$(TARGET_CFLAGS) -Os" \
 	./configure \
-                --host=$(target) \
-                --disable-fontconfig \
-		        --prefix=/usr
+		--host=$(target) \
+		--disable-fontconfig \
+		--prefix=/usr
 	touch $@
 
 $(DEPDIR)/min-libass $(DEPDIR)/std-libass $(DEPDIR)/max-libass \
@@ -1378,7 +1377,6 @@ $(DEPDIR)/webkitdfb.do_prepare: bootstrap glib2 icu4c libxml2 enchant lite curl 
 	@PREPARE_webkitdfb@
 	touch $@
 
-
 #
 $(DEPDIR)/webkitdfb.do_compile: $(DEPDIR)/webkitdfb.do_prepare
 	export PATH=$(BUILDPREFIX)/@DIR_icu4c@/host/config:$(PATH) && \
@@ -1389,23 +1387,23 @@ $(DEPDIR)/webkitdfb.do_compile: $(DEPDIR)/webkitdfb.do_prepare
 		--prefix=/usr \
 		--with-cairo-directfb \
 		--disable-shared-workers \
-		--enable-optimizations	\
-		--disable-channel-messaging	\
-		--disable-javascript-debugger	\
-		--enable-offline-web-applications	\
-		--enable-dom-storage	\
-		--enable-database	\
-		--disable-eventsource	\
-		--enable-icon-database	\
-		--enable-datalist	\
-		--disable-video	\
-		--enable-svg	\
-		--enable-xpath	\
-		--disable-xslt	\
+		--enable-optimizations \
+		--disable-channel-messaging \
+		--disable-javascript-debugger \
+		--enable-offline-web-applications \
+		--enable-dom-storage \
+		--enable-database \
+		--disable-eventsource \
+		--enable-icon-database \
+		--enable-datalist \
+		--disable-video \
+		--enable-svg \
+		--enable-xpath \
+		--disable-xslt \
 		--disable-dashboard-support \
 		--disable-geolocation \
-		--disable-workers	\
-		--disable-web-sockets	\
+		--disable-workers \
+		--disable-web-sockets \
 		--with-networking-backend=soup
 	touch $@
 
@@ -1417,12 +1415,14 @@ $(DEPDIR)/%webkitdfb: $(DEPDIR)/webkitdfb.do_compile
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
-
+#
+# icu4c
+#
 $(DEPDIR)/icu4c.do_prepare: bootstrap @DEPENDS_icu4c@
 	@PREPARE_icu4c@
 	cd @DIR_icu4c@ && \
 		rm data/mappings/ucm*.mk; \
-		patch -p1 < ../../Patches/icu4c-4_4_1_locales.patch;
+		patch -p1 < $(buildprefix)/Patches/icu4c-4_4_1_locales.patch;
 	touch $@
 
 $(DEPDIR)/icu4c.do_compile: $(DEPDIR)/icu4c.do_prepare
@@ -1449,11 +1449,14 @@ $(DEPDIR)/min-icu4c $(DEPDIR)/std-icu4c $(DEPDIR)/max-icu4c \
 $(DEPDIR)/icu4c: \
 $(DEPDIR)/%icu4c: $(DEPDIR)/icu4c.do_compile
 	cd @DIR_icu4c@ && \
-	   unset TARGET && \
+		unset TARGET && \
 		@INSTALL_icu4c@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
-	
+
+#
+# enchant
+#
 $(DEPDIR)/enchant.do_prepare: bootstrap @DEPENDS_enchant@
 	@PREPARE_enchant@
 	touch $@
@@ -1498,7 +1501,7 @@ $(DEPDIR)/lite.do_compile: $(DEPDIR)/lite.do_prepare
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
-      --disable-debug
+		--disable-debug
 	touch $@
 
 $(DEPDIR)/min-lite $(DEPDIR)/std-lite $(DEPDIR)/max-lite \
@@ -1767,7 +1770,7 @@ $(DEPDIR)/gst_plugins_bad.do_compile: $(DEPDIR)/gst_plugins_bad.do_prepare
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
-		 ac_cv_openssldir=no --with-check=no
+		ac_cv_openssldir=no --with-check=no
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_bad $(DEPDIR)/std-gst_plugins_bad $(DEPDIR)/max-gst_plugins_bad \
@@ -1912,12 +1915,13 @@ $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compi
 
 ################ EXTERNAL_LCD #############################
 
+#
 # libusb 
-# 
+#
 $(DEPDIR)/libusb.do_prepare:  @DEPENDS_libusb@ 
 	@PREPARE_libusb@ 
 	touch $@ 
- 
+
 $(DEPDIR)/libusb.do_compile: $(DEPDIR)/libusb.do_prepare 
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_libusb@ && \
@@ -1927,7 +1931,7 @@ $(DEPDIR)/libusb.do_compile: $(DEPDIR)/libusb.do_prepare
 		--prefix=/usr && \
 		$(MAKE) all
 	touch $@
- 
+
 $(DEPDIR)/min-libusb $(DEPDIR)/std-libusb $(DEPDIR)/max-libusb \
 $(DEPDIR)/libusb: \
 $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
@@ -1936,36 +1940,62 @@ $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
 		@INSTALL_libusb@
 	@TUXBOX_YAUD_CUSTOMIZE@
 
+#
 # graphlcd
-$(DEPDIR)/graphlcd.do_prepare:	libusb
-	[ -d graphlcd-base ] && \
-    rm -rf graphlcd-base; \
-	git clone git://github.com/schpuntik/graphlcd-base.git --branch touchcol graphlcd-base;
-	cd graphlcd-base && \
-    patch -p0 <../Patches/graphlcd.patch
-	touch $@
-
-$(DEPDIR)/graphlcd.do_compile: $(DEPDIR)/graphlcd.do_prepare
-	cd graphlcd-base && \
+#
+$(DEPDIR)/graphlcd: graphlcd-base-touchcol.tar.bz2 bootstrap libusb @DEPENDS_graphlcd@
+	@PREPARE_graphlcd@
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_graphlcd@ && \
 	$(BUILDENV) \
-	$(MAKE) all
-	touch $@
-
-$(DEPDIR)/min-graphlcd $(DEPDIR)/std-graphlcd $(DEPDIR)/max-graphlcd \
-$(DEPDIR)/graphlcd: \
-$(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
-	@[ "x$*" = "x" ] && touch $@ || true
-	cd graphlcd-base && \
-		cp glcddrivers/*.so* $(targetprefix)/usr/lib/ && \
-		cp glcdgraphics/*.so* $(targetprefix)/usr/lib/ && \
-		cp glcdskin/*.so* $(targetprefix)/usr/lib/ && \
-		cp tools/showpic/showpic $(targetprefix)/usr/bin/ && \
-		cp tools/showtext/showtext $(targetprefix)/usr/bin/ && \
-		cp graphlcd.conf $(targetprefix)/etc/
+		$(MAKE) all && \
+		@INSTALL_graphlcd@
+	@DISTCLEANUP_graphlcd@
+	@touch $@
 	@TUXBOX_YAUD_CUSTOMIZE@
 
-#$(DEPDIR)/graphlcd: graphlcd.do_compile
-#	touch $@
+graphlcd-base-touchcol.tar.bz2:
+	if [ -d $(archivedir)/graphlcd-base-touchcol.tar.bz2; then \
+		rm $(archivedir)/graphlcd-base-touchcol.tar.bz2; \
+	fi
+####################### LCD4LINUX #############################
+#
+# LIBGD2
+#
+$(DEPDIR)/libgd2: bootstrap libz libpng jpeg libiconv freetype fontconfig @DEPENDS_libgd2@
+	@PREPARE_libgd2@
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libgd2@ && \
+	chmod +w configure && \
+	libtoolize -f -c && \
+	autoreconf --force --install -I$(hostprefix)/share/aclocal && \
+	$(BUILDENV) \
+	./configure \
+		--build=$(build) \
+		--host=$(target) \
+		--prefix=/usr && \
+		$(MAKE) && \
+		@INSTALL_libgd2@
+	@DISTCLEANUP_libgd2@
+	@touch $@
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+#
+# libusbcompat
+#
+$(DEPDIR)/libusbcompat: bootstrap libusb2 @DEPENDS_libusbcompat@
+	@PREPARE_libusbcompat@
+	cd @DIR_libusbcompat@ && \
+	$(BUILDENV) \
+	./configure \
+		--build=$(build) \
+		--host=$(target) \
+		--prefix=/usr && \
+		$(MAKE) && \
+		@INSTALL_libusbcompat@
+	@DISTCLEANUP_libusbcompat@
+	@touch $@
+	@TUXBOX_YAUD_CUSTOMIZE@
 
 ################ END EXTERNAL_LCD #############################
 
@@ -2116,4 +2146,124 @@ $(DEPDIR)/%rtmpdump: $(DEPDIR)/rtmpdump.do_compile
 	@[ "x$*" = "x" ] && touch $@ || true
 	cd @DIR_rtmpdump@ && \
 		@INSTALL_rtmpdump@
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+#
+# libdvbsi++
+#
+$(DEPDIR)/libdvbsipp.do_prepare:  @DEPENDS_libdvbsipp@
+	@PREPARE_libdvbsipp@
+	touch $@
+
+$(DEPDIR)/libdvbsipp.do_compile: $(DEPDIR)/libdvbsipp.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libdvbsipp@ && \
+	aclocal -I $(hostprefix)/share/aclocal -I m4 && \
+	autoheader && \
+	autoconf && \
+	automake --foreign && \
+	libtoolize --force && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libdvbsipp $(DEPDIR)/std-libdvbsipp $(DEPDIR)/max-libdvbsipp \
+$(DEPDIR)/libdvbsipp: \
+$(DEPDIR)/%libdvbsipp: $(DEPDIR)/libdvbsipp.do_compile
+	@[ "x$*" = "x" ] && touch $@ || true
+	cd @DIR_libdvbsipp@ && \
+		@INSTALL_libdvbsipp@
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+
+#
+# tuxtxt32bpp
+#
+$(DEPDIR)/tuxtxt32bpp.do_prepare:  @DEPENDS_tuxtxt32bpp@
+	[ -d "tuxtxt" ] && \
+	cd tuxtxt && git pull; \
+	[ -d "tuxtxt" ] || \
+	git clone git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt;
+	touch py-compile
+	chmod 755 py-compile
+	cd @DIR_tuxtxt32bpp@ && patch -p1 < ../../Patches/tuxtxt32bpp-1.0-fix_dbox_headers.diff
+	touch $@
+
+$(DEPDIR)/tuxtxt32bpp.do_compile: $(DEPDIR)/tuxtxt32bpp.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_tuxtxt32bpp@ && \
+	aclocal -I $(hostprefix)/share/aclocal && \
+	autoheader && \
+	autoconf && \
+	automake --foreign && \
+	libtoolize --force && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr \
+		--with-boxtype=generic \
+		--with-configdir=/etc && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-tuxtxt32bpp $(DEPDIR)/std-tuxtxt32bpp $(DEPDIR)/max-tuxtxt32bpp \
+$(DEPDIR)/tuxtxt32bpp: \
+$(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
+	@[ "x$*" = "x" ] && touch $@ || true
+	cd @DIR_tuxtxt32bpp@ && \
+		@INSTALL_tuxtxt32bpp@
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+#
+# libdreamdvd
+#
+$(DEPDIR)/libdreamdvd2.do_prepare:  @DEPENDS_libdreamdvd2@
+	[ -d "libdreamdvd" ] && \
+	cd libdreamdvd && git pull; \
+	[ -d "libdreamdvd" ] || \
+	git clone git://schwerkraft.elitedvb.net/libdreamdvd/libdreamdvd.git;
+	touch $@
+
+$(DEPDIR)/libdreamdvd2.do_compile: $(DEPDIR)/libdreamdvd2.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libdreamdvd2@ && \
+	aclocal -I $(hostprefix)/share/aclocal && \
+	autoheader && \
+	autoconf && \
+	automake --foreign && \
+	libtoolize --force && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libdreamdvd2 $(DEPDIR)/std-libdreamdvd2 $(DEPDIR)/max-libdreamdvd2 \
+$(DEPDIR)/libdreamdvd2: \
+$(DEPDIR)/%libdreamdvd2: $(DEPDIR)/libdreamdvd2.do_compile
+	@[ "x$*" = "x" ] && touch $@ || true
+	cd @DIR_libdreamdvd2@ && \
+		@INSTALL_libdreamdvd2@
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+#
+# PilImaging
+#
+$(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
+	@PREPARE_pilimaging@
+	cd @DIR_pythonimaging@ && \
+		echo 'JPEG_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' > setup_site.py && \
+		echo 'ZLIB_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
+		echo 'FREETYPE_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
+		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
+		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		$(crossprefix)/bin/python ./setup.py build && \
+		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr && \
+		@DISTCLEANUP_pilimaging@
+	@DISTCLEANUP_pilimaging@
+	@touch $@
 	@TUXBOX_YAUD_CUSTOMIZE@

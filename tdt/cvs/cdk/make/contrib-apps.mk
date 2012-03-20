@@ -991,7 +991,7 @@ $(DEPDIR)/util-linux.do_prepare: @DEPENDS_util_linux@
 		for p in `grep -v "^#" debian/patches/00list` ; do \
 			patch -p1 < debian/patches/$$p.dpatch; \
 		done; \
-		patch -p1 < ../Patches/util-linux-stm.diff
+		patch -p1 < $(buildprefix)/Patches/util-linux-stm.diff
 	touch $@
 
 $(DEPDIR)/util-linux.do_compile: bootstrap util-linux.do_prepare
@@ -1176,3 +1176,20 @@ $(DEPDIR)/udpxy: $(DEPDIR)/udpxy.do_compile
 	ipkg-build -o root -g root $(ipkgbuilddir)/$(@F) $(ipkprefix);
 	touch $@
 
+# sysstat
+#
+$(DEPDIR)/sysstat: bootstrap @DEPENDS_sysstat@
+	@PREPARE_sysstat@
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_sysstat@ && \
+	$(BUILDENV) \
+	./configure \
+		--build=$(build) \
+		--host=$(target) \
+		--prefix=/usr \
+		--disable-documentation && \
+		$(MAKE) && \
+		@INSTALL_sysstat@
+	@DISTCLEANUP_sysstat@
+	@touch $@
+	@TUXBOX_YAUD_CUSTOMIZE@

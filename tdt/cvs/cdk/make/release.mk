@@ -737,7 +737,7 @@ release_adb_box:
 	cp $(targetprefix)/lib/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_adb_box.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
 	cp -dp $(buildprefix)/root/etc/lircd_adb_box.conf $(prefix)/release/etc/lircd.conf
-	cp -dp $(buildprefix)/root/usr/bin/lircd_adb $(prefix)/release/usr/bin/lircd
+	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/lircd
 	mkdir -p $(prefix)/release/var/run/lirc
 	cp -dp $(buildprefix)/root/etc/boxtype $(prefix)/release/etc/boxtype
 
@@ -1529,7 +1529,7 @@ endif
 		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/gfxdrivers/*.la; \
 		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/gfxdrivers/*.o; \
 		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/inputdrivers/*; \
-		cp -a $(targetprefix)/usr/lib/directfb-1.4-5/inputdrivers/libdirectfb_ps2mouse.so $(prefix)/release/usr/lib/directfb-1.4-5/inputdrivers/; \
+		cp -a $(targetprefix)/usr/lib/directfb-1.4-5/inputdrivers/libdirectfb_enigma2remote.so $(prefix)/release/usr/lib/directfb-1.4-5/inputdrivers/; \
 		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/systems/*.a; \
 		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/systems/*.la; \
 		rm -rf $(prefix)/release/usr/lib/directfb-1.4-5/systems/*.o; \
@@ -1563,8 +1563,5 @@ endif
 
 #graphlcd Stuff
 	if [ -e $(prefix)/release/usr/lib/libglcddrivers.so ]; then \
-	    ln -s /usr/lib/libglcddrivers.so $(prefix)/release/usr/lib/libglcddrivers.so.2; \
-	    ln -s /usr/lib/libglcdgraphics.so $(prefix)/release/usr/lib/libglcdgraphics.so.2; \
-	    ln -s /usr/lib/libglcdskin.so $(prefix)/release/usr/lib/libglcdskin.so.2; \
 		cp -f $(targetprefix)/etc/graphlcd.conf $(prefix)/release/etc/graphlcd.conf; \
 	fi

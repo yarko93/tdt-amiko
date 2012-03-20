@@ -1,7 +1,4 @@
-## Makefile for Tuxbox UFS-910
-# http://www.stlinux.com/docs/getting_started-1.0/doc.php?print=1
-
-##################################################################################################
+## Makefile for Tuxbox
 
 # Set up the build environment
 include make/buildenv.mk
@@ -19,7 +16,7 @@ include make/ipkg.mk
 # Include bootstrap targets (SPECS derived)
 include make/bootstrap.mk
 
-#  Include u-boot targets
+# Include u-boot targets
 if ENABLE_TF7700
 include make/tf_u-boot.mk
 else
@@ -82,6 +79,9 @@ include make/externe-skins.mk
 
 #Some staff for building and splitting ipk packages with python
 include packaging.mk
+
+# Include enigma2-pli-nightly gui targets
+include make/enigma2-pli-nightly.mk
 
 # Include neutrino gui targets
 include make/neutrino.mk
@@ -186,3 +186,8 @@ include make/tfinstaller.mk
 
 download-for-smart: @DOWNLOAD_FOR_SMART@
 @SMART_DOWNLOAD_RULES@
+# this makes sure we do not build top-level dependencies in parallel
+# (which would not be too helpful anyway, running many configure and
+# downloads in parallel...), but the sub-targets are still built in
+# parallel, which is useful on multi-processor / multi-core machines
+.NOTPARALLEL:

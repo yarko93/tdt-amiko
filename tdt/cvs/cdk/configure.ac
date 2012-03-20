@@ -953,6 +953,7 @@ TUXBOX_RULES_MAKE(util_linux)
 TUXBOX_RULES_MAKE(jfsutils)
 TUXBOX_RULES_MAKE(opkg)
 TUXBOX_RULES_MAKE(pppd)
+TUXBOX_RULES_MAKE(sysstat)
 
 #
 # contrib apps with smart rules
@@ -1027,13 +1028,17 @@ TUXBOX_RULES_MAKE(gst_ffmpeg)
 TUXBOX_RULES_MAKE(gst_plugins_fluendo_mpegdemux)
 TUXBOX_RULES_MAKE(gst_plugins_dvbmediasink)
 TUXBOX_RULES_MAKE(libalsa)
-TUXBOX_RULES_MAKE(libusb)
 TUXBOX_RULES_MAKE(rtmpdump)
+TUXBOX_RULES_MAKE(libdvbsipp)
+TUXBOX_RULES_MAKE(tuxtxt32bpp)
+TUXBOX_RULES_MAKE(libdreamdvd2)
 
 #
-# GUI
+# EXTERNAL_LCD
 #
-#TUXBOX_RULES_MAKE(enigma2)
+TUXBOX_RULES_MAKE(graphlcd)
+TUXBOX_RULES_MAKE(libusb)
+TUXBOX_RULES_MAKE(libgd2)
 
 #
 # development
