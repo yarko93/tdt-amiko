@@ -1278,7 +1278,7 @@ endif
 	fi
 	
 	$(INSTALL_DIR) $(prefix)/release/usr/tuxtxt
-	cp -p $(targetprefix)/usr/tuxtxt/tuxtxt2.conf $(prefix)/release/usr/tuxtxt/
+	cp -p $(targetprefix)/etc/tuxbox/tuxtxt2.conf $(prefix)/release/usr/tuxtxt/
 	
 	cp -p $(targetprefix)/usr/sbin/ethtool $(prefix)/release/usr/sbin/
 
@@ -1292,7 +1292,9 @@ endif
 	cp $(targetprefix)/usr/share/fonts/md_khmurabi_10.ttf $(prefix)/release/usr/share/fonts/
 	cp $(targetprefix)/usr/share/fonts/nmsbd.ttf $(prefix)/release/usr/share/fonts/
 	cp $(targetprefix)/usr/share/fonts/tuxtxt.ttf $(prefix)/release/usr/share/fonts/
-	cp $(targetprefix)/usr/share/fonts/tuxtxt.otb $(prefix)/release/usr/share/fonts/
+	if [ -e $(targetprefix)/usr/share/fonts/tuxtxt.otb ]; then \
+		cp $(targetprefix)/usr/share/fonts/tuxtxt.otb $(prefix)/release/usr/share/fonts/; \
+	fi
 	cp $(targetprefix)/usr/share/fonts/goodtime.ttf $(prefix)/release/usr/share/fonts/
 	cp $(targetprefix)/usr/share/fonts/valis_enigma.ttf $(prefix)/release/usr/share/fonts/
 	cp $(targetprefix)/usr/share/fonts/valis_lcd.ttf $(prefix)/release/usr/share/fonts/
