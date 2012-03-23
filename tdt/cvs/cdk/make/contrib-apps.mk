@@ -296,12 +296,12 @@ else !STM24
 $(DEPDIR)/e2fsprogs.do_compile: $(DEPDIR)/e2fsprogs.do_prepare
 	cd @DIR_e2fsprogs@ && \
 	$(BUILDENV) \
+	cc="$(target)-gcc") \
 	./configure \
 		--build=$(build) \
 		--host=$(target) \
 		--target=$(target) \
 		--with-linker=$(target)-ld \
-		$(if $(STABLE), cc="$(target)-gcc") \
 		--enable-htree \
 		--disable-profile \
 		--disable-e2initrd-helper \
@@ -1193,3 +1193,63 @@ $(DEPDIR)/sysstat: bootstrap @DEPENDS_sysstat@
 	@DISTCLEANUP_sysstat@
 	@touch $@
 	@TUXBOX_YAUD_CUSTOMIZE@
+
+#
+# hotplug-e2
+#
+$(DEPDIR)/hotplug_e2.do_prepare: @DEPENDS_hotplug_e2@
+	[ -d @DIR_hotplug_e2@ ] && \
+	cd @DIR_hotplug_e2@ && git pull; \
+	[ -d @DIR_hotplug_e2@ ] || \
+	git clone git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper;
+	touch $@
+
+$(DEPDIR)/hotplug_e2.do_compile: bootstrap hotplug_e2.do_prepare 
+	cd @DIR_hotplug_e2@ && \
+		aclocal -I $(hostprefix)/share/aclocal && \
+		autoconf && \
+		automake --foreign && \
+		libtoolize --force && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr && \
+		$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-hotplug_e2 $(DEPDIR)/std-hotplug_e2 $(DEPDIR)/max-hotplug_e2 \
+$(DEPDIR)/hotplug_e2: \
+$(DEPDIR)/%hotplug_e2: $(DEPDIR)/hotplug_e2.do_compile
+	cd @DIR_hotplug_e2@ && \
+		@INSTALL_hotplug_e2@
+#	@DISTCLEANUP_jfsutils@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+#
+# autofs
+#
+$(DEPDIR)/autofs.do_prepare: @DEPENDS_autofs@
+	@PREPARE_autofs@
+	touch $@
+
+$(DEPDIR)/autofs.do_compile: bootstrap autofs.do_prepare 
+	cd @DIR_autofs@ && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr && \
+		$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-autofs $(DEPDIR)/std-autofs $(DEPDIR)/max-autofs \
+$(DEPDIR)/autofs: \
+$(DEPDIR)/%autofs: $(DEPDIR)/autofs.do_compile
+	cd @DIR_autofs@ && \
+		@INSTALL_autofs@
+#	@DISTCLEANUP_jfsutils@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+

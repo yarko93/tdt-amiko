@@ -9,7 +9,7 @@ EXTRA_DIST = \
 	rules-archive \
 	rules-install rules-install-flash \
 	smart-rules.pl smart-rules \
-	rules-make$(if $(STABLE),,.latest)
+	rules-make
 
 
 @ARCHIVE@

@@ -72,6 +72,7 @@ jfsutils-1.1.15.tar.gz;http://jfs.sourceforge.net/project/pub;http://fossies.org
 opkg-0.1.8.tar.gz;http://opkg.googlecode.com/files
 ppp-2.4.5.tar.gz;ftp://ftp.samba.org/pub/ppp
 sysstat-10.0.4.tar.gz;http://pagesperso-orange.fr/sebastien.godard
+autofs-3.1.7.tar.gz;ftp://ftp.kernel.org/pub/linux/daemons/autofs/v3/
 #
 # contrib libs
 #
