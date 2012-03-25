@@ -31,8 +31,8 @@ cp $TMPBOOTDIR/uImage $OUTDIR/uImage
 
 # Create a kathrein update file for fw's 
 # Offset on NAND Disk = 0x00400000
-$MKFSJFFS2 -l -e0x20000 -n -pv -d $TMPFWDIR  -o $OUTFILE << EOF
-$SUMTOOL -i $OUTFILE -o $OUTFILE2
+$MKFSJFFS2 -l -e0x20000 -n -pv -d $TMPFWDIR  -o $OUTFILE 
+$SUMTOOL -i $OUTFILE -o $OUTFILE2 -e 0x20000 -n << EOF
 
 EOF
 

@@ -23,7 +23,6 @@ $(appsdir)/enigma2/config.status: bootstrap freetype expat fontconfig libpng jpe
 			$(if $(UFS910),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_UFS910 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(UFS922),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_UFS922 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(TF7700),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_TF7700 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include" --enable-tf7700) \
-			$(if $(FLASH_UFS910),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_FLASH_UFS910 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(FORTIS_HDBOX),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_FORTIS_HDBOX -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(ATEVIO7500),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_ATEVIO7500 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 			$(if $(HL101),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_HL101 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include" --enable-hl101) \
@@ -104,34 +103,6 @@ enigma2-clean enigma2-distclean:
 	rm -f $(DEPDIR)/enigma2.do_compile
 	cd $(appsdir)/enigma2 && \
 		$(MAKE) distclean
-
-flash-enigma2: $(flashprefix)/root-enigma2
-
-$(flashprefix)/root-enigma2: \
-		bootstrap $(wildcard root-enigma2-local.sh) \
-		$(ENIGMA2_GUI_ADAPTED_ETC_FILES:%=root/etc/%) \
-		enigma2.do_compile
-	$(MAKE) flash-python-enigma2 && \
-	$(MAKE) flash-libxml2-enigma2 && \
-	$(MAKE) flash-libxslt-enigma2 && \
-	$(MAKE) flash-elementtree-enigma2 && \
-	$(MAKE) flash-zope-interface-enigma2 && \
-	$(MAKE) flash-twisted-enigma2 && \
-	$(MAKE) flash-libxmlccwrap-enigma2 && \
-	$(MAKE) -C $(appsdir)/enigma2 install DESTDIR=$@ && \
-	$(MAKE) enigma2-misc targetprefix=$@ && \
-	$(INSTALL_DIR) $@/etc/init.d && \
-	$(INSTALL_BIN) root/etc/init.d/{player,enigma2} $@/etc/init.d && \
-	$(INSTALL_DIR) $@/etc/rc.d/rc{S,0,1,2,3,4,5,6}.d && \
-	$(LN_SF) ../init.d $@/etc/rc.d/init.d && \
-	( export HHL_CROSS_TARGET_DIR=$@ && cd $@/etc/init.d && \
-		for s in player enigma2 ; do \
-			$(hostprefix)/bin/target-initdconfig --add $$s || \
-			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true ) && \
-	$(INSTALL_BIN) root/etc/init.d/rcS_flash $@/etc/init.d/rcS && \
-	$(INSTALL_BIN) root/etc/init.d/rc $@/etc/init.d/ && \
-	touch $@
-	@TUXBOX_CUSTOMIZE@
 
 #
 # dvb/libdvbsi++
