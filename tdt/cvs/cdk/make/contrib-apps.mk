@@ -59,8 +59,6 @@ $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
-if TARGETRULESET_FLASH
-
 flash-grep: $(flashprefix)/root/usr/bin/grep
 
 $(flashprefix)/root/usr/bin/grep: $(DEPDIR)/grep.do_compile | $(flashprefix)/root
@@ -69,7 +67,6 @@ $(flashprefix)/root/usr/bin/grep: $(DEPDIR)/grep.do_compile | $(flashprefix)/roo
 			$(INSTALL) -m 755 $$i $(@D) ; done
 	@FLASHROOTDIR_MODIFIED@
 	@TUXBOX_CUSTOMIZE@
-endif
 #
 # PPPD
 #
@@ -102,7 +99,6 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
-if TARGETRULESET_FLASH
 
 flash-pppd: $(flashprefix)/root/usr/bin/pppd
 
@@ -112,7 +108,7 @@ $(flashprefix)/root/usr/bin/pppd: $(DEPDIR)/pppd.do_compile | $(flashprefix)/roo
 			$(INSTALL) -m 755 $$i $(@D) ; done
 	@FLASHROOTDIR_MODIFIED@
 	@TUXBOX_CUSTOMIZE@
-endif
+
 
 #
 # LSB
