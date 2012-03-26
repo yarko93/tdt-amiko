@@ -132,9 +132,9 @@ ACLOCAL_AMFLAGS = -I .
 
 CONFIG_STATUS_DEPENDENCIES = \
 	$(top_srcdir)/rules.pl \
-	$(top_srcdir)/rules-install $(top_srcdir)/rules-install-flash \
 	$(top_srcdir)/smart-rules.pl \
 	$(top_srcdir)/smart-rules \
+	$(top_srcdir)/rules-install \
 	$(top_srcdir)/rules-make \
 	Makefile-archive
 
