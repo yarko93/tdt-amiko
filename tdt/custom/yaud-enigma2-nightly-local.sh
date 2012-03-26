@@ -2,8 +2,8 @@
 CURDIR=`pwd`
 NRELDIR='../../tufsbox/release'
 CHANGEDIR='../../tufsbox'
-TARGET=`cat $CURDIR/lastChoice | awk -F '--enable-' '{print $7}' | cut -d ' ' -f 1`
-DIST=`cat $CURDIR/lastChoice | awk -F '--enable-' '{print $5}' | cut -d ' ' -f 1`
+TARGET=`cat $CURDIR/lastChoice | awk -F '--enable-' '{print $6}' | cut -d ' ' -f 1`
+DIST=`cat $CURDIR/lastChoice | awk -F '--enable-' '{print $4}' | cut -d ' ' -f 1`
 BUILDDIR='../../cvs/cdk'
 
 echo "src/gz AR-P http://vip.sat-universum.de" | cat - $NRELDIR/etc/opkg/official-feed.conf > $NRELDIR/etc/opkg/official-feed
@@ -29,8 +29,8 @@ elif [ $TARGET == p0207 ]; [ $DIST == spark7162 ]; then
 elif [ $TARGET == p0123 ]; [ $DIST == spark ]; then
     mv $NRELDIR/lib/modules/pti_123.ko $NRELDIR/lib/modules/pti.ko
 fi
-cd $NRELDIR/usr/lib/locale
-ln -s /usr/local/share/titan/po po
+echo "TARGET       = $TARGET"
+echo "DIST       = $DIST"
 exit
 echo "--- Erledigt ---"
 exit
