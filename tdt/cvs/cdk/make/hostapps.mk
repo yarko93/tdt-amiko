@@ -69,7 +69,6 @@ $(hostprefix)/bin/mksquashfs: @DEPENDS_squashfs@
 #	rm -rf @DIR_squashfs@
 endif
 
-endif
 #
 # IPKG-UTILS
 #
