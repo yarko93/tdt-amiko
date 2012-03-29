@@ -50,3 +50,10 @@ ipkg-utils-*
 libpng-*
 ipkgbuild
 ppp-*
+vsftpd-*
+libcap-*
+autofs*
+hotplug*
+libdreamdvd*
+libdvbsi*
+tuxtxt*

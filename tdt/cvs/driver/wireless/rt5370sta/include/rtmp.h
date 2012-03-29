@@ -37,7 +37,7 @@
 #ifdef CONFIG_STA_SUPPORT
 #endif /* CONFIG_STA_SUPPORT */
 
-/*#include "wsc.h"*/
+#include "wsc.h"
 
 
 

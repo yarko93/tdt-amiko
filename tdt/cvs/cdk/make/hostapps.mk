@@ -21,8 +21,6 @@ $(hostprefix)/bin/ccache: @DEPENDS_ccache@
 #	@CLEANUP_ccache@
 endif
 
-if TARGETRULESET_FLASH
-
 #
 # MKCRAMFS
 #
@@ -47,9 +45,9 @@ $(hostprefix)/bin/mksquashfs: @DEPENDS_squashfs@
 	mkdir -p @DIR_squashfs@
 	cd @DIR_squashfs@ && \
 	bunzip2 -cd $(archivedir)/lzma442.tar.bz2 | TAPE=- tar -x && \
-	patch -p1 < ../Patches/lzma_zlib-stream.diff && \
+	patch -p1 < $(buildprefix)/Patches/lzma_zlib-stream.diff && \
 	gunzip -cd $(archivedir)/squashfs3.0.tar.gz | TAPE=- tar -x && \
-	cd squashfs3.0 && patch -p1 < ../../Patches/mksquashfs_lzma.diff
+	cd squashfs3.0 && patch -p1 < $(buildprefix)/Patches/mksquashfs_lzma.diff
 	$(MAKE) -C @DIR_squashfs@/C/7zip/Compress/LZMA_Lib
 	$(MAKE) -C @DIR_squashfs@/squashfs3.0/squashfs-tools
 	$(INSTALL) -d $(@D)
@@ -63,7 +61,7 @@ $(hostprefix)/bin/mksquashfs: @DEPENDS_squashfs@
 	cd @DIR_squashfs@ && \
 	bunzip2 -cd $(archivedir)/lzma465.tar.bz2 | TAPE=- tar -x && \
 	gunzip -cd $(archivedir)/squashfs4.0.tar.gz | TAPE=- tar -x && \
-	cd squashfs4.0/squashfs-tools && patch -p1 < ../../../Patches/squashfs-tools-4.0-lzma.patch
+	cd squashfs4.0/squashfs-tools && patch -p1 < $(buildprefix)/Patches/squashfs-tools-4.0-lzma.patch
 	$(MAKE) -C @DIR_squashfs@/squashfs4.0/squashfs-tools
 	$(INSTALL) -d $(@D)
 	$(INSTALL) -m755 @DIR_squashfs@/squashfs4.0/squashfs-tools/mksquashfs $@
@@ -114,10 +112,6 @@ $(crossprefix)/bin/opkg: @DEPENDS_opkg_host@
 	  echo "arch sh4 10"; \
 	  echo "arch all 1"; \
 	  echo "src/gz cross file://$(ipkcdk)" ) >>$(OPKG_CONFCDK)
-
-#	$(INSTALL_DIR) $(crossprefix)/etc/ipkg
-#	echo "src/gz cross file://$(ipkprefix)" >$(crossprefix)/etc/ipkg/cross-feed.conf
-
 
 
 #
