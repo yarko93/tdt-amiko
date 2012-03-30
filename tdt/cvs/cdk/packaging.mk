@@ -1,4 +1,4 @@
-PARENT_PK =
+PARENT_PK = ''
 
 PACKAGE_PARAMS_LIST := PKGV PKGR DESCRIPTION SECTION PRIORITY MAINTAINER LICENSE PACKAGE_ARCH HOMEPAGE RDEPENDS RREPLACES RCONFLICTS SRC_URI FILES NAME preinst postinst prerm postrm PACKAGES
 
@@ -8,9 +8,13 @@ EXPORT_ENV += $(filter $(addsuffix _%, $(PACKAGE_PARAMS_LIST)), $(EXPORT_ALLENV)
 export $(EXPORT_ENV)
 
 packagingtmpdir := $(buildprefix)/packagingtmpdir
+ipkgbuilddir := $(buildprefix)/ipkgbuild
 PKDIR := $(packagingtmpdir)
 
 export packagingtmpdir
+export ipkgbuilddir
+IPKGBUILDDIR := $(ipkgbuilddir)
+export IPKGBUILDDIR
 
 ipkcdk := $(prefix)/ipkcdk
 
@@ -31,7 +35,7 @@ define toflash_build
 	$(call do_build_pkg,install,flash)
 endef
 
-define tocdk_build
+define tocdk_build 
 	rm -rf $(ipkgbuilddir)/*
 	export FILES_$(PARENT_PK)="/"; \
 	python split_packages.py
@@ -53,6 +57,9 @@ define do_build_pkg
 endef
 
 define start_build
+	$(eval $(if $(filter '',$(PARENT_PK)), PARENT_PK = $(notdir $@) ))
+	$(eval export PARENT_PK)
+	@echo PARENT_PK = $(PARENT_PK)
 	rm -rf $(PKDIR)
 	mkdir $(PKDIR)
 endef
