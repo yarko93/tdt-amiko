@@ -17,8 +17,11 @@ IPKGBUILDDIR := $(ipkgbuilddir)
 export IPKGBUILDDIR
 
 ipkcdk := $(prefix)/ipkcdk
+ipkprefix := $(prefix)/ipkbox
 
 $(ipkcdk):
+	$(INSTALL) -d $@
+$(ipkbox):
 	$(INSTALL) -d $@
 
 define extra_build
@@ -39,10 +42,13 @@ define tocdk_build
 	rm -rf $(ipkgbuilddir)/*
 	export FILES_$(PARENT_PK)="/"; \
 	python split_packages.py
+	$(rewrite_libtool)
+	$(rewrite_pkgconfig)
+	$(rewrite_dependency)
 	$(call do_build_pkg,install,cdk)
 endef
 
-flash_ipkg_args = -f $(crossprefix)/etc/opkg.conf -o $(flashprefix)/root
+flash_ipkg_args = -f $(crossprefix)/etc/opkg.conf -o $(prefix)/release
 cdk_ipkg_args = -f $(crossprefix)/etc/opkg-cdk.conf -o $(targetprefix)
 
 define do_build_pkg
@@ -57,7 +63,8 @@ define do_build_pkg
 endef
 
 define start_build
-	$(eval $(if $(filter '',$(PARENT_PK)), PARENT_PK = $(notdir $@) ))
+	@echo aaPARENT_PK = $(PARENT_PK)
+	$(eval $(if $(filter '',$(PARENT_PK)), $@: PARENT_PK = $(notdir $@) ))
 	$(eval export PARENT_PK)
 	@echo PARENT_PK = $(PARENT_PK)
 	rm -rf $(PKDIR)
@@ -65,8 +72,6 @@ define start_build
 endef
 
 define flash_prebuild
-	$(rewrite_libtool)
-	$(rewrite_pkgconfig)
 	$(remove_libs)
 	$(remove_pkgconfigs)
 	$(remove_includedir)
@@ -101,11 +106,16 @@ define prepare_pkginfo_for_flash
 endef
 
 define rewrite_libtool
-	 find $(PKDIR) -name "*.la" -type f -exec perl -pi -e "s,^libdir=.*$$,libdir='$(targetprefix)/usr/lib'," {} \;
+	 find $(ipkgbuilddir)/* -name "*.la" -type f -exec perl -pi -e "s,^libdir=.*$$,libdir='$(targetprefix)/usr/lib'," {} \;
 endef
 
 define rewrite_pkgconfig
-	 find $(PKDIR) -name "*.pc" -type f -exec perl -pi -e "s,^prefix=.*$$,prefix=$(targetprefix)/usr," {} \;
+	 find $(ipkgbuilddir)/* -name "*.pc" -type f -exec perl -pi -e "s,^prefix=.*$$,prefix=$(targetprefix)/usr," {} \;
+endef
+
+define rewrite_dependency
+	find $(ipkgbuilddir)/* -name "*.la" -type f -exec \
+		perl -pi -e "s, /usr/lib, $(targetprefix)/usr/lib,g if /^dependency_libs/" {} \;
 endef
 
 
