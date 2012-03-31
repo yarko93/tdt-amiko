@@ -84,13 +84,13 @@ $(crossprefix)/bin/ipkg-build: @DEPENDS_ipkg_utils@ | $(ipkprefix)
 #       @DISTCLEANUP_ipkg_utils@
 
 #
-# IPKG-HOST
+# OPKG-HOST
 #
 OPKG_BIN = $(crossprefix)/bin/opkg
 OPKG_CONF = $(crossprefix)/etc/opkg.conf
 OPKG_CONFCDK = $(crossprefix)/etc/opkg-cdk.conf
 
-opkg-host: $(OPKG_BIN) $(ipkcdk)
+opkg-host: $(OPKG_BIN) $(ipkcdk) $(ipkbox)
 
 $(crossprefix)/bin/opkg: @DEPENDS_opkg_host@
 	@PREPARE_opkg_host@
@@ -100,7 +100,8 @@ $(crossprefix)/bin/opkg: @DEPENDS_opkg_host@
 		$(MAKE) && \
 		$(MAKE) install && \
 	$(LN_SF) opkg-cl $@
-	install -d $(crossprefix)/usr/lib/opkg
+	install -d $(targetprefix)/usr/lib/opkg
+	install -d $(prefix)/release/usr/lib/opkg
 	echo "dest root /" >$(OPKG_CONF)
 	( echo "lists_dir ext /usr/lib/opkg"; \
 	  echo "arch sh4 10"; \
