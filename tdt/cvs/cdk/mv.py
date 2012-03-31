@@ -36,7 +36,9 @@ for lm in fm:
 	pdeps = rm[3].split(':')
 	ptasks = rm[4:]
 	print "  tasks are\n   ", '\n    '.join(ptasks)
+	print ptasks
 	for tsk in ptasks:
+		if tsk == '': continue
 		dep = tsk.split(':')[1]
 		if dep in pdeps:
 			pdeps.remove(dep)
@@ -47,6 +49,7 @@ for lm in fm:
 		for dep in pdeps:
 				ptasks += ["nothing:"+dep]
 	for tsk in ptasks:
+		if tsk == '': continue
 		dep = tsk.split(':')[1]
 		rule = tsk.split(':')[0]
 		if rule in cmd_tasks:
