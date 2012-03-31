@@ -24,6 +24,7 @@ linuxp0205;2.6.32.16_stm24_0205;linux-sh4-2.6.32.16_stm24_0205;stlinux24-host-ke
 linuxp0206;2.6.32.28_stm24_0206;linux-sh4-2.6.32.28_stm24_0206;stlinux24-host-kernel-source-sh4-2.6.32.28_stm24_0206-206.src.rpm
 linuxp0207;2.6.32.28_stm24_0207;linux-sh4-2.6.32.28_stm24_0207;stlinux24-host-kernel-source-sh4-2.6.32.28_stm24_0207-207.src.rpm
 linuxp0209;2.6.32.46_stm24_0209;linux-sh4-2.6.32.46_stm24_0209;stlinux24-host-kernel-source-sh4-2.6.32.46_stm24_0209-209.src.rpm
+linuxp0210;2.6.32.57_stm24_0210;linux-sh4-2.6.32.57_stm24_0210;stlinux24-host-kernel-source-sh4-2.6.32.57_stm24_0210-210.src.rpm
 squashfs;3.0;mksquashfs;squashfs3.0.tar.gz:mksquashfs_lzma.diff:lzma442.tar.bz2:lzma_zlib-stream.diff;dircreate:mksquashfs;extract:lzma442.tar.bz2;patch:lzma_zlib-stream.diff;extract:squashfs3.0.tar.gz;patch:mksquashfs_lzma.diff
 squashfs;4.0;mksquashfs;squashfs4.0.tar.gz:squashfs-tools-4.0-lzma.patch:lzma465.tar.bz2;dircreate:mksquashfs;extract:lzma465.tar.bz2;extract:squashfs4.0.tar.gz;patch:squashfs-tools-4.0-lzma.patch
 ccache;2.4;ccache-2.4;ccache-2.4.tar.gz;extract:ccache-2.4.tar.gz
@@ -52,7 +53,7 @@ openrdate;1.1.2;openrdate-1.1.2;openrdate-1.1.2.tar.gz;extract:openrdate-1.1.2.t
 e2fsprogs;1.41.14;e2fsprogs-1.41.14;e2fsprogs-1.41.14.tar.gz:e2fsprogs-1.41.11-relative-usrlib-path.patch:e2fsprogs-1.41.11-no-lib-deps.patch;extract:e2fsprogs-1.41.14.tar.gz;patch:e2fsprogs-1.41.11-relative-usrlib-path.patch;patch:e2fsprogs-1.41.11-no-lib-deps.patch
 xfsprogs;2.9.4-1;xfsprogs-2.9.4;xfsprogs_2.9.4-1.tar.gz:xfsprogs.diff;extract:xfsprogs_2.9.4-1.tar.gz;patch:xfsprogs.diff
 mc;4.8.0;mc-4.8.0;mc-4.8.0.tar.bz2:mc.diff;extract:mc-4.8.0.tar.bz2
-sdparm;1.01;sdparm-1.01;sdparm-1.01.tgz;extract:sdparm-1.01.tgz
+sdparm;1.07;sdparm-1.07;sdparm-1.07.tgz;extract:sdparm-1.07.tgz
 sg3_utils;1.24;sg3_utils-1.24;sg3_utils-1.24.tgz:sg3_utils.diff;extract:sg3_utils-1.24.tgz;patch:sg3_utils.diff
 console_data;1.03;console-data-1.03;console-data_1.03.orig.tar.gz;extract:console-data_1.03.orig.tar.gz
 nano;2.0.6;nano-2.0.6;nano-2.0.6.tar.gz;extract:nano-2.0.6.tar.gz
