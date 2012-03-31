@@ -381,6 +381,28 @@ pppd
   extract:ftp://ftp.samba.org/pub/ppp/ppp-{PV}.tar.gz
   make:install:DESTDIR=TARGETS
 ;
+sysstat
+  10.0.4
+  {PN}-{PV}
+  extract:http://pagesperso-orange.fr/sebastien.godard/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=TARGETS
+;
+hotplug_e2
+  1.0
+  {PN}-helper
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+autofs
+  3.1.7
+  {PN}-{PV}
+  extract:ftp://ftp.kernel.org/pub/linux/daemons/{PN}/v3//{PN}-{PV}.tar.gz
+  patch:file://{PN}-{PV}-stm.patch
+  patch:file://{PN}-4.0.0-open_max.patch
+  patch:file://{PN}-{PV}-labelfix.patch
+  patch:file://{PN}-{PV}-timeout.patch
+  patch:file://{PN}-{PV}-no_man.patch
+  make:install:INSTALLROOT=TARGETS
+;
 libboost
   boost-1.49.0
   boost_1_49_0
@@ -852,6 +874,42 @@ rtmpdump
   make:install:prefix=/usr:DESTDIR=TARGETS
   rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/librtmp.pc
 ;
+pilimaging
+  1.1.7
+  Imaging-{PV}
+  extract:http://effbot.org/downloads/Imaging-{PV}.tar.gz
+;
+libdvbsipp
+  0.3.6
+  libdvbsi++-{PV}
+  extract:http://www.saftware.de/libdvbsi++/libdvbsi++-{PV}.tar.bz2
+  patch:file://libdvbsi++-{PV}-fix_unaligned_access.patch
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+libtuxtxt
+  1.0
+  tuxtxt/{PN}
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+tuxtxt32bpp
+  1.0
+  tuxtxt/tuxtxt
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+libdreamdvd
+  1.0
+  {PN}
+  plink:../apps/misc/tools/{PN}:{PN}
+  make:install:prefix=/usr:DESTDIR=TARGETS
+  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}.pc
+;
+libdreamdvd2
+  1.0
+  libdreamdvd
+  patch:file://libdreamdvd-{PV}-support_sh4.patch
+  make:install:prefix=/usr:DESTDIR=TARGETS
+  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/libdreamdvd.pc
+;
 gstreamer
   0.10.35.2
   {PN}-{PV}
@@ -912,6 +970,45 @@ gst_plugins_dvbmediasink
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=TARGETS
+;
+graphlcd
+  base-touchcol
+  {PN}-{PV}
+  extract:http://projects.vdr-developer.org/git/{PN}-base.git/snapshot/{PN}-{PV}.tar.bz2
+  patch:file://{PN}.patch
+  make:install:DESTDIR=TARGETS
+;
+libusb
+  0.1.12
+  {PN}-{PV}
+  extract:http://downloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=TARGETS
+  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}.pc
+  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  rewrite-libtool:TARGETS/usr/lib/{PN}pp.la
+;
+libusb2
+  1.0.8
+  libusb-{PV}
+  extract:http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-{PV}/libusb-{PV}.tar.bz2
+  make:install:DESTDIR=TARGETS
+  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/libusb-1.0.pc
+  rewrite-libtool:TARGETS/usr/lib/libusb-1.0.la
+;
+libusbcompat
+  0.1.3
+  libusb-compat-{PV}
+  extract:http://downloads.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-{PV}/libusb-compat-{PV}.tar.bz2
+  make:install:DESTDIR=TARGETS
+  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/libusb.pc
+  rewrite-libtool:TARGETS/usr/lib/libusb.la
+;
+libgd2
+  2.0.35
+  gd-{PV}
+  extract:http://www.chipsnbytes.net/downloads/gd-{PV}.tar.gz
+  make:install:DESTDIR=TARGETS
+  rewrite-libtool:TARGETS/usr/lib/libgd.la
 ;
 portmap
   6.0
