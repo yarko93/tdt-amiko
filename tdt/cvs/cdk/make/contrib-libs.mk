@@ -1555,6 +1555,56 @@ $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
 #
 # GSTREAMER
 #
+
+DESCRIPTION_gstreamer = "GStreamer Multimedia Framework"
+
+FILES_gstreamer = \
+/usr/bin/gst-launch* \
+/usr/lib/gstreamer-0.10/libgstalsa.so \
+/usr/lib/gstreamer-0.10/libgstapp.so \
+/usr/lib/gstreamer-0.10/libgstasf.so \
+/usr/lib/gstreamer-0.10/libgstassrender.so \
+/usr/lib/gstreamer-0.10/libgstaudioconvert.so \
+/usr/lib/gstreamer-0.10/libgstaudioparsersbad.so \
+/usr/lib/gstreamer-0.10/libgstaudioresample.so \
+/usr/lib/gstreamer-0.10/libgstautodetect.so \
+/usr/lib/gstreamer-0.10/libgstavi.so \
+/usr/lib/gstreamer-0.10/libgstcdxaparse.so \
+/usr/lib/gstreamer-0.10/libgstcoreelements.so \
+/usr/lib/gstreamer-0.10/libgstcoreindexers.so \
+/usr/lib/gstreamer-0.10/libgstdecodebin.so \
+/usr/lib/gstreamer-0.10/libgstdecodebin2.so \
+/usr/lib/gstreamer-0.10/libgstdvbaudiosink.so \
+/usr/lib/gstreamer-0.10/libgstdvbvideosink.so \
+/usr/lib/gstreamer-0.10/libgstdvdsub.so \
+/usr/lib/gstreamer-0.10/libgstflac.so \
+/usr/lib/gstreamer-0.10/libgstflv.so \
+/usr/lib/gstreamer-0.10/libgstfragmented.so \
+/usr/lib/gstreamer-0.10/libgsticydemux.so \
+/usr/lib/gstreamer-0.10/libgstid3demux.so \
+/usr/lib/gstreamer-0.10/libgstisomp4.so \
+/usr/lib/gstreamer-0.10/libgstmad.so \
+/usr/lib/gstreamer-0.10/libgstmatroska.so \
+/usr/lib/gstreamer-0.10/libgstmpegaudioparse.so \
+/usr/lib/gstreamer-0.10/libgstmpegdemux.so \
+/usr/lib/gstreamer-0.10/libgstmpegstream.so \
+/usr/lib/gstreamer-0.10/libgstogg.so \
+/usr/lib/gstreamer-0.10/libgstplaybin.so \
+/usr/lib/gstreamer-0.10/libgstrtmp.so \
+/usr/lib/gstreamer-0.10/libgstrtp.so \
+/usr/lib/gstreamer-0.10/libgstrtpmanager.so \
+/usr/lib/gstreamer-0.10/libgstrtsp.so \
+/usr/lib/gstreamer-0.10/libgstsouphttpsrc.so \
+/usr/lib/gstreamer-0.10/libgstsubparse.so \
+/usr/lib/gstreamer-0.10/libgsttypefindfunctions.so \
+/usr/lib/gstreamer-0.10/libgstudp.so \
+/usr/lib/gstreamer-0.10/libgstvcdsrc.so \
+/usr/lib/gstreamer-0.10/libgstwavparse.so \
+/usr/lib/gstreamer-0.10/libgstffmpeg.so \
+/usr/lib/gstreamer-0.10/libgstffmpegscale.so \
+/usr/lib/gstreamer-0.10/libgstpostproc.so
+
+
 $(DEPDIR)/gstreamer.do_prepare: bootstrap glib2 libxml2 @DEPENDS_gstreamer@
 	@PREPARE_gstreamer@
 	touch $@
@@ -1572,12 +1622,18 @@ $(DEPDIR)/gstreamer.do_compile: $(DEPDIR)/gstreamer.do_prepare
 		ac_cv_func_register_printf_function=no
 	touch $@
 
+$(DEPDIR)/gstreamer: PARENT_PK = gstreamer
+
 $(DEPDIR)/min-gstreamer $(DEPDIR)/std-gstreamer $(DEPDIR)/max-gstreamer \
 $(DEPDIR)/gstreamer: \
 $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
+	$(start_build)
+	$(BUILDENV) \
 	cd @DIR_gstreamer@ && \
 		@INSTALL_gstreamer@
 #	@DISTCLEANUP_gstreamer@
+	$(tocdk_build)
+	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 

@@ -914,10 +914,7 @@ gstreamer
   0.10.35.2
   {PN}-{PV}
   extract:http://{PN}.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
-  rewrite-pkgconfig:pkgconfig/{PN}.pc:pkgconfig/{PN}-base.pc:pkgconfig/{PN}-check.pc:pkgconfig/{PN}-controller.pc:pkgconfig/{PN}-dataprotocol.pc:pkgconfig/{PN}-net.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}-0.10.la:TARGETS/usr/lib/libgstbase-0.10.la:TARGETS/usr/lib/libgstcheck-0.10.la:TARGETS/usr/lib/libgstcontroller-0.10.la:TARGETS/usr/lib/libgstdataprotocol-0.10.la:TARGETS/usr/lib/libgstnet-0.10.la
-  rewrite-dependency:TARGETS/usr/lib/libgstbase-0.10.la::TARGETS/usr/lib/libgstcheck-0.10.la:TARGETS/usr/lib/libgstcontroller-0.10.la:TARGETS/usr/lib/libgstdataprotocol-0.10.la:TARGETS/usr/lib/libgstnet-0.10.la
+  make:install:DESTDIR=PKDIR
 ;
 gst_plugins_base
   0.10.35.2

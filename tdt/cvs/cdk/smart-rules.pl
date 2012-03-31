@@ -594,6 +594,7 @@ if ( $output )
   $output =~ s#HCTDUNINST#HHL\_CROSS\_TARGET\_DIR\=\$\(targetprefix\)#g;
   $output =~ s#HOST#\$\(hostprefix\)#g;
   $output =~ s#BUILD#\$\(buildprefix\)#g;
+  $output =~ s#PKDIR#\$\(packagingtmpdir\)#g;
   $output =~ s#\{PV\}#$version#g;
   my $dashpackage = $package;
   $dashpackage =~ s#_#\-#g;
