@@ -21,7 +21,8 @@ ipkprefix := $(prefix)/ipkbox
 
 $(ipkcdk):
 	$(INSTALL) -d $@
-$(ipkbox):
+
+$(ipkprefix):
 	$(INSTALL) -d $@
 
 define extra_build
