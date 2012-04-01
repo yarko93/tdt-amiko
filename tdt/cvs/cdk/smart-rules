@@ -272,9 +272,9 @@ mc
   make:install:DESTDIR=TARGETS
 ;
 sdparm
-  1.01
+  1.07
   {PN}-{PV}
-  extract:http://sg.torque.net/sg/p/{PN}-{PV}.tgz
+  extract:http://sg.danny.cz/sg/p{PN}-{PV}.tgz
   make:install:DESTDIR=TARGETS
 ;
 sg3_utils
