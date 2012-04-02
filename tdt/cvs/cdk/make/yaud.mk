@@ -149,7 +149,7 @@ yaud-none: \
 		net-utils \
 		disk-utils \
 		driver \
-		misc-tools
+		misc-tools 
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
