@@ -85,7 +85,9 @@ SRC_URI_enigma2 := git://gitorious.org/open-duckbox-project-sh4/guigit.git
 DIR_enigma2 := $(appsdir)/enigma2-nightly
 FILES_enigma2 := /usr/bin /usr/lib/ /etc/enigma2 /usr/local/share
 
-$(DEPDIR)/enigma2-nightly: PARENT_PK = enigma2
+#by default PARENT_PK equals $@ How to ovveride see below
+#****** word "private" here is critically important!!! Overvise other rules could be broken!
+$(DEPDIR)/enigma2-nightly: private PARENT_PK = enigma2
 $(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
 	$(get_git_version)
 	@echo $$PKGV_$(PARENT_PK)
