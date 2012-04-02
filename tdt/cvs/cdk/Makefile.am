@@ -1,5 +1,8 @@
 ## Makefile for Tuxbox
 
+#Some staff for building and splitting ipk packages with python
+include packaging.mk
+
 # Set up the build environment
 include make/buildenv.mk
 
@@ -69,9 +72,6 @@ include make/externe-plugins.mk
 
 # ExterneSkins
 include make/externe-skins.mk
-
-#Some staff for building and splitting ipk packages with python
-include packaging.mk
 
 # Include enigma2-pli-nightly gui targets
 include make/enigma2-pli-nightly.mk
