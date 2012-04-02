@@ -67,7 +67,7 @@ BUILDENV := \
 	LN_S="ln -s" \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	CXXFLAGS="$(TARGET_CFLAGS)" \
-	LDFLAGS="$(TARGET_LDFLAGS)" \
+	LDFLAGS="$(TARGET_LDFLAGS) -Wl,-rpath-link,$(packagingtmpdir)/usr/lib" \
 	PKG_CONFIG_PATH="$(targetprefix)/usr/lib/pkgconfig"
 #	PKG_CONFIG_PATH="$(targetprefix)/lib/pkgconfig:$(targetprefix)/usr/lib/pkgconfig"
 
