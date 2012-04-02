@@ -1640,6 +1640,9 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 #
 # GST-PLUGINS-BASE
 #
+
+DESCRIPTION_gst_plugins_base = "GStreamer Multimedia Framework base plugins"
+
 $(DEPDIR)/gst_plugins_base.do_prepare: bootstrap glib2 gstreamer libogg libalsa @DEPENDS_gst_plugins_base@
 	@PREPARE_gst_plugins_base@
 	touch $@
@@ -1662,14 +1665,21 @@ $(DEPDIR)/gst_plugins_base.do_compile: $(DEPDIR)/gst_plugins_base.do_prepare
 $(DEPDIR)/min-gst_plugins_base $(DEPDIR)/std-gst_plugins_base $(DEPDIR)/max-gst_plugins_base \
 $(DEPDIR)/gst_plugins_base: \
 $(DEPDIR)/%gst_plugins_base: $(DEPDIR)/gst_plugins_base.do_compile
+	$(start_build)
 	cd @DIR_gst_plugins_base@ && \
+		$(BUILDENV) \
 		@INSTALL_gst_plugins_base@
 #	@DISTCLEANUP_gst_plugins_base@
+	$(tocdk_build)
+	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-PLUGINS-GOOD
 #
+
+DESCRIPTION_gst_plugins_good = "GStreamer Multimedia Framework good plugins"
+
 $(DEPDIR)/gst_plugins_good.do_prepare: bootstrap gstreamer gst_plugins_base libsoup libflac @DEPENDS_gst_plugins_good@
 	@PREPARE_gst_plugins_good@
 	touch $@
@@ -1693,14 +1703,20 @@ $(DEPDIR)/gst_plugins_good.do_compile: $(DEPDIR)/gst_plugins_good.do_prepare
 $(DEPDIR)/min-gst_plugins_good $(DEPDIR)/std-gst_plugins_good $(DEPDIR)/max-gst_plugins_good \
 $(DEPDIR)/gst_plugins_good: \
 $(DEPDIR)/%gst_plugins_good: $(DEPDIR)/gst_plugins_good.do_compile
+	$(start_build)
 	cd @DIR_gst_plugins_good@ && \
 		@INSTALL_gst_plugins_good@
 #	@DISTCLEANUP_gst_plugins_good@
+	$(tocdk_build)
+	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-PLUGINS-BAD
 #
+
+DESCRIPTION_gst_plugins_bad = "GStreamer Multimedia Framework bad plugins"
+
 $(DEPDIR)/gst_plugins_bad.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_bad@
 	@PREPARE_gst_plugins_bad@
 	touch $@
@@ -1720,14 +1736,20 @@ $(DEPDIR)/gst_plugins_bad.do_compile: $(DEPDIR)/gst_plugins_bad.do_prepare
 $(DEPDIR)/min-gst_plugins_bad $(DEPDIR)/std-gst_plugins_bad $(DEPDIR)/max-gst_plugins_bad \
 $(DEPDIR)/gst_plugins_bad: \
 $(DEPDIR)/%gst_plugins_bad: $(DEPDIR)/gst_plugins_bad.do_compile
+	$(start_build)
 	cd @DIR_gst_plugins_bad@ && \
 		@INSTALL_gst_plugins_bad@
 #	@DISTCLEANUP_gst_plugins_bad@
+	$(tocdk_build)
+	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-PLUGINS-UGLY
 #
+
+DESCRIPTION_gst_plugins_ugly = "GStreamer Multimedia Framework ugly plugins"
+
 $(DEPDIR)/gst_plugins_ugly.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_ugly@
 	@PREPARE_gst_plugins_ugly@
 	touch $@
@@ -1745,14 +1767,20 @@ $(DEPDIR)/gst_plugins_ugly.do_compile: $(DEPDIR)/gst_plugins_ugly.do_prepare
 $(DEPDIR)/min-gst_plugins_ugly $(DEPDIR)/std-gst_plugins_ugly $(DEPDIR)/max-gst_plugins_ugly \
 $(DEPDIR)/gst_plugins_ugly: \
 $(DEPDIR)/%gst_plugins_ugly: $(DEPDIR)/gst_plugins_ugly.do_compile
+	$(start_build)
 	cd @DIR_gst_plugins_ugly@ && \
 		@INSTALL_gst_plugins_ugly@
 #	@DISTCLEANUP_gst_plugins_ugly@
+	$(tocdk_build)
+	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-FFMPEG
 #
+
+DESCRIPTION_gst_ffmpeg = "GStreamer Multimedia Framework ffmpeg module"
+
 $(DEPDIR)/gst_ffmpeg.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_ffmpeg@
 	@PREPARE_gst_ffmpeg@
 	touch $@
@@ -1807,13 +1835,19 @@ $(DEPDIR)/gst_ffmpeg.do_compile: $(DEPDIR)/gst_ffmpeg.do_prepare
 $(DEPDIR)/min-gst_ffmpeg $(DEPDIR)/std-gst_ffmpeg $(DEPDIR)/max-gst_ffmpeg \
 $(DEPDIR)/gst_ffmpeg: \
 $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
+	$(start_build)
 	cd @DIR_gst_ffmpeg@ && \
 		@INSTALL_gst_ffmpeg@
 #	@DISTCLEANUP_gst_ffmpeg@
+	$(tocdk_build)
+	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
+
+DESCRIPTION_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
+
 $(DEPDIR)/gst_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_fluendo_mpegdemux@
 	@PREPARE_gst_fluendo_mpegdemux@
 	touch $@
@@ -1830,14 +1864,20 @@ $(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_plugins_fluendo_mpegde
 $(DEPDIR)/min-gst_fluendo_mpegdemux $(DEPDIR)/std-gst_plugins_fluendo_mpegdemux $(DEPDIR)/max-gst_plugins_fluendo_mpegdemux \
 $(DEPDIR)/gst_fluendo_mpegdemux: \
 $(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile
+	$(start_build)
 	cd @DIR_gst_fluendo_mpegdemux@ && \
 		@INSTALL_gst_fluendo_mpegdemux@
 #	@DISTCLEANUP_gst_ffmpeg@
+	$(tocdk_build)
+	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-PLUGINS-DVBMEDIASINK
 #
+
+DESCRIPTION_gst_plugins_dvbmediasink = "GStreamer Multimedia Framework dvbmediasink"
+
 $(DEPDIR)/gst_plugins_dvbmediasink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly @DEPENDS_gst_plugins_dvbmediasink@
 	@PREPARE_gst_plugins_dvbmediasink@
 	touch $@
@@ -1859,9 +1899,12 @@ $(DEPDIR)/gst_plugins_dvbmediasink.do_compile: $(DEPDIR)/gst_plugins_dvbmediasin
 $(DEPDIR)/min-gst_plugins_dvbmediasink $(DEPDIR)/std-gst_plugins_dvbmediasink $(DEPDIR)/max-gst_plugins_dvbmediasink \
 $(DEPDIR)/gst_plugins_dvbmediasink: \
 $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compile
+	$(start_build)
 	cd @DIR_gst_plugins_dvbmediasink@ && \
 		@INSTALL_gst_plugins_dvbmediasink@
 #	@DISTCLEANUP_gst_plugins_dvbmediasink@
+	$(tocdk_build)
+	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
 
 ################ EXTERNAL_LCD #############################
@@ -2087,6 +2130,10 @@ $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 #
 # alsa-lib
 #
+
+DESCRIPTION_libalsa = "alsa"
+FILES_libalsa = /
+
 $(DEPDIR)/libalsa.do_prepare:  @DEPENDS_libalsa@
 	@PREPARE_libalsa@
 	touch $@
@@ -2112,9 +2159,12 @@ $(DEPDIR)/libalsa.do_compile: $(DEPDIR)/libalsa.do_prepare
 $(DEPDIR)/min-libalsa $(DEPDIR)/std-libalsa $(DEPDIR)/max-libalsa \
 $(DEPDIR)/libalsa: \
 $(DEPDIR)/%libalsa: $(DEPDIR)/libalsa.do_compile
+	$(start_build)
 	cd @DIR_libalsa@ && \
 		@INSTALL_libalsa@
 #	@DISTCLEANUP_libalsa@
+	$(tocdk_build)
+	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
