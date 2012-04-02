@@ -118,7 +118,7 @@ endif
 
 if STM22
 yaud-enigma2-nightly: yaud-none host-python lirc stslave\
-		boot-elf hotplug remote firstboot enigma2-nightly enigma2-misc opkg-host release
+		boot-elf hotplug remote firstboot enigma2-nightly enigma2-misc release
 	@TUXBOX_YAUD_CUSTOMIZE@
 else
 yaud-enigma2-nightly: yaud-none host-python lirc stslave\
@@ -149,7 +149,7 @@ yaud-none: \
 		net-utils \
 		disk-utils \
 		driver \
-		misc-tools
+		misc-tools 
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
