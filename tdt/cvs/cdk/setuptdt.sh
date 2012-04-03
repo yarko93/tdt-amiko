@@ -81,6 +81,8 @@ PACKAGES="\
 	${UBUNTU:+doc-base} \
 	${UBUNTU:+texi2html} \
 	${UBUNTU:+help2man} \
+	${UBUNTU:+libgpgme11-dev} \
+	${UBUNTU:+libcurl4-openssl-dev} \
 ";
 
 if [ `which arch > /dev/null 2>&1 && arch || uname -m` == x86_64 ]; then
