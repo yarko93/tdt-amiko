@@ -41,7 +41,7 @@ endef
 
 define tocdk_build 
 	rm -rf $(ipkgbuilddir)/*
-	export FILES_$(PARENT_PK)="/"; \
+	export FILES_$(PARENT_PK)="/" && \
 	python split_packages.py
 	$(rewrite_libtool)
 	$(rewrite_pkgconfig)
@@ -65,7 +65,7 @@ endef
 
 define start_build
 	@echo aaPARENT_PK = $(PARENT_PK)
-	$(eval $(if $(filter '',$(PARENT_PK)), $@: PARENT_PK = $(notdir $@) ))
+	$(eval $(if $(filter '',$(PARENT_PK)), $@: PARENT_PK = $(notdir $@)))
 	$(eval export PARENT_PK)
 	@echo PARENT_PK = $(PARENT_PK)
 	rm -rf $(PKDIR)
