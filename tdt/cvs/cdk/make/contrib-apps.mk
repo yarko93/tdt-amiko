@@ -59,14 +59,6 @@ $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
-flash-grep: $(flashprefix)/root/usr/bin/grep
-
-$(flashprefix)/root/usr/bin/grep: $(DEPDIR)/grep.do_compile | $(flashprefix)/root
-	cd @DIR_grep@  && \
-		for i in src/{grep,egrep,fgrep} ; do \
-			$(INSTALL) -m 755 $$i $(@D) ; done
-	@FLASHROOTDIR_MODIFIED@
-	@TUXBOX_CUSTOMIZE@
 #
 # PPPD
 #
@@ -98,17 +90,6 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 #	@DISTCLEANUP_pppd@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
-
-
-flash-pppd: $(flashprefix)/root/usr/bin/pppd
-
-$(flashprefix)/root/usr/bin/pppd: $(DEPDIR)/pppd.do_compile | $(flashprefix)/root
-	cd @DIR_pppd@  && \
-		for i in src/{grep,egrep,fgrep} ; do \
-			$(INSTALL) -m 755 $$i $(@D) ; done
-	@FLASHROOTDIR_MODIFIED@
-	@TUXBOX_CUSTOMIZE@
-
 
 #
 # LSB
