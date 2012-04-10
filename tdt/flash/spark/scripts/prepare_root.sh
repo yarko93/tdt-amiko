@@ -30,8 +30,6 @@ ${MAKEDEV} input i2c mtd
 ${MAKEDEV} dvb
 ${MAKEDEV} vfd
 ${MAKEDEV} hdmi_cec
-mkdir pts
-mkdir shm
 cd -
 
 
