@@ -2,10 +2,8 @@
 *.order
 *.lo
 *.la
-*.so
 *.o
 .*.cmd
-*.ko
 *.a
 *.mod.c
 *.o.d
