@@ -1560,50 +1560,10 @@ DESCRIPTION_gstreamer = "GStreamer Multimedia Framework"
 
 FILES_gstreamer = \
 /usr/bin/gst-launch* \
-/usr/lib/gstreamer-0.10/libgstalsa.so \
-/usr/lib/gstreamer-0.10/libgstapp.so \
-/usr/lib/gstreamer-0.10/libgstasf.so \
 /usr/lib/gstreamer-0.10/libgstassrender.so \
-/usr/lib/gstreamer-0.10/libgstaudioconvert.so \
-/usr/lib/gstreamer-0.10/libgstaudioparsersbad.so \
-/usr/lib/gstreamer-0.10/libgstaudioresample.so \
-/usr/lib/gstreamer-0.10/libgstautodetect.so \
-/usr/lib/gstreamer-0.10/libgstavi.so \
-/usr/lib/gstreamer-0.10/libgstcdxaparse.so \
 /usr/lib/gstreamer-0.10/libgstcoreelements.so \
 /usr/lib/gstreamer-0.10/libgstcoreindexers.so \
-/usr/lib/gstreamer-0.10/libgstdecodebin.so \
-/usr/lib/gstreamer-0.10/libgstdecodebin2.so \
-/usr/lib/gstreamer-0.10/libgstdvbaudiosink.so \
-/usr/lib/gstreamer-0.10/libgstdvbvideosink.so \
-/usr/lib/gstreamer-0.10/libgstdvdsub.so \
-/usr/lib/gstreamer-0.10/libgstflac.so \
-/usr/lib/gstreamer-0.10/libgstflv.so \
-/usr/lib/gstreamer-0.10/libgstfragmented.so \
-/usr/lib/gstreamer-0.10/libgsticydemux.so \
-/usr/lib/gstreamer-0.10/libgstid3demux.so \
-/usr/lib/gstreamer-0.10/libgstisomp4.so \
-/usr/lib/gstreamer-0.10/libgstmad.so \
-/usr/lib/gstreamer-0.10/libgstmatroska.so \
-/usr/lib/gstreamer-0.10/libgstmpegaudioparse.so \
-/usr/lib/gstreamer-0.10/libgstmpegdemux.so \
-/usr/lib/gstreamer-0.10/libgstmpegstream.so \
-/usr/lib/gstreamer-0.10/libgstogg.so \
-/usr/lib/gstreamer-0.10/libgstplaybin.so \
-/usr/lib/gstreamer-0.10/libgstrtmp.so \
-/usr/lib/gstreamer-0.10/libgstrtp.so \
-/usr/lib/gstreamer-0.10/libgstrtpmanager.so \
-/usr/lib/gstreamer-0.10/libgstrtsp.so \
-/usr/lib/gstreamer-0.10/libgstsouphttpsrc.so \
-/usr/lib/gstreamer-0.10/libgstsubparse.so \
-/usr/lib/gstreamer-0.10/libgsttypefindfunctions.so \
-/usr/lib/gstreamer-0.10/libgstudp.so \
-/usr/lib/gstreamer-0.10/libgstvcdsrc.so \
-/usr/lib/gstreamer-0.10/libgstwavparse.so \
-/usr/lib/gstreamer-0.10/libgstffmpeg.so \
-/usr/lib/gstreamer-0.10/libgstffmpegscale.so \
-/usr/lib/gstreamer-0.10/libgstpostproc.so
-
+/usr/lib/gstreamer-0.10/libgstrtmp.so
 
 $(DEPDIR)/gstreamer.do_prepare: bootstrap glib2 libxml2 @DEPENDS_gstreamer@
 	@PREPARE_gstreamer@
@@ -1643,6 +1603,18 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 
 DESCRIPTION_gst_plugins_base = "GStreamer Multimedia Framework base plugins"
 
+FILES_gst_plugins_base = \
+/usr/lib/gstreamer-0.10/libgstalsa.so \
+/usr/lib/gstreamer-0.10/libgstapp.so \
+/usr/lib/gstreamer-0.10/libgstaudioconvert.so \
+/usr/lib/gstreamer-0.10/libgstaudioresample.so \
+/usr/lib/gstreamer-0.10/libgstdecodebin.so \
+/usr/lib/gstreamer-0.10/libgstdecodebin2.so \
+/usr/lib/gstreamer-0.10/libgstogg.so \
+/usr/lib/gstreamer-0.10/libgstplaybin.so \
+/usr/lib/gstreamer-0.10/libgstsubparse.so \
+/usr/lib/gstreamer-0.10/libgsttypefindfunctions.so
+
 $(DEPDIR)/gst_plugins_base.do_prepare: bootstrap glib2 gstreamer libogg libalsa @DEPENDS_gst_plugins_base@
 	@PREPARE_gst_plugins_base@
 	touch $@
@@ -1679,6 +1651,23 @@ $(DEPDIR)/%gst_plugins_base: $(DEPDIR)/gst_plugins_base.do_compile
 #
 
 DESCRIPTION_gst_plugins_good = "GStreamer Multimedia Framework good plugins"
+
+FILES_gst_plugins_good = \
+/usr/lib/gstreamer-0.10/libgstaudioparsersbad.so \
+/usr/lib/gstreamer-0.10/libgstautodetect.so \
+/usr/lib/gstreamer-0.10/libgstavi.so \
+/usr/lib/gstreamer-0.10/libgstflac.so \
+/usr/lib/gstreamer-0.10/libgstflv.so \
+/usr/lib/gstreamer-0.10/libgsticydemux.so \
+/usr/lib/gstreamer-0.10/libgstid3demux.so \
+/usr/lib/gstreamer-0.10/libgstisomp4.so \
+/usr/lib/gstreamer-0.10/libgstmatroska.so \
+/usr/lib/gstreamer-0.10/libgstrtp.so \
+/usr/lib/gstreamer-0.10/libgstrtpmanager.so \
+/usr/lib/gstreamer-0.10/libgstrtsp.so \
+/usr/lib/gstreamer-0.10/libgstsouphttpsrc.so \
+/usr/lib/gstreamer-0.10/libgstudp.so \
+/usr/lib/gstreamer-0.10/libgstwavparse.so
 
 $(DEPDIR)/gst_plugins_good.do_prepare: bootstrap gstreamer gst_plugins_base libsoup libflac @DEPENDS_gst_plugins_good@
 	@PREPARE_gst_plugins_good@
@@ -1717,6 +1706,12 @@ $(DEPDIR)/%gst_plugins_good: $(DEPDIR)/gst_plugins_good.do_compile
 
 DESCRIPTION_gst_plugins_bad = "GStreamer Multimedia Framework bad plugins"
 
+FILES_gst_plugins_bad = \
+/usr/lib/gstreamer-0.10/libgstcdxaparse.so \
+/usr/lib/gstreamer-0.10/libgstfragmented.so \
+/usr/lib/gstreamer-0.10/libgstmpegdemux.so \
+/usr/lib/gstreamer-0.10/libgstvcdsrc.so
+
 $(DEPDIR)/gst_plugins_bad.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_bad@
 	@PREPARE_gst_plugins_bad@
 	touch $@
@@ -1750,6 +1745,13 @@ $(DEPDIR)/%gst_plugins_bad: $(DEPDIR)/gst_plugins_bad.do_compile
 
 DESCRIPTION_gst_plugins_ugly = "GStreamer Multimedia Framework ugly plugins"
 
+FILES_gst_plugins_ugly = \
+/usr/lib/gstreamer-0.10/libgstasf.so \
+/usr/lib/gstreamer-0.10/libgstdvdsub.so \
+/usr/lib/gstreamer-0.10/libgstmad.so \
+/usr/lib/gstreamer-0.10/libgstmpegaudioparse.so \
+/usr/lib/gstreamer-0.10/libgstmpegstream.so
+
 $(DEPDIR)/gst_plugins_ugly.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_ugly@
 	@PREPARE_gst_plugins_ugly@
 	touch $@
@@ -1780,6 +1782,11 @@ $(DEPDIR)/%gst_plugins_ugly: $(DEPDIR)/gst_plugins_ugly.do_compile
 #
 
 DESCRIPTION_gst_ffmpeg = "GStreamer Multimedia Framework ffmpeg module"
+
+FILES_gst_ffmpeg = \
+/usr/lib/gstreamer-0.10/libgstffmpeg.so \
+/usr/lib/gstreamer-0.10/libgstffmpegscale.so \
+/usr/lib/gstreamer-0.10/libgstpostproc.so
 
 $(DEPDIR)/gst_ffmpeg.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_ffmpeg@
 	@PREPARE_gst_ffmpeg@
@@ -1846,13 +1853,14 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 #
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
 
-DESCRIPTION_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
+DESCRIPTION_gst_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
 
-$(DEPDIR)/gst_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_fluendo_mpegdemux@
+
+$(DEPDIR)/gst_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_fluendo_mpegdemux@
 	@PREPARE_gst_fluendo_mpegdemux@
 	touch $@
 
-$(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_prepare
+$(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_fluendo_mpegdemux.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_gst_fluendo_mpegdemux@ && \
 	$(BUILDENV) \
@@ -1861,9 +1869,9 @@ $(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_plugins_fluendo_mpegde
 		--prefix=/usr --with-check=no
 	touch $@
 
-$(DEPDIR)/min-gst_fluendo_mpegdemux $(DEPDIR)/std-gst_plugins_fluendo_mpegdemux $(DEPDIR)/max-gst_plugins_fluendo_mpegdemux \
+$(DEPDIR)/min-gst_fluendo_mpegdemux $(DEPDIR)/std-gst_fluendo_mpegdemux $(DEPDIR)/max-gst_fluendo_mpegdemux \
 $(DEPDIR)/gst_fluendo_mpegdemux: \
-$(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile
+$(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_fluendo_mpegdemux.do_compile
 	$(start_build)
 	cd @DIR_gst_fluendo_mpegdemux@ && \
 		@INSTALL_gst_fluendo_mpegdemux@
@@ -1877,6 +1885,11 @@ $(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_com
 #
 
 DESCRIPTION_gst_plugins_dvbmediasink = "GStreamer Multimedia Framework dvbmediasink"
+SRC_URI_gst_plugins_dvbmediasink = git://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko.git
+
+FILES_gst_plugins_dvbmediasink = \
+/usr/lib/gstreamer-0.10/libgstdvbaudiosink.so \
+/usr/lib/gstreamer-0.10/libgstdvbvideosink.so
 
 $(DEPDIR)/gst_plugins_dvbmediasink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly @DEPENDS_gst_plugins_dvbmediasink@
 	@PREPARE_gst_plugins_dvbmediasink@
@@ -1888,7 +1901,7 @@ $(DEPDIR)/gst_plugins_dvbmediasink.do_compile: $(DEPDIR)/gst_plugins_dvbmediasin
 	aclocal -I $(hostprefix)/share/aclocal -I m4 && \
 	autoheader && \
 	autoconf && \
-	automake --foreign && \
+	automake --foreign --add-missing && \
 	libtoolize --force && \
 	$(BUILDENV) \
 	./configure \
