@@ -119,7 +119,9 @@ define rewrite_dependency
 		perl -pi -e "s, /usr/lib, $(targetprefix)/usr/lib,g if /^dependency_libs/" {} \;
 endef
 
-
+define parent_pk
+	$(eval $@: PARENT_PK = $1)
+endef
 
 git_version := git log -1 --format=%cd --date=short |sed s/-//g
 get_git_version = $(eval export PKGV_$(PARENT_PK) = $(shell cd $(DIR_$(PARENT_PK)) && $(git_version)))

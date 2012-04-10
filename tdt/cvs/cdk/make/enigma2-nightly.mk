@@ -86,9 +86,11 @@ DIR_enigma2 := $(appsdir)/enigma2-nightly
 FILES_enigma2 := /usr/bin /usr/lib/ /etc/enigma2 /usr/local/share
 
 #by default PARENT_PK equals $@ How to ovveride see below
-#****** word "private" here is critically important!!! Overvise other rules could be broken!
-$(DEPDIR)/enigma2-nightly: private PARENT_PK = enigma2
+#****** word "private" here is critically important!!! Overvise other rules could be broken! only make 3.82
+#$(DEPDIR)/enigma2-nightly: private PARENT_PK = enigma2
 $(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
+#alternate you can do the following: (see packaging.mk)
+	$(call parent_pk,enigma2)
 	$(get_git_version)
 	@echo $$PKGV_$(PARENT_PK)
 	$(start_build)
