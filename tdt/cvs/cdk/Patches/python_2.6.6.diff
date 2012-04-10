@@ -1,38 +1,7 @@
-diff -Nur python-2.6.6.org/configure python-2.6.6/configure
---- python-2.6.6.org/configure	2010-05-25 04:27:03.000000000 +0200
-+++ python-2.6.6/configure	2011-01-31 03:25:21.763515609 +0100
-@@ -12760,12 +12760,12 @@
- 
- { $as_echo "$as_me:${as_lineno-$LINENO}: checking for %zd printf() format support" >&5
- $as_echo_n "checking for %zd printf() format support... " >&6; }
--if test "$cross_compiling" = yes; then :
--  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
--$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
--as_fn_error "cannot run test program while cross compiling
--See \`config.log' for more details." "$LINENO" 5; }
--else
-+#if test "$cross_compiling" = yes; then :
-+#  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
-+#$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-+#as_fn_error "cannot run test program while cross compiling
-+#See \`config.log' for more details." "$LINENO" 5; }
-+#else
-   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
- /* end confdefs.h.  */
- #include <stdio.h>
-@@ -12815,7 +12815,7 @@
- fi
- rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-   conftest.$ac_objext conftest.beam conftest.$ac_ext
--fi
-+#fi
- 
- 
- ac_fn_c_check_type "$LINENO" "socklen_t" "ac_cv_type_socklen_t" "
-diff -Nur python-2.6.6.org/configure.in python-2.6.6/configure.in
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.6/configure.in
 --- python-2.6.6.org/configure.in	2010-05-25 04:27:03.000000000 +0200
-+++ python-2.6.6/configure.in	2011-01-31 02:09:47.899516609 +0100
-@@ -2713,49 +2713,49 @@
++++ python-2.6.6/configure.in	2012-04-09 18:43:41.000000000 +0200
+@@ -2697,50 +2697,6 @@
    AC_CHECK_LIB(resolv, inet_aton)
  )
  
@@ -79,87 +48,14 @@ diff -Nur python-2.6.6.org/configure.in python-2.6.6/configure.in
 -if test "$ac_cv_have_lchflags" = yes ; then
 -  AC_DEFINE(HAVE_LCHFLAGS, 1, Define to 1 if you have the `lchflags' function.)
 -fi
-+## On Tru64, chflags seems to be present, but calling it will
-+## exit Python
-+#AC_CACHE_CHECK([for chflags], [ac_cv_have_chflags], [dnl
-+#AC_TRY_RUN([[
-+##include <sys/stat.h>
-+##include <unistd.h>
-+#int main(int argc, char*argv[])
-+#{
-+#  if(chflags(argv[0], 0) != 0)
-+#    return 1;
-+#  return 0;
-+#}
-+#]], ac_cv_have_chflags=yes,
-+#   ac_cv_have_chflags=no,
-+#   ac_cv_have_chflags=cross)
-+#])
-+#if test "$ac_cv_have_chflags" = cross ; then
-+#  AC_CHECK_FUNC([chflags], [ac_cv_have_chflags="yes"], [ac_cv_have_chflags="no"])
-+#fi
-+#if test "$ac_cv_have_chflags" = yes ; then
-+#  AC_DEFINE(HAVE_CHFLAGS, 1, Define to 1 if you have the `chflags' function.)
-+#fi
-+#
-+#AC_CACHE_CHECK([for lchflags], [ac_cv_have_lchflags], [dnl
-+#AC_TRY_RUN([[
-+##include <sys/stat.h>
-+##include <unistd.h>
-+#int main(int argc, char*argv[])
-+#{
-+#  if(lchflags(argv[0], 0) != 0)
-+#    return 1;
-+#  return 0;
-+#}
-+#]], ac_cv_have_lchflags=yes,
-+#   ac_cv_have_lchflags=no,
-+#   ac_cv_have_lchflags=cross)
-+#])
-+#if test "$ac_cv_have_lchflags" = cross ; then
-+#  AC_CHECK_FUNC([lchflags], [ac_cv_have_lchflags="yes"], [ac_cv_have_lchflags="no"])
-+#fi
-+#if test "$ac_cv_have_lchflags" = yes ; then
-+#  AC_DEFINE(HAVE_LCHFLAGS, 1, Define to 1 if you have the `lchflags' function.)
-+#fi
- 
+-
  dnl Check if system zlib has *Copy() functions
  dnl
-@@ -3011,7 +3011,7 @@
- buggygetaddrinfo=yes
- ])
- 
--if test "$buggygetaddrinfo" = "yes"; then
-+if test "$buggygetaddrinfo" = "yes" -a x"$cross_compiling" != "xyes"; then
- 	if test "$ipv6" = "yes"; then
- 		echo 'Fatal: You must get working getaddrinfo() function.'
- 		echo '       or you can specify "--disable-ipv6"'.
-@@ -3838,70 +3838,72 @@
+ dnl On MacOSX the linker will search for dylibs on the entire linker path
+@@ -3844,45 +3800,6 @@
    AC_MSG_RESULT(no)
- )
+ fi
  
--AC_MSG_CHECKING(for /dev/ptmx)
--
--if test -r /dev/ptmx
--then
--  AC_MSG_RESULT(yes)
--  AC_DEFINE(HAVE_DEV_PTMX, 1,
--  [Define if we have /dev/ptmx.])
--else
--  AC_MSG_RESULT(no)
--fi
--
--AC_MSG_CHECKING(for /dev/ptc)
--
--if test -r /dev/ptc
--then
--  AC_MSG_RESULT(yes)
--  AC_DEFINE(HAVE_DEV_PTC, 1,
--  [Define if we have /dev/ptc.])
--else
--  AC_MSG_RESULT(no)
--fi
--
 -AC_MSG_CHECKING(for %zd printf() format support)
 -AC_TRY_RUN([#include <stdio.h>
 -#include <stddef.h>
@@ -173,14 +69,7 @@ diff -Nur python-2.6.6.org/configure.in python-2.6.6/configure.in
 -typedef ssize_t Py_ssize_t;
 -#elif SIZEOF_VOID_P == SIZEOF_LONG
 -typedef long Py_ssize_t;
-+#AC_MSG_CHECKING(for /dev/ptmx)
-+#
-+#if test -r /dev/ptmx
-+#then
-+#  AC_MSG_RESULT(yes)
-+#  AC_DEFINE(HAVE_DEV_PTMX, 1,
-+#  [Define if we have /dev/ptmx.])
- #else
+-#else
 -typedef int Py_ssize_t;
 -#endif
 -
@@ -205,71 +94,25 @@ diff -Nur python-2.6.6.org/configure.in python-2.6.6/configure.in
 -[AC_MSG_RESULT(yes)
 - AC_DEFINE(PY_FORMAT_SIZE_T, "z", [Define to printf format modifier for Py_ssize_t])],
 - AC_MSG_RESULT(no))
-+#  AC_MSG_RESULT(no)
-+#fi
-+AC_CHECK_FILE(/dev/ptmx, AC_DEFINE(HAVE_DEV_PTMX, 1, [Define if we have /dev/ptmx.]))
-+
-+#AC_MSG_CHECKING(for /dev/ptc)
-+#
-+#if test -r /dev/ptc
-+#then
-+#  AC_MSG_RESULT(yes)
-+#  AC_DEFINE(HAVE_DEV_PTC, 1,
-+#  [Define if we have /dev/ptc.])
-+#else
-+#  AC_MSG_RESULT(no)
-+#fi
-+AC_CHECK_FILE(/dev/ptc, AC_DEFINE(HAVE_DEV_PTC, 1, [Define if we have /dev/ptc.]))
-+
-+#AC_MSG_CHECKING(for %zd printf() format support)
-+#AC_TRY_RUN([#include <stdio.h>
-+##include <stddef.h>
-+##include <string.h>
-+#
-+##ifdef HAVE_SYS_TYPES_H
-+##include <sys/types.h>
-+##endif
-+#
-+##ifdef HAVE_SSIZE_T
-+#typedef ssize_t Py_ssize_t;
-+##elif SIZEOF_VOID_P == SIZEOF_LONG
-+#typedef long Py_ssize_t;
-+##else
-+#typedef int Py_ssize_t;
-+##endif
-+#
-+#int main()
-+#{
-+#    char buffer[256];
-+#
-+#    if(sprintf(buffer, "%zd", (size_t)123) < 0)
-+#       	return 1;
-+#
-+#    if (strcmp(buffer, "123"))
-+#	return 1;
-+#
-+#    if (sprintf(buffer, "%zd", (Py_ssize_t)-123) < 0)
-+#       	return 1;
-+#
-+#    if (strcmp(buffer, "-123"))
-+#	return 1;
-+#
-+#    return 0;
-+#}],
-+#[AC_MSG_RESULT(yes)
-+# AC_DEFINE(PY_FORMAT_SIZE_T, "z", [Define to printf format modifier for Py_ssize_t])],
-+# AC_MSG_RESULT(no))
- 
+-
  AC_CHECK_TYPE(socklen_t,,
    AC_DEFINE(socklen_t,int,
--            Define to `int' if <sys/socket.h> does not define.),[
-+            Define to 'int' if <sys/socket.h> does not define.),[
- #ifdef HAVE_SYS_TYPES_H
- #include <sys/types.h>
+             Define to `int' if <sys/socket.h> does not define.),[
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Include/pyport.h python-2.6.6/Include/pyport.h
+--- python-2.6.6.org/Include/pyport.h	2010-05-09 17:15:40.000000000 +0200
++++ python-2.6.6/Include/pyport.h	2012-04-09 18:43:41.000000000 +0200
+@@ -691,7 +691,7 @@
+  * rather than waiting for integer multiplication to trigger bogus
+  * overflows.
+  */
+-#error "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)."
++/* #error "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)." */
  #endif
-diff -Nur python-2.6.6.org/Lib/distutils/command/build_ext.py python-2.6.6/Lib/distutils/command/build_ext.py
+ 
+ #ifdef __cplusplus
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/distutils/command/build_ext.py python-2.6.6/Lib/distutils/command/build_ext.py
 --- python-2.6.6.org/Lib/distutils/command/build_ext.py	2010-08-02 22:26:41.000000000 +0200
-+++ python-2.6.6/Lib/distutils/command/build_ext.py	2011-01-30 15:52:27.000000000 +0100
++++ python-2.6.6/Lib/distutils/command/build_ext.py	2012-04-09 18:43:41.000000000 +0200
 @@ -438,7 +438,9 @@
          # "build" tree.
          outputs = []
@@ -317,9 +160,9 @@ diff -Nur python-2.6.6.org/Lib/distutils/command/build_ext.py python-2.6.6/Lib/d
              libraries=self.get_libraries(ext),
              library_dirs=ext.library_dirs,
              runtime_library_dirs=ext.runtime_library_dirs,
-diff -Nur python-2.6.6.org/Lib/distutils/unixccompiler.py python-2.6.6/Lib/distutils/unixccompiler.py
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/distutils/unixccompiler.py python-2.6.6/Lib/distutils/unixccompiler.py
 --- python-2.6.6.org/Lib/distutils/unixccompiler.py	2010-06-27 14:39:22.000000000 +0200
-+++ python-2.6.6/Lib/distutils/unixccompiler.py	2011-01-31 01:48:35.695517833 +0100
++++ python-2.6.6/Lib/distutils/unixccompiler.py	2012-04-09 18:43:41.000000000 +0200
 @@ -305,6 +305,8 @@
          dylib_f = self.library_filename(lib, lib_type='dylib')
          static_f = self.library_filename(lib, lib_type='static')
@@ -343,18 +186,71 @@ diff -Nur python-2.6.6.org/Lib/distutils/unixccompiler.py python-2.6.6/Lib/distu
                  return static
  
          # Oops, didn't find it in *any* of 'dirs'
-diff -Nur python-2.6.6.org/Makefile.pre.in python-2.6.6/Makefile.pre.in
---- python-2.6.6.org/Makefile.pre.in	2011-01-29 21:35:45.993710336 +0100
-+++ python-2.6.6/Makefile.pre.in	2011-01-31 02:26:11.387514661 +0100
-@@ -175,6 +175,7 @@
- 
- PYTHON=		python$(EXE)
- BUILDPYTHON=	python$(BUILDEXE)
-+HOSTPYTHON=	$(BUILDPYTHON)
- 
- # The task to run while instrument when building the profile-opt target
- PROFILE_TASK=	$(srcdir)/Tools/pybench/pybench.py -n 2 --with-gc --with-syscheck
-@@ -197,6 +198,7 @@
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/plat-linux3/regen python-2.6.6/Lib/plat-linux3/regen
+--- python-2.6.6.org/Lib/plat-linux3/regen	1970-01-01 01:00:00.000000000 +0100
++++ python-2.6.6/Lib/plat-linux3/regen	2012-04-09 18:43:41.000000000 +0200
+@@ -0,0 +1,8 @@
++#! /bin/sh
++case `uname` in
++Linux*) ;;
++*) echo Probably not on a Linux system 1>&2
++ exit 1;;
++esac
++set -v
++h2py -i '(u_long)' /usr/include/sys/types.h /usr/include/netinet/in.h /usr/include/dlfcn.h
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/sitecustomize.py python-2.6.6/Lib/sitecustomize.py
+--- python-2.6.6.org/Lib/sitecustomize.py	1970-01-01 01:00:00.000000000 +0100
++++ python-2.6.6/Lib/sitecustomize.py	2012-04-08 23:23:39.000000000 +0200
+@@ -0,0 +1,45 @@
++# OpenEmbedded sitecustomize.py (C) 2002-2008 Michael 'Mickey' Lauer <mlauer@vanille-media.de>
++# GPLv2 or later
++# Version: 20081123
++# Features:
++# * set proper default encoding
++# * enable readline completion in the interactive interpreter
++# * load command line history on startup
++# * save command line history on exit
++
++import os
++
++def __exithandler():
++    try:
++        readline.write_history_file( "%s/.python-history" % os.getenv( "HOME", "/tmp" ) )
++    except IOError:
++        pass
++
++def __registerExitHandler():
++    import atexit
++    atexit.register( __exithandler )
++
++def __enableReadlineSupport():
++    readline.set_history_length( 1000 )
++    readline.parse_and_bind( "tab: complete" )
++    try:
++        readline.read_history_file( "%s/.python-history" % os.getenv( "HOME", "/tmp" ) )
++    except IOError:
++        pass
++
++def __enableDefaultEncoding():
++    import sys
++    try:
++        sys.setdefaultencoding( "utf8" )
++    except LookupError:
++        pass
++
++import sys
++try:
++    import rlcompleter, readline
++except ImportError:
++    pass
++else:
++    __enableDefaultEncoding()
++    __registerExitHandler()
++    __enableReadlineSupport()
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Makefile.pre.in python-2.6.6/Makefile.pre.in
+--- python-2.6.6.org/Makefile.pre.in	2010-08-02 00:05:31.000000000 +0200
++++ python-2.6.6/Makefile.pre.in	2012-04-09 18:43:41.000000000 +0200
+@@ -197,6 +197,7 @@
  
  ##########################################################################
  # Grammar
@@ -362,7 +258,7 @@ diff -Nur python-2.6.6.org/Makefile.pre.in python-2.6.6/Makefile.pre.in
  GRAMMAR_H=	$(srcdir)/Include/graminit.h
  GRAMMAR_C=	$(srcdir)/Python/graminit.c
  GRAMMAR_INPUT=	$(srcdir)/Grammar/Grammar
-@@ -205,6 +207,7 @@
+@@ -205,6 +206,7 @@
  ##########################################################################
  # Parser
  PGEN=		Parser/pgen$(EXE)
@@ -370,7 +266,7 @@ diff -Nur python-2.6.6.org/Makefile.pre.in python-2.6.6/Makefile.pre.in
  
  POBJS=		\
  		Parser/acceler.o \
-@@ -394,8 +397,10 @@
+@@ -394,8 +396,10 @@
  # Build the shared modules
  sharedmods: $(BUILDPYTHON)
  	@case $$MAKEFLAGS in \
@@ -378,41 +274,82 @@ diff -Nur python-2.6.6.org/Makefile.pre.in python-2.6.6/Makefile.pre.in
 -	*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' LDFLAGS='$(LDFLAGS)' OPT='$(OPT)' ./$(BUILDPYTHON) -E $(srcdir)/setup.py build;; \
 +#	*s*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' LDFLAGS='$(LDFLAGS)' OPT='$(OPT)' ./$(BUILDPYTHON) -E $(srcdir)/setup.py -q build;; \
 +#	*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' LDFLAGS='$(LDFLAGS)' OPT='$(OPT)' ./$(BUILDPYTHON) -E $(srcdir)/setup.py build;; \
-+	*s*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' $(HOSTPYTHON) -E $(srcdir)/setup.py -q build;; \
-+	*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' $(HOSTPYTHON) -E $(srcdir)/setup.py build;; \
++	*s*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' LDFLAGS='$(LDFLAGS)' OPT='$(OPT)' $(HOSTPYTHON) -E $(srcdir)/setup.py -q build;; \
++	*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' LDFLAGS='$(LDFLAGS)' OPT='$(OPT)' $(HOSTPYTHON) -E $(srcdir)/setup.py build;; \
  	esac
  
  # Build static library
-@@ -887,23 +892,23 @@
+@@ -514,10 +518,24 @@
+ Modules/python.o: $(srcdir)/Modules/python.c
+ 	$(MAINCC) -c $(PY_CFLAGS) -o $@ $(srcdir)/Modules/python.c
+ 
++# GNU "make" interprets rules with two dependents as two copies of the rule.
++#
++# In a parallel build this can lead to pgen being run twice, once for each of
++# GRAMMAR_H and GRAMMAR_C, leading to race conditions in which the compiler
++# reads a partially-overwritten copy of one of these files, leading to syntax
++# errors (or linker errors if the fragment happens to be syntactically valid C)
++#
++# See http://www.gnu.org/software/hello/manual/automake/Multiple-Outputs.html
++# for more information.
++#
++# Introduce ".grammar-stamp" as a contrived single output from PGEN to avoid
++# this:
++$(GRAMMAR_H) $(GRAMMAR_C): $(GRAMMAR_STAMP)
+ 
+-$(GRAMMAR_H) $(GRAMMAR_C): $(PGEN) $(GRAMMAR_INPUT)
++$(GRAMMAR_STAMP): $(PGEN) $(GRAMMAR_INPUT)
+ 		-@$(INSTALL) -d Include
+-		-$(PGEN) $(GRAMMAR_INPUT) $(GRAMMAR_H) $(GRAMMAR_C)
++		-$(HOSTPGEN) $(GRAMMAR_INPUT) $(GRAMMAR_H) $(GRAMMAR_C)
++		touch $(GRAMMAR_STAMP)
+ 
+ $(PGEN):	$(PGENOBJS)
+ 		$(CC) $(OPT) $(LDFLAGS) $(PGENOBJS) $(LIBS) -o $(PGEN)
+@@ -886,24 +904,24 @@
+ 		done; \
  	done
  	$(INSTALL_DATA) $(srcdir)/LICENSE $(DESTDIR)$(LIBDEST)/LICENSE.txt
- 	PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
+-	PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
 -		./$(BUILDPYTHON) -Wi -tt $(DESTDIR)$(LIBDEST)/compileall.py \
-+		$(HOSTPYTHON) -Wi -tt $(DESTDIR)$(LIBDEST)/compileall.py \
- 		-d $(LIBDEST) -f \
- 		-x 'bad_coding|badsyntax|site-packages' $(DESTDIR)$(LIBDEST)
- 	PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+-		-d $(LIBDEST) -f \
+-		-x 'bad_coding|badsyntax|site-packages' $(DESTDIR)$(LIBDEST)
+-	PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 -		./$(BUILDPYTHON) -Wi -tt -O $(DESTDIR)$(LIBDEST)/compileall.py \
-+		$(HOSTPYTHON) -Wi -tt -O $(DESTDIR)$(LIBDEST)/compileall.py \
- 		-d $(LIBDEST) -f \
- 		-x 'bad_coding|badsyntax|site-packages' $(DESTDIR)$(LIBDEST)
- 	-PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
+-		-d $(LIBDEST) -f \
+-		-x 'bad_coding|badsyntax|site-packages' $(DESTDIR)$(LIBDEST)
+-	-PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
 -		./$(BUILDPYTHON) -Wi -t $(DESTDIR)$(LIBDEST)/compileall.py \
-+		$(HOSTPYTHON) -Wi -t $(DESTDIR)$(LIBDEST)/compileall.py \
- 		-d $(LIBDEST)/site-packages -f \
- 		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
- 	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+-		-d $(LIBDEST)/site-packages -f \
+-		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
+-	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 -		./$(BUILDPYTHON) -Wi -t -O $(DESTDIR)$(LIBDEST)/compileall.py \
-+		$(HOSTPYTHON) -Wi -t -O $(DESTDIR)$(LIBDEST)/compileall.py \
- 		-d $(LIBDEST)/site-packages -f \
- 		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
- 	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+-		-d $(LIBDEST)/site-packages -f \
+-		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
+-	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 -		./$(BUILDPYTHON) -Wi -t -c "import lib2to3.pygram, lib2to3.patcomp;lib2to3.patcomp.PatternCompiler()"
-+		$(HOSTPYTHON) -Wi -t -c "import lib2to3.pygram, lib2to3.patcomp;lib2to3.patcomp.PatternCompiler()"
++#	PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
++#		./$(BUILDPYTHON) -Wi -tt $(DESTDIR)$(LIBDEST)/compileall.py \
++#		-d $(LIBDEST) -f \
++#		-x 'bad_coding|badsyntax|site-packages' $(DESTDIR)$(LIBDEST)
++#	PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
++#		./$(BUILDPYTHON) -Wi -tt -O $(DESTDIR)$(LIBDEST)/compileall.py \
++#		-d $(LIBDEST) -f \
++#		-x 'bad_coding|badsyntax|site-packages' $(DESTDIR)$(LIBDEST)
++#	-PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
++#		./$(BUILDPYTHON) -Wi -t $(DESTDIR)$(LIBDEST)/compileall.py \
++#		-d $(LIBDEST)/site-packages -f \
++#		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
++#	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
++#		./$(BUILDPYTHON) -Wi -t -O $(DESTDIR)$(LIBDEST)/compileall.py \
++#		-d $(LIBDEST)/site-packages -f \
++#		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
++#	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
++#		./$(BUILDPYTHON) -Wi -t -c "import lib2to3.pygram, lib2to3.patcomp;lib2to3.patcomp.PatternCompiler()"
  
  # Create the PLATDIR source directory, if one wasn't distributed..
  $(srcdir)/Lib/$(PLATDIR):
-@@ -1001,7 +1006,7 @@
+@@ -1001,7 +1019,7 @@
  # Install the dynamically loadable modules
  # This goes into $(exec_prefix)
  sharedinstall:
@@ -421,50 +358,18 @@ diff -Nur python-2.6.6.org/Makefile.pre.in python-2.6.6/Makefile.pre.in
  	   	--prefix=$(prefix) \
  		--install-scripts=$(BINDIR) \
  		--install-platlib=$(DESTSHARED) \
-diff -Nur python-2.6.6.org/Modules/_ctypes/libffi/configure.ac python-2.6.6/Modules/_ctypes/libffi/configure.ac
---- python-2.6.6.org/Modules/_ctypes/libffi/configure.ac	2009-04-28 22:01:18.000000000 +0200
-+++ python-2.6.6/Modules/_ctypes/libffi/configure.ac	2011-01-31 01:41:43.559520950 +0100
-@@ -23,6 +23,7 @@
- m4_rename([_AC_ARG_VAR_PRECIOUS],[real_PRECIOUS])
- m4_define([_AC_ARG_VAR_PRECIOUS],[])
- AC_PROG_CC
-+m4_undefine([_AC_ARG_VAR_PRECIOUS])
- m4_rename([real_PRECIOUS],[_AC_ARG_VAR_PRECIOUS])
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/_ctypes/libffi/fficonfig.py.in python-2.6.6/Modules/_ctypes/libffi/fficonfig.py.in
+--- python-2.6.6.org/Modules/_ctypes/libffi/fficonfig.py.in	2010-01-16 19:05:15.000000000 +0100
++++ python-2.6.6/Modules/_ctypes/libffi/fficonfig.py.in	2012-04-09 19:38:57.000000000 +0200
+@@ -30,4 +30,4 @@
  
- AC_SUBST(CFLAGS)
-@@ -366,7 +367,7 @@
+ ffi_sources += ffi_platforms['@TARGET@']
  
- AC_CONFIG_LINKS(include/ffitarget.h:src/$TARGETDIR/ffitarget.h)
- 
--AC_CONFIG_FILES(include/ffi.h)
-+AC_CONFIG_FILES(include/ffi.h include/Makefile Makefile)
- 
- AC_CONFIG_LINKS(include/ffi_common.h:include/ffi_common.h)
- 
-diff -Nur python-2.6.6.org/Modules/_ctypes/libffi/Makefile.am python-2.6.6/Modules/_ctypes/libffi/Makefile.am
---- python-2.6.6.org/Modules/_ctypes/libffi/Makefile.am	2008-03-04 21:09:11.000000000 +0100
-+++ python-2.6.6/Modules/_ctypes/libffi/Makefile.am	2011-01-31 01:42:25.331519756 +0100
-@@ -2,7 +2,7 @@
- 
- AUTOMAKE_OPTIONS = foreign subdir-objects
- 
--SUBDIRS = include testsuite man
-+SUBDIRS = include
- 
- EXTRA_DIST = LICENSE ChangeLog.v1 ChangeLog.libgcj configure.host \
- 	src/alpha/ffi.c src/alpha/osf.S src/alpha/ffitarget.h \
-@@ -32,8 +32,6 @@
- 	src/frv/ffi.c src/frv/eabi.S src/frv/ffitarget.h src/dlmalloc.c \
- 	libtool-version ChangeLog.libffi
- 
--info_TEXINFOS = doc/libffi.texi
--
- ## ################################################################
- 
- ##
-diff -Nur python-2.6.6.org/Modules/gcmodule.c python-2.6.6/Modules/gcmodule.c
+-ffi_cflags = '@CFLAGS@'
++ffi_cflags = '@CFLAGS@ -DPIC'
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/gcmodule.c python-2.6.6/Modules/gcmodule.c
 --- python-2.6.6.org/Modules/gcmodule.c	2010-05-09 17:15:40.000000000 +0200
-+++ python-2.6.6/Modules/gcmodule.c	2011-01-28 11:04:26.000000000 +0100
++++ python-2.6.6/Modules/gcmodule.c	2012-04-09 18:43:41.000000000 +0200
 @@ -274,7 +274,7 @@
           * generation being collected, which can be recognized
           * because only they have positive gc_refs.
@@ -483,9 +388,9 @@ diff -Nur python-2.6.6.org/Modules/gcmodule.c python-2.6.6/Modules/gcmodule.c
              gc->gc.gc_refs = GC_REACHABLE;
              (void) traverse(op,
                              (visitproc)visit_reachable,
-diff -Nur python-2.6.6.org/Modules/termios.c python-2.6.6/Modules/termios.c
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/termios.c python-2.6.6/Modules/termios.c
 --- python-2.6.6.org/Modules/termios.c	2010-05-09 17:15:40.000000000 +0200
-+++ python-2.6.6/Modules/termios.c	2011-01-29 22:50:34.736711039 +0100
++++ python-2.6.6/Modules/termios.c	2012-04-09 18:43:41.000000000 +0200
 @@ -17,6 +17,12 @@
  #include <termio.h>
  #endif
@@ -499,9 +404,9 @@ diff -Nur python-2.6.6.org/Modules/termios.c python-2.6.6/Modules/termios.c
  
  /* HP-UX requires that this be included to pick up MDCD, MCTS, MDSR,
   * MDTR, MRI, and MRTS (appearantly used internally by some things
-diff -Nur python-2.6.6.org/Python/import.c python-2.6.6/Python/import.c
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Python/import.c python-2.6.6/Python/import.c
 --- python-2.6.6.org/Python/import.c	2010-05-20 20:41:08.000000000 +0200
-+++ python-2.6.6/Python/import.c	2011-01-28 11:04:26.000000000 +0100
++++ python-2.6.6/Python/import.c	2012-04-09 18:43:41.000000000 +0200
 @@ -882,6 +882,12 @@
      mode_t mode = srcstat->st_mode & ~S_IXUSR & ~S_IXGRP & ~S_IXOTH;
  #endif
@@ -515,18 +420,34 @@ diff -Nur python-2.6.6.org/Python/import.c python-2.6.6/Python/import.c
      fp = open_exclusive(cpathname, mode);
      if (fp == NULL) {
          if (Py_VerboseFlag)
-diff -Nur python-2.6.6.org/setup.py python-2.6.6/setup.py
+diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/setup.py python-2.6.6/setup.py
 --- python-2.6.6.org/setup.py	2010-07-17 14:31:09.000000000 +0200
-+++ python-2.6.6/setup.py	2011-01-31 02:32:51.623513663 +0100
-@@ -322,6 +322,7 @@
++++ python-2.6.6/setup.py	2012-04-09 18:43:41.000000000 +0200
+@@ -18,7 +18,14 @@
+ from distutils.spawn import find_executable
+ 
+ # This global variable is used to hold the list of modules to be disabled.
+-disabled_module_list = []
++try:
++    disabled_module_list = os.environ["PYTHON_DISABLE_MODULES"].split()
++except KeyError:
++    disabled_module_list = []
++try:
++    disable_ssl = os.environ["PYTHON_DISABLE_SSL"]
++except KeyError:
++    disable_ssl = 0
+ 
+ def add_dir_to_list(dirlist, dir):
+     """Add the directory 'dir' to the list 'dirlist' (at the front) if
+@@ -319,6 +326,7 @@
+         try:
+             imp.load_dynamic(ext.name, ext_filename)
+         except ImportError, why:
++            return
              self.failed.append(ext.name)
              self.announce('*** WARNING: renaming "%s" since importing it'
                            ' failed: %s' % (ext.name, why), level=3)
-+            return
-             assert not self.inplace
-             basename, tail = os.path.splitext(ext_filename)
-             newname = basename + "_failed" + tail
-@@ -356,8 +357,8 @@
+@@ -356,8 +364,21 @@
  
      def detect_modules(self):
          # Ensure that /usr/local is always used
@@ -534,24 +455,40 @@ diff -Nur python-2.6.6.org/setup.py python-2.6.6/setup.py
 -        add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
 +#        add_dir_to_list(self.compiler.library_dirs, '/usr/local/lib')
 +#        add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
++        global disable_ssl
++        try:
++            modules_include_dirs = os.environ["PYTHON_MODULES_INCLUDE"].split()
++        except KeyError:
++            modules_include_dirs = ['/usr/include']
++        try:
++            modules_lib_dirs = os.environ["PYTHON_MODULES_LIB"].split()
++        except KeyError:
++            modules_lib_dirs = ['/usr/lib']
++        for dir in modules_include_dirs:
++                add_dir_to_list(self.compiler.include_dirs, dir)
++        for dir in modules_lib_dirs:
++                add_dir_to_list(self.compiler.library_dirs, dir)
  
          # Add paths specified in the environment variables LDFLAGS and
          # CPPFLAGS for header and library files.
-@@ -393,10 +394,10 @@
+@@ -393,11 +414,11 @@
                      for directory in reversed(options.dirs):
                          add_dir_to_list(dir_list, directory)
  
 -        if os.path.normpath(sys.prefix) != '/usr':
 -            add_dir_to_list(self.compiler.library_dirs,
-+#        if os.path.normpath(sys.prefix) != '/usr':
-+        add_dir_to_list(self.compiler.library_dirs,
-                             sysconfig.get_config_var("LIBDIR"))
+-                            sysconfig.get_config_var("LIBDIR"))
 -            add_dir_to_list(self.compiler.include_dirs,
-+        add_dir_to_list(self.compiler.include_dirs,
-                             sysconfig.get_config_var("INCLUDEDIR"))
+-                            sysconfig.get_config_var("INCLUDEDIR"))
++#        if os.path.normpath(sys.prefix) != '/usr':
++#        add_dir_to_list(self.compiler.library_dirs,
++#                            sysconfig.get_config_var("LIBDIR"))
++#        add_dir_to_list(self.compiler.include_dirs,
++#                            sysconfig.get_config_var("INCLUDEDIR"))
  
          try:
-@@ -407,11 +408,13 @@
+             have_unicode = unicode
+@@ -407,11 +428,13 @@
          # lib_dirs and inc_dirs are used to search for files;
          # if a file is found in one of those directories, it can
          # be assumed that no additional -I,-L directives are needed.
@@ -570,7 +507,7 @@ diff -Nur python-2.6.6.org/setup.py python-2.6.6/setup.py
          exts = []
          missing = []
  
-@@ -661,9 +664,12 @@
+@@ -661,9 +684,12 @@
                  pass # Issue 7384: Already linked against curses or tinfo.
              elif curses_library:
                  readline_libs.append(curses_library)
@@ -585,44 +522,16 @@ diff -Nur python-2.6.6.org/setup.py python-2.6.6/setup.py
                  readline_libs.append('termcap')
              exts.append( Extension('readline', ['readline.c'],
                                     library_dirs=['/usr/lib/termcap'],
-@@ -1713,21 +1719,21 @@
-             if dir not in include_dirs:
-                 include_dirs.append(dir)
+@@ -708,7 +734,7 @@
+                                      ] )
  
--        # Check for various platform-specific directories
--        if platform == 'sunos5':
--            include_dirs.append('/usr/openwin/include')
--            added_lib_dirs.append('/usr/openwin/lib')
--        elif os.path.exists('/usr/X11R6/include'):
--            include_dirs.append('/usr/X11R6/include')
--            added_lib_dirs.append('/usr/X11R6/lib64')
--            added_lib_dirs.append('/usr/X11R6/lib')
--        elif os.path.exists('/usr/X11R5/include'):
--            include_dirs.append('/usr/X11R5/include')
--            added_lib_dirs.append('/usr/X11R5/lib')
--        else:
--            # Assume default location for X11
--            include_dirs.append('/usr/X11/include')
--            added_lib_dirs.append('/usr/X11/lib')
-+#        # Check for various platform-specific directories
-+#        if platform == 'sunos5':
-+#            include_dirs.append('/usr/openwin/include')
-+#            added_lib_dirs.append('/usr/openwin/lib')
-+#        elif os.path.exists('/usr/X11R6/include'):
-+#            include_dirs.append('/usr/X11R6/include')
-+#            added_lib_dirs.append('/usr/X11R6/lib64')
-+#            added_lib_dirs.append('/usr/X11R6/lib')
-+#        elif os.path.exists('/usr/X11R5/include'):
-+#            include_dirs.append('/usr/X11R5/include')
-+#            added_lib_dirs.append('/usr/X11R5/lib')
-+#        else:
-+#            # Assume default location for X11
-+#            include_dirs.append('/usr/X11/include')
-+#            added_lib_dirs.append('/usr/X11/lib')
- 
-         # If Cygwin, then verify that X is installed before proceeding
-         if platform == 'cygwin':
-@@ -1823,16 +1829,16 @@
+         if (ssl_incs is not None and
+-            ssl_libs is not None):
++            ssl_libs is not None and not disable_ssl):
+             exts.append( Extension('_ssl', ['_ssl.c'],
+                                    include_dirs = ssl_incs,
+                                    library_dirs = ssl_libs,
+@@ -1823,16 +1849,17 @@
                                           ffi_configfile):
                  from distutils.dir_util import mkpath
                  mkpath(ffi_builddir)
@@ -637,9 +546,21 @@ diff -Nur python-2.6.6.org/setup.py python-2.6.6/setup.py
 +                      % (ffi_srcdir, ffi_builddir, ffi_srcdir, " ".join(config_args))
  
                  res = os.system(cmd)
++                res = os.system("echo \"" + cmd + "\"")
                  if res or not os.path.exists(ffi_configfile):
 -                    print "Failed to configure _ctypes module"
 +                    print "Failed to configure _ctypes module (res=%d) or missing conffile=%s" % ( res, ffi_configfile )
                      return False
  
              fficonfig = {}
+--- Python-2.6.6.orig/Python/compile.c
++++ Python-2.6.6/Python/compile.c
+@@ -32,7 +32,7 @@
+ #include "symtable.h"
+ #include "opcode.h"
+ 
+-int Py_OptimizeFlag = 0;
++int Py_OptimizeFlag = 1;
+ 
+ #define DEFAULT_BLOCK_SIZE 16
+ #define DEFAULT_BLOCKS 8
