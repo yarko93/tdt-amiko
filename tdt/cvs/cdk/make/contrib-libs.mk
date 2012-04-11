@@ -1950,13 +1950,27 @@ $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
 #
 # graphlcd
 #
+DESCRIPTION_graphlcd = "Driver and Tools for LCD4LINUX"
+
+FILES_graphlcd = \
+/usr/lib/libglcddrivers.so \
+/usr/lib/libglcddrivers.so.2.1.0 \
+/usr/lib/libglcdgraphics.so \
+/usr/lib/libglcdgraphics.so.2.1.0 \
+/usr/lib/libglcdskin.so \
+/usr/lib/libglcdskin.so.2.1.0 
+
 $(DEPDIR)/graphlcd: graphlcd-base-touchcol.tar.bz2 bootstrap libusb @DEPENDS_graphlcd@
+
 	@PREPARE_graphlcd@
+	$(start_build)
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_graphlcd@ && \
 	$(BUILDENV) \
 		$(MAKE) all && \
 		@INSTALL_graphlcd@
+	$(tocdk_build)
+	$(toflash_build)
 	@DISTCLEANUP_graphlcd@
 	@touch $@
 	@TUXBOX_YAUD_CUSTOMIZE@

@@ -974,7 +974,7 @@ graphlcd
   {PN}-{PV}
   extract:http://projects.vdr-developer.org/git/{PN}-base.git/snapshot/{PN}-{PV}.tar.bz2
   patch:file://{PN}.patch
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 libusb
   0.1.12
