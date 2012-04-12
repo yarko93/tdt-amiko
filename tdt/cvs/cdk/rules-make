@@ -129,8 +129,8 @@ brofs;1.2;BroFS1.2;BroFS1.2.tgz;extract:BroFS1.2.tgz
 libalsa;1.0.21a;alsa-lib-1.0.21a;alsa-lib-1.0.21a.tar.bz2:alsa-lib-1.0.21a-soft_float.patch;extract:alsa-lib-1.0.21a.tar.bz2;patch:alsa-lib-1.0.21a-soft_float.patch
 rtmpdump;2.4;rtmpdump-2.4;rtmpdump-2.4.tar.gz;extract:rtmpdump-2.4.tar.gz;move:rtmpdump:rtmpdump-2.4
 libdvbsipp;0.3.6;libdvbsi++-0.3.6;libdvbsi++-0.3.6.tar.bz2;extract:libdvbsi++-0.3.6.tar.bz2;patch:libdvbsi++-0.3.6-fix_unaligned_access.patch
-libtuxtxt;1.0;tuxtxt/libtuxtxt;;
-tuxtxt32bpp;1.0;tuxtxt/tuxtxt;;
+tuxtxtlib;1.0;libtuxtxt;libtuxtxt.git:libtuxtxt-1.0-fix_dbox_headers.diff;extract:libtuxtxt.git/libtuxtxt;patch:libtuxtxt-1.0-fix_dbox_headers.diff
+tuxtxt32bpp;1.0;tuxtxt;libtuxtxt.git:tuxtxt32bpp-1.0-fix_dbox_headers.diff;extract:libtuxtxt.git/tuxtxt;patch:tuxtxt32bpp-1.0-fix_dbox_headers.diff
 libdreamdvd;1.0;libdreamdvd;;link:../apps/misc/tools/libdreamdvd:libdreamdvd
 libdreamdvd2;1.0;libdreamdvd;;patch:libdreamdvd-1.0-support_sh4.patch
 
@@ -154,6 +154,11 @@ pythoncheetah;2.4.4;Cheetah-2.4.4;Cheetah-2.4.4.tar.gz;extract:Cheetah-2.4.4.tar
 zope_interface;3.3.0;zope.interface-3.3.0;zope.interface-3.3.0.tar.gz;extract:zope.interface-3.3.0.tar.gz
 
 #
+# ENGIMA2
+#
+enigma2_networkbrowser;1.0;enigma2-networkbrowser;enigma2-openpli-plugins-enigma2.git:enigma2-networkbrowser-support_autofs.patch;extract:enigma2-openpli-plugins-enigma2.git/networkbrowser:enigma2-networkbrowser;patch:enigma2-networkbrowser-support_autofs.patch
+
+#
 # GSTREAMER
 #
 #gstreamer;0.11.1;gstreamer-0.11.1;gstreamer-0.11.1.tar.bz2;extract:gstreamer-0.11.1.tar.bz2
@@ -172,7 +177,7 @@ gst_plugins_dvbmediasink;0.10.1;gst-plugins-dvbmediasink-0.10.1;;link:../apps/mi
 #
 # EXTERNAL_LCD
 #
-graphlcd;base-touchcol;graphlcd-base-touchcol;graphlcd-base-touchcol.tar.bz2:graphlcd.patch;extract:graphlcd-base-touchcol.tar.bz2;patch:graphlcd.patch
+graphlcd;base-touchcol;graphlcd-base-touchcol;graphlcd-base-touchcol.git:graphlcd.patch;extract:graphlcd-base-touchcol.git;patch:graphlcd.patch
 libusb;0.1.12;libusb-0.1.12;libusb-0.1.12.tar.gz;extract:libusb-0.1.12.tar.gz
 libusb2;1.0.8;libusb-1.0.8;libusb-1.0.8.tar.bz2;extract:libusb-1.0.8.tar.bz2
 libusbcompat;0.1.3;libusb-compat-0.1.3;libusb-compat-0.1.3.tar.bz2;extract:libusb-compat-0.1.3.tar.bz2

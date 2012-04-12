@@ -905,6 +905,7 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/media/hdd && \
 	$(INSTALL_DIR) $(prefix)/release/media/hdd/music && \
 	$(INSTALL_DIR) $(prefix)/release/media/hdd/picture && \
+	ln -s /media/hdd $(prefix)/release/hdd && \
 	$(INSTALL_DIR) $(prefix)/release/lib && \
 	$(INSTALL_DIR) $(prefix)/release/lib/modules && \
 	$(INSTALL_DIR) $(prefix)/release/ram && \
@@ -1187,8 +1188,9 @@ endif
 	rm -rf $(prefix)/release/lib/modules/$(KERNELVERSION)
 
 	$(INSTALL_DIR) $(prefix)/release/media
-	ln -s /media/hdd $(prefix)/release/hdd
 	$(INSTALL_DIR) $(prefix)/release/media/dvd
+	$(INSTALL_DIR) $(prefix)/release/media/hdd
+	$(INSTALL_DIR) $(prefix)/release/media/net
 
 	$(INSTALL_DIR) $(prefix)/release/mnt
 	$(INSTALL_DIR) $(prefix)/release/mnt/usb
@@ -1446,6 +1448,7 @@ endif
 # GSTREAMER
 #
 	if [ -d $(prefix)/release/usr/lib/gstreamer-0.10 ]; then \
+		rm -rf $(prefix)/release/usr/lib/libav*; \
 		rm -rf $(prefix)/release/usr/lib/libgstfft*; \
 		rm -rf $(prefix)/release/usr/lib/gstreamer-0.10/*; \
 		cp -a $(targetprefix)/usr/bin/gst-launch* $(prefix)/release/usr/bin/; \

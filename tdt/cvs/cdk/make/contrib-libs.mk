@@ -34,7 +34,7 @@ $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
 	cd @DIR_libz@ && \
 		@INSTALL_libz@
 #	@DISTCLEANUP_libz@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libreadline
@@ -60,7 +60,7 @@ $(DEPDIR)/%libreadline: $(DEPDIR)/libreadline.do_compile
 	cd @DIR_libreadline@ && \
 		@INSTALL_libreadline@
 #	@DISTCLEANUP_libreadline@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # FREETYPE_OLD
@@ -92,7 +92,7 @@ $(DEPDIR)/freetype-old: $(DEPDIR)/freetype-old.do_compile
 		sed 's,-I$${prefix}/include/freetype2,-I$(targetprefix)/usr/include/freetype-old -I$(targetprefix)/usr/include/freetype-old/freetype2,g' -i $(crossprefix)/bin/freetype-old-config; \
 		sed 's,/usr/include/freetype2/,$(targetprefix)/usr/include/freetype-old/freetype2/,g' -i $(crossprefix)/bin/freetype-old-config
 #	@DISTCLEANUP_freetype_old@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # freetype
@@ -121,7 +121,7 @@ $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 		ln -sf $(crossprefix)/bin/freetype-config $(crossprefix)/bin/$(target)-freetype-config && \
 		ln -sf $(targetprefix)/usr/include/freetype2/freetype $(targetprefix)/usr/include/freetype
 #	@DISTCLEANUP_freetype@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # lirc
@@ -159,7 +159,7 @@ $(DEPDIR)/%lirc: $(DEPDIR)/lirc.do_compile
 	cd @DIR_lirc@ && \
 		@INSTALL_lirc@
 #	@DISTCLEANUP_lirc@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # jpeg
@@ -186,7 +186,7 @@ $(DEPDIR)/%jpeg: $(DEPDIR)/jpeg.do_compile
 	cd @DIR_jpeg@ && \
 		@INSTALL_jpeg@
 #	@DISTCLEANUP_jpeg@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libpng
@@ -217,7 +217,7 @@ $(DEPDIR)/%libpng: $(DEPDIR)/libpng.do_compile
 #		sed -e "s,^prefix=\",prefix=\"$(targetprefix)," < libpng-config > $(targetprefix)/usr/bin/libpng-config
 #		ln -s $(targetprefix)/usr/bin/libpng-config $(hostprefix)/bin/libpng-config
 #	@DISTCLEANUP_libpng@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libungif
@@ -243,7 +243,7 @@ $(DEPDIR)/%libungif: $(DEPDIR)/libungif.do_compile
 	cd @libungif@ && \
 		@INSTALL_libungif@
 #	@DISTCLEANUP_libungif@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libgif
@@ -269,7 +269,7 @@ $(DEPDIR)/%libgif: $(DEPDIR)/libgif.do_compile
 	cd @DIR_libgif@ && \
 		@INSTALL_libgif@
 #	@DISTCLEANUP_libgif@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libcurl
@@ -300,7 +300,7 @@ $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
 		@INSTALL_curl@
 	rm -f $(targetprefix)/usr/bin/curl-config
 #	@DISTCLEANUP_curl@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libfribidi
@@ -327,7 +327,7 @@ $(DEPDIR)/%libfribidi: $(DEPDIR)/libfribidi.do_compile
 	cd @DIR_libfribidi@ && \
 		@INSTALL_libfribidi@
 #	@DISTCLEANUP_libfribidi@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libsigc
@@ -353,7 +353,7 @@ $(DEPDIR)/%libsigc: $(DEPDIR)/libsigc.do_compile
 	cd @DIR_libsigc@ && \
 		@INSTALL_libsigc@
 #	@DISTCLEANUP_libsigc@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libmad
@@ -388,7 +388,7 @@ $(DEPDIR)/%libmad: $(DEPDIR)/libmad.do_compile
 	cd @DIR_libmad@ && \
 		@INSTALL_libmad@
 #	@DISTCLEANUP_libmad@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libid3tag
@@ -415,7 +415,7 @@ $(DEPDIR)/%libid3tag: %libz $(DEPDIR)/libid3tag.do_compile
 	cd @DIR_libid3tag@ && \
 		@INSTALL_libid3tag@
 #	@DISTCLEANUP_libid3tag@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libvorbisidec
@@ -479,7 +479,7 @@ $(DEPDIR)/%glib2: $(DEPDIR)/glib2.do_compile
 	cd @DIR_glib2@ && \
 		@INSTALL_glib2@
 #	@DISTCLEANUP_glib2@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libiconv
@@ -505,7 +505,7 @@ $(DEPDIR)/%libiconv: $(DEPDIR)/libiconv.do_compile
 		cp ./srcm4/* $(hostprefix)/share/aclocal/ && \
 		@INSTALL_libiconv@
 #	@DISTCLEANUP_libiconv@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libmng
@@ -589,7 +589,7 @@ $(DEPDIR)/%directfb: $(DEPDIR)/directfb.do_compile
 	cd @DIR_directfb@ && \
 		@INSTALL_directfb@
 #	@DISTCLEANUP_directfb@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # DFB++
@@ -615,7 +615,7 @@ $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
 	cd @DIR_dfbpp@ && \
 		@INSTALL_dfbpp@
 #	@DISTCLEANUP_dfbpp@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # expat
@@ -641,7 +641,7 @@ $(DEPDIR)/%expat: $(DEPDIR)/expat.do_compile
 	cd @DIR_expat@ && \
 		@INSTALL_expat@
 #	@DISTCLEANUP_expat@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # fontconfig
@@ -678,7 +678,7 @@ $(DEPDIR)/%fontconfig: $(DEPDIR)/fontconfig.do_compile
 	cd @DIR_fontconfig@ && \
 		@INSTALL_fontconfig@
 #	@DISTCLEANUP_fontconfig@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libxmlccwrap
@@ -923,7 +923,7 @@ $(DEPDIR)/%ffmpeg: $(DEPDIR)/ffmpeg.do_compile
 	cd @DIR_ffmpeg@ && \
 		@INSTALL_ffmpeg@
 #	@DISTCLEANUP_pyopenssl@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libass
@@ -949,7 +949,7 @@ $(DEPDIR)/%libass: $(DEPDIR)/libass.do_compile
 		@INSTALL_libass@
 	echo "libdir='$(targetprefix)/usr/lib'" >> $(targetprefix)/usr/lib/libass.la
 #	@DISTCLEANUP_libass@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # WebKitDFB
@@ -995,7 +995,7 @@ $(DEPDIR)/%webkitdfb: $(DEPDIR)/webkitdfb.do_compile
 	cd @DIR_webkitdfb@ && \
 		@INSTALL_webkitdfb@
 #	@DISTCLEANUP_webkitdfb@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # icu4c
@@ -1034,7 +1034,7 @@ $(DEPDIR)/%icu4c: $(DEPDIR)/icu4c.do_compile
 		unset TARGET && \
 		@INSTALL_icu4c@
 #	@DISTCLEANUP_icu4c@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # enchant
@@ -1061,7 +1061,7 @@ $(DEPDIR)/%enchant: $(DEPDIR)/enchant.do_compile
 	cd @DIR_enchant@ && \
 		@INSTALL_enchant@
 #	@DISTCLEANUP_enchant@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # lite
@@ -1089,7 +1089,7 @@ $(DEPDIR)/%lite: $(DEPDIR)/lite.do_compile
 	cd @DIR_lite@ && \
 		@INSTALL_lite@
 #	@DISTCLEANUP_lite@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # sqlite
@@ -1117,7 +1117,7 @@ $(DEPDIR)/%sqlite: $(DEPDIR)/sqlite.do_compile
 	cd @DIR_sqlite@ && \
 		@INSTALL_sqlite@
 #	@DISTCLEANUP_sqlite@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libsoup
@@ -1143,7 +1143,7 @@ $(DEPDIR)/%libsoup: $(DEPDIR)/libsoup.do_compile
 	cd @DIR_libsoup@ && \
 		@INSTALL_libsoup@
 #	@DISTCLEANUP_libsoup@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # pixman
@@ -1167,7 +1167,7 @@ $(DEPDIR)/%pixman: $(DEPDIR)/pixman.do_compile
 	cd @DIR_pixman@ && \
 		@INSTALL_pixman@
 #	@DISTCLEANUP_pixman@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # cairo
@@ -1202,7 +1202,7 @@ $(DEPDIR)/%cairo: $(DEPDIR)/cairo.do_compile
 	cd @DIR_cairo@ && \
 		@INSTALL_cairo@
 #	@DISTCLEANUP_cairo@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libogg
@@ -1226,7 +1226,7 @@ $(DEPDIR)/%libogg: $(DEPDIR)/libogg.do_compile
 	cd @DIR_libogg@ && \
 		@INSTALL_libogg@
 #	@DISTCLEANUP_libogg@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libflac
@@ -1262,7 +1262,7 @@ $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
 	cd @DIR_libflac@ && \
 		@INSTALL_libflac@
 #	@DISTCLEANUP_libflac@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 
 ##############################   PYTHON   #####################################
@@ -1320,7 +1320,7 @@ $(DEPDIR)/%libxml2: libxml2.do_compile
 		sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(targetprefix)/usr/lib,g" -i $(targetprefix)/usr/lib/xml2Conf.sh; \
 		sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(targetprefix)/usr/include,g" -i $(targetprefix)/usr/lib/xml2Conf.sh
 #	@DISTCLEANUP_libxml2@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libxslt
@@ -1650,7 +1650,7 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 		@INSTALL_gstreamer@
 #	@DISTCLEANUP_gstreamer@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	TUXBOX_YAUD_CUSTOMIZE@
 
 #
 # GST-PLUGINS-BASE
@@ -1680,7 +1680,7 @@ $(DEPDIR)/%gst_plugins_base: $(DEPDIR)/gst_plugins_base.do_compile
 	cd @DIR_gst_plugins_base@ && \
 		@INSTALL_gst_plugins_base@
 #	@DISTCLEANUP_gst_plugins_base@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-PLUGINS-GOOD
@@ -1710,7 +1710,7 @@ $(DEPDIR)/%gst_plugins_good: $(DEPDIR)/gst_plugins_good.do_compile
 	cd @DIR_gst_plugins_good@ && \
 		@INSTALL_gst_plugins_good@
 #	@DISTCLEANUP_gst_plugins_good@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-PLUGINS-BAD
@@ -1736,7 +1736,7 @@ $(DEPDIR)/%gst_plugins_bad: $(DEPDIR)/gst_plugins_bad.do_compile
 	cd @DIR_gst_plugins_bad@ && \
 		@INSTALL_gst_plugins_bad@
 #	@DISTCLEANUP_gst_plugins_bad@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-PLUGINS-UGLY
@@ -1761,7 +1761,7 @@ $(DEPDIR)/%gst_plugins_ugly: $(DEPDIR)/gst_plugins_ugly.do_compile
 	cd @DIR_gst_plugins_ugly@ && \
 		@INSTALL_gst_plugins_ugly@
 #	@DISTCLEANUP_gst_plugins_ugly@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-FFMPEG
@@ -1823,7 +1823,7 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 	cd @DIR_gst_ffmpeg@ && \
 		@INSTALL_gst_ffmpeg@
 #	@DISTCLEANUP_gst_ffmpeg@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
@@ -1847,7 +1847,7 @@ $(DEPDIR)/%gst_plugins_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemu
 	cd @DIR_gst_plugins_fluendo_mpegdemux@ && \
 		@INSTALL_gst_plugins_fluendo_mpegdemux@
 #	@DISTCLEANUP_gst_ffmpeg@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GST-PLUGINS-DVBMEDIASINK
@@ -1876,7 +1876,7 @@ $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compi
 	cd @DIR_gst_plugins_dvbmediasink@ && \
 		@INSTALL_gst_plugins_dvbmediasink@
 #	@DISTCLEANUP_gst_plugins_dvbmediasink@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 ##############################   EXTERNAL_LCD   ################################
 
@@ -1903,12 +1903,12 @@ $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
 	cd @DIR_libusb@ && \
 		@INSTALL_libusb@
 #	@DISTCLEANUP_libusb@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # graphlcd
 #
-$(DEPDIR)/graphlcd.do_prepare: graphlcd-base-touchcol.tar.bz2 bootstrap libusb @DEPENDS_graphlcd@
+$(DEPDIR)/graphlcd.do_prepare: bootstrap libusb @DEPENDS_graphlcd@
 	@PREPARE_graphlcd@
 	touch $@
 
@@ -1925,12 +1925,7 @@ $(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
 	cd @DIR_graphlcd@ && \
 		@INSTALL_graphlcd@
 #	@DISTCLEANUP_graphlcd@
-	@[ "x$*" = "x" ] && touch $@ || true
-
-graphlcd-base-touchcol.tar.bz2:
-	if [ -d $(archivedir)/graphlcd-base-touchcol.tar.bz2 ]; then \
-		rm $(archivedir)/graphlcd-base-touchcol.tar.bz2; \
-	fi
+	[ "x$*" = "x" ] && touch $@ || true
 
 ##############################   LCD4LINUX   ###################################
 
@@ -1961,7 +1956,7 @@ $(DEPDIR)/%libgd2: $(DEPDIR)/libgd2.do_compile
 	cd @DIR_libgd2@ && \
 		@INSTALL_libgd2@
 #	@DISTCLEANUP_libgd2@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libusb2
@@ -1986,7 +1981,7 @@ $(DEPDIR)/%libusb2: $(DEPDIR)/libusb2.do_compile
 	cd @DIR_libusb2@ && \
 		@INSTALL_libusb2@
 #	@DISTCLEANUP_libusb2@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libusbcompat
@@ -2010,7 +2005,7 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 	cd @DIR_libusbcompat@ && \
 		@INSTALL_libusbcompat@
 #	@DISTCLEANUP_libusbcompat@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 ##############################   END EXTERNAL_LCD   #############################
 
@@ -2044,7 +2039,7 @@ $(DEPDIR)/%evebrowser: $(DEPDIR)/evebrowser.do_compile
 		@INSTALL_evebrowser@ && \
 		cp -ar enigma2/HbbTv $(targetprefix)/usr/lib/enigma2/python/Plugins/SystemPlugins/
 #	@DISTCLEANUP_evebrowser@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # brofs
@@ -2066,7 +2061,7 @@ $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
 	cd @DIR_brofs@ && \
 		@INSTALL_brofs@
 #	@DISTCLEANUP_brofs@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libcap
@@ -2106,7 +2101,7 @@ $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 		LIBATTR=no \
 		CC=sh4-linux-gcc
 #	@DISTCLEANUP_libcap@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # alsa-lib
@@ -2139,7 +2134,7 @@ $(DEPDIR)/%libalsa: $(DEPDIR)/libalsa.do_compile
 	cd @DIR_libalsa@ && \
 		@INSTALL_libalsa@
 #	@DISTCLEANUP_libalsa@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # rtmpdump
@@ -2163,7 +2158,7 @@ $(DEPDIR)/%rtmpdump: $(DEPDIR)/rtmpdump.do_compile
 	cd @DIR_rtmpdump@ && \
 		@INSTALL_rtmpdump@
 #	@DISTCLEANUP_rtmpdump@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdvbsi++
@@ -2193,21 +2188,18 @@ $(DEPDIR)/%libdvbsipp: $(DEPDIR)/libdvbsipp.do_compile
 	cd @DIR_libdvbsipp@ && \
 		@INSTALL_libdvbsipp@
 #	@DISTCLEANUP_libdvbsipp@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
-# libtuxtxt
+# tuxtxtlib
 #
-$(DEPDIR)/libtuxtxt.do_prepare: @DEPENDS_libtuxtxt@
-	rm -rf $(buildprefix)/tuxtxt && \
-	git clone git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt;
-	cd @DIR_libtuxtxt@ && \
-	patch -p1 < $(buildprefix)/Patches/libtuxtxt-1.0-fix_dbox_headers.diff
+$(DEPDIR)/tuxtxtlib.do_prepare: bootstrap @DEPENDS_tuxtxtlib@
+	@PREPARE_tuxtxtlib@
 	touch $@
 
-$(DEPDIR)/libtuxtxt.do_compile: $(DEPDIR)/libtuxtxt.do_prepare
+$(DEPDIR)/tuxtxtlib.do_compile: $(DEPDIR)/tuxtxtlib.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
-	cd @DIR_libtuxtxt@ && \
+	cd @DIR_tuxtxtlib@ && \
 	aclocal -I $(hostprefix)/share/aclocal && \
 	autoheader && \
 	autoconf && \
@@ -2224,20 +2216,19 @@ $(DEPDIR)/libtuxtxt.do_compile: $(DEPDIR)/libtuxtxt.do_prepare
 	$(MAKE) all
 	touch $@
 
-$(DEPDIR)/min-libtuxtxt $(DEPDIR)/std-libtuxtxt $(DEPDIR)/max-libtuxtxt \
-$(DEPDIR)/libtuxtxt: \
-$(DEPDIR)/%libtuxtxt: $(DEPDIR)/libtuxtxt.do_compile
-	cd @DIR_libtuxtxt@ && \
-		@INSTALL_libtuxtxt@
-#	@DISTCLEANUP_libtuxtxt@
-	@[ "x$*" = "x" ] && touch $@ || true
+$(DEPDIR)/min-tuxtxtlib $(DEPDIR)/std-tuxtxtlib $(DEPDIR)/max-tuxtxtlib \
+$(DEPDIR)/tuxtxtlib: \
+$(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
+	cd @DIR_tuxtxtlib@ && \
+		@INSTALL_tuxtxtlib@
+#	@DISTCLEANUP_tuxtxtlib@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # tuxtxt32bpp
 #
-$(DEPDIR)/tuxtxt32bpp.do_prepare: libtuxtxt @DEPENDS_tuxtxt32bpp@
-	cd @DIR_tuxtxt32bpp@ && \
-		patch -p1 < $(buildprefix)/Patches/tuxtxt32bpp-1.0-fix_dbox_headers.diff;
+$(DEPDIR)/tuxtxt32bpp.do_prepare: tuxtxtlib @DEPENDS_tuxtxt32bpp@
+	@PREPARE_tuxtxt32bpp@
 	touch $@
 
 $(DEPDIR)/tuxtxt32bpp.do_compile: $(DEPDIR)/tuxtxt32bpp.do_prepare
@@ -2265,7 +2256,7 @@ $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
 	cd @DIR_tuxtxt32bpp@ && \
 		@INSTALL_tuxtxt32bpp@
 #	@DISTCLEANUP_tuxtxt32bpp@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdreamdvd
@@ -2295,7 +2286,7 @@ $(DEPDIR)/%libdreamdvd: $(DEPDIR)/libdreamdvd.do_compile
 	cd @DIR_libdreamdvd@ && \
 		@INSTALL_libdreamdvd@
 #	@DISTCLEANUP_libdreamdvd@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdreamdvd2
@@ -2328,4 +2319,4 @@ $(DEPDIR)/%libdreamdvd2: $(DEPDIR)/libdreamdvd2.do_compile
 	cd @DIR_libdreamdvd2@ && \
 		@INSTALL_libdreamdvd2@
 #	@DISTCLEANUP_libdreamdvd2@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
