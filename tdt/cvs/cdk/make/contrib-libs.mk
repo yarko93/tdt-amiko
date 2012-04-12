@@ -1649,8 +1649,8 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 	cd @DIR_gstreamer@ && \
 		@INSTALL_gstreamer@
 #	@DISTCLEANUP_gstreamer@
-	@[ "x$*" = "x" ] && touch $@ || true
-	TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
 # GST-PLUGINS-BASE
