@@ -1698,6 +1698,7 @@ $(DEPDIR)/gst_plugins_good.do_compile: $(DEPDIR)/gst_plugins_good.do_prepare
 		--prefix=/usr \
 		--disable-esd \
 		--disable-esdtest \
+		--aalib \
 		--disable-shout2 \
 		--disable-shout2test \
 		--disable-x \
@@ -1726,6 +1727,7 @@ $(DEPDIR)/gst_plugins_bad.do_compile: $(DEPDIR)/gst_plugins_bad.do_prepare
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
+		--disable-sdl \
 		ac_cv_openssldir=no \
 		--with-check=no
 	touch $@
