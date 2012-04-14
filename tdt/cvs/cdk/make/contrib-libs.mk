@@ -1729,7 +1729,8 @@ $(DEPDIR)/gst_plugins_bad.do_compile: $(DEPDIR)/gst_plugins_bad.do_prepare
 		--prefix=/usr \
 		--disable-sdl \
 		ac_cv_openssldir=no \
-		--with-check=no
+		--with-check=no \
+		--disable-sdl
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_bad $(DEPDIR)/std-gst_plugins_bad $(DEPDIR)/max-gst_plugins_bad \
