@@ -1698,7 +1698,7 @@ $(DEPDIR)/gst_plugins_good.do_compile: $(DEPDIR)/gst_plugins_good.do_prepare
 		--prefix=/usr \
 		--disable-esd \
 		--disable-esdtest \
-		--aalib \
+		--disable-aalib \
 		--disable-shout2 \
 		--disable-shout2test \
 		--disable-x \

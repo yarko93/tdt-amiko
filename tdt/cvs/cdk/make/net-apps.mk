@@ -60,7 +60,7 @@ $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
 	cd @DIR_vsftpd@ && \
 		@INSTALL_vsftpd@
 		cp $(buildprefix)/root/etc/vsftpd.conf $(targetprefix)/etc
-#	@DISTCLEANUP_vsftpd@
+#	@DISTCLEANUP_ethtool@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
