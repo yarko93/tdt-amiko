@@ -90,14 +90,26 @@ if [ `which arch > /dev/null 2>&1 && arch || uname -m` == x86_64 ]; then
 	# we might need to install more 32bit versions of some packages
 	PACKAGES="$PACKAGES \
 	${UBUNTU:+gcc-multilib}         ${SUSE:+gcc-32bit}           ${FEDORA:+libstdc++-devel.i686} \
-	${UBUNTU:+g++-multilib}                                      ${FEDORA:+glibc-devel.i686} \
-	${UBUNTU:+lib32ncurses5-dev}                                 ${FEDORA:+libgcc.i686} \
-	${UBUNTU:+lib32z1-dev}                                       ${FEDORA:+ncurses-devel.i686} \
-	${UBUNTU:+libc6-dev-i386} \
+	${UBUNTU:+libc6-dev-i386}                                    ${FEDORA:+glibc-devel.i686} \
+	${UBUNTU:+lib32z1-dev}                                       ${FEDORA:+libgcc.i686} \
+	                                                             ${FEDORA:+ncurses-devel.i686} \
 	";
 fi
-
 $INSTALL $PACKAGES
+
+#Is this also necessary for other dists?
+DEBIAN_VERSION=`cat /etc/debian_version`
+if [ $DEBIAN_VERSION == "wheezy/sid" ]; then
+	if [ `which arch > /dev/null 2>&1 && arch || uname -m` == x86_64 ]; then
+		ln -s /usr/include/x86_64-linux-gnu/bits /usr/include/bits
+		ln -s /usr/include/x86_64-linux-gnu/gnu /usr/include/gnu
+		ln -s /usr/include/x86_64-linux-gnu/sys /usr/include/sys
+	else
+		ln -s /usr/include/i386-linux-gnu/bits /usr/include/bits
+		ln -s /usr/include/i386-linux-gnu/gnu /usr/include/gnu
+		ln -s /usr/include/i386-linux-gnu/sys /usr/include/sys
+	fi
+fi
 
 # Link sh to bash instead of dash on Ubuntu (and possibly others)
 /bin/sh --version 2>/dev/null | grep bash -s -q
