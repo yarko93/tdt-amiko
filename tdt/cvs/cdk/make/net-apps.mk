@@ -103,13 +103,46 @@ $(DEPDIR)/samba.do_compile: bootstrap $(DEPDIR)/samba.do_prepare
 		cd source3 && \
 		./autogen.sh && \
 		$(BUILDENV) \
+		libreplace_cv_HAVE_GETADDRINFO=no \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= \
 			--exec-prefix=/usr \
-			--with-automount \
-			--with-smbmount \
+			--disable-pie \
+			--disable-avahi \
+			--disable-cups \
+			--disable-relro \
+			--disable-swat \
+			--disable-shared-libs \
+			--disable-socket-wrapper \
+			--disable-nss-wrapper \
+			--disable-smbtorture4 \
+			--disable-fam \
+			--disable-iprint \
+			--disable-dnssd \
+			--disable-pthreadpool \
+			--disable-dmalloc \
+			--with-included-iniparser \
+			--with-included-popt \
+			--with-sendfile-support \
+			--without-aio-support \
+			--without-cluster-support \
+			--without-ads \
+			--without-krb5 \
+			--without-dnsupdate \
+			--without-automount \
+			--without-ldap \
+			--without-pam \
+			--without-pam_smbpass \
+			--without-winbind \
+			--without-wbclient \
+			--without-syslog \
+			--without-nisplus-home \
+			--without-quotas \
+			--without-sys-quotas \
+			--without-utmp \
+			--without-acl-support \
 			--with-configdir=/etc/samba \
 			--with-privatedir=/etc/samba/private \
 			--with-mandir=/usr/share/man \
@@ -125,7 +158,7 @@ define samba/install
 	cd @DIR_samba@ && \
 		cd source3 && \
 		$(MAKE) $(MAKE_OPTS) installservers installbin installcifsmount installman installscripts installdat installmodules \
-			SBIN_PROGS="bin/smbd bin/nmbd bin/winbindd" DESTDIR=$(prefix)/$*cdkroot/ prefix=./. && \
+			SBIN_PROGS="bin/smbd bin/nmbd" DESTDIR=$(prefix)/$*cdkroot/ prefix=./. && \
 		$(INSTALL) -d $(prefix)/$*cdkroot/etc/samba && \
 		$(INSTALL) -c -m644 ../examples/smb.conf.default $(prefix)/$*cdkroot/etc/samba/smb.conf
 #		$(MAKE) $(MAKE_OPTS) install DESTDIR=$(prefix)/$*cdkroot/ prefix=./.
