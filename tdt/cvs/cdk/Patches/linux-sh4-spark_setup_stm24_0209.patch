@@ -397,14 +397,3 @@
  	/* Clear the interrupt by writing a logic 1 to the CSR5[15-0] */
  	writel((intr_status & 0x1ffff), ioaddr + DMA_STATUS);
 
-*** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/net/stmmac/stmmac_main.c	2011-12-27 11:58:10.718838549 +0100
---- linux-sh4/drivers/net/stmmac/stmmac_main.c	2011-12-27 11:58:45.139009163 +0100
-@@ -964,7 +964,7 @@
- 	memset(&priv->xstats, 0, sizeof(struct stmmac_extra_stats));
- 	priv->xstats.threshold = tc;
- 
--	if (priv->dma_cap.rmon)
-+	// if (priv->dma_cap.rmon)
- 		stmmac_mmc_setup(priv);
- 
- 	/* Start the ball rolling... */
