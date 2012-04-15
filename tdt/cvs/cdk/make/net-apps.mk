@@ -151,7 +151,8 @@ $(DEPDIR)/samba.do_compile: bootstrap $(DEPDIR)/samba.do_prepare
 			--with-lockdir=/var/lock \
 			--with-swatdir=/usr/share/swat \
 			--disable-cups && \
-		$(MAKE) $(MAKE_OPTS)
+		$(MAKE) $(MAKE_OPTS) && \
+		$(target)-strip -s bin/smbd && $(target)-strip -s bin/nmbd
 	touch $@
 
 define samba/install
