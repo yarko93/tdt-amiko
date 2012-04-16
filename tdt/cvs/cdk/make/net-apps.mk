@@ -151,20 +151,23 @@ $(DEPDIR)/samba.do_compile: bootstrap $(DEPDIR)/samba.do_prepare
 			--with-lockdir=/var/lock \
 			--with-swatdir=/usr/share/swat \
 			--disable-cups && \
-		$(MAKE) $(MAKE_OPTS) && \
-		$(target)-strip -s bin/smbd && $(target)-strip -s bin/nmbd
+		$(MAKE) $(MAKE_OPTS)
 	touch $@
+
 $(DEPDIR)/min-samba $(DEPDIR)/std-samba $(DEPDIR)/max-samba \
 $(DEPDIR)/samba: \
 $(DEPDIR)/%samba: $(DEPDIR)/samba.do_compile
 	cd @DIR_samba@ && \
 		cd source3 && \
-		$(MAKE) $(MAKE_OPTS) installbin installscripts \
-			SBIN_PROGS="bin/smbd bin/nmbd" DESTDIR=$(prefix)/$*cdkroot/ prefix=./. && \
 		$(INSTALL) -d $(prefix)/$*cdkroot/etc/samba && \
-		$(INSTALL) -c -m644 ../examples/smb.conf.default $(prefix)/$*cdkroot/etc/samba/smb.conf
-	@TUXBOX_TOUCH@
+		$(INSTALL) -c -m644 ../examples/smb.conf.spark $(prefix)/$*cdkroot/etc/samba/smb.conf && \
+		$(INSTALL) -d $(prefix)/$*cdkroot/etc/init.d && \
+		$(INSTALL) -c -m755 ../examples/samba.spark $(prefix)/$*cdkroot/etc/init.d/samba && \
+		@INSTALL_samba@
+#	@DISTCLEANUP_samba@
+	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
+
 #
 # NETIO
 #
@@ -184,7 +187,8 @@ $(DEPDIR)/%netio: $(DEPDIR)/netio.do_compile
 	cd @DIR_netio@ && \
 		$(INSTALL) -d $(prefix)/$*cdkroot/usr/bin && \
 		@INSTALL_netio@
-	@TUXBOX_TOUCH@
+#	@DISTCLEANUP_netio@
+	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 #

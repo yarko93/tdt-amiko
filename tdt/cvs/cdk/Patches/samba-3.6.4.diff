@@ -152,3 +152,93 @@
  		}
  	}
  
+--- samba-3.6.4/examples/smb.conf.spark.org	1970-01-01 03:00:00.000000000 +0300
++++ samba-3.6.4/examples/smb.conf.spark	2012-04-15 23:17:27.080703963 +0300
+@@ -0,0 +1,30 @@
++[global] 
++workgroup = WORKGRUP 
++netbios name = Receiver
++security = share 
++deadtime = 15 
++max smbd processes = 6
++max log size = 5
++guest account = root
++load printers = no
++show add printer wizard = no
++printcap name = /dev/null
++disable spoolss = yes
++max protocol = SMB2
++
++# [root] 
++# path = / 
++# read only = no 
++# guest ok = yes
++# browseable = yes
++# create mask = 0777
++# directory mask = 0777
++
++[hdd]
++path = /hdd
++read only = no
++guest ok = yes
++browseable = yes
++create mask = 0777
++directory mask = 0777
++
+--- samba-3.6.4/examples/samba.spark.org	1970-01-01 03:00:00.000000000 +0300
++++ samba-3.6.4/examples/samba.spark	2012-04-17 00:00:58.790815510 +0300
+@@ -0,0 +1,54 @@
++#! /bin/sh 
++#
++# This is an init script for openembedded
++# Copy it to /etc/init.d/samba and type
++# > update-rc.d samba defaults 60
++#
++
++smbd=/usr/sbin/smbd
++test -x "$smbd" || exit 0
++nmbd=/usr/sbin/nmbd
++test -x "$nmbd" || exit 0
++test -f "/etc/samba/smb.conf" || exit 0
++
++case "$1" in
++  start)
++    echo -n "Starting Samba: smbd"
++    start-stop-daemon --start --quiet --exec $smbd
++    echo -n " nmbd"
++    start-stop-daemon --start --quiet --exec $nmbd
++    echo "."
++    ;;
++  stop)
++    echo -n "Stopping Samba: smbd"
++    start-stop-daemon --stop --quiet --pidfile /var/run/smbd.pid
++    echo -n " nmbd"
++    start-stop-daemon --stop --quiet --pidfile /var/run/nmbd.pid
++    echo "."
++    ;;
++  restart)
++    echo -n "Stopping Samba: smbd"
++    start-stop-daemon --stop --quiet --pidfile /var/run/smbd.pid
++    echo -n " nmbd"
++    start-stop-daemon --stop --quiet --pidfile /var/run/nmbd.pid
++    echo ""
++    echo -n "Waiting for samba processes to die off"
++    for i in 1 2 3 ;
++    do
++        sleep 1
++        echo -n "."
++    done
++    echo ""
++    echo -n "Starting Samba: smbd"
++    start-stop-daemon --start --quiet --exec $smbd
++    echo -n " nmbd"
++    start-stop-daemon --start --quiet --exec $nmbd
++    echo "."
++    ;;
++  *)
++    echo "Usage: /etc/init.d/samba {start|stop|restart}"
++    exit 1
++esac
++
++exit 0
++

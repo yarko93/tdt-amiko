@@ -1548,3 +1548,16 @@ endif
 		cp -f $(targetprefix)/etc/graphlcd.conf $(prefix)/release/etc/graphlcd.conf; \
 	fi
 
+#
+# SAMBA
+#
+	if [ -e $(targetprefix)/usr/sbin/smbd ]; then \
+		cp -p $(targetprefix)/usr/sbin/smbd $(prefix)/release/usr/sbin/; \
+		cp -p $(targetprefix)/usr/sbin/nmbd $(prefix)/release/usr/sbin/; \
+		mkdir -p $(prefix)/release/etc/samba; \
+		mkdir -p $(prefix)/release/etc/samba/private; \
+		cp -p $(targetprefix)/etc/samba/smb.conf $(prefix)/release/etc/samba/; \
+		cp -p $(targetprefix)/etc/init.d/samba $(prefix)/release/etc/init.d/; \
+		chmod 755 $(prefix)/release/etc/init.d/samba; \
+	fi
+
