@@ -86,6 +86,7 @@ host-filesystem:
 	$(INSTALL) -d $(devkitprefix)/sources/kernel
 	$(INSTALL) -d $(hostprefix)
 	$(INSTALL) -d $(hostprefix)/{bin,doc,etc,include,info,lib,man,share,var}
+	ln -s /$(hostprefix)/lib $(hostprefix)/lib64
 	$(INSTALL) -d $(hostprefix)/man/man{1,2,3,4,5,6,7,8,9}
 	touch .deps/$@
 
@@ -450,6 +451,7 @@ cross-sh4-filesystem:
 	$(INSTALL) -d $(targetprefix)
 	$(INSTALL) -d $(crossprefix)
 	$(INSTALL) -d $(crossprefix)/{bin,doc,etc,include,lib,man,sh4-linux,share,var}
+	ln -s /$(crossprefix)/lib $(crossprefix)/lib64
 	$(INSTALL) -d $(crossprefix)/man/man{1,2,3,4,5,6,7,8,9}
 	$(INSTALL) -d $(crossprefix)/sh4-linux/{bin,include,lib}
 	touch .deps/$@
