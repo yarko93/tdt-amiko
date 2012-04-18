@@ -8,10 +8,9 @@ TMPKERNELDIR=$4
 
 cp -a $RELEASEDIR/* $TMPROOTDIR
 
-# --- BOOT ---
-mv $TMPROOTDIR/boot/uImage $TMPKERNELDIR/uImage
-
-# --- ROOT ---
 cd $TMPROOTDIR/dev/
 $TMPROOTDIR/etc/init.d/makedev start
 cd -
+
+# --- BOOT ---
+mv $TMPROOTDIR/boot/uImage $TMPKERNELDIR/uImage
