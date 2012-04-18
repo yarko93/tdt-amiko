@@ -49,7 +49,6 @@ $(DEPDIR)/%release_vdrdev2:
 	cp -dp $(targetprefix)/usr/bin/rdate $(prefix)/release_vdrdev2/sbin/ && \
 	cp -dp $(targetprefix)/etc/init.d/portmap $(prefix)/release_vdrdev2/etc/init.d/ && \
 	cp -dp $(buildprefix)/root/etc/init.d/udhcpc $(prefix)/release_vdrdev2/etc/init.d/ && \
-cp -dp $(targetprefix)/sbin/MAKEDEV$(if $(TF7700),_dual_tuner)$(if $(FORTIS_HDBOX),_dual_tuner)$(if $(ATEVIO7500),_dual_tuner)$(if $(ADB_BOX),_dual_tuner)$(if $(CUBEREVO),_dual_tuner)$(if $(CUBEREVO_9500HD),_dual_tuner)$(if $(UFS922),_dual_tuner)$(if $(CUBEREVO_MINI_FTA),_no_CI)$(if $(CUBEREVO_250HD),_no_CI)$(if $(CUBEREVO_2000HD),_no_CI)$(if $(SPARK),_no_CI)$(if $(SPARK7162),_twin_no_ci) $(prefix)/release_vdrdev2/sbin/MAKEDEV && \
 	cp -dp $(targetprefix)/usr/bin/grep $(prefix)/release_vdrdev2/bin/ && \
 	cp -dp $(targetprefix)/usr/bin/egrep $(prefix)/release_vdrdev2/bin/ && \
 	cp $(targetprefix)/boot/video_7100.elf $(prefix)/release_vdrdev2/boot/video.elf && \
