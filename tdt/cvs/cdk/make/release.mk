@@ -1159,7 +1159,10 @@ else
 if ENABLE_ATEVIO7500
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/multituner/*.ko $(prefix)/release/lib/modules/
 else
+if ENABLE_SPARK7162
+else
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/*.ko $(prefix)/release/lib/modules/
+endif
 endif
 endif
 endif
