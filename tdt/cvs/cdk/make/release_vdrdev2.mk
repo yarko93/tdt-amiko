@@ -101,6 +101,7 @@ $(DEPDIR)/%release_vdrdev2:
 	mkdir -p $(prefix)/release_vdrdev2/usr/local/share/vdr/themes && \
 	mkdir -p $(prefix)/release_vdrdev2/usr/local/bin && \
 	mkdir -p $(prefix)/release_vdrdev2/usr/lib/locale && \
+	cp -f $(targetprefix)/etc/init.d/makedev $(prefix)/release_vdrdev2/etc/init.d/ && \
 	cp $(buildprefix)/root/var/vdr/plugins_vdrdev2.load $(prefix)/release_vdrdev2/usr/local/share/vdr/plugins.load && \
 	cp $(buildprefix)/root/var/vdr/channels.conf $(prefix)/release_vdrdev2/usr/local/share/vdr/ && \
 	cp $(buildprefix)/root/var/vdr/diseqc.conf $(prefix)/release_vdrdev2/usr/local/share/vdr/ && \
@@ -463,6 +464,9 @@ if ENABLE_SPARK
 #	install autofs
 	cp -f $(targetprefix)/usr/sbin/automount $(prefix)/release_vdrdev2/usr/sbin/
 	cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release_vdrdev2/etc/
+	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release_vdrdev2/sbin
+	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release_vdrdev2/sbin
+	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release_vdrdev2/etc/lircd.conf
 
 	mv $(prefix)/release_vdrdev2/lib/firmware/component_7111_mb618.fw $(prefix)/release_vdrdev2/lib/firmware/component.fw
 	rm $(prefix)/release_vdrdev2/lib/firmware/component_7105_pdk7105.fw

@@ -2,20 +2,20 @@
 CURDIR=`pwd`
 BASEDIR=$CURDIR/../..
 TUFSBOXDIR=$BASEDIR/tufsbox
-RELASEDIR=$BASEDIR/relase
-SCRIPTDIR=$CURDIR/scripts
-TMPDIR=$CURDIR/tmp
-TMPFWDIR=$TMPDIR/ROOT
-TMPBOOTDIR=$TMPFWDIR/boot
-NFSDIR=/nfs
-TARGET=$NFSDIR/target
-OUTDIR=$CURDIR/out
+#RELASEDIR=$BASEDIR/relase
+#SCRIPTDIR=$CURDIR/scripts
+#TMPDIR=$CURDIR/tmp
+#TMPFWDIR=$TMPDIR/ROOT
+#TMPBOOTDIR=$TMPFWDIR/boot
+#NFSDIR=/nfs
+#TARGET=$NFSDIR/target
+#OUTDIR=$CURDIR/out
 
-if [  -e $TMPDIR ]; then
-  rm -rf $TMPDIR/*
-else
-  mkdir $TMPDIR
-fi
+#if [  -e $TMPDIR ]; then
+#  rm -rf $TMPDIR/*
+#else
+#  mkdir $TMPDIR
+#fi
 
 mkdir $TMPFWDIR
 echo "CURDIR       = $CURDIR"
