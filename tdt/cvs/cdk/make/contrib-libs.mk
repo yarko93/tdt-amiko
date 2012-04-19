@@ -939,6 +939,7 @@ $(DEPDIR)/libass.do_compile: $(DEPDIR)/libass.do_prepare
 	./configure \
 		--host=$(target) \
 		--disable-fontconfig \
+		--disable-enca \
 		--prefix=/usr
 	touch $@
 
