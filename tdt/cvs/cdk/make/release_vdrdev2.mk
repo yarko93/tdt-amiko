@@ -101,7 +101,8 @@ $(DEPDIR)/%release_vdrdev2:
 	mkdir -p $(prefix)/release_vdrdev2/usr/local/share/vdr/themes && \
 	mkdir -p $(prefix)/release_vdrdev2/usr/local/bin && \
 	mkdir -p $(prefix)/release_vdrdev2/usr/lib/locale && \
-	cp -f $(targetprefix)/etc/init.d/makedev $(prefix)/release_vdrdev2/etc/init.d/ && \
+	cp -dp $(targetprefix)/sbin/MAKEDEV $(prefix)/release_vdrdev2/sbin/MAKEDEV && \
+	cp -f $(buildprefix)/root/release/makedev $(prefix)/release_vdrdev2/etc/init.d/ && \
 	cp $(buildprefix)/root/var/vdr/plugins_vdrdev2.load $(prefix)/release_vdrdev2/usr/local/share/vdr/plugins.load && \
 	cp $(buildprefix)/root/var/vdr/channels.conf $(prefix)/release_vdrdev2/usr/local/share/vdr/ && \
 	cp $(buildprefix)/root/var/vdr/diseqc.conf $(prefix)/release_vdrdev2/usr/local/share/vdr/ && \
