@@ -90,6 +90,8 @@ start()
   ${MAKEDEV} mme bpamem
   ${MAKEDEV} vfd
   ${MAKEDEV} rc
+  ${MAKEDEV} avs
+  ${MAKEDEV} fuse
   ${MAKEDEV} hdmi
   if [ ${HDMI_CEC} == "TRUE" ]; then
     ${MAKEDEV} hdmi_cec

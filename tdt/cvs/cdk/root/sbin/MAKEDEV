@@ -37,6 +37,8 @@ readable="  root root   0444"
  bpamem="  root root   0644"
 ramzswap="  root root   0644"
      rc="  root root   0644"
+    avs="  root root   0644"
+   fuse="  root root   0644"
     vfd="  root root   0644"
    hdmi="  root root   0644"
 hdmi_cec="  root root   0644"
@@ -304,6 +306,8 @@ cvt () {
 			tundev) echo tundev ;;
 			rc) echo rc ;;
 			vfd) echo vfd ;;
+			avs) echo avs ;;
+			fuse) echo fuse ;;
 			hdmi) echo hdmi ;;
 			hdmi_cec) echo hdmi_cec ;;
 			sci) echo sci ;;
@@ -533,6 +537,8 @@ do
 		$0 $opts bpamem
 		$0 $opts ramzswap
 		$0 $opts rc
+		$0 $opts avs
+		$0 $opts fuse
 		$0 $opts vfd
 		$0 $opts hdmi
 		$0 $opts hdmi_cec
@@ -1964,6 +1970,12 @@ do
 		;;
 	rc)
 		makedev rc c 147 1 $rc
+		;;
+	avs)
+		makedev avs c 221 0 $avs
+		;;
+	fuse)
+		makedev fuse c 10 229 $fuse
 		;;
 	vfd)
 		makedev vfd c 147 0 $vfd
