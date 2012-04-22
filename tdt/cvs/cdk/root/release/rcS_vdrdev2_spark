@@ -4,16 +4,13 @@ MODDIR=/lib/modules
 echo "init frontpanel"
 insmod $MODDIR/aotom.ko
 insmod $MODDIR/simu_button.ko
-#insmod $MODDIR/encrypt.ko
+
 
 if [ -e /var/etc/.firstboot ]; then
    echo "WAIT 1 min" >/dev/vfd
    echo "WAIT 1 min"
    rm /var/etc/.firstboot
-   touch /dev/.devfsd
-   touch /dev/.udev
-   mkdir /dev/pts
-   mkdir /dev/shm
+   /etc/init.d/makedev start
 fi
 echo "AR-P" > /dev/vfd
 /etc/init.d/mountvirtfs start
