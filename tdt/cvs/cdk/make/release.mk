@@ -169,7 +169,7 @@ release_ufs912:
 	rm $(prefix)/release/lib/firmware/component_7105_pdk7105.fw
 
 release_spark:
-	echo "Amiko" > $(prefix)/release/etc/hostname
+	echo "spark" > $(prefix)/release/etc/hostname
 	rm -f $(prefix)/release/sbin/halt
 	cp $(buildprefix)/root/release/halt_spark $(prefix)/release/etc/init.d/halt
 	chmod 777 $(prefix)/release/etc/init.d/halt
@@ -255,7 +255,7 @@ endif
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname
 	rm -f $(prefix)/release/sbin/halt
-	cp $(buildprefix)/root/release/halt_spark $(prefix)/release/etc/init.d/halt
+	cp $(buildprefix)/root/release/halt_spark7162 $(prefix)/release/etc/init.d/halt
 	chmod 777 $(prefix)/release/etc/init.d/halt
 	mkdir -p $(prefix)/release/etc/opkg
 	mkdir -p $(prefix)/release/usr/lib/locale
