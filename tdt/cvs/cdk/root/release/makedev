@@ -2,7 +2,7 @@
 
 start()
 {
-  echo "Starting makedev" >/dev/vfd
+  echo "mdev" >/dev/vfd
   # Check if started on target or on host
   MACHINE=`uname -m`
   if [ $MACHINE == "sh4" ]; then
