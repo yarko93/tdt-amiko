@@ -26,6 +26,7 @@ $(DEPDIR)/%release_vdrdev2:
 	$(INSTALL_DIR) $(prefix)/release_vdrdev2/ram && \
 	$(INSTALL_DIR) $(prefix)/release_vdrdev2/var && \
 	$(INSTALL_DIR) $(prefix)/release_vdrdev2/var/etc && \
+	$(INSTALL_DIR) $(prefix)/release_vdrdev2/var/run/lirc && \
 	export CROSS_COMPILE=$(target)- && \
 		$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/release_vdrdev2 && \
 	touch $(prefix)/release_vdrdev2/var/etc/.firstboot && \
