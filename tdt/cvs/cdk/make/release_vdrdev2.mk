@@ -437,7 +437,7 @@ if ENABLE_SPARK
 	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdrdev2/etc/init.d/
 	cp $(buildprefix)/root/release/rc $(prefix)/release_vdrdev2/etc/init.d/
 	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdrdev2/etc/init.d/
-	cp $(buildprefix)/root/release/halt_ufs912 $(prefix)/release_vdrdev2/etc/init.d/halt
+	cp $(buildprefix)/root/release/halt_spark $(prefix)/release_vdrdev2/etc/init.d/halt
 	chmod 755 $(prefix)/release_vdrdev2/etc/init.d/umountfs
 	chmod 755 $(prefix)/release_vdrdev2/etc/init.d/rc
 	chmod 755 $(prefix)/release_vdrdev2/etc/init.d/sendsigs
@@ -468,9 +468,59 @@ if ENABLE_SPARK
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release_vdrdev2/sbin
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release_vdrdev2/sbin
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release_vdrdev2/etc/lircd.conf
-
+	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release_vdrdev2/usr/bin/
 	mv $(prefix)/release_vdrdev2/lib/firmware/component_7111_mb618.fw $(prefix)/release_vdrdev2/lib/firmware/component.fw
 	rm $(prefix)/release_vdrdev2/lib/firmware/component_7105_pdk7105.fw
+
+	rm -f $(prefix)/release_vdrdev2/lib/firmware/dvb-fe-avl2108.fw
+	rm -f $(prefix)/release_vdrdev2/lib/firmware/dvb-fe-stv6306.fw
+	rm -f $(prefix)/release_vdrdev2/lib/firmware/dvb-fe-cx24116.fw
+	rm -f $(prefix)/release_vdrdev2/lib/firmware/dvb-fe-cx21143.fw
+	rm -f $(prefix)/release_vdrdev2/bin/evremote
+	rm -f $(prefix)/release_vdrdev2/bin/gotosleep
+
+else
+if ENABLE_SPARK7162
+	echo "spark7162" > $(prefix)/release_vdrdev2/etc/hostname
+	rm -f $(prefix)/release_vdrdev2/sbin/halt
+	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdrdev2/sbin/
+	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdrdev2/etc/init.d/
+	cp $(buildprefix)/root/release/rc $(prefix)/release_vdrdev2/etc/init.d/
+	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdrdev2/etc/init.d/
+	cp $(buildprefix)/root/release/halt_spark7162 $(prefix)/release_vdrdev2/etc/init.d/halt
+	chmod 755 $(prefix)/release_vdrdev2/etc/init.d/umountfs
+	chmod 755 $(prefix)/release_vdrdev2/etc/init.d/rc
+	chmod 755 $(prefix)/release_vdrdev2/etc/init.d/sendsigs
+	chmod 755 $(prefix)/release_vdrdev2/etc/init.d/halt
+	mkdir -p $(prefix)/release_vdrdev2/etc/rc.d/rc0.d
+	ln -s ../init.d $(prefix)/release_vdrdev2/etc/rc.d
+	ln -fs halt $(prefix)/release_vdrdev2/sbin/reboot
+	ln -fs halt $(prefix)/release_vdrdev2/sbin/poweroff
+	ln -s ../init.d/sendsigs $(prefix)/release_vdrdev2/etc/rc.d/rc0.d/S20sendsigs
+	ln -s ../init.d/umountfs $(prefix)/release_vdrdev2/etc/rc.d/rc0.d/S40umountfs
+	ln -s ../init.d/halt $(prefix)/release_vdrdev2/etc/rc.d/rc0.d/S90halt
+	mkdir -p $(prefix)/release_vdrdev2/etc/rc.d/rc6.d
+	ln -s ../init.d/sendsigs $(prefix)/release_vdrdev2/etc/rc.d/rc6.d/S20sendsigs
+	ln -s ../init.d/umountfs $(prefix)/release_vdrdev2/etc/rc.d/rc6.d/S40umountfs
+	ln -s ../init.d/reboot $(prefix)/release_vdrdev2/etc/rc.d/rc6.d/S90reboot
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/aotom/aotom.ko $(prefix)/release_vdrdev2/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release_vdrdev2/lib/modules/
+	cp $(targetprefix)/boot/video_7105.elf $(prefix)/release_vdrdev2/boot/video.elf
+	cp $(targetprefix)/boot/audio_7105.elf $(prefix)/release_vdrdev2/boot/audio.elf
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt2870sta/rt2870sta.ko $(prefix)/release_vdrdev2/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt3070sta/rt3070sta.ko $(prefix)/release_vdrdev2/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu/8192cu.ko $(prefix)/release_vdrdev2/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko $(prefix)/release_vdrdev2/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt5370sta/rt5370sta.ko $(prefix)/release_vdrdev2/lib/modules/
+#	install autofs
+	cp -f $(targetprefix)/usr/sbin/automount $(prefix)/release_vdrdev2/usr/sbin/
+	cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release_vdrdev2/etc/
+	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release_vdrdev2/sbin
+	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release_vdrdev2/sbin
+	cp -dp $(buildprefix)/root/etc/lircd_spark7162.conf $(prefix)/release_vdrdev2/etc/lircd.conf
+	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release_vdrdev2/usr/bin/
+	mv $(prefix)/release_vdrdev2/lib/firmware/component_7105_pdk7105.fw $(prefix)/release_vdrdev2/lib/firmware/component.fw
+	rm $(prefix)/release_vdrdev2/lib/firmware/component_7111_mb618.fw
 
 	rm -f $(prefix)/release_vdrdev2/lib/firmware/dvb-fe-avl2108.fw
 	rm -f $(prefix)/release_vdrdev2/lib/firmware/dvb-fe-stv6306.fw
@@ -598,6 +648,7 @@ else
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7100.ko $(prefix)/release_vdrdev2/lib/modules/
 
 	rm -f $(prefix)/release_vdrdev2/lib/firmware/dvb-fe-cx21143.fw
+endif
 endif
 endif
 endif
