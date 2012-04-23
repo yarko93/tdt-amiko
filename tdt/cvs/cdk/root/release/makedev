@@ -6,7 +6,8 @@ start()
   # Check if started on target or on host
   MACHINE=`uname -m`
   if [ $MACHINE == "sh4" ]; then
-    MAKEDEV="/dev/MAKEDEV -p /etc/passwd -g /etc/group"
+   cd /dev
+    MAKEDEV="./MAKEDEV -p /etc/passwd -g /etc/group"
     HOST=`cat /etc/hostname`
   else
     # Expecting to be in /dev
