@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.6.0\n"
 "Report-Msgid-Bugs-To: <vdr-bugs@tvdr.de>\n"
-"POT-Creation-Date: 2011-12-21 22:29+0100\n"
+"POT-Creation-Date: 2012-04-17 00:14+0200\n"
 "PO-Revision-Date: 2008-03-12 18:25+0100\n"
 "Last-Translator: Magnus Andersson <svankan@bahnhof.se>\n"
 "Language-Team: Swedish <vdr@linuxtv.org>\n"
@@ -1261,6 +1261,9 @@ msgstr "Upp/Ner för nya platsen - därefter OK för att flytta"
 
 msgid "Channel locked (recording)!"
 msgstr "Kanalen är låst (inspelning pågår)!"
+
+msgid "ERROR: [recorder.c] video data stream broken"
+msgstr ""
 
 msgid "Low disk space!"
 msgstr "Lågt diskutrymme!"

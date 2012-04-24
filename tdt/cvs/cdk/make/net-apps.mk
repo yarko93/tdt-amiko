@@ -14,7 +14,7 @@ $(DEPDIR)/nfs-utils.do_prepare: @DEPENDS_nfs_utils@
 	touch $@
 
 $(DEPDIR)/nfs-utils.do_compile: bootstrap e2fsprogs $(DEPDIR)/nfs-utils.do_prepare
-	cd @DIR_nfs_utils@  && \
+	cd @DIR_nfs_utils@ && \
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
@@ -27,25 +27,18 @@ $(DEPDIR)/nfs-utils.do_compile: bootstrap e2fsprogs $(DEPDIR)/nfs-utils.do_prepa
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-nfs-utils $(DEPDIR)/std-nfs-utils $(DEPDIR)/max-nfs-utils $(DEPDIR)/ipk-nfs-utils \
+$(DEPDIR)/min-nfs-utils $(DEPDIR)/std-nfs-utils $(DEPDIR)/max-nfs-utils \
 $(DEPDIR)/nfs-utils: \
 $(DEPDIR)/%nfs-utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
 		$(DEPDIR)/nfs-utils.do_compile
-	@[ "x$*" = "xipk-" ] && rm -rf  $(prefix)/$*cdkroot || true
 	$(INSTALL) -d $(prefix)/$*cdkroot/etc/{default,init.d} && \
-	cd @DIR_nfs_utils@  && \
+	cd @DIR_nfs_utils@ && \
 		@INSTALL_nfs_utils@
 	( cd root/etc && for i in $(NFS_UTILS_ADAPTED_ETC_FILES); do \
 		[ -f $$i ] && $(INSTALL) -m644 $$i $(prefix)/$*cdkroot/etc/$$i || true; \
-		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done ) && \
-	[ "x$*" != "xipk-" ] && { \
-		export HHL_CROSS_TARGET_DIR=$(prefix)/$*cdkroot && cd $(prefix)/$*cdkroot/etc/init.d && \
-			for s in nfs-common nfs-kernel-server ; do \
-				$(hostprefix)/bin/target-initdconfig --add $$s || \
-				echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true ; } || true
+		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done )
 #	@DISTCLEANUP_nfs_utils@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@[ "x$*" = "xipk-" ] && make $(prefix)/$*cdkroot/strippy || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
@@ -110,13 +103,46 @@ $(DEPDIR)/samba.do_compile: bootstrap $(DEPDIR)/samba.do_prepare
 		cd source3 && \
 		./autogen.sh && \
 		$(BUILDENV) \
+		libreplace_cv_HAVE_GETADDRINFO=no \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix= \
 			--exec-prefix=/usr \
-			--with-automount \
-			--with-smbmount \
+			--disable-pie \
+			--disable-avahi \
+			--disable-cups \
+			--disable-relro \
+			--disable-swat \
+			--disable-shared-libs \
+			--disable-socket-wrapper \
+			--disable-nss-wrapper \
+			--disable-smbtorture4 \
+			--disable-fam \
+			--disable-iprint \
+			--disable-dnssd \
+			--disable-pthreadpool \
+			--disable-dmalloc \
+			--with-included-iniparser \
+			--with-included-popt \
+			--with-sendfile-support \
+			--without-aio-support \
+			--without-cluster-support \
+			--without-ads \
+			--without-krb5 \
+			--without-dnsupdate \
+			--without-automount \
+			--without-ldap \
+			--without-pam \
+			--without-pam_smbpass \
+			--without-winbind \
+			--without-wbclient \
+			--without-syslog \
+			--without-nisplus-home \
+			--without-quotas \
+			--without-sys-quotas \
+			--without-utmp \
+			--without-acl-support \
 			--with-configdir=/etc/samba \
 			--with-privatedir=/etc/samba/private \
 			--with-mandir=/usr/share/man \
@@ -125,22 +151,23 @@ $(DEPDIR)/samba.do_compile: bootstrap $(DEPDIR)/samba.do_prepare
 			--with-lockdir=/var/lock \
 			--with-swatdir=/usr/share/swat \
 			--disable-cups && \
-		$(MAKE) $(MAKE_OPTS)
+		$(MAKE) $(MAKE_OPTS) && \
+		$(target)-strip -s bin/smbd && $(target)-strip -s bin/nmbd
 	touch $@
 
-define samba/install
+$(DEPDIR)/min-samba $(DEPDIR)/std-samba $(DEPDIR)/max-samba \
+$(DEPDIR)/samba: \
+$(DEPDIR)/%samba: $(DEPDIR)/samba.do_compile
 	cd @DIR_samba@ && \
 		cd source3 && \
-		$(MAKE) $(MAKE_OPTS) installservers installbin installcifsmount installman installscripts installdat installmodules \
-			SBIN_PROGS="bin/smbd bin/nmbd bin/winbindd" DESTDIR=$(prefix)/$*cdkroot/ prefix=./. && \
 		$(INSTALL) -d $(prefix)/$*cdkroot/etc/samba && \
-		$(INSTALL) -c -m644 ../examples/smb.conf.default $(prefix)/$*cdkroot/etc/samba/smb.conf
-#		$(MAKE) $(MAKE_OPTS) install DESTDIR=$(prefix)/$*cdkroot/ prefix=./.
-endef
-
-samba_ADAPTED_FILES = /etc/samba/smb.conf /etc/init.d/samba
-samba_INITD_FILES = samba
-ETC_RW_FILES += samba/smb.conf init.d/samba
+		$(INSTALL) -c -m644 ../examples/smb.conf.spark $(prefix)/$*cdkroot/etc/samba/smb.conf && \
+		$(INSTALL) -d $(prefix)/$*cdkroot/etc/init.d && \
+		$(INSTALL) -c -m755 ../examples/samba.spark $(prefix)/$*cdkroot/etc/init.d/samba && \
+		@INSTALL_samba@
+#	@DISTCLEANUP_samba@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
 # NETIO
@@ -161,7 +188,8 @@ $(DEPDIR)/%netio: $(DEPDIR)/netio.do_compile
 	cd @DIR_netio@ && \
 		$(INSTALL) -d $(prefix)/$*cdkroot/usr/bin && \
 		@INSTALL_netio@
-	@TUXBOX_TOUCH@
+#	@DISTCLEANUP_netio@
+	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 #

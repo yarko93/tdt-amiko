@@ -1,14 +1,8 @@
-/*
- * crc32.h
- *
- *  Created on: Mar 6, 2010
- *      Author: ubuntu
- */
-
 #ifndef CRC32_H_
 #define CRC32_H_
 
+#include <stdint.h>
 
-unsigned long crc32 (unsigned char *data, unsigned int len);
+uint32_t crc32(uint32_t crc, uint8_t *buf, uint32_t size);
 
 #endif /* CRC32_H_ */

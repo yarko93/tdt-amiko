@@ -2,20 +2,20 @@
 CURDIR=`pwd`
 BASEDIR=$CURDIR/../..
 TUFSBOXDIR=$BASEDIR/tufsbox
-RELASEDIR=$BASEDIR/relase
-SCRIPTDIR=$CURDIR/scripts
-TMPDIR=$CURDIR/tmp
-TMPFWDIR=$TMPDIR/ROOT
-TMPBOOTDIR=$TMPFWDIR/boot
-NFSDIR=/nfs
-TARGET=$NFSDIR/target
-OUTDIR=$CURDIR/out
+#RELASEDIR=$BASEDIR/relase
+#SCRIPTDIR=$CURDIR/scripts
+#TMPDIR=$CURDIR/tmp
+#TMPFWDIR=$TMPDIR/ROOT
+#TMPBOOTDIR=$TMPFWDIR/boot
+#NFSDIR=/nfs
+#TARGET=$NFSDIR/target
+#OUTDIR=$CURDIR/out
 
-if [  -e $TMPDIR ]; then
-  rm -rf $TMPDIR/*
-else
-  mkdir $TMPDIR
-fi
+#if [  -e $TMPDIR ]; then
+#  rm -rf $TMPDIR/*
+#else
+#  mkdir $TMPDIR
+#fi
 
 mkdir $TMPFWDIR
 echo "CURDIR       = $CURDIR"
@@ -44,14 +44,11 @@ TMPKERNELDIR=$TMPDIR/KERNEL
 
 OUTDIR=$CURDIR/out
 
-if [ $# == "0" ]; then
-  if [  -e $TMPDIR ]; then
-    sudo rm -rf $TMPDIR/*
-  else
-    mkdir $TMPDIR
-  fi
+if [ -e $TMPDIR ]; then
+  rm -rf $TMPDIR/*
 fi
 
+mkdir $TMPDIR
 mkdir $TMPROOTDIR
 mkdir $TMPKERNELDIR
 
@@ -59,7 +56,7 @@ echo "This script creates flashable images for Spark"
 echo "Author: Schischu"
 echo "Date: 05-01-2012"
 echo "-----------------------------------------------------------------------"
-echo "It's expected that a images was already build prior to this execution!"
+echo "It's expected that an image was already build prior to this execution!"
 echo "-----------------------------------------------------------------------"
 
 $BASEDIR/flash/common/common.sh $BASEDIR/flash/common/
@@ -74,14 +71,18 @@ fi
 if [  -e $TUFSBOXDIR/release_neutrino ]; then
   echo "   2) Prepare Neutrino"
 fi
-
-read -p "Select target (1-2)? "
+if [  -e $TUFSBOXDIR/release_vdrdev2 ]; then
+  echo "   3) Prepare VDR"
+fi
+read -p "Select target (1-3)? "
 case "$REPLY" in
 	0)  echo "Skipping...";;
 	1)  echo "Preparing Enigma2 Root..."
 		$SCRIPTDIR/prepare_root.sh $CURDIR $TUFSBOXDIR/release $TMPROOTDIR $TMPKERNELDIR;;
 	2)  echo "Preparing Neutrino Root..."
 		$SCRIPTDIR/prepare_root_neutrino.sh $CURDIR $TUFSBOXDIR/release_neutrino $TMPROOTDIR $TMPKERNELDIR;;
+	3)  echo "Preparing VDR Root..."
+		$SCRIPTDIR/prepare_root_vdr.sh $CURDIR $TUFSBOXDIR/release_vdrdev2 $TMPROOTDIR $TMPKERNELDIR;;
 	*)  "Invalid Input! Exiting..."
 		exit 2;;
 esac

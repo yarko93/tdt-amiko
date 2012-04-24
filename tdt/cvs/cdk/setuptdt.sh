@@ -49,6 +49,17 @@ if [ -z "$FEDORA$SUSE$UBUNTU" ]; then
 	INSTALL="echo "
 fi
 
+if [ "$SUSE" == 1 ]; then
+	SUSE_VERSION=`cat /etc/SuSE-release | line | awk '{ print $2 }'`
+	if [ "$SUSE_VERSION" == "12.1" ]; then
+		zypper ar "http://download.opensuse.org/repositories/home:/toganm/openSUSE_12.1/" fakeroot
+	fi
+	if [ "$SUSE_VERSION" == "11.4" ]; then
+		zypper ar "http://download.opensuse.org/repositories/home:/toganm/openSUSE_11.4/" fakeroot
+	fi
+	zypper ref
+fi
+
 PACKAGES="\
 	make \
 	subversion \
@@ -60,19 +71,19 @@ PACKAGES="\
 	swig \
 	dialog \
 	wget \
-	${UBUNTU:+rpm}                                          ${FEDORA:+rpm-build} \
-	${UBUNTU:+lsb-release}     ${SUSE:+lsb-release}         ${FEDORA:+redhat-lsb} \
-	${UBUNTU:+git-core}        ${SUSE:+git-core}            ${FEDORA:+git} \
-	${UBUNTU:+libncurses5-dev} ${SUSE:+ncurses-devel}       ${FEDORA:+ncurses-devel} \
-	${UBUNTU:+gettext}         ${SUSE:+gettext-devel}       ${FEDORA:+gettext-devel} \
-	${UBUNTU:+zlib1g-dev}      ${SUSE:+zlib-devel}          ${FEDORA:+zlib-devel} \
-	${UBUNTU:+g++}             ${SUSE:+gcc gcc-c++}         ${FEDORA:+gcc-c++} \
-	${UBUNTU:+automake}        ${SUSE:+automake make} \
-	${UBUNTU:+xfslibs-dev}     ${SUSE:+xfsprogs-devel} \
-	${UBUNTU:+pkg-config}      ${SUSE:+pkg-config} \
-	${UBUNTU:+patch}           ${SUSE:+patch} \
-	${UBUNTU:+autopoint} \
-	${UBUNTU:+cfv} \
+	${UBUNTU:+rpm}                                               ${FEDORA:+rpm-build} \
+	${UBUNTU:+lsb-release}          ${SUSE:+lsb-release}         ${FEDORA:+redhat-lsb} \
+	${UBUNTU:+git-core}             ${SUSE:+git-core}            ${FEDORA:+git} \
+	${UBUNTU:+libncurses5-dev}      ${SUSE:+ncurses-devel}       ${FEDORA:+ncurses-devel} \
+	${UBUNTU:+gettext}              ${SUSE:+gettext-devel}       ${FEDORA:+gettext-devel} \
+	${UBUNTU:+zlib1g-dev}           ${SUSE:+zlib-devel}          ${FEDORA:+zlib-devel} \
+	${UBUNTU:+g++}                  ${SUSE:+gcc gcc-c++}         ${FEDORA:+gcc-c++} \
+	${UBUNTU:+automake}             ${SUSE:+automake make} \
+	${UBUNTU:+xfslibs-dev}          ${SUSE:+xfsprogs-devel} \
+	${UBUNTU:+pkg-config}           ${SUSE:+pkg-config} \
+	${UBUNTU:+patch}                ${SUSE:+patch} \
+	${UBUNTU:+autopoint}            ${SUSE:+glib2-devel} \
+	${UBUNTU:+cfv}                  ${SUSE:+fakeroot} \
 	${UBUNTU:+fakeroot} \
 	${UBUNTU:+gawk} \
 	${UBUNTU:+gperf} \
@@ -81,20 +92,37 @@ PACKAGES="\
 	${UBUNTU:+doc-base} \
 	${UBUNTU:+texi2html} \
 	${UBUNTU:+help2man} \
+	${UBUNTU:+libgpgme11-dev} \
+	${UBUNTU:+libcurl4-openssl-dev} \
 ";
 
 if [ `which arch > /dev/null 2>&1 && arch || uname -m` == x86_64 ]; then
 	# ST changed to the -m32 option for their gcc compiler build
 	# we might need to install more 32bit versions of some packages
 	PACKAGES="$PACKAGES \
-	${UBUNTU:+gcc-multilib}         ${SUSE:+gcc-32bit}      ${FEDORA:+libstdc++-devel.i686} \
-	${UBUNTU:+lib32ncurses5-dev}                            ${FEDORA:+glibc-devel.i686} \
-	${UBUNTU:+lib32z1-dev}                                  ${FEDORA:+libgcc.i686} \
-	${UBUNTU:+libc6-dev-i386}                               ${FEDORA:+ncurses-devel.i686} \
+	${UBUNTU:+gcc-multilib}         ${SUSE:+gcc-32bit}           ${FEDORA:+libstdc++-devel.i686} \
+	${UBUNTU:+libc6-dev-i386}       ${SUSE:+zlib-devel-32bit}    ${FEDORA:+glibc-devel.i686} \
+	${UBUNTU:+lib32z1-dev}                                       ${FEDORA:+libgcc.i686} \
+	                                                             ${FEDORA:+ncurses-devel.i686} \
 	";
 fi
-
 $INSTALL $PACKAGES
+
+#Is this also necessary for other dists?
+if [ "$UBUNTU" == 1 ]; then
+	DEBIAN_VERSION=`cat /etc/debian_version`
+	if [ "$DEBIAN_VERSION" == "wheezy/sid" ]; then
+		if [ `which arch > /dev/null 2>&1 && arch || uname -m` == x86_64 ]; then
+			ln -s /usr/include/x86_64-linux-gnu/bits /usr/include/bits
+			ln -s /usr/include/x86_64-linux-gnu/gnu /usr/include/gnu
+			ln -s /usr/include/x86_64-linux-gnu/sys /usr/include/sys
+		else
+			ln -s /usr/include/i386-linux-gnu/bits /usr/include/bits
+			ln -s /usr/include/i386-linux-gnu/gnu /usr/include/gnu
+			ln -s /usr/include/i386-linux-gnu/sys /usr/include/sys
+		fi
+	fi
+fi
 
 # Link sh to bash instead of dash on Ubuntu (and possibly others)
 /bin/sh --version 2>/dev/null | grep bash -s -q
@@ -105,19 +133,4 @@ if [ ! "$?" -eq "0" ]; then
 		rm -f /bin/sh
 		ln -s /bin/bash /bin/sh
 	fi
-fi
-
-#Is this also necessary for other dists?
-DEBIAN_VERSION=`cat /etc/debian_version`
-if [ $DEBIAN_VERSION == "wheezy/sid" ]; then
-	# Do we need to take care of 32bit and 64bit?
-	echo "Downgrading to gcc-4.5"
-	apt-get install gcc-4.5
-	apt-get install g++-4.5
-	update-alternatives --remove-all gcc
-	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.5 45 --slave /usr/bin/g++ g++ /usr/bin/g++-4.5 --slave /usr/bin/gcov gcov /usr/bin/gcov-4.5
-
-	ln -s /usr/include/i386-linux-gnu/bits /usr/include/bits
-	ln -s /usr/include/i386-linux-gnu/gnu /usr/include/gnu
-	ln -s /usr/include/i386-linux-gnu/sys /usr/include/sys
 fi

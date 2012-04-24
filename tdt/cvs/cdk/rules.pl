@@ -82,6 +82,14 @@ sub process_make_depends (@)
     {
       $output .= "\\\$(archivedir)/". $_ . " ";
     }
+    elsif ( $_ =~ m#\.svn# )
+    {
+      $output .= "\\\$(archivedir)/". $_ . " ";
+    }
+    elsif ($_ =~ m#\.git# )
+    {
+      $output .= "\\\$(archivedir)/". $_ . " ";
+    }
     else
     {
       die "can't recognize type of archive " . $_;
@@ -140,10 +148,32 @@ sub process_make_prepare (@)
       {
         $output .= "rpm \${DRPM} -Uhv  \\\$(archivedir)/" . $_[1];
       }
-      elsif ( $_[1] =~ m#\.cvs$# )
+      elsif ( $_[1] =~ m#\.cvs# )
       {
-        $_[1] =~ s/\.cvs//;
-        $output .= "cp -a \\\$(archivedir)/" . $_[1] . " . && mv " . $_[1] . " " . $dir;
+        my $target = $dir;
+        if ( @_ > 2 )
+        {
+          $target = $_[2] 
+        }
+        $output .= "cp -a \\\$(archivedir)/" . $_[1] . " " . $target;
+      }
+      elsif ( $_[1] =~ m#\.svn# )
+      {
+        my $target = $dir;
+        if ( @_ > 2 )
+        {
+          $target = $_[2] 
+        }
+        $output .= "cp -a \\\$(archivedir)/" . $_[1] . " " . $target;
+      }
+      elsif ( $_[1] =~ m#\.git# )
+      {
+        my $target = $dir;
+        if ( @_ > 2 )
+        {
+          $target = $_[2] 
+        }
+        $output .= "(rm -rf " . $target . "; cp -a \\\$(archivedir)/" . $_[1] . " " . $target . ")";
       }
       else
       {
@@ -179,13 +209,23 @@ sub process_make_prepare (@)
       $_ = "-p1 ";
       $_ = "-p$3 " if defined $3;
       $_ .= "-Z " if defined $1;
+      
+      my $patchesdir = "";
+      my @level = split ( /\//, $dir );
+      foreach ( @level )
+      {
+        $patchesdir .= "../";
+      }
+      
+      $patchesdir .= "Patches/";
+      
       if ( $_[1] =~ m#\.bz2$# )
       {
         $output .= "( cd " . $dir . " && chmod +w -R .; bunzip2 -cd \\\$(archivedir)/" . $_[1] . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.deb\.diff\.gz$# )
       {
-        $output .= "( cd " . $dir . "; gunzip -cd ../Patches/" . $_[1] . " | patch $_ )";
+        $output .= "( cd " . $dir . "; gunzip -cd " . $patchesdir . $_[1] . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.gz$# )
       {
@@ -193,11 +233,11 @@ sub process_make_prepare (@)
       }
       elsif ( $_[1] =~ m#\.spec\.diff$# )
       {
-        $output .= "( cd SPECS && patch $_ < ../Patches/" . $_[1] . " )";
+        $output .= "( cd SPECS && patch $_ < " . $patchesdir . $_[1] . " )";
       }
       else
       {
-        $output .= "( cd " . $dir . " && chmod +w -R .; patch $_ < ../Patches/" . $_[1] . " )";
+        $output .= "( cd " . $dir . " && chmod +w -R .; patch $_ < " . $patchesdir . $_[1] . " )";
       }
     }
     elsif ( $_[0] eq "rpmbuild" )
@@ -329,63 +369,6 @@ sub process_install_rule ($)
   return $output;
 }
 
-sub process_uninstall_rule ($)
-{
-  my $rule = shift;
-  @_ = split ( /:/, $rule );
-  $_ = shift @_;
-
-  my $output = "";
-
-  if ( $_ eq "make" )
-  {
-    $output .= "\$\(MAKE\) " . join " ", @_;
-  }
-  elsif ( $_ eq "install" )
-  {
-    $output .= "\$\(INSTALL\) " . join " ", @_;
-  }
-  elsif ( $_ eq "rpminstall" )
-  {
-    $output .= "rpm \${DRPM} --ignorearch -Uhv RPMS/sh4/" . join " ", @_;
-  }
-  elsif ( $_ eq "shellconfigdel" )
-  {
-    $output .= "export HCTDUNINST \&\& HOST/bin/target-shellconfig --del " . join " ", @_;
-  }
-  elsif ( $_ eq "initdconfigdel" )
-  {
-    $output .= "export HCTDUNINST \&\& HOST/bin/target-initdconfig --del " . join " ", @_;
-  }
-  elsif ( $_ eq "move" )
-  {
-    $output .= "mv " . join " ", @_;
-  }
-  elsif ( $_ eq "remove" )
-  {
-    $output .= "rm -rf " . join " ", @_;
-  }
-  elsif ( $_ eq "link" )
-  {
-    $output .= "ln -sf " . join " ", @_;
-  }
-  elsif ( $_ eq "archive" )
-  {
-    $output .= "TARGETNAME-ar cru " . join " ", @_;
-  }
-  elsif ( $_ =~ m/^rewrite-(libtool|pkgconfig)/ )
-  {
-    $output .= "perl -pi -e \"s,^libdir=.*\$\$,libdir='TARGET/lib',\"  ". join " ", @_ if $1 eq "libtool";
-    $output .= "perl -pi -e \"s,^prefix=.*\$\$,prefix=TARGET,\" " . join " ", @_ if $1 eq "pkgconfig";
-  }
-  else
-  {
-    die "can't recognize rule \"$rule\"";
-  }
-
-  return $output;
-}
-
 sub process_install ($$$)
 {
   my @rules = @{$_[1]};
@@ -400,25 +383,10 @@ sub process_install ($$$)
   return $output;
 }
 
-sub process_uninstall ($$$)
-{
-  my @rules = @{$_[1]};
-  my $output = "";
-
-  foreach ( @rules )
-  {
-    $output .= " && " if $output;
-    $output .= process_uninstall_rule ($_);
-  }
-
-  return $output;
-}
-
 my %ruletypes =
 (
   make => { process => \&process_make, further_args => 1 },
   install => { process => \&process_install },
-  uninstall => { process => \&process_uninstall },
 );
 
 die "please specify a rule type, filename and a package" if $#ARGV < 2;
@@ -446,4 +414,3 @@ if ( $output )
   $output =~ s#BUILD#\$\(buildprefix\)#g;
   print $output . "\n";
 }
-

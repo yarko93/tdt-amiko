@@ -169,7 +169,7 @@ release_ufs912:
 	rm $(prefix)/release/lib/firmware/component_7105_pdk7105.fw
 
 release_spark:
-	echo "Amiko" > $(prefix)/release/etc/hostname
+	echo "spark" > $(prefix)/release/etc/hostname
 	rm -f $(prefix)/release/sbin/halt
 	cp $(buildprefix)/root/release/halt_spark $(prefix)/release/etc/init.d/halt
 	chmod 777 $(prefix)/release/etc/init.d/halt
@@ -206,9 +206,6 @@ release_spark:
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt5370sta/rt5370sta.ko $(prefix)/release/lib/modules/
 if STM24
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt2x00/rt73usb.ko $(prefix)/release/lib/modules/rt73.ko
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt2x00/rt2x00lib.ko $(prefix)/release/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/drivers/net/wireless/rt2x00/rt2x00usb.ko $(prefix)/release/lib/modules/
 	cp -f $(buildprefix)/root/lib/modules/*.* $(prefix)/release/lib/modules/
 endif
 	cp $(targetprefix)/boot/video_7111.elf $(prefix)/release/boot/video.elf
@@ -258,7 +255,7 @@ endif
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname
 	rm -f $(prefix)/release/sbin/halt
-	cp $(buildprefix)/root/release/halt_spark $(prefix)/release/etc/init.d/halt
+	cp $(buildprefix)/root/release/halt_spark7162 $(prefix)/release/etc/init.d/halt
 	chmod 777 $(prefix)/release/etc/init.d/halt
 	mkdir -p $(prefix)/release/etc/opkg
 	mkdir -p $(prefix)/release/usr/lib/locale
@@ -547,9 +544,6 @@ release_hs7110:
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/lnb/lnb.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt2870sta/rt2870sta.ko $(prefix)/release/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt3070sta/rt3070sta.ko $(prefix)/release/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/boot/video_7111.elf $(prefix)/release/boot/video.elf
 	cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/smartcard/smartcard.ko $(prefix)/release/lib/modules/
@@ -710,7 +704,7 @@ release_adb_box:
 	rm -f $(prefix)/release/bin/vdstandby
 
 release_vip1_v2: release_common_utils
-	echo "Edision" > $(prefix)/release/etc/hostname
+	echo "Edision-v2" > $(prefix)/release/etc/hostname
 	cp -f $(targetprefix)/sbin/shutdown $(prefix)/release/sbin/
 	cp $(buildprefix)/root/release/halt_vip2 $(prefix)/release/etc/init.d/halt
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/aotom/aotom.ko $(prefix)/release/lib/modules/
@@ -737,6 +731,7 @@ endif
 	rm -f $(prefix)/release/bin/vdstandby
 
 release_vip2_v1: release_vip1_v2
+	echo "Edision-v1" > $(prefix)/release/etc/hostname
 
 release_hs5101:
 	echo "hs5101" > $(prefix)/release/etc/hostname
@@ -774,7 +769,7 @@ endif
 	rm -f $(prefix)/release/bin/vdstandby
 
 release_ipbox9900: release_common_utils
-	echo "ipbox" > $(prefix)/release/etc/hostname
+	echo "ipbox9900" > $(prefix)/release/etc/hostname
 	cp $(buildprefix)/root/release/halt_ipbox $(prefix)/release/etc/init.d/halt
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/ipbox99xx/micom.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release/lib/modules/
@@ -807,7 +802,7 @@ endif
 	echo "config.usage.hdd_standby=0" >> $(prefix)/release/etc/enigma2/settings
 
 release_ipbox99: release_common_utils
-	echo "ipbox" > $(prefix)/release/etc/hostname
+	echo "ipbox99" > $(prefix)/release/etc/hostname
 	cp $(buildprefix)/root/release/halt_ipbox $(prefix)/release/etc/init.d/halt
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/ipbox99xx/micom.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release/lib/modules/
@@ -839,7 +834,7 @@ endif
 	echo "config.usage.hdd_standby=0" >> $(prefix)/release/etc/enigma2/settings
 
 release_ipbox55: release_common_utils
-	echo "ipbox" > $(prefix)/release/etc/hostname
+	echo "ipbox55" > $(prefix)/release/etc/hostname
 	cp $(buildprefix)/root/release/halt_ipbox $(prefix)/release/etc/init.d/halt
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/ipbox55/front.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release/lib/modules/
@@ -875,7 +870,7 @@ endif
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
-$(DEPDIR)/min-release $(DEPDIR)/std-release $(DEPDIR)/max-release $(DEPDIR)/ipk-release $(DEPDIR)/release: \
+$(DEPDIR)/min-release $(DEPDIR)/std-release $(DEPDIR)/max-release $(DEPDIR)/release: \
 $(DEPDIR)/%release: release_base release_$(TF7700)$(HL101)$(VIP1_V2)$(VIP2_V1)$(UFS910)$(UFS912)$(SPARK)$(SPARK7162)$(UFS922)$(OCTAGON1008)$(FORTIS_HDBOX)$(ATEVIO7500)$(HS7810A)$(HS7110)$(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(HOMECAST5101)$(IPBOX9900)$(IPBOX99)$(IPBOX55)$(ADB_BOX)
 	touch $@
 
@@ -911,6 +906,7 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/media/hdd && \
 	$(INSTALL_DIR) $(prefix)/release/media/hdd/music && \
 	$(INSTALL_DIR) $(prefix)/release/media/hdd/picture && \
+	ln -s /media/hdd $(prefix)/release/hdd && \
 	$(INSTALL_DIR) $(prefix)/release/lib && \
 	$(INSTALL_DIR) $(prefix)/release/lib/modules && \
 	$(INSTALL_DIR) $(prefix)/release/ram && \
@@ -919,10 +915,9 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/opkg && \
 	export CROSS_COMPILE=$(target)- && \
 		$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/release && \
-	touch $(prefix)/release/etc/.firstboot && \
+	touch $(prefix)/release/var/etc/.firstboot && \
 	cp -a $(targetprefix)/bin/* $(prefix)/release/bin/ && \
 	ln -s /bin/showiframe $(prefix)/release/usr/bin/showiframe && \
-	cp -dp $(targetprefix)/bin/hotplug $(prefix)/release/sbin/ && \
 	cp -dp $(targetprefix)/usr/bin/sdparm $(prefix)/release/sbin/ && \
 	cp -dp $(targetprefix)/sbin/init $(prefix)/release/sbin/ && \
 	cp -dp $(targetprefix)/sbin/killall5 $(prefix)/release/sbin/ && \
@@ -948,7 +943,8 @@ release_base:
 	cp -dp $(targetprefix)/sbin/tune2fs $(prefix)/release/sbin/ && \
 	cp -dp $(targetprefix)/etc/init.d/portmap $(prefix)/release/etc/init.d/ && \
 	cp -dp $(buildprefix)/root/etc/init.d/udhcpc $(prefix)/release/etc/init.d/ && \
-	cp -dp $(targetprefix)/sbin/MAKEDEV$(if $(TF7700),_dual_tuner)$(if $(FORTIS_HDBOX),_dual_tuner)$(if $(ATEVIO7500),_dual_tuner)$(if $(VIP2_V1),_dual_tuner)$(if $(CUBEREVO),_dual_tuner)$(if $(CUBEREVO_9500HD),_dual_tuner)$(if $(UFS922),_dual_tuner)$(if $(CUBEREVO_MINI_FTA),_no_CI)$(if $(CUBEREVO_250HD),_no_CI)$(if $(CUBEREVO_2000HD),_no_CI)$(if $(IPBOX9900),_dual_tuner)$(if $(IPBOX99),_no_CI)$(if $(IPBOX55),_no_CI)$(if $(ADB_BOX),_adb_box)$(if $(SPARK),_no_CI)$(if $(SPARK7162),_twin_no_ci) $(prefix)/release/sbin/MAKEDEV && \
+	cp -dp $(targetprefix)/sbin/MAKEDEV $(prefix)/release/sbin/MAKEDEV && \
+	cp -f $(buildprefix)/root/release/makedev $(prefix)/release/etc/init.d/ && \
 	cp -dp $(targetprefix)/usr/bin/grep $(prefix)/release/bin/ && \
 	cp -dp $(targetprefix)/usr/bin/egrep $(prefix)/release/bin/ && \
 	cp $(targetprefix)/boot/audio.elf $(prefix)/release/boot/audio.elf && \
@@ -995,6 +991,7 @@ release_base:
 	cp $(buildprefix)/root/release/hostname $(prefix)/release/etc/init.d/ && \
 	cp $(buildprefix)/root/release/vsftpd $(prefix)/release/etc/init.d/ && \
 	cp $(buildprefix)/root/release/bootclean.sh $(prefix)/release/etc/init.d/ && \
+	cp $(buildprefix)/root/release/network $(prefix)/release/etc/init.d/ && \
 	cp $(buildprefix)/root/release/networking $(prefix)/release/etc/init.d/ && \
 	cp $(buildprefix)/root/bootscreen/bootlogo.mvi $(prefix)/release/boot/ && \
 	cp $(buildprefix)/root/bin/autologin $(prefix)/release/bin/ && \
@@ -1004,6 +1001,14 @@ release_base:
 	rm -f $(prefix)/release/lib/*.o && \
 	rm -f $(prefix)/release/lib/*.la && \
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
+
+	if [ -e $(targetprefix)/usr/bin/hotplug_e2_helper ]; then \
+		cp -dp $(targetprefix)/usr/bin/hotplug_e2_helper $(prefix)/release/sbin/hotplug; \
+		cp -dp $(targetprefix)/usr/bin/bdpoll $(prefix)/release/sbin/; \
+		rm -f $(prefix)/release/bin/hotplug; \
+	else \
+		cp -dp $(targetprefix)/bin/hotplug $(prefix)/release/sbin/; \
+	fi;
 
 if STM24
 	cp -dp $(targetprefix)/sbin/mkfs $(prefix)/release/sbin/
@@ -1156,7 +1161,10 @@ else
 if ENABLE_ATEVIO7500
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/multituner/*.ko $(prefix)/release/lib/modules/
 else
+if ENABLE_SPARK7162
+else
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/*.ko $(prefix)/release/lib/modules/
+endif
 endif
 endif
 endif
@@ -1185,8 +1193,9 @@ endif
 	rm -rf $(prefix)/release/lib/modules/$(KERNELVERSION)
 
 	$(INSTALL_DIR) $(prefix)/release/media
-	ln -s /media/hdd $(prefix)/release/hdd
 	$(INSTALL_DIR) $(prefix)/release/media/dvd
+	$(INSTALL_DIR) $(prefix)/release/media/hdd
+	$(INSTALL_DIR) $(prefix)/release/media/net
 
 	$(INSTALL_DIR) $(prefix)/release/mnt
 	$(INSTALL_DIR) $(prefix)/release/mnt/usb
@@ -1326,11 +1335,13 @@ endif
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/python2.6
 	cp -a $(targetprefix)/usr/lib/python2.6/* $(prefix)/release/usr/lib/python2.6/
 	rm -rf $(prefix)/release/usr/lib/python2.6/test
+	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/Cheetah-2.4.4-py2.6.egg-info
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/lxml
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/lxml-2.0.5-py2.6.egg-info
 	rm -f $(prefix)/release/usr/lib/python2.6/site-packages/libxml2mod.so
 	rm -f $(prefix)/release/usr/lib/python2.6/site-packages/libxsltmod.so
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/OpenSSL/test
+	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/python_wiffi-0.5.0-py2.6.egg-info
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/setuptools
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/setuptools-0.6c8-py2.6.egg-info
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/zope.interface-3.3.0-py2.6.egg-info
@@ -1413,6 +1424,17 @@ endif
 	[ -e $(kernelprefix)/linux-sh4/fs/nfs_common/nfs_acl.ko ] && cp $(kernelprefix)/linux-sh4/fs/nfs_common/nfs_acl.ko $(prefix)/release/lib/modules || true
 	[ -e $(kernelprefix)/linux-sh4/fs/nfs/nfs.ko ] && cp $(kernelprefix)/linux-sh4/fs/nfs/nfs.ko $(prefix)/release/lib/modules || true
 
+	[ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt2870sta/rt2870sta.ko ] && cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt2870sta/rt2870sta.ko $(prefix)/release/lib/modules || true
+	[ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt3070sta/rt3070sta.ko ] && cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt3070sta/rt3070sta.ko $(prefix)/release/lib/modules || true
+	[ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt5370sta/rt5370sta.ko ] && cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt5370sta/rt5370sta.ko $(prefix)/release/lib/modules || true
+	[ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko ] && cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko $(prefix)/release/lib/modules || true
+
+if STM23
+	[ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu_hs7110/8192cu.ko ] && cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu_hs7110/8192cu.ko $(prefix)/release/lib/modules || true
+else
+	[ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu/8192cu.ko ] && cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu/8192cu.ko $(prefix)/release/lib/modules || true
+endif
+
 #
 # AUTOFS
 #
@@ -1422,13 +1444,16 @@ endif
 		if [ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/fs/autofs4/autofs4.ko ]; then \
 			cp $(targetprefix)/lib/modules/$(KERNELVERSION)/kernel/fs/autofs4/autofs4.ko $(prefix)/release/lib/modules; \
 		fi; \
-		cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release/etc/; \
+		cp -f $(buildprefix)/root/release/auto.hotplug $(prefix)/release/etc/; \
+		cp -f $(buildprefix)/root/release/auto.network $(prefix)/release/etc/; \
+		cp -f $(buildprefix)/root/release/autofs $(prefix)/release/etc/init.d/; \
 	fi
 
 #
 # GSTREAMER
 #
 	if [ -d $(prefix)/release/usr/lib/gstreamer-0.10 ]; then \
+		rm -rf $(prefix)/release/usr/lib/libav*; \
 		rm -rf $(prefix)/release/usr/lib/libgstfft*; \
 		rm -rf $(prefix)/release/usr/lib/gstreamer-0.10/*; \
 		cp -a $(targetprefix)/usr/bin/gst-launch* $(prefix)/release/usr/bin/; \
@@ -1438,7 +1463,7 @@ endif
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstasf.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstassrender.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstaudioconvert.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
-		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstaudioparsersbad.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
+		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstaudioparsers.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstaudioresample.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstautodetect.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
 		cp -a $(targetprefix)/usr/lib/gstreamer-0.10/libgstavi.so $(prefix)/release/usr/lib/gstreamer-0.10/; \
@@ -1526,5 +1551,18 @@ endif
 #
 	if [ -e $(prefix)/release/usr/lib/libglcddrivers.so ]; then \
 		cp -f $(targetprefix)/etc/graphlcd.conf $(prefix)/release/etc/graphlcd.conf; \
+	fi
+
+#
+# SAMBA
+#
+	if [ -e $(targetprefix)/usr/sbin/smbd ]; then \
+		cp -p $(targetprefix)/usr/sbin/smbd $(prefix)/release/usr/sbin/; \
+		cp -p $(targetprefix)/usr/sbin/nmbd $(prefix)/release/usr/sbin/; \
+		mkdir -p $(prefix)/release/etc/samba; \
+		mkdir -p $(prefix)/release/etc/samba/private; \
+		cp -p $(targetprefix)/etc/samba/smb.conf $(prefix)/release/etc/samba/; \
+		cp -p $(targetprefix)/etc/init.d/samba $(prefix)/release/etc/init.d/; \
+		chmod 755 $(prefix)/release/etc/init.d/samba; \
 	fi
 

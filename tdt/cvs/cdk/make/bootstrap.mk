@@ -86,6 +86,7 @@ host-filesystem:
 	$(INSTALL) -d $(devkitprefix)/sources/kernel
 	$(INSTALL) -d $(hostprefix)
 	$(INSTALL) -d $(hostprefix)/{bin,doc,etc,include,info,lib,man,share,var}
+	ln -s /$(hostprefix)/lib $(hostprefix)/lib64
 	$(INSTALL) -d $(hostprefix)/man/man{1,2,3,4,5,6,7,8,9}
 	touch .deps/$@
 
@@ -130,9 +131,9 @@ else !STM23
 # if STM24
 HOST_RPMCONFIG_VERSION = 2.4-21
 HOST_RPMCONFIG_SPEC = stm-$(HOST_RPMCONFIG).spec
-HOST_RPMCONFIG_SPEC_PATCH = $(HOST_RPMCONFIG_SPEC)24.diff
-HOST_RPMCONFIG_PATCHES = stm-$(HOST_RPMCONFIG)-ignore-skip-cvs-errors.patch \
-			 stm-$(HOST_RPMCONFIG)-autoreconf-add-libtool-macros24.patch
+HOST_RPMCONFIG_SPEC_PATCH = $(HOST_RPMCONFIG_SPEC).$(HOST_RPMCONFIG_VERSION).diff
+HOST_RPMCONFIG_PATCHES = stm-$(HOST_RPMCONFIG)-$(HOST_RPMCONFIG_VERSION)-ignore-skip-cvs-errors.patch \
+			 stm-$(HOST_RPMCONFIG)-$(HOST_RPMCONFIG_VERSION)-autoreconf-add-libtool-macros.patch
 # endif STM24
 endif !STM23
 endif !STM22
@@ -450,6 +451,7 @@ cross-sh4-filesystem:
 	$(INSTALL) -d $(targetprefix)
 	$(INSTALL) -d $(crossprefix)
 	$(INSTALL) -d $(crossprefix)/{bin,doc,etc,include,lib,man,sh4-linux,share,var}
+	ln -s /$(crossprefix)/lib $(crossprefix)/lib64
 	$(INSTALL) -d $(crossprefix)/man/man{1,2,3,4,5,6,7,8,9}
 	$(INSTALL) -d $(crossprefix)/sh4-linux/{bin,include,lib}
 	touch .deps/$@
@@ -515,13 +517,13 @@ else !STM22
 if STM23
 CROSS_BINUTILS_VERSION = 2.18.50.0.8-34
 CROSS_BINUTILS_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_BINUTILS)).spec
-CROSS_BINUTILS_SPEC_PATCH = $(CROSS_BINUTILS_SPEC)23.diff
+CROSS_BINUTILS_SPEC_PATCH = $(CROSS_BINUTILS_SPEC).$(CROSS_BINUTILS_VERSION).diff
 CROSS_BINUTILS_PATCHES = stm-cross-binutils.diff
 else !STM23
 # if STM24
 CROSS_BINUTILS_VERSION = 2.19.1-41
 CROSS_BINUTILS_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_BINUTILS)).spec
-CROSS_BINUTILS_SPEC_PATCH =
+CROSS_BINUTILS_SPEC_PATCH = $(CROSS_BINUTILS_SPEC).$(CROSS_BINUTILS_VERSION).diff
 CROSS_BINUTILS_PATCHES =
 # endif STM24
 endif !STM23
@@ -564,7 +566,7 @@ else !STM23
 CROSS_GMP = cross-sh4-gmp
 CROSS_GMP_VERSION = 5.0.1-9
 CROSS_GMP_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_GMP)).spec
-CROSS_GMP_SPEC_PATCH =
+CROSS_GMP_SPEC_PATCH = $(CROSS_GMP_SPEC).$(CROSS_GMP_VERSION).diff
 CROSS_GMP_PATCHES =
 CROSS_GMP_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_GMP)-$(CROSS_GMP_VERSION).$(host_arch).rpm
 # endif STM24
@@ -593,13 +595,13 @@ if STM23
 # Due to libtool errors of target-gcc, the stm24 version is used instead of stm23
 CROSS_MPFR_VERSION = 2.4.2-6
 CROSS_MPFR_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_MPFR)).spec
-CROSS_MPFR_SPEC_PATCH = $(CROSS_MPFR_SPEC)24.diff
+CROSS_MPFR_SPEC_PATCH = $(CROSS_MPFR_SPEC).$(CROSS_MPFR_VERSION).diff
 CROSS_MPFR_PATCHES =
 else !STM23
 # if STM24
 CROSS_MPFR_VERSION = 2.4.2-6
 CROSS_MPFR_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_MPFR)).spec
-CROSS_MPFR_SPEC_PATCH = $(CROSS_MPFR_SPEC)24.diff
+CROSS_MPFR_SPEC_PATCH = $(CROSS_MPFR_SPEC).$(CROSS_MPFR_VERSION).diff
 CROSS_MPFR_PATCHES =
 # endif STM24
 endif !STM23
@@ -627,7 +629,7 @@ if STM24
 CROSS_MPC = cross-sh4-mpc
 CROSS_MPC_VERSION = 0.8.2-3
 CROSS_MPC_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_MPC)).spec
-CROSS_MPC_SPEC_PATCH =
+CROSS_MPC_SPEC_PATCH = $(CROSS_MPC_SPEC).$(CROSS_MPC_VERSION).diff
 CROSS_MPC_PATCHES =
 CROSS_MPC_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_MPC)-$(CROSS_MPC_VERSION).$(host_arch).rpm
 
@@ -652,7 +654,7 @@ if STM24
 CROSS_LIBELF = cross-sh4-libelf
 CROSS_LIBELF_VERSION = 0.8.13-1
 CROSS_LIBELF_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_LIBELF)).spec
-CROSS_LIBELF_SPEC_PATCH =
+CROSS_LIBELF_SPEC_PATCH = $(CROSS_LIBELF_SPEC).$(CROSS_LIBELF_VERSION).diff
 CROSS_LIBELF_PATCHES =
 CROSS_LIBELF_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_LIBELF)-$(CROSS_LIBELF_VERSION).$(host_arch).rpm
 

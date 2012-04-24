@@ -4,13 +4,12 @@ MODDIR=/lib/modules
 echo "init frontpanel"
 insmod $MODDIR/aotom.ko
 insmod $MODDIR/simu_button.ko
-#insmod $MODDIR/encrypt.ko
 
 if [ -e /var/etc/.firstboot ]; then
    echo "WAIT 1 min" >/dev/vfd
    echo "WAIT 1 min"
    rm /var/etc/.firstboot
-   touch /dev/.devfsd
+   /etc/init.d/makedev start
 fi
 echo "AR-P" > /dev/vfd
 /etc/init.d/mountvirtfs start
@@ -18,9 +17,7 @@ echo "AR-P" > /dev/vfd
 
 insmod $MODDIR/e2_proc.ko
 
-# start automounter with umount timeout of 5 seconds
-insmod $MODDIR/autofs4.ko
-/usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
+/etc/init.d/autofs start
 
 if [ ! -e /var/etc/.firstboot ]; then
 

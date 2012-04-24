@@ -5,8 +5,8 @@
 		<key id="KEY_HOME" mapto="back" flags="mr" />
 		<key id="KEY_PAGEUP" mapto="pageUp" flags="mr" />
 		<key id="KEY_PAGEDOWN" mapto="pageDown" flags="mr" />
-		<key id="KEY_PREVIOUS" mapto="pageUp" flags="mr" />
-		<key id="KEY_NEXT" mapto="pageDown" flags="mr" />
+		<key id="KEY_LEFT" mapto="pageUp" flags="mr" />
+		<key id="KEY_RIGHT" mapto="pageDown" flags="mr" />
 		<key id="KEY_1" mapto="moveUp" flags="mr" />
 		<key id="KEY_2" mapto="moveDown" flags="mr" />
 	</map>
@@ -54,12 +54,14 @@
 		<key id="KEY_EPG" mapto="showEventInfoPlugin" flags="m" />
 	</map>
 	
+	
+	
 	<map context="InfobarInstantRecord">
 		<key id="KEY_RECORD" mapto="instantRecord" flags="m" />
 	</map>
 
 	<map context="InfobarExtensions">
-		<key id="KEY_RED" mapto="extensions" flags="m" />
+		<!--key id="KEY_RED" mapto="extensions" flags="m" /-->
 	</map>
 	
 	<map context="InfobarChannelSelection">
@@ -70,6 +72,7 @@
 		<key id="KEY_REWIND" mapto="historyBack" flags="mr" />
 		<key id="KEY_FASTFORWARD" mapto="historyNext" flags="mr" />
 		<key id="KEY_OK" mapto="openServiceList" flags="m" />
+        <key id="KEY_FAVORITES" mapto="openServiceListFAV" flags="m" />
 	</map>
 	
 	<map context="MinuteInputActions">
@@ -131,37 +134,48 @@
 	<map context="InfobarActions">
 		<key id="KEY_PLAY" mapto="showMovies" flags="m" />
 		<key id="KEY_ARCHIVE" mapto="showMovies" flags="m" />
-		<key id="KEY_BLUE" mapto="toogleTvRadio" flags="m" />
+		<!--key id="KEY_BLUE" mapto="toogleTvRadio" flags="m" /-->
 		<key id="KEY_TV2" mapto="toogleTvRadio" flags="m" />
 
     <key id="KEY_RIGHT" mapto="volumeUp" flags="mr" />
     <key id="KEY_LEFT" mapto="volumeDown" flags="mr" />
     
-		<!--key id="KEY_BLUE" mapto="showTv" flags="m" /-->
+		<!--key id="KEY_BLUE" mapto="showTv" flags="b" /-->
 	</map>
 
 
 	<map context="InfobarExtendedAudioSelectionActions">
-		<key id="KEY_YELLOW" mapto="audioSelection" flags="m" />
+		<!--key id="KEY_YELLOW" mapto="audioSelection" flags="m" /-->
 	</map>
 
 	<map context="InfobarAudioSelectionActions">
-		<key id="KEY_YELLOW" mapto="audioSelection" flags="m" />
+		<key id="KEY_AUDIO" mapto="audioSelection" flags="m" />
 		<key id="KEY_LANGUAGE" mapto="audioSelection" flags="m" />
 	</map>
 
 	<map context="InfobarAspectSelectionActions">
-		<key id="KEY_GREEN" mapto="aspectSelection" flags="m" />
+		<key id="KEY_F1" mapto="aspectSelection" flags="m" />
 		<key id="KEY_SUBTITLE" mapto="aspectSelection" flags="m" />
 	</map>
 
-	<map context="InfobarSubserviceQuickzapActions">
-		<key id="KEY_HOME" mapto="exit" flags="m" />
+	<map context="InfobarSubserviceSelectionActions">
+		<key id="KEY_GREEN" mapto="subserviceSelection" flags="b" />
+		<key id="KEY_VOLUMEUP" mapto="volumeUp" flags="mr" />
+		<key id="KEY_VOLUMEDOWN" mapto="volumeDown" flags="mr" />
+		<key id="KEY_BLUE" mapto="blue" flags="b" />
 	</map>
 
-	<map context="PowerKeyActions">
-		<key id="KEY_POWER" mapto="power_long" flags="m" />
+	<map context="InfobarSubserviceQuickzapActions">
+		<key id="KEY_PREVIOUS" mapto="prevSubservice" flags="m" />
+		<key id="KEY_NEXT" mapto="nextSubservice" flags="m" />
+		<key id="KEY_BACK" mapto="prevSubservice" flags="m" />
+		<key id="KEY_FORWARD" mapto="nextSubservice" flags="m" />
+		<key id="KEY_EXIT" mapto="exit" flags="m" />
+		<key id="KEY_HOME" mapto="exit" flags="m" />
+
 	</map>
+
+
 	
 	<map context="NumberActions">
 		<key id="KEY_1" mapto="1" flags="m" />
@@ -173,7 +187,7 @@
 		<key id="KEY_7" mapto="7" flags="m" />
 		<key id="KEY_8" mapto="8" flags="m" />
 		<key id="KEY_9" mapto="9" flags="m" />
-		<key id="KEY_0" mapto="0" flags="m" />
+		<key id="KEY_BACK" mapto="0" flags="m" />
 	</map>
 
 	<map context="TextEntryActions">
@@ -248,7 +262,8 @@
 	</map>
 	
 	<map context="InfobarTeletextActions">
-		<key id="KEY_TEXT" mapto="startTeletext" flags="m" />
+		<key id="KEY_SAT" mapto="startTeletext" flags="m" />
+		<key id="KEY_EXIT" mapto="exit" flags="m" />
 	</map>
 
 	<map context="InfobarRdsActions">
@@ -267,7 +282,7 @@
 		<key id="KEY_RED" mapto="showAllServices" flags="m" />
 		<key id="KEY_GREEN" mapto="showSatellites" flags="m" />
 		<key id="KEY_YELLOW" mapto="showProviders" flags="m" />
-		<key id="KEY_BLUE" mapto="showFavourites" flags="m" />
+		<key id="KEY_BLUE" mapto="showFavourites" flags="b" />
 		<key id="KEY_FAVORITES" mapto="showFavourites" flags="m" />
 		<key id="KEY_REWIND" mapto="prevBouquet" flags="m" />
 		<key id="KEY_FASTFORWARD" mapto="nextBouquet" flags="m" />
@@ -316,7 +331,7 @@
 	
 	<map context="EventViewEPGActions">
 		<key id="KEY_YELLOW" mapto="openSingleServiceEPG" flags="m" />
-		<key id="KEY_BLUE" mapto="openMultiServiceEPG" flags="m" />
+		<key id="KEY_BLUE" mapto="openMultiServiceEPG" flags="b" />
 	</map>
 
 	<map context="OkCancelActions">
@@ -438,11 +453,14 @@
 	</map>
 
   <map context="GlobalActions">
-    <key id="KEY_RIGHT" mapto="volumeUp" flags="mr" />
-    <key id="KEY_LEFT" mapto="volumeDown" flags="mr" />
+    <key id="KEY_NEXT" mapto="volumeUp" flags="mr" />
+    <key id="KEY_PREVIOUS" mapto="volumeDown" flags="mr" />
     <key id="KEY_MUTE" mapto="volumeMute" flags="mr" />
-    <key id="KEY_POWER" mapto="power_long" flags="l" />
-    <key id="KEY_POWER" mapto="power_down" flags="m" />
-    <key id="KEY_POWER" mapto="power_up" flags="b" />
+    <key id="KEY_POWER" mapto="power_long" flags="m" />
   </map>
+  
+  <map context="PowerKeyActions">
+		<key id="KEY_POWER" mapto="powerdown" flags="m" />
+	</map>
+	
 </keymap>

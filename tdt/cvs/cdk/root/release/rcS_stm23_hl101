@@ -2,24 +2,18 @@
 
 MODDIR=/lib/modules
 echo "init frontpanel"
-insmod $MODDIR/proton.ko
+insmod $MODDIR/proton.ko gmt=+400
 insmod $MODDIR/simu_button.ko
-
+   echo "ОЖИДАЙТЕ" > /dev/vfd
+   echo "WAIT 1 min"
 if [ -e /var/etc/.firstboot ]; then
-   echo "WAIT 3 min" > /dev/vfd
-   echo "WAIT 3 min"
    rm /var/etc/.firstboot
    touch /dev/.devfsd
 fi
 
 /etc/init.d/mountvirtfs start
-/etc/init.d/portmap start
 
 insmod $MODDIR/e2_proc.ko
-
-# start automounter with umount timeout of 5 seconds
-insmod $MODDIR/autofs4.ko
-/usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
 
 if [ ! -e /var/etc/.firstboot ]; then
 
@@ -27,19 +21,12 @@ if [ ! -e /var/etc/.firstboot ]; then
    /etc/init.d/mountall start
    /etc/init.d/hostname start
 
-   echo "starting telnetd"
-   /usr/sbin/telnetd -l /bin/autologin
-
    echo "init stmfb"
    insmod $MODDIR/stmcore-display-stx7109c3.ko
    insmod $MODDIR/stmfb.ko display0=1280x720-32@50:12m:pal:yuv:yuv
 
    echo "LOADING MODULES"
-   echo "LOADING" >/dev/vfd
-
-   if [ ! -e /boot/audio.elf ]; then
-      echo "FW MISSING!!!"
-   fi
+   echo "ЗАГРУЗКА" >/dev/vfd
 
    echo "load a firmware"
    /bin/ustslave /dev/st231-1 /boot/audio.elf
@@ -54,49 +41,31 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "init AVS"
    insmod $MODDIR/avs.ko type=stv6418
-
-   player=`cat /proc/stb/player/version`
-   player=`cat /proc/stb/player/version | awk '{ print substr( $0, length($0) - 2, length($0) ) }'`
-   echo "init player $player"
-
    insmod $MODDIR/mmelog.ko
-   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
+   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER1;
    insmod $MODDIR/ksound.ko
+   insmod $MODDIR/kreplay.ko
+   insmod $MODDIR/silencegen.ko
    insmod $MODDIR/p2div64.ko
    insmod $MODDIR/stm_v4l2.ko
-   if [ $player -gt 131 ]; then
-	insmod $MODDIR/stmvout.ko
-	insmod $MODDIR/stmvbi.ko
-   fi
    insmod $MODDIR/pseudocard.ko
    
    echo "init frontends"
-   insmod $MODDIR/fe-core.ko demod=stb0899 tuner=stb6100 ;
+   insmod $MODDIR/fe-core.ko demod=stv090x tuner=stv6110x
 
    echo "init drivers"
    insmod $MODDIR/cimax.ko
-   insmod $MODDIR/pti.ko
-
-   if [ $player -gt 131 ]; then
-	insmod $MODDIR/pti.ko
-	insmod $MODDIR/stm_monitor.ko
-	insmod $MODDIR/stmsysfs.ko
-    	insmod $MODDIR/stmdvb.ko
-   else
-	insmod $MODDIR/pti.ko
-	insmod $MODDIR/stmdvb.ko
-	insmod $MODDIR/stm_monitor.ko
-   fi	
-
-   insmod $MODDIR/player2.ko
+   insmod $MODDIR/pti.ko waitMS=30 videoMem=4096
+   insmod $MODDIR/stm_monitor.ko
+   insmod $MODDIR/stmdvb.ko
+   insmod $MODDIR/player2.ko discardlateframe=0
    insmod $MODDIR/sth264pp.ko
    insmod $MODDIR/stmalloc.ko
    insmod $MODDIR/platform.ko
-   insmod $MODDIR/smartcard.ko
+   insmod $MODDIR/smartcard.ko debug=1
 
-   showiframe -p /boot/bootlogo.mvi &
-   stfbcontrol a 0
-
+   showiframe -p /boot/RUnigmaHD-VIP-start.mvi &
+   
    echo "init lircd"
    /usr/bin/lircd
 
@@ -110,52 +79,57 @@ if [ ! -e /var/etc/.firstboot ]; then
    /etc/init.d/hostname start
 
    echo "starting telnetd"
-   /usr/sbin/telnetd -l /bin/autologin
+   /usr/sbin/telnetd -l /bin/login
    /etc/init.d/vsftpd start
    /usr/sbin/inetd
-
-   NFS=`grep -c nfs /proc/cmdline`
-   if [ "$NFS" -eq "1" ]; then 
-      echo "Booting from nfs, don't set network" 
-   else 
-      if [ -e /etc/network/interfaces ]; then 
+ 
+   if [ -e /etc/network/interfaces ]; then 
 	 ip addr flush eth0 
 	 /etc/init.d/networking stop 
 	 DHCP=`grep -c dhcp /etc/network/interfaces`
-	 if [ "$DHCP" -eq "1" ]; then 
+   if [ "$DHCP" -eq "1" ]; then 
 	    echo "Starting dhcp"
             /etc/init.d/udhcpc start 
-	 fi 
+   fi 
 	 /etc/init.d/networking start 
-      fi 
-   fi
+   fi 
 
-   echo "run app" > /dev/vfd
-   echo "LOADING E2"
+   touch /dev/.udev
+
+   echo "РУНИГМА" > /dev/vfd
+   echo "LOADING RUNIGMA"
 
    until false
    do
-      echo "starting e2->"
+      echo "starting enigma2->"
+	  /usr/sbin/ntpdate ru.pool.ntp.org &
+	  /var/bin/emustarter.sh &
+	  /var/bin/opkg.sh &
+	  /hdd/epg.conf &
       /usr/local/bin/enigma2
       rtv=$?
       echo "e2 ended <- RTV: " $rtv
       case "$rtv" in
 		0) echo "0"
 		   echo "E2 ERROR"
-		   init 6;;
+           echo "0" > /proc/progress
+		   showiframe -p /boot/RUnigmaHD-VIP-restartGUI.mvi &;;
 		1) echo "1"
 		   echo "SHUTDOWN"
-		   init 0;;
+		   /bin/shutdown.sh;;
 		2) echo "2"
 		   echo "REBOOT"
-		   init 6;;
+		   /etc/init.d/reboot
+           showiframe -p /boot/RUnigmaHD-VIP-restart.mvi &
+           /etc/init.d/reboot;;
 		3) echo "3"
 		   echo "E2 RESTART"
 		   echo "0" > /proc/progress
-		   showiframe -p /boot/bootlogo.mvi &;;
+		   showiframe -p /boot/RUnigmaHD-VIP-restartGUI.mvi &;;
 		*) echo "*"
 		   echo "ERROR"
-		   init 6;;
+           echo "0" > /proc/progress
+		   showiframe -p /boot/RUnigmaHD-VIP-restartGUI.mvi &;;
       esac
    done 
 fi
@@ -163,5 +137,4 @@ fi
 #never reached
 echo "REBOOT HL101" > /dev/vfd
 echo "REBOOT HL101"
-reboot
-
+reboot 

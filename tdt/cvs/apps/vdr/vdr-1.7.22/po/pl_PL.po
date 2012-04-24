@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.6.0\n"
 "Report-Msgid-Bugs-To: <vdr-bugs@tvdr.de>\n"
-"POT-Creation-Date: 2011-12-21 22:29+0100\n"
+"POT-Creation-Date: 2012-04-17 00:14+0200\n"
 "PO-Revision-Date: 2008-03-09 12:59+0100\n"
 "Last-Translator: Michael Rakowski <mrak@gmx.de>\n"
 "Language-Team: Polish <vdr@linuxtv.org>\n"
@@ -1259,6 +1259,9 @@ msgstr "Do góry/Na dó³ na now± pozycjê - Ok zatwierdza"
 
 msgid "Channel locked (recording)!"
 msgstr "Kana³ zablokowany (trwa nagrywanie)!"
+
+msgid "ERROR: [recorder.c] video data stream broken"
+msgstr ""
 
 msgid "Low disk space!"
 msgstr "Ma³o miejsca na dysku!"

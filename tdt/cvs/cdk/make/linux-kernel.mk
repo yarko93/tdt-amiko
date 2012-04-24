@@ -467,7 +467,10 @@ COMMONPATCHES_24 = \
 		$(if $(P0207),linux-sh4-ehci_stm24$(PATCH_STR).patch) \
 		linux-ftdi_sio.c_stm24$(PATCH_STR).patch \
 		linux-sh4-lzma-fix_stm24$(PATCH_STR).patch \
-		linux-tune_stm24.patch
+		linux-tune_stm24.patch \
+		$(if $(P0209),linux-sh4-dwmac_stm24_0209.patch) \
+		$(if $(P0207),linux-sh4-sti7100_missing_clk_alias_stm24$(PATCH_STR).patch)
+
 
 TF7700PATCHES_24 = $(COMMONPATCHES_24) \
 		linux-sh4-tf7700_setup_stm24$(PATCH_STR).patch \
@@ -477,6 +480,8 @@ TF7700PATCHES_24 = $(COMMONPATCHES_24) \
 		linux-sh4-sata-v06_stm24$(PATCH_STR).patch
 
 UFS910PATCHES_24 = $(COMMONPATCHES_24) \
+		$(if $(P0209)$(P0210),linux-sh4-mmap_stm24.patch) \
+		$(if $(P0209)$(P0210),linux-sh4-remove_pcm_reader_stm24.patch) \
 		stx7100_fdma_fix_stm24$(PATCH_STR).patch \
 		sata_32bit_fix_stm24$(PATCH_STR).patch \
 		sata_stx7100_B4Team_fix_stm24$(PATCH_STR).patch \
@@ -545,7 +550,8 @@ SPARK_PATCHES_24 = $(COMMONPATCHES_24) \
 		linux-sh4-spark_setup_stm24$(PATCH_STR).patch \
 		$(if $(P0207),linux-sh4-i2c-stm-downgrade_stm24$(PATCH_STR).patch) \
 		$(if $(P0209),linux-sh4-linux_yaffs2_stm24_0209.patch) \
-		linux-sh4-lirc_stm.patch
+		$(if $(P0207)$(P0209),linux-sh4-lirc_stm.patch) \
+		$(if $(P0210),linux-sh4-lirc_stm_stm24$(PATCH_STR).patch)
 
 SPARK7162_PATCHES_24 = $(COMMONPATCHES_24) \
 		linux-sh4-stmmac_stm24$(PATCH_STR).patch \
@@ -557,9 +563,11 @@ FORTISPATCHES_24 = $(COMMONPATCHES_24) \
 		linux-usbwait123_stm24.patch \
 		linux-sh4-stmmac_stm24$(PATCH_STR).patch \
 		linux-sh4-i2c-st40-pio_stm24$(PATCH_STR).patch \
-		$(if $(P0207),linux-sh4-fortis_hdbox_i2c_st40_stm24$(PATCH_STR).patch)
+		$(if $(P0207),linux-sh4-fortis_hdbox_i2c_st40_stm24$(PATCH_STR).patch) \
+		$(if $(P0209),linux-sh4-fortis_hdbox_i2c_st40_stm24$(PATCH_STR).patch)
 
 ADB_BOXPATCHES_24 = $(COMMONPATCHES_24) \
+		$(if $(P0209)$(P0210),linux-sh4-mmap_stm24.patch) \
 		stx7100_fdma_fix_stm24$(PATCH_STR).patch \
 		sata_32bit_fix_stm24$(PATCH_STR).patch \
 		linux-sh4-adb_box_setup_stm24$(PATCH_STR).patch \

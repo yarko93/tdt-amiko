@@ -9,6 +9,7 @@
 
 # remote control receiver plugin
 remote -i /dev/input/event0
+remote -i /dev/input/event1
 
 # UFS9xx front panel display
 vfd

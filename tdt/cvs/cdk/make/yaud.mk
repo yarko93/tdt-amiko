@@ -28,7 +28,7 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%$(BASE_PASSWD) \
 		%$(MAKEDEV) \
 		%$(BASE_FILES) \
-		%module-init-tools \
+		%module_init_tools \
 		%busybox \
 		\
 		%libz \
@@ -90,7 +90,7 @@ yaud-vdr: yaud-none stslave openssl openssl-dev \
 		boot-elf misc-cp remote firstboot vdr release_vdr
 	@TUXBOX_YAUD_CUSTOMIZE@
 
-yaud-vdrdev2: yaud-none stslave openssl openssl-dev \
+yaud-vdrdev2: yaud-none stslave lirc openssl openssl-dev \
 		boot-elf misc-cp remote firstboot vdrdev2 release_vdrdev2
 	@TUXBOX_YAUD_CUSTOMIZE@
 
@@ -137,7 +137,7 @@ yaud-enigma1-hd: yaud-none lirc stslave\
 endif
 
 yaud-enigma2-pli-nightly: yaud-none host-python lirc \
-		boot-elf remote firstboot enigma2-pli-nightly enigma2-misc release
+		boot-elf remote firstboot enigma2-pli-nightly enigma2-misc enigma2-plugins release
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 yaud-none: \

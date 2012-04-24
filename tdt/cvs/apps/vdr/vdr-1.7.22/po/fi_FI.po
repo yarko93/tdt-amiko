@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.6.0\n"
 "Report-Msgid-Bugs-To: <vdr-bugs@tvdr.de>\n"
-"POT-Creation-Date: 2011-12-21 22:29+0100\n"
+"POT-Creation-Date: 2012-04-17 00:14+0200\n"
 "PO-Revision-Date: 2007-08-15 15:52+0200\n"
 "Last-Translator: Rolf Ahrenberg <rahrenbe@cc.hut.fi>\n"
 "Language-Team: Finnish <vdr@linuxtv.org>\n"
@@ -1261,6 +1261,9 @@ msgstr "'Ylös/Alas' uusi paikka - 'OK' hyväksy"
 
 msgid "Channel locked (recording)!"
 msgstr "Kanava lukittu (tallennus käynnissä)!"
+
+msgid "ERROR: [recorder.c] video data stream broken"
+msgstr ""
 
 msgid "Low disk space!"
 msgstr "Tallennustila loppumassa!"
