@@ -62,6 +62,7 @@ for lm in fm:
 			ra = la.split(';')
 			#print ra
 			if len(ra) < 1: continue
+			ra[0] = ra[0].strip()
 			if len(ra) == 1: ra += [default_url]
 			if dep != ra[0]: continue
 			src = ra[1]+'/'+ra[0]
