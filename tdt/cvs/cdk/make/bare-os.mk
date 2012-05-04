@@ -127,7 +127,7 @@ BINUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BINUTILS)-$(BINUTILS_VERSION).sh4.rpm
 BINUTILS_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BINUTILS_DEV)-$(BINUTILS_VERSION).sh4.rpm
 
 $(BINUTILS_RPM) $(BINUTILS_DEV_RPM): \
-		$(if $(BINUTILS_SPEC_PATCH),Patches/$(BINUTILS_PATCH)) \
+		$(if $(BINUTILS_SPEC_PATCH),Patches/$(BINUTILS_SPEC_PATCH)) \
 		$(if $(BINUTILS_PATCHES),$(BINUTILS_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX:%23=%24)-target-$(BINUTILS)-$(BINUTILS_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
@@ -203,9 +203,9 @@ endif !STM23
 MPFR_RPM := RPMS/sh4/$(STLINUX)-sh4-$(MPFR)-$(MPFR_VERSION).sh4.rpm
 
 $(MPFR_RPM): \
-		$(GMP) \
 		$(addprefix Patches/,$(MPFR_SPEC_PATCH) $(MPFR_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(MPFR)-$(MPFR_VERSION).src.rpm
+		$(archivedir)/$(STLINUX:%23=%24)-target-$(MPFR)-$(MPFR_VERSION).src.rpm \
+		| $(DEPDIR)/$(GMP)
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(MPFR_SPEC_PATCH),( cd SPECS && patch -p1 $(MPFR_SPEC) < $(buildprefix)/Patches/$(MPFR_SPEC_PATCH) ) &&) \
 	$(if $(MPFR_PATCHES),cp $(addprefix Patches/,$(MPFR_PATCHES)) SOURCES/ &&) \
@@ -231,9 +231,9 @@ MPC_PATCHES := stm-target-$(MPC).$(MPC_VERSION).diff
 MPC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(MPC)-$(MPC_VERSION).sh4.rpm
 
 $(MPC_RPM): \
-		$(MPFR) \
 		$(addprefix Patches/,$(MPC_SPEC_PATCH) $(MPC_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(MPC)-$(MPC_VERSION).src.rpm
+		$(archivedir)/$(STLINUX:%23=%24)-target-$(MPC)-$(MPC_VERSION).src.rpm \
+		| $(DEPDIR)/$(MPFR)
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(MPC_SPEC_PATCH),( cd SPECS && patch -p1 $(MPC_SPEC) < $(buildprefix)/Patches/$(MPC_SPEC_PATCH) ) &&) \
 	$(if $(MPC_PATCHES),cp $(addprefix Patches/,$(MPC_PATCHES)) SOURCES/ &&) \
