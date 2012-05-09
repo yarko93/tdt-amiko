@@ -2,11 +2,11 @@
 
 start()
 {
-  echo "mdev" >/dev/vfd
   # Check if started on target or on host
   MACHINE=`uname -m`
   if [ $MACHINE == "sh4" ]; then
-   cd /dev
+    echo "mdev" >/dev/vfd
+    cd /dev
     MAKEDEV="./MAKEDEV -p /etc/passwd -g /etc/group"
     HOST=`cat /etc/hostname`
   else
