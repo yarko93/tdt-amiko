@@ -116,10 +116,11 @@ $(DEPDIR)/freetype: \
 $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 	cd @DIR_freetype@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < builds/unix/freetype-config > $(crossprefix)/bin/freetype-config && \
-		@INSTALL_freetype@
 		chmod 755 $(crossprefix)/bin/freetype-config && \
 		ln -sf $(crossprefix)/bin/freetype-config $(crossprefix)/bin/$(target)-freetype-config && \
-		ln -sf $(targetprefix)/usr/include/freetype2/freetype $(targetprefix)/usr/include/freetype
+		ln -sf $(targetprefix)/usr/include/freetype2/freetype $(targetprefix)/usr/include/freetype && \
+		@INSTALL_freetype@
+		rm -f $(targetprefix)/usr/bin/freetype-config
 #	@DISTCLEANUP_freetype@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -213,9 +214,10 @@ $(DEPDIR)/min-libpng $(DEPDIR)/std-libpng $(DEPDIR)/max-libpng \
 $(DEPDIR)/libpng: \
 $(DEPDIR)/%libpng: $(DEPDIR)/libpng.do_compile
 	cd @DIR_libpng@ && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < libpng-config > $(crossprefix)/bin/libpng-config && \
+		chmod 755 $(crossprefix)/bin/libpng-config && \
 		@INSTALL_libpng@
-#		sed -e "s,^prefix=\",prefix=\"$(targetprefix)," < libpng-config > $(targetprefix)/usr/bin/libpng-config
-#		ln -s $(targetprefix)/usr/bin/libpng-config $(hostprefix)/bin/libpng-config
+		rm -f $(targetprefix)/usr/bin/libpng*-config
 #	@DISTCLEANUP_libpng@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -295,10 +297,10 @@ $(DEPDIR)/min-curl $(DEPDIR)/std-curl $(DEPDIR)/max-curl \
 $(DEPDIR)/curl: \
 $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
 	cd @DIR_curl@ && \
-		sed -e "s,^prefix=,prefix=$(targetprefix)," < curl-config > $(hostprefix)/bin/curl-config && \
-		chmod 755 $(hostprefix)/bin/curl-config && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < curl-config > $(crossprefix)/bin/curl-config && \
+		chmod 755 $(crossprefix)/bin/curl-config && \
 		@INSTALL_curl@
-	rm -f $(targetprefix)/usr/bin/curl-config
+		rm -f $(targetprefix)/usr/bin/curl-config
 #	@DISTCLEANUP_curl@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -779,7 +781,7 @@ $(DEPDIR)/libdvdnav.do_compile: bootstrap libdvdread libdvdnav.do_prepare
 			--prefix=/usr \
 			--enable-static \
 			--enable-shared \
-			--with-dvdread-config=$(targetprefix)/usr/bin/dvdread-config && \
+			--with-dvdread-config=$(crossprefix)/bin/dvdread-config && \
 		$(MAKE) all
 	touch $@
 
@@ -787,7 +789,10 @@ $(DEPDIR)/min-libdvdnav $(DEPDIR)/std-libdvdnav $(DEPDIR)/max-libdvdnav \
 $(DEPDIR)/libdvdnav: \
 $(DEPDIR)/%libdvdnav: libdvdnav.do_compile
 	cd @DIR_libdvdnav@ && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < misc/dvdnav-config > $(crossprefix)/bin/dvdnav-config && \
+		chmod 755 $(crossprefix)/bin/dvdnav-config && \
 		@INSTALL_libdvdnav@
+		rm -f $(targetprefix)/usr/bin/dvdnav-config
 #	@DISTCLEANUP_libdvdnav@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -813,22 +818,16 @@ $(DEPDIR)/libdvdread.do_compile: bootstrap libdvdread.do_prepare
 			--enable-shared \
 			--prefix=/usr && \
 		$(MAKE) all
-	echo '#!/bin/sh' > $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
-	echo 'prefix='$(targetprefix)/usr >> $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
-	echo 'libdir='$(targetprefix)/usr/lib >> $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
-	echo >> $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
-	cat $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config.sh >> $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
-	chmod 0755 $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
 	touch $@
 
 $(DEPDIR)/min-libdvdread $(DEPDIR)/std-libdvdread $(DEPDIR)/max-libdvdread \
 $(DEPDIR)/libdvdread: \
 $(DEPDIR)/%libdvdread: libdvdread.do_compile
 	cd @DIR_libdvdread@ && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < misc/dvdread-config > $(crossprefix)/bin/dvdread-config && \
+		chmod 755 $(crossprefix)/bin/dvdread-config && \
 		@INSTALL_libdvdread@
-	sed 's!/usr/lib!$(targetprefix)/usr/lib!g' $(targetprefix)/usr/lib/libdvdread.la > $(targetprefix)/usr/lib/libdvdread.la1
-	cp $(targetprefix)/usr/lib/libdvdread.la1 $(targetprefix)/usr/lib/libdvdread.la
-	rm $(targetprefix)/usr/lib/libdvdread.la1
+		rm -f $(targetprefix)/usr/bin/dvdread-config
 #	@DISTCLEANUP_libdvdread@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -1049,7 +1048,7 @@ $(DEPDIR)/enchant.do_compile: $(DEPDIR)/enchant.do_prepare
 	cd @DIR_enchant@ && \
 	libtoolize -f -c && \
 	autoreconf --verbose --force --install -I$(hostprefix)/share/aclocal && \
-	$(BUILDENV)  \
+	$(BUILDENV) \
 	./configure --disable-aspell --disable-ispell --disable-myspell --disable-zemberek \
 		--host=$(target) \
 		--prefix=/usr && \
