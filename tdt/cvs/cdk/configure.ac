@@ -887,6 +887,7 @@ TUXBOX_RULES_MAKE(pppd)
 TUXBOX_RULES_MAKE(sysstat)
 TUXBOX_RULES_MAKE(hotplug_e2)
 TUXBOX_RULES_MAKE(autofs)
+TUXBOX_RULES_MAKE(imagemagick)
 
 #
 # contrib apps with smart rules
@@ -949,6 +950,18 @@ TUXBOX_RULES_MAKE(tuxtxtlib)
 TUXBOX_RULES_MAKE(tuxtxt32bpp)
 TUXBOX_RULES_MAKE(libdreamdvd)
 TUXBOX_RULES_MAKE(libdreamdvd2)
+TUXBOX_RULES_MAKE(libmpeg2)
+TUXBOX_RULES_MAKE(libsamplerate)
+TUXBOX_RULES_MAKE(libvorbis)
+TUXBOX_RULES_MAKE(libmodplug)
+TUXBOX_RULES_MAKE(tiff)
+TUXBOX_RULES_MAKE(lzo)
+TUXBOX_RULES_MAKE(yajl)
+TUXBOX_RULES_MAKE(libpcre)
+TUXBOX_RULES_MAKE(libcdio)
+TUXBOX_RULES_MAKE(jasper)
+TUXBOX_RULES_MAKE(mysql)
+TUXBOX_RULES_MAKE(libmicrohttpd)
 
 #
 # python

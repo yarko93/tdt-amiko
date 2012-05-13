@@ -74,7 +74,7 @@ pppd;2.4.5;ppp-2.4.5;ppp-2.4.5.tar.gz;extract:ppp-2.4.5.tar.gz
 sysstat;10.0.4;sysstat-10.0.4;sysstat-10.0.4.tar.gz;extract:sysstat-10.0.4.tar.gz
 hotplug_e2;1.0;hotplug-e2-helper;;
 autofs;4.1.4;autofs-4.1.4;autofs-4.1.4.tar.gz;extract:autofs-4.1.4.tar.gz;patch:autofs-4.1.4-misc-fixes.patch;patch:autofs-4.1.4-multi-parse-fix.patch;patch:autofs-4.1.4-non-replicated-ping.patch;patch:autofs-4.1.4-locking-fix-1.patch;patch:autofs-4.1.4-cross.patch;patch:autofs-4.1.4-Makefile.rules-cross.patch;patch:autofs-4.1.4-install.patch;patch:autofs-4.1.4-auto.net-sort-option-fix.patch;patch:autofs-4.1.4-autofs-additional-distros.patch;patch:autofs-4.1.4-no-bash.patch;patch:autofs-4.1.4-autofs-add-hotplug.patch;patch:autofs-4.1.4-no_man.patch
-#autofs;3.1.7;autofs-3.1.7;autofs-3.1.7.tar.gz;extract:autofs-3.1.7.tar.gz;patch:autofs-3.1.7-stm.patch;patch:autofs-4.0.0-open_max.patch;patch:autofs-3.1.7-labelfix.patch;patch:autofs-3.1.7-timeout.patch;patch:autofs-3.1.7-no_man.patch
+imagemagick;6.7.6-9;ImageMagick-6.7.6-9;ImageMagick-6.7.6-9.tar.bz2;extract:ImageMagick-6.7.6-9.tar.bz2
 #
 # contrib libs
 #
@@ -107,7 +107,8 @@ webkitdfb;2010-11-18;webkitdfb_2010-11-18;webkitdfb_2010-11-18.tar.gz:webkitdfb.
 icu4c;4_4_1;icu/source;icu4c-4_4_1-src.tgz:icu4c-4_4_1_locales.patch;extract:icu4c-4_4_1-src.tgz
 enchant;1.5.0;enchant-1.5.0;enchant-1.5.0.tar.gz;extract:enchant-1.5.0.tar.gz
 lite;0.9.0;lite-0.9.0+git0.7982ccc;lite-0.9.0+git0.7982ccc.tar.bz2;extract:lite-0.9.0+git0.7982ccc.tar.bz2
-sqlite;3.6.0;sqlite-3.6.0;sqlite-3.6.0.tar.gz;extract:sqlite-3.6.0.tar.gz
+#sqlite;3.6.0;sqlite-3.6.0;sqlite-3.6.0.tar.gz;extract:sqlite-3.6.0.tar.gz
+sqlite;3.7.11;sqlite-autoconf-3071100;sqlite-autoconf-3071100.tar.gz;extract:sqlite-autoconf-3071100.tar.gz
 libsoup;2.33.90;libsoup-2.33.90;libsoup-2.33.90.tar.gz;extract:libsoup-2.33.90.tar.gz
 pixman;0.18.0;pixman-0.18.0;pixman-0.18.0.tar.gz;extract:pixman-0.18.0.tar.gz
 cairo;1.8.10;cairo-1.8.10;cairo-1.8.10.tar.gz;extract:cairo-1.8.10.tar.gz;patch:cairo-1.8.10.diff
@@ -134,6 +135,18 @@ tuxtxtlib;1.0;libtuxtxt;libtuxtxt.git:libtuxtxt-1.0-fix_dbox_headers.diff;extrac
 tuxtxt32bpp;1.0;tuxtxt;libtuxtxt.git:tuxtxt32bpp-1.0-fix_dbox_headers.diff;extract:libtuxtxt.git/tuxtxt;patch:tuxtxt32bpp-1.0-fix_dbox_headers.diff
 libdreamdvd;1.0;libdreamdvd;;link:../apps/misc/tools/libdreamdvd:libdreamdvd
 libdreamdvd2;1.0;libdreamdvd;;patch:libdreamdvd-1.0-support_sh4.patch
+libmpeg2;0.5.1;libmpeg2-0.5.1;libmpeg2-0.5.1.tar.gz;extract:libmpeg2-0.5.1.tar.gz
+libsamplerate;0.1.8;libsamplerate-0.1.8;libsamplerate-0.1.8.tar.gz;extract:libsamplerate-0.1.8.tar.gz
+libvorbis;1.3.2;libvorbis-1.3.2;libvorbis-1.3.2.tar.bz2;extract:libvorbis-1.3.2.tar.bz2
+libmodplug;0.8.8.4;libmodplug-0.8.8.4;libmodplug-0.8.8.4.tar.gz;extract:libmodplug-0.8.8.4.tar.gz
+tiff;4.0.1;tiff-4.0.1;tiff-4.0.1.tar.gz;extract:tiff-4.0.1.tar.gz
+lzo;2.06;lzo-2.06;lzo-2.06.tar.gz;extract:lzo-2.06.tar.gz
+yajl;2.0.1;yajl-2.0.1;yajl.git;extract:yajl.git
+libpcre;8.30;pcre-8.30;pcre-8.30.tar.bz2;extract:pcre-8.30.tar.bz2
+libcdio;0.83;libcdio-0.83;libcdio-0.83.tar.gz;extract:libcdio-0.83.tar.gz
+jasper;1.900.1;jasper-1.900.1;jasper-1.900.1.zip;extract:jasper-1.900.1.zip
+mysql;5.1.40;mysql-5.1.40;mysql-5.1.40.tar.gz;extract:mysql-5.1.40.tar.gz
+libmicrohttpd;0.9.19;libmicrohttpd-0.9.19;libmicrohttpd-0.9.19.tar.gz;extract:libmicrohttpd-0.9.19.tar.gz
 
 #
 # PYTHON

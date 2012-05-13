@@ -21,7 +21,7 @@ libtool;make:install
 busybox;make:install:CONFIG_PREFIX=TARGETS;shellconfigadd:/bin/ash:5
 lsb;install:-d:TARGETS/lib/lsb;install:-m644:init-functions:TARGETS/lib/lsb
 ipkg;make:install:DESTDIR=TARGETS
-module_init_tools;make:INSTALL=install:install:sbin_PROGRAMS="depmod modinfo":bin_PROGRAMS=:DESTDIR=TARGETS
+module_init_tools;make:INSTALL=install:install:sbin_PROGRAMS="depmod modinfo":bin_PROGRAMS=:mandir=/usr/share/man:DESTDIR=TARGETS
 
 #
 # contrib apps
@@ -44,10 +44,11 @@ fbset;install:-d:-m755:TARGETS/{usr/sbin,etc};install:-m755:fbset:TARGETS/usr/sb
 pngquant;install:-m755:pngquant:TARGETS/usr/bin
 mplayer;make:install INSTALLSTRIP="":DESTDIR=TARGETS
 mencoder;make:install INSTALLSTRIP="":DESTDIR=TARGETS
-jfsutils;make:install:prefix=TARGETS
 pppd;make:install:DESTDIR=TARGETS
+jfsutils;make:install:mandir=/usr/share/man:DESTDIR=TARGET
 opkg;rewrite-pkgconfig:libopkg.pc;make:install:DESTDIR=TARGETS;link:/usr/bin/opkg-cl:TARGETS/usr/bin/opkg;mkdir:TARGETS/var/opkg;rewrite-libtool:TARGETS/usr/lib/libopkg.la
 sysstat;make:install:DESTDIR=TARGETS
+imagemagick;rewrite-pkgconfig:magick/ImageMagick.pc:magick/MagickCore.pc:wand/MagickWand.pc:wand/Wand.pc:Magick++/lib/ImageMagick++.pc:Magick++/lib/Magick++.pc;make:install:prefix=/usr:DESTDIR=TARGET;rewrite-libtool:TARGET/usr/lib/libMagickCore.la:TARGET/usr/lib/libMagickWand.la:TARGET/usr/lib/libMagick++.la
 #
 # contrib libs
 #
@@ -104,6 +105,17 @@ tuxtxt32bpp;make:install:prefix=/usr:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr
 libdreamdvd;rewrite-pkgconfig:libdreamdvd.pc;make:install:prefix=/usr:DESTDIR=TARGETS
 libdreamdvd2;rewrite-pkgconfig:libdreamdvd.pc;make:install:prefix=/usr:DESTDIR=TARGETS
 hotplug_e2;make:install:prefix=/usr:DESTDIR=TARGETS
+libpcre;rewrite-pkgconfig:libpcre.pc:libpcrecpp.pc:libpcreposix.pc;make:install:prefix=/usr:DESTDIR=TARGET;rewrite-libtool:TARGET/usr/lib/libpcre.la:TARGET/usr/lib/libpcreposix.la
+libmpeg2;make:install:prefix=/usr:DESTDIR=TARGETS
+libsamplerate;make:install:prefix=/usr:DESTDIR=TARGETS
+libvorbis;make:install:prefix=/usr:DESTDIR=TARGETS
+libmodplug;make:install:prefix=/usr:DESTDIR=TARGETS
+tiff;make:install:prefix=/usr:DESTDIR=TARGETS
+lzo;make:install:prefix=/usr:DESTDIR=TARGETS
+yajl;make:install:prefix=/usr:DESTDIR=TARGETS
+libcdio;make:install:prefix=/usr:DESTDIR=TARGETS
+jasper;make:install:prefix=/usr:DESTDIR=TARGETS
+libmicrohttpd;make:install:prefix=/usr:DESTDIR=TARGETS
 
 #
 # PYTHON
