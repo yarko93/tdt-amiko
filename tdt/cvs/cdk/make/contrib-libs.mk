@@ -116,10 +116,11 @@ $(DEPDIR)/freetype: \
 $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 	cd @DIR_freetype@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < builds/unix/freetype-config > $(crossprefix)/bin/freetype-config && \
-		@INSTALL_freetype@
 		chmod 755 $(crossprefix)/bin/freetype-config && \
 		ln -sf $(crossprefix)/bin/freetype-config $(crossprefix)/bin/$(target)-freetype-config && \
-		ln -sf $(targetprefix)/usr/include/freetype2/freetype $(targetprefix)/usr/include/freetype
+		ln -sf $(targetprefix)/usr/include/freetype2/freetype $(targetprefix)/usr/include/freetype && \
+		@INSTALL_freetype@
+		rm -f $(targetprefix)/usr/bin/freetype-config
 #	@DISTCLEANUP_freetype@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -213,9 +214,10 @@ $(DEPDIR)/min-libpng $(DEPDIR)/std-libpng $(DEPDIR)/max-libpng \
 $(DEPDIR)/libpng: \
 $(DEPDIR)/%libpng: $(DEPDIR)/libpng.do_compile
 	cd @DIR_libpng@ && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < libpng-config > $(crossprefix)/bin/libpng-config && \
+		chmod 755 $(crossprefix)/bin/libpng-config && \
 		@INSTALL_libpng@
-#		sed -e "s,^prefix=\",prefix=\"$(targetprefix)," < libpng-config > $(targetprefix)/usr/bin/libpng-config
-#		ln -s $(targetprefix)/usr/bin/libpng-config $(hostprefix)/bin/libpng-config
+		rm -f $(targetprefix)/usr/bin/libpng*-config
 #	@DISTCLEANUP_libpng@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -295,10 +297,10 @@ $(DEPDIR)/min-curl $(DEPDIR)/std-curl $(DEPDIR)/max-curl \
 $(DEPDIR)/curl: \
 $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
 	cd @DIR_curl@ && \
-		sed -e "s,^prefix=,prefix=$(targetprefix)," < curl-config > $(hostprefix)/bin/curl-config && \
-		chmod 755 $(hostprefix)/bin/curl-config && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < curl-config > $(crossprefix)/bin/curl-config && \
+		chmod 755 $(crossprefix)/bin/curl-config && \
 		@INSTALL_curl@
-	rm -f $(targetprefix)/usr/bin/curl-config
+		rm -f $(targetprefix)/usr/bin/curl-config
 #	@DISTCLEANUP_curl@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -779,7 +781,7 @@ $(DEPDIR)/libdvdnav.do_compile: bootstrap libdvdread libdvdnav.do_prepare
 			--prefix=/usr \
 			--enable-static \
 			--enable-shared \
-			--with-dvdread-config=$(targetprefix)/usr/bin/dvdread-config && \
+			--with-dvdread-config=$(crossprefix)/bin/dvdread-config && \
 		$(MAKE) all
 	touch $@
 
@@ -787,7 +789,10 @@ $(DEPDIR)/min-libdvdnav $(DEPDIR)/std-libdvdnav $(DEPDIR)/max-libdvdnav \
 $(DEPDIR)/libdvdnav: \
 $(DEPDIR)/%libdvdnav: libdvdnav.do_compile
 	cd @DIR_libdvdnav@ && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < misc/dvdnav-config > $(crossprefix)/bin/dvdnav-config && \
+		chmod 755 $(crossprefix)/bin/dvdnav-config && \
 		@INSTALL_libdvdnav@
+		rm -f $(targetprefix)/usr/bin/dvdnav-config
 #	@DISTCLEANUP_libdvdnav@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -813,22 +818,16 @@ $(DEPDIR)/libdvdread.do_compile: bootstrap libdvdread.do_prepare
 			--enable-shared \
 			--prefix=/usr && \
 		$(MAKE) all
-	echo '#!/bin/sh' > $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
-	echo 'prefix='$(targetprefix)/usr >> $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
-	echo 'libdir='$(targetprefix)/usr/lib >> $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
-	echo >> $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
-	cat $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config.sh >> $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
-	chmod 0755 $(buildprefix)/libdvdread-4.1.3/misc/dvdread-config
 	touch $@
 
 $(DEPDIR)/min-libdvdread $(DEPDIR)/std-libdvdread $(DEPDIR)/max-libdvdread \
 $(DEPDIR)/libdvdread: \
 $(DEPDIR)/%libdvdread: libdvdread.do_compile
 	cd @DIR_libdvdread@ && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < misc/dvdread-config > $(crossprefix)/bin/dvdread-config && \
+		chmod 755 $(crossprefix)/bin/dvdread-config && \
 		@INSTALL_libdvdread@
-	sed 's!/usr/lib!$(targetprefix)/usr/lib!g' $(targetprefix)/usr/lib/libdvdread.la > $(targetprefix)/usr/lib/libdvdread.la1
-	cp $(targetprefix)/usr/lib/libdvdread.la1 $(targetprefix)/usr/lib/libdvdread.la
-	rm $(targetprefix)/usr/lib/libdvdread.la1
+		rm -f $(targetprefix)/usr/bin/dvdread-config
 #	@DISTCLEANUP_libdvdread@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -1049,7 +1048,7 @@ $(DEPDIR)/enchant.do_compile: $(DEPDIR)/enchant.do_prepare
 	cd @DIR_enchant@ && \
 	libtoolize -f -c && \
 	autoreconf --verbose --force --install -I$(hostprefix)/share/aclocal && \
-	$(BUILDENV)  \
+	$(BUILDENV) \
 	./configure --disable-aspell --disable-ispell --disable-myspell --disable-zemberek \
 		--host=$(target) \
 		--prefix=/usr && \
@@ -2455,4 +2454,336 @@ $(DEPDIR)/%libdreamdvd2: $(DEPDIR)/libdreamdvd2.do_compile
 	cd @DIR_libdreamdvd2@ && \
 		@INSTALL_libdreamdvd2@
 #	@DISTCLEANUP_libdreamdvd2@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libmpeg2
+#
+$(DEPDIR)/libmpeg2.do_prepare:  @DEPENDS_libmpeg2@
+	@PREPARE_libmpeg2@
+	touch $@
+
+$(DEPDIR)/libmpeg2.do_compile: $(DEPDIR)/libmpeg2.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libmpeg2@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libmpeg2 $(DEPDIR)/std-libmpeg2 $(DEPDIR)/max-libmpeg2 \
+$(DEPDIR)/libmpeg2: \
+$(DEPDIR)/%libmpeg2: $(DEPDIR)/libmpeg2.do_compile
+	cd @DIR_libmpeg2@ && \
+		@INSTALL_libmpeg2@
+#	@DISTCLEANUP_libmpeg2@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libsamplerate
+#
+$(DEPDIR)/libsamplerate.do_prepare:  @DEPENDS_libsamplerate@
+	@PREPARE_libsamplerate@
+	touch $@
+
+$(DEPDIR)/libsamplerate.do_compile: $(DEPDIR)/libsamplerate.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libsamplerate@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libsamplerate $(DEPDIR)/std-libsamplerate $(DEPDIR)/max-libsamplerate \
+$(DEPDIR)/libsamplerate: \
+$(DEPDIR)/%libsamplerate: $(DEPDIR)/libsamplerate.do_compile
+	cd @DIR_libsamplerate@ && \
+		@INSTALL_libsamplerate@
+#	@DISTCLEANUP_libsamplerate@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libvorbis
+#
+$(DEPDIR)/libvorbis.do_prepare:  @DEPENDS_libvorbis@
+	@PREPARE_libvorbis@
+	touch $@
+
+$(DEPDIR)/libvorbis.do_compile: $(DEPDIR)/libvorbis.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libvorbis@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libvorbis $(DEPDIR)/std-libvorbis $(DEPDIR)/max-libvorbis \
+$(DEPDIR)/libvorbis: \
+$(DEPDIR)/%libvorbis: $(DEPDIR)/libvorbis.do_compile
+	cd @DIR_libvorbis@ && \
+		@INSTALL_libvorbis@
+#	@DISTCLEANUP_libvorbis@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libmodplug
+#
+$(DEPDIR)/libmodplug.do_prepare:  @DEPENDS_libmodplug@
+	@PREPARE_libmodplug@
+	touch $@
+
+$(DEPDIR)/libmodplug.do_compile: $(DEPDIR)/libmodplug.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libmodplug@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libmodplug $(DEPDIR)/std-libmodplug $(DEPDIR)/max-libmodplug \
+$(DEPDIR)/libmodplug: \
+$(DEPDIR)/%libmodplug: $(DEPDIR)/libmodplug.do_compile
+	cd @DIR_libmodplug@ && \
+		@INSTALL_libmodplug@
+#	@DISTCLEANUP_libmodplug@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# bzip - already in contrib-apps, check which is better
+#
+#$(DEPDIR)/bzip.do_prepare:  @DEPENDS_bzip@
+#	@PREPARE_bzip@
+#	touch $@
+#
+#$(DEPDIR)/bzip.do_compile: $(DEPDIR)/bzip.do_prepare
+#	export PATH=$(hostprefix)/bin:$(PATH) && \
+#	cd @DIR_bzip@ && \
+#	$(BUILDENV) \
+#	sed -i "s/CC=gcc/CC=sh4-linux-gcc/g" Makefile && \
+#	sed -i "s/AR=ar/AR=sh4-linux-ar/g" Makefile && \
+#	sed -i "s/RANLIB=ranlib/RANLIB=sh4-linux-ranlib/g" Makefile&& \
+#	sed -i -e 's|PREFIX=/usr/local|PREFIX=$(prefix)/cdkroot/usr|g' Makefile
+#	$(MAKE) all
+#	touch $@
+#
+#$(DEPDIR)/min-bzip $(DEPDIR)/std-bzip $(DEPDIR)/max-bzip \
+#$(DEPDIR)/bzip: \
+#$(DEPDIR)/%bzip: $(DEPDIR)/bzip.do_compile
+#	cd @DIR_bzip@ && \
+#		@INSTALL_bzip@
+#	@DISTCLEANUP_bzip@
+#	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# tiff
+#
+$(DEPDIR)/tiff.do_prepare:  @DEPENDS_tiff@
+	@PREPARE_tiff@
+	touch $@
+
+$(DEPDIR)/tiff.do_compile: $(DEPDIR)/tiff.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_tiff@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-tiff $(DEPDIR)/std-tiff $(DEPDIR)/max-tiff \
+$(DEPDIR)/tiff: \
+$(DEPDIR)/%tiff: $(DEPDIR)/tiff.do_compile
+	cd @DIR_tiff@ && \
+		@INSTALL_tiff@
+#	@DISTCLEANUP_tiff@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# lzo
+#
+$(DEPDIR)/lzo.do_prepare:  @DEPENDS_lzo@
+	@PREPARE_lzo@
+	touch $@
+
+$(DEPDIR)/lzo.do_compile: $(DEPDIR)/lzo.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_lzo@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-lzo $(DEPDIR)/std-lzo $(DEPDIR)/max-lzo \
+$(DEPDIR)/lzo: \
+$(DEPDIR)/%lzo: $(DEPDIR)/lzo.do_compile
+	cd @DIR_lzo@ && \
+		@INSTALL_lzo@
+#	@DISTCLEANUP_lzo@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# yajl
+#
+$(DEPDIR)/yajl.do_prepare:  @DEPENDS_yajl@
+	@PREPARE_yajl@
+	touch $@
+
+$(DEPDIR)/yajl.do_compile: $(DEPDIR)/yajl.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_yajl@ && \
+	sed -i "s/install: all/install: distro/g" Makefile && \
+	$(BUILDENV) \
+	./configure \
+		--prefix=/usr && \
+	$(MAKE) distro
+	touch $@
+
+$(DEPDIR)/min-yajl $(DEPDIR)/std-yajl $(DEPDIR)/max-yajl \
+$(DEPDIR)/yajl: \
+$(DEPDIR)/%yajl: $(DEPDIR)/yajl.do_compile
+	cd @DIR_yajl@ && \
+		@INSTALL_yajl@
+#	@DISTCLEANUP_yajl@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libpcre (shouldn't this be named pcre without the lib?)
+#
+$(DEPDIR)/libpcre.do_prepare: bootstrap @DEPENDS_libpcre@
+	@PREPARE_libpcre@
+	touch $@
+
+$(DEPDIR)/libpcre.do_compile: $(DEPDIR)/libpcre.do_prepare
+	cd @DIR_libpcre@ && \
+	$(BUILDENV) \
+	./configure \
+		--build=$(build) \
+		--host=$(target) \
+		--prefix=/usr \
+		--enable-utf8 \
+		--enable-unicode-properties && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libpcre $(DEPDIR)/std-libpcre $(DEPDIR)/max-libpcre \
+$(DEPDIR)/libpcre: \
+$(DEPDIR)/%libpcre: $(DEPDIR)/libpcre.do_compile
+	cd @DIR_libpcre@ && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < pcre-config > $(crossprefix)/bin/pcre-config && \
+		chmod 755 $(crossprefix)/bin/pcre-config && \
+		@INSTALL_libpcre@
+		rm -f $(targetprefix)/usr/bin/pcre-config
+#	@DISTCLEANUP_libpcre@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libcdio
+#
+$(DEPDIR)/libcdio.do_prepare:  @DEPENDS_libcdio@
+	@PREPARE_libcdio@
+	touch $@
+
+$(DEPDIR)/libcdio.do_compile: $(DEPDIR)/libcdio.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libcdio@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libcdio $(DEPDIR)/std-libcdio $(DEPDIR)/max-libcdio \
+$(DEPDIR)/libcdio: \
+$(DEPDIR)/%libcdio: $(DEPDIR)/libcdio.do_compile
+	cd @DIR_libcdio@ && \
+		@INSTALL_libcdio@
+#	@DISTCLEANUP_libcdio@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# jasper
+#
+$(DEPDIR)/jasper.do_prepare:  @DEPENDS_jasper@
+	@PREPARE_jasper@
+	touch $@
+
+$(DEPDIR)/jasper.do_compile: $(DEPDIR)/jasper.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_jasper@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-jasper $(DEPDIR)/std-jasper $(DEPDIR)/max-jasper \
+$(DEPDIR)/jasper: \
+$(DEPDIR)/%jasper: $(DEPDIR)/jasper.do_compile
+	cd @DIR_jasper@ && \
+		@INSTALL_jasper@
+#	@DISTCLEANUP_jasper@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# mysql
+#
+$(DEPDIR)/mysql.do_prepare:  @DEPENDS_mysql@
+	@PREPARE_mysql@
+	touch $@
+
+$(DEPDIR)/mysql.do_compile: $(DEPDIR)/mysql.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_mysql@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--with-atomic-ops=up --with-embedded-server --prefix=/usr --sysconfdir=/etc/mysql --localstatedir=/var/mysql --disable-dependency-tracking --without-raid --without-debug --with-low-memory --without-query-cache --without-man --without-docs --without-innodb && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-mysql $(DEPDIR)/std-mysql $(DEPDIR)/max-mysql \
+$(DEPDIR)/mysql: \
+$(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
+	cd @DIR_mysql@ && \
+		@INSTALL_mysql@
+#	@DISTCLEANUP_mysql@
+	[ "x$*" = "x" ] && touch $@ || true
+
+
+#
+# libmicrohttpd
+#
+$(DEPDIR)/libmicrohttpd.do_prepare:  @DEPENDS_libmicrohttpd@
+	@PREPARE_libmicrohttpd@
+	touch $@
+
+$(DEPDIR)/libmicrohttpd.do_compile: $(DEPDIR)/libmicrohttpd.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libmicrohttpd@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libmicrohttpd $(DEPDIR)/std-libmicrohttpd $(DEPDIR)/max-libmicrohttpd \
+$(DEPDIR)/libmicrohttpd: \
+$(DEPDIR)/%libmicrohttpd: $(DEPDIR)/libmicrohttpd.do_compile
+	cd @DIR_libmicrohttpd@ && \
+		@INSTALL_libmicrohttpd@
+#	@DISTCLEANUP_libmicrohttpd@
 	[ "x$*" = "x" ] && touch $@ || true

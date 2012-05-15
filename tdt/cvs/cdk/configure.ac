@@ -404,6 +404,14 @@ AC_ARG_ENABLE(hs7110,
 AM_CONDITIONAL(ENABLE_HS7110,test "$enable_hs7110" = "yes")
 AC_SUBST(HS7110)
 
+AC_ARG_ENABLE(whitebox,
+	AS_HELP_STRING(--enable-whitebox,    enable fortis whitebox stuff),
+	[case "${enableval}" in
+		yes) WHITEBOX=whitebox ;;
+	esac],[enable_WHITEBOX=no])
+AM_CONDITIONAL(ENABLE_WHITEBOX,test "$enable_whitebox" = "yes")
+AC_SUBST(WHITEBOX)
+
 AC_ARG_ENABLE(cuberevo,
 	AS_HELP_STRING(--enable-cuberevo,    enable cuberevo stuff),
 	[case "${enableval}" in
@@ -855,6 +863,7 @@ TUXBOX_RULES_MAKE(ethtool)
 #
 # contrib apps
 #
+TUXBOX_RULES_MAKE(bzip2)
 TUXBOX_RULES_MAKE(grep)
 TUXBOX_RULES_MAKE(openrdate)
 TUXBOX_RULES_MAKE(e2fsprogs)
@@ -880,6 +889,7 @@ TUXBOX_RULES_MAKE(pppd)
 TUXBOX_RULES_MAKE(sysstat)
 TUXBOX_RULES_MAKE(hotplug_e2)
 TUXBOX_RULES_MAKE(autofs)
+TUXBOX_RULES_MAKE(imagemagick)
 
 #
 # contrib apps with smart rules
@@ -942,6 +952,18 @@ TUXBOX_RULES_MAKE(tuxtxtlib)
 TUXBOX_RULES_MAKE(tuxtxt32bpp)
 TUXBOX_RULES_MAKE(libdreamdvd)
 TUXBOX_RULES_MAKE(libdreamdvd2)
+TUXBOX_RULES_MAKE(libmpeg2)
+TUXBOX_RULES_MAKE(libsamplerate)
+TUXBOX_RULES_MAKE(libvorbis)
+TUXBOX_RULES_MAKE(libmodplug)
+TUXBOX_RULES_MAKE(tiff)
+TUXBOX_RULES_MAKE(lzo)
+TUXBOX_RULES_MAKE(yajl)
+TUXBOX_RULES_MAKE(libpcre)
+TUXBOX_RULES_MAKE(libcdio)
+TUXBOX_RULES_MAKE(jasper)
+TUXBOX_RULES_MAKE(mysql)
+TUXBOX_RULES_MAKE(libmicrohttpd)
 
 #
 # python
@@ -1166,12 +1188,12 @@ AC_MSG_RESULT([
 ])
 fi
 
+TUXBOX_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNELVERSION=$(KERNELVERSION) && $(customizationsdir)/$(notdir $@)-local.sh $(buildprefix) || true]'
+AC_SUBST(TUXBOX_CUSTOMIZE)
+TUXBOX_YAUD_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNELVERSION=$(KERNELVERSION) && $(customizationsdir)/$(notdir $@)-local.sh $(prefix)/$*cdkroot $(buildprefix) || true]'
+AC_SUBST(TUXBOX_YAUD_CUSTOMIZE)
 TUXBOX_TOUCH='[@[ "x$*" = "x" ] && touch $@ || true]'
 AC_SUBST(TUXBOX_TOUCH)
-TUXBOX_YAUD_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNEL='$used_kernelversion' KERNELVERSION=$(KERNELVERSION) && $(customizationsdir)/$(notdir $@)-local.sh $(prefix)/$*cdkroot $(buildprefix) || true; $(toimage_build)]'
-AC_SUBST(TUXBOX_YAUD_CUSTOMIZE)
-TUXBOX_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNEL='$used_kernelversion' KERNELVERSION=$(KERNELVERSION) && $(customizationsdir)/$(notdir $@)-local.sh $(buildprefix) || true]'
-AC_SUBST(TUXBOX_CUSTOMIZE)
 
 AC_CONFIG_FILES([
 Makefile

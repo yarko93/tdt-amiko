@@ -21,11 +21,12 @@ libtool;make:install
 busybox;make:install:CONFIG_PREFIX=TARGETS;shellconfigadd:/bin/ash:5
 lsb;install:-d:TARGETS/lib/lsb;install:-m644:init-functions:TARGETS/lib/lsb
 ipkg;make:install:DESTDIR=TARGETS
-module_init_tools;make:INSTALL=install:install:sbin_PROGRAMS="depmod modinfo":bin_PROGRAMS=:DESTDIR=TARGETS
+module_init_tools;make:INSTALL=install:install:sbin_PROGRAMS="depmod modinfo":bin_PROGRAMS=:mandir=/usr/share/man:DESTDIR=TARGETS
 
 #
 # contrib apps
 #
+bzip2;make:install:PREFIX=TARGET/usr
 grep;make:install:DESTDIR=TARGETS
 openrdate;make:install:DESTDIR=TARGETS
 e2fsprogs;rewrite-pkgconfig:lib/e2p/e2p.pc:lib/com_err.pc:lib/uuid.pc:lib/blkid.pc:lib/ss/ss.pc;make:install:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr/lib/libblkid.la:TARGETS/usr/lib/libblkid.la:TARGETS/usr/lib/libuuid.la
@@ -43,10 +44,11 @@ fbset;install:-d:-m755:TARGETS/{usr/sbin,etc};install:-m755:fbset:TARGETS/usr/sb
 pngquant;install:-m755:pngquant:TARGETS/usr/bin
 mplayer;make:install INSTALLSTRIP="":DESTDIR=TARGETS
 mencoder;make:install INSTALLSTRIP="":DESTDIR=TARGETS
-jfsutils;make:install:prefix=TARGETS
 pppd;make:install:DESTDIR=TARGETS
+jfsutils;make:install:mandir=/usr/share/man:DESTDIR=TARGET
 opkg;rewrite-pkgconfig:libopkg.pc;make:install:DESTDIR=TARGETS;link:/usr/bin/opkg-cl:TARGETS/usr/bin/opkg;mkdir:TARGETS/var/opkg;rewrite-libtool:TARGETS/usr/lib/libopkg.la
 sysstat;make:install:DESTDIR=TARGETS
+imagemagick;rewrite-pkgconfig:magick/ImageMagick.pc:magick/MagickCore.pc:wand/MagickWand.pc:wand/Wand.pc:Magick++/lib/ImageMagick++.pc:Magick++/lib/Magick++.pc;make:install:prefix=/usr:DESTDIR=TARGET;rewrite-libtool:TARGET/usr/lib/libMagickCore.la:TARGET/usr/lib/libMagickWand.la:TARGET/usr/lib/libMagick++.la
 #
 # contrib libs
 #
@@ -87,7 +89,7 @@ libxmlccwrap;make:install:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr/lib/libxml
 a52dec;make:install:DESTDIR=TARGETS
 libdvdcss;rewrite-pkgconfig:src/libdvdcss.pc;make:install:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr/lib/libdvdcss.la
 libdvdnav;rewrite-pkgconfig:misc/dvdnav.pc:misc/dvdnavmini.pc;make:install:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr/lib/libdvdnav.la:TARGETS/usr/lib/libdvdnavmini.la
-libdvdread;rewrite-pkgconfig:misc/dvdread.pc;make:install:DESTDIR=TARGETS
+libdvdread;rewrite-pkgconfig:misc/dvdread.pc;make:install:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr/lib/libdvdread.la
 ffmpeg;rewrite-pkgconfig:libavcodec/libavcodec.pc:libavdevice/libavdevice.pc:libavformat/libavformat.pc:libavutil/libavutil.pc:libswscale/libswscale.pc;make:install:DESTDIR=TARGETS
 libass;rewrite-pkgconfig:libass.pc;make:install:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr/lib/libass.la
 libcap;make:install:DESTDIR=TARGETS
@@ -97,12 +99,23 @@ evebrowser;make:install:DESTDIR=TARGETS
 brofs;make:install:DESTDIR=TARGETS/usr/bin
 libalsa;rewrite-pkgconfig:utils/alsa.pc;make:install:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr/lib/libasound.la
 rtmpdump;rewrite-pkgconfig:librtmp/librtmp.pc;make:install:prefix=/usr:DESTDIR=TARGETS
-libdvbsipp;rewrite-pkgconfig:libdvbsi++.pc;make:install:prefix=/usr:DESTDIR=TARGETS
+libdvbsipp;rewrite-pkgconfig:libdvbsi++.pc;make:install:prefix=/usr:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr/lib/libdvbsi++.la
 tuxtxtlib;rewrite-pkgconfig:tuxbox-tuxtxt.pc;make:install:prefix=/usr:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr/lib/libtuxtxt.la
 tuxtxt32bpp;make:install:prefix=/usr:DESTDIR=TARGETS;rewrite-libtool:TARGETS/usr/lib/libtuxtxt32bpp.la
 libdreamdvd;rewrite-pkgconfig:libdreamdvd.pc;make:install:prefix=/usr:DESTDIR=TARGETS
 libdreamdvd2;rewrite-pkgconfig:libdreamdvd.pc;make:install:prefix=/usr:DESTDIR=TARGETS
 hotplug_e2;make:install:prefix=/usr:DESTDIR=TARGETS
+libpcre;rewrite-pkgconfig:libpcre.pc:libpcrecpp.pc:libpcreposix.pc;make:install:prefix=/usr:DESTDIR=TARGET;rewrite-libtool:TARGET/usr/lib/libpcre.la:TARGET/usr/lib/libpcreposix.la
+libmpeg2;make:install:prefix=/usr:DESTDIR=TARGETS
+libsamplerate;make:install:prefix=/usr:DESTDIR=TARGETS
+libvorbis;make:install:prefix=/usr:DESTDIR=TARGETS
+libmodplug;make:install:prefix=/usr:DESTDIR=TARGETS
+tiff;make:install:prefix=/usr:DESTDIR=TARGETS
+lzo;make:install:prefix=/usr:DESTDIR=TARGETS
+yajl;make:install:prefix=/usr:DESTDIR=TARGETS
+libcdio;make:install:prefix=/usr:DESTDIR=TARGETS
+jasper;make:install:prefix=/usr:DESTDIR=TARGETS
+libmicrohttpd;make:install:prefix=/usr:DESTDIR=TARGETS
 
 #
 # PYTHON
@@ -149,6 +162,7 @@ samba;make:install bin/smbd bin/nmbd:DESTDIR=TARGETS:prefix=./.
 netio;install:-m755:netio:TARGETS/usr/bin;install:-m755:bin/linux-i386:HOST/bin/netio
 lighttpd;make:install:DESTDIR=TARGETS
 wireless_tools;make:install:INSTALL_MAN=TARGETS/usr/share/man:PREFIX=TARGETS/usr
+wpa_supplicant;make:install:DESTDIR=TARGETS
 ethtool;make:install:DESTDIR=TARGETS
 
 

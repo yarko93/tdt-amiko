@@ -95,7 +95,7 @@ endif !STM22
 SPLASHUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(SPLASHUTILS)-$(SPLASHUTILS_VERSION).sh4.rpm
 
 $(SPLASHUTILS_RPM): \
-		$(if $(SPLASHUTILS_SPEC_PATCH),Patches/$(SPLASHUTILS_PATCH)) \
+		$(if $(SPLASHUTILS_SPEC_PATCH),Patches/$(SPLASHUTILS_SPEC_PATCH)) \
 		$(if $(SPLASHUTILS_PATCHES),$(SPLASHUTILS_PATCHES:%=Patches/%)) \
 		jpeg libmng freetype libpng \
 		$(archivedir)/stlinux23-target-$(SPLASHUTILS)-$(SPLASHUTILS_VERSION).src.rpm
@@ -146,7 +146,7 @@ endif !STM22
 STSLAVE_RPM := RPMS/sh4/$(STLINUX)-sh4-$(STSLAVE)-$(STSLAVE_VERSION).sh4.rpm
 
 $(STSLAVE_RPM): \
-		$(if $(STSLAVE_SPEC_PATCH),Patches/$(STSLAVE_PATCH)) \
+		$(if $(STSLAVE_SPEC_PATCH),Patches/$(STSLAVE_SPEC_PATCH)) \
 		$(if $(STSLAVE_PATCHES),$(STSLAVE_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX:%23=%24)-target-$(STSLAVE)-$(STSLAVE_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
@@ -201,7 +201,7 @@ OPENSSL_RPM := RPMS/sh4/$(STLINUX)-sh4-$(OPENSSL)-$(OPENSSL_VERSION).sh4.rpm
 OPENSSL_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(OPENSSL_DEV)-$(OPENSSL_VERSION).sh4.rpm
 
 $(OPENSSL_RPM) $(OPENSSL_DEV_RPM): \
-		$(if $(OPENSSL_SPEC_PATCH),Patches/$(OPENSSL_PATCH)) \
+		$(if $(OPENSSL_SPEC_PATCH),Patches/$(OPENSSL_SPEC_PATCH)) \
 		$(if $(OPENSSL_PATCHES),$(OPENSSL_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX)-target-$(OPENSSL)-$(OPENSSL_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
@@ -306,7 +306,7 @@ endif !STM22
 ALSAUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ALSAUTILS)-$(ALSAUTILS_VERSION).sh4.rpm
 
 $(ALSAUTILS_RPM): \
-		$(if $(ALSAUTILS_SPEC_PATCH),Patches/$(ALSAUTILS_PATCH)) \
+		$(if $(ALSAUTILS_SPEC_PATCH),Patches/$(ALSAUTILS_SPEC_PATCH)) \
 		$(if $(ALSAUTILS_PATCHES),$(ALSAUTILS_PATCHES:%=Patches/%)) \
 		$(NCURSES_DEV) $(ALSALIB_DEV) \
 		$(archivedir)/$(STLINUX)-target-$(ALSAUTILS)-$(ALSAUTILS_VERSION).src.rpm
@@ -353,7 +353,7 @@ ALSAPLAYER_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ALSAPLAYER)-$(ALSAPLAYER_VERSION).sh
 ALSAPLAYER_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ALSAPLAYER_DEV)-$(ALSAPLAYER_VERSION).sh4.rpm
 
 $(ALSAPLAYER_RPM) $(ALSAPLAYER_DEV_RPM): \
-		$(if $(ALSAPLAYER_SPEC_PATCH),Patches/$(ALSAPLAYER_PATCH)) \
+		$(if $(ALSAPLAYER_SPEC_PATCH),Patches/$(ALSAPLAYER_SPEC_PATCH)) \
 		$(if $(ALSAPLAYER_PATCHES),$(ALSAPLAYER_PATCHES:%=Patches/%)) \
 		libmad libid3tag \
 		$(archivedir)/$(STLINUX:%23=%24)-target-$(ALSAPLAYER)-$(ALSAPLAYER_VERSION).src.rpm

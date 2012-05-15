@@ -1,4 +1,25 @@
 #
+#bzip2
+#
+$(DEPDIR)/bzip2.do_prepare: @DEPENDS_bzip2@
+	@PREPARE_bzip2@
+	touch $@
+
+$(DEPDIR)/bzip2.do_compile: bootstrap $(DEPDIR)/bzip2.do_prepare
+	cd @DIR_bzip2@ && \
+		mv Makefile-libbz2_so Makefile && \
+		$(MAKE) all CC=$(target)-gcc
+	touch $@
+
+$(DEPDIR)/min-bzip2 $(DEPDIR)/std-bzip2 $(DEPDIR)/max-bzip2 \
+$(DEPDIR)/bzip2: \
+$(DEPDIR)/%bzip2: $(DEPDIR)/bzip2.do_compile
+	cd @DIR_bzip2@ && \
+		@INSTALL_bzip2@
+#	@DISTCLEANUP_bzip2@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
 # MODULE-INIT-TOOLS
 #
 $(DEPDIR)/module_init_tools.do_prepare: @DEPENDS_module_init_tools@
@@ -999,3 +1020,40 @@ $(DEPDIR)/%autofs: $(DEPDIR)/autofs.do_compile
 #	@DISTCLEANUP_autofs@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
+
+#
+# imagemagick
+#
+$(DEPDIR)/imagemagick.do_prepare: bootstrap @DEPENDS_imagemagick@
+	@PREPARE_imagemagick@
+	touch $@
+
+$(DEPDIR)/imagemagick.do_compile: $(DEPDIR)/imagemagick.do_prepare
+	cd @DIR_imagemagick@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr \
+		--without-dps \
+		--without-fpx \
+		--without-gslib \
+		--without-jbig \
+		--without-jp2 \
+		--without-lcms \
+		--without-tiff \
+		--without-xml \
+		--enable-shared \
+		--enable-static \
+		--without-x && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-imagemagick $(DEPDIR)/std-imagemagick $(DEPDIR)/max-imagemagick \
+$(DEPDIR)/imagemagick: \
+$(DEPDIR)/%imagemagick: $(DEPDIR)/imagemagick.do_compile
+	cd @DIR_imagemagick@ && \
+		@INSTALL_imagemagick@
+#	@DISTCLEANUP_imagemagick@
+	[ "x$*" = "x" ] && touch $@ || true
+
+
