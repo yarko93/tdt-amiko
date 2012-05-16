@@ -28,6 +28,7 @@ $(DEPDIR)/xbmc-nightly.do_prepare:
 	[ "$$REVISION" == "" ] || (cd $(appsdir)/xbmc-nightly; git checkout "$$REVISION"; cd "$(buildprefix)";); \
 	cp -ra $(appsdir)/xbmc-nightly $(appsdir)/xbmc-nightly.org; \
 	cd $(appsdir)/xbmc-nightly && patch -p1 < "../../cdk/Patches/xbmc-add_sh_arch.patch"; \
+	cd $(appsdir)/xbmc-nightly && patch -p1 < "../../cdk/Patches/xbmc-fribidi_version_compatibility.patch"; \
 	cp -ra $(appsdir)/xbmc-nightly $(appsdir)/xbmc-nightly.patched
 	touch $@
 
