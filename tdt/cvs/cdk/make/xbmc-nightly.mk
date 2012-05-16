@@ -29,6 +29,7 @@ $(DEPDIR)/xbmc-nightly.do_prepare:
 	cp -ra $(appsdir)/xbmc-nightly $(appsdir)/xbmc-nightly.org; \
 	cd $(appsdir)/xbmc-nightly && patch -p1 < "../../cdk/Patches/xbmc-add_sh_arch.patch"; \
 	cd $(appsdir)/xbmc-nightly && patch -p1 < "../../cdk/Patches/xbmc-fribidi_version_compatibility.patch"; \
+	cd $(appsdir)/xbmc-nightly && patch -p1 < "../../cdk/Patches/xbmc-remove_mysql_dependency.patch"; \
 	cp -ra $(appsdir)/xbmc-nightly $(appsdir)/xbmc-nightly.patched
 	touch $@
 
