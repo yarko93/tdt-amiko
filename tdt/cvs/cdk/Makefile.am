@@ -79,6 +79,9 @@ include packaging.mk
 # Include enigma2-pli-nightly gui targets
 include make/enigma2-pli-nightly.mk
 
+# Include xbmc-nightly gui targets
+include make/xbmc-nightly.mk
+
 # Include neutrino gui targets
 include make/neutrino.mk
 
