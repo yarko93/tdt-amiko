@@ -962,6 +962,9 @@ TUXBOX_RULES_MAKE(libcdio)
 TUXBOX_RULES_MAKE(jasper)
 TUXBOX_RULES_MAKE(mysql)
 TUXBOX_RULES_MAKE(libmicrohttpd)
+TUXBOX_RULES_MAKE(libexif)
+TUXBOX_RULES_MAKE(minidlna)
+TUXBOX_RULES_MAKE(vlc)
 
 #
 # python

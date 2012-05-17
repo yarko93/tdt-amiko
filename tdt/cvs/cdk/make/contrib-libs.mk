@@ -921,7 +921,7 @@ $(DEPDIR)/ffmpeg: \
 $(DEPDIR)/%ffmpeg: $(DEPDIR)/ffmpeg.do_compile
 	cd @DIR_ffmpeg@ && \
 		@INSTALL_ffmpeg@
-#	@DISTCLEANUP_pyopenssl@
+#	@DISTCLEANUP_ffmpeg@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -947,7 +947,6 @@ $(DEPDIR)/libass: \
 $(DEPDIR)/%libass: $(DEPDIR)/libass.do_compile
 	cd @DIR_libass@ && \
 		@INSTALL_libass@
-	echo "libdir='$(targetprefix)/usr/lib'" >> $(targetprefix)/usr/lib/libass.la
 #	@DISTCLEANUP_libass@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -1501,7 +1500,7 @@ $(DEPDIR)/%pyopenssl: pyopenssl.do_compile
 #
 # python
 #
-$(DEPDIR)/python.do_prepare: host-python @DEPENDS_python@
+$(DEPDIR)/python.do_prepare: host_python @DEPENDS_python@
 	@PREPARE_python@ && \
 	touch $@
 
@@ -1593,7 +1592,7 @@ $(DEPDIR)/%pythoncheetah: pythoncheetah.do_compile
 	cd @DIR_pythoncheetah@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
-#	@DISTCLEANUP_pythonwifi@
+#	@DISTCLEANUP_pythoncheetah@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -2655,3 +2654,99 @@ $(DEPDIR)/%libmicrohttpd: $(DEPDIR)/libmicrohttpd.do_compile
 		@INSTALL_libmicrohttpd@
 #	@DISTCLEANUP_libmicrohttpd@
 	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libexif
+#
+$(DEPDIR)/libexif.do_prepare: bootstrap  @DEPENDS_libexif@
+	@PREPARE_libexif@
+	touch $@
+
+$(DEPDIR)/libexif.do_compile: $(DEPDIR)/libexif.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libexif@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr
+	touch $@
+
+$(DEPDIR)/min-libexif $(DEPDIR)/std-libexif $(DEPDIR)/max-libexif \
+$(DEPDIR)/libexif: \
+$(DEPDIR)/%libexif: $(DEPDIR)/libexif.do_compile
+	cd @DIR_libexif@ && \
+		@INSTALL_libexif@
+#	@DISTCLEANUP_libexif@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# minidlna
+#
+$(DEPDIR)/minidlna.do_prepare: bootstrap ffmpeg libflac libogg libvorbis libid3tag sqlite libexif jpeg @DEPENDS_minidlna@
+	@PREPARE_minidlna@
+	touch $@
+
+$(DEPDIR)/minidlna.do_compile: $(DEPDIR)/minidlna.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_minidlna@ && \
+	libtoolize -f -c && \
+	$(BUILDENV) \
+	DESTDIR=$(prefix)/cdkroot \
+	$(MAKE) \
+	PREFIX=$(prefix)/cdkroot/usr \
+	LIBDIR=$(prefix)/cdkroot/usr/lib \
+	SBINDIR=$(prefix)/cdkroot/usr/sbin \
+	INCDIR=$(prefix)/cdkroot/usr/include \
+	PAM_CAP=no \
+	LIBATTR=no
+	touch $@
+
+$(DEPDIR)/min-minidlna $(DEPDIR)/std-minidlna $(DEPDIR)/max-minidlna \
+$(DEPDIR)/minidlna: \
+$(DEPDIR)/%minidlna: $(DEPDIR)/minidlna.do_compile
+	cd @DIR_minidlna@ && \
+		@INSTALL_minidlna@
+#	@DISTCLEANUP_minidlna@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# vlc
+#
+$(DEPDIR)/vlc.do_prepare: bootstrap libfribidi ffmpeg @DEPENDS_vlc@
+	@PREPARE_vlc@
+	touch $@
+
+$(DEPDIR)/vlc.do_compile: bootstrap ffmpeg $(DEPDIR)/vlc.do_prepare
+	cd @DIR_vlc@ && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--disable-fontconfig \
+		--prefix=/usr \
+		--disable-xcb \
+		--disable-glx \
+		--disable-qt4 \
+		--disable-mad \
+		--disable-postproc \
+		--disable-a52 \
+		--disable-qt4 \
+		--disable-skins2 \
+		--disable-remoteosd \
+		--disable-lua \
+		--disable-libgcrypt \
+		--disable-nls \
+		--disable-mozilla \
+		--disable-dbus \
+		--disable-sdl \
+		--enable-run-as-root
+	touch $@
+
+$(DEPDIR)/min-vlc $(DEPDIR)/std-vlc $(DEPDIR)/max-vlc \
+$(DEPDIR)/vlc: \
+$(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
+	cd @DIR_vlc@ && \
+		@INSTALL_vlc@
+	echo "libdir='$(targetprefix)/usr/lib'" >> $(targetprefix)/usr/lib/vlc.la
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
