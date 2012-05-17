@@ -207,7 +207,7 @@ libtool
   make:install
 ;
 busybox
-  1.19.4
+  1.20.0
   {PN}-{PV}
   extract:http://www.{PN}.net/downloads/{PN}-{PV}.tar.bz2
   make:install:CONFIG_PREFIX=TARGETS
@@ -230,13 +230,20 @@ module_init_tools
   3.3-pre1
   {PN}-{PV}
   extract:http://ftp.tlk-l.net/pub/mirrors/kernel.org/linux/utils/kernel/{PN}/{PN}-{PV}.tar.bz2
-  make:INSTALL=install:install:sbin_PROGRAMS="depmod modinfo":bin_PROGRAMS=:DESTDIR=TARGETS
+  make:INSTALL=install:install:sbin_PROGRAMS="depmod modinfo":bin_PROGRAMS=:mandir=/usr/share/man:DESTDIR=TARGETS
 ;
 sysvinit
   2.86
   {PN}-{PV}
   extract:ftp://ftp.cistron.nl/pub/people/miquels/{PN}/{PN}-{PV}.tar.gz
   nothing:http://ftp.de.debian.org/debian/pool/main/s/{PN}/{PN}_{PV}.ds1-38.diff.gz
+;
+bzip2
+  1.0.6
+  {PN}-{PV}
+  extract:http://www.bzip.org/{PV}/{PN}-{PV}.tar.gz
+  patch:file://{PN}.diff
+  make:install:PREFIX=TARGET/usr
 ;
 grep
   2.5.1
@@ -367,7 +374,7 @@ jfsutils
   1.1.15
   {PN}-{PV}
   extract:http://jfs.sourceforge.net/project/pub/{PN}-{PV}.tar.gz
-  make:install:prefix=TARGETS
+  make:install:mandir=/usr/share/man:DESTDIR=TARGET
 ;
 opkg
   0.1.8
@@ -413,6 +420,14 @@ autofs
   patch:file://{PN}-{PV}-{PN}-add-hotplug.patch
   patch:file://{PN}-{PV}-no_man.patch
   make:install:INSTALLROOT=TARGETS
+;
+imagemagick
+  6.7.6-9
+  ImageMagick-{PV}
+  extract:ftp://ftp.fifi.org/pub/ImageMagick/ImageMagick-{PV}.tar.bz2
+  rewrite-pkgconfig:magick/ImageMagick.pc:magick/MagickCore.pc:wand/MagickWand.pc:wand/Wand.pc:Magick++/lib/ImageMagick++.pc:Magick++/lib/Magick++.pc
+  make:install:prefix=/usr:DESTDIR=TARGET
+  rewrite-libtool:TARGET/usr/lib/libMagickCore.la:TARGET/usr/lib/libMagickWand.la:TARGET/usr/lib/libMagick++.la
 ;
 libboost
   boost-1.49.0
@@ -496,7 +511,7 @@ libgif
   rewrite-libtool:TARGETS/usr/lib/{PN}.la
 ;
 curl
-  7.23.1
+  7.25.0
   {PN}-{PV}
   extract:http://{PN}.haxx.se/download/{PN}-{PV}.tar.gz
   patch:file://lib{PN}.diff
@@ -659,9 +674,9 @@ lite
   rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}.pc:TARGETS/usr/lib/pkgconfig/leck.pc
 ;
 sqlite
-  3.6.0
-  {PN}-{PV}
-  extract:http://www.duckbox.info/files/packages/{PN}-{PV}.tar.gz
+  3.7.11
+  {PN}-autoconf-3071100
+  extract:http://www.{PN}.org/{PN}-autoconf-3071100.tar.gz
   rewrite-pkgconfig:{PN}3.pc
   make:install:DESTDIR=TARGETS
   rewrite-libtool:TARGETS/usr/lib/lib{PN}3.la
@@ -746,6 +761,7 @@ libdvdread
   patch:file://{PN}_{PV}-5.diff
   rewrite-pkgconfig:misc/dvdread.pc
   make:install:DESTDIR=TARGETS
+  rewrite-libtool:TARGETS/usr/lib/{PN}.la
 ;
 ffmpeg
   0.8.7
@@ -766,7 +782,7 @@ libass
 libcap
   2.22
   {PN}-{PV}
-  extract:http://ftp.ntu.edu.tw/ftp/linux/libs/security/linux-privs/{PN}2/{PN}-{PV}.tar.gz
+  extract:http://mirror.linux.org.au/linux/libs/security/linux-privs/{PN}2/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=TARGETS
 ;
 libogg
@@ -780,7 +796,7 @@ libogg
 libflac
   1.2.1
   flac-{PV}
-  extract:http://downloads.xiph.org/releases/flac/flac-{PV}.tar.gz
+  extract:http://ignum.dl.sourceforge.net/project/flac/flac-src/flac-{PV}-src/flac-{PV}.tar.gz
   patch:file://flac-{PV}.patch
   rewrite-pkgconfig:src/libFLAC/flac.pc
   make:install:DESTDIR=TARGETS
@@ -826,6 +842,7 @@ libdvbsipp
   patch:file://libdvbsi++-{PV}-fix_unaligned_access.patch
   rewrite-pkgconfig:libdvbsi++.pc
   make:install:prefix=/usr:DESTDIR=TARGETS
+  rewrite-libtool:TARGETS/usr/lib/libdvbsi++.la
 ;
 tuxtxtlib
   1.0
@@ -858,6 +875,79 @@ libdreamdvd2
   libdreamdvd
   patch:file://libdreamdvd-{PV}-support_sh4.patch
   rewrite-pkgconfig:libdreamdvd.pc
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+libmpeg2
+  0.5.1
+  {PN}-{PV}
+  extract:http://{PN}.sourceforge.net/files/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+libsamplerate
+  0.1.8
+  {PN}-{PV}
+  extract:http://www.mega-nerd.com/SRC/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+libvorbis
+  1.3.2
+  {PN}-{PV}
+  extract:http://downloads.xiph.org/releases/vorbis/{PN}-{PV}.tar.bz2
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+libmodplug
+  0.8.8.4
+  {PN}-{PV}
+  extract:http://downloads.sourceforge.net/project/modplug-xmms/{PN}/{PV}/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+tiff
+  4.0.1
+  {PN}-{PV}
+  extract:ftp://ftp.remotesensing.org/pub/lib{PN}/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+lzo
+  2.06
+  {PN}-{PV}
+  extract:http://www.oberhumer.com/opensource/{PN}/download/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+yajl
+  2.0.1
+  {PN}-{PV}
+  nothing:git://github.com/lloyd/{PN}:r=f4b2b1af87483caac60e50e5352fc783d9b2de2d
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+libpcre
+  8.30
+  pcre-{PV}
+  extract:ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-{PV}.tar.bz2
+  rewrite-pkgconfig:{PN}.pc:{PN}cpp.pc:{PN}posix.pc
+  make:install:prefix=/usr:DESTDIR=TARGET
+  rewrite-libtool:TARGET/usr/lib/{PN}.la:TARGET/usr/lib/{PN}posix.la
+;
+libcdio
+  0.83
+  {PN}-{PV}
+  extract:ftp://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+jasper
+  1.900.1
+  {PN}-{PV}
+  extract:http://www.ece.uvic.ca/~frodo/{PN}/software/{PN}-{PV}.zip
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+mysql
+  5.1.40
+  {PN}-{PV}
+  extract:http://downloads.{PN}.com/archives/{PN}-5.1/{PN}-{PV}.tar.gz
+;
+libmicrohttpd
+  0.9.19
+  {PN}-{PV}
+  extract:http://ftp.halifax.rwth-aachen.de/gnu/{PN}/{PN}-{PV}.tar.gz
   make:install:prefix=/usr:DESTDIR=TARGETS
 ;
 elementtree
@@ -1112,6 +1202,7 @@ wpa_supplicant
   0.5.9
   wpa_supplicant-{PV}
   extract:http://hostap.epitest.fi/releases/wpa_supplicant-{PV}.tar.gz
+  make:install:DESTDIR=TARGETS
 ;
 ethtool
   6
