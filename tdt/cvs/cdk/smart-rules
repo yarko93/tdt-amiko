@@ -847,9 +847,8 @@ libdvbsipp
 tuxtxtlib
   1.0
   libtuxtxt
-  extract:file://libtuxtxt.git/libtuxtxt
+  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=libtuxtxt
   patch:file://libtuxtxt-{PV}-fix_dbox_headers.diff
-  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt/libtuxtxt.git
   rewrite-pkgconfig:tuxbox-tuxtxt.pc
   make:install:prefix=/usr:DESTDIR=TARGETS
   rewrite-libtool:TARGETS/usr/lib/libtuxtxt.la
@@ -857,9 +856,8 @@ tuxtxtlib
 tuxtxt32bpp
   1.0
   tuxtxt
-  extract:file://libtuxtxt.git/tuxtxt
+  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=tuxtxt
   patch:file://{PN}-{PV}-fix_dbox_headers.diff
-  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt/libtuxtxt.git
   make:install:prefix=/usr:DESTDIR=TARGETS
   rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
 ;
@@ -1029,9 +1027,8 @@ zope_interface
 enigma2_networkbrowser
   1.0
   {PN}
-  extract:file://enigma2-openpli-plugins-enigma2.git/networkbrowser
+  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/plugins-enigma2:sub=networkbrowser
   patch:file://{PN}-support_autofs.patch
-  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/plugins-enigma2/enigma2-openpli-plugins-enigma2.git
   make:install:DESTDIR=TARGETS
 ;
 gstreamer
@@ -1090,7 +1087,7 @@ gst_plugins_dvbmediasink
 graphlcd
   base-touchcol
   {PN}-{PV}
-  extract:http://projects.vdr-developer.org/git/{PN}-base.git/snapshot/{PN}-{PV}.tar.bz2
+  nothing:git://projects.vdr-developer.org/{PN}-base.git:r=a39f265732d0bc28cb66b58b5ecf1964a130d02b:b=touchcol
   patch:file://{PN}.patch
   make:install:DESTDIR=PKDIR
 ;

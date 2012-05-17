@@ -52,6 +52,13 @@ for lm in fm:
 		if tsk == '': continue
 		dep = tsk.split(':')[1]
 		rule = tsk.split(':')[0]
+		if dep.endswith('.git') or dep.find('.git/') > -1:
+			print 'marked as git', dep
+			if rule == 'nothing': continue
+			rule = 'nothing'
+			githack = dep.split('/')
+			if len(githack) > 1:
+				dep = githack[0]
 		if rule in cmd_tasks:
 			add2ret('p'+tsk)
 			continue
@@ -65,7 +72,16 @@ for lm in fm:
 			ra[0] = ra[0].strip()
 			if len(ra) == 1: ra += [default_url]
 			if dep != ra[0]: continue
-			src = ra[1]+'/'+ra[0]
+			if ra[1].startswith('git://'):
+				src = ra[1]
+				if len(ra) > 2:
+					src += ":r=%s" % ra[2]
+				if len(ra) > 3:
+					src += ":b=%s" % ra[3]
+				if len(githack) > 1:
+					src += ":sub=%s" % '/'.join(githack[1:])
+			else:
+				src = ra[1]+'/'+ra[0]
 		if src == '':
 			if dep.endswith('.src.rpm'):
 				src = default_url+'/'+dep
