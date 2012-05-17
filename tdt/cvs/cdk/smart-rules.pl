@@ -5,7 +5,7 @@ use IO::File;
 
 my $version;
 
-my $supported_protocols = "http|ftp|file";
+my $supported_protocols = "http|ftp|file|git|svn";
 my $make_commands = "nothing|extract|dirextract|patch(time)?(-(\\d+))?|pmove|premove|plink|pdircreate";
 
 sub load ($$$);
@@ -64,6 +64,8 @@ sub process_rule($) {
   my $f = "";
   my $l = $_;
   my @l = split( /:/ , $l );
+
+#  s#^(\w+)?:($supported_protocols)://([^:]+):.*$#
   
   my $cmd = shift @l;
   my $p;
@@ -78,24 +80,34 @@ sub process_rule($) {
     $p = shift @l;
   }
   
-  my $q = shift @l;
-  #print "test $q \n";
-  if ( not $q or $q !~ m#^//.*# )
+  my $url = shift @l;
+  #print "test $url \n";
+  if ( not $url or $url !~ m#^//.*# )
   {
     $p = "none";
   }
-  
+  else
+  {
+    $url = $p . ":" . $url;
+  }
+
   if ( $p ne "none" )
   {
-    my @a = split("/", $_);
+    my @a = split("/", $url);
     $f = $a[-1];
   }
-      
   #warn "command: $cmd protocol: $p file: $f\n";
 
-  return ($p, $f, $cmd);
-}
+  my %args = ();
+  my $arg;
+  while($arg = shift @l)
+  {
+    $args{$1} = $2 if $arg =~ m/(\w+)=(.*)/;
+    #warn "arg " . $1 . ' = ' . $2 . "\n";
+  }    
 
+  return ($p, $f, $cmd, $url, %args);
+}
 
 sub process_make_depends (@)
 {
@@ -142,8 +154,10 @@ sub process_make_prepare (@)
 
   foreach ( @_ )
   {
-	my @args = split( /:/, $_ );
-    my ($p, $f, $cmd) = process_rule($_);
+    my @args = split( /:/, $_ );
+    my ($p, $f, $cmd, $url, %opts) = process_rule($_);
+    my $subdir = "";
+    $subdir = "/" . $opts{"sub"} if $opts{"sub"};
     local @_ = ($p, $f);
 
     if ( $cmd eq "nothing" || $cmd !~ m#$make_commands# )
@@ -182,11 +196,24 @@ sub process_make_prepare (@)
       {
         $output .= "rpm \${DRPM} -Uhv  \\\$(archivedir)/" . $_[1];
       }
-      elsif ( $_[1] =~ m#\.cvs$# )
+      elsif ( $_[1] =~ m#\.cvs# )
       {
-        $_[1] =~ s/\.cvs//;
-        $output .= "cp -a \\\$(archivedir)/" . $_[1] . " . && mv " . $_[1] . " " . $dir;
+        my $target = $dir;
+        if ( @_ > 2 )
+        {
+          $target = $_[2] 
+        }
+        $output .= "cp -a \\\$(archivedir)/" . $_[1] . " " . $target;
       }
+      elsif ( $p eq "svn" )
+      {
+        $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
+      }
+      elsif ( $p eq "git" )
+      {
+        $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
+      }
+
       else
       {
         warn "can't recognize type of archive " . $_[1] . " skip";
@@ -225,7 +252,7 @@ sub process_make_prepare (@)
       $_ .= "-Z " if defined $1;
       if ( $_[1] =~ m#\.bz2$# )
       {
-        $output .= "( cd " . $dir . "; bunzip2 -cd \\\$(archivedir)/" . $_[1] . " | patch $_ )";
+        $output .= "( cd " . $dir . " && chmod +w -R .; bunzip2 -cd \\\$(archivedir)/" . $_[1] . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.deb\.diff\.gz$# )
       {
@@ -233,7 +260,7 @@ sub process_make_prepare (@)
       }
       elsif ( $_[1] =~ m#\.gz$# )
       {
-        $output .= "( cd " . $dir . "; gunzip -cd \\\$(archivedir)/" . $_[1] . " | patch $_ )";
+        $output .= "( cd " . $dir . " && chmod +w -R .; gunzip -cd \\\$(archivedir)/" . $_[1] . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.spec\.diff$# )
       {
@@ -241,7 +268,7 @@ sub process_make_prepare (@)
       }
       else
       {
-        $output .= "( cd " . $dir . "; patch $_ < ../Patches/" . $_[1] . " )";
+        $output .= "( cd " . $dir . " && chmod +w -R .; patch $_ < ../Patches/" . $_[1] . " )";
       }
     }
     elsif ( $cmd eq "rpmbuild" )
@@ -497,22 +524,22 @@ sub process_make_sources ($$$)
 
 sub process_download ($$$)
 {
-  local @_ = @{$_[1]};
-  process_make_version (@_);
+  my @rules = @{$_[1]};
+  process_make_version (@rules);
 
   my $head;
   my $output = "";
 
-  shift @_;
-  shift @_;
-  foreach ( @_ )
+  shift @rules;
+  shift @rules;
+  foreach ( @rules )
   {
-    my ($p, $f, $cmd) = process_rule($_);
+    my ($p, $f, $cmd, $url, %opts) = process_rule($_);
     next if ( $p eq "file" || $p eq "none" );
     
     $_ =~ s/$cmd:// if ($cmd ne "");
     
-    #print "download: " . $_ . "\n";
+    #warn "download: " . $url . "\n";
     
     $head .= " \$(archivedir)/" . $f;
     $output .= " \$(archivedir)/" . $f . ":\n\tfalse";
@@ -533,7 +560,24 @@ sub process_download ($$$)
 #       $outputupdate .= "\$(archivedir)" . $file . "up:\n\tfalse";
 #       $outputupdate .= " || \\\n\tcd \$(archivedir) && " . $cvsstring;
 #     }
-    if ( $f =~ m/gz$/ )
+    elsif ( $_ =~ m#^svn://# )
+    {
+      $output .= " || \\\n\tsvn checkout ";
+      if ( @_ > 2 )
+      {
+        my $revision = $_[2];
+        $output .= "-r " . $revision . " ";
+      }
+      $output .= "svn://" . $_[1] ." \$(archivedir)/" . $f;
+    }
+    elsif ( $url =~ m#^git://# )
+    {
+      $output .= " || \\\n\tgit clone $url" . " \$(archivedir)/" . $f;
+      $output .= " -b " . $opts{"b"} if $opts{"b"};
+      $output .= " && (cd \$(archivedir)/" . $f . "; git checkout " . $opts{"r"} . "; cd -) " if $opts{"r"};
+    }
+
+    elsif ( $f =~ m/gz$/ )
     {
       $output .= " || \\\n\twget -c -P \$(archivedir) ftp://ftp.stlinux.com/pub/stlinux/2.0/ST_Linux_2.0/RPM_Distribution/sh4-target-glibc-packages/" . $f;
       $output .= "\n\t\@touch \$\@";
