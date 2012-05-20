@@ -15,6 +15,8 @@ $(DEPDIR)/%misc-tools: driver libstdc++-dev libdvdnav libdvdcss libpng jpeg ffmp
 	$(if $(UFS910), -DPLATFORM_UFS910) \
 	$(if $(UFS912), -DPLATFORM_UFS912) \
 	$(if $(UFS922), -DPLATFORM_UFS922) \
+	$(if $(SPARK), -DPLATFORM_SPARK) \
+	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
 	$(if $(FORTIS_HDBOX), -DPLATFORM_FORTIS_HDBOX) \
 	$(if $(OCTAGON1008), -DPLATFORM_OCTAGON1008) \
 	$(if $(CUBEREVO), -DPLATFORM_CUBEREVO) \
@@ -35,7 +37,7 @@ $(DEPDIR)/%misc-tools: driver libstdc++-dev libdvdnav libdvdcss libpng jpeg ffmp
 	$(if $(PLAYER179), -DPLAYER179) \
 	$(if $(PLAYER191), -DPLAYER191) \
 	$(if $(VDR1722), -DVDR1722) \
-	$(if $(STM22), -DSTM22)"
+	$(if $(VDR1727), -DVDR1727)"
 	[ "x$*" = "x" ] && touch $@ || true
 
 misc-tools-clean:
