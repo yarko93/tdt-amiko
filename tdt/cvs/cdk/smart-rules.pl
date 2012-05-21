@@ -115,7 +115,7 @@ sub process_make_depends (@)
   shift;
   shift;
 
-  my $output;
+  my $output = "";
 
   foreach ( @_ )
   {  

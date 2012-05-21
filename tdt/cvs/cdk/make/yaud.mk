@@ -33,7 +33,6 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		\
 		%libz \
 		%grep \
-		%pppd \
 		%$(INITSCRIPTS) \
 		%openrdate \
 		%$(NETBASE) \
