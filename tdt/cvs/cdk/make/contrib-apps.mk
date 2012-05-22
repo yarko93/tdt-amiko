@@ -1025,6 +1025,7 @@ $(DEPDIR)/imagemagick.do_compile: $(DEPDIR)/imagemagick.do_prepare
 		--without-tiff \
 		--without-xml \
 		--enable-shared \
+		--disable-silent-rules \
 		--enable-static \
 		--without-x && \
 	$(MAKE) all
