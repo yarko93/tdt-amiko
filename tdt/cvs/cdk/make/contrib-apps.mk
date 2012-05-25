@@ -1012,6 +1012,8 @@ $(DEPDIR)/imagemagick.do_prepare: bootstrap @DEPENDS_imagemagick@
 $(DEPDIR)/imagemagick.do_compile: $(DEPDIR)/imagemagick.do_prepare
 	cd @DIR_imagemagick@ && \
 	$(BUILDENV) \
+	CFLAGS="-O1" \
+	PKG_CONFIG=$(hostprefix)/bin/pkg-config \
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
@@ -1023,8 +1025,10 @@ $(DEPDIR)/imagemagick.do_compile: $(DEPDIR)/imagemagick.do_prepare
 		--without-lcms \
 		--without-tiff \
 		--without-xml \
+		--without-perl \
+		--disable-openmp \
+		--without-zlib \
 		--enable-shared \
-		--disable-silent-rules \
 		--enable-static \
 		--without-x && \
 	$(MAKE) all

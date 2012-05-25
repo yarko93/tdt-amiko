@@ -1,7 +1,7 @@
 # vdr
 DIR_vdr := ../apps/vdr
 
-$(DEPDIR)/vdr.do_prepare: bootstrap freetype libxml2 jpeg libz libpng fontconfig libcap expat imagemagick
+$(DEPDIR)/vdr.do_prepare: bootstrap freetype libxml2 jpeg libz libpng fontconfig libpcre bzip2 libcap expat imagemagick
 
 $(DEPDIR)/vdr.do_compile: 
 
