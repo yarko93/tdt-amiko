@@ -948,8 +948,6 @@ TUXBOX_RULES_MAKE(brofs)
 TUXBOX_RULES_MAKE(libalsa)
 TUXBOX_RULES_MAKE(rtmpdump)
 TUXBOX_RULES_MAKE(libdvbsipp)
-TUXBOX_RULES_MAKE(tuxtxtlib)
-TUXBOX_RULES_MAKE(tuxtxt32bpp)
 TUXBOX_RULES_MAKE(libdreamdvd)
 TUXBOX_RULES_MAKE(libdreamdvd2)
 TUXBOX_RULES_MAKE(libmpeg2)
@@ -964,6 +962,12 @@ TUXBOX_RULES_MAKE(libcdio)
 TUXBOX_RULES_MAKE(jasper)
 TUXBOX_RULES_MAKE(mysql)
 TUXBOX_RULES_MAKE(libmicrohttpd)
+TUXBOX_RULES_MAKE(libexif)
+TUXBOX_RULES_MAKE(minidlna)
+TUXBOX_RULES_MAKE(vlc)
+TUXBOX_RULES_MAKE(djmount)
+TUXBOX_RULES_MAKE(libupnp)
+TUXBOX_RULES_MAKE(rarfs)
 
 #
 # python
@@ -997,7 +1001,10 @@ TUXBOX_RULES_MAKE(gst_plugins_dvbmediasink)
 #
 # enigma2
 #
+TUXBOX_RULES_MAKE(tuxtxtlib)
+TUXBOX_RULES_MAKE(tuxtxt32bpp)
 TUXBOX_RULES_MAKE(enigma2_networkbrowser)
+TUXBOX_RULES_MAKE(enigma2_openwebif)
 
 #
 # external lcd

@@ -1,11 +1,11 @@
 #
 #bzip2
 #
-$(DEPDIR)/bzip2.do_prepare: @DEPENDS_bzip2@
+$(DEPDIR)/bzip2.do_prepare: bootstrap @DEPENDS_bzip2@
 	@PREPARE_bzip2@
 	touch $@
 
-$(DEPDIR)/bzip2.do_compile: bootstrap $(DEPDIR)/bzip2.do_prepare
+$(DEPDIR)/bzip2.do_compile: $(DEPDIR)/bzip2.do_prepare
 	cd @DIR_bzip2@ && \
 		mv Makefile-libbz2_so Makefile && \
 		$(MAKE) all CC=$(target)-gcc
@@ -22,11 +22,11 @@ $(DEPDIR)/%bzip2: $(DEPDIR)/bzip2.do_compile
 #
 # MODULE-INIT-TOOLS
 #
-$(DEPDIR)/module_init_tools.do_prepare: @DEPENDS_module_init_tools@
+$(DEPDIR)/module_init_tools.do_prepare: bootstrap @DEPENDS_module_init_tools@
 	@PREPARE_module_init_tools@
 	touch $@
 
-$(DEPDIR)/module_init_tools.do_compile: bootstrap $(DEPDIR)/module_init_tools.do_prepare
+$(DEPDIR)/module_init_tools.do_compile: $(DEPDIR)/module_init_tools.do_prepare
 	cd @DIR_module_init_tools@ && \
 		$(BUILDENV) \
 		./configure \
@@ -44,20 +44,19 @@ $(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS:%=root/etc/%) $
 	$(call adapted-etc-files,$(MODULE_INIT_TOOLS_ADAPTED_ETC_FILES))
 	$(call initdconfig,module-init-tools)
 #	@DISTCLEANUP_module_init_tools@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # GREP
 #
-$(DEPDIR)/grep.do_prepare: @DEPENDS_grep@
+$(DEPDIR)/grep.do_prepare: bootstrap @DEPENDS_grep@
 	@PREPARE_grep@
 	cd @DIR_grep@ && \
 		gunzip -cd $(lastword $^) | cat > debian.patch && \
 		patch -p1 <debian.patch
 	touch $@
 
-$(DEPDIR)/grep.do_compile: bootstrap $(DEPDIR)/grep.do_prepare
+$(DEPDIR)/grep.do_compile: $(DEPDIR)/grep.do_prepare
 	cd @DIR_grep@ && \
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
@@ -77,8 +76,7 @@ $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
 	cd @DIR_grep@ && \
 		@INSTALL_grep@
 #	@DISTCLEANUP_grep@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # PPPD
@@ -115,11 +113,11 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 #
 # LSB
 #
-$(DEPDIR)/lsb.do_prepare: @DEPENDS_lsb@
+$(DEPDIR)/lsb.do_prepare: bootstrap @DEPENDS_lsb@
 	@PREPARE_lsb@
 	touch $@
 
-$(DEPDIR)/lsb.do_compile: bootstrap $(DEPDIR)/lsb.do_prepare
+$(DEPDIR)/lsb.do_compile: $(DEPDIR)/lsb.do_prepare
 	touch $@
 
 $(DEPDIR)/min-lsb $(DEPDIR)/std-lsb $(DEPDIR)/max-lsb \
@@ -128,13 +126,12 @@ $(DEPDIR)/%lsb: $(DEPDIR)/lsb.do_compile
 	cd @DIR_lsb@ && \
 		@INSTALL_lsb@
 #	@DISTCLEANUP_lsb@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # PORTMAP
 #
-$(DEPDIR)/portmap.do_prepare: @DEPENDS_portmap@
+$(DEPDIR)/portmap.do_prepare: bootstrap @DEPENDS_portmap@
 	@PREPARE_portmap@
 	cd @DIR_portmap@ && \
 		gunzip -cd $(lastword $^) | cat > debian.patch && \
@@ -142,8 +139,8 @@ $(DEPDIR)/portmap.do_prepare: @DEPENDS_portmap@
 		sed -e 's/### BEGIN INIT INFO/# chkconfig: S 41 10\n### BEGIN INIT INFO/g' -i debian/init.d
 	touch $@
 
-$(DEPDIR)/portmap.do_compile: bootstrap $(DEPDIR)/portmap.do_prepare
-	cd @DIR_portmap@  && \
+$(DEPDIR)/portmap.do_compile: $(DEPDIR)/portmap.do_prepare
+	cd @DIR_portmap@ && \
 		$(BUILDENV) \
 		$(MAKE)
 	touch $@
@@ -156,8 +153,7 @@ $(DEPDIR)/%portmap: $(DEPDIR)/%lsb $(PORTMAP_ADAPTED_ETC_FILES:%=root/etc/%) $(D
 	$(call adapted-etc-files,$(PORTMAP_ADAPTED_ETC_FILES))
 	$(call initdconfig,portmap)
 #	@DISTCLEANUP_portmap@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # OPENRDATE
@@ -192,8 +188,7 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
 #	@DISTCLEANUP_openrdate@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # E2FSPROGS
@@ -262,8 +257,8 @@ $(DEPDIR)/e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
 		LDCONFIG=true \
 		DESTDIR=$(targetprefix) && \
 	$(INSTALL) e2fsck/e2fsck.static $(targetprefix)/sbin
+#	@DISTCLEANUP_e2fsprogs@
 	touch $@
-	@TUXBOX_YAUD_CUSTOMIZE@
 else !STM24
 $(DEPDIR)/min-e2fsprogs $(DEPDIR)/std-e2fsprogs $(DEPDIR)/max-e2fsprogs \
 $(DEPDIR)/e2fsprogs: \
@@ -274,18 +269,17 @@ $(DEPDIR)/%e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
 		$(MAKE) install -C lib/uuid DESTDIR=$(targetprefix) && \
 		$(MAKE) install -C lib/blkid DESTDIR=$(targetprefix) ) || true
 #	@DISTCLEANUP_e2fsprogs@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 endif !STM24
 
 #
 # XFSPROGS
 #
-$(DEPDIR)/xfsprogs.do_prepare: bootstrap @DEPENDS_xfsprogs@
+$(DEPDIR)/xfsprogs.do_prepare: bootstrap $(DEPDIR)/e2fsprogs $(DEPDIR)/libreadline @DEPENDS_xfsprogs@
 	@PREPARE_xfsprogs@
 	touch $@
 
-$(DEPDIR)/xfsprogs.do_compile: $(DEPDIR)/e2fsprogs $(DEPDIR)/libreadline $(DEPDIR)/xfsprogs.do_prepare
+$(DEPDIR)/xfsprogs.do_compile: $(DEPDIR)/xfsprogs.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_xfsprogs@ && \
 		export DEBUG=-DNDEBUG && export OPTIMIZER=-O2 && \
@@ -315,17 +309,16 @@ $(DEPDIR)/%xfsprogs: $(DEPDIR)/xfsprogs.do_compile
 		export top_builddir=`pwd` && \
 		@INSTALL_xfsprogs@
 #	@DISTCLEANUP_xfsprogs@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # MC
 #
-$(DEPDIR)/mc.do_prepare: @DEPENDS_mc@
+$(DEPDIR)/mc.do_prepare: bootstrap glib2 @DEPENDS_mc@
 	@PREPARE_mc@
 	touch $@
 
-$(DEPDIR)/mc.do_compile: bootstrap glib2 $(DEPDIR)/mc.do_prepare | $(NCURSES_DEV) 
+$(DEPDIR)/mc.do_compile: $(DEPDIR)/mc.do_prepare | $(NCURSES_DEV)
 	cd @DIR_mc@ && \
 		$(BUILDENV) \
 		./configure \
@@ -346,13 +339,12 @@ $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
 #		export top_builddir=`pwd` && \
 #		$(MAKE) install DESTDIR=$(prefix)/$*cdkroot
 #	@DISTCLEANUP_mc@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # SDPARM
 #
-$(DEPDIR)/sdparm.do_prepare: @DEPENDS_sdparm@
+$(DEPDIR)/sdparm.do_prepare: bootstrap @DEPENDS_sdparm@
 	@PREPARE_sdparm@
 	touch $@
 
@@ -370,7 +362,8 @@ $(DEPDIR)/sdparm.do_compile: $(DEPDIR)/sdparm.do_prepare
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-sdparm $(DEPDIR)/std-sdparm $(DEPDIR)/max-sdparm $(DEPDIR)/sdparm: \
+$(DEPDIR)/min-sdparm $(DEPDIR)/std-sdparm $(DEPDIR)/max-sdparm \
+$(DEPDIR)/sdparm: \
 $(DEPDIR)/%sdparm: $(DEPDIR)/sdparm.do_compile
 	cd @DIR_sdparm@ && \
 		export PATH=$(MAKE_PATH) && \
@@ -378,8 +371,7 @@ $(DEPDIR)/%sdparm: $(DEPDIR)/sdparm.do_compile
 	@( cd $(prefix)/$*cdkroot/usr/share/man/man8 && \
 		gzip -v9 sdparm.8 )
 #	@DISTCLEANUP_sdparm@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # SG3_UTILS
@@ -418,13 +410,12 @@ $(DEPDIR)/%sg3_utils: $(DEPDIR)/sg3_utils.do_compile
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done ) && \
 	$(INSTALL) -m755 root/usr/sbin/sg_down.sh $(prefix)/$*cdkroot/usr/sbin
 #	@DISTCLEANUP_sg3_utils@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # IPKG
 #
-$(DEPDIR)/ipkg.do_prepare: @DEPENDS_ipkg@
+$(DEPDIR)/ipkg.do_prepare: bootstrap @DEPENDS_ipkg@
 	@PREPARE_ipkg@
 	touch $@
 
@@ -449,14 +440,13 @@ $(DEPDIR)/%ipkg: $(DEPDIR)/ipkg.do_compile
 	$(INSTALL) -d $(prefix)/$*cdkroot/usr/lib/ipkg
 	$(INSTALL) -m 644 root/usr/lib/ipkg/status.initial $(prefix)/$*cdkroot/usr/lib/ipkg/status
 #	@DISTCLEANUP_ipkg@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # ZD1211
 #
-CONFIG_ZD1211B	:=
-$(DEPDIR)/zd1211.do_prepare: @DEPENDS_zd1211@
+CONFIG_ZD1211B :=
+$(DEPDIR)/zd1211.do_prepare: bootstrap @DEPENDS_zd1211@
 	@PREPARE_zd1211@
 	touch $@
 
@@ -478,17 +468,16 @@ $(DEPDIR)/%zd1211: $(DEPDIR)/zd1211.do_compile
 			install
 	$(DEPMOD) -ae -b $(targetprefix) -r $(KERNELVERSION)
 #	@DISTCLEANUP_zd1211@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # NANO
 #
-$(DEPDIR)/nano.do_prepare: @DEPENDS_nano@
+$(DEPDIR)/nano.do_prepare: bootstrap ncurses ncurses-dev @DEPENDS_nano@
 	@PREPARE_nano@
 	touch $@
 
-$(DEPDIR)/nano.do_compile: bootstrap ncurses ncurses-dev $(DEPDIR)/nano.do_prepare 
+$(DEPDIR)/nano.do_compile: $(DEPDIR)/nano.do_prepare
 	cd @DIR_nano@ && \
 		$(BUILDENV) \
 		./configure \
@@ -507,17 +496,16 @@ $(DEPDIR)/%nano: $(DEPDIR)/nano.do_compile
 	cd @DIR_nano@ && \
 		@INSTALL_nano@
 #	@DISTCLEANUP_nano@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # RSYNC
 #
-$(DEPDIR)/rsync.do_prepare: @DEPENDS_rsync@
+$(DEPDIR)/rsync.do_prepare: bootstrap @DEPENDS_rsync@
 	@PREPARE_rsync@
 	touch $@
 
-$(DEPDIR)/rsync.do_compile: bootstrap $(DEPDIR)/rsync.do_prepare 
+$(DEPDIR)/rsync.do_compile: $(DEPDIR)/rsync.do_prepare
 	cd @DIR_rsync@ && \
 		$(BUILDENV) \
 		./configure \
@@ -535,17 +523,16 @@ $(DEPDIR)/%rsync: $(DEPDIR)/rsync.do_compile
 	cd @DIR_rsync@ && \
 		@INSTALL_rsync@
 #	@DISTCLEANUP_rsync@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # LM_SENSORS
 #
-$(DEPDIR)/lm_sensors.do_prepare: @DEPENDS_lm_sensors@
+$(DEPDIR)/lm_sensors.do_prepare: bootstrap @DEPENDS_lm_sensors@
 	@PREPARE_lm_sensors@
 	touch $@
 
-$(DEPDIR)/lm_sensors.do_compile: bootstrap $(DEPDIR)/lm_sensors.do_prepare 
+$(DEPDIR)/lm_sensors.do_compile: $(DEPDIR)/lm_sensors.do_prepare
 	cd @DIR_lm_sensors@ && \
 		$(MAKE) $(MAKE_OPTS) MACHINE=sh PREFIX=/usr user
 	touch $@
@@ -562,17 +549,16 @@ $(DEPDIR)/%lm_sensors: $(DEPDIR)/lm_sensors.do_compile
 		rm $(prefix)/$*cdkroot/usr/include/linux/i2c-dev.h && \
 		rm $(prefix)/$*cdkroot/usr/bin/ddcmon
 #	@DISTCLEANUP_lm_sensors@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # FUSE
 #
-$(DEPDIR)/fuse.do_prepare: @DEPENDS_fuse@
+$(DEPDIR)/fuse.do_prepare: bootstrap curl glib2 @DEPENDS_fuse@
 	@PREPARE_fuse@
 	touch $@
 
-$(DEPDIR)/fuse.do_compile: bootstrap curl glib2 $(DEPDIR)/fuse.do_prepare
+$(DEPDIR)/fuse.do_compile: $(DEPDIR)/fuse.do_prepare
 	cd @DIR_fuse@ && \
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -I$(buildprefix)/linux/arch/sh" \
@@ -601,17 +587,16 @@ $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
 #	@DISTCLEANUP_fuse@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # CURLFTPFS
 #
-$(DEPDIR)/curlftpfs.do_prepare: @DEPENDS_curlftpfs@
+$(DEPDIR)/curlftpfs.do_prepare: bootstrap fuse @DEPENDS_curlftpfs@
 	@PREPARE_curlftpfs@
 	touch $@
 
-$(DEPDIR)/curlftpfs.do_compile: fuse bootstrap $(DEPDIR)/curlftpfs.do_prepare
+$(DEPDIR)/curlftpfs.do_compile: $(DEPDIR)/curlftpfs.do_prepare
 	cd @DIR_curlftpfs@ && \
 		export ac_cv_func_malloc_0_nonnull=yes && \
 		export ac_cv_func_realloc_0_nonnull=yes && \
@@ -629,17 +614,16 @@ $(DEPDIR)/%curlftpfs: %fuse $(DEPDIR)/curlftpfs.do_compile
 	cd @DIR_curlftpfs@ && \
 		@INSTALL_curlftpfs@
 #	@DISTCLEANUP_curlftpfs@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # FBSET
 #
-$(DEPDIR)/fbset.do_prepare: @DEPENDS_fbset@
+$(DEPDIR)/fbset.do_prepare: bootstrap @DEPENDS_fbset@
 	@PREPARE_fbset@
 	touch $@
 
-$(DEPDIR)/fbset.do_compile: bootstrap fbset.do_prepare
+$(DEPDIR)/fbset.do_compile: $(DEPDIR)/fbset.do_prepare
 	cd @DIR_fbset@ && \
 		make CC="$(target)-gcc -Wall -O2 -I."
 	touch $@
@@ -647,20 +631,19 @@ $(DEPDIR)/fbset.do_compile: bootstrap fbset.do_prepare
 $(DEPDIR)/min-fbset $(DEPDIR)/std-fbset $(DEPDIR)/max-fbset \
 $(DEPDIR)/fbset: \
 $(DEPDIR)/%fbset: fbset.do_compile
-	cd @DIR_fbset@  && \
+	cd @DIR_fbset@ && \
 		@INSTALL_fbset@
 #	@DISTCLEANUP_fbset@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # PNGQUANT
 #
-$(DEPDIR)/pngquant.do_prepare: @DEPENDS_pngquant@
+$(DEPDIR)/pngquant.do_prepare: bootstrap libz libpng @DEPENDS_pngquant@
 	@PREPARE_pngquant@
 	touch $@
 
-$(DEPDIR)/pngquant.do_compile: bootstrap libz libpng pngquant.do_prepare 
+$(DEPDIR)/pngquant.do_compile: $(DEPDIR)/pngquant.do_prepare
 	cd @DIR_pngquant@ && \
 		$(target)-gcc -O3 -Wall -I. -funroll-loops -fomit-frame-pointer -o pngquant pngquant.c rwpng.c -lpng -lz -lm
 	touch $@
@@ -671,17 +654,16 @@ $(DEPDIR)/%pngquant: $(DEPDIR)/pngquant.do_compile
 	cd @DIR_pngquant@ && \
 		@INSTALL_pngquant@
 #	@DISTCLEANUP_pngquant@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # MPLAYER
 #
-$(DEPDIR)/mplayer.do_prepare: @DEPENDS_mplayer@
+$(DEPDIR)/mplayer.do_prepare: bootstrap @DEPENDS_mplayer@
 	@PREPARE_mplayer@
 	touch $@
 
-$(DEPDIR)/mplayer.do_compile: bootstrap mplayer.do_prepare 
+$(DEPDIR)/mplayer.do_compile: $(DEPDIR)/mplayer.do_prepare
 	cd @DIR_mplayer@ && \
 		$(BUILDENV) \
 		./configure \
@@ -689,7 +671,7 @@ $(DEPDIR)/mplayer.do_compile: bootstrap mplayer.do_prepare
 			--target=$(target) \
 			--host-cc=gcc \
 			--prefix=/usr \
-			--disable-mencoder  && \
+			--disable-mencoder && \
 		$(MAKE) CC="$(target)-gcc"
 	touch $@
 
@@ -699,17 +681,16 @@ $(DEPDIR)/%mplayer: $(DEPDIR)/mplayer.do_compile
 	cd @DIR_mplayer@ && \
 		@INSTALL_mplayer@
 #	@DISTCLEANUP_mplayer@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # MENCODER
 #
-#$(DEPDIR)/mencoder.do_prepare: @DEPENDS_mplayer@
-#	@PREPARE_mplayer@
+#$(DEPDIR)/mencoder.do_prepare: bootstrap @DEPENDS_mencoder@
+#	@PREPARE_mencoder@
 #	touch $@
 
-$(DEPDIR)/mencoder.do_compile: bootstrap mplayer.do_prepare 
+$(DEPDIR)/mencoder.do_compile: $(DEPDIR)/mplayer.do_prepare
 	cd @DIR_mencoder@ && \
 		$(BUILDENV) \
 		./configure \
@@ -752,16 +733,15 @@ $(DEPDIR)/%mencoder: $(DEPDIR)/mencoder.do_compile
 	cd @DIR_mencoder@ && \
 		@INSTALL_mencoder@
 #	@DISTCLEANUP_mencoder@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # UTIL-LINUX
 #
 if STM24
-# for stm24, look in contrib-apps-specs.mk 
+# for stm24, look in contrib-apps-specs.mk
 else !STM24
-$(DEPDIR)/util-linux.do_prepare: @DEPENDS_util_linux@
+$(DEPDIR)/util-linux.do_prepare: bootstrap @DEPENDS_util_linux@
 	@PREPARE_util_linux@
 	cd @DIR_util_linux@ && \
 		for p in `grep -v "^#" debian/patches/00list` ; do \
@@ -770,7 +750,7 @@ $(DEPDIR)/util-linux.do_prepare: @DEPENDS_util_linux@
 		patch -p1 < $(buildprefix)/Patches/util-linux-stm.diff
 	touch $@
 
-$(DEPDIR)/util-linux.do_compile: bootstrap util-linux.do_prepare
+$(DEPDIR)/util-linux.do_compile: $(DEPDIR)/util-linux.do_prepare
 	cd @DIR_util_linux@ && \
 		sed -e 's/\ && .\/conftest//g' < configure > configure.new && \
 		chmod +x configure.new && mv configure.new configure && \
@@ -786,7 +766,7 @@ $(DEPDIR)/util-linux.do_compile: bootstrap util-linux.do_prepare
 $(DEPDIR)/min-util-linux $(DEPDIR)/std-util-linux $(DEPDIR)/max-util-linux \
 $(DEPDIR)/util-linux: \
 $(DEPDIR)/%util-linux: util-linux.do_compile
-	cd @DIR_util_linux@  && \
+	cd @DIR_util_linux@ && \
 		install -d $(targetprefix)/sbin && \
 		install -m 755 fdisk/sfdisk $(targetprefix)/sbin/
 #		$(MAKE) ARCH=sh4 HAVE_SLANG=no HAVE_SHADOW=yes HAVE_PAM=no \
@@ -798,18 +778,17 @@ $(DEPDIR)/%util-linux: util-linux.do_compile
 #		( cd po && make install DESTDIR=$(targetprefix) )
 #		@INSTALL_util_linux@
 #	@DISTCLEANUP_util_linux@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 endif !STM24
 
 #
 # jfsutils
 #
-$(DEPDIR)/jfsutils.do_prepare: @DEPENDS_jfsutils@
+$(DEPDIR)/jfsutils.do_prepare: bootstrap @DEPENDS_jfsutils@
 	@PREPARE_jfsutils@
 	touch $@
 
-$(DEPDIR)/jfsutils.do_compile: bootstrap jfsutils.do_prepare 
+$(DEPDIR)/jfsutils.do_compile: $(DEPDIR)/jfsutils.do_prepare
 	cd @DIR_jfsutils@ && \
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
@@ -826,17 +805,16 @@ $(DEPDIR)/%jfsutils: $(DEPDIR)/jfsutils.do_compile
 	cd @DIR_jfsutils@ && \
 		@INSTALL_jfsutils@
 #	@DISTCLEANUP_jfsutils@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # opkg
 #
-$(DEPDIR)/opkg.do_prepare: @DEPENDS_opkg@
+$(DEPDIR)/opkg.do_prepare: bootstrap @DEPENDS_opkg@
 	@PREPARE_opkg@
 	touch $@
 
-$(DEPDIR)/opkg.do_compile: bootstrap opkg.do_prepare 
+$(DEPDIR)/opkg.do_compile: $(DEPDIR)/opkg.do_prepare
 	cd @DIR_opkg@ && \
 		$(BUILDENV) \
 		./configure \
@@ -854,9 +832,8 @@ $(DEPDIR)/opkg: \
 $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
 	cd @DIR_opkg@ && \
 		@INSTALL_opkg@
-#	@DISTCLEANUP_jfsutils@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+#	@DISTCLEANUP_opkg@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # ntpclient
@@ -959,18 +936,17 @@ $(DEPDIR)/sysstat: bootstrap @DEPENDS_sysstat@
 		@INSTALL_sysstat@
 	@DISTCLEANUP_sysstat@
 	@touch $@
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
 # hotplug-e2
 #
-$(DEPDIR)/hotplug_e2.do_prepare: @DEPENDS_hotplug_e2@
+$(DEPDIR)/hotplug_e2.do_prepare: bootstrap @DEPENDS_hotplug_e2@
 	@PREPARE_hotplug_e2@
 	git clone git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper;
 	cd @DIR_hotplug_e2@ && patch -p1 < $(buildprefix)/Patches/hotplug-e2-helper-support_fw_upload.patch
 	touch $@
 
-$(DEPDIR)/hotplug_e2.do_compile: bootstrap hotplug_e2.do_prepare 
+$(DEPDIR)/hotplug_e2.do_compile: $(DEPDIR)/hotplug_e2.do_prepare
 	cd @DIR_hotplug_e2@ && \
 		aclocal -I $(hostprefix)/share/aclocal && \
 		autoconf && \
@@ -989,18 +965,17 @@ $(DEPDIR)/hotplug_e2: \
 $(DEPDIR)/%hotplug_e2: $(DEPDIR)/hotplug_e2.do_compile
 	cd @DIR_hotplug_e2@ && \
 		@INSTALL_hotplug_e2@
-#	@DISTCLEANUP_jfsutils@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+#	@DISTCLEANUP_hotplug_e2@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # autofs
 #
-$(DEPDIR)/autofs.do_prepare: @DEPENDS_autofs@
+$(DEPDIR)/autofs.do_prepare: bootstrap @DEPENDS_autofs@
 	@PREPARE_autofs@
 	touch $@
 
-$(DEPDIR)/autofs.do_compile: bootstrap autofs.do_prepare 
+$(DEPDIR)/autofs.do_compile: $(DEPDIR)/autofs.do_prepare
 	cd @DIR_autofs@ && \
 		cp aclocal.m4 acinclude.m4 && \
 		autoconf && \
@@ -1018,8 +993,7 @@ $(DEPDIR)/%autofs: $(DEPDIR)/autofs.do_compile
 	cd @DIR_autofs@ && \
 		@INSTALL_autofs@
 #	@DISTCLEANUP_autofs@
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # imagemagick
@@ -1055,5 +1029,3 @@ $(DEPDIR)/%imagemagick: $(DEPDIR)/imagemagick.do_compile
 		@INSTALL_imagemagick@
 #	@DISTCLEANUP_imagemagick@
 	[ "x$*" = "x" ] && touch $@ || true
-
-

@@ -39,11 +39,11 @@ $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
 #
 # libreadline
 #
-$(DEPDIR)/libreadline.do_prepare: bootstrap @DEPENDS_libreadline@
+$(DEPDIR)/libreadline.do_prepare: bootstrap ncurses-dev @DEPENDS_libreadline@
 	@PREPARE_libreadline@
 	touch $@
 
-$(DEPDIR)/libreadline.do_compile: ncurses-dev $(DEPDIR)/libreadline.do_prepare
+$(DEPDIR)/libreadline.do_compile: $(DEPDIR)/libreadline.do_prepare
 	cd @DIR_libreadline@ && \
 		autoconf && \
 		$(BUILDENV) \
@@ -192,11 +192,11 @@ $(DEPDIR)/%jpeg: $(DEPDIR)/jpeg.do_compile
 #
 # libpng
 #
-$(DEPDIR)/libpng.do_prepare: bootstrap @DEPENDS_libpng@
+$(DEPDIR)/libpng.do_prepare: bootstrap libz @DEPENDS_libpng@
 	@PREPARE_libpng@
 	touch $@
 
-$(DEPDIR)/libpng.do_compile: libz $(DEPDIR)/libpng.do_prepare
+$(DEPDIR)/libpng.do_compile: $(DEPDIR)/libpng.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_libpng@ && \
 		./autogen.sh && \
@@ -276,11 +276,11 @@ $(DEPDIR)/%libgif: $(DEPDIR)/libgif.do_compile
 #
 # libcurl
 #
-$(DEPDIR)/curl.do_prepare: @DEPENDS_curl@
+$(DEPDIR)/curl.do_prepare: bootstrap libz @DEPENDS_curl@
 	@PREPARE_curl@
 	touch $@
 
-$(DEPDIR)/curl.do_compile: bootstrap libz $(DEPDIR)/curl.do_prepare
+$(DEPDIR)/curl.do_compile: $(DEPDIR)/curl.do_prepare
 	cd @DIR_curl@ && \
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
@@ -334,11 +334,11 @@ $(DEPDIR)/%libfribidi: $(DEPDIR)/libfribidi.do_compile
 #
 # libsigc
 #
-$(DEPDIR)/libsigc.do_prepare: bootstrap @DEPENDS_libsigc@
+$(DEPDIR)/libsigc.do_prepare: bootstrap libstdc++-dev @DEPENDS_libsigc@
 	@PREPARE_libsigc@
 	touch $@
 
-$(DEPDIR)/libsigc.do_compile: libstdc++-dev $(DEPDIR)/libsigc.do_prepare
+$(DEPDIR)/libsigc.do_compile: $(DEPDIR)/libsigc.do_prepare
 	cd @DIR_libsigc@ && \
 		$(BUILDENV) \
 		./configure \
@@ -395,11 +395,11 @@ $(DEPDIR)/%libmad: $(DEPDIR)/libmad.do_compile
 #
 # libid3tag
 #
-$(DEPDIR)/libid3tag.do_prepare: bootstrap @DEPENDS_libid3tag@
+$(DEPDIR)/libid3tag.do_prepare: bootstrap libz @DEPENDS_libid3tag@
 	@PREPARE_libid3tag@
 	touch $@
 
-$(DEPDIR)/libid3tag.do_compile: libz $(DEPDIR)/libid3tag.do_prepare
+$(DEPDIR)/libid3tag.do_compile: $(DEPDIR)/libid3tag.do_prepare
 	cd @DIR_libid3tag@ && \
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
@@ -423,11 +423,11 @@ $(DEPDIR)/%libid3tag: %libz $(DEPDIR)/libid3tag.do_compile
 # libvorbisidec
 #
 
-$(DEPDIR)/libvorbisidec.do_prepare: @DEPENDS_libvorbisidec@
+$(DEPDIR)/libvorbisidec.do_prepare: bootstrap @DEPENDS_libvorbisidec@
 	@PREPARE_libvorbisidec@
 	touch $@
 
-$(DEPDIR)/libvorbisidec.do_compile: bootstrap $(DEPDIR)/libvorbisidec.do_prepare
+$(DEPDIR)/libvorbisidec.do_compile: $(DEPDIR)/libvorbisidec.do_prepare
 	cd @DIR_libvorbisidec@ && \
 		$(BUILDENV) \
 		./autogen.sh \
@@ -447,11 +447,11 @@ $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
 # libglib2
 # You need libglib2.0-dev on host system
 #
-$(DEPDIR)/glib2.do_prepare: @DEPENDS_glib2@
+$(DEPDIR)/glib2.do_prepare: bootstrap libz @DEPENDS_glib2@
 	@PREPARE_glib2@
 	touch $@
 
-$(DEPDIR)/glib2.do_compile: bootstrap libz $(DEPDIR)/glib2.do_prepare
+$(DEPDIR)/glib2.do_compile: $(DEPDIR)/glib2.do_prepare
 	echo "glib_cv_va_copy=no" > @DIR_glib2@/config.cache
 	echo "glib_cv___va_copy=yes" >> @DIR_glib2@/config.cache
 	echo "glib_cv_va_val_copy=yes" >> @DIR_glib2@/config.cache
@@ -512,11 +512,11 @@ $(DEPDIR)/%libiconv: $(DEPDIR)/libiconv.do_compile
 #
 # libmng
 #
-$(DEPDIR)/libmng.do_prepare: @DEPENDS_libmng@
+$(DEPDIR)/libmng.do_prepare: bootstrap libz jpeg lcms @DEPENDS_libmng@
 	@PREPARE_libmng@
 	touch $@
 
-$(DEPDIR)/libmng.do_compile: bootstrap libz jpeg lcms libmng.do_prepare
+$(DEPDIR)/libmng.do_compile: $(DEPDIR)/libmng.do_prepare
 	cd @DIR_libmng@ && \
 		cat unmaintained/autogen.sh | tr -d \\r > autogen.sh && chmod 755 autogen.sh && \
 		[ ! -x ./configure ] && ./autogen.sh --help || true && \
@@ -537,11 +537,11 @@ $(DEPDIR)/libmng.do_compile: bootstrap libz jpeg lcms libmng.do_prepare
 #
 # lcms
 #
-$(DEPDIR)/lcms.do_prepare: @DEPENDS_lcms@
+$(DEPDIR)/lcms.do_prepare: bootstrap libz jpeg @DEPENDS_lcms@
 	@PREPARE_lcms@
 	touch $@
 
-$(DEPDIR)/lcms.do_compile: bootstrap libz jpeg lcms.do_prepare
+$(DEPDIR)/lcms.do_compile: $(DEPDIR)/lcms.do_prepare
 	cd @DIR_lcms@ && \
 		$(BUILDENV) \
 		./configure \
@@ -556,11 +556,11 @@ $(DEPDIR)/lcms.do_compile: bootstrap libz jpeg lcms.do_prepare
 #
 # directfb
 #
-$(DEPDIR)/directfb.do_prepare: @DEPENDS_directfb@
+$(DEPDIR)/directfb.do_prepare: bootstrap freetype @DEPENDS_directfb@
 	@PREPARE_directfb@
 	touch $@
 
-$(DEPDIR)/directfb.do_compile: bootstrap freetype directfb.do_prepare
+$(DEPDIR)/directfb.do_compile: $(DEPDIR)/directfb.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_directfb@ && \
 		libtoolize -f -c && \
@@ -596,11 +596,11 @@ $(DEPDIR)/%directfb: $(DEPDIR)/directfb.do_compile
 #
 # DFB++
 #
-$(DEPDIR)/dfbpp.do_prepare: @DEPENDS_dfbpp@
+$(DEPDIR)/dfbpp.do_prepare: bootstrap libz jpeg directfb @DEPENDS_dfbpp@
 	@PREPARE_dfbpp@
 	touch $@
 
-$(DEPDIR)/dfbpp.do_compile: bootstrap libz jpeg directfb dfbpp.do_prepare
+$(DEPDIR)/dfbpp.do_compile: $(DEPDIR)/dfbpp.do_prepare
 	cd @DIR_dfbpp@ && \
 		$(BUILDENV) \
 		./configure \
@@ -622,11 +622,11 @@ $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
 #
 # expat
 #
-$(DEPDIR)/expat.do_prepare: @DEPENDS_expat@
+$(DEPDIR)/expat.do_prepare: bootstrap @DEPENDS_expat@
 	@PREPARE_expat@
 	touch $@
 
-$(DEPDIR)/expat.do_compile: bootstrap expat.do_prepare
+$(DEPDIR)/expat.do_compile: $(DEPDIR)/expat.do_prepare
 	cd @DIR_expat@ && \
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
@@ -648,11 +648,11 @@ $(DEPDIR)/%expat: $(DEPDIR)/expat.do_compile
 #
 # fontconfig
 #
-$(DEPDIR)/fontconfig.do_prepare: @DEPENDS_fontconfig@
+$(DEPDIR)/fontconfig.do_prepare: bootstrap libz libxml2 @DEPENDS_fontconfig@
 	@PREPARE_fontconfig@
 	touch $@
 
-$(DEPDIR)/fontconfig.do_compile: bootstrap libz fontconfig.do_prepare
+$(DEPDIR)/fontconfig.do_compile: $(DEPDIR)/fontconfig.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_fontconfig@ && \
 		libtoolize -f -c && \
@@ -685,11 +685,11 @@ $(DEPDIR)/%fontconfig: $(DEPDIR)/fontconfig.do_compile
 #
 # libxmlccwrap
 #
-$(DEPDIR)/libxmlccwrap.do_prepare: @DEPENDS_libxmlccwrap@
+$(DEPDIR)/libxmlccwrap.do_prepare: bootstrap @DEPENDS_libxmlccwrap@
 	@PREPARE_libxmlccwrap@
 	touch $@
 
-$(DEPDIR)/libxmlccwrap.do_compile: bootstrap libxmlccwrap.do_prepare
+$(DEPDIR)/libxmlccwrap.do_compile: $(DEPDIR)/libxmlccwrap.do_prepare
 	cd @DIR_libxmlccwrap@ && \
 		$(BUILDENV) \
 		./configure \
@@ -713,11 +713,11 @@ $(DEPDIR)/%libxmlccwrap: libxmlccwrap.do_compile
 #
 # a52dec
 #
-$(DEPDIR)/a52dec.do_prepare: @DEPENDS_a52dec@
+$(DEPDIR)/a52dec.do_prepare: bootstrap @DEPENDS_a52dec@
 	@PREPARE_a52dec@
 	touch $@
 
-$(DEPDIR)/a52dec.do_compile: bootstrap a52dec.do_prepare
+$(DEPDIR)/a52dec.do_compile: $(DEPDIR)/a52dec.do_prepare
 	cd @DIR_a52dec@ && \
 		$(BUILDENV) \
 		./configure \
@@ -738,11 +738,11 @@ $(DEPDIR)/%a52dec: a52dec.do_compile
 #
 # libdvdcss
 #
-$(DEPDIR)/libdvdcss.do_prepare: @DEPENDS_libdvdcss@
+$(DEPDIR)/libdvdcss.do_prepare: bootstrap @DEPENDS_libdvdcss@
 	@PREPARE_libdvdcss@
 	touch $@
 
-$(DEPDIR)/libdvdcss.do_compile: bootstrap libdvdcss.do_prepare
+$(DEPDIR)/libdvdcss.do_compile: $(DEPDIR)/libdvdcss.do_prepare
 	cd @DIR_libdvdcss@ && \
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
@@ -764,11 +764,11 @@ $(DEPDIR)/%libdvdcss: libdvdcss.do_compile
 #
 # libdvdnav
 #
-$(DEPDIR)/libdvdnav.do_prepare: @DEPENDS_libdvdnav@
+$(DEPDIR)/libdvdnav.do_prepare: bootstrap libdvdread @DEPENDS_libdvdnav@
 	@PREPARE_libdvdnav@
 	touch $@
 
-$(DEPDIR)/libdvdnav.do_compile: bootstrap libdvdread libdvdnav.do_prepare
+$(DEPDIR)/libdvdnav.do_compile: $(DEPDIR)/libdvdnav.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_libdvdnav@ && \
 		cp $(hostprefix)/share/libtool/config/ltmain.sh . && \
@@ -799,11 +799,11 @@ $(DEPDIR)/%libdvdnav: libdvdnav.do_compile
 #
 # libdvdread
 #
-$(DEPDIR)/libdvdread.do_prepare: @DEPENDS_libdvdread@
+$(DEPDIR)/libdvdread.do_prepare: bootstrap @DEPENDS_libdvdread@
 	@PREPARE_libdvdread@
 	touch $@
 
-$(DEPDIR)/libdvdread.do_compile: bootstrap libdvdread.do_prepare
+$(DEPDIR)/libdvdread.do_compile: $(DEPDIR)/libdvdread.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_libdvdread@ && \
 		cp $(hostprefix)/share/libtool/config/ltmain.sh . && \
@@ -838,7 +838,7 @@ $(DEPDIR)/ffmpeg.do_prepare: bootstrap libass rtmpdump @DEPENDS_ffmpeg@
 	@PREPARE_ffmpeg@
 	touch $@
 
-$(DEPDIR)/ffmpeg.do_compile: bootstrap libass rtmpdump $(DEPDIR)/ffmpeg.do_prepare
+$(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 	cd @DIR_ffmpeg@ && \
 	$(BUILDENV) \
 	./configure \
@@ -921,7 +921,7 @@ $(DEPDIR)/ffmpeg: \
 $(DEPDIR)/%ffmpeg: $(DEPDIR)/ffmpeg.do_compile
 	cd @DIR_ffmpeg@ && \
 		@INSTALL_ffmpeg@
-#	@DISTCLEANUP_pyopenssl@
+#	@DISTCLEANUP_ffmpeg@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -947,7 +947,6 @@ $(DEPDIR)/libass: \
 $(DEPDIR)/%libass: $(DEPDIR)/libass.do_compile
 	cd @DIR_libass@ && \
 		@INSTALL_libass@
-	echo "libdir='$(targetprefix)/usr/lib'" >> $(targetprefix)/usr/lib/libass.la
 #	@DISTCLEANUP_libass@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -1207,7 +1206,7 @@ $(DEPDIR)/%cairo: $(DEPDIR)/cairo.do_compile
 #
 # libogg
 #
-$(DEPDIR)/libogg.do_prepare: bootstrap  @DEPENDS_libogg@
+$(DEPDIR)/libogg.do_prepare: bootstrap @DEPENDS_libogg@
 	@PREPARE_libogg@
 	touch $@
 
@@ -1231,7 +1230,7 @@ $(DEPDIR)/%libogg: $(DEPDIR)/libogg.do_compile
 #
 # libflac
 #
-$(DEPDIR)/libflac.do_prepare: bootstrap  @DEPENDS_libflac@
+$(DEPDIR)/libflac.do_prepare: bootstrap @DEPENDS_libflac@
 	@PREPARE_libflac@
 	touch $@
 
@@ -1270,11 +1269,11 @@ $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
 #
 # elementtree
 #
-$(DEPDIR)/elementtree.do_prepare: @DEPENDS_elementtree@
+$(DEPDIR)/elementtree.do_prepare: bootstrap @DEPENDS_elementtree@
 	@PREPARE_elementtree@
 	touch $@
 
-$(DEPDIR)/elementtree.do_compile: bootstrap elementtree.do_prepare
+$(DEPDIR)/elementtree.do_compile: $(DEPDIR)/elementtree.do_prepare
 	touch $@
 
 $(DEPDIR)/min-elementtree $(DEPDIR)/std-elementtree $(DEPDIR)/max-elementtree \
@@ -1293,7 +1292,7 @@ $(DEPDIR)/libxml2.do_prepare: bootstrap @DEPENDS_libxml2@
 	@PREPARE_libxml2@
 	touch $@
 
-$(DEPDIR)/libxml2.do_compile: libxml2.do_prepare
+$(DEPDIR)/libxml2.do_compile: $(DEPDIR)/libxml2.do_prepare
 	cd @DIR_libxml2@ && \
 		$(BUILDENV) \
 		./configure \
@@ -1325,11 +1324,11 @@ $(DEPDIR)/%libxml2: libxml2.do_compile
 #
 # libxslt
 #
-$(DEPDIR)/libxslt.do_prepare: @DEPENDS_libxslt@
+$(DEPDIR)/libxslt.do_prepare: bootstrap libxml2 @DEPENDS_libxslt@
 	@PREPARE_libxslt@
 	touch $@
 
-$(DEPDIR)/libxslt.do_compile: bootstrap libxml2 libxslt.do_prepare
+$(DEPDIR)/libxslt.do_compile: $(DEPDIR)/libxslt.do_prepare
 	cd @DIR_libxslt@ && \
 		$(BUILDENV) \
 		CPPFLAGS="$(CPPFLAGS) -I$(targetprefix)/usr/include/libxml2 -Os" \
@@ -1366,11 +1365,11 @@ $(DEPDIR)/%libxslt: %libxml2 libxslt.do_compile
 #
 # lxml
 #
-$(DEPDIR)/lxml.do_prepare: @DEPENDS_lxml@
+$(DEPDIR)/lxml.do_prepare: bootstrap python @DEPENDS_lxml@
 	@PREPARE_lxml@
 	touch $@
 
-$(DEPDIR)/lxml.do_compile: bootstrap python lxml.do_prepare
+$(DEPDIR)/lxml.do_compile: $(DEPDIR)/lxml.do_prepare
 	cd @DIR_lxml@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -1392,11 +1391,11 @@ $(DEPDIR)/%lxml: lxml.do_compile
 #
 # setuptools
 #
-$(DEPDIR)/setuptools.do_prepare: @DEPENDS_setuptools@
+$(DEPDIR)/setuptools.do_prepare: bootstrap @DEPENDS_setuptools@
 	@PREPARE_setuptools@
 	touch $@
 
-$(DEPDIR)/setuptools.do_compile: bootstrap setuptools.do_prepare
+$(DEPDIR)/setuptools.do_compile: $(DEPDIR)/setuptools.do_prepare
 	cd @DIR_setuptools@ && \
 		$(crossprefix)/bin/python ./setup.py build
 	touch $@
@@ -1412,11 +1411,11 @@ $(DEPDIR)/%setuptools: setuptools.do_compile
 #
 # twisted
 #
-$(DEPDIR)/twisted.do_prepare: @DEPENDS_twisted@
+$(DEPDIR)/twisted.do_prepare: bootstrap setuptools @DEPENDS_twisted@
 	@PREPARE_twisted@
 	touch $@
 
-$(DEPDIR)/twisted.do_compile: bootstrap setuptools twisted.do_prepare
+$(DEPDIR)/twisted.do_compile: $(DEPDIR)/twisted.do_prepare
 	cd @DIR_twisted@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -1436,11 +1435,11 @@ $(DEPDIR)/%twisted: twisted.do_compile
 #
 # twistetweb2
 #
-$(DEPDIR)/twistedweb2.do_prepare: @DEPENDS_twistedweb2@
+$(DEPDIR)/twistedweb2.do_prepare: bootstrap setuptools @DEPENDS_twistedweb2@
 	@PREPARE_twistedweb2@
 	touch $@
 
-$(DEPDIR)/twistedweb2.do_compile: bootstrap setuptools twistedweb2.do_prepare
+$(DEPDIR)/twistedweb2.do_compile: $(DEPDIR)/twistedweb2.do_prepare
 	cd @DIR_twistedweb2@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -1478,11 +1477,11 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 #
 # pyopenssl
 #
-$(DEPDIR)/pyopenssl.do_prepare: @DEPENDS_pyopenssl@
+$(DEPDIR)/pyopenssl.do_prepare: bootstrap setuptools @DEPENDS_pyopenssl@
 	@PREPARE_pyopenssl@
 	touch $@
 
-$(DEPDIR)/pyopenssl.do_compile: bootstrap setuptools pyopenssl.do_prepare
+$(DEPDIR)/pyopenssl.do_compile: $(DEPDIR)/pyopenssl.do_prepare
 	cd @DIR_pyopenssl@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -1501,11 +1500,11 @@ $(DEPDIR)/%pyopenssl: pyopenssl.do_compile
 #
 # python
 #
-$(DEPDIR)/python.do_prepare: host-python @DEPENDS_python@
+$(DEPDIR)/python.do_prepare: bootstrap host_python openssl openssl-dev sqlite @DEPENDS_python@
 	@PREPARE_python@ && \
 	touch $@
 
-$(DEPDIR)/python.do_compile: openssl openssl-dev sqlite bootstrap python.do_prepare
+$(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
 	( cd @DIR_python@ && \
 		autoconf && \
 		CONFIG_SITE= \
@@ -1553,11 +1552,11 @@ $(DEPDIR)/%python: python.do_compile
 #
 # pythonwifi
 #
-$(DEPDIR)/pythonwifi.do_prepare: @DEPENDS_pythonwifi@
+$(DEPDIR)/pythonwifi.do_prepare: bootstrap setuptools @DEPENDS_pythonwifi@
 	@PREPARE_pythonwifi@
 	touch $@
 
-$(DEPDIR)/pythonwifi.do_compile: bootstrap setuptools pythonwifi.do_prepare
+$(DEPDIR)/pythonwifi.do_compile: $(DEPDIR)/pythonwifi.do_prepare
 	cd @DIR_pythonwifi@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -1576,11 +1575,11 @@ $(DEPDIR)/%pythonwifi: pythonwifi.do_compile
 #
 # pythoncheetah
 #
-$(DEPDIR)/pythoncheetah.do_prepare: @DEPENDS_pythoncheetah@
+$(DEPDIR)/pythoncheetah.do_prepare: bootstrap setuptools @DEPENDS_pythoncheetah@
 	@PREPARE_pythoncheetah@
 	touch $@
 
-$(DEPDIR)/pythoncheetah.do_compile: bootstrap setuptools pythoncheetah.do_prepare
+$(DEPDIR)/pythoncheetah.do_compile: $(DEPDIR)/pythoncheetah.do_prepare
 	cd @DIR_pythoncheetah@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -1593,17 +1592,17 @@ $(DEPDIR)/%pythoncheetah: pythoncheetah.do_compile
 	cd @DIR_pythoncheetah@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
-#	@DISTCLEANUP_pythonwifi@
+#	@DISTCLEANUP_pythoncheetah@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # zope interface
 #
-$(DEPDIR)/zope_interface.do_prepare: @DEPENDS_zope_interface@
+$(DEPDIR)/zope_interface.do_prepare: bootstrap python setuptools @DEPENDS_zope_interface@
 	@PREPARE_zope_interface@
 	touch $@
 
-$(DEPDIR)/zope_interface.do_compile: bootstrap python setuptools zope_interface.do_prepare
+$(DEPDIR)/zope_interface.do_compile: $(DEPDIR)/zope_interface.do_prepare
 	cd @DIR_zope_interface@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -2141,7 +2140,7 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 #
 # eve-browser
 #
-$(DEPDIR)/evebrowser.do_prepare: webkitdfb @DEPENDS_evebrowser@
+$(DEPDIR)/evebrowser.do_prepare: bootstrap webkitdfb @DEPENDS_evebrowser@
 	svn checkout https://eve-browser.googlecode.com/svn/trunk/ @DIR_evebrowser@
 	touch $@
 
@@ -2172,7 +2171,7 @@ $(DEPDIR)/%evebrowser: $(DEPDIR)/evebrowser.do_compile
 #
 # brofs
 #
-$(DEPDIR)/brofs.do_prepare:  @DEPENDS_brofs@
+$(DEPDIR)/brofs.do_prepare: bootstrap @DEPENDS_brofs@
 	@PREPARE_brofs@
 	touch $@
 
@@ -2194,7 +2193,7 @@ $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
 #
 # libcap
 #
-$(DEPDIR)/libcap.do_prepare:  @DEPENDS_libcap@
+$(DEPDIR)/libcap.do_prepare: bootstrap @DEPENDS_libcap@
 	@PREPARE_libcap@
 	touch $@
 
@@ -2234,11 +2233,7 @@ $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 #
 # alsa-lib
 #
-
-DESCRIPTION_libalsa = "alsa"
-FILES_libalsa = /
-
-$(DEPDIR)/libalsa.do_prepare:  @DEPENDS_libalsa@
+$(DEPDIR)/libalsa.do_prepare: bootstrap @DEPENDS_libalsa@
 	@PREPARE_libalsa@
 	touch $@
 
@@ -2278,7 +2273,7 @@ $(DEPDIR)/rtmpdump.do_prepare: bootstrap openssl openssl-dev libz @DEPENDS_rtmpd
 	@PREPARE_rtmpdump@
 	touch $@
 
-$(DEPDIR)/rtmpdump.do_compile: bootstrap openssl openssl-dev libz $(DEPDIR)/rtmpdump.do_prepare
+$(DEPDIR)/rtmpdump.do_compile: $(DEPDIR)/rtmpdump.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_rtmpdump@ && \
 	cp $(hostprefix)/share/libtool/config/ltmain.sh .. && \
@@ -2298,7 +2293,7 @@ $(DEPDIR)/%rtmpdump: $(DEPDIR)/rtmpdump.do_compile
 #
 # libdvbsi++
 #
-$(DEPDIR)/libdvbsipp.do_prepare:  @DEPENDS_libdvbsipp@
+$(DEPDIR)/libdvbsipp.do_prepare: bootstrap @DEPENDS_libdvbsipp@
 	@PREPARE_libdvbsipp@
 	touch $@
 
@@ -2396,7 +2391,7 @@ $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
 #
 # libdreamdvd
 #
-$(DEPDIR)/libdreamdvd.do_prepare:  @DEPENDS_libdreamdvd@
+$(DEPDIR)/libdreamdvd.do_prepare: bootstrap @DEPENDS_libdreamdvd@
 	@PREPARE_libdreamdvd@
 	touch $@
 
@@ -2426,7 +2421,7 @@ $(DEPDIR)/%libdreamdvd: $(DEPDIR)/libdreamdvd.do_compile
 #
 # libdreamdvd2
 #
-$(DEPDIR)/libdreamdvd2.do_prepare:  @DEPENDS_libdreamdvd2@
+$(DEPDIR)/libdreamdvd2.do_prepare: bootstrap @DEPENDS_libdreamdvd2@
 	[ -d "libdreamdvd" ] && \
 	cd libdreamdvd && git pull; \
 	[ -d "libdreamdvd" ] || \
@@ -2459,7 +2454,7 @@ $(DEPDIR)/%libdreamdvd2: $(DEPDIR)/libdreamdvd2.do_compile
 #
 # libmpeg2
 #
-$(DEPDIR)/libmpeg2.do_prepare:  @DEPENDS_libmpeg2@
+$(DEPDIR)/libmpeg2.do_prepare: bootstrap @DEPENDS_libmpeg2@
 	@PREPARE_libmpeg2@
 	touch $@
 
@@ -2484,7 +2479,7 @@ $(DEPDIR)/%libmpeg2: $(DEPDIR)/libmpeg2.do_compile
 #
 # libsamplerate
 #
-$(DEPDIR)/libsamplerate.do_prepare:  @DEPENDS_libsamplerate@
+$(DEPDIR)/libsamplerate.do_prepare: bootstrap @DEPENDS_libsamplerate@
 	@PREPARE_libsamplerate@
 	touch $@
 
@@ -2509,7 +2504,7 @@ $(DEPDIR)/%libsamplerate: $(DEPDIR)/libsamplerate.do_compile
 #
 # libvorbis
 #
-$(DEPDIR)/libvorbis.do_prepare:  @DEPENDS_libvorbis@
+$(DEPDIR)/libvorbis.do_prepare: bootstrap @DEPENDS_libvorbis@
 	@PREPARE_libvorbis@
 	touch $@
 
@@ -2534,7 +2529,7 @@ $(DEPDIR)/%libvorbis: $(DEPDIR)/libvorbis.do_compile
 #
 # libmodplug
 #
-$(DEPDIR)/libmodplug.do_prepare:  @DEPENDS_libmodplug@
+$(DEPDIR)/libmodplug.do_prepare: bootstrap @DEPENDS_libmodplug@
 	@PREPARE_libmodplug@
 	touch $@
 
@@ -2559,7 +2554,7 @@ $(DEPDIR)/%libmodplug: $(DEPDIR)/libmodplug.do_compile
 #
 # bzip - already in contrib-apps, check which is better
 #
-#$(DEPDIR)/bzip.do_prepare:  @DEPENDS_bzip@
+#$(DEPDIR)/bzip.do_prepare: bootstrap @DEPENDS_bzip@
 #	@PREPARE_bzip@
 #	touch $@
 #
@@ -2585,7 +2580,7 @@ $(DEPDIR)/%libmodplug: $(DEPDIR)/libmodplug.do_compile
 #
 # tiff
 #
-$(DEPDIR)/tiff.do_prepare:  @DEPENDS_tiff@
+$(DEPDIR)/tiff.do_prepare: bootstrap @DEPENDS_tiff@
 	@PREPARE_tiff@
 	touch $@
 
@@ -2610,7 +2605,7 @@ $(DEPDIR)/%tiff: $(DEPDIR)/tiff.do_compile
 #
 # lzo
 #
-$(DEPDIR)/lzo.do_prepare:  @DEPENDS_lzo@
+$(DEPDIR)/lzo.do_prepare: @DEPENDS_lzo@
 	@PREPARE_lzo@
 	touch $@
 
@@ -2635,7 +2630,7 @@ $(DEPDIR)/%lzo: $(DEPDIR)/lzo.do_compile
 #
 # yajl
 #
-$(DEPDIR)/yajl.do_prepare:  @DEPENDS_yajl@
+$(DEPDIR)/yajl.do_prepare: bootstrap @DEPENDS_yajl@
 	@PREPARE_yajl@
 	touch $@
 
@@ -2690,7 +2685,7 @@ $(DEPDIR)/%libpcre: $(DEPDIR)/libpcre.do_compile
 #
 # libcdio
 #
-$(DEPDIR)/libcdio.do_prepare:  @DEPENDS_libcdio@
+$(DEPDIR)/libcdio.do_prepare: bootstrap @DEPENDS_libcdio@
 	@PREPARE_libcdio@
 	touch $@
 
@@ -2715,7 +2710,7 @@ $(DEPDIR)/%libcdio: $(DEPDIR)/libcdio.do_compile
 #
 # jasper
 #
-$(DEPDIR)/jasper.do_prepare:  @DEPENDS_jasper@
+$(DEPDIR)/jasper.do_prepare: bootstrap @DEPENDS_jasper@
 	@PREPARE_jasper@
 	touch $@
 
@@ -2740,7 +2735,7 @@ $(DEPDIR)/%jasper: $(DEPDIR)/jasper.do_compile
 #
 # mysql
 #
-$(DEPDIR)/mysql.do_prepare:  @DEPENDS_mysql@
+$(DEPDIR)/mysql.do_prepare: bootstrap @DEPENDS_mysql@
 	@PREPARE_mysql@
 	touch $@
 
@@ -2766,7 +2761,7 @@ $(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
 #
 # libmicrohttpd
 #
-$(DEPDIR)/libmicrohttpd.do_prepare:  @DEPENDS_libmicrohttpd@
+$(DEPDIR)/libmicrohttpd.do_prepare: bootstrap @DEPENDS_libmicrohttpd@
 	@PREPARE_libmicrohttpd@
 	touch $@
 
@@ -2786,4 +2781,173 @@ $(DEPDIR)/%libmicrohttpd: $(DEPDIR)/libmicrohttpd.do_compile
 	cd @DIR_libmicrohttpd@ && \
 		@INSTALL_libmicrohttpd@
 #	@DISTCLEANUP_libmicrohttpd@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libexif
+#
+$(DEPDIR)/libexif.do_prepare: bootstrap @DEPENDS_libexif@
+	@PREPARE_libexif@
+	touch $@
+
+$(DEPDIR)/libexif.do_compile: $(DEPDIR)/libexif.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libexif@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr
+	touch $@
+
+$(DEPDIR)/min-libexif $(DEPDIR)/std-libexif $(DEPDIR)/max-libexif \
+$(DEPDIR)/libexif: \
+$(DEPDIR)/%libexif: $(DEPDIR)/libexif.do_compile
+	cd @DIR_libexif@ && \
+		@INSTALL_libexif@
+#	@DISTCLEANUP_libexif@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# minidlna
+#
+$(DEPDIR)/minidlna.do_prepare: bootstrap ffmpeg libflac libogg libvorbis libid3tag sqlite libexif jpeg @DEPENDS_minidlna@
+	@PREPARE_minidlna@
+	touch $@
+
+$(DEPDIR)/minidlna.do_compile: $(DEPDIR)/minidlna.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_minidlna@ && \
+	libtoolize -f -c && \
+	$(BUILDENV) \
+	DESTDIR=$(prefix)/cdkroot \
+	$(MAKE) \
+	PREFIX=$(prefix)/cdkroot/usr \
+	LIBDIR=$(prefix)/cdkroot/usr/lib \
+	SBINDIR=$(prefix)/cdkroot/usr/sbin \
+	INCDIR=$(prefix)/cdkroot/usr/include \
+	PAM_CAP=no \
+	LIBATTR=no
+	touch $@
+
+$(DEPDIR)/min-minidlna $(DEPDIR)/std-minidlna $(DEPDIR)/max-minidlna \
+$(DEPDIR)/minidlna: \
+$(DEPDIR)/%minidlna: $(DEPDIR)/minidlna.do_compile
+	cd @DIR_minidlna@ && \
+		@INSTALL_minidlna@
+#	@DISTCLEANUP_minidlna@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# vlc
+#
+$(DEPDIR)/vlc.do_prepare: bootstrap libstdc++-dev libfribidi ffmpeg @DEPENDS_vlc@
+	@PREPARE_vlc@
+	touch $@
+
+$(DEPDIR)/vlc.do_compile: $(DEPDIR)/vlc.do_prepare
+	cd @DIR_vlc@ && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--disable-fontconfig \
+		--prefix=/usr \
+		--disable-xcb \
+		--disable-glx \
+		--disable-qt4 \
+		--disable-mad \
+		--disable-postproc \
+		--disable-a52 \
+		--disable-qt4 \
+		--disable-skins2 \
+		--disable-remoteosd \
+		--disable-lua \
+		--disable-libgcrypt \
+		--disable-nls \
+		--disable-mozilla \
+		--disable-dbus \
+		--disable-sdl \
+		--enable-run-as-root
+	touch $@
+
+$(DEPDIR)/min-vlc $(DEPDIR)/std-vlc $(DEPDIR)/max-vlc \
+$(DEPDIR)/vlc: \
+$(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
+	cd @DIR_vlc@ && \
+		@INSTALL_vlc@
+#	@DISTCLEANUP_vlc@
+	@[ "x$*" = "x" ] && touch $@ || true
+
+#
+# djmount
+#
+$(DEPDIR)/djmount.do_prepare: bootstrap libupnp fuse @DEPENDS_djmount@
+	@PREPARE_djmount@
+	touch $@
+
+$(DEPDIR)/djmount.do_compile: $(DEPDIR)/djmount.do_prepare
+	cd @DIR_djmount@ && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--disable-FEATURE \
+		--prefix=/usr
+	touch $@
+
+$(DEPDIR)/min-djmount $(DEPDIR)/std-djmount $(DEPDIR)/max-djmount \
+$(DEPDIR)/djmount: \
+$(DEPDIR)/%djmount: $(DEPDIR)/djmount.do_compile
+	cd @DIR_djmount@ && \
+		@INSTALL_djmount@
+#	@DISTCLEANUP_djmount@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libupnp
+#
+$(DEPDIR)/libupnp.do_prepare: bootstrap @DEPENDS_libupnp@
+	@PREPARE_libupnp@
+	touch $@
+
+$(DEPDIR)/libupnp.do_compile: $(DEPDIR)/libupnp.do_prepare
+	cd @DIR_libupnp@ && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--enable-debug \
+		--prefix=/usr
+	touch $@
+
+$(DEPDIR)/min-libupnp $(DEPDIR)/std-libupnp $(DEPDIR)/max-libupnp \
+$(DEPDIR)/libupnp: \
+$(DEPDIR)/%libupnp: $(DEPDIR)/libupnp.do_compile
+	cd @DIR_libupnp@ && \
+		@INSTALL_libupnp@
+#	@DISTCLEANUP_djmount@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# rarfs
+#
+$(DEPDIR)/rarfs.do_prepare: bootstrap fuse @DEPENDS_rarfs@
+	@PREPARE_rarfs@
+	touch $@
+
+$(DEPDIR)/rarfs.do_compile: $(DEPDIR)/rarfs.do_prepare
+	cd @DIR_libexif@ && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--disable-FEATURE \
+		--prefix=/usr
+	touch $@
+
+$(DEPDIR)/min-rarfs $(DEPDIR)/std-rarfs $(DEPDIR)/max-rarfs \
+$(DEPDIR)/rarfs: \
+$(DEPDIR)/%rarfs: $(DEPDIR)/rarfs.do_compile
+	cd @DIR_rarfs@ && \
+		@INSTALL_rarfs@
+#	@DISTCLEANUP_rarfs@
 	[ "x$*" = "x" ] && touch $@ || true
