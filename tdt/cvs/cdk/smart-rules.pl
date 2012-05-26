@@ -550,12 +550,13 @@ sub process_download ($$)
     
     $_ =~ s/$cmd:// if ($cmd ne "");
 
-    if( subs_vars($_) ~~ @allurls )
+    my $suburl = subs_vars($_);
+    if( $suburl ~~ @allurls )
     {
-       print $_ . "\n";
+       #warn $suburl . "\n";
        next;
     }
-    push(@allurls, $_); 
+    push(@allurls, $suburl);
     
     #warn "download: " . $url . "\n";
     
