@@ -52,7 +52,7 @@ $(DEPDIR)/misc-cp:
 
 $(DEPDIR)/firstboot:
 	$(INSTALL_DIR) $(targetprefix)/var/etc
-	cp -rd $(buildprefix)/root/var/etc/.firstboot $(targetprefix)/var/etc/
+	touch $(targetprefix)/var/etc/.firstboot
 	@[ "x$*" = "x" ] && touch $@ || true
 
 $(DEPDIR)/remote:

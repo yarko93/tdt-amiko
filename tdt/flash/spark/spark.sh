@@ -71,7 +71,7 @@ fi
 if [  -e $TUFSBOXDIR/release_neutrino ]; then
   echo "   2) Prepare Neutrino"
 fi
-if [  -e $TUFSBOXDIR/release_vdrdev2 ]; then
+if [  -e $TUFSBOXDIR/release_vdr ]; then
   echo "   3) Prepare VDR"
 fi
 read -p "Select target (1-3)? "
@@ -82,7 +82,7 @@ case "$REPLY" in
 	2)  echo "Preparing Neutrino Root..."
 		$SCRIPTDIR/prepare_root_neutrino.sh $CURDIR $TUFSBOXDIR/release_neutrino $TMPROOTDIR $TMPKERNELDIR;;
 	3)  echo "Preparing VDR Root..."
-		$SCRIPTDIR/prepare_root_vdr.sh $CURDIR $TUFSBOXDIR/release_vdrdev2 $TMPROOTDIR $TMPKERNELDIR;;
+		$SCRIPTDIR/prepare_root_vdr.sh $CURDIR $TUFSBOXDIR/release_vdr $TMPROOTDIR $TMPKERNELDIR;;
 	*)  "Invalid Input! Exiting..."
 		exit 2;;
 esac
