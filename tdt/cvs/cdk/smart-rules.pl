@@ -180,7 +180,7 @@ sub process_make_prepare (@)
     $subdir = "/" . $opts{"sub"} if $opts{"sub"};
     local @_ = ($p, $f);
 
-    if ( $cmd eq "nothing" || $cmd !~ m#$make_commands# )
+    if ( ($cmd eq "nothing" || $cmd !~ m#$make_commands#) and $p !~ m#(git|svn)# )
     {
       next;
     }
@@ -225,20 +225,19 @@ sub process_make_prepare (@)
         }
         $output .= "cp -a \\\$(archivedir)/" . $_[1] . " " . $target;
       }
-      elsif ( $p eq "svn" )
-      {
-        $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
-      }
-      elsif ( $p eq "git" )
-      {
-        $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
-      }
-
       else
       {
         warn "can't recognize type of archive " . $_[1] . " skip";
         $output .= "true";
       }
+    }
+    elsif ( $p eq "svn" )
+    {
+      $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
+    }
+    elsif ( $p eq "git" )
+    {
+      $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
     }
     elsif ( $cmd eq "dirextract" )
     {
@@ -270,13 +269,23 @@ sub process_make_prepare (@)
       $_ = "-p1 ";
       $_ = "-p$3 " if defined $3;
       $_ .= "-Z " if defined $1;
+
+      my $patchesdir = "";
+      my @level = split ( /\//, $dir );
+      foreach ( @level )
+      {
+        $patchesdir .= "../";
+      }
+      
+      $patchesdir .= "Patches/";
+
       if ( $_[1] =~ m#\.bz2$# )
       {
         $output .= "( cd " . $dir . " && chmod +w -R .; bunzip2 -cd \\\$(archivedir)/" . $_[1] . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.deb\.diff\.gz$# )
       {
-        $output .= "( cd " . $dir . "; gunzip -cd ../Patches/" . $_[1] . " | patch $_ )";
+        $output .= "( cd " . $dir . "; gunzip -cd $patchesdir" . $_[1] . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.gz$# )
       {
@@ -284,11 +293,11 @@ sub process_make_prepare (@)
       }
       elsif ( $_[1] =~ m#\.spec\.diff$# )
       {
-        $output .= "( cd SPECS && patch $_ < ../Patches/" . $_[1] . " )";
+        $output .= "( cd SPECS && patch $_ < $patchesdir" . $_[1] . " )";
       }
       else
       {
-        $output .= "( cd " . $dir . " && chmod +w -R .; patch $_ < ../Patches/" . $_[1] . " )";
+        $output .= "( cd " . $dir . " && chmod +w -R .; patch $_ < $patchesdir" . $_[1] . " )";
       }
     }
     elsif ( $cmd eq "rpmbuild" )
