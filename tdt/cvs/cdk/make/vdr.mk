@@ -13,6 +13,15 @@ $(DEPDIR)/vdr.do_compile:
 		PLUGINLIBDIR=/usr/lib/vdr
 	touch $@
 $(DEPDIR)/vdr: vdr.do_prepare vdr.do_compile
+	cd $(DIR_vdr)/vdr && \
+		$(BUILDENV) $(MAKE) all plugins install-bin install-conf install-plugins install-i18n \
+		DESTDIR=$(targetprefix) \
+		VIDEODIR=/hdd/movie \
+		CONFDIR=/usr/local/share/vdr \
+		PLUGINLIBDIR=/usr/lib/vdr
+	if [ -e $(targetprefix)/usr/local/bin/vdr ]; then \
+		$(target)-strip $(targetprefix)/usr/local/bin/vdr; \
+	fi
 	touch $@
 vdr-clean:
 	-rm .deps/vdr
