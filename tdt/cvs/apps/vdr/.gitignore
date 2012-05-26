@@ -3,3 +3,5 @@
 *.pc
 .*
 *.so.*
+libvdr-*.so
+vdr

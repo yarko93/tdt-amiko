@@ -74,8 +74,8 @@ PKGR_e2skin = r0
 DIR_e2skin = $(appsdir)/skins
 enigma2_skindir = '/usr/local/share/enigma2'
 
-enigma2-skins-sh4-package: export PARENT_PK = e2skin
 enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
+	$(call parent_pk,e2skin)
 	$(start_build)
 	$(get_git_version)
 	$(MAKE) -C $(appsdir)/skins install DESTDIR=$(packagingtmpdir)

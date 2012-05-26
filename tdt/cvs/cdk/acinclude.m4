@@ -1,8 +1,8 @@
 AC_DEFUN([TUXBOX_RULES_MAKE],[
 AC_MSG_CHECKING([$1 rules])
-eval `${srcdir}/smart-rules.pl make ${srcdir}/smart-rules $1 cdkoutput`
-INSTALL_$1=`${srcdir}/smart-rules.pl install ${srcdir}/smart-rules $1`
-DOWNLOAD_$1=`${srcdir}/smart-rules.pl download ${srcdir}/smart-rules $1`
+eval `cat ruledir/make_$1`
+INSTALL_$1=`cat ruledir/install_$1`
+DOWNLOAD_$1=`cat ruledir/download_$1`
 DOWNLOAD_FOR_SMART="$DOWNLOAD_FOR_SMART $DEPENDS_$1"
 SMART_DOWNLOAD_RULES="$SMART_DOWNLOAD_RULES
 $DOWNLOAD_$1"

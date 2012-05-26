@@ -1630,10 +1630,8 @@ DESCRIPTION_gstreamer = "GStreamer Multimedia Framework"
 
 FILES_gstreamer = \
 /usr/bin/gst-launch* \
-/usr/lib/gstreamer-0.10/libgstassrender.so \
 /usr/lib/gstreamer-0.10/libgstcoreelements.so \
-/usr/lib/gstreamer-0.10/libgstcoreindexers.so \
-/usr/lib/gstreamer-0.10/libgstrtmp.so
+/usr/lib/gstreamer-0.10/libgstcoreindexers.so
 
 $(DEPDIR)/gstreamer.do_prepare: bootstrap glib2 libxml2 @DEPENDS_gstreamer@
 	@PREPARE_gstreamer@
@@ -1651,8 +1649,6 @@ $(DEPDIR)/gstreamer.do_compile: $(DEPDIR)/gstreamer.do_prepare
 		--with-check=no \
 		ac_cv_func_register_printf_function=no
 	touch $@
-
-$(DEPDIR)/gstreamer: PARENT_PK = gstreamer
 
 $(DEPDIR)/min-gstreamer $(DEPDIR)/std-gstreamer $(DEPDIR)/max-gstreamer \
 $(DEPDIR)/gstreamer: \
@@ -1778,10 +1774,12 @@ $(DEPDIR)/%gst_plugins_good: $(DEPDIR)/gst_plugins_good.do_compile
 DESCRIPTION_gst_plugins_bad = "GStreamer Multimedia Framework bad plugins"
 
 FILES_gst_plugins_bad = \
+/usr/lib/gstreamer-0.10/libgstassrender.so \
 /usr/lib/gstreamer-0.10/libgstcdxaparse.so \
 /usr/lib/gstreamer-0.10/libgstfragmented.so \
 /usr/lib/gstreamer-0.10/libgstmpegdemux.so \
-/usr/lib/gstreamer-0.10/libgstvcdsrc.so
+/usr/lib/gstreamer-0.10/libgstvcdsrc.so \
+/usr/lib/gstreamer-0.10/libgstrtmp.so
 
 $(DEPDIR)/gst_plugins_bad.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_bad@
 	@PREPARE_gst_plugins_bad@
@@ -2230,6 +2228,8 @@ $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 #	@DISTCLEANUP_libcap@
 	[ "x$*" = "x" ] && touch $@ || true
 
+DESCRIPTION_libalsa = "alsa"
+FILES_libalsa = /	
 #
 # alsa-lib
 #

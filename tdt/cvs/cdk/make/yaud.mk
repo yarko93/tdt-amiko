@@ -33,7 +33,6 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		\
 		%libz \
 		%grep \
-		%pppd \
 		%$(INITSCRIPTS) \
 		%openrdate \
 		%$(NETBASE) \
@@ -85,13 +84,9 @@ yaud-stock: yaud-none stock
 yaud-enigma: yaud-none lirc stslave \
 		boot-elf misc-cp remote firstboot enigma
 	@TUXBOX_YAUD_CUSTOMIZE@
-
-yaud-vdr: yaud-none stslave openssl openssl-dev \
+	
+yaud-vdr: yaud-none stslave lirc openssl openssl-dev \
 		boot-elf misc-cp remote firstboot vdr release_vdr
-	@TUXBOX_YAUD_CUSTOMIZE@
-
-yaud-vdrdev2: yaud-none stslave lirc openssl openssl-dev \
-		boot-elf misc-cp remote firstboot vdrdev2 release_vdrdev2
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 yaud-neutrino: yaud-none lirc stslave \

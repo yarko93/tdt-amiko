@@ -764,7 +764,7 @@ libdvdread
   rewrite-libtool:TARGETS/usr/lib/{PN}.la
 ;
 ffmpeg
-  0.8.7
+  0.8.11
   {PN}-{PV}
   extract:http://{PN}.org/releases/{PN}-{PV}.tar.gz
   patch:file://{PN}.patch
@@ -947,6 +947,25 @@ libmicrohttpd
   {PN}-{PV}
   extract:http://ftp.halifax.rwth-aachen.de/gnu/{PN}/{PN}-{PV}.tar.gz
   make:install:prefix=/usr:DESTDIR=TARGETS
+;
+libexif
+  0.6.20
+  {PN}-{PV}
+  extract:http://sourceforge.net/projects/{PN}/files/{PN}/{PV}/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+minidlna
+  1.0.24
+  {PN}-{PV}
+  extract:http://netcologne.dl.sourceforge.net/project/{PN}/{PN}/{PV}/{PN}_{PV}_src.tar.gz
+  patch:file://{PN}-{PV}.patch
+  make:install:prefix=/usr:DESTDIR=TARGETS
+;
+vlc
+  1.1.9
+  {PN}-{PV}
+  extract:http://download.videolan.org/pub/videolan/{PN}/{PV}/{PN}-{PV}.tar.bz2
+  make:install:DESTDIR=TARGETS
 ;
 elementtree
   1.2.6-20050316

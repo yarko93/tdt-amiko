@@ -75,8 +75,8 @@ enigma2-plugins-sh4-package: export PKGV_e2plugin = 3.2git$(shell cd $(appsdir)/
 PKGR_e2plugin = r0
 enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 
-enigma2-plugins-sh4-package: export PARENT_PK = e2plugin
 enigma2-plugins-sh4-package: enigma2-plugins-sh4.do_compile
+	$(call parent_pk,e2plugin)
 	rm -rf $(packagingtmpdir)
 	mkdir -p $(packagingtmpdir)
 	$(MAKE) -C $(appsdir)/plugins install DESTDIR=$(packagingtmpdir)

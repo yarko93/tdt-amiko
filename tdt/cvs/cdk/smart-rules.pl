@@ -4,15 +4,28 @@ use warnings;
 use IO::File;
 
 my $version;
+my @allurls;
+
+my $filename = shift;
+my $allout = "";
+my $package = ""; # current processing package
 
 my $supported_protocols = "http|ftp|file|git|svn";
 my $make_commands = "nothing|extract|dirextract|patch(time)?(-(\\d+))?|pmove|premove|plink|pdircreate";
 
-sub load ($$$);
+my %ruletypes =
+(
+  make => \&process_make,
+  download => \&process_download,
+  install => \&process_install,
+);
 
-sub load ($$$)
+
+sub load ($$);
+
+sub load ($$)
 {
-  my ( $filename, $package, $ignore ) = @_;
+  my ( $filename, $ignore ) = @_;
 
   my $fh = new IO::File $filename;
 
@@ -28,7 +41,7 @@ sub load ($$$)
     $_ =~ s/#.*$//;
     $lines .= $_ if not $_ =~ m#^\s+$#;
   }
-  my @lines = split( /\;;|\n\n|\n;|;\n/ , $lines);
+  my @lines = split( /;;|\n\n|\n;|;\n/ , $lines);
 
   foreach ( @lines )
   {
@@ -42,19 +55,26 @@ sub load ($$$)
       push(@rule, $_) if ( $_ ne "" );
     }
     
-    #print "BEGIN package\n" . join(";", @rule) . "\nEND\n";
+    #warn "BEGIN package\n" . join(";", @rule) . "\nEND\n";
 
-    next if not defined $rule[0];
-    return @rule if $rule[0] eq $package;
-
-    next if not defined $rule[1];
-    my @ret;
-    @ret = load ( $rule[1], $package, 0 ) if $rule[0] eq ">>>";
-    @ret = load ( $rule[1], $package, 1 ) if $rule[0] eq ">>?";
-    return @ret if @ret;
+    if( ($rule[0] eq ">>>" or $rule[0] eq ">>?") and defined $rule[1])
+    {
+      load ( $rule[1], 0 ) if $rule[0] eq ">>>";
+      load ( $rule[1], 1 ) if $rule[0] eq ">>?";
+    }
+    elsif (defined $rule[0]) {
+      $package = shift @rule;
+      foreach ( sort keys %ruletypes )
+      {
+        open FILE, "+>", "ruledir/$_" . "_" . $package;
+        $allout = &{$ruletypes{$_}} ($package, \@rule);
+        #print "$allout\n";
+        print FILE subs_vars($allout);
+        close FILE;
+      }
+    }
   }
 
-  die "can't find package $package";
 }
 
 sub process_rule($) {
@@ -115,7 +135,7 @@ sub process_make_depends (@)
   shift;
   shift;
 
-  my $output;
+  my $output = "";
 
   foreach ( @_ )
   {  
@@ -160,7 +180,7 @@ sub process_make_prepare (@)
     $subdir = "/" . $opts{"sub"} if $opts{"sub"};
     local @_ = ($p, $f);
 
-    if ( $cmd eq "nothing" || $cmd !~ m#$make_commands# )
+    if ( ($cmd eq "nothing" || $cmd !~ m#$make_commands#) and $p !~ m#(git|svn)# )
     {
       next;
     }
@@ -205,20 +225,19 @@ sub process_make_prepare (@)
         }
         $output .= "cp -a \\\$(archivedir)/" . $_[1] . " " . $target;
       }
-      elsif ( $p eq "svn" )
-      {
-        $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
-      }
-      elsif ( $p eq "git" )
-      {
-        $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
-      }
-
       else
       {
         warn "can't recognize type of archive " . $_[1] . " skip";
         $output .= "true";
       }
+    }
+    elsif ( $p eq "svn" )
+    {
+      $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
+    }
+    elsif ( $p eq "git" )
+    {
+      $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
     }
     elsif ( $cmd eq "dirextract" )
     {
@@ -250,13 +269,23 @@ sub process_make_prepare (@)
       $_ = "-p1 ";
       $_ = "-p$3 " if defined $3;
       $_ .= "-Z " if defined $1;
+
+      my $patchesdir = "";
+      my @level = split ( /\//, $dir );
+      foreach ( @level )
+      {
+        $patchesdir .= "../";
+      }
+      
+      $patchesdir .= "Patches/";
+
       if ( $_[1] =~ m#\.bz2$# )
       {
         $output .= "( cd " . $dir . " && chmod +w -R .; bunzip2 -cd \\\$(archivedir)/" . $_[1] . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.deb\.diff\.gz$# )
       {
-        $output .= "( cd " . $dir . "; gunzip -cd ../Patches/" . $_[1] . " | patch $_ )";
+        $output .= "( cd " . $dir . "; gunzip -cd $patchesdir" . $_[1] . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.gz$# )
       {
@@ -264,11 +293,11 @@ sub process_make_prepare (@)
       }
       elsif ( $_[1] =~ m#\.spec\.diff$# )
       {
-        $output .= "( cd SPECS && patch $_ < ../Patches/" . $_[1] . " )";
+        $output .= "( cd SPECS && patch $_ < $patchesdir" . $_[1] . " )";
       }
       else
       {
-        $output .= "( cd " . $dir . " && chmod +w -R .; patch $_ < ../Patches/" . $_[1] . " )";
+        $output .= "( cd " . $dir . " && chmod +w -R .; patch $_ < $patchesdir" . $_[1] . " )";
       }
     }
     elsif ( $cmd eq "rpmbuild" )
@@ -306,11 +335,11 @@ sub process_make_version (@)
   return $_[0];
 }
 
-sub process_make ($$$)
+sub process_make ($$)
 {
+  #warn $_[0];
   my $package = $_[0];
   my @rules = @{$_[1]};
-  my $arg = @{$_[2]}[0];
   my $output = "";
 
   my %args =
@@ -322,19 +351,10 @@ sub process_make ($$$)
     sources => \&process_make_sources,
   );
 
-  if ( $arg eq "cdkoutput" )
+  foreach ( sort keys %args )
   {
-    foreach ( sort keys %args )
-    {
-      ( my $tmp = $_ ) =~ y/a-z/A-Z/;
-      $output .= $tmp . "_" . $package . "=" . &{$args{$_}} (@rules) . "\n";
-    }
-  }
-  else
-  {
-    die "can't recognize $arg" if not $args{$arg};
-
-    $output = &{$args{$arg}} (@rules);
+    ( my $tmp = $_ ) =~ y/a-z/A-Z/;
+    $output .= $tmp . "_" . $package . "=" . &{$args{$_}} (@rules) . "\n";
   }
 
   return $output;
@@ -474,7 +494,7 @@ sub process_uninstall_rule ($)
   return $output;
 }
 
-sub process_install ($$$)
+sub process_install ($$)
 {
   my @rules = @{$_[1]};
   my $output = "";
@@ -490,7 +510,7 @@ sub process_install ($$$)
   return $output;
 }
 
-sub process_uninstall ($$$)
+sub process_uninstall ($$)
 {
   my @rules = @{$_[1]};
   my $output = "";
@@ -522,7 +542,7 @@ sub process_make_sources ($$$)
   return "\"$output\""
 }
 
-sub process_download ($$$)
+sub process_download ($$)
 {
   my @rules = @{$_[1]};
   process_make_version (@rules);
@@ -538,6 +558,14 @@ sub process_download ($$$)
     next if ( $p eq "file" || $p eq "none" );
     
     $_ =~ s/$cmd:// if ($cmd ne "");
+
+    my $suburl = subs_vars($_);
+    if( $suburl ~~ @allurls )
+    {
+       #warn $suburl . "\n";
+       next;
+    }
+    push(@allurls, $suburl);
     
     #warn "download: " . $url . "\n";
     
@@ -562,13 +590,8 @@ sub process_download ($$$)
 #     }
     elsif ( $_ =~ m#^svn://# )
     {
-      $output .= " || \\\n\tsvn checkout ";
-      if ( @_ > 2 )
-      {
-        my $revision = $_[2];
-        $output .= "-r " . $revision . " ";
-      }
-      $output .= "svn://" . $_[1] ." \$(archivedir)/" . $f;
+      $output .= " || \\\n\tsvn checkout $url" . " \$(archivedir)/" . $f;
+      $output .= " -r " . $opts{"r"} if $opts{"r"};
     }
     elsif ( $url =~ m#^git://# )
     {
@@ -606,31 +629,13 @@ sub process_download ($$$)
 # 
 # print $head . "\n\n" . $output . "\n\n" . $outputupdate . "\n";
 
+#TODO:
+#die "please specify a filename and at least one package" if $#ARGV < 2;
 
-my %ruletypes =
-(
-  make => { process => \&process_make, further_args => 1 },
-  download => { process => \&process_download },
-  install => { process => \&process_install },
-  uninstall => { process => \&process_uninstall },
-);
 
-die "please specify a rule type, filename and a package" if $#ARGV < 2;
-
-my $ruletype = shift;
-my $filename = shift;
-my $package = shift;
-
-die "can't determine rule type" if not $ruletypes{$ruletype};
-die "rule type needs further args" if $ruletypes{$ruletype}->{further_args} and $#ARGV + 1 < $ruletypes{$ruletype}->{further_args};
-
-my @rules = load ( $filename, $package, 0 );
-shift @rules;
-
-my $output = &{$ruletypes{$ruletype}->{process}} ($package, \@rules, \@ARGV);
-
-if ( $output )
+sub subs_vars($)
 {
+  my $output = shift;
   $output =~ s#TARGETNAME#\$\(target\)#g;
   $output =~ s#TARGETS#\$\(prefix\)\/\$\*cdkroot#g;
   $output =~ s#TARGET#\$\(targetprefix\)#g;
@@ -643,6 +648,9 @@ if ( $output )
   my $dashpackage = $package;
   $dashpackage =~ s#_#\-#g;
   $output =~ s#\{PN\}#$dashpackage#g;
-  print $output . "\n";
+  return $output
 }
 
+load ( $filename, 0 );
+
+#print subs_vars($allout) . "\n";
