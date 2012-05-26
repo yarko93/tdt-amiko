@@ -729,6 +729,14 @@ AC_SUBST(DISTCLEANUP)
 #
 # core
 #
+
+mkdir ${srcdir}/ruledir
+rm -f  ${srcdir}/ruledir/* 
+${srcdir}/smart-rules.pl ${srcdir}/smart-rules
+if test "$?" != "0"; then
+	AC_MSG_ERROR(smart-rule pareser failed)
+fi
+
 AC_SUBST(KERNELVERSION)
 AC_SUBST(KERNELSTMLABEL)
 AC_SUBST(KERNELLABEL)
