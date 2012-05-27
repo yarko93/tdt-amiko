@@ -921,7 +921,7 @@ libmicrohttpd
   0.9.19
   {PN}-{PV}
   extract:http://ftp.halifax.rwth-aachen.de/gnu/{PN}/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libexif
   0.6.20

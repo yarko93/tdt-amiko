@@ -2908,6 +2908,11 @@ $(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
 #
 # libmicrohttpd
 #
+DESCRIPTION_libmicrohttpd = ""
+
+FILES_libmicrohttpd = \
+/usr/lib/libmicrohttpd.*
+
 $(DEPDIR)/libmicrohttpd.do_prepare: bootstrap @DEPENDS_libmicrohttpd@
 	@PREPARE_libmicrohttpd@
 	touch $@
@@ -2925,8 +2930,11 @@ $(DEPDIR)/libmicrohttpd.do_compile: $(DEPDIR)/libmicrohttpd.do_prepare
 $(DEPDIR)/min-libmicrohttpd $(DEPDIR)/std-libmicrohttpd $(DEPDIR)/max-libmicrohttpd \
 $(DEPDIR)/libmicrohttpd: \
 $(DEPDIR)/%libmicrohttpd: $(DEPDIR)/libmicrohttpd.do_compile
+	$(start_build)
 	cd @DIR_libmicrohttpd@ && \
 		@INSTALL_libmicrohttpd@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libmicrohttpd@
 	[ "x$*" = "x" ] && touch $@ || true
 
