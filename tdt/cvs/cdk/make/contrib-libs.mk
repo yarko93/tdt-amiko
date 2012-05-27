@@ -2874,6 +2874,11 @@ $(DEPDIR)/%jasper: $(DEPDIR)/jasper.do_compile
 #
 # mysql
 #
+DESCRIPTION_mysql = "MySQL"
+
+FILES_mysql = \
+/usr/bin/*
+
 $(DEPDIR)/mysql.do_prepare: bootstrap @DEPENDS_mysql@
 	@PREPARE_mysql@
 	touch $@
@@ -2891,8 +2896,11 @@ $(DEPDIR)/mysql.do_compile: $(DEPDIR)/mysql.do_prepare
 $(DEPDIR)/min-mysql $(DEPDIR)/std-mysql $(DEPDIR)/max-mysql \
 $(DEPDIR)/mysql: \
 $(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
+	$(start_build)
 	cd @DIR_mysql@ && \
 		@INSTALL_mysql@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_mysql@
 	[ "x$*" = "x" ] && touch $@ || true
 
