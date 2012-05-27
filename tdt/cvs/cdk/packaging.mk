@@ -79,8 +79,8 @@ define flash_prebuild
 endef
 
 define remove_libs
-	rm -f $(PKDIR)/lib/*.{a,so,la}
-	rm -f $(PKDIR)/usr/lib/*.{a,so,la}
+	rm -f $(PKDIR)/lib/*.{a,la}
+	rm -f $(PKDIR)/usr/lib/*.{a,la}
 endef
 
 define remove_pkgconfigs
