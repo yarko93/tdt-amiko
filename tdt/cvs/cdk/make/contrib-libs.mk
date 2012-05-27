@@ -2291,8 +2291,12 @@ $(DEPDIR)/%libalsa: $(DEPDIR)/libalsa.do_compile
 #
 # rtmpdump
 #
-DESCRIPTION_rtmpdump = "rtmpdump"
-FILES_rtmpdump = /
+DESCRIPTION_rtmpdump = "rtmpdump is a tool for dumping media content streamed over RTMP."
+
+FILES_rtmpdump = \
+/usr/bin/rtmpdump \
+/usr/lib/librtmp* \
+/usr/sbin/rtmpgw
 
 $(DEPDIR)/rtmpdump.do_prepare: bootstrap openssl openssl-dev libz @DEPENDS_rtmpdump@
 	@PREPARE_rtmpdump@
@@ -2310,8 +2314,11 @@ $(DEPDIR)/rtmpdump.do_compile: $(DEPDIR)/rtmpdump.do_prepare
 $(DEPDIR)/min-rtmpdump $(DEPDIR)/std-rtmpdump $(DEPDIR)/max-rtmpdump \
 $(DEPDIR)/rtmpdump: \
 $(DEPDIR)/%rtmpdump: $(DEPDIR)/rtmpdump.do_compile
+	$(start_build)
 	cd @DIR_rtmpdump@ && \
 		@INSTALL_rtmpdump@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_rtmpdump@
 	[ "x$*" = "x" ] && touch $@ || true
 

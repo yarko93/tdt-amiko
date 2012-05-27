@@ -830,8 +830,7 @@ rtmpdump
   {PN}-{PV}
   extract:http://{PN}.mplayerhq.hu/download/{PN}-{PV}.tar.gz
   pmove:{PN}:{PN}-{PV}
-  rewrite-pkgconfig:librtmp/librtmp.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libdvbsipp
   0.3.6
