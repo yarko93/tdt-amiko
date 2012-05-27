@@ -897,9 +897,7 @@ libpcre
   8.30
   pcre-{PV}
   extract:ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-{PV}.tar.bz2
-  rewrite-pkgconfig:{PN}.pc:{PN}cpp.pc:{PN}posix.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la:TARGETS/usr/lib/{PN}posix.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libcdio
   0.83

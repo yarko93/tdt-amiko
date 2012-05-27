@@ -2731,7 +2731,7 @@ $(DEPDIR)/%lzo: $(DEPDIR)/lzo.do_compile
 #
 # yajl
 #
-DESCRIPTION_yajl = ""
+DESCRIPTION_yajl = "Yet Another JSON Library"
 
 FILES_yajl = \
 /usr/lib/libyajl.* \
@@ -2765,6 +2765,12 @@ $(DEPDIR)/%yajl: $(DEPDIR)/yajl.do_compile
 #
 # libpcre (shouldn't this be named pcre without the lib?)
 #
+DESCRIPTION_libpcre = "Perl-compatible regular expression library"
+
+FILES_libpcre = \
+/usr/lib/* \
+/usr/bin/pcre*
+
 $(DEPDIR)/libpcre.do_prepare: bootstrap @DEPENDS_libpcre@
 	@PREPARE_libpcre@
 	touch $@
@@ -2784,11 +2790,14 @@ $(DEPDIR)/libpcre.do_compile: $(DEPDIR)/libpcre.do_prepare
 $(DEPDIR)/min-libpcre $(DEPDIR)/std-libpcre $(DEPDIR)/max-libpcre \
 $(DEPDIR)/libpcre: \
 $(DEPDIR)/%libpcre: $(DEPDIR)/libpcre.do_compile
+	$(start_build)
 	cd @DIR_libpcre@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < pcre-config > $(crossprefix)/bin/pcre-config && \
 		chmod 755 $(crossprefix)/bin/pcre-config && \
 		@INSTALL_libpcre@
 		rm -f $(targetprefix)/usr/bin/pcre-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libpcre@
 	[ "x$*" = "x" ] && touch $@ || true
 
