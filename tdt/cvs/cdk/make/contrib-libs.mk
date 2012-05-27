@@ -2529,6 +2529,13 @@ $(DEPDIR)/%libdreamdvd2: $(DEPDIR)/libdreamdvd2.do_compile
 #
 # libmpeg2
 #
+DESCRIPTION_libmpeg2 = ""
+
+FILES_libmpeg2 = \
+/usr/lib/libmpeg2.* \
+/usr/lib/libmpeg2convert.* \
+/usr/bin/*
+
 $(DEPDIR)/libmpeg2.do_prepare: bootstrap @DEPENDS_libmpeg2@
 	@PREPARE_libmpeg2@
 	touch $@
@@ -2546,8 +2553,11 @@ $(DEPDIR)/libmpeg2.do_compile: $(DEPDIR)/libmpeg2.do_prepare
 $(DEPDIR)/min-libmpeg2 $(DEPDIR)/std-libmpeg2 $(DEPDIR)/max-libmpeg2 \
 $(DEPDIR)/libmpeg2: \
 $(DEPDIR)/%libmpeg2: $(DEPDIR)/libmpeg2.do_compile
+	$(start_build)
 	cd @DIR_libmpeg2@ && \
 		@INSTALL_libmpeg2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libmpeg2@
 	[ "x$*" = "x" ] && touch $@ || true
 

@@ -855,7 +855,7 @@ libmpeg2
   0.5.1
   {PN}-{PV}
   extract:http://{PN}.sourceforge.net/files/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libsamplerate
   0.1.8
