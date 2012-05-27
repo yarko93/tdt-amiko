@@ -164,7 +164,7 @@ if ENABLE_VDR1722
 endif
 if ENABLE_VDR1727
 	cp $(buildprefix)/root/var/vdr/plugins.load $(prefix)/release_vdr/usr/local/share/vdr/plugins.load
-	cp $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/setup/examples/x-vdr/vdr-menu.xml $(prefix)/release_vdr/usr/local/share/vdr/plugins/
+	cp $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/setup/examples/x-vdr/vdr-menu.xml $(prefix)/release_vdr/usr/local/share/vdr/plugins/setup
 	cp -dpR $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/PearlHD $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin
 	cp -dpR $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/anthra_1280_FS $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin
 	cp -dpR $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/anthra_1920_OSo $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin
