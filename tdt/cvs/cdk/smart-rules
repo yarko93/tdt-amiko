@@ -903,7 +903,7 @@ libcdio
   0.83
   {PN}-{PV}
   extract:ftp://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 jasper
   1.900.1

@@ -2804,6 +2804,12 @@ $(DEPDIR)/%libpcre: $(DEPDIR)/libpcre.do_compile
 #
 # libcdio
 #
+DESCRIPTION_libcdio = "The libcdio package contains a library for CD-ROM and CD image access"
+
+FILES_libcdio = \
+/usr/lib/* \
+/usr/bin/*
+
 $(DEPDIR)/libcdio.do_prepare: bootstrap @DEPENDS_libcdio@
 	@PREPARE_libcdio@
 	touch $@
@@ -2821,8 +2827,11 @@ $(DEPDIR)/libcdio.do_compile: $(DEPDIR)/libcdio.do_prepare
 $(DEPDIR)/min-libcdio $(DEPDIR)/std-libcdio $(DEPDIR)/max-libcdio \
 $(DEPDIR)/libcdio: \
 $(DEPDIR)/%libcdio: $(DEPDIR)/libcdio.do_compile
+	$(start_build)
 	cd @DIR_libcdio@ && \
 		@INSTALL_libcdio@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libcdio@
 	[ "x$*" = "x" ] && touch $@ || true
 
