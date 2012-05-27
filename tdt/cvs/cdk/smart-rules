@@ -867,7 +867,7 @@ libvorbis
   1.3.2
   {PN}-{PV}
   extract:http://downloads.xiph.org/releases/vorbis/{PN}-{PV}.tar.bz2
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libmodplug
   0.8.8.4

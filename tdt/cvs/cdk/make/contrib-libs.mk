@@ -2564,7 +2564,7 @@ $(DEPDIR)/%libmpeg2: $(DEPDIR)/libmpeg2.do_compile
 #
 # libsamplerate
 #
-DESCRIPTION_libsamplerate = "libsamplerate"
+DESCRIPTION_libsamplerate = "libsamplerate (also known as Secret Rabbit Code) is a library for perfroming sample rate conversion of audio data."
 
 FILES_libsamplerate = \
 /usr/bin/sndfile-resample \
@@ -2598,6 +2598,11 @@ $(DEPDIR)/%libsamplerate: $(DEPDIR)/libsamplerate.do_compile
 #
 # libvorbis
 #
+DESCRIPTION_libvorbis = "The libvorbis reference implementation provides both a standard encoder and decoder"
+
+FILES_libvorbis = \
+/usr/lib/libvorbis*
+
 $(DEPDIR)/libvorbis.do_prepare: bootstrap @DEPENDS_libvorbis@
 	@PREPARE_libvorbis@
 	touch $@
@@ -2615,8 +2620,11 @@ $(DEPDIR)/libvorbis.do_compile: $(DEPDIR)/libvorbis.do_prepare
 $(DEPDIR)/min-libvorbis $(DEPDIR)/std-libvorbis $(DEPDIR)/max-libvorbis \
 $(DEPDIR)/libvorbis: \
 $(DEPDIR)/%libvorbis: $(DEPDIR)/libvorbis.do_compile
+	$(start_build)
 	cd @DIR_libvorbis@ && \
 		@INSTALL_libvorbis@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libvorbis@
 	[ "x$*" = "x" ] && touch $@ || true
 
