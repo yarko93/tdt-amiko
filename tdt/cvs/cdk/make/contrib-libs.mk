@@ -1995,6 +1995,12 @@ $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compi
 #
 # libusb
 #
+DESCRIPTION_libusb = "libusb is a library which allows userspace application access to USB devices."
+
+FILES_libusb = \
+/usr/lib/libusb* \
+/usr/lib/libusbpp*
+
 $(DEPDIR)/libusb.do_prepare: @DEPENDS_libusb@
 	@PREPARE_libusb@
 	touch $@
@@ -2012,8 +2018,11 @@ $(DEPDIR)/libusb.do_compile: $(DEPDIR)/libusb.do_prepare
 $(DEPDIR)/min-libusb $(DEPDIR)/std-libusb $(DEPDIR)/max-libusb \
 $(DEPDIR)/libusb: \
 $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
+	$(start_build)
 	cd @DIR_libusb@ && \
 		@INSTALL_libusb@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libusb@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -2023,12 +2032,10 @@ $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
 DESCRIPTION_graphlcd = "Driver and Tools for LCD4LINUX"
 
 FILES_graphlcd = \
-/usr/lib/libglcddrivers.so \
-/usr/lib/libglcddrivers.so.2.1.0 \
-/usr/lib/libglcdgraphics.so \
-/usr/lib/libglcdgraphics.so.2.1.0 \
-/usr/lib/libglcdskin.so \
-/usr/lib/libglcdskin.so.2.1.0 
+/usr/lib/libglcddrivers* \
+/usr/lib/libglcdgraphics* \
+/usr/lib/libglcdskin* \
+/etc/graphlcd.conf
 
 $(DEPDIR)/graphlcd.do_prepare: bootstrap libusb @DEPENDS_graphlcd@
 	@PREPARE_graphlcd@
@@ -2045,6 +2052,7 @@ $(DEPDIR)/min-graphlcd $(DEPDIR)/std-graphlcd $(DEPDIR)/max-graphlcd \
 $(DEPDIR)/graphlcd: \
 $(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
 	$(start_build)
+	install -d $(PKDIR)/etc
 	cd @DIR_graphlcd@ && \
 		@INSTALL_graphlcd@
 	$(tocdk_build)
@@ -2228,11 +2236,13 @@ $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 #	@DISTCLEANUP_libcap@
 	[ "x$*" = "x" ] && touch $@ || true
 
-DESCRIPTION_libalsa = "alsa"
-FILES_libalsa = /	
+	
 #
 # alsa-lib
 #
+DESCRIPTION_libalsa = "alsa"
+FILES_libalsa = /
+
 $(DEPDIR)/libalsa.do_prepare: bootstrap @DEPENDS_libalsa@
 	@PREPARE_libalsa@
 	touch $@
@@ -2269,6 +2279,9 @@ $(DEPDIR)/%libalsa: $(DEPDIR)/libalsa.do_compile
 #
 # rtmpdump
 #
+DESCRIPTION_rtmpdump = "rtmpdump"
+FILES_rtmpdump = /
+
 $(DEPDIR)/rtmpdump.do_prepare: bootstrap openssl openssl-dev libz @DEPENDS_rtmpdump@
 	@PREPARE_rtmpdump@
 	touch $@
