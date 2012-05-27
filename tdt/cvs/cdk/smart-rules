@@ -181,7 +181,7 @@ cramfs
 ipkg_utils
   050831
   {PN}-{PV}
-  extract:ftp://ftp.handhelds.org/packages/{PN}/{PN}-{PV}.tar.gz
+  extract:http://downloads.buffalo.nas-central.org/ArchIndependent/Sources/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
   make:install
 ;
@@ -422,7 +422,7 @@ autofs
   make:install:INSTALLROOT=TARGETS
 ;
 imagemagick
-  6.7.6-9
+  6.7.7-0
   ImageMagick-{PV}
   extract:ftp://ftp.fifi.org/pub/ImageMagick/ImageMagick-{PV}.tar.bz2
   rewrite-pkgconfig:magick/ImageMagick.pc:magick/MagickCore.pc:wand/MagickWand.pc:wand/Wand.pc:Magick++/lib/ImageMagick++.pc:Magick++/lib/Magick++.pc
@@ -844,23 +844,6 @@ libdvbsipp
   make:install:prefix=/usr:DESTDIR=TARGETS
   rewrite-libtool:TARGETS/usr/lib/libdvbsi++.la
 ;
-tuxtxtlib
-  1.0
-  libtuxtxt
-  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=libtuxtxt
-  patch:file://libtuxtxt-{PV}-fix_dbox_headers.diff
-  rewrite-pkgconfig:tuxbox-tuxtxt.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libtuxtxt.la
-;
-tuxtxt32bpp
-  1.0
-  tuxtxt
-  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=tuxtxt
-  patch:file://{PN}-{PV}-fix_dbox_headers.diff
-  make:install:prefix=/usr:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
-;
 libdreamdvd
   1.0
   {PN}
@@ -922,8 +905,8 @@ libpcre
   pcre-{PV}
   extract:ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-{PV}.tar.bz2
   rewrite-pkgconfig:{PN}.pc:{PN}cpp.pc:{PN}posix.pc
-  make:install:prefix=/usr:DESTDIR=TARGET
-  rewrite-libtool:TARGET/usr/lib/{PN}.la:TARGET/usr/lib/{PN}posix.la
+  make:install:prefix=/usr:DESTDIR=TARGETS
+  rewrite-libtool:TARGETS/usr/lib/{PN}.la:TARGETS/usr/lib/{PN}posix.la
 ;
 libcdio
   0.83
@@ -962,10 +945,11 @@ minidlna
   make:install:prefix=/usr:DESTDIR=TARGETS
 ;
 vlc
-  1.1.9
+  1.1.13
   {PN}-{PV}
   extract:http://download.videolan.org/pub/videolan/{PN}/{PV}/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=TARGETS
+  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la:TARGETS/usr/lib/lib{PN}core.la
 ;
 elementtree
   1.2.6-20050316
@@ -1043,11 +1027,34 @@ zope_interface
   zope.interface-{PV}
   extract:http://www.zope.org/Products/ZopeInterface/{PV}/zope.interface-{PV}.tar.gz
 ;
+tuxtxtlib
+  1.0
+  libtuxtxt
+  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=libtuxtxt
+  patch:file://libtuxtxt-{PV}-fix_dbox_headers.diff
+  rewrite-pkgconfig:tuxbox-tuxtxt.pc
+  make:install:prefix=/usr:DESTDIR=TARGETS
+  rewrite-libtool:TARGETS/usr/lib/libtuxtxt.la
+;
+tuxtxt32bpp
+  1.0
+  tuxtxt
+  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=tuxtxt
+  patch:file://{PN}-{PV}-fix_dbox_headers.diff
+  make:install:prefix=/usr:DESTDIR=TARGETS
+  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+;
 enigma2_networkbrowser
   1.0
   {PN}
   nothing:git://openpli.git.sourceforge.net/gitroot/openpli/plugins-enigma2:sub=networkbrowser
   patch:file://{PN}-support_autofs.patch
+  make:install:DESTDIR=TARGETS
+;
+enigma2_openwebif
+  1.0
+  e2openplugin-OpenWebif
+  nothing:git://github.com/E2OpenPlugins/e2openplugin-OpenWebif.git
   make:install:DESTDIR=TARGETS
 ;
 gstreamer
@@ -1141,10 +1148,6 @@ libgd2
   extract:http://www.chipsnbytes.net/downloads/gd-{PV}.tar.gz
   make:install:DESTDIR=TARGETS
   rewrite-libtool:TARGETS/usr/lib/libgd.la
-;
-enigma2-openwebif
-  1.0
-  e2openplugin-OpenWebif
 ;
 portmap
   6.0
