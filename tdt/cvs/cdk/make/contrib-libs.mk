@@ -2529,7 +2529,7 @@ $(DEPDIR)/%libdreamdvd2: $(DEPDIR)/libdreamdvd2.do_compile
 #
 # libmpeg2
 #
-DESCRIPTION_libmpeg2 = ""
+DESCRIPTION_libmpeg2 = "libmpeg2 is a free library for decoding mpeg-2 and mpeg-1 video streams. It is released under the terms of the GPL license."
 
 FILES_libmpeg2 = \
 /usr/lib/libmpeg2.* \
@@ -2564,6 +2564,12 @@ $(DEPDIR)/%libmpeg2: $(DEPDIR)/libmpeg2.do_compile
 #
 # libsamplerate
 #
+DESCRIPTION_libsamplerate = "libsamplerate"
+
+FILES_libsamplerate = \
+/usr/bin/sndfile-resample \
+/usr/lib/libsamplerate.*
+
 $(DEPDIR)/libsamplerate.do_prepare: bootstrap @DEPENDS_libsamplerate@
 	@PREPARE_libsamplerate@
 	touch $@
@@ -2581,8 +2587,11 @@ $(DEPDIR)/libsamplerate.do_compile: $(DEPDIR)/libsamplerate.do_prepare
 $(DEPDIR)/min-libsamplerate $(DEPDIR)/std-libsamplerate $(DEPDIR)/max-libsamplerate \
 $(DEPDIR)/libsamplerate: \
 $(DEPDIR)/%libsamplerate: $(DEPDIR)/libsamplerate.do_compile
+	$(start_build)
 	cd @DIR_libsamplerate@ && \
 		@INSTALL_libsamplerate@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libsamplerate@
 	[ "x$*" = "x" ] && touch $@ || true
 

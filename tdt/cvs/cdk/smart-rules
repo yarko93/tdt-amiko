@@ -861,7 +861,7 @@ libsamplerate
   0.1.8
   {PN}-{PV}
   extract:http://www.mega-nerd.com/SRC/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libvorbis
   1.3.2
