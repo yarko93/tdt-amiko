@@ -2698,6 +2698,11 @@ $(DEPDIR)/%tiff: $(DEPDIR)/tiff.do_compile
 #
 # lzo
 #
+DESCRIPTION_lzo = "LZO -- a real-time data compression library"
+
+FILES_lzo = \
+/usr/lib/*
+
 $(DEPDIR)/lzo.do_prepare: @DEPENDS_lzo@
 	@PREPARE_lzo@
 	touch $@
@@ -2715,8 +2720,11 @@ $(DEPDIR)/lzo.do_compile: $(DEPDIR)/lzo.do_prepare
 $(DEPDIR)/min-lzo $(DEPDIR)/std-lzo $(DEPDIR)/max-lzo \
 $(DEPDIR)/lzo: \
 $(DEPDIR)/%lzo: $(DEPDIR)/lzo.do_compile
+	$(start_build)
 	cd @DIR_lzo@ && \
 		@INSTALL_lzo@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lzo@
 	[ "x$*" = "x" ] && touch $@ || true
 

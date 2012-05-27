@@ -885,7 +885,7 @@ lzo
   2.06
   {PN}-{PV}
   extract:http://www.oberhumer.com/opensource/{PN}/download/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 yajl
   2.0.1
