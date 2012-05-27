@@ -879,7 +879,7 @@ tiff
   4.0.1
   {PN}-{PV}
   extract:ftp://ftp.remotesensing.org/pub/lib{PN}/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 lzo
   2.06

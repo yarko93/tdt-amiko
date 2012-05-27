@@ -2662,34 +2662,14 @@ $(DEPDIR)/%libmodplug: $(DEPDIR)/libmodplug.do_compile
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
-# bzip - already in contrib-apps, check which is better
-#
-#$(DEPDIR)/bzip.do_prepare: bootstrap @DEPENDS_bzip@
-#	@PREPARE_bzip@
-#	touch $@
-#
-#$(DEPDIR)/bzip.do_compile: $(DEPDIR)/bzip.do_prepare
-#	export PATH=$(hostprefix)/bin:$(PATH) && \
-#	cd @DIR_bzip@ && \
-#	$(BUILDENV) \
-#	sed -i "s/CC=gcc/CC=sh4-linux-gcc/g" Makefile && \
-#	sed -i "s/AR=ar/AR=sh4-linux-ar/g" Makefile && \
-#	sed -i "s/RANLIB=ranlib/RANLIB=sh4-linux-ranlib/g" Makefile&& \
-#	sed -i -e 's|PREFIX=/usr/local|PREFIX=$(prefix)/cdkroot/usr|g' Makefile
-#	$(MAKE) all
-#	touch $@
-#
-#$(DEPDIR)/min-bzip $(DEPDIR)/std-bzip $(DEPDIR)/max-bzip \
-#$(DEPDIR)/bzip: \
-#$(DEPDIR)/%bzip: $(DEPDIR)/bzip.do_compile
-#	cd @DIR_bzip@ && \
-#		@INSTALL_bzip@
-#	@DISTCLEANUP_bzip@
-#	[ "x$*" = "x" ] && touch $@ || true
-
-#
 # tiff
 #
+DESCRIPTION_tiff = "TIFF Software Distribution"
+
+FILES_tiff = \
+/usr/lib/libtiff* \
+/usr/bin/*
+
 $(DEPDIR)/tiff.do_prepare: bootstrap @DEPENDS_tiff@
 	@PREPARE_tiff@
 	touch $@
@@ -2707,8 +2687,11 @@ $(DEPDIR)/tiff.do_compile: $(DEPDIR)/tiff.do_prepare
 $(DEPDIR)/min-tiff $(DEPDIR)/std-tiff $(DEPDIR)/max-tiff \
 $(DEPDIR)/tiff: \
 $(DEPDIR)/%tiff: $(DEPDIR)/tiff.do_compile
+	$(start_build)
 	cd @DIR_tiff@ && \
 		@INSTALL_tiff@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_tiff@
 	[ "x$*" = "x" ] && touch $@ || true
 
