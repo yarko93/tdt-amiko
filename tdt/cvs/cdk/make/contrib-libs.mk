@@ -2941,6 +2941,11 @@ $(DEPDIR)/%libmicrohttpd: $(DEPDIR)/libmicrohttpd.do_compile
 #
 # libexif
 #
+DESCRIPTION_libexif = ""
+
+FILES_libexif = \
+/usr/lib/libexif.*
+
 $(DEPDIR)/libexif.do_prepare: bootstrap @DEPENDS_libexif@
 	@PREPARE_libexif@
 	touch $@
@@ -2957,8 +2962,11 @@ $(DEPDIR)/libexif.do_compile: $(DEPDIR)/libexif.do_prepare
 $(DEPDIR)/min-libexif $(DEPDIR)/std-libexif $(DEPDIR)/max-libexif \
 $(DEPDIR)/libexif: \
 $(DEPDIR)/%libexif: $(DEPDIR)/libexif.do_compile
+	$(start_build)
 	cd @DIR_libexif@ && \
 		@INSTALL_libexif@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libexif@
 	[ "x$*" = "x" ] && touch $@ || true
 
