@@ -2066,6 +2066,12 @@ $(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
 #
 # libgd2
 #
+DESCRIPTION_libgd2 = "A graphics library for fast image creation"
+
+FILES_libgd2 = \
+/usr/lib/libgd* \
+/usr/bin/*
+
 $(DEPDIR)/libgd2.do_prepare: bootstrap libz libpng jpeg libiconv freetype fontconfig @DEPENDS_libgd2@
 	@PREPARE_libgd2@
 	touch $@
@@ -2086,8 +2092,11 @@ $(DEPDIR)/libgd2.do_compile: $(DEPDIR)/libgd2.do_prepare
 $(DEPDIR)/min-libgd2 $(DEPDIR)/std-libgd2 $(DEPDIR)/max-libgd2 \
 $(DEPDIR)/libgd2: \
 $(DEPDIR)/%libgd2: $(DEPDIR)/libgd2.do_compile
+	$(start_build)
 	cd @DIR_libgd2@ && \
 		@INSTALL_libgd2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libgd2@
 	[ "x$*" = "x" ] && touch $@ || true
 

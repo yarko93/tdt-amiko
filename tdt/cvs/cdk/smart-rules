@@ -1143,8 +1143,7 @@ libgd2
   2.0.35
   gd-{PV}
   extract:http://www.chipsnbytes.net/downloads/gd-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libgd.la
+  make:install:DESTDIR=PKDIR
 ;
 portmap
   6.0
