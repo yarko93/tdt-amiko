@@ -880,7 +880,6 @@ $(DEPDIR)/linux-kernel.do_compile: \
 		Patches/$(HAVANA_STM24_KERNEL_CONFIG) \
 		config.status \
 		| $(HOST_U_BOOT_TOOLS)
-	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -909,7 +908,6 @@ $(DEPDIR)/linux-kernel.do_compile: \
 		Patches/mb618se_defconfig \
 		config.status \
 		| $(HOST_U_BOOT_TOOLS)
-	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -952,7 +950,6 @@ $(DEPDIR)/linux-kernel.do_compile: \
 		Patches/$(HOST_KERNEL_CONFIG) \
 		config.status \
 		| $(HOST_U_BOOT_TOOLS)
-	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -994,7 +991,6 @@ $(DEPDIR)/linux-kernel.%.do_compile: \
 		Patches/$(HOST_KERNEL_CONFIG) \
 		config.status \
 		| $(DEPDIR)/$(HOST_U_BOOT_TOOLS)
-	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
