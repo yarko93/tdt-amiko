@@ -2731,6 +2731,12 @@ $(DEPDIR)/%lzo: $(DEPDIR)/lzo.do_compile
 #
 # yajl
 #
+DESCRIPTION_yajl = ""
+
+FILES_yajl = \
+/usr/lib/libyajl.* \
+/usr/bin/json*
+
 $(DEPDIR)/yajl.do_prepare: bootstrap @DEPENDS_yajl@
 	@PREPARE_yajl@
 	touch $@
@@ -2738,18 +2744,21 @@ $(DEPDIR)/yajl.do_prepare: bootstrap @DEPENDS_yajl@
 $(DEPDIR)/yajl.do_compile: $(DEPDIR)/yajl.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_yajl@ && \
-	sed -i "s/install: all/install: distro/g" Makefile && \
 	$(BUILDENV) \
 	./configure \
 		--prefix=/usr && \
+	sed -i "s/install: all/install: distro/g" Makefile && \
 	$(MAKE) distro
 	touch $@
 
 $(DEPDIR)/min-yajl $(DEPDIR)/std-yajl $(DEPDIR)/max-yajl \
 $(DEPDIR)/yajl: \
 $(DEPDIR)/%yajl: $(DEPDIR)/yajl.do_compile
+	$(start_build)
 	cd @DIR_yajl@ && \
 		@INSTALL_yajl@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_yajl@
 	[ "x$*" = "x" ] && touch $@ || true
 

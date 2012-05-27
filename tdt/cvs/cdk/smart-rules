@@ -891,7 +891,7 @@ yajl
   2.0.1
   {PN}-{PV}
   nothing:git://github.com/lloyd/{PN}:r=f4b2b1af87483caac60e50e5352fc783d9b2de2d
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libpcre
   8.30
