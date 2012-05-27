@@ -873,7 +873,7 @@ libmodplug
   0.8.8.4
   {PN}-{PV}
   extract:http://downloads.sourceforge.net/project/modplug-xmms/{PN}/{PV}/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 tiff
   4.0.1

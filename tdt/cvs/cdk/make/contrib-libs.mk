@@ -2631,6 +2631,11 @@ $(DEPDIR)/%libvorbis: $(DEPDIR)/libvorbis.do_compile
 #
 # libmodplug
 #
+DESCRIPTION_libmodplug = "the library for decoding mod-like music formats"
+
+FILES_libmodplug = \
+/usr/lib/lib*
+
 $(DEPDIR)/libmodplug.do_prepare: bootstrap @DEPENDS_libmodplug@
 	@PREPARE_libmodplug@
 	touch $@
@@ -2648,8 +2653,11 @@ $(DEPDIR)/libmodplug.do_compile: $(DEPDIR)/libmodplug.do_prepare
 $(DEPDIR)/min-libmodplug $(DEPDIR)/std-libmodplug $(DEPDIR)/max-libmodplug \
 $(DEPDIR)/libmodplug: \
 $(DEPDIR)/%libmodplug: $(DEPDIR)/libmodplug.do_compile
+	$(start_build)
 	cd @DIR_libmodplug@ && \
 		@INSTALL_libmodplug@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libmodplug@
 	[ "x$*" = "x" ] && touch $@ || true
 
