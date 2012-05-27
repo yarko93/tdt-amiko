@@ -843,15 +843,13 @@ libdreamdvd
   1.0
   {PN}
   plink:../apps/misc/tools/{PN}:{PN}
-  rewrite-pkgconfig:{PN}.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libdreamdvd2
   1.0
   libdreamdvd
   patch:file://libdreamdvd-{PV}-support_sh4.patch
-  rewrite-pkgconfig:libdreamdvd.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libmpeg2
   0.5.1
@@ -1034,8 +1032,7 @@ tuxtxt32bpp
   tuxtxt
   nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=tuxtxt
   patch:file://{PN}-{PV}-fix_dbox_headers.diff
-  make:install:prefix=/usr:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 enigma2_networkbrowser
   1.0

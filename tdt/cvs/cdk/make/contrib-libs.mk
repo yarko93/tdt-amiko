@@ -2405,6 +2405,12 @@ $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
 #
 # tuxtxt32bpp
 #
+DESCRIPTION_tuxtxt32bpp = "tuxtxt plugin"
+
+FILES_tuxtxt32bpp = \
+/usr/lib/libtuxtxt32bpp* \
+/usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*
+
 $(DEPDIR)/tuxtxt32bpp.do_prepare: tuxtxtlib @DEPENDS_tuxtxt32bpp@
 	@PREPARE_tuxtxt32bpp@
 	touch $@
@@ -2431,14 +2437,24 @@ $(DEPDIR)/tuxtxt32bpp.do_compile: $(DEPDIR)/tuxtxt32bpp.do_prepare
 $(DEPDIR)/min-tuxtxt32bpp $(DEPDIR)/std-tuxtxt32bpp $(DEPDIR)/max-tuxtxt32bpp \
 $(DEPDIR)/tuxtxt32bpp: \
 $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
+	$(start_build)
 	cd @DIR_tuxtxt32bpp@ && \
 		@INSTALL_tuxtxt32bpp@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_tuxtxt32bpp@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdreamdvd
 #
+DESCRIPTION_libdreamdvd = "libdreamdvd"
+
+FILES_libdreamdvd = \
+/usr/lib/libdreamdvd*
+
+SRC_URI_libdreamdvd = "libdreamdvd"
+
 $(DEPDIR)/libdreamdvd.do_prepare: bootstrap @DEPENDS_libdreamdvd@
 	@PREPARE_libdreamdvd@
 	touch $@
@@ -2461,14 +2477,22 @@ $(DEPDIR)/libdreamdvd.do_compile: $(DEPDIR)/libdreamdvd.do_prepare
 $(DEPDIR)/min-libdreamdvd $(DEPDIR)/std-libdreamdvd $(DEPDIR)/max-libdreamdvd \
 $(DEPDIR)/libdreamdvd: \
 $(DEPDIR)/%libdreamdvd: $(DEPDIR)/libdreamdvd.do_compile
+	$(start_build)
 	cd @DIR_libdreamdvd@ && \
 		@INSTALL_libdreamdvd@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdreamdvd@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdreamdvd2
 #
+DESCRIPTION_libdreamdvd2 = ""
+
+FILES_libdreamdvd2 = \
+/usr/lib/*
+
 $(DEPDIR)/libdreamdvd2.do_prepare: bootstrap @DEPENDS_libdreamdvd2@
 	[ -d "libdreamdvd" ] && \
 	cd libdreamdvd && git pull; \
@@ -2494,8 +2518,11 @@ $(DEPDIR)/libdreamdvd2.do_compile: $(DEPDIR)/libdreamdvd2.do_prepare
 $(DEPDIR)/min-libdreamdvd2 $(DEPDIR)/std-libdreamdvd2 $(DEPDIR)/max-libdreamdvd2 \
 $(DEPDIR)/libdreamdvd2: \
 $(DEPDIR)/%libdreamdvd2: $(DEPDIR)/libdreamdvd2.do_compile
+	$(start_build)
 	cd @DIR_libdreamdvd2@ && \
 		@INSTALL_libdreamdvd2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdreamdvd2@
 	[ "x$*" = "x" ] && touch $@ || true
 
