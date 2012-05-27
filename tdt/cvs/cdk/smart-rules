@@ -823,9 +823,7 @@ libalsa
   alsa-lib-{PV}
   extract:ftp://ftp.alsa-project.org/pub/lib/alsa-lib-{PV}.tar.bz2
   patch:file://alsa-lib-{PV}-soft_float.patch
-  rewrite-pkgconfig:utils/alsa.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libasound.la
+  make:install:DESTDIR=PKDIR
 ;
 rtmpdump
   2.4

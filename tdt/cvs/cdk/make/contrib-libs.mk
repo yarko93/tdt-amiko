@@ -2032,6 +2032,7 @@ $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
 DESCRIPTION_graphlcd = "Driver and Tools for LCD4LINUX"
 
 FILES_graphlcd = \
+/usr/bin/* \
 /usr/lib/libglcddrivers* \
 /usr/lib/libglcdgraphics* \
 /usr/lib/libglcdskin* \
@@ -2249,8 +2250,10 @@ $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 #
 # alsa-lib
 #
-DESCRIPTION_libalsa = "alsa"
-FILES_libalsa = /
+DESCRIPTION_libalsa = "ALSA library"
+
+FILES_libalsa = \
+/usr/lib/libasound*
 
 $(DEPDIR)/libalsa.do_prepare: bootstrap @DEPENDS_libalsa@
 	@PREPARE_libalsa@
