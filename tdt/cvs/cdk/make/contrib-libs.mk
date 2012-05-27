@@ -2325,7 +2325,7 @@ $(DEPDIR)/%rtmpdump: $(DEPDIR)/rtmpdump.do_compile
 #
 # libdvbsi++
 #
-DESCRIPTION_libdvbsipp = ""
+DESCRIPTION_libdvbsipp = "libdvbsi++ is a open source C++ library for parsing DVB Service Information and MPEG-2 Program Specific Information."
 
 FILES_libdvbsipp = \
 /usr/lib/libdvbsi++*
@@ -2363,6 +2363,11 @@ $(DEPDIR)/%libdvbsipp: $(DEPDIR)/libdvbsipp.do_compile
 #
 # tuxtxtlib
 #
+DESCRIPTION_tuxtxtlib = "tuxtxt library"
+
+FILES_tuxtxtlib = \
+/usr/lib/libtuxtxt*
+
 $(DEPDIR)/tuxtxtlib.do_prepare: bootstrap @DEPENDS_tuxtxtlib@
 	@PREPARE_tuxtxtlib@
 	touch $@
@@ -2389,8 +2394,11 @@ $(DEPDIR)/tuxtxtlib.do_compile: $(DEPDIR)/tuxtxtlib.do_prepare
 $(DEPDIR)/min-tuxtxtlib $(DEPDIR)/std-tuxtxtlib $(DEPDIR)/max-tuxtxtlib \
 $(DEPDIR)/tuxtxtlib: \
 $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
+	$(start_build)
 	cd @DIR_tuxtxtlib@ && \
 		@INSTALL_tuxtxtlib@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_tuxtxtlib@
 	[ "x$*" = "x" ] && touch $@ || true
 

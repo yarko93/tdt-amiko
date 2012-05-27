@@ -1027,9 +1027,7 @@ tuxtxtlib
   libtuxtxt
   nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=libtuxtxt
   patch:file://libtuxtxt-{PV}-fix_dbox_headers.diff
-  rewrite-pkgconfig:tuxbox-tuxtxt.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libtuxtxt.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 tuxtxt32bpp
   1.0
