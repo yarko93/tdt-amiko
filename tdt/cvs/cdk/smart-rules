@@ -909,7 +909,7 @@ jasper
   1.900.1
   {PN}-{PV}
   extract:http://www.ece.uvic.ca/~frodo/{PN}/software/{PN}-{PV}.zip
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 mysql
   5.1.40

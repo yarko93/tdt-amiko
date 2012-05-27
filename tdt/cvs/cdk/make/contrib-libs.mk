@@ -2838,13 +2838,21 @@ $(DEPDIR)/%libcdio: $(DEPDIR)/libcdio.do_compile
 #
 # jasper
 #
+DESCRIPTION_jasper = "JasPer is a collection \
+of software (i.e., a library and application programs) for the coding \
+and manipulation of images.  This software can handle image data in a \
+variety of formats"
+
+FILES_jasper = \
+/usr/bin/* 
+
 $(DEPDIR)/jasper.do_prepare: bootstrap @DEPENDS_jasper@
 	@PREPARE_jasper@
 	touch $@
 
 $(DEPDIR)/jasper.do_compile: $(DEPDIR)/jasper.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
-	cd @DIR_jasper@ && \
+	cd @DIR_jasper@/@DIR_jasper@ && \
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
@@ -2855,8 +2863,11 @@ $(DEPDIR)/jasper.do_compile: $(DEPDIR)/jasper.do_prepare
 $(DEPDIR)/min-jasper $(DEPDIR)/std-jasper $(DEPDIR)/max-jasper \
 $(DEPDIR)/jasper: \
 $(DEPDIR)/%jasper: $(DEPDIR)/jasper.do_compile
-	cd @DIR_jasper@ && \
+	$(start_build)
+	cd @DIR_jasper@/@DIR_jasper@ && \
 		@INSTALL_jasper@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_jasper@
 	[ "x$*" = "x" ] && touch $@ || true
 
