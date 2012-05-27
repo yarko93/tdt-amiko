@@ -837,9 +837,7 @@ libdvbsipp
   libdvbsi++-{PV}
   extract:http://www.saftware.de/libdvbsi++/libdvbsi++-{PV}.tar.bz2
   patch:file://libdvbsi++-{PV}-fix_unaligned_access.patch
-  rewrite-pkgconfig:libdvbsi++.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libdvbsi++.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libdreamdvd
   1.0

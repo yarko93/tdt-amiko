@@ -2325,6 +2325,11 @@ $(DEPDIR)/%rtmpdump: $(DEPDIR)/rtmpdump.do_compile
 #
 # libdvbsi++
 #
+DESCRIPTION_libdvbsipp = ""
+
+FILES_libdvbsipp = \
+/usr/lib/libdvbsi++*
+
 $(DEPDIR)/libdvbsipp.do_prepare: bootstrap @DEPENDS_libdvbsipp@
 	@PREPARE_libdvbsipp@
 	touch $@
@@ -2347,8 +2352,11 @@ $(DEPDIR)/libdvbsipp.do_compile: $(DEPDIR)/libdvbsipp.do_prepare
 $(DEPDIR)/min-libdvbsipp $(DEPDIR)/std-libdvbsipp $(DEPDIR)/max-libdvbsipp \
 $(DEPDIR)/libdvbsipp: \
 $(DEPDIR)/%libdvbsipp: $(DEPDIR)/libdvbsipp.do_compile
+	$(start_build)
 	cd @DIR_libdvbsipp@ && \
 		@INSTALL_libdvbsipp@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdvbsipp@
 	[ "x$*" = "x" ] && touch $@ || true
 
