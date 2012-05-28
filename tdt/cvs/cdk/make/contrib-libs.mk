@@ -738,6 +738,11 @@ $(DEPDIR)/%libxmlccwrap: libxmlccwrap.do_compile
 #
 # a52dec
 #
+DESCRIPTION_a52dec = "liba52 is a free library for decoding ATSC A/52 streams. It is released under the terms of the GPL license"
+
+FILES_a52dec = \
+/usr/lib/*
+
 $(DEPDIR)/a52dec.do_prepare: bootstrap @DEPENDS_a52dec@
 	@PREPARE_a52dec@
 	touch $@
@@ -755,14 +760,22 @@ $(DEPDIR)/a52dec.do_compile: $(DEPDIR)/a52dec.do_prepare
 $(DEPDIR)/min-a52dec $(DEPDIR)/std-a52dec $(DEPDIR)/max-a52dec \
 $(DEPDIR)/a52dec: \
 $(DEPDIR)/%a52dec: a52dec.do_compile
+	$(start_build)
 	cd @DIR_a52dec@ && \
 		@INSTALL_a52dec@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_a52dec@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdvdcss
 #
+DESCRIPTION_libdvdcss = "libdvdcss"
+
+FILES_libdvdcss = \
+/usr/lib/libdvdcss.so*
+
 $(DEPDIR)/libdvdcss.do_prepare: bootstrap @DEPENDS_libdvdcss@
 	@PREPARE_libdvdcss@
 	touch $@
@@ -781,8 +794,11 @@ $(DEPDIR)/libdvdcss.do_compile: $(DEPDIR)/libdvdcss.do_prepare
 $(DEPDIR)/min-libdvdcss $(DEPDIR)/std-libdvdcss $(DEPDIR)/max-libdvdcss \
 $(DEPDIR)/libdvdcss: \
 $(DEPDIR)/%libdvdcss: libdvdcss.do_compile
+	$(start_build)
 	cd @DIR_libdvdcss@ && \
 		@INSTALL_libdvdcss@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdvdcss@
 	[ "x$*" = "x" ] && touch $@ || true
 

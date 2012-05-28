@@ -729,15 +729,13 @@ a52dec
   0.7.4
   {PN}-{PV}
   extract:http://liba52.sourceforge.net/files/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 libdvdcss
   1.2.10
   {PN}-{PV}
   extract:http://download.videolan.org/pub/{PN}/{PV}/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:src/{PN}.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libdvdnav
   4.1.3
