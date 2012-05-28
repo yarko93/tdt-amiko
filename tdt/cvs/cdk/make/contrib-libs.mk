@@ -2941,7 +2941,7 @@ $(DEPDIR)/%libmicrohttpd: $(DEPDIR)/libmicrohttpd.do_compile
 #
 # libexif
 #
-DESCRIPTION_libexif = ""
+DESCRIPTION_libexif = "libexif is a library for parsing, editing, and saving EXIF data."
 
 FILES_libexif = \
 /usr/lib/libexif.*
@@ -2973,6 +2973,11 @@ $(DEPDIR)/%libexif: $(DEPDIR)/libexif.do_compile
 #
 # minidlna
 #
+DESCRIPTION_minidlna = "The MiniDLNA daemon is an UPnP-A/V and DLNA service which serves multimedia content to compatible clients on the network."
+
+FILES_minidlna = \
+/usr/lib/* \
+/usr/sbin/*
 $(DEPDIR)/minidlna.do_prepare: bootstrap ffmpeg libflac libogg libvorbis libid3tag sqlite libexif jpeg @DEPENDS_minidlna@
 	@PREPARE_minidlna@
 	touch $@
@@ -2995,14 +3000,43 @@ $(DEPDIR)/minidlna.do_compile: $(DEPDIR)/minidlna.do_prepare
 $(DEPDIR)/min-minidlna $(DEPDIR)/std-minidlna $(DEPDIR)/max-minidlna \
 $(DEPDIR)/minidlna: \
 $(DEPDIR)/%minidlna: $(DEPDIR)/minidlna.do_compile
+	$(start_build)
 	cd @DIR_minidlna@ && \
 		@INSTALL_minidlna@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_minidlna@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # vlc
 #
+DESCRIPTION_vlc = "VLC player"
+
+FILES_vlc = \
+/usr/bin/* \
+/usr/lib/libvlc* \
+/usr/lib/vlc/plugins/access/*.so \
+/usr/lib/vlc/plugins/access_output/*.so \
+/usr/lib/vlc/plugins/audio_filter/*.so \
+/usr/lib/vlc/plugins/audio_mixer/*.so \
+/usr/lib/vlc/plugins/audio_output/*.so \
+/usr/lib/vlc/plugins/codec/*.so \
+/usr/lib/vlc/plugins/control/*.so \
+/usr/lib/vlc/plugins/demux/*.so \
+/usr/lib/vlc/plugins/gui/*.so \
+/usr/lib/vlc/plugins/meta_engine/*.so \
+/usr/lib/vlc/plugins/misc/*.so \
+/usr/lib/vlc/plugins/mux/*.so \
+/usr/lib/vlc/plugins/packetizer/*.so \
+/usr/lib/vlc/plugins/services_discovery/*.so \
+/usr/lib/vlc/plugins/stream_filter/*.so \
+/usr/lib/vlc/plugins/stream_out/*.so \
+/usr/lib/vlc/plugins/video_chroma/*.so \
+/usr/lib/vlc/plugins/video_filter/*.so \
+/usr/lib/vlc/plugins/video_output/*.so \
+/usr/lib/vlc/plugins/visualization/*.so
+
 $(DEPDIR)/vlc.do_prepare: bootstrap libstdc++-dev libfribidi ffmpeg @DEPENDS_vlc@
 	@PREPARE_vlc@
 	touch $@
@@ -3036,8 +3070,11 @@ $(DEPDIR)/vlc.do_compile: $(DEPDIR)/vlc.do_prepare
 $(DEPDIR)/min-vlc $(DEPDIR)/std-vlc $(DEPDIR)/max-vlc \
 $(DEPDIR)/vlc: \
 $(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
+	$(start_build)
 	cd @DIR_vlc@ && \
 		@INSTALL_vlc@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_vlc@
 	@[ "x$*" = "x" ] && touch $@ || true
 

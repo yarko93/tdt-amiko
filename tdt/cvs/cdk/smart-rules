@@ -934,14 +934,13 @@ minidlna
   {PN}-{PV}
   extract:http://netcologne.dl.sourceforge.net/project/{PN}/{PN}/{PV}/{PN}_{PV}_src.tar.gz
   patch:file://{PN}-{PV}.patch
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 vlc
   1.1.13
   {PN}-{PV}
   extract:http://download.videolan.org/pub/videolan/{PN}/{PV}/{PN}-{PV}.tar.bz2
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la:TARGETS/usr/lib/lib{PN}core.la
+  make:install:DESTDIR=PKDIR
 ;
 elementtree
   1.2.6-20050316
