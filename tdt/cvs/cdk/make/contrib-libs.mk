@@ -805,6 +805,12 @@ $(DEPDIR)/%libdvdcss: libdvdcss.do_compile
 #
 # libdvdnav
 #
+DESCRIPTION_libdvdnav = "libdvdnav"
+
+FILES_libdvdnav = \
+/usr/lib/*.so* \
+/usr/bin/dvdnav-config
+
 $(DEPDIR)/libdvdnav.do_prepare: bootstrap libdvdread @DEPENDS_libdvdnav@
 	@PREPARE_libdvdnav@
 	touch $@
@@ -829,11 +835,14 @@ $(DEPDIR)/libdvdnav.do_compile: $(DEPDIR)/libdvdnav.do_prepare
 $(DEPDIR)/min-libdvdnav $(DEPDIR)/std-libdvdnav $(DEPDIR)/max-libdvdnav \
 $(DEPDIR)/libdvdnav: \
 $(DEPDIR)/%libdvdnav: libdvdnav.do_compile
-	cd @DIR_libdvdnav@ && \
+	 $(start_build)
+	 cd @DIR_libdvdnav@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < misc/dvdnav-config > $(crossprefix)/bin/dvdnav-config && \
 		chmod 755 $(crossprefix)/bin/dvdnav-config && \
 		@INSTALL_libdvdnav@
 		rm -f $(targetprefix)/usr/bin/dvdnav-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdvdnav@
 	[ "x$*" = "x" ] && touch $@ || true
 

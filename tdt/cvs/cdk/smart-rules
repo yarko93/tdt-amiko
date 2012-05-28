@@ -742,9 +742,7 @@ libdvdnav
   {PN}-{PV}
   extract:http://www.mplayerhq.hu/MPlayer/releases/dvdnav-old/{PN}-{PV}.tar.bz2
   patch:file://{PN}_{PV}-3.diff
-  rewrite-pkgconfig:misc/dvdnav.pc:misc/dvdnavmini.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la:TARGETS/usr/lib/{PN}mini.la
+  make:install:DESTDIR=PKDIR
 ;
 libdvdread
   4.1.3
