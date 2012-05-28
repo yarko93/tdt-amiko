@@ -289,6 +289,11 @@ $(DEPDIR)/%libungif: $(DEPDIR)/libungif.do_compile
 #
 # libgif
 #
+DESCRIPTION_libgif = "libgif"
+
+FILES_libgif = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libgif.do_prepare: bootstrap @DEPENDS_libgif@
 	@PREPARE_libgif@
 	touch $@
@@ -307,8 +312,11 @@ $(DEPDIR)/libgif.do_compile: $(DEPDIR)/libgif.do_prepare
 $(DEPDIR)/min-libgif $(DEPDIR)/std-libgif $(DEPDIR)/max-libgif \
 $(DEPDIR)/libgif: \
 $(DEPDIR)/%libgif: $(DEPDIR)/libgif.do_compile
+	$(start_build)
 	cd @DIR_libgif@ && \
 		@INSTALL_libgif@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libgif@
 	[ "x$*" = "x" ] && touch $@ || true
 
