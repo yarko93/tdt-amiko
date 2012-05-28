@@ -756,8 +756,7 @@ ffmpeg
   {PN}-{PV}
   extract:http://{PN}.org/releases/{PN}-{PV}.tar.gz
   patch:file://{PN}.patch
-  rewrite-pkgconfig:libavcodec/libavcodec.pc:libavdevice/libavdevice.pc:libavformat/libavformat.pc:libavutil/libavutil.pc:libswscale/libswscale.pc
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 libass
   0.9.11

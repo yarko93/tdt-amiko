@@ -893,6 +893,13 @@ $(DEPDIR)/%libdvdread: libdvdread.do_compile
 #
 # ffmpeg
 #
+DESCRIPTION_ffmpeg = "ffmpeg"
+
+FILES_ffmpeg = \
+/usr/lib/*.so* \
+/usr/bin/ffmpeg \
+/usr/bin/ffprobe
+
 $(DEPDIR)/ffmpeg.do_prepare: bootstrap libass rtmpdump @DEPENDS_ffmpeg@
 	@PREPARE_ffmpeg@
 	touch $@
@@ -978,8 +985,11 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 $(DEPDIR)/min-ffmpeg $(DEPDIR)/std-ffmpeg $(DEPDIR)/max-ffmpeg \
 $(DEPDIR)/ffmpeg: \
 $(DEPDIR)/%ffmpeg: $(DEPDIR)/ffmpeg.do_compile
+	$(start_build)
 	cd @DIR_ffmpeg@ && \
 		@INSTALL_ffmpeg@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_ffmpeg@
 	[ "x$*" = "x" ] && touch $@ || true
 
