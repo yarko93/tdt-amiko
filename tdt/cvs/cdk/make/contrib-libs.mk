@@ -849,6 +849,12 @@ $(DEPDIR)/%libdvdnav: libdvdnav.do_compile
 #
 # libdvdread
 #
+DESCRIPTION_libdvdread = "libdvdread"
+
+FILES_libdvdread = \
+/usr/lib/*.so* \
+/usr/bin/dvdread-config
+
 $(DEPDIR)/libdvdread.do_prepare: bootstrap @DEPENDS_libdvdread@
 	@PREPARE_libdvdread@
 	touch $@
@@ -873,11 +879,14 @@ $(DEPDIR)/libdvdread.do_compile: $(DEPDIR)/libdvdread.do_prepare
 $(DEPDIR)/min-libdvdread $(DEPDIR)/std-libdvdread $(DEPDIR)/max-libdvdread \
 $(DEPDIR)/libdvdread: \
 $(DEPDIR)/%libdvdread: libdvdread.do_compile
+	$(start_build)
 	cd @DIR_libdvdread@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < misc/dvdread-config > $(crossprefix)/bin/dvdread-config && \
 		chmod 755 $(crossprefix)/bin/dvdread-config && \
 		@INSTALL_libdvdread@
 		rm -f $(targetprefix)/usr/bin/dvdread-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdvdread@
 	[ "x$*" = "x" ] && touch $@ || true
 

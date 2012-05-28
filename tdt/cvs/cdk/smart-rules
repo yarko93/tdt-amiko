@@ -749,9 +749,7 @@ libdvdread
   {PN}-{PV}
   extract:http://www.mplayerhq.hu/MPlayer/releases/dvdnav-old/{PN}-{PV}.tar.bz2
   patch:file://{PN}_{PV}-5.diff
-  rewrite-pkgconfig:misc/dvdread.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 ffmpeg
   0.8.11
