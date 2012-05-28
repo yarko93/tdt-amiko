@@ -622,6 +622,12 @@ $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
 #
 # expat
 #
+DESCRIPTION_expat = ""
+
+FILES_expat = \
+/usr/lib/libexpat.so* \
+/usr/bin/xmlwf
+
 $(DEPDIR)/expat.do_prepare: bootstrap @DEPENDS_expat@
 	@PREPARE_expat@
 	touch $@
@@ -640,14 +646,22 @@ $(DEPDIR)/expat.do_compile: $(DEPDIR)/expat.do_prepare
 $(DEPDIR)/min-expat $(DEPDIR)/std-expat $(DEPDIR)/max-expat \
 $(DEPDIR)/expat: \
 $(DEPDIR)/%expat: $(DEPDIR)/expat.do_compile
+	$(start_build)
 	cd @DIR_expat@ && \
 		@INSTALL_expat@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_expat@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # fontconfig
 #
+DESCRIPTION_fontconfig = ""
+
+FILES_fontconfig = \
+/usr/lib/*
+
 $(DEPDIR)/fontconfig.do_prepare: bootstrap libz libxml2 @DEPENDS_fontconfig@
 	@PREPARE_fontconfig@
 	touch $@
@@ -677,8 +691,11 @@ $(DEPDIR)/fontconfig.do_compile: $(DEPDIR)/fontconfig.do_prepare
 $(DEPDIR)/min-fontconfig $(DEPDIR)/std-fontconfig $(DEPDIR)/max-fontconfig \
 $(DEPDIR)/fontconfig: \
 $(DEPDIR)/%fontconfig: $(DEPDIR)/fontconfig.do_compile
+	$(start_build)
 	cd @DIR_fontconfig@ && \
 		@INSTALL_fontconfig@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_fontconfig@
 	[ "x$*" = "x" ] && touch $@ || true
 

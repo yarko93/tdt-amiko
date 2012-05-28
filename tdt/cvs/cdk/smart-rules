@@ -710,17 +710,14 @@ expat
   2.0.1
   {PN}-{PV}
   extract:http://kent.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 fontconfig
   2.5.93
   {PN}-{PV}
   extract:http://{PN}.org/release/{PN}-{PV}.tar.gz
   rewrite-pkgconfig:{PN}.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
-  rewrite-dependency:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libxmlccwrap
   0.0.12
