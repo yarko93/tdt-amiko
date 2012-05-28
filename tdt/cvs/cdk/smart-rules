@@ -465,17 +465,14 @@ freetype
   2.3.5
   {PN}-{PV}
   extract:http://download.savannah.gnu.org/releases/{PN}/{PN}-{PV}.tar.bz2
-  rewrite-pkgconfig:builds/unix/{PN}2.pc
-  make:install:libdir=TARGETS/usr/lib:includedir=TARGETS/usr/include:bindir=TARGETS/usr/bin:prefix=TARGETS/usr
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 lirc
   0.9.0
   {PN}-{PV}
   extract:http://prdownloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}-try_first_last_remote.diff
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}_client.la
+  make:install:DESTDIR=PKDIR
 ;
 jpeg
   8d

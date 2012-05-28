@@ -97,6 +97,12 @@ $(DEPDIR)/freetype-old: $(DEPDIR)/freetype-old.do_compile
 #
 # freetype
 #
+DESCRIPTION_freetype = "freetype"
+
+FILES_freetype = \
+/usr/lib/*.so* \
+/usr/bin/freetype-config
+
 $(DEPDIR)/freetype.do_prepare: bootstrap @DEPENDS_freetype@
 	@PREPARE_freetype@
 	touch $@
@@ -114,6 +120,7 @@ $(DEPDIR)/freetype.do_compile: $(DEPDIR)/freetype.do_prepare
 $(DEPDIR)/min-freetype $(DEPDIR)/std-freetype $(DEPDIR)/max-freetype \
 $(DEPDIR)/freetype: \
 $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
+	$(start_build)
 	cd @DIR_freetype@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < builds/unix/freetype-config > $(crossprefix)/bin/freetype-config && \
 		chmod 755 $(crossprefix)/bin/freetype-config && \
@@ -121,12 +128,20 @@ $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 		ln -sf $(targetprefix)/usr/include/freetype2/freetype $(targetprefix)/usr/include/freetype && \
 		@INSTALL_freetype@
 		rm -f $(targetprefix)/usr/bin/freetype-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_freetype@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # lirc
 #
+DESCRIPTION_lirc ="lirc"
+
+FILES_lirc = \
+/usr/bin/lircd \
+/usr/lib/*.so*
+
 $(DEPDIR)/lirc.do_prepare: bootstrap @DEPENDS_lirc@
 	@PREPARE_lirc@
 	touch $@
@@ -157,8 +172,11 @@ $(DEPDIR)/lirc.do_compile: $(DEPDIR)/lirc.do_prepare
 $(DEPDIR)/min-lirc $(DEPDIR)/std-lirc $(DEPDIR)/max-lirc \
 $(DEPDIR)/lirc: \
 $(DEPDIR)/%lirc: $(DEPDIR)/lirc.do_compile
+	$(start_build)
 	cd @DIR_lirc@ && \
 		@INSTALL_lirc@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lirc@
 	[ "x$*" = "x" ] && touch $@ || true
 
