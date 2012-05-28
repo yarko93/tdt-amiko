@@ -53,21 +53,22 @@ flash_ipkg_args = -f $(crossprefix)/etc/opkg.conf -o $(prefix)/release
 cdk_ipkg_args = -f $(crossprefix)/etc/opkg-cdk.conf -o $(targetprefix)
 
 define do_build_pkg
+	@echo
+	@echo "====> do_build_pkg $(1) $(2)"
 	for pkg in `ls $(ipkgbuilddir)`; do \
 		ipkg-build -o root -g root $(ipkgbuilddir)/$$pkg $(if $(filter cdk,$(2)),$(ipkcdk),$(ipkprefix)) |tee tmpname \
 		$(if $(filter install,$(1)), && \
 			pkgn=`cat tmpname |perl -ne 'if (m/Packaged contents/) { print ((split / /)[-1])}'` && \
 			opkg install $(if $(filter cdk,$(2)),$(cdk_ipkg_args),$(flash_ipkg_args)) $$pkgn \
 		); done
-#FIXME: too frequent invokes
-#	$(if $(filter flash,$(2)),$(prepare_pkginfo_for_flash))
 endef
 
 define start_build
-	@echo aaPARENT_PK = $(PARENT_PK)
-	$(eval $(if $(filter '',$(PARENT_PK)), $@: PARENT_PK = $(notdir $@)))
+	@echo
+	@echo "====> checking for PARENT_PK variable"
+	$(eval $(if $(filter '',$(PARENT_PK)), $@: PARENT_PK = $(subst -,_,$(notdir $@))))
 	$(eval export PARENT_PK)
-	@echo PARENT_PK = $(PARENT_PK)
+	@echo "====> start_build $(PARENT_PK)"
 	rm -rf $(PKDIR)
 	mkdir $(PKDIR)
 endef

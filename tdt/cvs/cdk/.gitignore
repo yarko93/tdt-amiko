@@ -67,3 +67,6 @@ jpeg-*
 enigma2-networkbrowser
 host-python-*
 libtuxtxt
+ruledir
+opkg-host
+bb.pyo
