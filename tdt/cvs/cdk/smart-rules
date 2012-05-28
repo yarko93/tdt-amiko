@@ -522,9 +522,7 @@ libsigc
   {PN}++-{PV}
   extract:http://ftp.gnome.org/pub/GNOME/sources/{PN}++/1.2/{PN}++-{PV}.tar.gz
   rewrite-pkgconfig:sigc++-1.2.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}-1.2.la
-  rewrite-dependency:TARGETS/usr/lib/{PN}-1.2.la
+  make:install:DESTDIR=PKDIR
 ;
 libmad
   0.15.1b

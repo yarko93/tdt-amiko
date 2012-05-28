@@ -394,6 +394,11 @@ $(DEPDIR)/%libfribidi: $(DEPDIR)/libfribidi.do_compile
 #
 # libsigc
 #
+DESCRIPTION_libsigc = "libsigc"
+
+FILES_libsigc = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libsigc.do_prepare: bootstrap libstdc++-dev @DEPENDS_libsigc@
 	@PREPARE_libsigc@
 	touch $@
@@ -412,8 +417,11 @@ $(DEPDIR)/libsigc.do_compile: $(DEPDIR)/libsigc.do_prepare
 $(DEPDIR)/min-libsigc $(DEPDIR)/std-libsigc $(DEPDIR)/max-libsigc \
 $(DEPDIR)/libsigc: \
 $(DEPDIR)/%libsigc: $(DEPDIR)/libsigc.do_compile
+	$(start_build)
 	cd @DIR_libsigc@ && \
 		@INSTALL_libsigc@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libsigc@
 	[ "x$*" = "x" ] && touch $@ || true
 
