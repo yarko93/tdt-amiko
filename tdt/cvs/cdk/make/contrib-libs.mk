@@ -3081,6 +3081,12 @@ $(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
 #
 # djmount
 #
+DESCRIPTION_djmount = "djmount is a UPnP AV client. It mounts as a Linux filesystem the media content of compatible UPnP AV devices."
+
+FILES_djmount = \
+/usr/bin/* \
+/usr/lib/*
+
 $(DEPDIR)/djmount.do_prepare: bootstrap libupnp fuse @DEPENDS_djmount@
 	@PREPARE_djmount@
 	touch $@
@@ -3098,14 +3104,22 @@ $(DEPDIR)/djmount.do_compile: $(DEPDIR)/djmount.do_prepare
 $(DEPDIR)/min-djmount $(DEPDIR)/std-djmount $(DEPDIR)/max-djmount \
 $(DEPDIR)/djmount: \
 $(DEPDIR)/%djmount: $(DEPDIR)/djmount.do_compile
+	$(start_build)
 	cd @DIR_djmount@ && \
 		@INSTALL_djmount@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_djmount@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libupnp
 #
+DESCRIPTION_libupnp = "The portable SDK for UPnP™ Devices (libupnp) provides developers with an API and open source code for building control points"
+
+FILES_libupnp = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libupnp.do_prepare: bootstrap @DEPENDS_libupnp@
 	@PREPARE_libupnp@
 	touch $@
@@ -3123,31 +3137,47 @@ $(DEPDIR)/libupnp.do_compile: $(DEPDIR)/libupnp.do_prepare
 $(DEPDIR)/min-libupnp $(DEPDIR)/std-libupnp $(DEPDIR)/max-libupnp \
 $(DEPDIR)/libupnp: \
 $(DEPDIR)/%libupnp: $(DEPDIR)/libupnp.do_compile
+	$(start_build)
 	cd @DIR_libupnp@ && \
 		@INSTALL_libupnp@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_djmount@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # rarfs
 #
+DESCRIPTION_rarfs = ""
+
+FILES_rarfs = \
+/usr/lib/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/rarfs.do_prepare: bootstrap fuse @DEPENDS_rarfs@
 	@PREPARE_rarfs@
 	touch $@
 
 $(DEPDIR)/rarfs.do_compile: $(DEPDIR)/rarfs.do_prepare
-	cd @DIR_libexif@ && \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	export PKG_CONFIG_PATH="$(targetprefix)/usr/lib/pkgconfig"
+	cd @DIR_rarfs@ && \
 	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os -D_FILE_OFFSET_BITS=64" \
 	./configure \
 		--host=$(target) \
-		--disable-FEATURE \
+		--disable-option-checking \
+		--includedir=/usr/include/fuse \
 		--prefix=/usr
 	touch $@
 
 $(DEPDIR)/min-rarfs $(DEPDIR)/std-rarfs $(DEPDIR)/max-rarfs \
 $(DEPDIR)/rarfs: \
 $(DEPDIR)/%rarfs: $(DEPDIR)/rarfs.do_compile
+	$(start_build)
 	cd @DIR_rarfs@ && \
 		@INSTALL_rarfs@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_rarfs@
 	[ "x$*" = "x" ] && touch $@ || true
