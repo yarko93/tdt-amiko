@@ -723,8 +723,7 @@ libxmlccwrap
   0.0.12
   {PN}-{PV}
   extract:http://www.ant.uni-bremen.de/whomes/rinas/{PN}/download/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 a52dec
   0.7.4

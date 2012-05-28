@@ -622,7 +622,7 @@ $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
 #
 # expat
 #
-DESCRIPTION_expat = ""
+DESCRIPTION_expat = "Expat is an XML parser library written in C. It is a stream-oriented parser in which an application registers handlers for things the parser might find in the XML document"
 
 FILES_expat = \
 /usr/lib/libexpat.so* \
@@ -657,12 +657,12 @@ $(DEPDIR)/%expat: $(DEPDIR)/expat.do_compile
 #
 # fontconfig
 #
-DESCRIPTION_fontconfig = ""
+DESCRIPTION_fontconfig = "Fontconfig is a library for configuring and customizing font access."
 
 FILES_fontconfig = \
 /usr/lib/*
 
-$(DEPDIR)/fontconfig.do_prepare: bootstrap libz libxml2 @DEPENDS_fontconfig@
+$(DEPDIR)/fontconfig.do_prepare: bootstrap libz libxml2 freetype @DEPENDS_fontconfig@
 	@PREPARE_fontconfig@
 	touch $@
 
@@ -702,7 +702,12 @@ $(DEPDIR)/%fontconfig: $(DEPDIR)/fontconfig.do_compile
 #
 # libxmlccwrap
 #
-$(DEPDIR)/libxmlccwrap.do_prepare: bootstrap @DEPENDS_libxmlccwrap@
+DESCRIPTION_libxmlccwrap = "libxmlccwrap is a small C++ wrapper around libxml2 and libxslt "
+
+FILES_libxmlccwrap = \
+/usr/lib/*.so*
+
+$(DEPDIR)/libxmlccwrap.do_prepare: bootstrap libxslt @DEPENDS_libxmlccwrap@
 	@PREPARE_libxmlccwrap@
 	touch $@
 
@@ -720,10 +725,13 @@ $(DEPDIR)/libxmlccwrap.do_compile: $(DEPDIR)/libxmlccwrap.do_prepare
 $(DEPDIR)/min-libxmlccwrap $(DEPDIR)/std-libxmlccwrap $(DEPDIR)/max-libxmlccwrap \
 $(DEPDIR)/libxmlccwrap: \
 $(DEPDIR)/%libxmlccwrap: libxmlccwrap.do_compile
+	$(start_build)
 	cd @DIR_libxmlccwrap@ && \
 		@INSTALL_libxmlccwrap@ && \
-		sed -e "/^dependency_libs/ s,-L/usr/lib,-L$(targetprefix)/usr/lib,g" -i $(targetprefix)/usr/lib/libxmlccwrap.la && \
-		sed -e "/^dependency_libs/ s, /usr/lib, $(targetprefix)/usr/lib,g" -i $(targetprefix)/usr/lib/libxmlccwrap.la
+		sed -e "/^dependency_libs/ s,-L/usr/lib,-L$(PKDIR)/usr/lib,g" -i $(PKDIR)/usr/lib/libxmlccwrap.la && \
+		sed -e "/^dependency_libs/ s, /usr/lib, $(PKDIR)/usr/lib,g" -i $(PKDIR)/usr/lib/libxmlccwrap.la
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libxmlccwrap@
 	[ "x$*" = "x" ] && touch $@ || true
 
