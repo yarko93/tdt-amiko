@@ -1995,6 +1995,12 @@ $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compi
 #
 # libusb
 #
+DESCRIPTION_libusb = "libusb is a library which allows userspace application access to USB devices."
+
+FILES_libusb = \
+/usr/lib/libusb* \
+/usr/lib/libusbpp*
+
 $(DEPDIR)/libusb.do_prepare: @DEPENDS_libusb@
 	@PREPARE_libusb@
 	touch $@
@@ -2012,8 +2018,11 @@ $(DEPDIR)/libusb.do_compile: $(DEPDIR)/libusb.do_prepare
 $(DEPDIR)/min-libusb $(DEPDIR)/std-libusb $(DEPDIR)/max-libusb \
 $(DEPDIR)/libusb: \
 $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
+	$(start_build)
 	cd @DIR_libusb@ && \
 		@INSTALL_libusb@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libusb@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -2023,12 +2032,11 @@ $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
 DESCRIPTION_graphlcd = "Driver and Tools for LCD4LINUX"
 
 FILES_graphlcd = \
-/usr/lib/libglcddrivers.so \
-/usr/lib/libglcddrivers.so.2.1.0 \
-/usr/lib/libglcdgraphics.so \
-/usr/lib/libglcdgraphics.so.2.1.0 \
-/usr/lib/libglcdskin.so \
-/usr/lib/libglcdskin.so.2.1.0 
+/usr/bin/* \
+/usr/lib/libglcddrivers* \
+/usr/lib/libglcdgraphics* \
+/usr/lib/libglcdskin* \
+/etc/graphlcd.conf
 
 $(DEPDIR)/graphlcd.do_prepare: bootstrap libusb @DEPENDS_graphlcd@
 	@PREPARE_graphlcd@
@@ -2045,6 +2053,7 @@ $(DEPDIR)/min-graphlcd $(DEPDIR)/std-graphlcd $(DEPDIR)/max-graphlcd \
 $(DEPDIR)/graphlcd: \
 $(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
 	$(start_build)
+	install -d $(PKDIR)/etc
 	cd @DIR_graphlcd@ && \
 		@INSTALL_graphlcd@
 	$(tocdk_build)
@@ -2058,6 +2067,12 @@ $(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
 #
 # libgd2
 #
+DESCRIPTION_libgd2 = "A graphics library for fast image creation"
+
+FILES_libgd2 = \
+/usr/lib/libgd* \
+/usr/bin/*
+
 $(DEPDIR)/libgd2.do_prepare: bootstrap libz libpng jpeg libiconv freetype fontconfig @DEPENDS_libgd2@
 	@PREPARE_libgd2@
 	touch $@
@@ -2078,8 +2093,11 @@ $(DEPDIR)/libgd2.do_compile: $(DEPDIR)/libgd2.do_prepare
 $(DEPDIR)/min-libgd2 $(DEPDIR)/std-libgd2 $(DEPDIR)/max-libgd2 \
 $(DEPDIR)/libgd2: \
 $(DEPDIR)/%libgd2: $(DEPDIR)/libgd2.do_compile
+	$(start_build)
 	cd @DIR_libgd2@ && \
 		@INSTALL_libgd2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libgd2@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -2228,11 +2246,15 @@ $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 #	@DISTCLEANUP_libcap@
 	[ "x$*" = "x" ] && touch $@ || true
 
-DESCRIPTION_libalsa = "alsa"
-FILES_libalsa = /	
+	
 #
 # alsa-lib
 #
+DESCRIPTION_libalsa = "ALSA library"
+
+FILES_libalsa = \
+/usr/lib/libasound*
+
 $(DEPDIR)/libalsa.do_prepare: bootstrap @DEPENDS_libalsa@
 	@PREPARE_libalsa@
 	touch $@
@@ -2269,6 +2291,13 @@ $(DEPDIR)/%libalsa: $(DEPDIR)/libalsa.do_compile
 #
 # rtmpdump
 #
+DESCRIPTION_rtmpdump = "rtmpdump is a tool for dumping media content streamed over RTMP."
+
+FILES_rtmpdump = \
+/usr/bin/rtmpdump \
+/usr/lib/librtmp* \
+/usr/sbin/rtmpgw
+
 $(DEPDIR)/rtmpdump.do_prepare: bootstrap openssl openssl-dev libz @DEPENDS_rtmpdump@
 	@PREPARE_rtmpdump@
 	touch $@
@@ -2285,14 +2314,22 @@ $(DEPDIR)/rtmpdump.do_compile: $(DEPDIR)/rtmpdump.do_prepare
 $(DEPDIR)/min-rtmpdump $(DEPDIR)/std-rtmpdump $(DEPDIR)/max-rtmpdump \
 $(DEPDIR)/rtmpdump: \
 $(DEPDIR)/%rtmpdump: $(DEPDIR)/rtmpdump.do_compile
+	$(start_build)
 	cd @DIR_rtmpdump@ && \
 		@INSTALL_rtmpdump@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_rtmpdump@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdvbsi++
 #
+DESCRIPTION_libdvbsipp = "libdvbsi++ is a open source C++ library for parsing DVB Service Information and MPEG-2 Program Specific Information."
+
+FILES_libdvbsipp = \
+/usr/lib/libdvbsi++*
+
 $(DEPDIR)/libdvbsipp.do_prepare: bootstrap @DEPENDS_libdvbsipp@
 	@PREPARE_libdvbsipp@
 	touch $@
@@ -2315,14 +2352,22 @@ $(DEPDIR)/libdvbsipp.do_compile: $(DEPDIR)/libdvbsipp.do_prepare
 $(DEPDIR)/min-libdvbsipp $(DEPDIR)/std-libdvbsipp $(DEPDIR)/max-libdvbsipp \
 $(DEPDIR)/libdvbsipp: \
 $(DEPDIR)/%libdvbsipp: $(DEPDIR)/libdvbsipp.do_compile
+	$(start_build)
 	cd @DIR_libdvbsipp@ && \
 		@INSTALL_libdvbsipp@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdvbsipp@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # tuxtxtlib
 #
+DESCRIPTION_tuxtxtlib = "tuxtxt library"
+
+FILES_tuxtxtlib = \
+/usr/lib/libtuxtxt*
+
 $(DEPDIR)/tuxtxtlib.do_prepare: bootstrap @DEPENDS_tuxtxtlib@
 	@PREPARE_tuxtxtlib@
 	touch $@
@@ -2349,14 +2394,23 @@ $(DEPDIR)/tuxtxtlib.do_compile: $(DEPDIR)/tuxtxtlib.do_prepare
 $(DEPDIR)/min-tuxtxtlib $(DEPDIR)/std-tuxtxtlib $(DEPDIR)/max-tuxtxtlib \
 $(DEPDIR)/tuxtxtlib: \
 $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
+	$(start_build)
 	cd @DIR_tuxtxtlib@ && \
 		@INSTALL_tuxtxtlib@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_tuxtxtlib@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # tuxtxt32bpp
 #
+DESCRIPTION_tuxtxt32bpp = "tuxtxt plugin"
+
+FILES_tuxtxt32bpp = \
+/usr/lib/libtuxtxt32bpp* \
+/usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*
+
 $(DEPDIR)/tuxtxt32bpp.do_prepare: tuxtxtlib @DEPENDS_tuxtxt32bpp@
 	@PREPARE_tuxtxt32bpp@
 	touch $@
@@ -2383,14 +2437,24 @@ $(DEPDIR)/tuxtxt32bpp.do_compile: $(DEPDIR)/tuxtxt32bpp.do_prepare
 $(DEPDIR)/min-tuxtxt32bpp $(DEPDIR)/std-tuxtxt32bpp $(DEPDIR)/max-tuxtxt32bpp \
 $(DEPDIR)/tuxtxt32bpp: \
 $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
+	$(start_build)
 	cd @DIR_tuxtxt32bpp@ && \
 		@INSTALL_tuxtxt32bpp@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_tuxtxt32bpp@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdreamdvd
 #
+DESCRIPTION_libdreamdvd = "libdreamdvd"
+
+FILES_libdreamdvd = \
+/usr/lib/libdreamdvd*
+
+SRC_URI_libdreamdvd = "libdreamdvd"
+
 $(DEPDIR)/libdreamdvd.do_prepare: bootstrap @DEPENDS_libdreamdvd@
 	@PREPARE_libdreamdvd@
 	touch $@
@@ -2413,14 +2477,22 @@ $(DEPDIR)/libdreamdvd.do_compile: $(DEPDIR)/libdreamdvd.do_prepare
 $(DEPDIR)/min-libdreamdvd $(DEPDIR)/std-libdreamdvd $(DEPDIR)/max-libdreamdvd \
 $(DEPDIR)/libdreamdvd: \
 $(DEPDIR)/%libdreamdvd: $(DEPDIR)/libdreamdvd.do_compile
+	$(start_build)
 	cd @DIR_libdreamdvd@ && \
 		@INSTALL_libdreamdvd@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdreamdvd@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdreamdvd2
 #
+DESCRIPTION_libdreamdvd2 = ""
+
+FILES_libdreamdvd2 = \
+/usr/lib/*
+
 $(DEPDIR)/libdreamdvd2.do_prepare: bootstrap @DEPENDS_libdreamdvd2@
 	[ -d "libdreamdvd" ] && \
 	cd libdreamdvd && git pull; \
@@ -2446,14 +2518,24 @@ $(DEPDIR)/libdreamdvd2.do_compile: $(DEPDIR)/libdreamdvd2.do_prepare
 $(DEPDIR)/min-libdreamdvd2 $(DEPDIR)/std-libdreamdvd2 $(DEPDIR)/max-libdreamdvd2 \
 $(DEPDIR)/libdreamdvd2: \
 $(DEPDIR)/%libdreamdvd2: $(DEPDIR)/libdreamdvd2.do_compile
+	$(start_build)
 	cd @DIR_libdreamdvd2@ && \
 		@INSTALL_libdreamdvd2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdreamdvd2@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libmpeg2
 #
+DESCRIPTION_libmpeg2 = "libmpeg2 is a free library for decoding mpeg-2 and mpeg-1 video streams. It is released under the terms of the GPL license."
+
+FILES_libmpeg2 = \
+/usr/lib/libmpeg2.* \
+/usr/lib/libmpeg2convert.* \
+/usr/bin/*
+
 $(DEPDIR)/libmpeg2.do_prepare: bootstrap @DEPENDS_libmpeg2@
 	@PREPARE_libmpeg2@
 	touch $@
@@ -2471,14 +2553,23 @@ $(DEPDIR)/libmpeg2.do_compile: $(DEPDIR)/libmpeg2.do_prepare
 $(DEPDIR)/min-libmpeg2 $(DEPDIR)/std-libmpeg2 $(DEPDIR)/max-libmpeg2 \
 $(DEPDIR)/libmpeg2: \
 $(DEPDIR)/%libmpeg2: $(DEPDIR)/libmpeg2.do_compile
+	$(start_build)
 	cd @DIR_libmpeg2@ && \
 		@INSTALL_libmpeg2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libmpeg2@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libsamplerate
 #
+DESCRIPTION_libsamplerate = "libsamplerate (also known as Secret Rabbit Code) is a library for perfroming sample rate conversion of audio data."
+
+FILES_libsamplerate = \
+/usr/bin/sndfile-resample \
+/usr/lib/libsamplerate.*
+
 $(DEPDIR)/libsamplerate.do_prepare: bootstrap @DEPENDS_libsamplerate@
 	@PREPARE_libsamplerate@
 	touch $@
@@ -2496,14 +2587,22 @@ $(DEPDIR)/libsamplerate.do_compile: $(DEPDIR)/libsamplerate.do_prepare
 $(DEPDIR)/min-libsamplerate $(DEPDIR)/std-libsamplerate $(DEPDIR)/max-libsamplerate \
 $(DEPDIR)/libsamplerate: \
 $(DEPDIR)/%libsamplerate: $(DEPDIR)/libsamplerate.do_compile
+	$(start_build)
 	cd @DIR_libsamplerate@ && \
 		@INSTALL_libsamplerate@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libsamplerate@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libvorbis
 #
+DESCRIPTION_libvorbis = "The libvorbis reference implementation provides both a standard encoder and decoder"
+
+FILES_libvorbis = \
+/usr/lib/libvorbis*
+
 $(DEPDIR)/libvorbis.do_prepare: bootstrap @DEPENDS_libvorbis@
 	@PREPARE_libvorbis@
 	touch $@
@@ -2521,14 +2620,22 @@ $(DEPDIR)/libvorbis.do_compile: $(DEPDIR)/libvorbis.do_prepare
 $(DEPDIR)/min-libvorbis $(DEPDIR)/std-libvorbis $(DEPDIR)/max-libvorbis \
 $(DEPDIR)/libvorbis: \
 $(DEPDIR)/%libvorbis: $(DEPDIR)/libvorbis.do_compile
+	$(start_build)
 	cd @DIR_libvorbis@ && \
 		@INSTALL_libvorbis@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libvorbis@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libmodplug
 #
+DESCRIPTION_libmodplug = "the library for decoding mod-like music formats"
+
+FILES_libmodplug = \
+/usr/lib/lib*
+
 $(DEPDIR)/libmodplug.do_prepare: bootstrap @DEPENDS_libmodplug@
 	@PREPARE_libmodplug@
 	touch $@
@@ -2546,40 +2653,23 @@ $(DEPDIR)/libmodplug.do_compile: $(DEPDIR)/libmodplug.do_prepare
 $(DEPDIR)/min-libmodplug $(DEPDIR)/std-libmodplug $(DEPDIR)/max-libmodplug \
 $(DEPDIR)/libmodplug: \
 $(DEPDIR)/%libmodplug: $(DEPDIR)/libmodplug.do_compile
+	$(start_build)
 	cd @DIR_libmodplug@ && \
 		@INSTALL_libmodplug@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libmodplug@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
-# bzip - already in contrib-apps, check which is better
-#
-#$(DEPDIR)/bzip.do_prepare: bootstrap @DEPENDS_bzip@
-#	@PREPARE_bzip@
-#	touch $@
-#
-#$(DEPDIR)/bzip.do_compile: $(DEPDIR)/bzip.do_prepare
-#	export PATH=$(hostprefix)/bin:$(PATH) && \
-#	cd @DIR_bzip@ && \
-#	$(BUILDENV) \
-#	sed -i "s/CC=gcc/CC=sh4-linux-gcc/g" Makefile && \
-#	sed -i "s/AR=ar/AR=sh4-linux-ar/g" Makefile && \
-#	sed -i "s/RANLIB=ranlib/RANLIB=sh4-linux-ranlib/g" Makefile&& \
-#	sed -i -e 's|PREFIX=/usr/local|PREFIX=$(prefix)/cdkroot/usr|g' Makefile
-#	$(MAKE) all
-#	touch $@
-#
-#$(DEPDIR)/min-bzip $(DEPDIR)/std-bzip $(DEPDIR)/max-bzip \
-#$(DEPDIR)/bzip: \
-#$(DEPDIR)/%bzip: $(DEPDIR)/bzip.do_compile
-#	cd @DIR_bzip@ && \
-#		@INSTALL_bzip@
-#	@DISTCLEANUP_bzip@
-#	[ "x$*" = "x" ] && touch $@ || true
-
-#
 # tiff
 #
+DESCRIPTION_tiff = "TIFF Software Distribution"
+
+FILES_tiff = \
+/usr/lib/libtiff* \
+/usr/bin/*
+
 $(DEPDIR)/tiff.do_prepare: bootstrap @DEPENDS_tiff@
 	@PREPARE_tiff@
 	touch $@
@@ -2597,14 +2687,22 @@ $(DEPDIR)/tiff.do_compile: $(DEPDIR)/tiff.do_prepare
 $(DEPDIR)/min-tiff $(DEPDIR)/std-tiff $(DEPDIR)/max-tiff \
 $(DEPDIR)/tiff: \
 $(DEPDIR)/%tiff: $(DEPDIR)/tiff.do_compile
+	$(start_build)
 	cd @DIR_tiff@ && \
 		@INSTALL_tiff@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_tiff@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # lzo
 #
+DESCRIPTION_lzo = "LZO -- a real-time data compression library"
+
+FILES_lzo = \
+/usr/lib/*
+
 $(DEPDIR)/lzo.do_prepare: @DEPENDS_lzo@
 	@PREPARE_lzo@
 	touch $@
@@ -2622,14 +2720,23 @@ $(DEPDIR)/lzo.do_compile: $(DEPDIR)/lzo.do_prepare
 $(DEPDIR)/min-lzo $(DEPDIR)/std-lzo $(DEPDIR)/max-lzo \
 $(DEPDIR)/lzo: \
 $(DEPDIR)/%lzo: $(DEPDIR)/lzo.do_compile
+	$(start_build)
 	cd @DIR_lzo@ && \
 		@INSTALL_lzo@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lzo@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # yajl
 #
+DESCRIPTION_yajl = "Yet Another JSON Library"
+
+FILES_yajl = \
+/usr/lib/libyajl.* \
+/usr/bin/json*
+
 $(DEPDIR)/yajl.do_prepare: bootstrap @DEPENDS_yajl@
 	@PREPARE_yajl@
 	touch $@
@@ -2637,24 +2744,33 @@ $(DEPDIR)/yajl.do_prepare: bootstrap @DEPENDS_yajl@
 $(DEPDIR)/yajl.do_compile: $(DEPDIR)/yajl.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_yajl@ && \
-	sed -i "s/install: all/install: distro/g" Makefile && \
 	$(BUILDENV) \
 	./configure \
 		--prefix=/usr && \
+	sed -i "s/install: all/install: distro/g" Makefile && \
 	$(MAKE) distro
 	touch $@
 
 $(DEPDIR)/min-yajl $(DEPDIR)/std-yajl $(DEPDIR)/max-yajl \
 $(DEPDIR)/yajl: \
 $(DEPDIR)/%yajl: $(DEPDIR)/yajl.do_compile
+	$(start_build)
 	cd @DIR_yajl@ && \
 		@INSTALL_yajl@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_yajl@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libpcre (shouldn't this be named pcre without the lib?)
 #
+DESCRIPTION_libpcre = "Perl-compatible regular expression library"
+
+FILES_libpcre = \
+/usr/lib/* \
+/usr/bin/pcre*
+
 $(DEPDIR)/libpcre.do_prepare: bootstrap @DEPENDS_libpcre@
 	@PREPARE_libpcre@
 	touch $@
@@ -2674,17 +2790,26 @@ $(DEPDIR)/libpcre.do_compile: $(DEPDIR)/libpcre.do_prepare
 $(DEPDIR)/min-libpcre $(DEPDIR)/std-libpcre $(DEPDIR)/max-libpcre \
 $(DEPDIR)/libpcre: \
 $(DEPDIR)/%libpcre: $(DEPDIR)/libpcre.do_compile
+	$(start_build)
 	cd @DIR_libpcre@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < pcre-config > $(crossprefix)/bin/pcre-config && \
 		chmod 755 $(crossprefix)/bin/pcre-config && \
 		@INSTALL_libpcre@
 		rm -f $(targetprefix)/usr/bin/pcre-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libpcre@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libcdio
 #
+DESCRIPTION_libcdio = "The libcdio package contains a library for CD-ROM and CD image access"
+
+FILES_libcdio = \
+/usr/lib/* \
+/usr/bin/*
+
 $(DEPDIR)/libcdio.do_prepare: bootstrap @DEPENDS_libcdio@
 	@PREPARE_libcdio@
 	touch $@
@@ -2702,21 +2827,32 @@ $(DEPDIR)/libcdio.do_compile: $(DEPDIR)/libcdio.do_prepare
 $(DEPDIR)/min-libcdio $(DEPDIR)/std-libcdio $(DEPDIR)/max-libcdio \
 $(DEPDIR)/libcdio: \
 $(DEPDIR)/%libcdio: $(DEPDIR)/libcdio.do_compile
+	$(start_build)
 	cd @DIR_libcdio@ && \
 		@INSTALL_libcdio@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libcdio@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # jasper
 #
+DESCRIPTION_jasper = "JasPer is a collection \
+of software (i.e., a library and application programs) for the coding \
+and manipulation of images.  This software can handle image data in a \
+variety of formats"
+
+FILES_jasper = \
+/usr/bin/* 
+
 $(DEPDIR)/jasper.do_prepare: bootstrap @DEPENDS_jasper@
 	@PREPARE_jasper@
 	touch $@
 
 $(DEPDIR)/jasper.do_compile: $(DEPDIR)/jasper.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
-	cd @DIR_jasper@ && \
+	cd @DIR_jasper@/@DIR_jasper@ && \
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
@@ -2727,14 +2863,22 @@ $(DEPDIR)/jasper.do_compile: $(DEPDIR)/jasper.do_prepare
 $(DEPDIR)/min-jasper $(DEPDIR)/std-jasper $(DEPDIR)/max-jasper \
 $(DEPDIR)/jasper: \
 $(DEPDIR)/%jasper: $(DEPDIR)/jasper.do_compile
-	cd @DIR_jasper@ && \
+	$(start_build)
+	cd @DIR_jasper@/@DIR_jasper@ && \
 		@INSTALL_jasper@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_jasper@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # mysql
 #
+DESCRIPTION_mysql = "MySQL"
+
+FILES_mysql = \
+/usr/bin/*
+
 $(DEPDIR)/mysql.do_prepare: bootstrap @DEPENDS_mysql@
 	@PREPARE_mysql@
 	touch $@
@@ -2752,8 +2896,11 @@ $(DEPDIR)/mysql.do_compile: $(DEPDIR)/mysql.do_prepare
 $(DEPDIR)/min-mysql $(DEPDIR)/std-mysql $(DEPDIR)/max-mysql \
 $(DEPDIR)/mysql: \
 $(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
+	$(start_build)
 	cd @DIR_mysql@ && \
 		@INSTALL_mysql@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_mysql@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -2761,6 +2908,11 @@ $(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
 #
 # libmicrohttpd
 #
+DESCRIPTION_libmicrohttpd = ""
+
+FILES_libmicrohttpd = \
+/usr/lib/libmicrohttpd.*
+
 $(DEPDIR)/libmicrohttpd.do_prepare: bootstrap @DEPENDS_libmicrohttpd@
 	@PREPARE_libmicrohttpd@
 	touch $@
@@ -2778,14 +2930,22 @@ $(DEPDIR)/libmicrohttpd.do_compile: $(DEPDIR)/libmicrohttpd.do_prepare
 $(DEPDIR)/min-libmicrohttpd $(DEPDIR)/std-libmicrohttpd $(DEPDIR)/max-libmicrohttpd \
 $(DEPDIR)/libmicrohttpd: \
 $(DEPDIR)/%libmicrohttpd: $(DEPDIR)/libmicrohttpd.do_compile
+	$(start_build)
 	cd @DIR_libmicrohttpd@ && \
 		@INSTALL_libmicrohttpd@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libmicrohttpd@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libexif
 #
+DESCRIPTION_libexif = "libexif is a library for parsing, editing, and saving EXIF data."
+
+FILES_libexif = \
+/usr/lib/libexif.*
+
 $(DEPDIR)/libexif.do_prepare: bootstrap @DEPENDS_libexif@
 	@PREPARE_libexif@
 	touch $@
@@ -2802,14 +2962,22 @@ $(DEPDIR)/libexif.do_compile: $(DEPDIR)/libexif.do_prepare
 $(DEPDIR)/min-libexif $(DEPDIR)/std-libexif $(DEPDIR)/max-libexif \
 $(DEPDIR)/libexif: \
 $(DEPDIR)/%libexif: $(DEPDIR)/libexif.do_compile
+	$(start_build)
 	cd @DIR_libexif@ && \
 		@INSTALL_libexif@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libexif@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # minidlna
 #
+DESCRIPTION_minidlna = "The MiniDLNA daemon is an UPnP-A/V and DLNA service which serves multimedia content to compatible clients on the network."
+
+FILES_minidlna = \
+/usr/lib/* \
+/usr/sbin/*
 $(DEPDIR)/minidlna.do_prepare: bootstrap ffmpeg libflac libogg libvorbis libid3tag sqlite libexif jpeg @DEPENDS_minidlna@
 	@PREPARE_minidlna@
 	touch $@
@@ -2832,14 +3000,43 @@ $(DEPDIR)/minidlna.do_compile: $(DEPDIR)/minidlna.do_prepare
 $(DEPDIR)/min-minidlna $(DEPDIR)/std-minidlna $(DEPDIR)/max-minidlna \
 $(DEPDIR)/minidlna: \
 $(DEPDIR)/%minidlna: $(DEPDIR)/minidlna.do_compile
+	$(start_build)
 	cd @DIR_minidlna@ && \
 		@INSTALL_minidlna@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_minidlna@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # vlc
 #
+DESCRIPTION_vlc = "VLC player"
+
+FILES_vlc = \
+/usr/bin/* \
+/usr/lib/libvlc* \
+/usr/lib/vlc/plugins/access/*.so \
+/usr/lib/vlc/plugins/access_output/*.so \
+/usr/lib/vlc/plugins/audio_filter/*.so \
+/usr/lib/vlc/plugins/audio_mixer/*.so \
+/usr/lib/vlc/plugins/audio_output/*.so \
+/usr/lib/vlc/plugins/codec/*.so \
+/usr/lib/vlc/plugins/control/*.so \
+/usr/lib/vlc/plugins/demux/*.so \
+/usr/lib/vlc/plugins/gui/*.so \
+/usr/lib/vlc/plugins/meta_engine/*.so \
+/usr/lib/vlc/plugins/misc/*.so \
+/usr/lib/vlc/plugins/mux/*.so \
+/usr/lib/vlc/plugins/packetizer/*.so \
+/usr/lib/vlc/plugins/services_discovery/*.so \
+/usr/lib/vlc/plugins/stream_filter/*.so \
+/usr/lib/vlc/plugins/stream_out/*.so \
+/usr/lib/vlc/plugins/video_chroma/*.so \
+/usr/lib/vlc/plugins/video_filter/*.so \
+/usr/lib/vlc/plugins/video_output/*.so \
+/usr/lib/vlc/plugins/visualization/*.so
+
 $(DEPDIR)/vlc.do_prepare: bootstrap libstdc++-dev libfribidi ffmpeg @DEPENDS_vlc@
 	@PREPARE_vlc@
 	touch $@
@@ -2873,8 +3070,11 @@ $(DEPDIR)/vlc.do_compile: $(DEPDIR)/vlc.do_prepare
 $(DEPDIR)/min-vlc $(DEPDIR)/std-vlc $(DEPDIR)/max-vlc \
 $(DEPDIR)/vlc: \
 $(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
+	$(start_build)
 	cd @DIR_vlc@ && \
 		@INSTALL_vlc@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_vlc@
 	@[ "x$*" = "x" ] && touch $@ || true
 

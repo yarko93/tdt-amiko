@@ -823,133 +823,124 @@ libalsa
   alsa-lib-{PV}
   extract:ftp://ftp.alsa-project.org/pub/lib/alsa-lib-{PV}.tar.bz2
   patch:file://alsa-lib-{PV}-soft_float.patch
-  rewrite-pkgconfig:utils/alsa.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libasound.la
+  make:install:DESTDIR=PKDIR
 ;
 rtmpdump
   2.4
   {PN}-{PV}
   extract:http://{PN}.mplayerhq.hu/download/{PN}-{PV}.tar.gz
   pmove:{PN}:{PN}-{PV}
-  rewrite-pkgconfig:librtmp/librtmp.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libdvbsipp
   0.3.6
   libdvbsi++-{PV}
   extract:http://www.saftware.de/libdvbsi++/libdvbsi++-{PV}.tar.bz2
   patch:file://libdvbsi++-{PV}-fix_unaligned_access.patch
-  rewrite-pkgconfig:libdvbsi++.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libdvbsi++.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libdreamdvd
   1.0
   {PN}
   plink:../apps/misc/tools/{PN}:{PN}
-  rewrite-pkgconfig:{PN}.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libdreamdvd2
   1.0
   libdreamdvd
   patch:file://libdreamdvd-{PV}-support_sh4.patch
-  rewrite-pkgconfig:libdreamdvd.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libmpeg2
   0.5.1
   {PN}-{PV}
   extract:http://{PN}.sourceforge.net/files/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libsamplerate
   0.1.8
   {PN}-{PV}
   extract:http://www.mega-nerd.com/SRC/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libvorbis
   1.3.2
   {PN}-{PV}
   extract:http://downloads.xiph.org/releases/vorbis/{PN}-{PV}.tar.bz2
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libmodplug
   0.8.8.4
   {PN}-{PV}
   extract:http://downloads.sourceforge.net/project/modplug-xmms/{PN}/{PV}/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 tiff
   4.0.1
   {PN}-{PV}
   extract:ftp://ftp.remotesensing.org/pub/lib{PN}/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 lzo
   2.06
   {PN}-{PV}
   extract:http://www.oberhumer.com/opensource/{PN}/download/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 yajl
   2.0.1
   {PN}-{PV}
   nothing:git://github.com/lloyd/{PN}:r=f4b2b1af87483caac60e50e5352fc783d9b2de2d
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libpcre
   8.30
   pcre-{PV}
   extract:ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-{PV}.tar.bz2
-  rewrite-pkgconfig:{PN}.pc:{PN}cpp.pc:{PN}posix.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la:TARGETS/usr/lib/{PN}posix.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libcdio
   0.83
   {PN}-{PV}
   extract:ftp://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 jasper
   1.900.1
   {PN}-{PV}
   extract:http://www.ece.uvic.ca/~frodo/{PN}/software/{PN}-{PV}.zip
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 mysql
   5.1.40
   {PN}-{PV}
   extract:http://downloads.{PN}.com/archives/{PN}-5.1/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libmicrohttpd
   0.9.19
   {PN}-{PV}
   extract:http://ftp.halifax.rwth-aachen.de/gnu/{PN}/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libexif
   0.6.20
   {PN}-{PV}
   extract:http://sourceforge.net/projects/{PN}/files/{PN}/{PV}/{PN}-{PV}.tar.gz
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 minidlna
   1.0.24
   {PN}-{PV}
   extract:http://netcologne.dl.sourceforge.net/project/{PN}/{PN}/{PV}/{PN}_{PV}_src.tar.gz
   patch:file://{PN}-{PV}.patch
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 vlc
   1.1.13
   {PN}-{PV}
   extract:http://download.videolan.org/pub/videolan/{PN}/{PV}/{PN}-{PV}.tar.bz2
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la:TARGETS/usr/lib/lib{PN}core.la
+  make:install:DESTDIR=PKDIR
 ;
 elementtree
   1.2.6-20050316
@@ -1032,17 +1023,14 @@ tuxtxtlib
   libtuxtxt
   nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=libtuxtxt
   patch:file://libtuxtxt-{PV}-fix_dbox_headers.diff
-  rewrite-pkgconfig:tuxbox-tuxtxt.pc
-  make:install:prefix=/usr:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libtuxtxt.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 tuxtxt32bpp
   1.0
   tuxtxt
   nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=tuxtxt
   patch:file://{PN}-{PV}-fix_dbox_headers.diff
-  make:install:prefix=/usr:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 enigma2_networkbrowser
   1.0
@@ -1121,10 +1109,7 @@ libusb
   0.1.12
   {PN}-{PV}
   extract:http://downloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:{PN}.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
-  rewrite-libtool:TARGETS/usr/lib/{PN}pp.la
+  make:install:DESTDIR=PKDIR
 ;
 libusb2
   1.0.8
@@ -1146,8 +1131,7 @@ libgd2
   2.0.35
   gd-{PV}
   extract:http://www.chipsnbytes.net/downloads/gd-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libgd.la
+  make:install:DESTDIR=PKDIR
 ;
 portmap
   6.0
