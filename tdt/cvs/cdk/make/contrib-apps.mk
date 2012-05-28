@@ -554,6 +554,14 @@ $(DEPDIR)/%lm_sensors: $(DEPDIR)/lm_sensors.do_compile
 #
 # FUSE
 #
+DESCRIPTION_fuse = "With FUSE it is possible to implement a fully functional filesystem in a userspace program.  Features include:"
+
+FILES_fuse = \
+/usr/lib/*.so* \
+/etc/init.d/* \
+/etc/udev/* \
+Usr/bin/*
+
 $(DEPDIR)/fuse.do_prepare: bootstrap curl glib2 @DEPENDS_fuse@
 	@PREPARE_fuse@
 	touch $@
@@ -575,7 +583,8 @@ $(DEPDIR)/fuse.do_compile: $(DEPDIR)/fuse.do_prepare
 $(DEPDIR)/min-fuse $(DEPDIR)/std-fuse $(DEPDIR)/max-fuse \
 $(DEPDIR)/fuse: \
 $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
-	cd @DIR_fuse@ && \
+	  $(start_build)
+	  cd @DIR_fuse@ && \
 		@INSTALL_fuse@
 	-rm $(prefix)/$*cdkroot/etc/udev/rules.d/99-fuse.rules
 	-rmdir $(prefix)/$*cdkroot/etc/udev/rules.d
@@ -586,6 +595,8 @@ $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
 		for s in fuse ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_fuse@
 	[ "x$*" = "x" ] && touch $@ || true
 
