@@ -515,9 +515,7 @@ libfribidi
   0.10.4
   fribidi-{PV}
   extract:http://fribidi.org/download/fribidi-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/fribidi.pc
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libsigc
   1.2.5

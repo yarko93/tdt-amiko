@@ -323,6 +323,11 @@ $(DEPDIR)/%libgif: $(DEPDIR)/libgif.do_compile
 #
 # libcurl
 #
+DESCRIPTION_libcurl = "libcurl"
+
+FILES_libcurl = \
+/usr/lib/*.so*
+
 $(DEPDIR)/curl.do_prepare: bootstrap libz @DEPENDS_curl@
 	@PREPARE_curl@
 	touch $@
@@ -354,6 +359,11 @@ $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
 #
 # libfribidi
 #
+DESCRIPTION_libfribidi = "libfribidi"
+
+FILES_libfribidi = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libfribidi.do_prepare: bootstrap @DEPENDS_libfribidi@
 	@PREPARE_libfribidi@
 	touch $@
@@ -373,8 +383,11 @@ $(DEPDIR)/libfribidi.do_compile: $(DEPDIR)/libfribidi.do_prepare
 $(DEPDIR)/min-libfribidi $(DEPDIR)/std-libfribidi $(DEPDIR)/max-libfribidi \
 $(DEPDIR)/libfribidi: \
 $(DEPDIR)/%libfribidi: $(DEPDIR)/libfribidi.do_compile
+	$(start_build)
 	cd @DIR_libfribidi@ && \
 		@INSTALL_libfribidi@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libfribidi@
 	[ "x$*" = "x" ] && touch $@ || true
 
