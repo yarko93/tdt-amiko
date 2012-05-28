@@ -479,8 +479,7 @@ jpeg
   {PN}-{PV}
   extract:http://www.ijg.org/files/{PN}src.v{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:prefix=TARGETS/usr
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libpng
   1.5.6
@@ -495,8 +494,7 @@ libungif
   4.1.4
   {PN}-{PV}
   extract:http://heanet.dl.sourceforge.net/sourceforge/giflib/{PN}-{PV}.tar.bz2
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libgif
   4.1.6

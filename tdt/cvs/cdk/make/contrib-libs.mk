@@ -183,6 +183,11 @@ $(DEPDIR)/%lirc: $(DEPDIR)/lirc.do_compile
 #
 # jpeg
 #
+DESCRIPTION_jpeg = "jpeg"
+
+FILES_jpeg = \
+/usr/lib/*.so* 
+
 $(DEPDIR)/jpeg.do_prepare: bootstrap @DEPENDS_jpeg@
 	@PREPARE_jpeg@
 	touch $@
@@ -202,14 +207,22 @@ $(DEPDIR)/jpeg.do_compile: $(DEPDIR)/jpeg.do_prepare
 $(DEPDIR)/min-jpeg $(DEPDIR)/std-jpeg $(DEPDIR)/max-jpeg \
 $(DEPDIR)/jpeg: \
 $(DEPDIR)/%jpeg: $(DEPDIR)/jpeg.do_compile
+	$(start_build)
 	cd @DIR_jpeg@ && \
 		@INSTALL_jpeg@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_jpeg@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libpng
 #
+DESCRIPTION_libpng = "libpng"
+
+FILES_libpng = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libpng.do_prepare: bootstrap libz @DEPENDS_libpng@
 	@PREPARE_libpng@
 	touch $@
@@ -242,6 +255,11 @@ $(DEPDIR)/%libpng: $(DEPDIR)/libpng.do_compile
 #
 # libungif
 #
+DESCRIPTION_libungif = "libungif"
+
+FILES_libungif = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libungif.do_prepare: bootstrap @DEPENDS_libungif@
 	@PREPARE_libungif@
 	touch $@
@@ -260,8 +278,11 @@ $(DEPDIR)/libungif.do_compile: $(DEPDIR)/libungif.do_prepare
 $(DEPDIR)/min-libungif $(DEPDIR)/std-libungif $(DEPDIR)/max-libungif \
 $(DEPDIR)/libungif: \
 $(DEPDIR)/%libungif: $(DEPDIR)/libungif.do_compile
+	$(start_build)
 	cd @DIR_libungif@ && \
 		@INSTALL_libungif@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libungif@
 	[ "x$*" = "x" ] && touch $@ || true
 
