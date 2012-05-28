@@ -428,6 +428,11 @@ $(DEPDIR)/%libsigc: $(DEPDIR)/libsigc.do_compile
 #
 # libmad
 #
+DESCRIPTION_libmad = "libmad"
+
+FILES_libmad = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libmad.do_prepare: bootstrap @DEPENDS_libmad@
 	@PREPARE_libmad@
 	touch $@
@@ -455,8 +460,11 @@ $(DEPDIR)/libmad.do_compile: $(DEPDIR)/libmad.do_prepare
 $(DEPDIR)/min-libmad $(DEPDIR)/std-libmad $(DEPDIR)/max-libmad \
 $(DEPDIR)/libmad: \
 $(DEPDIR)/%libmad: $(DEPDIR)/libmad.do_compile
+	$(start_build)
 	cd @DIR_libmad@ && \
 		@INSTALL_libmad@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libmad@
 	[ "x$*" = "x" ] && touch $@ || true
 

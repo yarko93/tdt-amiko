@@ -529,10 +529,7 @@ libmad
   {PN}-{PV}
   extract:ftp://ftp.mars.org/pub/mpeg/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
-  rewrite-pkgconfig:mad.pc
-  make:install:DESTDIR=TARGETS
-  install:-m644:mad.pc:TARGETS/usr/lib/pkgconfig
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libid3tag
   0.15.1b
