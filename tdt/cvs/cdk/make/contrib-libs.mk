@@ -471,6 +471,11 @@ $(DEPDIR)/%libmad: $(DEPDIR)/libmad.do_compile
 #
 # libid3tag
 #
+DESCRIPTION_libid3tag = "libid3tag"
+
+FILES_libid3tag = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libid3tag.do_prepare: bootstrap libz @DEPENDS_libid3tag@
 	@PREPARE_libid3tag@
 	touch $@
@@ -490,14 +495,21 @@ $(DEPDIR)/libid3tag.do_compile: $(DEPDIR)/libid3tag.do_prepare
 $(DEPDIR)/min-libid3tag $(DEPDIR)/std-libid3tag $(DEPDIR)/max-libid3tag \
 $(DEPDIR)/libid3tag: \
 $(DEPDIR)/%libid3tag: %libz $(DEPDIR)/libid3tag.do_compile
+	$(start_build)
 	cd @DIR_libid3tag@ && \
 		@INSTALL_libid3tag@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libid3tag@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libvorbisidec
 #
+DESCRIPTION_libvorbisidec = "libvorbisidec"
+
+FILES_libvorbisidec = \
+/usr/lib/*.so*
 
 $(DEPDIR)/libvorbisidec.do_prepare: bootstrap @DEPENDS_libvorbisidec@
 	@PREPARE_libvorbisidec@
@@ -514,8 +526,11 @@ $(DEPDIR)/libvorbisidec.do_compile: $(DEPDIR)/libvorbisidec.do_prepare
 	touch $@
 
 $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
+	$(start_build)
 	cd @DIR_libvorbisidec@ && \
 		@INSTALL_libvorbisidec@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libvorbisidec@
 	@[ "x$*" = "x" ] && touch $@ || true
 

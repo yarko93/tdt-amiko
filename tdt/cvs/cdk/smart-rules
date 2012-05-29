@@ -536,20 +536,14 @@ libid3tag
   {PN}-{PV}
   extract:http://bent.latency.net/bent/darcs/{PN}-{PV}/src/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
-  rewrite-pkgconfig:id3tag.pc
-  make:install:DESTDIR=TARGETS
-  install:-m644:id3tag.pc:TARGETS/usr/lib/pkgconfig
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libvorbisidec
   1.0.2+svn16259
   {PN}-{PV}
   extract:http://ftp.debian.org/debian/pool/main/libv/{PN}/{PN}_{PV}.orig.tar.gz
   patch:file://tremor.diff
-  make:install:DESTDIR=TARGETS
-  install:-m644:vorbisidec.pc:TARGETS/usr/lib/pkgconfig
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/vorbisidec.pc
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 glib2
   2.28.3
