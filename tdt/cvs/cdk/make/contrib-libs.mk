@@ -577,6 +577,12 @@ $(DEPDIR)/%glib2: $(DEPDIR)/glib2.do_compile
 #
 # libiconv
 #
+DESCRIPTION_libiconv = "libiconv"
+
+FILES_libiconv = \
+/usr/lib/*.so* \
+/usr/bin/iconv
+
 $(DEPDIR)/libiconv.do_prepare: bootstrap @DEPENDS_libiconv@
 	@PREPARE_libiconv@
 	touch $@
@@ -594,9 +600,12 @@ $(DEPDIR)/libiconv.do_compile: $(DEPDIR)/libiconv.do_prepare
 $(DEPDIR)/min-libiconv $(DEPDIR)/std-libiconv $(DEPDIR)/max-libiconv \
 $(DEPDIR)/libiconv: \
 $(DEPDIR)/%libiconv: $(DEPDIR)/libiconv.do_compile
+	$(start_build)
 	cd @DIR_libiconv@ && \
 		cp ./srcm4/* $(hostprefix)/share/aclocal/ && \
 		@INSTALL_libiconv@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libiconv@
 	[ "x$*" = "x" ] && touch $@ || true
 

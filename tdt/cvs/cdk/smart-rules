@@ -566,8 +566,7 @@ libiconv
   1.14
   {PN}-{PV}
   extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libmng
   1.0.10
