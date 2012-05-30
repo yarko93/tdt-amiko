@@ -42,7 +42,8 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		\
 		%e2fsprogs \
 		%u-boot-utils \
-		%diverse-tools
+		%diverse-tools \
+		%ipkg-utils 
 #		%$(RELEASE) \
 #		%$(FINDUTILS) \
 #
@@ -144,8 +145,7 @@ yaud-none: \
 		linux-kernel \
 		net-utils \
 		disk-utils \
-		driver \
-		ipkg-utils \
+		driver \		
 		misc-tools 
 	@TUXBOX_YAUD_CUSTOMIZE@
 

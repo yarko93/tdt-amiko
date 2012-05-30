@@ -1,6 +1,11 @@
 #
 #bzip2
 #
+DESCRIPTION_bzip2 = "bzip2"
+
+FILES_bzip2 = \
+/usr/bin/*
+
 $(DEPDIR)/bzip2.do_prepare: bootstrap @DEPENDS_bzip2@
 	@PREPARE_bzip2@
 	touch $@
@@ -14,8 +19,11 @@ $(DEPDIR)/bzip2.do_compile: $(DEPDIR)/bzip2.do_prepare
 $(DEPDIR)/min-bzip2 $(DEPDIR)/std-bzip2 $(DEPDIR)/max-bzip2 \
 $(DEPDIR)/bzip2: \
 $(DEPDIR)/%bzip2: $(DEPDIR)/bzip2.do_compile
+	$(start_build)
 	cd @DIR_bzip2@ && \
 		@INSTALL_bzip2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_bzip2@
 	[ "x$*" = "x" ] && touch $@ || true
 
