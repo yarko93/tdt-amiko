@@ -844,8 +844,8 @@ $(DEPDIR)/a52dec.do_compile: $(DEPDIR)/a52dec.do_prepare
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
-			--prefix=$(targetprefix)/usr && \
-		$(MAKE) install
+			--prefix=/usr && \
+		$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-a52dec $(DEPDIR)/std-a52dec $(DEPDIR)/max-a52dec \
