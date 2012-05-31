@@ -352,7 +352,9 @@ $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < curl-config > $(crossprefix)/bin/curl-config && \
 		chmod 755 $(crossprefix)/bin/curl-config && \
 		@INSTALL_curl@
-		rm -f $(targetprefix)/usr/bin/curl-config
+		rm -f $(PKDIR)/usr/bin/curl-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_curl@
 	[ "x$*" = "x" ] && touch $@ || true
 
