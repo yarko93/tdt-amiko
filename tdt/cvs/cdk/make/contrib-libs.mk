@@ -1534,6 +1534,11 @@ $(DEPDIR)/%libxslt: %libxml2 libxslt.do_compile
 #
 # lxml
 #
+
+DESCRIPTION_lxml = "Python binding for the libxml2 and libxslt libraries"
+FILES_lxml = \
+/usr/lib/python2.6
+
 $(DEPDIR)/lxml.do_prepare: bootstrap python @DEPENDS_lxml@
 	@PREPARE_lxml@
 	touch $@
@@ -1550,11 +1555,15 @@ $(DEPDIR)/lxml.do_compile: $(DEPDIR)/lxml.do_prepare
 $(DEPDIR)/min-lxml $(DEPDIR)/std-lxml $(DEPDIR)/max-lxml \
 $(DEPDIR)/lxml: \
 $(DEPDIR)/%lxml: lxml.do_compile
+	$(start_build)
 	cd @DIR_lxml@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_lxml@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
