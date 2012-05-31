@@ -1798,6 +1798,11 @@ $(DEPDIR)/%pythoncheetah: pythoncheetah.do_compile
 #
 # zope interface
 #
+
+DESCRIPTION_zope_interface = "Zope Interfaces for Python2"
+FILES_zope_interface = \
+/usr/lib/python2.6
+
 $(DEPDIR)/zope_interface.do_prepare: bootstrap python setuptools @DEPENDS_zope_interface@
 	@PREPARE_zope_interface@
 	touch $@
@@ -1812,10 +1817,14 @@ $(DEPDIR)/zope_interface.do_compile: $(DEPDIR)/zope_interface.do_prepare
 $(DEPDIR)/min-zope_interface $(DEPDIR)/std-zope_interface $(DEPDIR)/max-zope_interface \
 $(DEPDIR)/zope_interface: \
 $(DEPDIR)/%zope_interface: zope_interface.do_compile
+	$(start_build)
 	cd @DIR_zope_interface@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_zope_interface@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 
