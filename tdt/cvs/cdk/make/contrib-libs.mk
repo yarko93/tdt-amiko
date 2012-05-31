@@ -1457,6 +1457,12 @@ $(DEPDIR)/%elementtree: %python elementtree.do_compile
 #
 # libxml2
 #
+
+DESCRIPTION_libxml2 = "XML parsing library, version 2"
+FILES_libxml2 = \
+/usr/lib/libxml2* \
+/usr/lib/python2.6/site-packages/*libxml2.py
+
 $(DEPDIR)/libxml2.do_prepare: bootstrap @DEPENDS_libxml2@
 	@PREPARE_libxml2@
 	touch $@
@@ -1479,14 +1485,16 @@ $(DEPDIR)/libxml2.do_compile: $(DEPDIR)/libxml2.do_prepare
 $(DEPDIR)/min-libxml2 $(DEPDIR)/std-libxml2 $(DEPDIR)/max-libxml2 \
 $(DEPDIR)/libxml2: \
 $(DEPDIR)/%libxml2: libxml2.do_compile
+	$(start_build)
 	cd @DIR_libxml2@ && \
-		@INSTALL_libxml2@; \
-		[ -f "$(targetprefix)/usr/lib/python2.6/site-packages/libxml2mod.la" ] && \
-		sed -e "/^dependency_libs/ s,/usr/lib/libxml2.la,$(targetprefix)/usr/lib/libxml2.la,g" -i $(targetprefix)/usr/lib/python2.6/site-packages/libxml2mod.la; \
-		sed -e "s,^prefix=,prefix=$(targetprefix)," < xml2-config > $(crossprefix)/bin/xml2-config; \
-		chmod 755 $(crossprefix)/bin/xml2-config; \
-		sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(targetprefix)/usr/lib,g" -i $(targetprefix)/usr/lib/xml2Conf.sh; \
-		sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(targetprefix)/usr/include,g" -i $(targetprefix)/usr/lib/xml2Conf.sh
+		@INSTALL_libxml2@ && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < xml2-config > $(crossprefix)/bin/xml2-config && \
+		chmod 755 $(crossprefix)/bin/xml2-config
+	$(tocdk_build_start)
+		sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(targetprefix)/usr/lib,g" -i $(ipkgbuilddir)/libxml2/usr/lib/xml2Conf.sh
+		sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(targetprefix)/usr/include,g" -i $(ipkgbuilddir)/libxml2/usr/lib/xml2Conf.sh
+	$(call do_build_pkg,install,cdk)
+	$(toflash_build)
 #	@DISTCLEANUP_libxml2@
 	[ "x$*" = "x" ] && touch $@ || true
 
