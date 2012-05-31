@@ -243,7 +243,7 @@ bzip2
   {PN}-{PV}
   extract:http://www.bzip.org/{PV}/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:PREFIX=TARGET/usr
+  make:install:DESTDIR=PKDIR
 ;
 grep
   2.5.1
@@ -566,8 +566,7 @@ libiconv
   1.14
   {PN}-{PV}
   extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libmng
   1.0.10
@@ -582,8 +581,7 @@ lcms
   {PN}-{PV}
   extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 openssl
   0.9.6m

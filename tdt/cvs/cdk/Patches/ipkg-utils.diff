@@ -32,3 +32,14 @@
  # $Id: ipkg-make-index,v 1.22 2005/03/03 16:39:04 jamey Exp $
  
  import sys, os, posixpath
+--- ipkg-utils-050831/Makefile.org	2012-05-30 22:44:33.855098828 +0200
++++ ipkg-utils-050831/Makefile	2012-05-30 22:44:51.043099201 +0200
+@@ -13,7 +13,7 @@
+ install: ${UTILS}
+ 	cp ${UTILS} $(PREFIX)/bin
+ 	echo "Copying build/lib/ipkg.py into $(PREFIX)/bin"
+-	cp build/lib/ipkg.py $(PREFIX)/bin
++	cp build/lib*/ipkg.py $(PREFIX)/bin
+ 	chmod agu+rx ipkg-make-index
+ 	cp -f ipkg-make-index $(PREFIX)/bin
+ 
