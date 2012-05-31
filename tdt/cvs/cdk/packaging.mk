@@ -39,13 +39,17 @@ define toflash_build
 	$(call do_build_pkg,install,flash)
 endef
 
-define tocdk_build 
+define tocdk_build_start
 	rm -rf $(ipkgbuilddir)/*
 	export FILES_$(PARENT_PK)="/" && \
 	python split_packages.py
 	$(rewrite_libtool)
 	$(rewrite_pkgconfig)
 	$(rewrite_dependency)
+endef
+
+define tocdk_build
+	$(tocdk_build_start)
 	$(call do_build_pkg,install,cdk)
 endef
 
@@ -90,6 +94,10 @@ endef
 
 define remove_includedir
 	rm -rf $(PKDIR)/usr/include
+endef
+
+define remove_pyo
+	find $(PKDIR) -name "*.pyo" -type f -exec rm -f {} \;
 endef
 
 
