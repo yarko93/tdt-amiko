@@ -98,6 +98,7 @@ endef
 
 define remove_pyo
 	find $(PKDIR) -name "*.pyo" -type f -exec rm -f {} \;
+	rm -rf $(PKDIR)/usr/lib/python2.6/site-packages/*-py2.6.egg-info
 endef
 
 
