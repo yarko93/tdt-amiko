@@ -1839,6 +1839,7 @@ DESCRIPTION_gstreamer = "GStreamer Multimedia Framework"
 
 FILES_gstreamer = \
 /usr/bin/gst-launch* \
+/usr/lib/libgst* \
 /usr/lib/gstreamer-0.10/libgstcoreelements.so \
 /usr/lib/gstreamer-0.10/libgstcoreindexers.so
 
@@ -1879,6 +1880,7 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 DESCRIPTION_gst_plugins_base = "GStreamer Multimedia Framework base plugins"
 
 FILES_gst_plugins_base = \
+/usr/lib/libgst* \
 /usr/lib/gstreamer-0.10/libgstalsa.so \
 /usr/lib/gstreamer-0.10/libgstapp.so \
 /usr/lib/gstreamer-0.10/libgstaudioconvert.so \
@@ -1928,7 +1930,8 @@ $(DEPDIR)/%gst_plugins_base: $(DEPDIR)/gst_plugins_base.do_compile
 DESCRIPTION_gst_plugins_good = "GStreamer Multimedia Framework good plugins"
 
 FILES_gst_plugins_good = \
-/usr/lib/gstreamer-0.10/libgstaudioparsersbad.so \
+/usr/lib/libgst* \
+/usr/lib/gstreamer-0.10/libgstaudioparsers.so \
 /usr/lib/gstreamer-0.10/libgstautodetect.so \
 /usr/lib/gstreamer-0.10/libgstavi.so \
 /usr/lib/gstreamer-0.10/libgstflac.so \
@@ -1983,6 +1986,7 @@ $(DEPDIR)/%gst_plugins_good: $(DEPDIR)/gst_plugins_good.do_compile
 DESCRIPTION_gst_plugins_bad = "GStreamer Multimedia Framework bad plugins"
 
 FILES_gst_plugins_bad = \
+/usr/lib/libgst* \
 /usr/lib/gstreamer-0.10/libgstassrender.so \
 /usr/lib/gstreamer-0.10/libgstcdxaparse.so \
 /usr/lib/gstreamer-0.10/libgstfragmented.so \
