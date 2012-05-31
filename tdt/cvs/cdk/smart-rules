@@ -944,9 +944,7 @@ libxslt
   1.1.24
   {PN}-{PV}
   extract:http://xmlsoft.org/sources/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:{PN}.pc:libexslt.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la:TARGETS/usr/lib/libexslt.la:TARGETS/usr/lib/python2.6/site-packages/{PN}mod.la
+  make:install:DESTDIR=PKDIR
 ;
 lxml
   2.0.5

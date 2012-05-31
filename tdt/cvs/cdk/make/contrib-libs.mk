@@ -1501,6 +1501,13 @@ $(DEPDIR)/%libxml2: libxml2.do_compile
 #
 # libxslt
 #
+
+DESCRIPTION_libxslt = "XML stylesheet transformation library"
+FILES_libxslt = \
+/usr/lib/libxslt* \
+/usr/lib/libexslt* \
+/usr/lib/python2.6/site-packages/libxslt.py
+
 $(DEPDIR)/libxslt.do_prepare: bootstrap libxml2 @DEPENDS_libxslt@
 	@PREPARE_libxslt@
 	touch $@
@@ -1527,15 +1534,16 @@ $(DEPDIR)/libxslt.do_compile: $(DEPDIR)/libxslt.do_prepare
 $(DEPDIR)/min-libxslt $(DEPDIR)/std-libxslt $(DEPDIR)/max-libxslt \
 $(DEPDIR)/libxslt: \
 $(DEPDIR)/%libxslt: %libxml2 libxslt.do_compile
+	$(start_build)
 	cd @DIR_libxslt@ && \
 		@INSTALL_libxslt@ && \
-		sed -e "/^dependency_libs/ s,/usr/lib/libxslt.la,$(targetprefix)/usr/lib/libxslt.la,g" -i $(targetprefix)/usr/lib/python2.6/site-packages/libxsltmod.la && \
-		sed -e "/^dependency_libs/ s,/usr/lib/libexslt.la,$(targetprefix)/usr/lib/libexslt.la,g" -i $(targetprefix)/usr/lib/python2.6/site-packages/libxsltmod.la && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < xslt-config > $(crossprefix)/bin/xslt-config && \
-		chmod 755 $(crossprefix)/bin/xslt-config && \
-		sed -e "/^dependency_libs/ s,/usr/lib/libxslt.la,$(targetprefix)/usr/lib/libxslt.la,g" -i $(targetprefix)/usr/lib/libexslt.la && \
-		sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(targetprefix)/usr/lib,g" -i $(targetprefix)/usr/lib/xsltConf.sh && \
-		sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(targetprefix)/usr/include,g" -i $(targetprefix)/usr/lib/xsltConf.sh
+		chmod 755 $(crossprefix)/bin/xslt-config
+	$(tocdk_build_start)
+	sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(targetprefix)/usr/lib,g" -i $(ipkgbuilddir)/libxslt/usr/lib/xsltConf.sh
+	sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(targetprefix)/usr/include,g" -i $(ipkgbuilddir)/libxslt/usr/lib/xsltConf.sh
+	$(call do_build_pkg,install,cdk)
+	$(toflash_build)
 #	@DISTCLEANUP_libxslt@
 	@[ "x$*" = "x" ] && touch $@ || true
 
