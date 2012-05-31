@@ -1589,6 +1589,24 @@ $(DEPDIR)/%setuptools: setuptools.do_compile
 #
 # twisted
 #
+
+DESCRIPTION_twisted = "Asynchronous networking framework written in Python"
+FILES_twisted = \
+/usr/lib/python2.6/site-packages/twisted/copyright.* \
+/usr/lib/python2.6/site-packages/twisted/cred \
+/usr/lib/python2.6/site-packages/twisted/im.* \
+/usr/lib/python2.6/site-packages/twisted/__init__.* \
+/usr/lib/python2.6/site-packages/twisted/internet \
+/usr/lib/python2.6/site-packages/twisted/persisted \
+/usr/lib/python2.6/site-packages/twisted/plugin.* \
+/usr/lib/python2.6/site-packages/twisted/plugins \
+/usr/lib/python2.6/site-packages/twisted/protocols \
+/usr/lib/python2.6/site-packages/twisted/python \
+/usr/lib/python2.6/site-packages/twisted/spread \
+/usr/lib/python2.6/site-packages/twisted/_version.py \
+/usr/lib/python2.6/site-packages/twisted/_version.pyo \
+/usr/lib/python2.6/site-packages/twisted/web
+
 $(DEPDIR)/twisted.do_prepare: bootstrap setuptools @DEPENDS_twisted@
 	@PREPARE_twisted@
 	touch $@
@@ -1603,11 +1621,15 @@ $(DEPDIR)/twisted.do_compile: $(DEPDIR)/twisted.do_prepare
 $(DEPDIR)/min-twisted $(DEPDIR)/std-twisted $(DEPDIR)/max-twisted \
 $(DEPDIR)/twisted: \
 $(DEPDIR)/%twisted: twisted.do_compile
+	$(start_build)
 	cd @DIR_twisted@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_twisted@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
