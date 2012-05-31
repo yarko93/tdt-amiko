@@ -1429,6 +1429,11 @@ $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
 #
 # elementtree
 #
+
+DESCRIPTION_elementtree = "Provides light-weight components for working with XML"
+FILES_elementtree = \
+/usr/lib/python2.6
+
 $(DEPDIR)/elementtree.do_prepare: bootstrap @DEPENDS_elementtree@
 	@PREPARE_elementtree@
 	touch $@
@@ -1439,10 +1444,14 @@ $(DEPDIR)/elementtree.do_compile: $(DEPDIR)/elementtree.do_prepare
 $(DEPDIR)/min-elementtree $(DEPDIR)/std-elementtree $(DEPDIR)/max-elementtree \
 $(DEPDIR)/elementtree: \
 $(DEPDIR)/%elementtree: %python elementtree.do_compile
+	$(start_build)
 	cd @DIR_elementtree@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_elementtree@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
