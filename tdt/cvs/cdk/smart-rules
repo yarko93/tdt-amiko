@@ -378,11 +378,8 @@ opkg
   0.1.8
   {PN}-{PV}
   extract:http://{PN}.googlecode.com/files/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:lib{PN}.pc
-  make:install:DESTDIR=TARGETS
-  link:/usr/bin/{PN}-cl:TARGETS/usr/bin/{PN}
-  mkdir:TARGETS/var/{PN}
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
+  link:/usr/bin/{PN}-cl:PKDIR/usr/bin/{PN}
 ;
 pppd
   2.4.5
