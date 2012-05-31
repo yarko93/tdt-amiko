@@ -1734,6 +1734,26 @@ $(DEPDIR)/%pyopenssl: pyopenssl.do_compile
 #
 # python
 #
+
+DESCRIPTION_python = "A high-level scripting language"
+FILES_python = \
+/usr/bin/python \
+/usr/lib/libpython2.6.* \
+/usr/lib/python2.6/*.py \
+/usr/lib/python2.6/encodings \
+/usr/lib/python2.6/hotshot \
+/usr/lib/python2.6/idlelib \
+/usr/lib/python2.6/json \
+/usr/lib/python2.6/lib-dynload \
+/usr/lib/python2.6/lib-tk \
+/usr/lib/python2.6/lib2to3 \
+/usr/lib/python2.6/logging \
+/usr/lib/python2.6/multiprocessing \
+/usr/lib/python2.6/plat-linux3 \
+/usr/lib/python2.6/sqlite3 \
+/usr/lib/python2.6/wsgiref \
+/usr/lib/python2.6/xml
+
 $(DEPDIR)/python.do_prepare: bootstrap host_python openssl openssl-dev sqlite @DEPENDS_python@
 	@PREPARE_python@ && \
 	touch $@
@@ -1773,14 +1793,18 @@ $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
 $(DEPDIR)/min-python $(DEPDIR)/std-python $(DEPDIR)/max-python \
 $(DEPDIR)/python: \
 $(DEPDIR)/%python: python.do_compile
+	$(start_build)
 	( cd @DIR_python@ && \
 		$(MAKE) $(MAKE_ARGS) \
 			TARGET_OS=$(target) \
 			HOSTPYTHON=$(crossprefix)/bin/python \
 			HOSTPGEN=$(crossprefix)/bin/pgen \
-			install DESTDIR=$(prefix)/$*cdkroot ) && \
-	$(LN_SF) ../../libpython2.6.so.1.0 $(prefix)/$*cdkroot/usr/lib/python2.6/config/libpython2.6.so
+			install DESTDIR=$(PKDIR) ) && \
+	$(LN_SF) ../../libpython2.6.so.1.0 $(PKDIR)/usr/lib/python2.6/config/libpython2.6.so
 #	@DISTCLEANUP_python@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
