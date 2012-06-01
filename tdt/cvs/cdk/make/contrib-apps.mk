@@ -97,6 +97,12 @@ $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
 #
 # PPPD
 #
+DESCRIPTION_pppd = "pppd"
+
+FILES_pppd = \
+/sbin/* \
+/lib/modules/*.so
+
 $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 	@PREPARE_pppd@
 	cd @DIR_pppd@ && \
@@ -120,8 +126,13 @@ $(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
 $(DEPDIR)/min-pppd $(DEPDIR)/std-pppd $(DEPDIR)/max-pppd \
 $(DEPDIR)/pppd: \
 $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
+	$(start_build)
 	cd @DIR_pppd@  && \
 		@INSTALL_pppd@
+	$(tocdk_build)
+	mkdir $(PKDIR)/lib/modules/
+	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
+	$(toflash_build)
 #	@DISTCLEANUP_pppd@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@

@@ -385,7 +385,7 @@ pppd
   2.4.5
   ppp-{PV}
   extract:ftp://ftp.samba.org/pub/ppp/ppp-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 sysstat
   10.0.4
