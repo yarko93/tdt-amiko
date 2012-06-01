@@ -250,7 +250,7 @@ grep
   {PN}-{PV}
   extract:ftp://mirrors.kernel.org/gnu/{PN}/{PN}-{PV}.tar.bz2
   nothing:http://64studio.hivelocity.net/apt/pool/main/g/{PN}/{PN}_{PV}.ds2-6.diff.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 openrdate
   1.1.2

@@ -57,6 +57,11 @@ $(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS:%=root/etc/%) $
 #
 # GREP
 #
+DESCRIPTION_grep = "grep"
+
+FILES_grep = \
+/usr/bin/grep
+
 $(DEPDIR)/grep.do_prepare: bootstrap @DEPENDS_grep@
 	@PREPARE_grep@
 	cd @DIR_grep@ && \
@@ -81,8 +86,11 @@ $(DEPDIR)/grep.do_compile: $(DEPDIR)/grep.do_prepare
 $(DEPDIR)/min-grep $(DEPDIR)/std-grep $(DEPDIR)/max-grep \
 $(DEPDIR)/grep: \
 $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
+	$(start_build)
 	cd @DIR_grep@ && \
 		@INSTALL_grep@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_grep@
 	[ "x$*" = "x" ] && touch $@ || true
 
