@@ -276,7 +276,7 @@ $(DEPDIR)/%libgif: $(DEPDIR)/libgif.do_compile
 #
 # libcurl
 #
-$(DEPDIR)/curl.do_prepare: bootstrap libz @DEPENDS_curl@
+$(DEPDIR)/curl.do_prepare: bootstrap openssl rtmpdump libz @DEPENDS_curl@
 	@PREPARE_curl@
 	touch $@
 
@@ -288,6 +288,10 @@ $(DEPDIR)/curl.do_compile: $(DEPDIR)/curl.do_prepare
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr \
+			--with-ssl \
+			--disable-debug \
+			--disable-verbose \
+			--disable-manual \
 			--mandir=/usr/share/man \
 			--with-random && \
 		$(MAKE) all
@@ -2753,7 +2757,7 @@ $(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
 #
 # djmount
 #
-$(DEPDIR)/djmount.do_prepare: bootstrap libupnp fuse @DEPENDS_djmount@
+$(DEPDIR)/djmount.do_prepare: bootstrap fuse @DEPENDS_djmount@
 	@PREPARE_djmount@
 	touch $@
 
@@ -2763,8 +2767,8 @@ $(DEPDIR)/djmount.do_compile: $(DEPDIR)/djmount.do_prepare
 	CFLAGS="$(TARGET_CFLAGS) -Os" \
 	./configure \
 		--host=$(target) \
-		--disable-FEATURE \
-		--prefix=/usr
+		--prefix=/usr && \
+	$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-djmount $(DEPDIR)/std-djmount $(DEPDIR)/max-djmount \
@@ -2789,7 +2793,8 @@ $(DEPDIR)/libupnp.do_compile: $(DEPDIR)/libupnp.do_prepare
 	./configure \
 		--host=$(target) \
 		--enable-debug \
-		--prefix=/usr
+		--prefix=/usr && \
+	$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-libupnp $(DEPDIR)/std-libupnp $(DEPDIR)/max-libupnp \
@@ -2797,23 +2802,26 @@ $(DEPDIR)/libupnp: \
 $(DEPDIR)/%libupnp: $(DEPDIR)/libupnp.do_compile
 	cd @DIR_libupnp@ && \
 		@INSTALL_libupnp@
-#	@DISTCLEANUP_djmount@
+#	@DISTCLEANUP_libupnp@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # rarfs
 #
-$(DEPDIR)/rarfs.do_prepare: bootstrap fuse @DEPENDS_rarfs@
+$(DEPDIR)/rarfs.do_prepare: bootstrap libstdc++-dev fuse @DEPENDS_rarfs@
 	@PREPARE_rarfs@
 	touch $@
 
 $(DEPDIR)/rarfs.do_compile: $(DEPDIR)/rarfs.do_prepare
-	cd @DIR_libexif@ && \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_rarfs@ && \
+	export PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig && \
 	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
 	./configure \
 		--host=$(target) \
-		--disable-FEATURE \
-		--prefix=/usr
+		--prefix=/usr && \
+	$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-rarfs $(DEPDIR)/std-rarfs $(DEPDIR)/max-rarfs \
@@ -2822,4 +2830,56 @@ $(DEPDIR)/%rarfs: $(DEPDIR)/rarfs.do_compile
 	cd @DIR_rarfs@ && \
 		@INSTALL_rarfs@
 #	@DISTCLEANUP_rarfs@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# sshfs
+#
+$(DEPDIR)/sshfs.do_prepare: bootstrap fuse @DEPENDS_sshfs@
+	@PREPARE_sshfs@
+	touch $@
+
+$(DEPDIR)/sshfs.do_compile: $(DEPDIR)/sshfs.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_sshfs@ && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr
+	touch $@
+
+$(DEPDIR)/min-sshfs $(DEPDIR)/std-sshfs $(DEPDIR)/max-sshfs \
+$(DEPDIR)/sshfs: \
+$(DEPDIR)/%sshfs: $(DEPDIR)/sshfs.do_compile
+	cd @DIR_sshfs@ && \
+		@INSTALL_sshfs@
+#	@DISTCLEANUP_sshfs@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# gmediarender
+#
+$(DEPDIR)/gmediarender.do_prepare: bootstrap libstdc++-dev gst_plugins_dvbmediasink libupnp @DEPENDS_gmediarender@
+	@PREPARE_gmediarender@
+	touch $@
+
+$(DEPDIR)/gmediarender.do_compile: $(DEPDIR)/gmediarender.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_gmediarender@ && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr \
+		--with-libupnp=$(targetprefix)/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-gmediarender $(DEPDIR)/std-gmediarender $(DEPDIR)/max-gmediarender \
+$(DEPDIR)/gmediarender: \
+$(DEPDIR)/%gmediarender: $(DEPDIR)/gmediarender.do_compile
+	cd @DIR_gmediarender@ && \
+		@INSTALL_gmediarender@
+#	@DISTCLEANUP_gmediarender@
 	[ "x$*" = "x" ] && touch $@ || true
