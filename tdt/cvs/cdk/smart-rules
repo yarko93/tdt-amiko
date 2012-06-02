@@ -545,17 +545,7 @@ glib2
   glib-{PV}
   extract:http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.28/glib-{PV}.tar.gz
   patch:file://glib-{PV}.patch
-  rewrite-pkgconfig:glib-2.0.pc:gmodule-2.0.pc:gio-2.0.pc:gio-unix-2.0.pc:gmodule-export-2.0.pc:gmodule-no-export-2.0.pc:gobject-2.0.pc:gthread-2.0.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libglib-2.0.la
-  rewrite-libtool:TARGETS/usr/lib/libgmodule-2.0.la
-  rewrite-dependency:TARGETS/usr/lib/libgmodule-2.0.la
-  rewrite-libtool:TARGETS/usr/lib/libgio-2.0.la
-  rewrite-dependency:TARGETS/usr/lib/libgio-2.0.la
-  rewrite-libtool:TARGETS/usr/lib/libgobject-2.0.la
-  rewrite-dependency:TARGETS/usr/lib/libgobject-2.0.la
-  rewrite-libtool:TARGETS/usr/lib/libgthread-2.0.la
-  rewrite-dependency:TARGETS/usr/lib/libgthread-2.0.la
+  make:install:DESTDIR=PKDIR
 ;
 libiconv
   1.14

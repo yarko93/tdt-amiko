@@ -434,7 +434,7 @@ $(DEPDIR)/%libsigc: $(DEPDIR)/libsigc.do_compile
 #
 # libmad
 #
-DESCRIPTION_libmad = "libmad"
+DESCRIPTION_libmad = "libmad - MPEG audio decoder library"
 
 FILES_libmad = \
 /usr/lib/*.so*
@@ -544,6 +544,11 @@ $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
 # libglib2
 # You need libglib2.0-dev on host system
 #
+DESCRIPTION_glib2 = "libglib2"
+
+FILES_glib2 = \
+/usr/lib/*.so*
+
 $(DEPDIR)/glib2.do_prepare: bootstrap libz @DEPENDS_glib2@
 	@PREPARE_glib2@
 	touch $@
@@ -575,8 +580,11 @@ $(DEPDIR)/glib2.do_compile: $(DEPDIR)/glib2.do_prepare
 $(DEPDIR)/min-glib2 $(DEPDIR)/std-glib2 $(DEPDIR)/max-glib2 \
 $(DEPDIR)/glib2: \
 $(DEPDIR)/%glib2: $(DEPDIR)/glib2.do_compile
+	$(start_build)
 	cd @DIR_glib2@ && \
 		@INSTALL_glib2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_glib2@
 	[ "x$*" = "x" ] && touch $@ || true
 
