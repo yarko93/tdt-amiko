@@ -1247,6 +1247,13 @@ $(DEPDIR)/%webkitdfb: $(DEPDIR)/webkitdfb.do_compile
 #
 # icu4c
 #
+DESCRIPTION_icu4c = "icu4c"
+
+FILES_icu4c = \
+/usr/lib/*.so* \
+/usr/bin/* \
+/usr/sbin/*
+
 $(DEPDIR)/icu4c.do_prepare: bootstrap @DEPENDS_icu4c@
 	@PREPARE_icu4c@
 	cd @DIR_icu4c@ && \
@@ -1277,9 +1284,12 @@ $(DEPDIR)/icu4c.do_compile: $(DEPDIR)/icu4c.do_prepare
 $(DEPDIR)/min-icu4c $(DEPDIR)/std-icu4c $(DEPDIR)/max-icu4c \
 $(DEPDIR)/icu4c: \
 $(DEPDIR)/%icu4c: $(DEPDIR)/icu4c.do_compile
+	$(start_build)
 	cd @DIR_icu4c@ && \
 		unset TARGET && \
 		@INSTALL_icu4c@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_icu4c@
 	[ "x$*" = "x" ] && touch $@ || true
 

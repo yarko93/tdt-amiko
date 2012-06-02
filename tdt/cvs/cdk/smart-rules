@@ -599,7 +599,7 @@ icu4c
   icu/source
   extract:http://download.icu-project.org/files/{PN}/4.4.1/{PN}-4_4_1-src.tgz
   nothing:file://{PN}-4_4_1_locales.patch
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 enchant
   1.5.0
