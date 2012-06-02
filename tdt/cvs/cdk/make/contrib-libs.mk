@@ -752,6 +752,11 @@ $(DEPDIR)/%directfb: $(DEPDIR)/directfb.do_compile
 #
 # DFB++
 #
+DESCRIPTION_dfbpp = ""
+
+FILES_dfbpp = \
+/usr/lib/*.so*
+
 $(DEPDIR)/dfbpp.do_prepare: bootstrap libz jpeg directfb @DEPENDS_dfbpp@
 	@PREPARE_dfbpp@
 	touch $@
@@ -763,15 +768,17 @@ $(DEPDIR)/dfbpp.do_compile: $(DEPDIR)/dfbpp.do_prepare
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr && \
-			export top_builddir=`pwd` && \
 		$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-dfbpp $(DEPDIR)/std-dfbpp $(DEPDIR)/max-dfbpp \
 $(DEPDIR)/dfbpp: \
 $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
+	$(start_build)
 	cd @DIR_dfbpp@ && \
 		@INSTALL_dfbpp@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_dfbpp@
 	[ "x$*" = "x" ] && touch $@ || true
 

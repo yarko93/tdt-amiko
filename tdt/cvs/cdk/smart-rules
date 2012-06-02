@@ -585,9 +585,7 @@ dfbpp
   1.0.0
   DFB++-{PV}
   extract:http://www.directfb.org/downloads/Extras/DFB++-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-pkgconfig:dfb++.pc
-  rewrite-libtool:TARGETS/usr/lib/libdfb++.la
+  make:install:DESTDIR=PKDIR
 ;
 webkitdfb
   2010-11-18
