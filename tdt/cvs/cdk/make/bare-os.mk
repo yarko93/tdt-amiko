@@ -339,6 +339,8 @@ $(DEPDIR)/min-$(LIBGCC) $(DEPDIR)/std-$(LIBGCC) $(DEPDIR)/max-$(LIBGCC) $(DEPDIR
 $(DEPDIR)/%$(LIBGCC): $(LIBGCC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #Wrote: RPMS/sh4/stlinux20-sh4-cpp-3.4.3-22.sh4.rpm
