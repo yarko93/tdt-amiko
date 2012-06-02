@@ -271,9 +271,9 @@ e2fsprogs
 xfsprogs
   2.9.4-1
   {PN}-2.9.4
-  extract:ftp://oss.sgi.com/projects/xfs/cmd_tars/{PN}_{PV}.tar.gz
+  extract:http://pkgs.fedoraproject.org/repo/pkgs/xfsprogs/xfsprogs_2.9.4-1.tar.gz/174683e3b86b587ed59823fdbbb96ea4/{PN}_{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:prefix=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 mc
   4.8.0
@@ -286,7 +286,7 @@ sdparm
   1.07
   {PN}-{PV}
   extract:http://sg.danny.cz/sg/p/{PN}-{PV}.tgz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 sg3_utils
   1.24

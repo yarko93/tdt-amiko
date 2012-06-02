@@ -302,6 +302,11 @@ endif !STM24
 #
 # XFSPROGS
 #
+DESCRIPTION_xfsprogs = "xfsprogs"
+
+FILES_xfsprogs = \
+/bin/*
+
 $(DEPDIR)/xfsprogs.do_prepare: bootstrap $(DEPDIR)/e2fsprogs $(DEPDIR)/libreadline @DEPENDS_xfsprogs@
 	@PREPARE_xfsprogs@
 	touch $@
@@ -332,9 +337,12 @@ $(DEPDIR)/xfsprogs.do_compile: $(DEPDIR)/xfsprogs.do_prepare
 $(DEPDIR)/min-xfsprogs $(DEPDIR)/std-xfsprogs $(DEPDIR)/max-xfsprogs \
 $(DEPDIR)/xfsprogs: \
 $(DEPDIR)/%xfsprogs: $(DEPDIR)/xfsprogs.do_compile
+	$(start_build)
 	cd @DIR_xfsprogs@ && \
 		export top_builddir=`pwd` && \
 		@INSTALL_xfsprogs@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_xfsprogs@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -382,6 +390,11 @@ $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
 #
 # SDPARM
 #
+DESCRIPTION_sdparm = "sdparm"
+
+FILES_sdparm = \
+/usr/bin/sdparm
+
 $(DEPDIR)/sdparm.do_prepare: bootstrap @DEPENDS_sdparm@
 	@PREPARE_sdparm@
 	touch $@
@@ -403,11 +416,12 @@ $(DEPDIR)/sdparm.do_compile: $(DEPDIR)/sdparm.do_prepare
 $(DEPDIR)/min-sdparm $(DEPDIR)/std-sdparm $(DEPDIR)/max-sdparm \
 $(DEPDIR)/sdparm: \
 $(DEPDIR)/%sdparm: $(DEPDIR)/sdparm.do_compile
+	$(start_build)
 	cd @DIR_sdparm@ && \
 		export PATH=$(MAKE_PATH) && \
 		@INSTALL_sdparm@
-	@( cd $(prefix)/$*cdkroot/usr/share/man/man8 && \
-		gzip -v9 sdparm.8 )
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_sdparm@
 	[ "x$*" = "x" ] && touch $@ || true
 
