@@ -579,16 +579,7 @@ directfb
   patch:file://{PN}-{PV}+STM2010.12.15-4.no-vt.diff
   patch:file://{PN}-libpng.diff
   patch:file://{PN}-{PV}+STM2010.12.15-4.enigma2remote.diff
-  rewrite-pkgconfig:{PN}.pc
-  rewrite-pkgconfig:{PN}-internal.pc
-  rewrite-pkgconfig:lib/direct/direct.pc
-  rewrite-pkgconfig:lib/fusion/fusion.pc
-  make:install:DESTDIR=TARGETS:LD=sh4-linux-ld
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
-  rewrite-libtool:TARGETS/usr/lib/libdirect.la
-  rewrite-libtool:TARGETS/usr/lib/libfusion.la
-  rewrite-dependency:TARGETS/usr/lib/lib{PN}.la
-  rewrite-dependency:TARGETS/usr/lib/libfusion.la
+  make:install:DESTDIR=PKDIR:LD=sh4-linux-ld
 ;
 dfbpp
   1.0.0

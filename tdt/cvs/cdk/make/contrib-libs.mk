@@ -698,6 +698,17 @@ $(DEPDIR)/%lcms: $(DEPDIR)/lcms.do_compile
 #
 # directfb
 #
+DESCRIPTION_directfb = "directfb"
+
+FILES_directfb = \
+/usr/lib/*.so* \
+/usr/lib/directfb-1.4-5/gfxdrivers/*.so* \
+/usr/lib/directfb-1.4-5/inputdrivers/*.so* \
+/usr/lib/directfb-1.4-5/interfaces/*.so* \
+/usr/lib/directfb-1.4-5/systems/*.so* \
+/usr/lib/directfb-1.4-5/wm/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/directfb.do_prepare: bootstrap freetype @DEPENDS_directfb@
 	@PREPARE_directfb@
 	touch $@
@@ -730,8 +741,11 @@ $(DEPDIR)/directfb.do_compile: $(DEPDIR)/directfb.do_prepare
 $(DEPDIR)/min-directfb $(DEPDIR)/std-directfb $(DEPDIR)/max-directfb \
 $(DEPDIR)/directfb: \
 $(DEPDIR)/%directfb: $(DEPDIR)/directfb.do_compile
+	$(start_build)
 	cd @DIR_directfb@ && \
 		@INSTALL_directfb@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_directfb@
 	[ "x$*" = "x" ] && touch $@ || true
 
