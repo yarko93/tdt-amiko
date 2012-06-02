@@ -1098,6 +1098,11 @@ $(DEPDIR)/%ffmpeg: $(DEPDIR)/ffmpeg.do_compile
 #
 # libass
 #
+DESCRIPTION_libass = "libass"
+
+FILES_libass = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libass.do_prepare: bootstrap freetype @DEPENDS_libass@
 	@PREPARE_libass@
 	touch $@
@@ -1116,8 +1121,11 @@ $(DEPDIR)/libass.do_compile: $(DEPDIR)/libass.do_prepare
 $(DEPDIR)/min-libass $(DEPDIR)/std-libass $(DEPDIR)/max-libass \
 $(DEPDIR)/libass: \
 $(DEPDIR)/%libass: $(DEPDIR)/libass.do_compile
+	$(start_build)
 	cd @DIR_libass@ && \
 		@INSTALL_libass@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libass@
 	[ "x$*" = "x" ] && touch $@ || true
 
