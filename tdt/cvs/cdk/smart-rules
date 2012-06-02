@@ -279,8 +279,8 @@ mc
   4.8.0
   {PN}-{PV}
   extract:http://www.midnight-commander.org/downloads/{PN}-{PV}.tar.bz2
-  nothing:file://{PN}.diff
-  make:install:DESTDIR=TARGETS
+#nothing:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
 ;
 sdparm
   1.07

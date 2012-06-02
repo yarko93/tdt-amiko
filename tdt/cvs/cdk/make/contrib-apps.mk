@@ -341,6 +341,14 @@ $(DEPDIR)/%xfsprogs: $(DEPDIR)/xfsprogs.do_compile
 #
 # MC
 #
+DESCRIPTION_mc = "Midnight Commander"
+
+FILES_mc = \
+/usr/bin/* \
+/usr/etc/mc/* \
+/usr/libexec/mc/extfs.d/* \
+/usr/libexec/mc/fish/*
+
 $(DEPDIR)/mc.do_prepare: bootstrap glib2 @DEPENDS_mc@
 	@PREPARE_mc@
 	touch $@
@@ -361,8 +369,11 @@ $(DEPDIR)/mc.do_compile: $(DEPDIR)/mc.do_prepare | $(NCURSES_DEV)
 $(DEPDIR)/min-mc $(DEPDIR)/std-mc $(DEPDIR)/max-mc \
 $(DEPDIR)/mc: \
 $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
+	$(start_build)
 	cd @DIR_mc@ && \
 		@INSTALL_mc@
+	$(tocdk_build)
+	$(toflash_build)
 #		export top_builddir=`pwd` && \
 #		$(MAKE) install DESTDIR=$(prefix)/$*cdkroot
 #	@DISTCLEANUP_mc@
