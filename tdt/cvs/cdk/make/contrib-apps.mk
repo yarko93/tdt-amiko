@@ -57,6 +57,11 @@ $(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS:%=root/etc/%) $
 #
 # GREP
 #
+DESCRIPTION_grep = "grep"
+
+FILES_grep = \
+/usr/bin/grep
+
 $(DEPDIR)/grep.do_prepare: bootstrap @DEPENDS_grep@
 	@PREPARE_grep@
 	cd @DIR_grep@ && \
@@ -81,14 +86,23 @@ $(DEPDIR)/grep.do_compile: $(DEPDIR)/grep.do_prepare
 $(DEPDIR)/min-grep $(DEPDIR)/std-grep $(DEPDIR)/max-grep \
 $(DEPDIR)/grep: \
 $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
+	$(start_build)
 	cd @DIR_grep@ && \
 		@INSTALL_grep@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_grep@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # PPPD
 #
+DESCRIPTION_pppd = "pppd"
+
+FILES_pppd = \
+/sbin/* \
+/lib/modules/*.so
+
 $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 	@PREPARE_pppd@
 	cd @DIR_pppd@ && \
@@ -112,8 +126,13 @@ $(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
 $(DEPDIR)/min-pppd $(DEPDIR)/std-pppd $(DEPDIR)/max-pppd \
 $(DEPDIR)/pppd: \
 $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
+	$(start_build)
 	cd @DIR_pppd@  && \
 		@INSTALL_pppd@
+	$(tocdk_build)
+	mkdir $(PKDIR)/lib/modules/
+	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
+	$(toflash_build)
 #	@DISTCLEANUP_pppd@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
