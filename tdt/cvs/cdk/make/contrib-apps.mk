@@ -829,6 +829,12 @@ $(DEPDIR)/%jfsutils: $(DEPDIR)/jfsutils.do_compile
 #
 # opkg
 #
+
+DESCRIPTION_opkg = "lightweight package management system"
+FILES_opkg = \
+/usr/bin \
+/usr/lib
+
 $(DEPDIR)/opkg.do_prepare: bootstrap @DEPENDS_opkg@
 	@PREPARE_opkg@
 	touch $@
@@ -849,8 +855,11 @@ $(DEPDIR)/opkg.do_compile: $(DEPDIR)/opkg.do_prepare
 $(DEPDIR)/min-opkg $(DEPDIR)/std-opkg $(DEPDIR)/max-opkg \
 $(DEPDIR)/opkg: \
 $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
+	$(start_build)
 	cd @DIR_opkg@ && \
 		@INSTALL_opkg@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_opkg@
 	[ "x$*" = "x" ] && touch $@ || true
 
