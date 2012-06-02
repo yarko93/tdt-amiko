@@ -557,9 +557,7 @@ libmng
   1.0.10
   {PN}-{PV}
   extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.bz2
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
-  rewrite-dependency:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 lcms
   1.17

@@ -626,6 +626,11 @@ $(DEPDIR)/%libiconv: $(DEPDIR)/libiconv.do_compile
 #
 # libmng
 #
+DESCRIPTION_libmng = "libmng - Multiple-image Network Graphics"
+
+FILES_libmng = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libmng.do_prepare: bootstrap libz jpeg lcms @DEPENDS_libmng@
 	@PREPARE_libmng@
 	touch $@
@@ -647,10 +652,24 @@ $(DEPDIR)/libmng.do_compile: $(DEPDIR)/libmng.do_prepare
 			--with-lcms && \
 		$(MAKE)
 	touch $@
-
+$(DEPDIR)/min-libmng $(DEPDIR)/std-libmng $(DEPDIR)/max-libmng \
+$(DEPDIR)/libmng: \
+$(DEPDIR)/%libmng: $(DEPDIR)/libmng.do_compile
+	$(start_build)
+	cd @DIR_libmng@ && \
+		@INSTALL_libmng@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_libmng@
+	[ "x$*" = "x" ] && touch $@ || true	
 #
 # lcms
 #
+DESCRIPTION_lcms = "lcms"
+
+FILES_lcms = \
+/usr/lib/*
+
 $(DEPDIR)/lcms.do_prepare: bootstrap libz jpeg @DEPENDS_lcms@
 	@PREPARE_lcms@
 	touch $@
@@ -666,7 +685,16 @@ $(DEPDIR)/lcms.do_compile: $(DEPDIR)/lcms.do_prepare
 			--enable-static && \
 		$(MAKE)
 	touch $@
-
+$(DEPDIR)/min-lcms $(DEPDIR)/std-lcms $(DEPDIR)/max-lcms \
+$(DEPDIR)/lcms: \
+$(DEPDIR)/%lcms: $(DEPDIR)/lcms.do_compile
+	$(start_build)
+	cd @DIR_lcms@ && \
+		@INSTALL_lcms@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_lcms@
+	[ "x$*" = "x" ] && touch $@ || true
 #
 # directfb
 #
