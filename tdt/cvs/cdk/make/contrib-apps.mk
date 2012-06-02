@@ -580,6 +580,14 @@ $(DEPDIR)/%rsync: $(DEPDIR)/rsync.do_compile
 #
 # LM_SENSORS
 #
+DESCRIPTION_lm_sensors = "lm_sensors"
+
+FILES_lm_sensors = \
+/usr/bin/sensors \
+/etc/sensors.conf \
+/usr/lib/*.so* \
+/usr/sbin/*
+
 $(DEPDIR)/lm_sensors.do_prepare: bootstrap @DEPENDS_lm_sensors@
 	@PREPARE_lm_sensors@
 	touch $@
@@ -592,14 +600,17 @@ $(DEPDIR)/lm_sensors.do_compile: $(DEPDIR)/lm_sensors.do_prepare
 $(DEPDIR)/min-lm_sensors $(DEPDIR)/std-lm_sensors $(DEPDIR)/max-lm_sensors \
 $(DEPDIR)/lm_sensors: \
 $(DEPDIR)/%lm_sensors: $(DEPDIR)/lm_sensors.do_compile
+	$(start_build)
 	cd @DIR_lm_sensors@ && \
 		@INSTALL_lm_sensors@ && \
-		rm $(prefix)/$*cdkroot/usr/bin/*.pl && \
-		rm $(prefix)/$*cdkroot/usr/sbin/*.pl && \
-		rm $(prefix)/$*cdkroot/usr/sbin/sensors-detect && \
-		rm $(prefix)/$*cdkroot/usr/share/man/man8/sensors-detect.8 && \
-		rm $(prefix)/$*cdkroot/usr/include/linux/i2c-dev.h && \
-		rm $(prefix)/$*cdkroot/usr/bin/ddcmon
+		rm $(PKDIR)/usr/bin/*.pl && \
+		rm $(PKDIR)/usr/sbin/*.pl && \
+		rm $(PKDIR)/usr/sbin/sensors-detect && \
+		rm $(PKDIR)/usr/share/man/man8/sensors-detect.8 && \
+		rm $(PKDIR)/usr/include/linux/i2c-dev.h && \
+		rm $(PKDIR)/usr/bin/ddcmon
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lm_sensors@
 	[ "x$*" = "x" ] && touch $@ || true
 

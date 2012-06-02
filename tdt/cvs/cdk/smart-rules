@@ -317,7 +317,7 @@ lm_sensors
   2.9.2
   lm_sensors-{PV}
   extract:http://dl.{PN}.org/{PN}/releases/lm_sensors-{PV}.tar.gz
-  make:user_install:MACHINE=sh:PREFIX=/usr:MANDIR=/usr/share/man:DESTDIR=TARGETS
+  make:user_install:MACHINE=sh:PREFIX=/usr:MANDIR=/usr/share/man:DESTDIR=PKDIR
 ;
 fuse
   2.9.0
