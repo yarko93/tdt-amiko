@@ -292,7 +292,8 @@ $(DEPDIR)/%libungif: $(DEPDIR)/libungif.do_compile
 DESCRIPTION_libgif = "libgif"
 
 FILES_libgif = \
-/usr/lib/*.so*
+/usr/lib/*.so* \
+/usr/bin/*
 
 $(DEPDIR)/libgif.do_prepare: bootstrap @DEPENDS_libgif@
 	@PREPARE_libgif@
@@ -366,7 +367,8 @@ $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
 DESCRIPTION_libfribidi = "libfribidi"
 
 FILES_libfribidi = \
-/usr/lib/*.so*
+/usr/lib/*.so* \
+/usr/bin/*
 
 $(DEPDIR)/libfribidi.do_prepare: bootstrap @DEPENDS_libfribidi@
 	@PREPARE_libfribidi@
