@@ -323,10 +323,11 @@ $(DEPDIR)/%libgif: $(DEPDIR)/libgif.do_compile
 #
 # libcurl
 #
-DESCRIPTION_libcurl = "libcurl"
+DESCRIPTION_curl = "Curl is a command line tool for transferring data specified with URL syntax"
 
-FILES_libcurl = \
-/usr/lib/*.so*
+FILES_curl = \
+/usr/lib/*.so* \
+/usr/bin/curl
 
 $(DEPDIR)/curl.do_prepare: bootstrap libz @DEPENDS_curl@
 	@PREPARE_curl@
@@ -348,6 +349,7 @@ $(DEPDIR)/curl.do_compile: $(DEPDIR)/curl.do_prepare
 $(DEPDIR)/min-curl $(DEPDIR)/std-curl $(DEPDIR)/max-curl \
 $(DEPDIR)/curl: \
 $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
+	$(start_build)
 	cd @DIR_curl@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < curl-config > $(crossprefix)/bin/curl-config && \
 		chmod 755 $(crossprefix)/bin/curl-config && \
@@ -1132,6 +1134,11 @@ $(DEPDIR)/%libass: $(DEPDIR)/libass.do_compile
 #
 # WebKitDFB
 #
+DESCRIPTION_webkitdfb = "webkitdfb"
+
+FILES_webkitdfb = \
+/usr/lib*
+
 $(DEPDIR)/webkitdfb.do_prepare: bootstrap glib2 icu4c libxml2 enchant lite curl fontconfig sqlite libsoup cairo jpeg @DEPENDS_webkitdfb@
 	@PREPARE_webkitdfb@
 	touch $@
@@ -1170,8 +1177,11 @@ $(DEPDIR)/webkitdfb.do_compile: $(DEPDIR)/webkitdfb.do_prepare
 $(DEPDIR)/min-webkitdfb $(DEPDIR)/std-webkitdfb $(DEPDIR)/max-webkitdfb \
 $(DEPDIR)/webkitdfb: \
 $(DEPDIR)/%webkitdfb: $(DEPDIR)/webkitdfb.do_compile
+	$(start_build)
 	cd @DIR_webkitdfb@ && \
 		@INSTALL_webkitdfb@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_webkitdfb@
 	[ "x$*" = "x" ] && touch $@ || true
 

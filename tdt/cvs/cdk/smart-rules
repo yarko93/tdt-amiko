@@ -504,9 +504,7 @@ curl
   {PN}-{PV}
   extract:http://{PN}.haxx.se/download/{PN}-{PV}.tar.gz
   patch:file://lib{PN}.diff
-  rewrite-pkgconfig:lib{PN}.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libfribidi
   0.10.4
@@ -617,10 +615,7 @@ webkitdfb
   {PN}_{PV}
   extract:http://www.duckbox.info/files/packages/{PN}_{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libwebkitgtk-1.0.la
-  rewrite-dependency:TARGETS/usr/lib/libwebkitgtk-1.0.la
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/webkit-1.0.pc
+  make:install:DESTDIR=PKDIR
 ;
 icu4c
   4_4_1
