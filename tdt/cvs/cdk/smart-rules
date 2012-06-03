@@ -36,7 +36,9 @@
 #  http:// - http wget download
 #  ftp:// - ftp wget download
 #  file:// - look for file in Patches directory
-# svn and git coming soon...
+#  git://www.gitserver.com/gitrepo:r=revision:b=branch:sub=subdir_in_git_tree
+#  revision, branch and subdirectory to use arguments are optional.
+# svn coming soon...
 #
 # if rule command doesn't match ones listed above, this is treated as install/uninstall rule.
 # 
