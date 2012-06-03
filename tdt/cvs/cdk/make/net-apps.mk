@@ -230,6 +230,14 @@ $(DEPDIR)/%netio: $(DEPDIR)/netio.do_compile
 #
 # LIGHTTPD
 #
+DESCRIPTION_lighttpd = "lighttpd"
+FILES_lighttpd = \
+/usr/bin/* \
+/usr/sbin/* \
+/usr/lib/*.so \
+/etc/init.d/* \
+/etc/lighttpd/*.conf 
+
 $(DEPDIR)/lighttpd.do_prepare: @DEPENDS_lighttpd@
 	@PREPARE_lighttpd@
 	touch $@
@@ -249,15 +257,18 @@ $(DEPDIR)/lighttpd.do_compile: bootstrap $(DEPDIR)/lighttpd.do_prepare
 $(DEPDIR)/min-lighttpd $(DEPDIR)/std-lighttpd $(DEPDIR)/max-lighttpd \
 $(DEPDIR)/lighttpd: \
 $(DEPDIR)/%lighttpd: $(DEPDIR)/lighttpd.do_compile
+	$(start_build)
 	cd @DIR_lighttpd@ && \
 		@INSTALL_lighttpd@
 	cd @DIR_lighttpd@ && \
-		$(INSTALL) -d $(prefix)/$*cdkroot/etc/lighttpd && \
-		$(INSTALL) -c -m644 doc/lighttpd.conf $(prefix)/$*cdkroot/etc/lighttpd && \
-		$(INSTALL) -d $(prefix)/$*cdkroot/etc/init.d && \
-		$(INSTALL) -c -m644 doc/rc.lighttpd.redhat $(prefix)/$*cdkroot/etc/init.d/lighttpd
-	$(INSTALL) -d $(prefix)/$*cdkroot/etc/lighttpd && $(INSTALL) -m755 root/etc/lighttpd/lighttpd.conf $(prefix)/$*cdkroot/etc/lighttpd
-	$(INSTALL) -d $(prefix)/$*cdkroot/etc/init.d && $(INSTALL) -m755 root/etc/init.d/lighttpd $(prefix)/$*cdkroot/etc/init.d
+		$(INSTALL) -d $(PKDIR)/etc/lighttpd && \
+		$(INSTALL) -c -m644 doc/lighttpd.conf $(PKDIR)/etc/lighttpd && \
+		$(INSTALL) -d $(PKDIR)/etc/init.d && \
+		$(INSTALL) -c -m644 doc/rc.lighttpd.redhat $(PKDIR)/etc/init.d/lighttpd
+	$(INSTALL) -d $(PKDIR)/etc/lighttpd && $(INSTALL) -m755 root/etc/lighttpd/lighttpd.conf $(PKDIR)/etc/lighttpd
+	$(INSTALL) -d $(PKDIR)/etc/init.d && $(INSTALL) -m755 root/etc/init.d/lighttpd $(PKDIR)/etc/init.d
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lighttpd@
 	@[ "x$*" = "x" ] && touch $@ || true
 

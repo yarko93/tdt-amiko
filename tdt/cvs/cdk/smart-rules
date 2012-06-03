@@ -1110,7 +1110,7 @@ lighttpd
   1.4.15
   {PN}-{PV}
   extract:http://www.{PN}.net/download/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 zd1211
   2_15_0_0
