@@ -900,6 +900,7 @@ setuptools
   0.6c8
   {PN}-{PV}
   extract:http://pypi.python.org/packages/source/s/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
 ;
 twisted
   8.2.0

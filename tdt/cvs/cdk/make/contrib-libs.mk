@@ -1751,6 +1751,16 @@ $(DEPDIR)/%lxml: lxml.do_compile
 #
 # setuptools
 #
+DESCRIPTION_setuptools = "setuptools"
+
+FILES_setuptools = \
+/usr/lib/python2.6/site-packages/*.py \
+/usr/lib/python2.6/site-packages/*.pyo \
+/usr/lib/python2.6/site-packages/setuptools/*.py \
+/usr/lib/python2.6/site-packages/setuptools/*.pyo \
+/usr/lib/python2.6/site-packages/setuptools/command/*.py \
+/usr/lib/python2.6/site-packages/setuptools/command/*.pyo
+
 $(DEPDIR)/setuptools.do_prepare: bootstrap @DEPENDS_setuptools@
 	@PREPARE_setuptools@
 	touch $@
@@ -1763,8 +1773,11 @@ $(DEPDIR)/setuptools.do_compile: $(DEPDIR)/setuptools.do_prepare
 $(DEPDIR)/min-setuptools $(DEPDIR)/std-setuptools $(DEPDIR)/max-setuptools \
 $(DEPDIR)/setuptools: \
 $(DEPDIR)/%setuptools: setuptools.do_compile
+	$(start_build)
 	cd @DIR_setuptools@ && \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_setuptools@
 	[ "x$*" = "x" ] && touch $@ || true
 
