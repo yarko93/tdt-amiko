@@ -1440,6 +1440,11 @@ $(DEPDIR)/%libsoup: $(DEPDIR)/libsoup.do_compile
 #
 # pixman
 #
+DESCRIPTION_pixman = "pixman is a library that provides low-level pixel manipulation"
+
+FILES_pixman = \
+/usr/lib/*.so*
+
 $(DEPDIR)/pixman.do_prepare: bootstrap @DEPENDS_pixman@
 	@PREPARE_pixman@
 	touch $@
@@ -1456,8 +1461,11 @@ $(DEPDIR)/pixman.do_compile: $(DEPDIR)/pixman.do_prepare
 $(DEPDIR)/min-pixman $(DEPDIR)/std-pixman $(DEPDIR)/max-pixman \
 $(DEPDIR)/pixman: \
 $(DEPDIR)/%pixman: $(DEPDIR)/pixman.do_compile
+	$(start_build)
 	cd @DIR_pixman@ && \
 		@INSTALL_pixman@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_pixman@
 	[ "x$*" = "x" ] && touch $@ || true
 

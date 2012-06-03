@@ -629,9 +629,7 @@ pixman
   0.18.0
   {PN}-{PV}
   extract:http://cairographics.org/releases/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}-1.la
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}-1.pc
+  make:install:DESTDIR=PKDIR
 ;
 cairo
   1.8.10
