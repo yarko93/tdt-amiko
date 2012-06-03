@@ -2398,6 +2398,8 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
 
 DESCRIPTION_gst_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
+FILES_gst_fluendo_mpegdemux = \
+/usr/lib/gstreamer-0.10/*.so
 
 
 $(DEPDIR)/gst_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_fluendo_mpegdemux@
@@ -2419,9 +2421,9 @@ $(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_fluendo_mpegdemux.do_compile
 	$(start_build)
 	cd @DIR_gst_fluendo_mpegdemux@ && \
 		@INSTALL_gst_fluendo_mpegdemux@
-#	@DISTCLEANUP_gst_ffmpeg@
 	$(tocdk_build)
 	$(toflash_build)
+#	@DISTCLEANUP_gst_fluendo_mpegdemux@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
