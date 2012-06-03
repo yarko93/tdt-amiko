@@ -1828,8 +1828,16 @@ $(DEPDIR)/%twisted: twisted.do_compile
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
-# twistetweb2
+# twistedweb2
 #
+DESCRIPTION_twistedweb2 = "twistedweb2"
+
+FILES_twistedweb2 = \
+/usr/lib/python2.6/site-packages/twisted/*.py \
+/usr/lib/python2.6/site-packages/twisted/*.pyo \
+/usr/lib/python2.6/site-packages/twisted/web2 \
+/usr/lib/python2.6/site-packages/twisted/plugins  
+
 $(DEPDIR)/twistedweb2.do_prepare: bootstrap setuptools @DEPENDS_twistedweb2@
 	@PREPARE_twistedweb2@
 	touch $@
@@ -1844,10 +1852,13 @@ $(DEPDIR)/twistedweb2.do_compile: $(DEPDIR)/twistedweb2.do_prepare
 $(DEPDIR)/min-twistedweb2 $(DEPDIR)/std-twistedweb2 $(DEPDIR)/max-twistedweb2 \
 $(DEPDIR)/twistedweb2: \
 $(DEPDIR)/%twistedweb2: twistedweb2.do_compile
+	$(start_build)
 	cd @DIR_twistedweb2@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_twistedweb2@
 	[ "x$*" = "x" ] && touch $@ || true
 
