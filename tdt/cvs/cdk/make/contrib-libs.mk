@@ -1999,6 +1999,10 @@ $(DEPDIR)/%python: python.do_compile
 #
 # pythonwifi
 #
+DESCRIPTION_pythonwifi = "pythonwifi"
+FILES_pythonwifi =\
+/usr/lib/python2.6/site-packages/pythonwifi
+
 $(DEPDIR)/pythonwifi.do_prepare: bootstrap setuptools @DEPENDS_pythonwifi@
 	@PREPARE_pythonwifi@
 	touch $@
@@ -2013,9 +2017,12 @@ $(DEPDIR)/pythonwifi.do_compile: $(DEPDIR)/pythonwifi.do_prepare
 $(DEPDIR)/min-pythonwifi $(DEPDIR)/std-pythonwifi $(DEPDIR)/max-pythonwifi \
 $(DEPDIR)/pythonwifi: \
 $(DEPDIR)/%pythonwifi: pythonwifi.do_compile
+	$(start_build)
 	cd @DIR_pythonwifi@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_pythonwifi@
 	[ "x$*" = "x" ] && touch $@ || true
 
