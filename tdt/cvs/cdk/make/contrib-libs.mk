@@ -2725,6 +2725,11 @@ $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
 #
 # libcap
 #
+DESCRIPTION_libcap = "This is a library for getting and setting POSIX"
+FILES_libcap = \
+/usr/lib/*.so* \
+/usr/sbin/*
+
 $(DEPDIR)/libcap.do_prepare: bootstrap @DEPENDS_libcap@
 	@PREPARE_libcap@
 	touch $@
@@ -2733,11 +2738,11 @@ $(DEPDIR)/libcap.do_compile: $(DEPDIR)/libcap.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_libcap@ && \
 	$(MAKE) \
-	DESTDIR=$(prefix)/cdkroot \
-	PREFIX=$(prefix)/cdkroot/usr \
-	LIBDIR=$(prefix)/cdkroot/usr/lib \
-	SBINDIR=$(prefix)/cdkroot/usr/sbin \
-	INCDIR=$(prefix)/cdkroot/usr/include \
+	DESTDIR=$(PKDIR) \
+	PREFIX=$(PKDIR)/usr \
+	LIBDIR=$(PKDIR)/usr/lib \
+	SBINDIR=$(PKDIR)/usr/sbin \
+	INCDIR=$(PKDIR)/usr/include \
 	BUILD_CC=gcc \
 	PAM_CAP=no \
 	LIBATTR=no \
@@ -2748,17 +2753,20 @@ $(DEPDIR)/min-libcap $(DEPDIR)/std-libcap $(DEPDIR)/max-libcap \
 $(DEPDIR)/libcap: \
 $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 	@[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
 	cd @DIR_libcap@ && \
 		@INSTALL_libcap@ \
-		DESTDIR=$(prefix)/cdkroot \
-		PREFIX=$(prefix)/cdkroot/usr \
-		LIBDIR=$(prefix)/cdkroot/usr/lib \
-		SBINDIR=$(prefix)/cdkroot/usr/sbin \
-		INCDIR=$(prefix)/cdkroot/usr/include \
+		DESTDIR=$(PKDIR)/ \
+		PREFIX=$(PKDIR)/usr \
+		LIBDIR=$(PKDIR)/usr/lib \
+		SBINDIR=$(PKDIR)/usr/sbin \
+		INCDIR=$(PKDIR)/usr/include \
 		BUILD_CC=gcc \
 		PAM_CAP=no \
 		LIBATTR=no \
 		CC=sh4-linux-gcc
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libcap@
 	[ "x$*" = "x" ] && touch $@ || true
 
