@@ -706,9 +706,7 @@ libogg
   1.2.2
   {PN}-{PV}
   extract:http://downloads.xiph.org/releases/ogg/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:ogg.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libflac
   1.2.1

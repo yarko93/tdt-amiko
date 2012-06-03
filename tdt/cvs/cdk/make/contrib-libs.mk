@@ -1515,6 +1515,11 @@ $(DEPDIR)/%cairo: $(DEPDIR)/cairo.do_compile
 #
 # libogg
 #
+DESCRIPTION_libogg = "distribution includes libogg and nothing else"
+
+FILES_libogg = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libogg.do_prepare: bootstrap @DEPENDS_libogg@
 	@PREPARE_libogg@
 	touch $@
@@ -1531,8 +1536,11 @@ $(DEPDIR)/libogg.do_compile: $(DEPDIR)/libogg.do_prepare
 $(DEPDIR)/min-libogg $(DEPDIR)/std-libogg $(DEPDIR)/max-libogg \
 $(DEPDIR)/libogg: \
 $(DEPDIR)/%libogg: $(DEPDIR)/libogg.do_compile
+	$(start_build)
 	cd @DIR_libogg@ && \
 		@INSTALL_libogg@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libogg@
 	[ "x$*" = "x" ] && touch $@ || true
 
