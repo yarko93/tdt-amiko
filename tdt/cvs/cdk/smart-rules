@@ -212,7 +212,7 @@ busybox
   1.20.0
   {PN}-{PV}
   extract:http://www.{PN}.net/downloads/{PN}-{PV}.tar.bz2
-  make:install:CONFIG_PREFIX=TARGETS
+  make:install:CONFIG_PREFIX=PKDIR
   shellconfigadd:/bin/ash:5
 ;
 lsb
