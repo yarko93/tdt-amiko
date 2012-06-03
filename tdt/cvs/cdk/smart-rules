@@ -729,7 +729,7 @@ brofs
   1.2
   BroFS{PV}
   extract:http://www.avalpa.com/assets/freesoft/other/BroFS{PV}.tgz
-  make:install:DESTDIR=TARGETS/usr/bin
+  make:install:prefix=/usr/bin:DESTDIR=PKDIR
 ;
 libalsa
   1.0.21a

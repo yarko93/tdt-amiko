@@ -2646,7 +2646,7 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 #
 # eve-browser
 #
-DESCRIPTION_evebrowser = "evebrowser"
+DESCRIPTION_evebrowser = "evebrowser for HbbTv"
 SRC_URI_evebrowser = https://eve-browser.googlecode.com/svn/trunk/
 FILES_evebrowser = \
 /usr/lib/*.so* \
@@ -2690,6 +2690,10 @@ $(DEPDIR)/%evebrowser: $(DEPDIR)/evebrowser.do_compile
 #
 # brofs
 #
+DESCRIPTION_brofs = "BROFS (BroadcastReadOnlyFileSystem)"
+FILES_brofs = \
+/usr/bin/*
+
 $(DEPDIR)/brofs.do_prepare: bootstrap @DEPENDS_brofs@
 	@PREPARE_brofs@
 	touch $@
@@ -2704,8 +2708,13 @@ $(DEPDIR)/brofs.do_compile: $(DEPDIR)/brofs.do_prepare
 $(DEPDIR)/min-brofs $(DEPDIR)/std-brofs $(DEPDIR)/max-brofs \
 $(DEPDIR)/brofs: \
 $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
+	$(start_build)
+	mkdir -p $(PKDIR)/usr/bin/
 	cd @DIR_brofs@ && \
 		@INSTALL_brofs@
+	cp -ar * $(PKDIR)/usr/bin/
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_brofs@
 	[ "x$*" = "x" ] && touch $@ || true
 
