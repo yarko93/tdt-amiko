@@ -1865,8 +1865,14 @@ $(DEPDIR)/%twistedweb2: twistedweb2.do_compile
 #
 # pilimaging
 #
+DESCRIPTION_pilimaging = "pilimaging"
+FILES_pilimaging = \
+/usr/lib/python2.6/site-packages \
+/usr/bin/*
+
 $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 	@PREPARE_pilimaging@
+	$(start_build)
 	cd @DIR_pilimaging@ && \
 		echo 'JPEG_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' > setup_site.py && \
 		echo 'ZLIB_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
@@ -1874,7 +1880,9 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
 		$(crossprefix)/bin/python ./setup.py build && \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr && \
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr && \
+	$(tocdk_build)
+	$(toflash_build)
 		@DISTCLEANUP_pilimaging@
 	@DISTCLEANUP_pilimaging@
 	@touch $@
