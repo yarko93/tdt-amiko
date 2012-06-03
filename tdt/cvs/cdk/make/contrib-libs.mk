@@ -2612,6 +2612,10 @@ $(DEPDIR)/%libusb2: $(DEPDIR)/libusb2.do_compile
 #
 # libusbcompat
 #
+DESCRIPTION_libusbcompat = "A compatibility layer allowing applications written for libusb-0.1 to work with libusb-1.0"
+FILES_libusbcompat = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libusbcompat.do_prepare: bootstrap libusb2 @DEPENDS_libusbcompat@
 	@PREPARE_libusbcompat@
 	touch $@
@@ -2628,8 +2632,11 @@ $(DEPDIR)/libusbcompat.do_compile: $(DEPDIR)/libusbcompat.do_prepare
 $(DEPDIR)/min-libusbcompat $(DEPDIR)/std-libusbcompat $(DEPDIR)/max-libusbcompat \
 $(DEPDIR)/libusbcompat: \
 $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
+	$(start_build)
 	cd @DIR_libusbcompat@ && \
 		@INSTALL_libusbcompat@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libusbcompat@
 	[ "x$*" = "x" ] && touch $@ || true
 

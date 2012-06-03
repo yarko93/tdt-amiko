@@ -1046,9 +1046,7 @@ libusbcompat
   0.1.3
   libusb-compat-{PV}
   extract:http://downloads.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-{PV}/libusb-compat-{PV}.tar.bz2
-  rewrite-pkgconfig:libusb.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libusb.la
+  make:install:DESTDIR=PKDIR
 ;
 libgd2
   2.0.35
