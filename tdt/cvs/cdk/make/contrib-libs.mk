@@ -823,6 +823,7 @@ $(DEPDIR)/%expat: $(DEPDIR)/expat.do_compile
 DESCRIPTION_fontconfig = "Fontconfig is a library for configuring and customizing font access."
 
 FILES_fontconfig = \
+/etc \
 /usr/lib/*
 
 $(DEPDIR)/fontconfig.do_prepare: bootstrap libz libxml2 freetype @DEPENDS_fontconfig@
