@@ -13,6 +13,8 @@ $(DEPDIR)/libboost: bootstrap @DEPENDS_libboost@
 #
 
 DESCRIPTION_libz = "Compression library implementing the deflate compression method found in gzip and PKZIP"
+FILES_libz = \
+/usr/lib
 
 if !STM22
 LIBZ_ORDER = binutils-dev
@@ -45,6 +47,11 @@ $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
 #
 # libreadline
 #
+
+DESCRIPTION_libreadline = GNU readline library
+FILES_libreadline = \
+/usr/lib
+
 $(DEPDIR)/libreadline.do_prepare: bootstrap ncurses-dev @DEPENDS_libreadline@
 	@PREPARE_libreadline@
 	touch $@
@@ -63,8 +70,11 @@ $(DEPDIR)/libreadline.do_compile: $(DEPDIR)/libreadline.do_prepare
 $(DEPDIR)/min-libreadline $(DEPDIR)/std-libreadline $(DEPDIR)/max-libreadline \
 $(DEPDIR)/libreadline: \
 $(DEPDIR)/%libreadline: $(DEPDIR)/libreadline.do_compile
+	$(start_build)
 	cd @DIR_libreadline@ && \
 		@INSTALL_libreadline@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libreadline@
 	[ "x$*" = "x" ] && touch $@ || true
 

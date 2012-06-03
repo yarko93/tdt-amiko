@@ -451,7 +451,7 @@ libreadline
   5.2
   readline-{PV}
   extract:ftp://ftp.cwru.edu/pub/bash/readline-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 freetype_old
   2.1.4
