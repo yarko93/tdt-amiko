@@ -1088,8 +1088,8 @@ vsftpd
 netkit_ftp
   0.17
   {PN}-{PV}
-  extract:ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/{PN}-{PV}.tar.gz
-  patch:file://{PN}.diff
+  extract:http://ibiblio.org/pub/linux/system/network/netkit//{PN}-{PV}.tar.gz
+#patch:file://{PN}.diff
   make:install:MANDIR=/usr/share/man:INSTALLROOT=TARGETS
 ;
 samba
@@ -1122,7 +1122,7 @@ wireless_tools
   29
   wireless_tools.{PV}
   extract:http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/wireless_tools.{PV}.tar.gz
-  make:install:INSTALL_MAN=TARGETS/usr/share/man:PREFIX=TARGETS/usr
+  make:install:INSTALL_MAN=PKDIR/usr/share/man:PREFIX=PKDIR/usr
 ;
 wpa_supplicant
   0.5.9

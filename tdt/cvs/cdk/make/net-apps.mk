@@ -275,6 +275,10 @@ $(DEPDIR)/%lighttpd: $(DEPDIR)/lighttpd.do_compile
 #
 # NETKIT_FTP
 #
+DESCRIPTION_netkit_ftp = "netkit_ftp"
+FILES_netkit_ftp = \
+/usr/bin/*
+
 $(DEPDIR)/netkit_ftp.do_prepare: @DEPENDS_netkit_ftp@
 	@PREPARE_netkit_ftp@
 	touch $@
@@ -285,21 +289,29 @@ $(DEPDIR)/netkit_ftp.do_compile: bootstrap ncurses libreadline $(DEPDIR)/netkit_
 		./configure \
 			--with-c-compiler=$(target)-gcc \
 			--prefix=/usr \
-			--installroot=$(prefix)/$*cdkroot && \
+			--installroot=$(PKDIR) && \
 		$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-netkit_ftp $(DEPDIR)/std-netkit_ftp $(DEPDIR)/max-netkit_ftp \
 $(DEPDIR)/netkit_ftp: \
 $(DEPDIR)/%netkit_ftp: $(DEPDIR)/netkit_ftp.do_compile
+	$(start_build)
 	cd @DIR_netkit_ftp@  && \
 		@INSTALL_netkit_ftp@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_netkit_ftp@
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # WIRELESS_TOOLS
 #
+DESCRIPTION_wireless_tools = "wireless_tools"
+FILES_wireless_tools = \
+/usr/sbin/* \
+/usr/lib/*.so*
+
 $(DEPDIR)/wireless_tools.do_prepare: @DEPENDS_wireless_tools@
 	@PREPARE_wireless_tools@
 	touch $@
@@ -312,8 +324,11 @@ $(DEPDIR)/wireless_tools.do_compile: bootstrap $(DEPDIR)/wireless_tools.do_prepa
 $(DEPDIR)/min-wireless_tools $(DEPDIR)/std-wireless_tools $(DEPDIR)/max-wireless_tools \
 $(DEPDIR)/wireless_tools: \
 $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
+	$(start_build)
 	cd @DIR_wireless_tools@  && \
 		@INSTALL_wireless_tools@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_wireless_tools@
 	@[ "x$*" = "x" ] && touch $@ || true
 
