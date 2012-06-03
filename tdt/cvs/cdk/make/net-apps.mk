@@ -335,6 +335,10 @@ $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 #
 # WPA_SUPPLICANT
 #
+DESCRIPTION_wpa_supplicant = "wpa_supplicant"
+FILES_wpa_supplicant = \
+/usr/local/sbin/*
+
 $(DEPDIR)/wpa_supplicant.do_prepare: @DEPENDS_wpa_supplicant@
 	@PREPARE_wpa_supplicant@
 	touch $@
@@ -348,7 +352,10 @@ $(DEPDIR)/wpa_supplicant.do_compile: bootstrap Patches/wpa_supplicant.config $(D
 $(DEPDIR)/min-wpa_supplicant $(DEPDIR)/std-wpa_supplicant $(DEPDIR)/max-wpa_supplicant \
 $(DEPDIR)/wpa_supplicant: \
 $(DEPDIR)/%wpa_supplicant: $(DEPDIR)/wpa_supplicant.do_compile
+	$(start_build)
 	cd @DIR_wpa_supplicant@  && \
 		@INSTALL_wpa_supplicant@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_wpa_supplicant@
 	@[ "x$*" = "x" ] && touch $@ || true
