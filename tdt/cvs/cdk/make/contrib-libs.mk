@@ -1472,6 +1472,11 @@ $(DEPDIR)/%pixman: $(DEPDIR)/pixman.do_compile
 #
 # cairo
 #
+DESCRIPTION_cairo = "Cairo - Multi-platform 2D graphics library"
+
+FILES_cairo = \
+/usr/lib/*.so*
+
 $(DEPDIR)/cairo.do_prepare: bootstrap libpng pixman @DEPENDS_cairo@
 	@PREPARE_cairo@
 	touch $@
@@ -1499,8 +1504,11 @@ $(DEPDIR)/cairo.do_compile: $(DEPDIR)/cairo.do_prepare
 $(DEPDIR)/min-cairo $(DEPDIR)/std-cairo $(DEPDIR)/max-cairo \
 $(DEPDIR)/cairo: \
 $(DEPDIR)/%cairo: $(DEPDIR)/cairo.do_compile
+	$(start_build)
 	cd @DIR_cairo@ && \
 		@INSTALL_cairo@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_cairo@
 	[ "x$*" = "x" ] && touch $@ || true
 

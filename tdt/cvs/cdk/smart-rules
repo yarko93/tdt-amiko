@@ -636,9 +636,7 @@ cairo
   {PN}-{PV}
   extract:http://{PN}graphics.org/releases/{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}.diff
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}.pc:TARGETS/usr/lib/pkgconfig/{PN}-directfb.pc:TARGETS/usr/lib/pkgconfig/{PN}-ft.pc:TARGETS/usr/lib/pkgconfig/{PN}-png.pc
+  make:install:DESTDIR=PKDIR
 ;
 expat
   2.0.1
