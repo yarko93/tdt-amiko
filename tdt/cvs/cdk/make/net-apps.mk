@@ -112,6 +112,14 @@ $(DEPDIR)/%ethtool: $(DEPDIR)/ethtool.do_compile
 #
 # SAMBA
 #
+DESCRIPTION_samba = "samba"
+FILES_samba = \
+/usr/sbin/* \
+/usr/lib/*.so \
+/etc/init.d/* \
+/etc/samba/smb.conf \
+/usr/lib/vfs/*.so
+
 $(DEPDIR)/samba.do_prepare: @DEPENDS_samba@
 	@PREPARE_samba@
 	touch $@
@@ -176,13 +184,16 @@ $(DEPDIR)/samba.do_compile: bootstrap $(DEPDIR)/samba.do_prepare
 $(DEPDIR)/min-samba $(DEPDIR)/std-samba $(DEPDIR)/max-samba \
 $(DEPDIR)/samba: \
 $(DEPDIR)/%samba: $(DEPDIR)/samba.do_compile
+	$(start_build)
 	cd @DIR_samba@ && \
 		cd source3 && \
-		$(INSTALL) -d $(prefix)/$*cdkroot/etc/samba && \
-		$(INSTALL) -c -m644 ../examples/smb.conf.spark $(prefix)/$*cdkroot/etc/samba/smb.conf && \
-		$(INSTALL) -d $(prefix)/$*cdkroot/etc/init.d && \
-		$(INSTALL) -c -m755 ../examples/samba.spark $(prefix)/$*cdkroot/etc/init.d/samba && \
+		$(INSTALL) -d $(PKDIR)/etc/samba && \
+		$(INSTALL) -c -m644 ../examples/smb.conf.spark $(PKDIR)/etc/samba/smb.conf && \
+		$(INSTALL) -d $(PKDIR)/etc/init.d && \
+		$(INSTALL) -c -m755 ../examples/samba.spark $(PKDIR)/etc/init.d/samba && \
 		@INSTALL_samba@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_samba@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@

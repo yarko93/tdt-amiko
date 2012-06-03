@@ -1097,7 +1097,7 @@ samba
   {PN}-{PV}
   extract:http://www.{PN}.org/{PN}/ftp/stable/{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}.diff
-  make:install bin/smbd bin/nmbd:DESTDIR=TARGETS:prefix=./.
+  make:install bin/smbd bin/nmbd:DESTDIR=PKDIR:prefix=./.
 ;
 netio
   1.26
