@@ -2646,6 +2646,13 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 #
 # eve-browser
 #
+DESCRIPTION_evebrowser = "evebrowser"
+SRC_URI_evebrowser = https://eve-browser.googlecode.com/svn/trunk/
+FILES_evebrowser = \
+/usr/lib/*.so* \
+/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-sh4 \
+/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/*.py
+
 $(DEPDIR)/evebrowser.do_prepare: bootstrap webkitdfb @DEPENDS_evebrowser@
 	svn checkout https://eve-browser.googlecode.com/svn/trunk/ @DIR_evebrowser@
 	touch $@
@@ -2668,9 +2675,15 @@ $(DEPDIR)/evebrowser.do_compile: $(DEPDIR)/evebrowser.do_prepare
 $(DEPDIR)/min-evebrowser $(DEPDIR)/std-evebrowser $(DEPDIR)/max-evebrowser \
 $(DEPDIR)/evebrowser: \
 $(DEPDIR)/%evebrowser: $(DEPDIR)/evebrowser.do_compile
+	$(start_build)
+	mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/
 	cd @DIR_evebrowser@ && \
 		@INSTALL_evebrowser@ && \
-		cp -ar enigma2/HbbTv $(targetprefix)/usr/lib/enigma2/python/Plugins/SystemPlugins/
+		cp -ar enigma2/HbbTv $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/
+		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-mipsel
+		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-powerpc
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_evebrowser@
 	[ "x$*" = "x" ] && touch $@ || true
 

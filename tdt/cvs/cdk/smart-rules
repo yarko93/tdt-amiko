@@ -700,7 +700,7 @@ libcap
   2.22
   {PN}-{PV}
   extract:http://mirror.linux.org.au/linux/libs/security/linux-privs/{PN}2/{PN}-{PV}.tar.bz2
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 libogg
   1.2.2
@@ -718,7 +718,7 @@ libflac
 evebrowser
   0.0.1
   {PN}-{PV}
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 dvbdata
   0.6
