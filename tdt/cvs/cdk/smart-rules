@@ -713,9 +713,7 @@ libflac
   flac-{PV}
   extract:http://ignum.dl.sourceforge.net/project/flac/flac-src/flac-{PV}-src/flac-{PV}.tar.gz
   patch:file://flac-{PV}.patch
-  rewrite-pkgconfig:src/libFLAC/flac.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libFLAC.la
+  make:install:DESTDIR=PKDIR
 ;
 evebrowser
   0.0.1

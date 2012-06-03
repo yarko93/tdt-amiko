@@ -1547,6 +1547,12 @@ $(DEPDIR)/%libogg: $(DEPDIR)/libogg.do_compile
 #
 # libflac
 #
+DESCRIPTION_libflac = "libflac is Open Source lossless audio codec"
+
+FILES_libflac = \
+/usr/lib/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/libflac.do_prepare: bootstrap @DEPENDS_libflac@
 	@PREPARE_libflac@
 	touch $@
@@ -1575,8 +1581,11 @@ $(DEPDIR)/libflac.do_compile: $(DEPDIR)/libflac.do_prepare
 $(DEPDIR)/min-libflac $(DEPDIR)/std-libflac $(DEPDIR)/max-libflac \
 $(DEPDIR)/libflac: \
 $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
+	$(start_build)
 	cd @DIR_libflac@ && \
 		@INSTALL_libflac@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libflac@
 	[ "x$*" = "x" ] && touch $@ || true
 
