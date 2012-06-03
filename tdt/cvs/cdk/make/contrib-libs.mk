@@ -2712,7 +2712,11 @@ $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
 	mkdir -p $(PKDIR)/usr/bin/
 	cd @DIR_brofs@ && \
 		@INSTALL_brofs@
-	cp -ar * $(PKDIR)/usr/bin/
+		mv -b $(PKDIR)/BroFS $(PKDIR)/usr/bin/ && \
+		mv -b $(PKDIR)/BroFSCommand $(PKDIR)/usr/bin/ && \
+		rm -r $(PKDIR)/BroFSd && \
+		cd $(PKDIR)/usr/bin/ && \
+		ln -sf BroFS BroFSd && \
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_brofs@
