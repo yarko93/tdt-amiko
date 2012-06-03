@@ -11,6 +11,9 @@ $(DEPDIR)/libboost: bootstrap @DEPENDS_libboost@
 #
 # libz
 #
+
+DESCRIPTION_libz = "Compression library implementing the deflate compression method found in gzip and PKZIP"
+
 if !STM22
 LIBZ_ORDER = binutils-dev
 endif !STM22
@@ -31,8 +34,11 @@ $(DEPDIR)/libz.do_compile: $(DEPDIR)/libz.do_prepare
 $(DEPDIR)/min-libz $(DEPDIR)/std-libz $(DEPDIR)/max-libz \
 $(DEPDIR)/libz: \
 $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
+	$(start_build)
 	cd @DIR_libz@ && \
 		@INSTALL_libz@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libz@
 	[ "x$*" = "x" ] && touch $@ || true
 

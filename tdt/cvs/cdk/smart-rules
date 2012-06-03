@@ -444,7 +444,7 @@ libz
   1.2.3
   zlib-{PV}
   extract:http://kent.dl.sourceforge.net/sourceforge/libpng/zlib-{PV}.tar.bz2
-  make:install:prefix=TARGETS/usr
+  make:install:prefix=PKDIR/usr
   install:-m644:{PN}.a:TARGETS/usr/lib
 ;
 libreadline
