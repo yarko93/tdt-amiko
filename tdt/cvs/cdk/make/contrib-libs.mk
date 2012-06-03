@@ -1296,7 +1296,7 @@ $(DEPDIR)/%icu4c: $(DEPDIR)/icu4c.do_compile
 #
 # enchant
 #
-DESCRIPTION_enchant = "enchant"
+DESCRIPTION_enchant = "libenchant -- Generic spell checking library"
 
 FILES_enchant = \
 /usr/lib/*.so* \
@@ -1332,6 +1332,12 @@ $(DEPDIR)/%enchant: $(DEPDIR)/enchant.do_compile
 #
 # lite
 #
+DESCRIPTION_lite = "LiTE is a Toolkit Engine"
+
+FILES_lite = \
+/usr/lib/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/lite.do_prepare: bootstrap directfb @DEPENDS_lite@
 	@PREPARE_lite@
 	touch $@
@@ -1352,8 +1358,11 @@ $(DEPDIR)/lite.do_compile: $(DEPDIR)/lite.do_prepare
 $(DEPDIR)/min-lite $(DEPDIR)/std-lite $(DEPDIR)/max-lite \
 $(DEPDIR)/lite: \
 $(DEPDIR)/%lite: $(DEPDIR)/lite.do_compile
+	$(start_build)
 	cd @DIR_lite@ && \
 		@INSTALL_lite@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lite@
 	[ "x$*" = "x" ] && touch $@ || true
 

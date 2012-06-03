@@ -611,10 +611,7 @@ lite
   0.9.0
   {PN}-{PV}+git0.7982ccc
   extract:http://www.duckbox.info/files/packages/{PN}-{PV}+git0.7982ccc.tar.bz2
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la:TARGETS/usr/lib/libleck.la
-  rewrite-dependency:TARGETS/usr/lib/lib{PN}.la:TARGETS/usr/lib/libleck.la
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}.pc:TARGETS/usr/lib/pkgconfig/leck.pc
+  make:install:DESTDIR=PKDIR
 ;
 sqlite
   3.7.11
