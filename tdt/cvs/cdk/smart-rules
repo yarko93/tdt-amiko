@@ -605,10 +605,7 @@ enchant
   1.5.0
   {PN}-{PV}
   extract:http://www.abisource.com/downloads/{PN}/{PV}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
-  rewrite-dependency:TARGETS/usr/lib/lib{PN}.la
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}.pc
+  make:install:DESTDIR=PKDIR
 ;
 lite
   0.9.0

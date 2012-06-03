@@ -1296,6 +1296,12 @@ $(DEPDIR)/%icu4c: $(DEPDIR)/icu4c.do_compile
 #
 # enchant
 #
+DESCRIPTION_enchant = "enchant"
+
+FILES_enchant = \
+/usr/lib/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/enchant.do_prepare: bootstrap @DEPENDS_enchant@
 	@PREPARE_enchant@
 	touch $@
@@ -1315,8 +1321,11 @@ $(DEPDIR)/enchant.do_compile: $(DEPDIR)/enchant.do_prepare
 $(DEPDIR)/min-enchant $(DEPDIR)/std-enchant $(DEPDIR)/max-enchant \
 $(DEPDIR)/enchant: \
 $(DEPDIR)/%enchant: $(DEPDIR)/enchant.do_compile
+	$(start_build)
 	cd @DIR_enchant@ && \
 		@INSTALL_enchant@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_enchant@
 	[ "x$*" = "x" ] && touch $@ || true
 
