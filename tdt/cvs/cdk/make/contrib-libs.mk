@@ -1894,7 +1894,8 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 
 DESCRIPTION_pyopenssl = "Python wrapper module around the OpenSSL library"
 FILES_pyopenssl = \
-/usr/lib/python2.6/site-packages/OpenSSL/*
+/usr/lib/python2.6/site-packages/OpenSSL/*py \
+/usr/lib/python2.6/site-packages/OpenSSL/*so
 
 $(DEPDIR)/pyopenssl.do_prepare: bootstrap setuptools @DEPENDS_pyopenssl@
 	@PREPARE_pyopenssl@
