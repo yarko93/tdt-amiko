@@ -2029,6 +2029,10 @@ $(DEPDIR)/%pythonwifi: pythonwifi.do_compile
 #
 # pythoncheetah
 #
+DESCRIPTION_pythoncheetah = "pythoncheetah"
+FILES_pythoncheetah = \
+/usr/lib/python2.6/site-packages/Cheetah
+
 $(DEPDIR)/pythoncheetah.do_prepare: bootstrap setuptools @DEPENDS_pythoncheetah@
 	@PREPARE_pythoncheetah@
 	touch $@
@@ -2043,9 +2047,12 @@ $(DEPDIR)/pythoncheetah.do_compile: $(DEPDIR)/pythoncheetah.do_prepare
 $(DEPDIR)/min-pythoncheetah $(DEPDIR)/std-pythoncheetah $(DEPDIR)/max-pythoncheetah \
 $(DEPDIR)/pythoncheetah: \
 $(DEPDIR)/%pythoncheetah: pythoncheetah.do_compile
+	$(start_build)
 	cd @DIR_pythoncheetah@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_pythoncheetah@
 	[ "x$*" = "x" ] && touch $@ || true
 
