@@ -201,6 +201,10 @@ $(DEPDIR)/%samba: $(DEPDIR)/samba.do_compile
 #
 # NETIO
 #
+DESCRIPTION_netio = "netio"
+FILES_netio = \
+/usr/bin/*
+
 $(DEPDIR)/netio.do_prepare: @DEPENDS_netio@
 	@PREPARE_netio@
 	touch $@
@@ -214,9 +218,12 @@ $(DEPDIR)/netio.do_compile: bootstrap $(DEPDIR)/netio.do_prepare
 $(DEPDIR)/min-netio $(DEPDIR)/std-netio $(DEPDIR)/max-netio \
 $(DEPDIR)/netio: \
 $(DEPDIR)/%netio: $(DEPDIR)/netio.do_compile
+	$(start_build)
 	cd @DIR_netio@ && \
-		$(INSTALL) -d $(prefix)/$*cdkroot/usr/bin && \
+		$(INSTALL) -d $(PKDIR)/usr/bin && \
 		@INSTALL_netio@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_netio@
 	@[ "x$*" = "x" ] && touch $@ || true
 

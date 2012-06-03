@@ -1103,7 +1103,7 @@ netio
   1.26
   {PN}126
   extract:http://bnsmb.de/files/public/windows/{PN}126.zip
-  install:-m755:{PN}:TARGETS/usr/bin
+  install:-m755:{PN}:PKDIR/usr/bin
   install:-m755:bin/linux-i386:HOST/bin/{PN}
 ;
 lighttpd
