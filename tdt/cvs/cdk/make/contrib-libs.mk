@@ -2580,6 +2580,10 @@ $(DEPDIR)/%libgd2: $(DEPDIR)/libgd2.do_compile
 #
 # libusb2
 #
+DESCRIPTION_libusb2 = "libusb2"
+FILES_libusb2 = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libusb2.do_prepare: bootstrap @DEPENDS_libusb2@
 	@PREPARE_libusb2@
 	touch $@
@@ -2597,8 +2601,11 @@ $(DEPDIR)/libusb2.do_compile: $(DEPDIR)/libusb2.do_prepare
 $(DEPDIR)/min-libusb2 $(DEPDIR)/std-libusb2 $(DEPDIR)/max-libusb2 \
 $(DEPDIR)/libusb2: \
 $(DEPDIR)/%libusb2: $(DEPDIR)/libusb2.do_compile
+	$(start_build)
 	cd @DIR_libusb2@ && \
 		@INSTALL_libusb2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libusb2@
 	[ "x$*" = "x" ] && touch $@ || true
 
