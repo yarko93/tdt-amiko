@@ -617,10 +617,7 @@ sqlite
   3.7.11
   {PN}-autoconf-3071100
   extract:http://www.{PN}.org/{PN}-autoconf-3071100.tar.gz
-  rewrite-pkgconfig:{PN}3.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}3.la
-  rewrite-dependency:TARGETS/usr/lib/lib{PN}3.la
+  make:install:DESTDIR=PKDIR
 ;
 libsoup
   2.33.90

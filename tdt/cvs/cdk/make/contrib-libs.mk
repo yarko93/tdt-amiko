@@ -1369,6 +1369,12 @@ $(DEPDIR)/%lite: $(DEPDIR)/lite.do_compile
 #
 # sqlite
 #
+DESCRIPTION_sqlite = "sqlite"
+
+FILES_sqlite = \
+/usr/lib/*.so* \
+/usr/bin/sqlite3
+
 $(DEPDIR)/sqlite.do_prepare: bootstrap @DEPENDS_sqlite@
 	@PREPARE_sqlite@
 	touch $@
@@ -1389,8 +1395,11 @@ $(DEPDIR)/sqlite.do_compile: $(DEPDIR)/sqlite.do_prepare
 $(DEPDIR)/min-sqlite $(DEPDIR)/std-sqlite $(DEPDIR)/max-sqlite \
 $(DEPDIR)/sqlite: \
 $(DEPDIR)/%sqlite: $(DEPDIR)/sqlite.do_compile
+	$(start_build)
 	cd @DIR_sqlite@ && \
 		@INSTALL_sqlite@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_sqlite@
 	[ "x$*" = "x" ] && touch $@ || true
 
