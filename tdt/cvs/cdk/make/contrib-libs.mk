@@ -1406,6 +1406,11 @@ $(DEPDIR)/%sqlite: $(DEPDIR)/sqlite.do_compile
 #
 # libsoup
 #
+DESCRIPTION_libsoup = "libsoup is an HTTP client/server library"
+
+FILES_libsoup = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libsoup.do_prepare: bootstrap @DEPENDS_libsoup@
 	@PREPARE_libsoup@
 	touch $@
@@ -1424,8 +1429,11 @@ $(DEPDIR)/libsoup.do_compile: $(DEPDIR)/libsoup.do_prepare
 $(DEPDIR)/min-libsoup $(DEPDIR)/std-libsoup $(DEPDIR)/max-libsoup \
 $(DEPDIR)/libsoup: \
 $(DEPDIR)/%libsoup: $(DEPDIR)/libsoup.do_compile
+	$(start_build)
 	cd @DIR_libsoup@ && \
 		@INSTALL_libsoup@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libsoup@
 	[ "x$*" = "x" ] && touch $@ || true
 

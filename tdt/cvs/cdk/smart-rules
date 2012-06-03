@@ -623,10 +623,7 @@ libsoup
   2.33.90
   {PN}-{PV}
   extract:http://download.gnome.org/sources/{PN}/2.33/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:{PN}-2.4.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}-2.4.la
-  rewrite-dependency:TARGETS/usr/lib/{PN}-2.4.la
+  make:install:DESTDIR=PKDIR
 ;
 pixman
   0.18.0
