@@ -1,7 +1,11 @@
 #
 # NFS-UTILS
 #
-$(DEPDIR)/nfs-utils.do_prepare: @DEPENDS_nfs_utils@
+DESCRIPTION_nfs_utils = "nfs_utils"
+FILES_nfs_utils = \
+/usr/bin/*
+
+$(DEPDIR)/nfs_utils.do_prepare: @DEPENDS_nfs_utils@
 	@PREPARE_nfs_utils@
 	chmod +x @DIR_nfs_utils@/autogen.sh
 	cd @DIR_nfs_utils@ && \
@@ -13,7 +17,7 @@ $(DEPDIR)/nfs-utils.do_prepare: @DEPENDS_nfs_utils@
 		sed -e 's/RPCNFSDCOUNT=8/RPCNFSDCOUNT=3/g' -i debian/nfs-kernel-server.default
 	touch $@
 
-$(DEPDIR)/nfs-utils.do_compile: bootstrap e2fsprogs $(DEPDIR)/nfs-utils.do_prepare
+$(DEPDIR)/nfs_utils.do_compile: bootstrap e2fsprogs $(DEPDIR)/nfs_utils.do_prepare
 	cd @DIR_nfs_utils@ && \
 		$(BUILDENV) \
 		./configure \
@@ -27,22 +31,29 @@ $(DEPDIR)/nfs-utils.do_compile: bootstrap e2fsprogs $(DEPDIR)/nfs-utils.do_prepa
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-nfs-utils $(DEPDIR)/std-nfs-utils $(DEPDIR)/max-nfs-utils \
-$(DEPDIR)/nfs-utils: \
-$(DEPDIR)/%nfs-utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
-		$(DEPDIR)/nfs-utils.do_compile
+$(DEPDIR)/min-nfs_utils $(DEPDIR)/std-nfs_utils $(DEPDIR)/max-nfs_utils \
+$(DEPDIR)/nfs_utils: \
+$(DEPDIR)/%nfs_utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
+		$(DEPDIR)/nfs_utils.do_compile
 	$(INSTALL) -d $(prefix)/$*cdkroot/etc/{default,init.d} && \
+	$(start_build)
 	cd @DIR_nfs_utils@ && \
 		@INSTALL_nfs_utils@
 	( cd root/etc && for i in $(NFS_UTILS_ADAPTED_ETC_FILES); do \
 		[ -f $$i ] && $(INSTALL) -m644 $$i $(prefix)/$*cdkroot/etc/$$i || true; \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done )
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_nfs_utils@
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # vsftpd
 #
+DESCRIPTION_vsftpd = "vsftpd"
+FILES_vsftpd = \
+/etc/smb.conf
+
 $(DEPDIR)/vsftpd.do_prepare: @DEPENDS_vsftpd@
 	@PREPARE_vsftpd@
 	touch $@
@@ -56,15 +67,22 @@ $(DEPDIR)/vsftpd.do_compile: bootstrap $(DEPDIR)/vsftpd.do_prepare
 $(DEPDIR)/min-vsftpd $(DEPDIR)/std-vsftpd $(DEPDIR)/max-vsftpd \
 $(DEPDIR)/vsftpd: \
 $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
+	$(start_build)
 	cd @DIR_vsftpd@ && \
 		@INSTALL_vsftpd@
-		cp $(buildprefix)/root/etc/vsftpd.conf $(targetprefix)/etc
+		cp $(buildprefix)/root/etc/vsftpd.conf $(PKDIR)/etc
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_vsftpd@
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # ETHTOOL
 #
+DESCRIPTION_ethtool = "ethtool"
+FILES_ethtool = \
+/usr/sbin/*
+
 $(DEPDIR)/ethtool.do_prepare: @DEPENDS_ethtool@
 	@PREPARE_ethtool@
 	touch $@
@@ -83,8 +101,11 @@ $(DEPDIR)/ethtool.do_compile: bootstrap $(DEPDIR)/ethtool.do_prepare
 $(DEPDIR)/min-ethtool $(DEPDIR)/std-ethtool $(DEPDIR)/max-ethtool \
 $(DEPDIR)/ethtool: \
 $(DEPDIR)/%ethtool: $(DEPDIR)/ethtool.do_compile
+	$(start_build)
 	cd @DIR_ethtool@  && \
 		@INSTALL_ethtool@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_ethtool@
 	@[ "x$*" = "x" ] && touch $@ || true
 

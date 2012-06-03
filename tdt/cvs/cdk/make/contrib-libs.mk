@@ -2676,12 +2676,12 @@ $(DEPDIR)/min-evebrowser $(DEPDIR)/std-evebrowser $(DEPDIR)/max-evebrowser \
 $(DEPDIR)/evebrowser: \
 $(DEPDIR)/%evebrowser: $(DEPDIR)/evebrowser.do_compile
 	$(start_build)
-	mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/
+	mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/ && \
 	cd @DIR_evebrowser@ && \
 		@INSTALL_evebrowser@ && \
-		cp -ar enigma2/HbbTv $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/
-		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-mipsel
-		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-powerpc
+		cp -ar enigma2/HbbTv $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/ && \
+		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-mipsel && \
+		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-powerpc && \
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_evebrowser@

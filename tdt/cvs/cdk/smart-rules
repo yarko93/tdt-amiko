@@ -1066,22 +1066,22 @@ portmap
 nfs_utils
   1.1.1
   {PN}-{PV}
-  extract:ftp://ftp.kernel.org/pub/linux/utils/nfs/{PN}-{PV}.tar.bz2
-  nothing:http://ftp.de.debian.org/debian/pool/main/n/{PN}/{PN}_{PV}-12.diff.gz
-  make:install:DESTDIR=TARGETS
-  install:-m644:debian/nfs-common.default:TARGETS/etc/default/nfs-common
-  install:-m755:debian/nfs-common.init:TARGETS/etc/init.d/nfs-common
-  install:-m644:debian/nfs-kernel-server.default:TARGETS/etc/default/nfs-kernel-server
-  install:-m755:debian/nfs-kernel-server.init:TARGETS/etc/init.d/nfs-kernel-server
-  install:-m644:debian/etc.exports:TARGETS/etc/exports
-  remove:TARGETS/sbin/mount.nfs4:TARGETS/sbin/umount.nfs4
+  extract:http://launchpad.net/ubuntu/+archive/primary/+files/{PN}-{PV}.orig.tar.bz2
+  nothing:http://launchpad.net/ubuntu/+archive/primary/+files/{PN}_{PV}-12.diff.gz
+  make:install:DESTDIR=PKDIR
+  install:-m644:debian/nfs-common.default:PKDIR/etc/default/nfs-common
+  install:-m755:debian/nfs-common.init:PKDIR/etc/init.d/nfs-common
+  install:-m644:debian/nfs-kernel-server.default:PKDIR/etc/default/nfs-kernel-server
+  install:-m755:debian/nfs-kernel-server.init:PKDIR/etc/init.d/nfs-kernel-server
+  install:-m644:debian/etc.exports:PKDIR/etc/exports
+  remove:PKDIR/sbin/mount.nfs4:PKDIR/sbin/umount.nfs4
 ;
 vsftpd
   2.3.5
   {PN}-{PV}
   extract:http://centos.googlecode.com/files/{PN}-{PV}.tar.gz
   patch:file://{PN}_{PV}.diff
-  make:install:PREFIX=TARGETS
+  make:install:PREFIX=TARGETS:DESTDIR=PKDIR
 ;
 netkit_ftp
   0.17
@@ -1132,5 +1132,5 @@ ethtool
   6
   {PN}-{PV}
   extract:http://downloads.openwrt.org/sources/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
