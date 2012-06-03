@@ -181,6 +181,8 @@ $(DEPDIR)/$(GMP): $(GMP_RPM)
 	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^) && \
 	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/libgmp.la
 	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libgmp.la
+	$(start_build)
+	$(fromrpm_build)
 	touch $@
 endif !STM22
 
