@@ -180,7 +180,7 @@ cramfs
   extract:http://heanet.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
   install:mk{PN}:HOST/bin
 ;
-ipkg_utils
+ipkg-utils
   050831
   {PN}-{PV}
   extract:http://downloads.buffalo.nas-central.org/ArchIndependent/Sources/{PN}-{PV}.tar.gz
@@ -702,7 +702,7 @@ libcap
   2.22
   {PN}-{PV}
   extract:http://mirror.linux.org.au/linux/libs/security/linux-privs/{PN}2/{PN}-{PV}.tar.bz2
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 libogg
   1.2.2
@@ -720,7 +720,7 @@ libflac
 evebrowser
   0.0.1
   {PN}-{PV}
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 dvbdata
   0.6
@@ -731,7 +731,7 @@ brofs
   1.2
   BroFS{PV}
   extract:http://www.avalpa.com/assets/freesoft/other/BroFS{PV}.tgz
-  make:install:DESTDIR=TARGETS/usr/bin
+  make:install:prefix=/usr/bin:DESTDIR=PKDIR
 ;
 libalsa
   1.0.21a
@@ -1012,7 +1012,7 @@ gst_ffmpeg
   patch:file://{PN}-0.10.12_lower_rank.patch
   make:install:DESTDIR=PKDIR
 ;
-gst_plugins_fluendo_mpegdemux
+gst_fluendo_mpegdemux
   0.10.69
   gst-fluendo-mpegdemux-{PV}
   extract:http://core.fluendo.com/gstreamer/src/gst-fluendo-mpegdemux/gst-fluendo-mpegdemux-{PV}.tar.gz
@@ -1042,17 +1042,13 @@ libusb2
   1.0.8
   libusb-{PV}
   extract:http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-{PV}/libusb-{PV}.tar.bz2
-  rewrite-pkgconfig:libusb-1.0.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libusb-1.0.la
+  make:install:DESTDIR=PKDIR
 ;
 libusbcompat
   0.1.3
   libusb-compat-{PV}
   extract:http://downloads.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-{PV}/libusb-compat-{PV}.tar.bz2
-  rewrite-pkgconfig:libusb.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libusb.la
+  make:install:DESTDIR=PKDIR
 ;
 libgd2
   2.0.35

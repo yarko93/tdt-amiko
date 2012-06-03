@@ -2000,6 +2000,10 @@ $(DEPDIR)/%python: python.do_compile
 #
 # pythonwifi
 #
+DESCRIPTION_pythonwifi = "pythonwifi"
+FILES_pythonwifi =\
+/usr/lib/python2.6/site-packages/pythonwifi
+
 $(DEPDIR)/pythonwifi.do_prepare: bootstrap setuptools @DEPENDS_pythonwifi@
 	@PREPARE_pythonwifi@
 	touch $@
@@ -2014,15 +2018,22 @@ $(DEPDIR)/pythonwifi.do_compile: $(DEPDIR)/pythonwifi.do_prepare
 $(DEPDIR)/min-pythonwifi $(DEPDIR)/std-pythonwifi $(DEPDIR)/max-pythonwifi \
 $(DEPDIR)/pythonwifi: \
 $(DEPDIR)/%pythonwifi: pythonwifi.do_compile
+	$(start_build)
 	cd @DIR_pythonwifi@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_pythonwifi@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # pythoncheetah
 #
+DESCRIPTION_pythoncheetah = "pythoncheetah"
+FILES_pythoncheetah = \
+/usr/lib/python2.6/site-packages/Cheetah
+
 $(DEPDIR)/pythoncheetah.do_prepare: bootstrap setuptools @DEPENDS_pythoncheetah@
 	@PREPARE_pythoncheetah@
 	touch $@
@@ -2037,9 +2048,12 @@ $(DEPDIR)/pythoncheetah.do_compile: $(DEPDIR)/pythoncheetah.do_prepare
 $(DEPDIR)/min-pythoncheetah $(DEPDIR)/std-pythoncheetah $(DEPDIR)/max-pythoncheetah \
 $(DEPDIR)/pythoncheetah: \
 $(DEPDIR)/%pythoncheetah: pythoncheetah.do_compile
+	$(start_build)
 	cd @DIR_pythoncheetah@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_pythoncheetah@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -2385,6 +2399,8 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
 
 DESCRIPTION_gst_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
+FILES_gst_fluendo_mpegdemux = \
+/usr/lib/gstreamer-0.10/*.so
 
 
 $(DEPDIR)/gst_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_fluendo_mpegdemux@
@@ -2406,9 +2422,9 @@ $(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_fluendo_mpegdemux.do_compile
 	$(start_build)
 	cd @DIR_gst_fluendo_mpegdemux@ && \
 		@INSTALL_gst_fluendo_mpegdemux@
-#	@DISTCLEANUP_gst_ffmpeg@
 	$(tocdk_build)
 	$(toflash_build)
+#	@DISTCLEANUP_gst_fluendo_mpegdemux@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -2565,6 +2581,10 @@ $(DEPDIR)/%libgd2: $(DEPDIR)/libgd2.do_compile
 #
 # libusb2
 #
+DESCRIPTION_libusb2 = "libusb2"
+FILES_libusb2 = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libusb2.do_prepare: bootstrap @DEPENDS_libusb2@
 	@PREPARE_libusb2@
 	touch $@
@@ -2582,14 +2602,21 @@ $(DEPDIR)/libusb2.do_compile: $(DEPDIR)/libusb2.do_prepare
 $(DEPDIR)/min-libusb2 $(DEPDIR)/std-libusb2 $(DEPDIR)/max-libusb2 \
 $(DEPDIR)/libusb2: \
 $(DEPDIR)/%libusb2: $(DEPDIR)/libusb2.do_compile
+	$(start_build)
 	cd @DIR_libusb2@ && \
 		@INSTALL_libusb2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libusb2@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libusbcompat
 #
+DESCRIPTION_libusbcompat = "A compatibility layer allowing applications written for libusb-0.1 to work with libusb-1.0"
+FILES_libusbcompat = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libusbcompat.do_prepare: bootstrap libusb2 @DEPENDS_libusbcompat@
 	@PREPARE_libusbcompat@
 	touch $@
@@ -2606,8 +2633,11 @@ $(DEPDIR)/libusbcompat.do_compile: $(DEPDIR)/libusbcompat.do_prepare
 $(DEPDIR)/min-libusbcompat $(DEPDIR)/std-libusbcompat $(DEPDIR)/max-libusbcompat \
 $(DEPDIR)/libusbcompat: \
 $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
+	$(start_build)
 	cd @DIR_libusbcompat@ && \
 		@INSTALL_libusbcompat@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libusbcompat@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -2617,6 +2647,13 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 #
 # eve-browser
 #
+DESCRIPTION_evebrowser = "evebrowser for HbbTv"
+SRC_URI_evebrowser = https://eve-browser.googlecode.com/svn/trunk/
+FILES_evebrowser = \
+/usr/lib/*.so* \
+/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-sh4 \
+/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/*.py
+
 $(DEPDIR)/evebrowser.do_prepare: bootstrap webkitdfb @DEPENDS_evebrowser@
 	svn checkout https://eve-browser.googlecode.com/svn/trunk/ @DIR_evebrowser@
 	touch $@
@@ -2639,15 +2676,25 @@ $(DEPDIR)/evebrowser.do_compile: $(DEPDIR)/evebrowser.do_prepare
 $(DEPDIR)/min-evebrowser $(DEPDIR)/std-evebrowser $(DEPDIR)/max-evebrowser \
 $(DEPDIR)/evebrowser: \
 $(DEPDIR)/%evebrowser: $(DEPDIR)/evebrowser.do_compile
+	$(start_build)
+	mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/
 	cd @DIR_evebrowser@ && \
 		@INSTALL_evebrowser@ && \
-		cp -ar enigma2/HbbTv $(targetprefix)/usr/lib/enigma2/python/Plugins/SystemPlugins/
+		cp -ar enigma2/HbbTv $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/
+		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-mipsel
+		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-powerpc
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_evebrowser@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # brofs
 #
+DESCRIPTION_brofs = "BROFS (BroadcastReadOnlyFileSystem)"
+FILES_brofs = \
+/usr/bin/*
+
 $(DEPDIR)/brofs.do_prepare: bootstrap @DEPENDS_brofs@
 	@PREPARE_brofs@
 	touch $@
@@ -2662,8 +2709,17 @@ $(DEPDIR)/brofs.do_compile: $(DEPDIR)/brofs.do_prepare
 $(DEPDIR)/min-brofs $(DEPDIR)/std-brofs $(DEPDIR)/max-brofs \
 $(DEPDIR)/brofs: \
 $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
+	$(start_build)
+	mkdir -p $(PKDIR)/usr/bin/
 	cd @DIR_brofs@ && \
 		@INSTALL_brofs@
+		mv -b $(PKDIR)/BroFS $(PKDIR)/usr/bin/ && \
+		mv -b $(PKDIR)/BroFSCommand $(PKDIR)/usr/bin/ && \
+		rm -r $(PKDIR)/BroFSd && \
+		cd $(PKDIR)/usr/bin/ && \
+		ln -sf BroFS BroFSd && \
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_brofs@
 	[ "x$*" = "x" ] && touch $@ || true
 
