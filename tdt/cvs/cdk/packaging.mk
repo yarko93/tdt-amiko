@@ -103,6 +103,13 @@ define flash_prebuild
 	$(remove_libs)
 	$(remove_pkgconfigs)
 	$(remove_includedir)
+	$(strip_libs)
+endef
+
+define strip_libs
+	find $(PKDIR) -type f -regex '.*/lib/.*so\(\.[0-9]+\)*' \
+		-exec echo strip {} \; \
+		-exec sh4-linux-strip --strip-unneeded {} \;
 endef
 
 define remove_libs
