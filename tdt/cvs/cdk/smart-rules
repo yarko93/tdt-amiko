@@ -444,14 +444,14 @@ libz
   1.2.3
   zlib-{PV}
   extract:http://kent.dl.sourceforge.net/sourceforge/libpng/zlib-{PV}.tar.bz2
-  make:install:prefix=TARGETS/usr
+  make:install:prefix=PKDIR/usr
   install:-m644:{PN}.a:TARGETS/usr/lib
 ;
 libreadline
   5.2
   readline-{PV}
   extract:ftp://ftp.cwru.edu/pub/bash/readline-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 freetype_old
   2.1.4

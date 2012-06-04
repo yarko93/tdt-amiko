@@ -11,6 +11,11 @@ $(DEPDIR)/libboost: bootstrap @DEPENDS_libboost@
 #
 # libz
 #
+
+DESCRIPTION_libz = "Compression library implementing the deflate compression method found in gzip and PKZIP"
+FILES_libz = \
+/usr/lib
+
 if !STM22
 LIBZ_ORDER = binutils-dev
 endif !STM22
@@ -31,14 +36,22 @@ $(DEPDIR)/libz.do_compile: $(DEPDIR)/libz.do_prepare
 $(DEPDIR)/min-libz $(DEPDIR)/std-libz $(DEPDIR)/max-libz \
 $(DEPDIR)/libz: \
 $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
+	$(start_build)
 	cd @DIR_libz@ && \
 		@INSTALL_libz@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libz@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libreadline
 #
+
+DESCRIPTION_libreadline = GNU readline library
+FILES_libreadline = \
+/usr/lib
+
 $(DEPDIR)/libreadline.do_prepare: bootstrap ncurses-dev @DEPENDS_libreadline@
 	@PREPARE_libreadline@
 	touch $@
@@ -57,8 +70,11 @@ $(DEPDIR)/libreadline.do_compile: $(DEPDIR)/libreadline.do_prepare
 $(DEPDIR)/min-libreadline $(DEPDIR)/std-libreadline $(DEPDIR)/max-libreadline \
 $(DEPDIR)/libreadline: \
 $(DEPDIR)/%libreadline: $(DEPDIR)/libreadline.do_compile
+	$(start_build)
 	cd @DIR_libreadline@ && \
 		@INSTALL_libreadline@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libreadline@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -823,6 +839,7 @@ $(DEPDIR)/%expat: $(DEPDIR)/expat.do_compile
 DESCRIPTION_fontconfig = "Fontconfig is a library for configuring and customizing font access."
 
 FILES_fontconfig = \
+/etc \
 /usr/lib/*
 
 $(DEPDIR)/fontconfig.do_prepare: bootstrap libz libxml2 freetype @DEPENDS_fontconfig@
