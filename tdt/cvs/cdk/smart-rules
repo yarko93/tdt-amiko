@@ -36,7 +36,9 @@
 #  http:// - http wget download
 #  ftp:// - ftp wget download
 #  file:// - look for file in Patches directory
-# svn and git coming soon...
+#  git://www.gitserver.com/gitrepo:r=revision:b=branch:sub=subdir_in_git_tree
+#  revision, branch and subdirectory to use arguments are optional.
+# svn coming soon...
 #
 # if rule command doesn't match ones listed above, this is treated as install/uninstall rule.
 # 
@@ -178,7 +180,7 @@ cramfs
   extract:http://heanet.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
   install:mk{PN}:HOST/bin
 ;
-ipkg_utils
+ipkg-utils
   050831
   {PN}-{PV}
   extract:http://downloads.buffalo.nas-central.org/ArchIndependent/Sources/{PN}-{PV}.tar.gz
@@ -210,7 +212,7 @@ busybox
   1.20.0
   {PN}-{PV}
   extract:http://www.{PN}.net/downloads/{PN}-{PV}.tar.bz2
-  make:install:CONFIG_PREFIX=TARGETS
+  make:install:CONFIG_PREFIX=PKDIR
   shellconfigadd:/bin/ash:5
 ;
 lsb
@@ -442,14 +444,14 @@ libz
   1.2.3
   zlib-{PV}
   extract:http://kent.dl.sourceforge.net/sourceforge/libpng/zlib-{PV}.tar.bz2
-  make:install:prefix=TARGETS/usr
+  make:install:prefix=PKDIR/usr
   install:-m644:{PN}.a:TARGETS/usr/lib
 ;
 libreadline
   5.2
   readline-{PV}
   extract:ftp://ftp.cwru.edu/pub/bash/readline-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 freetype_old
   2.1.4
@@ -1066,28 +1068,28 @@ portmap
 nfs_utils
   1.1.1
   {PN}-{PV}
-  extract:ftp://ftp.kernel.org/pub/linux/utils/nfs/{PN}-{PV}.tar.bz2
-  nothing:http://ftp.de.debian.org/debian/pool/main/n/{PN}/{PN}_{PV}-12.diff.gz
-  make:install:DESTDIR=TARGETS
-  install:-m644:debian/nfs-common.default:TARGETS/etc/default/nfs-common
-  install:-m755:debian/nfs-common.init:TARGETS/etc/init.d/nfs-common
-  install:-m644:debian/nfs-kernel-server.default:TARGETS/etc/default/nfs-kernel-server
-  install:-m755:debian/nfs-kernel-server.init:TARGETS/etc/init.d/nfs-kernel-server
-  install:-m644:debian/etc.exports:TARGETS/etc/exports
-  remove:TARGETS/sbin/mount.nfs4:TARGETS/sbin/umount.nfs4
+  extract:ftp://ftp.piotrkosoft.net/pub/mirrors/ftp.kernel.org/linux/utils/nfs/{PN}-{PV}.tar.bz2
+  patch:file://{PN}_{PV}-12.diff.gz
+  make:install:DESTDIR=PKDIR
+  install:-m644:debian/nfs-common.default:PKDIR/etc/default/nfs-common
+  install:-m755:debian/nfs-common.init:PKDIR/etc/init.d/nfs-common
+  install:-m644:debian/nfs-kernel-server.default:PKDIR/etc/default/nfs-kernel-server
+  install:-m755:debian/nfs-kernel-server.init:PKDIR/etc/init.d/nfs-kernel-server
+  install:-m644:debian/etc.exports:PKDIR/etc/exports
+  remove:PKDIR/sbin/mount.nfs4:PKDIR/sbin/umount.nfs4
 ;
 vsftpd
   2.3.5
   {PN}-{PV}
   extract:http://centos.googlecode.com/files/{PN}-{PV}.tar.gz
   patch:file://{PN}_{PV}.diff
-  make:install:PREFIX=TARGETS
+  make:install:PREFIX=TARGETS:DESTDIR=PKDIR
 ;
 netkit_ftp
   0.17
   {PN}-{PV}
-  extract:ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/{PN}-{PV}.tar.gz
-  patch:file://{PN}.diff
+  extract:http://ibiblio.org/pub/linux/system/network/netkit//{PN}-{PV}.tar.gz
+#patch:file://{PN}.diff
   make:install:MANDIR=/usr/share/man:INSTALLROOT=TARGETS
 ;
 samba
@@ -1095,20 +1097,20 @@ samba
   {PN}-{PV}
   extract:http://www.{PN}.org/{PN}/ftp/stable/{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}.diff
-  make:install bin/smbd bin/nmbd:DESTDIR=TARGETS:prefix=./.
+  make:install bin/smbd bin/nmbd:DESTDIR=PKDIR:prefix=./.
 ;
 netio
   1.26
   {PN}126
   extract:http://bnsmb.de/files/public/windows/{PN}126.zip
-  install:-m755:{PN}:TARGETS/usr/bin
+  install:-m755:{PN}:PKDIR/usr/bin
   install:-m755:bin/linux-i386:HOST/bin/{PN}
 ;
 lighttpd
   1.4.15
   {PN}-{PV}
   extract:http://www.{PN}.net/download/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 zd1211
   2_15_0_0
@@ -1120,17 +1122,17 @@ wireless_tools
   29
   wireless_tools.{PV}
   extract:http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/wireless_tools.{PV}.tar.gz
-  make:install:INSTALL_MAN=TARGETS/usr/share/man:PREFIX=TARGETS/usr
+  make:install:INSTALL_MAN=PKDIR/usr/share/man:PREFIX=PKDIR/usr
 ;
 wpa_supplicant
   0.5.9
   wpa_supplicant-{PV}
   extract:http://hostap.epitest.fi/releases/wpa_supplicant-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 ethtool
   6
   {PN}-{PV}
   extract:http://downloads.openwrt.org/sources/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;

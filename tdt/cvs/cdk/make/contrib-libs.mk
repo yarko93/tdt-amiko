@@ -11,6 +11,11 @@ $(DEPDIR)/libboost: bootstrap @DEPENDS_libboost@
 #
 # libz
 #
+
+DESCRIPTION_libz = "Compression library implementing the deflate compression method found in gzip and PKZIP"
+FILES_libz = \
+/usr/lib
+
 if !STM22
 LIBZ_ORDER = binutils-dev
 endif !STM22
@@ -31,14 +36,22 @@ $(DEPDIR)/libz.do_compile: $(DEPDIR)/libz.do_prepare
 $(DEPDIR)/min-libz $(DEPDIR)/std-libz $(DEPDIR)/max-libz \
 $(DEPDIR)/libz: \
 $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
+	$(start_build)
 	cd @DIR_libz@ && \
 		@INSTALL_libz@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libz@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libreadline
 #
+
+DESCRIPTION_libreadline = GNU readline library
+FILES_libreadline = \
+/usr/lib
+
 $(DEPDIR)/libreadline.do_prepare: bootstrap ncurses-dev @DEPENDS_libreadline@
 	@PREPARE_libreadline@
 	touch $@
@@ -57,8 +70,11 @@ $(DEPDIR)/libreadline.do_compile: $(DEPDIR)/libreadline.do_prepare
 $(DEPDIR)/min-libreadline $(DEPDIR)/std-libreadline $(DEPDIR)/max-libreadline \
 $(DEPDIR)/libreadline: \
 $(DEPDIR)/%libreadline: $(DEPDIR)/libreadline.do_compile
+	$(start_build)
 	cd @DIR_libreadline@ && \
 		@INSTALL_libreadline@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libreadline@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -823,6 +839,7 @@ $(DEPDIR)/%expat: $(DEPDIR)/expat.do_compile
 DESCRIPTION_fontconfig = "Fontconfig is a library for configuring and customizing font access."
 
 FILES_fontconfig = \
+/etc \
 /usr/lib/*
 
 $(DEPDIR)/fontconfig.do_prepare: bootstrap libz libxml2 freetype @DEPENDS_fontconfig@
@@ -1894,7 +1911,8 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 
 DESCRIPTION_pyopenssl = "Python wrapper module around the OpenSSL library"
 FILES_pyopenssl = \
-/usr/lib/python2.6/site-packages/OpenSSL/*
+/usr/lib/python2.6/site-packages/OpenSSL/*py \
+/usr/lib/python2.6/site-packages/OpenSSL/*so
 
 $(DEPDIR)/pyopenssl.do_prepare: bootstrap setuptools @DEPENDS_pyopenssl@
 	@PREPARE_pyopenssl@
@@ -2676,12 +2694,12 @@ $(DEPDIR)/min-evebrowser $(DEPDIR)/std-evebrowser $(DEPDIR)/max-evebrowser \
 $(DEPDIR)/evebrowser: \
 $(DEPDIR)/%evebrowser: $(DEPDIR)/evebrowser.do_compile
 	$(start_build)
-	mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/
+	mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/ && \
 	cd @DIR_evebrowser@ && \
 		@INSTALL_evebrowser@ && \
-		cp -ar enigma2/HbbTv $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/
-		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-mipsel
-		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-powerpc
+		cp -ar enigma2/HbbTv $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/ && \
+		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-mipsel && \
+		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-powerpc && \
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_evebrowser@
@@ -2712,7 +2730,11 @@ $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
 	mkdir -p $(PKDIR)/usr/bin/
 	cd @DIR_brofs@ && \
 		@INSTALL_brofs@
-	cp -ar * $(PKDIR)/usr/bin/
+		mv -b $(PKDIR)/BroFS $(PKDIR)/usr/bin/ && \
+		mv -b $(PKDIR)/BroFSCommand $(PKDIR)/usr/bin/ && \
+		rm -r $(PKDIR)/BroFSd && \
+		cd $(PKDIR)/usr/bin/ && \
+		ln -sf BroFS BroFSd && \
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_brofs@
@@ -2721,6 +2743,11 @@ $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
 #
 # libcap
 #
+DESCRIPTION_libcap = "This is a library for getting and setting POSIX"
+FILES_libcap = \
+/usr/lib/*.so* \
+/usr/sbin/*
+
 $(DEPDIR)/libcap.do_prepare: bootstrap @DEPENDS_libcap@
 	@PREPARE_libcap@
 	touch $@
@@ -2729,11 +2756,11 @@ $(DEPDIR)/libcap.do_compile: $(DEPDIR)/libcap.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_libcap@ && \
 	$(MAKE) \
-	DESTDIR=$(prefix)/cdkroot \
-	PREFIX=$(prefix)/cdkroot/usr \
-	LIBDIR=$(prefix)/cdkroot/usr/lib \
-	SBINDIR=$(prefix)/cdkroot/usr/sbin \
-	INCDIR=$(prefix)/cdkroot/usr/include \
+	DESTDIR=$(PKDIR) \
+	PREFIX=$(PKDIR)/usr \
+	LIBDIR=$(PKDIR)/usr/lib \
+	SBINDIR=$(PKDIR)/usr/sbin \
+	INCDIR=$(PKDIR)/usr/include \
 	BUILD_CC=gcc \
 	PAM_CAP=no \
 	LIBATTR=no \
@@ -2744,17 +2771,20 @@ $(DEPDIR)/min-libcap $(DEPDIR)/std-libcap $(DEPDIR)/max-libcap \
 $(DEPDIR)/libcap: \
 $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 	@[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
 	cd @DIR_libcap@ && \
 		@INSTALL_libcap@ \
-		DESTDIR=$(prefix)/cdkroot \
-		PREFIX=$(prefix)/cdkroot/usr \
-		LIBDIR=$(prefix)/cdkroot/usr/lib \
-		SBINDIR=$(prefix)/cdkroot/usr/sbin \
-		INCDIR=$(prefix)/cdkroot/usr/include \
+		DESTDIR=$(PKDIR)/ \
+		PREFIX=$(PKDIR)/usr \
+		LIBDIR=$(PKDIR)/usr/lib \
+		SBINDIR=$(PKDIR)/usr/sbin \
+		INCDIR=$(PKDIR)/usr/include \
 		BUILD_CC=gcc \
 		PAM_CAP=no \
 		LIBATTR=no \
 		CC=sh4-linux-gcc
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libcap@
 	[ "x$*" = "x" ] && touch $@ || true
 

@@ -32,7 +32,6 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%ipkg-utils \
 		%module_init_tools \
 		%busybox \
-		\
 		%libz \
 		%grep \
 		%$(INITSCRIPTS) \

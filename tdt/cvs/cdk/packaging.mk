@@ -83,7 +83,7 @@ define start_build
 endef
 
 define package_rpm_get
-	$(shell rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --queryformat $1)
+	$(shell rpm --dbpath $(prefix)/cdkroot-rpmdb --queryformat $1)
 endef
 
 define fromrpm_get
@@ -91,17 +91,25 @@ define fromrpm_get
 	$(eval export PKGV_$(PARENT_PK) = $(call package_rpm_get,'%{VERSION}' -qp $(lastword $^)))
 	$(eval export PKGR_$(PARENT_PK) = $(call package_rpm_get,'%{RELEASE}' -qp $(lastword $^)))
 	$(eval export SRC_URI_$(PARENT_PK) = "stlinux.com")
-	@echo $(DESCRIPTION_$(PARENT_PK))
-	cd $(PKDIR) && \
-		bsdtar xf ../$(lastword $^) && \
-		mv -v ./$(targetprefix)/* . && \
-		rmdir -v ./$(targetprefix)
+	@echo "rpm got descr $(DESCRIPTION_$(PARENT_PK))"
+	@echo "rpm got version $(PKGV_$(PARENT_PK))"
+	rm -rf rpmtmpdir
+	mkdir rpmtmpdir
+	bsdtar xf $(lastword $^) -C rpmtmpdir
+	mv -v rpmtmpdir/$(targetprefix)/* $(PKDIR)
 endef
 
 define flash_prebuild
 	$(remove_libs)
 	$(remove_pkgconfigs)
 	$(remove_includedir)
+	$(strip_libs)
+endef
+
+define strip_libs
+	find $(PKDIR) -type f -regex '.*/lib/.*so\(\.[0-9]+\)*' \
+		-exec echo strip {} \; \
+		-exec sh4-linux-strip --strip-unneeded {} \;
 endef
 
 define remove_libs
