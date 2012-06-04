@@ -77,8 +77,8 @@ IPKG_BUILD_BIN = $(crossprefix)/bin/ipkg-build
 ipkg-utils: $(IPKG_BUILD_BIN)
 
 $(crossprefix)/bin/ipkg-build: @DEPENDS_ipkg_utils@ | $(ipkprefix)
-	@PREPARE_ipkg-utils@
-	cd @DIR_ipkg-utils@ && \
+	@PREPARE_ipkg_utils@
+	cd @DIR_ipkg_utils@ && \
 		$(MAKE) all PREFIX=$(crossprefix) && \
 		$(MAKE) install PREFIX=$(crossprefix)
 #       @DISTCLEANUP_ipkg-utils@

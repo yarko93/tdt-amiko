@@ -180,7 +180,7 @@ cramfs
   extract:http://heanet.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
   install:mk{PN}:HOST/bin
 ;
-ipkg-utils
+ipkg_utils
   050831
   {PN}-{PV}
   extract:http://downloads.buffalo.nas-central.org/ArchIndependent/Sources/{PN}-{PV}.tar.gz
