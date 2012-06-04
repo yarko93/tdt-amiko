@@ -29,6 +29,7 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%$(MAKEDEV) \
 		%$(BASE_FILES) \
 		%opkg-host \
+		%ipkg-utils \
 		%module_init_tools \
 		%busybox \
 		%libz \

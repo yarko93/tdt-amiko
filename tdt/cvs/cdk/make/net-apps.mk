@@ -35,13 +35,12 @@ $(DEPDIR)/min-nfs_utils $(DEPDIR)/std-nfs_utils $(DEPDIR)/max-nfs_utils \
 $(DEPDIR)/nfs_utils: \
 $(DEPDIR)/%nfs_utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
 		$(DEPDIR)/nfs_utils.do_compile
-	$(INSTALL) -d $(prefix)/$*cdkroot/etc/{default,init.d} && \
 	$(start_build)
 	cd @DIR_nfs_utils@ && \
 		@INSTALL_nfs_utils@
 	( cd root/etc && for i in $(NFS_UTILS_ADAPTED_ETC_FILES); do \
-		[ -f $$i ] && $(INSTALL) -m644 $$i $(prefix)/$*cdkroot/etc/$$i || true; \
-		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done )
+		[ -f $$i ] && $(INSTALL) -m644 $$i $(PKDIR)/etc/$$i || true; \
+		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(PKDIR)/etc/$$i || true; done )
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_nfs_utils@
@@ -335,6 +334,10 @@ $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 #
 # WPA_SUPPLICANT
 #
+DESCRIPTION_wpa_supplicant = "wpa_supplicant"
+FILES_wpa_supplicant = \
+/usr/local/sbin/*
+
 $(DEPDIR)/wpa_supplicant.do_prepare: @DEPENDS_wpa_supplicant@
 	@PREPARE_wpa_supplicant@
 	touch $@
@@ -348,7 +351,10 @@ $(DEPDIR)/wpa_supplicant.do_compile: bootstrap Patches/wpa_supplicant.config $(D
 $(DEPDIR)/min-wpa_supplicant $(DEPDIR)/std-wpa_supplicant $(DEPDIR)/max-wpa_supplicant \
 $(DEPDIR)/wpa_supplicant: \
 $(DEPDIR)/%wpa_supplicant: $(DEPDIR)/wpa_supplicant.do_compile
+	$(start_build)
 	cd @DIR_wpa_supplicant@  && \
 		@INSTALL_wpa_supplicant@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_wpa_supplicant@
 	@[ "x$*" = "x" ] && touch $@ || true

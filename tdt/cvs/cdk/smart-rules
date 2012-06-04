@@ -1068,8 +1068,8 @@ portmap
 nfs_utils
   1.1.1
   {PN}-{PV}
-  extract:http://launchpad.net/ubuntu/+archive/primary/+files/{PN}-{PV}.orig.tar.bz2
-  nothing:http://launchpad.net/ubuntu/+archive/primary/+files/{PN}_{PV}-12.diff.gz
+  extract:ftp://ftp.piotrkosoft.net/pub/mirrors/ftp.kernel.org/linux/utils/nfs/{PN}-{PV}.tar.bz2
+  patch:file://{PN}_{PV}-12.diff.gz
   make:install:DESTDIR=PKDIR
   install:-m644:debian/nfs-common.default:PKDIR/etc/default/nfs-common
   install:-m755:debian/nfs-common.init:PKDIR/etc/init.d/nfs-common
@@ -1128,7 +1128,7 @@ wpa_supplicant
   0.5.9
   wpa_supplicant-{PV}
   extract:http://hostap.epitest.fi/releases/wpa_supplicant-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 ethtool
   6
