@@ -778,6 +778,8 @@ $(DEPDIR)/bootstrap-cross: | \
 		cross-sh4-cpp \
 		cross-sh4-gcc \
 		cross-sh4-g++ \
+		ipkg-utils \
+		opkg-host \
 		cross-sh4-libgcc
 	[ "x$*" = "x" ] && touch -r $(CROSS_G++_RPM) $@ || true
 

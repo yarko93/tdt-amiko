@@ -11,9 +11,10 @@ $(DEPDIR)/min-bootstrap $(DEPDIR)/std-bootstrap $(DEPDIR)/max-bootstrap $(DEPDIR
 $(DEPDIR)/%bootstrap: \
 		%libtool \
 		%$(FILESYSTEM) \
-		| %$(GLIBC) \
+		%$(GLIBC) \
 		%$(CROSS_LIBGCC) \
 		%$(LIBSTDC)
+
 	@[ "x$*" = "x" ] && touch -r RPMS/sh4/$(STLINUX)-sh4-$(LIBSTDC)-$(GCC_VERSION).sh4.rpm $@ || true
 
 #
@@ -28,8 +29,6 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%$(BASE_PASSWD) \
 		%$(MAKEDEV) \
 		%$(BASE_FILES) \
-		%opkg-host \
-		%ipkg-utils \
 		%module_init_tools \
 		%busybox \
 		%libz \
