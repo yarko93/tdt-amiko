@@ -28,6 +28,8 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%$(BASE_PASSWD) \
 		%$(MAKEDEV) \
 		%$(BASE_FILES) \
+		%opkg-host \
+		%ipkg-utils \
 		%module_init_tools \
 		%busybox \
 		\
@@ -42,8 +44,7 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		\
 		%e2fsprogs \
 		%u-boot-utils \
-		%diverse-tools \
-		%ipkg-utils 
+		%diverse-tools 
 #		%$(RELEASE) \
 #		%$(FINDUTILS) \
 #
