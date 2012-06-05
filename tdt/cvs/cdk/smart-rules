@@ -213,7 +213,6 @@ busybox
   {PN}-{PV}
   extract:http://www.{PN}.net/downloads/{PN}-{PV}.tar.bz2
   make:install:CONFIG_PREFIX=PKDIR
-  shellconfigadd:/bin/ash:5
 ;
 lsb
   3.2-20

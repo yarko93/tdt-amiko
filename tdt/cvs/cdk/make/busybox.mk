@@ -34,6 +34,8 @@ $(DEPDIR)/%busybox: $(DEPDIR)/busybox.do_compile
 		export CROSS_COMPILE=$(target)- && \
 		@INSTALL_busybox@
 #		@CLEANUP_busybox@
+	install -m644 -D /dev/null $(PKDIR)/etc/shells
+	export HHL_CROSS_TARGET_DIR=$(PKDIR) && $(hostprefix)/bin/target-shellconfig --add /bin/ash 5
 	$(tocdk_build)
 	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
