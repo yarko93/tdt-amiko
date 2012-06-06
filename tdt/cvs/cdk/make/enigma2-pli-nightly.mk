@@ -60,14 +60,25 @@ $(DEPDIR)/enigma2-pli-nightly.do_compile: $(appsdir)/enigma2-pli-nightly/config.
 		$(MAKE) all
 	touch $@
 
+DESCRIPTION_enigma2_pli := a framebuffer-based zapping application (GUI) for linux
+SRC_URI_enigma2_pli := git://openpli.git.sourceforge.net/gitroot/openpli/enigma2
+# neccecary for get_git_version:
+DIR_enigma2_pli := $(appsdir)/enigma2-nightly
+FILES_enigma2_pli := /usr/bin /usr/lib/ /etc/enigma2 /usr/local/share
+
 $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_prepare enigma2-pli-nightly.do_compile
-	$(MAKE) -C $(appsdir)/enigma2-nightly install DESTDIR=$(targetprefix)
-	if [ -e $(targetprefix)/usr/bin/enigma2 ]; then \
-		$(target)-strip $(targetprefix)/usr/bin/enigma2; \
+	$(call parent_pk,enigma2_pli)
+	$(start_build)
+	$(get_git_version)
+	$(MAKE) -C $(appsdir)/enigma2-nightly install DESTDIR=$(PKDIR)
+	if [ -e $(PKDIR)/usr/bin/enigma2 ]; then \
+		$(target)-strip $(PKDIR)/usr/bin/enigma2; \
 	fi
-	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
-		$(target)-strip $(targetprefix)/usr/local/bin/enigma2; \
+	if [ -e $(PKDIR)/usr/local/bin/enigma2 ]; then \
+		$(target)-strip $(PKDIR)/usr/local/bin/enigma2; \
 	fi
+	$(tocdk_build)
+	$(toflash_build)
 	touch $@
 
 enigma2-pli-nightly-clean enigma2-pli-nightly-distclean:
