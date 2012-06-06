@@ -113,8 +113,8 @@ define strip_libs
 endef
 
 define remove_libs
-	rm -f $(PKDIR)/lib/*.{a,la}
-	rm -f $(PKDIR)/usr/lib/*.{a,la}
+	rm -f $(PKDIR)/lib/*.{a,la,o}
+	rm -f $(PKDIR)/usr/lib/*.{a,la,o}
 endef
 
 define remove_pkgconfigs
