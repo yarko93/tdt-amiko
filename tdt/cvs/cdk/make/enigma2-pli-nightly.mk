@@ -80,8 +80,12 @@ $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_prepare enigma2-pli-nightl
 	$(tocdk_build)
 	$(toflash_build)
 	touch $@
+enigma2-pli-nightly-clean:
+	cd $(appsdir)/enigma2-nightly && \
+		$(MAKE) clean
+	rm -f $(DEPDIR)/enigma2-pli-nightly.do_compile
 
-enigma2-pli-nightly-clean enigma2-pli-nightly-distclean:
+enigma2-pli-nightly-distclean:
 	rm -f $(DEPDIR)/enigma2-pli-nightly
 	rm -f $(DEPDIR)/enigma2-pli-nightly.do_compile
 	rm -f $(DEPDIR)/enigma2-pli-nightly.do_prepare

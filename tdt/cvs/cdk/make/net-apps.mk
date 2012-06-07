@@ -51,7 +51,8 @@ $(DEPDIR)/%nfs_utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
 #
 DESCRIPTION_vsftpd = "vsftpd"
 FILES_vsftpd = \
-/etc/smb.conf
+/etc/* \
+/usr/bin/*
 
 $(DEPDIR)/vsftpd.do_prepare: @DEPENDS_vsftpd@
 	@PREPARE_vsftpd@
@@ -67,6 +68,10 @@ $(DEPDIR)/min-vsftpd $(DEPDIR)/std-vsftpd $(DEPDIR)/max-vsftpd \
 $(DEPDIR)/vsftpd: \
 $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
 	$(start_build)
+	mkdir -p $(PKDIR)/etc/
+	mkdir -p $(PKDIR)/usr/bin/
+	mkdir -p $(PKDIR)/usr/share/man/man8/
+	mkdir -p $(PKDIR)/usr/share/man/man5/
 	cd @DIR_vsftpd@ && \
 		@INSTALL_vsftpd@
 		cp $(buildprefix)/root/etc/vsftpd.conf $(PKDIR)/etc
