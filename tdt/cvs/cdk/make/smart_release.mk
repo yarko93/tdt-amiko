@@ -142,8 +142,10 @@ release_cuberevo_mini: release_cube_common
 
 release_cuberevo: release_cube_common
 	echo "cuberevo" > $(prefix)/release/etc/hostname
+	
 release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname
+	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
 	
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname	
