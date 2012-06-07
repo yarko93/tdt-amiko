@@ -19,7 +19,8 @@ $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 	$(start_build)
 	cd @DIR_enigma2_openwebif@ && \
 		$(BUILDENV) \
-		cp -a plugin $(targetprefix)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif
+		mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/Extensions && \
+		cp -a plugin $(PKDIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif
 	$(toflash_build)
 #	@DISTCLEANUP_enigma2_openwebif@
 	@[ "x$*" = "x" ] && touch $@ || true
