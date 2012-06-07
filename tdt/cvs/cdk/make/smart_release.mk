@@ -70,6 +70,23 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/var && \
 	$(INSTALL_DIR) $(prefix)/release/var/etc && \
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/opkg && \
+	ln -s /usr/bin/opkg  $(prefix)/release/usr/bin/ipkg-cl && \
+	ln -s /usr/bin/opkg  $(prefix)/release/usr/bin/ipkg 
+# zoneinfo
+	$(INSTALL_DIR) $(prefix)/release/usr/share/zoneinfo && \
+	cp -aR $(buildprefix)/root/usr/share/zoneinfo/* $(prefix)/release/usr/share/zoneinfo/
+# udhcpc
+	$(INSTALL_DIR) $(prefix)/release/usr/share/udhcpc && \
+	cp -aR $(buildprefix)/root/usr/share/udhcpc/* $(prefix)/release/usr/share/udhcpc/ && \
+	ln -s /usr/local/share/keymaps $(prefix)/release/usr/share/keymaps
+	if [ -e $(targetprefix)/usr/share/alsa ]; then \
+	mkdir $(prefix)/release/usr/share/alsa/; \
+	mkdir $(prefix)/release/usr/share/alsa/cards/; \
+	mkdir $(prefix)/release/usr/share/alsa/pcm/; \
+	cp $(targetprefix)/usr/share/alsa/alsa.conf          $(prefix)/release/usr/share/alsa/alsa.conf; \
+	cp $(targetprefix)/usr/share/alsa/cards/aliases.conf $(prefix)/release/usr/share/alsa/cards/; \
+	cp $(targetprefix)/usr/share/alsa/pcm/default.conf   $(prefix)/release/usr/share/alsa/pcm/; \
+	cp $(targetprefix)/usr/share/alsa/pcm/dmix.conf      $(prefix)/release/usr/share/alsa/pcm/; fi
 	export CROSS_COMPILE=$(target)- && \
 	$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/release && \
 	cp -R $(targetprefix)/etc/fonts/* $(prefix)/release/etc/fonts/
