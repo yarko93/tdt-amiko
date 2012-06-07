@@ -104,6 +104,12 @@ define flash_prebuild
 	$(remove_pkgconfigs)
 	$(remove_includedir)
 	$(strip_libs)
+	$(remove_docs)
+endef
+
+define remove_docs
+	rm -rf $(PKDIR)/usr/share/doc
+	rm -rf $(PKDIR)/usr/share/man
 endef
 
 define strip_libs
