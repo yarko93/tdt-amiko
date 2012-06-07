@@ -835,6 +835,10 @@ $(DEPDIR)/%mencoder: $(DEPDIR)/mencoder.do_compile
 if STM24
 # for stm24, look in contrib-apps-specs.mk
 else !STM24
+DESCRIPTION_util_linux = "util-linux"
+FILES_util_linux = \
+/sbin/*
+
 $(DEPDIR)/util-linux.do_prepare: bootstrap @DEPENDS_util_linux@
 	@PREPARE_util_linux@
 	cd @DIR_util_linux@ && \
@@ -860,16 +864,19 @@ $(DEPDIR)/util-linux.do_compile: $(DEPDIR)/util-linux.do_prepare
 $(DEPDIR)/min-util-linux $(DEPDIR)/std-util-linux $(DEPDIR)/max-util-linux \
 $(DEPDIR)/util-linux: \
 $(DEPDIR)/%util-linux: util-linux.do_compile
+	$(start_build)
 	cd @DIR_util_linux@ && \
-		install -d $(targetprefix)/sbin && \
-		install -m 755 fdisk/sfdisk $(targetprefix)/sbin/
+		install -d $(PKDIR)/sbin && \
+		install -m 755 fdisk/sfdisk $(PKDIR)/sbin/
+	$(tocdk_build)
+	$(toflash_build)
 #		$(MAKE) ARCH=sh4 HAVE_SLANG=no HAVE_SHADOW=yes HAVE_PAM=no \
 #		USE_TTY_GROUP=no INSTALLSUID='$(INSTALL) -m $(SUIDMODE)' \
-#		DESTDIR=$(targetprefix) install && \
-#		ln -s agetty $(targetprefix)/sbin/getty && \
-#		ln -s agetty.8.gz $(targetprefix)/usr/man/man8/getty.8.gz && \
-#		install -m 755 debian/hwclock.sh $(targetprefix)/etc/init.d/hwclock.sh && \
-#		( cd po && make install DESTDIR=$(targetprefix) )
+#		DESTDIR=$(PKDIR) install && \
+#		ln -s agetty $(PKDIR)/sbin/getty && \
+#		ln -s agetty.8.gz $(PKDIR)/usr/man/man8/getty.8.gz && \
+#		install -m 755 debian/hwclock.sh $(PKDIR)/etc/init.d/hwclock.sh && \
+#		( cd po && make install DESTDIR=$(PKDIR) )
 #		@INSTALL_util_linux@
 #	@DISTCLEANUP_util_linux@
 	[ "x$*" = "x" ] && touch $@ || true

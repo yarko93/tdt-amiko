@@ -82,6 +82,8 @@ release_base:
 	touch $(prefix)/release/var/etc/.firstboot && \
 	chmod 755 $(prefix)/release/etc/init.d/rcS && \
 	chmod 755 $(prefix)/release/etc/init.d/halt && \
+	cp -dp $(targetprefix)/sbin/MAKEDEV $(prefix)/release/sbin/MAKEDEV && \
+	cp -f $(buildprefix)/root/release/makedev $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/release/mountvirtfs $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/release/mme_check $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/release/mountall $(prefix)/release/etc/init.d/ && \
