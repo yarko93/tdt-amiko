@@ -2148,7 +2148,7 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 		@INSTALL_gstreamer@
 #	@DISTCLEANUP_gstreamer@
 	$(tocdk_build)
-	sh4-linux-strip --strip-unneeded $(PKDIR)/usr/bin/gst-launch
+	sh4-linux-strip --strip-unneeded $(PKDIR)/usr/bin/gst-launch*
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
