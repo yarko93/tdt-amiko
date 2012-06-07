@@ -1082,7 +1082,7 @@ vsftpd
   {PN}-{PV}
   extract:http://centos.googlecode.com/files/{PN}-{PV}.tar.gz
   patch:file://{PN}_{PV}.diff
-  make:install:PREFIX=TARGETS:DESTDIR=PKDIR
+  make:install:PREFIX=PKDIR
 ;
 netkit_ftp
   0.17
