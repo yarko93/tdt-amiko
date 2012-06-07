@@ -158,6 +158,11 @@ $(DEPDIR)/%lsb: $(DEPDIR)/lsb.do_compile
 #
 # PORTMAP
 #
+DESCRIPTION_portmap = "the program supports access control in the style of the tcp wrapper (log_tcp) packag"
+FILES_portmap = \
+/sbin/* \
+/etc/init.d/
+
 $(DEPDIR)/portmap.do_prepare: bootstrap @DEPENDS_portmap@
 	@PREPARE_portmap@
 	cd @DIR_portmap@ && \
@@ -175,10 +180,16 @@ $(DEPDIR)/portmap.do_compile: $(DEPDIR)/portmap.do_prepare
 $(DEPDIR)/min-portmap $(DEPDIR)/std-portmap $(DEPDIR)/max-portmap \
 $(DEPDIR)/portmap: \
 $(DEPDIR)/%portmap: $(DEPDIR)/%lsb $(PORTMAP_ADAPTED_ETC_FILES:%=root/etc/%) $(DEPDIR)/portmap.do_compile
+	$(start_build)
+	mkdir -p $(PKDIR)/sbin/
+	mkdir -p $(PKDIR)/etc/init.d/
+	mkdir -p $(PKDIR)/usr/share/man/man8
 	cd @DIR_portmap@ && \
 		@INSTALL_portmap@
 	$(call adapted-etc-files,$(PORTMAP_ADAPTED_ETC_FILES))
 	$(call initdconfig,portmap)
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_portmap@
 	[ "x$*" = "x" ] && touch $@ || true
 
