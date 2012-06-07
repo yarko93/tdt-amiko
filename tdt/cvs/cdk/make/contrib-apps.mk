@@ -231,6 +231,12 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 #
 # E2FSPROGS
 #
+DESCRIPTION_e2fsprogs = "e2fsprogs"
+FILES_e2fsprogs = \
+/sbin/* \
+/lib/*.so* \
+/usr/lib/*.so*
+
 $(DEPDIR)/e2fsprogs.do_prepare: bootstrap @DEPENDS_e2fsprogs@
 	@PREPARE_e2fsprogs@
 	touch $@
@@ -289,12 +295,15 @@ endif !STM24
 
 if STM24
 $(DEPDIR)/e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
+	$(start_build)
 	cd @DIR_e2fsprogs@ && \
 	$(BUILDENV) \
 	$(MAKE) install install-libs \
 		LDCONFIG=true \
-		DESTDIR=$(targetprefix) && \
-	$(INSTALL) e2fsck/e2fsck.static $(targetprefix)/sbin
+		DESTDIR=$(PKDIR) && \
+	$(INSTALL) e2fsck/e2fsck.static $(PKDIR)/sbin
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_e2fsprogs@
 	touch $@
 else !STM24
@@ -304,8 +313,8 @@ $(DEPDIR)/%e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
 	cd @DIR_e2fsprogs@ && \
 		@INSTALL_e2fsprogs@
 	[ "x$*" = "x" ] && ( cd @DIR_e2fsprogs@ && \
-		$(MAKE) install -C lib/uuid DESTDIR=$(targetprefix) && \
-		$(MAKE) install -C lib/blkid DESTDIR=$(targetprefix) ) || true
+		$(MAKE) install -C lib/uuid DESTDIR=$(PKDIR) && \
+		$(MAKE) install -C lib/blkid DESTDIR=$(PKDIR) ) || true
 #	@DISTCLEANUP_e2fsprogs@
 	[ "x$*" = "x" ] && touch $@ || true
 endif !STM24
@@ -869,6 +878,10 @@ endif !STM24
 #
 # jfsutils
 #
+DESCRIPTION_jfsutils = "jfsutils"
+FILES_jfsutils = \
+/sbin/*
+
 $(DEPDIR)/jfsutils.do_prepare: bootstrap @DEPENDS_jfsutils@
 	@PREPARE_jfsutils@
 	touch $@
@@ -887,8 +900,11 @@ $(DEPDIR)/jfsutils.do_compile: $(DEPDIR)/jfsutils.do_prepare
 $(DEPDIR)/min-jfsutils $(DEPDIR)/std-jfsutils $(DEPDIR)/max-jfsutils \
 $(DEPDIR)/jfsutils: \
 $(DEPDIR)/%jfsutils: $(DEPDIR)/jfsutils.do_compile
+	$(start_build)
 	cd @DIR_jfsutils@ && \
 		@INSTALL_jfsutils@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_jfsutils@
 	[ "x$*" = "x" ] && touch $@ || true
 

@@ -265,9 +265,7 @@ e2fsprogs
   extract:http://prdownloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
   patch:file://{PN}-1.41.11-relative-usrlib-path.patch
   patch:file://{PN}-1.41.11-no-lib-deps.patch
-  rewrite-pkgconfig:lib/e2p/e2p.pc:lib/com_err.pc:lib/uuid.pc:lib/blkid.pc:lib/ss/ss.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libblkid.la:TARGETS/usr/lib/libblkid.la:TARGETS/usr/lib/libuuid.la
+  make:install:DESTDIR=PKDIR
 ;
 xfsprogs
   2.9.4-1
@@ -373,7 +371,7 @@ jfsutils
   1.1.15
   {PN}-{PV}
   extract:http://jfs.sourceforge.net/project/pub/{PN}-{PV}.tar.gz
-  make:install:mandir=/usr/share/man:DESTDIR=TARGET
+  make:install:mandir=/usr/share/man:DESTDIR=PKDIR
 ;
 opkg
   0.1.8
