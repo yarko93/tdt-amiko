@@ -174,5 +174,5 @@ $(ipkprefix)/Packages: $(ipkprefix)
 		$(crossprefix)/bin/ipkg-make-index . > Packages && \
 		cat Packages | gzip > Packages.gz
 
-git_version := git log -1 --format=%cd --date=short |sed s/-//g
+git_version := git log -1 --format=%cd --date=short -- . |sed s/-//g
 get_git_version = $(eval export PKGV_$(PARENT_PK) = $(shell cd $(DIR_$(PARENT_PK)) && $(git_version)))
