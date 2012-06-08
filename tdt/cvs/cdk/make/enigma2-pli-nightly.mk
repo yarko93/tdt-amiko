@@ -1,14 +1,15 @@
 # tuxbox/enigma2
 
+DIR_enigma2_pli := $(appsdir)/enigma2-pli-nightly
+
 $(DEPDIR)/enigma2-pli-nightly.do_prepare:
 	REVISION=""; \
 	HEAD="master"; \
 	DIFF="0"; \
 	REPO="git://gitorious.org/open-duckbox-project-sh4/guigit.git"; \
-	rm -rf $(appsdir)/enigma2-nightly; \
-	rm -rf $(appsdir)/enigma2-nightly.org; \
-	rm -rf $(appsdir)/enigma2-nightly.newest; \
-	rm -rf $(appsdir)/enigma2-nightly.patched; \
+	rm -rf $(DIR_enigma2_pli).org; \
+	rm -rf $(DIR_enigma2_pli).newest; \
+	rm -rf $(DIR_enigma2_pli).patched; \
 	clear; \
 	echo "Media Framwork: $(MEDIAFW)"; \
 	echo "Choose between the following revisions:"; \
@@ -21,22 +22,22 @@ $(DEPDIR)/enigma2-pli-nightly.do_prepare:
 	[ "$$REPLY" == "0" ] && DIFF="0" && HEAD="experimental"; \
 	[ "$$REPLY" == "1" ] && DIFF="1" && REVISION="945aeb939308b3652b56bc6c577853369d54a537" && REPO="git://openpli.git.sourceforge.net/gitroot/openpli/enigma2"; \
 	echo "Revision: " $$REVISION; \
-	[ -d "$(appsdir)/enigma2-nightly" ] && \
-	git pull $(appsdir)/enigma2-nightly $$HEAD;\
-	[ -d "$(appsdir)/enigma2-nightly" ] || \
-	git clone -b $$HEAD $$REPO $(appsdir)/enigma2-nightly; \
-	cp -ra $(appsdir)/enigma2-nightly $(appsdir)/enigma2-nightly.newest; \
-	[ "$$REVISION" == "" ] || (cd $(appsdir)/enigma2-nightly; git checkout "$$REVISION"; cd "$(buildprefix)";); \
-	cp -ra $(appsdir)/enigma2-nightly $(appsdir)/enigma2-nightly.org; \
-	cd $(appsdir)/enigma2-nightly && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.diff"; \
-	cd $(appsdir)/enigma2-nightly && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.$(MEDIAFW).diff"; \
-	[ "$(EXTERNALLCD_DEP)" == "" ] || (cd $(appsdir)/enigma2-nightly && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.graphlcd.diff" ); \
-	cp -ra $(appsdir)/enigma2-nightly $(appsdir)/enigma2-nightly.patched
+	[ -d "$(DIR_enigma2_pli)" ] && \
+	git pull $(DIR_enigma2_pli) $$HEAD;\
+	[ -d "$(DIR_enigma2_pli)" ] || \
+	git clone -b $$HEAD $$REPO $(DIR_enigma2_pli); \
+	cp -ra $(DIR_enigma2_pli) $(DIR_enigma2_pli).newest; \
+	[ "$$REVISION" == "" ] || (cd $(DIR_enigma2_pli); git checkout "$$REVISION"; cd "$(buildprefix)";); \
+	cp -ra $(DIR_enigma2_pli) $(DIR_enigma2_pli).org; \
+	cd $(DIR_enigma2_pli) && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.diff"; \
+	cd $(DIR_enigma2_pli) && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.$(MEDIAFW).diff"; \
+	[ "$(EXTERNALLCD_DEP)" == "" ] || (cd $(DIR_enigma2_pli) && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.graphlcd.diff" ); \
+	cp -ra $(DIR_enigma2_pli) $(DIR_enigma2_pli).patched
 	touch $@
 
-$(appsdir)/enigma2-pli-nightly/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline \
+$(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline \
 		libdvbsipp python libxml2 libxslt elementtree zope_interface twisted pyopenssl pythonwifi lxml libxmlccwrap ncurses-dev libdreamdvd2 tuxtxt32bpp sdparm hotplug_e2 $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
-	cd $(appsdir)/enigma2-nightly && \
+	cd $(DIR_enigma2_pli) && \
 		./autogen.sh && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \
 		./configure \
@@ -55,22 +56,21 @@ $(appsdir)/enigma2-pli-nightly/config.status: bootstrap freetype expat fontconfi
 			$(PLATFORM_CPPFLAGS)
 
 
-$(DEPDIR)/enigma2-pli-nightly.do_compile: $(appsdir)/enigma2-pli-nightly/config.status
-	cd $(appsdir)/enigma2-nightly && \
+$(DEPDIR)/enigma2-pli-nightly.do_compile: $(DIR_enigma2_pli)/config.status
+	cd $(DIR_enigma2_pli) && \
 		$(MAKE) all
 	touch $@
 
 DESCRIPTION_enigma2_pli := a framebuffer-based zapping application (GUI) for linux
 SRC_URI_enigma2_pli := git://openpli.git.sourceforge.net/gitroot/openpli/enigma2
 # neccecary for get_git_version:
-DIR_enigma2_pli := $(appsdir)/enigma2-nightly
 FILES_enigma2_pli := /usr/bin /usr/lib/ /etc/enigma2 /usr/local/share
 
 $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_prepare enigma2-pli-nightly.do_compile
 	$(call parent_pk,enigma2_pli)
 	$(start_build)
 	$(get_git_version)
-	$(MAKE) -C $(appsdir)/enigma2-nightly install DESTDIR=$(PKDIR)
+	$(MAKE) -C $(DIR_enigma2_pli) install DESTDIR=$(PKDIR)
 	if [ -e $(PKDIR)/usr/bin/enigma2 ]; then \
 		$(target)-strip $(PKDIR)/usr/bin/enigma2; \
 	fi
@@ -81,7 +81,7 @@ $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_prepare enigma2-pli-nightl
 	$(toflash_build)
 	touch $@
 enigma2-pli-nightly-clean:
-	cd $(appsdir)/enigma2-nightly && \
+	cd $(DIR_enigma2_pli) && \
 		$(MAKE) clean
 	rm -f $(DEPDIR)/enigma2-pli-nightly.do_compile
 
@@ -89,8 +89,8 @@ enigma2-pli-nightly-distclean:
 	rm -f $(DEPDIR)/enigma2-pli-nightly
 	rm -f $(DEPDIR)/enigma2-pli-nightly.do_compile
 	rm -f $(DEPDIR)/enigma2-pli-nightly.do_prepare
-	rm -rf $(appsdir)/enigma2-nightly
-	rm -rf $(appsdir)/enigma2-nightly.newest
-	rm -rf $(appsdir)/enigma2-nightly.org
-	rm -rf $(appsdir)/enigma2-nightly.patched
+	rm -rf $(DIR_enigma2_pli)
+	rm -rf $(DIR_enigma2_pli).newest
+	rm -rf $(DIR_enigma2_pli).org
+	rm -rf $(DIR_enigma2_pli).patched
 
