@@ -482,9 +482,7 @@ libpng
   {PN}-{PV}
   extract:http://www.fhloston-paradise.de/{PN}-{PV}.tar.gz
   nothing:file://{PN}.diff
-  rewrite-pkgconfig:{PN}15.pc
-  make:install:prefix=TARGETS/usr
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la:TARGETS/usr/lib/{PN}15.la
+  make:install:prefix=PKDIR/usr
 ;
 libungif
   4.1.4
