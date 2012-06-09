@@ -58,7 +58,7 @@ define fromrpm_build
 	$(toflash_build)
 endef
 
-flash_ipkg_args = -f $(crossprefix)/etc/opkg.conf -o $(prefix)/release
+flash_ipkg_args = -f $(crossprefix)/etc/opkg.conf -o $(prefix)/pkgroot
 cdk_ipkg_args = -f $(crossprefix)/etc/opkg-cdk.conf -o $(targetprefix)
 
 define do_build_pkg
