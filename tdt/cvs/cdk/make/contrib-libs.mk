@@ -2955,7 +2955,8 @@ DESCRIPTION_tuxtxt32bpp = "tuxtxt plugin"
 
 FILES_tuxtxt32bpp = \
 /usr/lib/libtuxtxt32bpp* \
-/usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*
+/usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/* \
+/usr/tuxtxt/tuxtxt2.conf
 
 $(DEPDIR)/tuxtxt32bpp.do_prepare: tuxtxtlib @DEPENDS_tuxtxt32bpp@
 	@PREPARE_tuxtxt32bpp@
@@ -2987,6 +2988,7 @@ $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
 	cd @DIR_tuxtxt32bpp@ && \
 		@INSTALL_tuxtxt32bpp@
 	$(tocdk_build)
+	mv -f $(PKDIR)/usr/etc/tuxtxt $(PKDIR)/usr
 	$(toflash_build)
 #	@DISTCLEANUP_tuxtxt32bpp@
 	[ "x$*" = "x" ] && touch $@ || true
