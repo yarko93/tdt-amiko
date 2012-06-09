@@ -218,8 +218,8 @@ lsb
   3.2-20
   {PN}-3.2
   extract:http://www.meyersound.com/opensource/code/D-Mitri-Engine/5.0/debian-sources/{PN}_{PV}.tar.gz
-  install:-d:TARGETS/lib/{PN}
-  install:-m644:init-functions:TARGETS/lib/{PN}
+  install:-d:PKDIR/lib/{PN}
+  install:-m644:init-functions:PKDIR/lib/{PN}
 ;
 ipkg
   0.99.163

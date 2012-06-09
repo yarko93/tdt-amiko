@@ -140,6 +140,10 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 #
 # LSB
 #
+DESCRIPTION_lsb = "lsb"
+FILES_lsb = \
+/lib/lsb/*
+
 $(DEPDIR)/lsb.do_prepare: bootstrap @DEPENDS_lsb@
 	@PREPARE_lsb@
 	touch $@
@@ -150,8 +154,11 @@ $(DEPDIR)/lsb.do_compile: $(DEPDIR)/lsb.do_prepare
 $(DEPDIR)/min-lsb $(DEPDIR)/std-lsb $(DEPDIR)/max-lsb \
 $(DEPDIR)/lsb: \
 $(DEPDIR)/%lsb: $(DEPDIR)/lsb.do_compile
+	$(start_build)
 	cd @DIR_lsb@ && \
 		@INSTALL_lsb@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lsb@
 	[ "x$*" = "x" ] && touch $@ || true
 
