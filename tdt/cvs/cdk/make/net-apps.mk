@@ -316,7 +316,7 @@ FILES_wireless_tools = \
 /usr/sbin/* \
 /usr/lib/*.so*
 
-$(DEPDIR)/wireless_tools.do_prepare: @DEPENDS_wireless_tools@
+$(DEPDIR)/wireless_tools.do_prepare: wpa_supplicant @DEPENDS_wireless_tools@
 	@PREPARE_wireless_tools@
 	touch $@
 
