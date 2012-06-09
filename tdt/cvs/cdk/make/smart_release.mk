@@ -25,6 +25,7 @@ release_common_utils:
 	mkdir -p $(prefix)/release/usr/lib/locale
 	cp -f $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
 	cp -f $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
+
 # Copy video_7100
 	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910),cp -f $(targetprefix)/boot/video_7100.elf $(prefix)/release/boot/video.elf)
 # Copy audio_7100
@@ -79,6 +80,7 @@ release_base:
 	ln -sf /media/hdd $(prefix)/release/hdd && \
 	$(INSTALL_DIR) $(prefix)/release/lib && \
 	$(INSTALL_DIR) $(prefix)/release/lib/modules && \
+	$(INSTALL_DIR) $(prefix)/release/lib/firmware && \
 	$(INSTALL_DIR) $(prefix)/release/ram && \
 	$(INSTALL_DIR) $(prefix)/release/var && \
 	$(INSTALL_DIR) $(prefix)/release/var/etc && \
@@ -143,6 +145,7 @@ release_base:
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
+	find $(targetprefix)/lib/modules/ -name '*ko' -exec cp -dp {} $(prefix)/release/lib/modules/ \;
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 	
 release_cube_common:
@@ -174,9 +177,14 @@ release_cuberevo: release_cube_common
 release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname
 	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
+	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
 	
 release_spark7162:
-	echo "spark7162" > $(prefix)/release/etc/hostname	
+	echo "spark7162" > $(prefix)/release/etc/hostname
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
+	cp -dp $(buildprefix)/root/etc/lircd_spark7162.conf $(prefix)/release/etc/lircd.conf
+	cp -f $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/spark7162.ko
 	
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
