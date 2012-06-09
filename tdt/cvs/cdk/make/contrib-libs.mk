@@ -260,11 +260,14 @@ $(DEPDIR)/libpng.do_compile: $(DEPDIR)/libpng.do_prepare
 $(DEPDIR)/min-libpng $(DEPDIR)/std-libpng $(DEPDIR)/max-libpng \
 $(DEPDIR)/libpng: \
 $(DEPDIR)/%libpng: $(DEPDIR)/libpng.do_compile
+	$(start_build)
 	cd @DIR_libpng@ && \
-		sed -e "s,^prefix=,prefix=$(targetprefix)," < libpng-config > $(crossprefix)/bin/libpng-config && \
+		sed -e "s,^prefix=,prefix=$(PKDIR)," < libpng-config > $(crossprefix)/bin/libpng-config && \
 		chmod 755 $(crossprefix)/bin/libpng-config && \
 		@INSTALL_libpng@
-		rm -f $(targetprefix)/usr/bin/libpng*-config
+		rm -f $(PKDIR)/usr/bin/libpng*-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libpng@
 	[ "x$*" = "x" ] && touch $@ || true
 

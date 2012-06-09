@@ -60,6 +60,19 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/tuxbox && \
 	$(INSTALL_DIR) $(prefix)/release/etc/enigma2 && \
+	$(INSTALL_DIR) $(prefix)/release/media && \
+	$(INSTALL_DIR) $(prefix)/release/media/dvd && \
+	$(INSTALL_DIR) $(prefix)/release/media/net && \
+	$(INSTALL_DIR) $(prefix)/release/mnt && \
+	$(INSTALL_DIR) $(prefix)/release/mnt/usb && \
+	$(INSTALL_DIR) $(prefix)/release/mnt/hdd && \
+	$(INSTALL_DIR) $(prefix)/release/mnt/nfs && \
+	$(INSTALL_DIR) $(prefix)/release/root && \
+	$(INSTALL_DIR) $(prefix)/release/proc && \
+	$(INSTALL_DIR) $(prefix)/release/sys && \
+	$(INSTALL_DIR) $(prefix)/release/tmp && \
+	$(INSTALL_DIR) $(prefix)/release/usr && \
+	$(INSTALL_DIR) $(prefix)/release/usr/bin && \
 	$(INSTALL_DIR) $(prefix)/release/media/hdd && \
 	$(INSTALL_DIR) $(prefix)/release/media/hdd/music && \
 	$(INSTALL_DIR) $(prefix)/release/media/hdd/picture && \
@@ -70,15 +83,15 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/var && \
 	$(INSTALL_DIR) $(prefix)/release/var/etc && \
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/opkg && \
-	ln -s /usr/bin/opkg  $(prefix)/release/usr/bin/ipkg-cl && \
-	ln -s /usr/bin/opkg  $(prefix)/release/usr/bin/ipkg 
+	ln -sf /usr/bin/opkg-cl  $(prefix)/release/usr/bin/ipkg-cl && \
+	ln -sf /usr/bin/opkg-cl  $(prefix)/release/usr/bin/ipkg
 # zoneinfo
 	$(INSTALL_DIR) $(prefix)/release/usr/share/zoneinfo && \
 	cp -aR $(buildprefix)/root/usr/share/zoneinfo/* $(prefix)/release/usr/share/zoneinfo/
 # udhcpc
 	$(INSTALL_DIR) $(prefix)/release/usr/share/udhcpc && \
 	cp -aR $(buildprefix)/root/usr/share/udhcpc/* $(prefix)/release/usr/share/udhcpc/ && \
-	ln -s /usr/local/share/keymaps $(prefix)/release/usr/share/keymaps
+	ln -sf /usr/local/share/keymaps $(prefix)/release/usr/share/keymaps
 	if [ -e $(targetprefix)/usr/share/alsa ]; then \
 	mkdir $(prefix)/release/usr/share/alsa/; \
 	mkdir $(prefix)/release/usr/share/alsa/cards/; \
@@ -115,6 +128,23 @@ release_base:
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin/ && \
 	cp -rd $(targetprefix)/lib/* $(prefix)/release/lib/ && \
+	cp -a $(targetprefix)/dev/* $(prefix)/release/dev/ && \
+	cp -dp $(targetprefix)/etc/fstab $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/group $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/host.conf $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/hostname $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/hosts $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/inetd.conf $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/inittab $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/localtime $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/mtab $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/passwd $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/profile $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/protocols $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/resolv.conf $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 	
 release_cube_common:
@@ -157,6 +187,7 @@ $(DEPDIR)/min-release $(DEPDIR)/std-release $(DEPDIR)/max-release $(DEPDIR)/rele
 $(DEPDIR)/%release: release_base release_common_utils release_$(TF7700)$(HL101)$(VIP1_V2)$(VIP2_V1)$(UFS910)$(UFS912)$(SPARK)$(SPARK7162)$(UFS922)$(OCTAGON1008)$(FORTIS_HDBOX)$(ATEVIO7500)$(HS7810A)$(HS7110)$(WHITEBOX)$(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(HOMECAST5101)$(IPBOX9900)$(IPBOX99)$(IPBOX55)$(ADB_BOX)
 	touch $@
 release-clean:
+
 	rm -f $(DEPDIR)/release
 	rm -f $(DEPDIR)/release_base
 	rm -f $(DEPDIR)/release_$(TF7700)$(HL101)$(VIP1_V2)$(VIP2_V1)$(UFS910)$(UFS912)$(SPARK)$(SPARK7162)$(UFS922)$(OCTAGON1008)$(FORTIS_HDBOX)$(ATEVIO7500)$(HS7810A)$(HS7110)$(WHITEBOX)$(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(HOMECAST5101)$(IPBOX9900)$(IPBOX99)$(IPBOX55)$(ADB_BOX)
