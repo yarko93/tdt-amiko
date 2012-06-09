@@ -241,6 +241,7 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 DESCRIPTION_e2fsprogs = "e2fsprogs"
 FILES_e2fsprogs = \
 /sbin/* \
+/usr/lib/e2initrd_helper \
 /lib/*.so* \
 /usr/lib/*.so*
 
@@ -262,6 +263,7 @@ $(DEPDIR)/e2fsprogs.do_compile: $(DEPDIR)/e2fsprogs.do_prepare | $(UTIL_LINUX)
 		--enable-elf-shlibs \
 		--with-root-prefix= \
 		--enable-verbose-makecmds \
+		--enable-e2initrd-helper \
 		--enable-symlink-install \
 		--enable-compression \
 		--disable-libblkid \
@@ -317,11 +319,14 @@ else !STM24
 $(DEPDIR)/min-e2fsprogs $(DEPDIR)/std-e2fsprogs $(DEPDIR)/max-e2fsprogs \
 $(DEPDIR)/e2fsprogs: \
 $(DEPDIR)/%e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
+	$(start_build)
 	cd @DIR_e2fsprogs@ && \
 		@INSTALL_e2fsprogs@
 	[ "x$*" = "x" ] && ( cd @DIR_e2fsprogs@ && \
 		$(MAKE) install -C lib/uuid DESTDIR=$(PKDIR) && \
 		$(MAKE) install -C lib/blkid DESTDIR=$(PKDIR) ) || true
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_e2fsprogs@
 	[ "x$*" = "x" ] && touch $@ || true
 endif !STM24
