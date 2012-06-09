@@ -395,7 +395,7 @@ sysstat
 hotplug_e2
   1.0
   {PN}-helper
-  make:install:prefix=/usr:DESTDIR=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 autofs
   4.1.4
