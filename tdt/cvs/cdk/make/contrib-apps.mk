@@ -1088,6 +1088,10 @@ $(DEPDIR)/%hotplug_e2: $(DEPDIR)/hotplug_e2.do_compile
 #
 # autofs
 #
+DESCRIPTION_autofs = "autofs"
+FILES_autofs = \
+/usr/*
+
 $(DEPDIR)/autofs.do_prepare: bootstrap @DEPENDS_autofs@
 	@PREPARE_autofs@
 	touch $@
@@ -1107,8 +1111,11 @@ $(DEPDIR)/autofs.do_compile: $(DEPDIR)/autofs.do_prepare
 $(DEPDIR)/min-autofs $(DEPDIR)/std-autofs $(DEPDIR)/max-autofs \
 $(DEPDIR)/autofs: \
 $(DEPDIR)/%autofs: $(DEPDIR)/autofs.do_compile
+	$(start_build)
 	cd @DIR_autofs@ && \
 		@INSTALL_autofs@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_autofs@
 	[ "x$*" = "x" ] && touch $@ || true
 
