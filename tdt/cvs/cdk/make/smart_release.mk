@@ -115,6 +115,7 @@ release_base:
 # AUTOFS
 	if [ -d $(prefix)/release/usr/lib/autofs ]; then \
 		cp -f $(buildprefix)/root/release/auto.hotplug $(prefix)/release/etc/; \
+		cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release/etc/; \
 		cp -f $(buildprefix)/root/release/auto.network $(prefix)/release/etc/; \
 		cp -f $(buildprefix)/root/release/autofs $(prefix)/release/etc/init.d/; \
 	fi
