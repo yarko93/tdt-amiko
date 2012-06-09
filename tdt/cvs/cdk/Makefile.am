@@ -114,7 +114,7 @@ include make/tags.mk
 include make/disttargets.mk
 
 #Trick
-include make/release.mk
+include make/smart_release.mk
 
 include make/release_neutrino.mk
 

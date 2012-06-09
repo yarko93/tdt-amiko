@@ -39,14 +39,23 @@ define toflash_build
 	$(call do_build_pkg,install,flash)
 endef
 
-define tocdk_build 
+define tocdk_build_start
 	rm -rf $(ipkgbuilddir)/*
 	export FILES_$(PARENT_PK)="/" && \
 	python split_packages.py
 	$(rewrite_libtool)
 	$(rewrite_pkgconfig)
 	$(rewrite_dependency)
+endef
+
+define tocdk_build
+	$(tocdk_build_start)
 	$(call do_build_pkg,install,cdk)
+endef
+
+define fromrpm_build
+	$(fromrpm_get)
+	$(toflash_build)
 endef
 
 flash_ipkg_args = -f $(crossprefix)/etc/opkg.conf -o $(prefix)/release
@@ -73,15 +82,45 @@ define start_build
 	mkdir $(PKDIR)
 endef
 
+define package_rpm_get
+	$(shell rpm --dbpath $(prefix)/cdkroot-rpmdb --queryformat $1)
+endef
+
+define fromrpm_get
+	$(eval export DESCRIPTION_$(PARENT_PK) = $(call package_rpm_get,'%{SUMMARY}' -qp $(lastword $^)))
+	$(eval export PKGV_$(PARENT_PK) = $(call package_rpm_get,'%{VERSION}' -qp $(lastword $^)))
+	$(eval export PKGR_$(PARENT_PK) = $(call package_rpm_get,'%{RELEASE}' -qp $(lastword $^)))
+	$(eval export SRC_URI_$(PARENT_PK) = "stlinux.com")
+	@echo "rpm got descr $(DESCRIPTION_$(PARENT_PK))"
+	@echo "rpm got version $(PKGV_$(PARENT_PK))"
+	rm -rf rpmtmpdir
+	mkdir rpmtmpdir
+	bsdtar xf $(lastword $^) -C rpmtmpdir
+	mv -v rpmtmpdir/$(targetprefix)/* $(PKDIR)
+endef
+
 define flash_prebuild
 	$(remove_libs)
 	$(remove_pkgconfigs)
 	$(remove_includedir)
+	$(strip_libs)
+	$(remove_docs)
+endef
+
+define remove_docs
+	rm -rf $(PKDIR)/usr/share/doc
+	rm -rf $(PKDIR)/usr/share/man
+endef
+
+define strip_libs
+	find $(PKDIR) -type f -regex '.*/lib/.*so\(\.[0-9]+\)*' \
+		-exec echo strip {} \; \
+		-exec sh4-linux-strip --strip-unneeded {} \;
 endef
 
 define remove_libs
-	rm -f $(PKDIR)/lib/*.{a,la}
-	rm -f $(PKDIR)/usr/lib/*.{a,la}
+	rm -f $(PKDIR)/lib/*.{a,la,o}
+	rm -f $(PKDIR)/usr/lib/*.{a,la,o}
 endef
 
 define remove_pkgconfigs
@@ -90,6 +129,11 @@ endef
 
 define remove_includedir
 	rm -rf $(PKDIR)/usr/include
+endef
+
+define remove_pyo
+	find $(PKDIR) -name "*.pyo" -type f -exec rm -f {} \;
+	rm -rf $(PKDIR)/usr/lib/python2.6/site-packages/*-py2.6.egg-info
 endef
 
 
@@ -124,5 +168,11 @@ define parent_pk
 	$(eval $@: PARENT_PK = $1)
 endef
 
-git_version := git log -1 --format=%cd --date=short |sed s/-//g
+package-index: $(ipkprefix)/Packages
+$(ipkprefix)/Packages: $(ipkprefix)
+	cd $(ipkprefix) && \
+		$(crossprefix)/bin/ipkg-make-index . > Packages && \
+		cat Packages | gzip > Packages.gz
+
+git_version := git log -1 --format=%cd --date=short -- . |sed s/-//g
 get_git_version = $(eval export PKGV_$(PARENT_PK) = $(shell cd $(DIR_$(PARENT_PK)) && $(git_version)))

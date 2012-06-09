@@ -11,6 +11,11 @@ $(DEPDIR)/libboost: bootstrap @DEPENDS_libboost@
 #
 # libz
 #
+
+DESCRIPTION_libz = "Compression library implementing the deflate compression method found in gzip and PKZIP"
+FILES_libz = \
+/usr/lib
+
 if !STM22
 LIBZ_ORDER = binutils-dev
 endif !STM22
@@ -31,14 +36,22 @@ $(DEPDIR)/libz.do_compile: $(DEPDIR)/libz.do_prepare
 $(DEPDIR)/min-libz $(DEPDIR)/std-libz $(DEPDIR)/max-libz \
 $(DEPDIR)/libz: \
 $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
+	$(start_build)
 	cd @DIR_libz@ && \
 		@INSTALL_libz@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libz@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libreadline
 #
+
+DESCRIPTION_libreadline = GNU readline library
+FILES_libreadline = \
+/usr/lib
+
 $(DEPDIR)/libreadline.do_prepare: bootstrap ncurses-dev @DEPENDS_libreadline@
 	@PREPARE_libreadline@
 	touch $@
@@ -57,8 +70,11 @@ $(DEPDIR)/libreadline.do_compile: $(DEPDIR)/libreadline.do_prepare
 $(DEPDIR)/min-libreadline $(DEPDIR)/std-libreadline $(DEPDIR)/max-libreadline \
 $(DEPDIR)/libreadline: \
 $(DEPDIR)/%libreadline: $(DEPDIR)/libreadline.do_compile
+	$(start_build)
 	cd @DIR_libreadline@ && \
 		@INSTALL_libreadline@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libreadline@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -97,6 +113,12 @@ $(DEPDIR)/freetype-old: $(DEPDIR)/freetype-old.do_compile
 #
 # freetype
 #
+DESCRIPTION_freetype = "freetype"
+
+FILES_freetype = \
+/usr/lib/*.so* \
+/usr/bin/freetype-config
+
 $(DEPDIR)/freetype.do_prepare: bootstrap @DEPENDS_freetype@
 	@PREPARE_freetype@
 	touch $@
@@ -114,6 +136,7 @@ $(DEPDIR)/freetype.do_compile: $(DEPDIR)/freetype.do_prepare
 $(DEPDIR)/min-freetype $(DEPDIR)/std-freetype $(DEPDIR)/max-freetype \
 $(DEPDIR)/freetype: \
 $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
+	$(start_build)
 	cd @DIR_freetype@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < builds/unix/freetype-config > $(crossprefix)/bin/freetype-config && \
 		chmod 755 $(crossprefix)/bin/freetype-config && \
@@ -121,12 +144,20 @@ $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 		ln -sf $(targetprefix)/usr/include/freetype2/freetype $(targetprefix)/usr/include/freetype && \
 		@INSTALL_freetype@
 		rm -f $(targetprefix)/usr/bin/freetype-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_freetype@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # lirc
 #
+DESCRIPTION_lirc ="lirc"
+
+FILES_lirc = \
+/usr/bin/lircd \
+/usr/lib/*.so*
+
 $(DEPDIR)/lirc.do_prepare: bootstrap @DEPENDS_lirc@
 	@PREPARE_lirc@
 	touch $@
@@ -157,14 +188,22 @@ $(DEPDIR)/lirc.do_compile: $(DEPDIR)/lirc.do_prepare
 $(DEPDIR)/min-lirc $(DEPDIR)/std-lirc $(DEPDIR)/max-lirc \
 $(DEPDIR)/lirc: \
 $(DEPDIR)/%lirc: $(DEPDIR)/lirc.do_compile
+	$(start_build)
 	cd @DIR_lirc@ && \
 		@INSTALL_lirc@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lirc@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # jpeg
 #
+DESCRIPTION_jpeg = "jpeg"
+
+FILES_jpeg = \
+/usr/lib/*.so* 
+
 $(DEPDIR)/jpeg.do_prepare: bootstrap @DEPENDS_jpeg@
 	@PREPARE_jpeg@
 	touch $@
@@ -184,14 +223,22 @@ $(DEPDIR)/jpeg.do_compile: $(DEPDIR)/jpeg.do_prepare
 $(DEPDIR)/min-jpeg $(DEPDIR)/std-jpeg $(DEPDIR)/max-jpeg \
 $(DEPDIR)/jpeg: \
 $(DEPDIR)/%jpeg: $(DEPDIR)/jpeg.do_compile
+	$(start_build)
 	cd @DIR_jpeg@ && \
 		@INSTALL_jpeg@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_jpeg@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libpng
 #
+DESCRIPTION_libpng = "libpng"
+
+FILES_libpng = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libpng.do_prepare: bootstrap libz @DEPENDS_libpng@
 	@PREPARE_libpng@
 	touch $@
@@ -213,17 +260,25 @@ $(DEPDIR)/libpng.do_compile: $(DEPDIR)/libpng.do_prepare
 $(DEPDIR)/min-libpng $(DEPDIR)/std-libpng $(DEPDIR)/max-libpng \
 $(DEPDIR)/libpng: \
 $(DEPDIR)/%libpng: $(DEPDIR)/libpng.do_compile
+	$(start_build)
 	cd @DIR_libpng@ && \
-		sed -e "s,^prefix=,prefix=$(targetprefix)," < libpng-config > $(crossprefix)/bin/libpng-config && \
+		sed -e "s,^prefix=,prefix=$(PKDIR)," < libpng-config > $(crossprefix)/bin/libpng-config && \
 		chmod 755 $(crossprefix)/bin/libpng-config && \
 		@INSTALL_libpng@
-		rm -f $(targetprefix)/usr/bin/libpng*-config
+		rm -f $(PKDIR)/usr/bin/libpng*-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libpng@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libungif
 #
+DESCRIPTION_libungif = "libungif"
+
+FILES_libungif = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libungif.do_prepare: bootstrap @DEPENDS_libungif@
 	@PREPARE_libungif@
 	touch $@
@@ -242,14 +297,23 @@ $(DEPDIR)/libungif.do_compile: $(DEPDIR)/libungif.do_prepare
 $(DEPDIR)/min-libungif $(DEPDIR)/std-libungif $(DEPDIR)/max-libungif \
 $(DEPDIR)/libungif: \
 $(DEPDIR)/%libungif: $(DEPDIR)/libungif.do_compile
+	$(start_build)
 	cd @DIR_libungif@ && \
 		@INSTALL_libungif@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libungif@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libgif
 #
+DESCRIPTION_libgif = "libgif"
+
+FILES_libgif = \
+/usr/lib/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/libgif.do_prepare: bootstrap @DEPENDS_libgif@
 	@PREPARE_libgif@
 	touch $@
@@ -268,14 +332,23 @@ $(DEPDIR)/libgif.do_compile: $(DEPDIR)/libgif.do_prepare
 $(DEPDIR)/min-libgif $(DEPDIR)/std-libgif $(DEPDIR)/max-libgif \
 $(DEPDIR)/libgif: \
 $(DEPDIR)/%libgif: $(DEPDIR)/libgif.do_compile
+	$(start_build)
 	cd @DIR_libgif@ && \
 		@INSTALL_libgif@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libgif@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libcurl
 #
+DESCRIPTION_curl = "Curl is a command line tool for transferring data specified with URL syntax"
+
+FILES_curl = \
+/usr/lib/*.so* \
+/usr/bin/curl
+
 $(DEPDIR)/curl.do_prepare: bootstrap libz @DEPENDS_curl@
 	@PREPARE_curl@
 	touch $@
@@ -296,17 +369,26 @@ $(DEPDIR)/curl.do_compile: $(DEPDIR)/curl.do_prepare
 $(DEPDIR)/min-curl $(DEPDIR)/std-curl $(DEPDIR)/max-curl \
 $(DEPDIR)/curl: \
 $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
+	$(start_build)
 	cd @DIR_curl@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < curl-config > $(crossprefix)/bin/curl-config && \
 		chmod 755 $(crossprefix)/bin/curl-config && \
 		@INSTALL_curl@
-		rm -f $(targetprefix)/usr/bin/curl-config
+		rm -f $(PKDIR)/usr/bin/curl-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_curl@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libfribidi
 #
+DESCRIPTION_libfribidi = "libfribidi"
+
+FILES_libfribidi = \
+/usr/lib/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/libfribidi.do_prepare: bootstrap @DEPENDS_libfribidi@
 	@PREPARE_libfribidi@
 	touch $@
@@ -326,14 +408,22 @@ $(DEPDIR)/libfribidi.do_compile: $(DEPDIR)/libfribidi.do_prepare
 $(DEPDIR)/min-libfribidi $(DEPDIR)/std-libfribidi $(DEPDIR)/max-libfribidi \
 $(DEPDIR)/libfribidi: \
 $(DEPDIR)/%libfribidi: $(DEPDIR)/libfribidi.do_compile
+	$(start_build)
 	cd @DIR_libfribidi@ && \
 		@INSTALL_libfribidi@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libfribidi@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libsigc
 #
+DESCRIPTION_libsigc = "libsigc"
+
+FILES_libsigc = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libsigc.do_prepare: bootstrap libstdc++-dev @DEPENDS_libsigc@
 	@PREPARE_libsigc@
 	touch $@
@@ -352,14 +442,22 @@ $(DEPDIR)/libsigc.do_compile: $(DEPDIR)/libsigc.do_prepare
 $(DEPDIR)/min-libsigc $(DEPDIR)/std-libsigc $(DEPDIR)/max-libsigc \
 $(DEPDIR)/libsigc: \
 $(DEPDIR)/%libsigc: $(DEPDIR)/libsigc.do_compile
+	$(start_build)
 	cd @DIR_libsigc@ && \
 		@INSTALL_libsigc@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libsigc@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libmad
 #
+DESCRIPTION_libmad = "libmad - MPEG audio decoder library"
+
+FILES_libmad = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libmad.do_prepare: bootstrap @DEPENDS_libmad@
 	@PREPARE_libmad@
 	touch $@
@@ -387,14 +485,22 @@ $(DEPDIR)/libmad.do_compile: $(DEPDIR)/libmad.do_prepare
 $(DEPDIR)/min-libmad $(DEPDIR)/std-libmad $(DEPDIR)/max-libmad \
 $(DEPDIR)/libmad: \
 $(DEPDIR)/%libmad: $(DEPDIR)/libmad.do_compile
+	$(start_build)
 	cd @DIR_libmad@ && \
 		@INSTALL_libmad@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libmad@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libid3tag
 #
+DESCRIPTION_libid3tag = "libid3tag"
+
+FILES_libid3tag = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libid3tag.do_prepare: bootstrap libz @DEPENDS_libid3tag@
 	@PREPARE_libid3tag@
 	touch $@
@@ -414,14 +520,21 @@ $(DEPDIR)/libid3tag.do_compile: $(DEPDIR)/libid3tag.do_prepare
 $(DEPDIR)/min-libid3tag $(DEPDIR)/std-libid3tag $(DEPDIR)/max-libid3tag \
 $(DEPDIR)/libid3tag: \
 $(DEPDIR)/%libid3tag: %libz $(DEPDIR)/libid3tag.do_compile
+	$(start_build)
 	cd @DIR_libid3tag@ && \
 		@INSTALL_libid3tag@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libid3tag@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libvorbisidec
 #
+DESCRIPTION_libvorbisidec = "libvorbisidec"
+
+FILES_libvorbisidec = \
+/usr/lib/*.so*
 
 $(DEPDIR)/libvorbisidec.do_prepare: bootstrap @DEPENDS_libvorbisidec@
 	@PREPARE_libvorbisidec@
@@ -438,8 +551,11 @@ $(DEPDIR)/libvorbisidec.do_compile: $(DEPDIR)/libvorbisidec.do_prepare
 	touch $@
 
 $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
+	$(start_build)
 	cd @DIR_libvorbisidec@ && \
 		@INSTALL_libvorbisidec@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libvorbisidec@
 	@[ "x$*" = "x" ] && touch $@ || true
 
@@ -447,6 +563,11 @@ $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
 # libglib2
 # You need libglib2.0-dev on host system
 #
+DESCRIPTION_glib2 = "libglib2"
+
+FILES_glib2 = \
+/usr/lib/*.so*
+
 $(DEPDIR)/glib2.do_prepare: bootstrap libz @DEPENDS_glib2@
 	@PREPARE_glib2@
 	touch $@
@@ -478,14 +599,23 @@ $(DEPDIR)/glib2.do_compile: $(DEPDIR)/glib2.do_prepare
 $(DEPDIR)/min-glib2 $(DEPDIR)/std-glib2 $(DEPDIR)/max-glib2 \
 $(DEPDIR)/glib2: \
 $(DEPDIR)/%glib2: $(DEPDIR)/glib2.do_compile
+	$(start_build)
 	cd @DIR_glib2@ && \
 		@INSTALL_glib2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_glib2@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libiconv
 #
+DESCRIPTION_libiconv = "libiconv"
+
+FILES_libiconv = \
+/usr/lib/*.so* \
+/usr/bin/iconv
+
 $(DEPDIR)/libiconv.do_prepare: bootstrap @DEPENDS_libiconv@
 	@PREPARE_libiconv@
 	touch $@
@@ -503,15 +633,23 @@ $(DEPDIR)/libiconv.do_compile: $(DEPDIR)/libiconv.do_prepare
 $(DEPDIR)/min-libiconv $(DEPDIR)/std-libiconv $(DEPDIR)/max-libiconv \
 $(DEPDIR)/libiconv: \
 $(DEPDIR)/%libiconv: $(DEPDIR)/libiconv.do_compile
+	$(start_build)
 	cd @DIR_libiconv@ && \
 		cp ./srcm4/* $(hostprefix)/share/aclocal/ && \
 		@INSTALL_libiconv@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libiconv@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libmng
 #
+DESCRIPTION_libmng = "libmng - Multiple-image Network Graphics"
+
+FILES_libmng = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libmng.do_prepare: bootstrap libz jpeg lcms @DEPENDS_libmng@
 	@PREPARE_libmng@
 	touch $@
@@ -533,10 +671,24 @@ $(DEPDIR)/libmng.do_compile: $(DEPDIR)/libmng.do_prepare
 			--with-lcms && \
 		$(MAKE)
 	touch $@
-
+$(DEPDIR)/min-libmng $(DEPDIR)/std-libmng $(DEPDIR)/max-libmng \
+$(DEPDIR)/libmng: \
+$(DEPDIR)/%libmng: $(DEPDIR)/libmng.do_compile
+	$(start_build)
+	cd @DIR_libmng@ && \
+		@INSTALL_libmng@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_libmng@
+	[ "x$*" = "x" ] && touch $@ || true	
 #
 # lcms
 #
+DESCRIPTION_lcms = "lcms"
+
+FILES_lcms = \
+/usr/lib/*
+
 $(DEPDIR)/lcms.do_prepare: bootstrap libz jpeg @DEPENDS_lcms@
 	@PREPARE_lcms@
 	touch $@
@@ -552,10 +704,30 @@ $(DEPDIR)/lcms.do_compile: $(DEPDIR)/lcms.do_prepare
 			--enable-static && \
 		$(MAKE)
 	touch $@
-
+$(DEPDIR)/min-lcms $(DEPDIR)/std-lcms $(DEPDIR)/max-lcms \
+$(DEPDIR)/lcms: \
+$(DEPDIR)/%lcms: $(DEPDIR)/lcms.do_compile
+	$(start_build)
+	cd @DIR_lcms@ && \
+		@INSTALL_lcms@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_lcms@
+	[ "x$*" = "x" ] && touch $@ || true
 #
 # directfb
 #
+DESCRIPTION_directfb = "directfb"
+
+FILES_directfb = \
+/usr/lib/*.so* \
+/usr/lib/directfb-1.4-5/gfxdrivers/*.so* \
+/usr/lib/directfb-1.4-5/inputdrivers/*.so* \
+/usr/lib/directfb-1.4-5/interfaces/*.so* \
+/usr/lib/directfb-1.4-5/systems/*.so* \
+/usr/lib/directfb-1.4-5/wm/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/directfb.do_prepare: bootstrap freetype @DEPENDS_directfb@
 	@PREPARE_directfb@
 	touch $@
@@ -588,14 +760,22 @@ $(DEPDIR)/directfb.do_compile: $(DEPDIR)/directfb.do_prepare
 $(DEPDIR)/min-directfb $(DEPDIR)/std-directfb $(DEPDIR)/max-directfb \
 $(DEPDIR)/directfb: \
 $(DEPDIR)/%directfb: $(DEPDIR)/directfb.do_compile
+	$(start_build)
 	cd @DIR_directfb@ && \
 		@INSTALL_directfb@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_directfb@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # DFB++
 #
+DESCRIPTION_dfbpp = ""
+
+FILES_dfbpp = \
+/usr/lib/*.so*
+
 $(DEPDIR)/dfbpp.do_prepare: bootstrap libz jpeg directfb @DEPENDS_dfbpp@
 	@PREPARE_dfbpp@
 	touch $@
@@ -607,21 +787,29 @@ $(DEPDIR)/dfbpp.do_compile: $(DEPDIR)/dfbpp.do_prepare
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr && \
-			export top_builddir=`pwd` && \
 		$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-dfbpp $(DEPDIR)/std-dfbpp $(DEPDIR)/max-dfbpp \
 $(DEPDIR)/dfbpp: \
 $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
+	$(start_build)
 	cd @DIR_dfbpp@ && \
 		@INSTALL_dfbpp@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_dfbpp@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # expat
 #
+DESCRIPTION_expat = "Expat is an XML parser library written in C. It is a stream-oriented parser in which an application registers handlers for things the parser might find in the XML document"
+
+FILES_expat = \
+/usr/lib/libexpat.so* \
+/usr/bin/xmlwf
+
 $(DEPDIR)/expat.do_prepare: bootstrap @DEPENDS_expat@
 	@PREPARE_expat@
 	touch $@
@@ -640,15 +828,24 @@ $(DEPDIR)/expat.do_compile: $(DEPDIR)/expat.do_prepare
 $(DEPDIR)/min-expat $(DEPDIR)/std-expat $(DEPDIR)/max-expat \
 $(DEPDIR)/expat: \
 $(DEPDIR)/%expat: $(DEPDIR)/expat.do_compile
+	$(start_build)
 	cd @DIR_expat@ && \
 		@INSTALL_expat@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_expat@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # fontconfig
 #
-$(DEPDIR)/fontconfig.do_prepare: bootstrap libz libxml2 @DEPENDS_fontconfig@
+DESCRIPTION_fontconfig = "Fontconfig is a library for configuring and customizing font access."
+
+FILES_fontconfig = \
+/etc \
+/usr/lib/*
+
+$(DEPDIR)/fontconfig.do_prepare: bootstrap libz libxml2 freetype @DEPENDS_fontconfig@
 	@PREPARE_fontconfig@
 	touch $@
 
@@ -677,15 +874,23 @@ $(DEPDIR)/fontconfig.do_compile: $(DEPDIR)/fontconfig.do_prepare
 $(DEPDIR)/min-fontconfig $(DEPDIR)/std-fontconfig $(DEPDIR)/max-fontconfig \
 $(DEPDIR)/fontconfig: \
 $(DEPDIR)/%fontconfig: $(DEPDIR)/fontconfig.do_compile
+	$(start_build)
 	cd @DIR_fontconfig@ && \
 		@INSTALL_fontconfig@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_fontconfig@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libxmlccwrap
 #
-$(DEPDIR)/libxmlccwrap.do_prepare: bootstrap @DEPENDS_libxmlccwrap@
+DESCRIPTION_libxmlccwrap = "libxmlccwrap is a small C++ wrapper around libxml2 and libxslt "
+
+FILES_libxmlccwrap = \
+/usr/lib/*.so*
+
+$(DEPDIR)/libxmlccwrap.do_prepare: bootstrap libxslt @DEPENDS_libxmlccwrap@
 	@PREPARE_libxmlccwrap@
 	touch $@
 
@@ -703,16 +908,24 @@ $(DEPDIR)/libxmlccwrap.do_compile: $(DEPDIR)/libxmlccwrap.do_prepare
 $(DEPDIR)/min-libxmlccwrap $(DEPDIR)/std-libxmlccwrap $(DEPDIR)/max-libxmlccwrap \
 $(DEPDIR)/libxmlccwrap: \
 $(DEPDIR)/%libxmlccwrap: libxmlccwrap.do_compile
+	$(start_build)
 	cd @DIR_libxmlccwrap@ && \
 		@INSTALL_libxmlccwrap@ && \
-		sed -e "/^dependency_libs/ s,-L/usr/lib,-L$(targetprefix)/usr/lib,g" -i $(targetprefix)/usr/lib/libxmlccwrap.la && \
-		sed -e "/^dependency_libs/ s, /usr/lib, $(targetprefix)/usr/lib,g" -i $(targetprefix)/usr/lib/libxmlccwrap.la
+		sed -e "/^dependency_libs/ s,-L/usr/lib,-L$(PKDIR)/usr/lib,g" -i $(PKDIR)/usr/lib/libxmlccwrap.la && \
+		sed -e "/^dependency_libs/ s, /usr/lib, $(PKDIR)/usr/lib,g" -i $(PKDIR)/usr/lib/libxmlccwrap.la
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libxmlccwrap@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # a52dec
 #
+DESCRIPTION_a52dec = "liba52 is a free library for decoding ATSC A/52 streams. It is released under the terms of the GPL license"
+
+FILES_a52dec = \
+/usr/lib/*
+
 $(DEPDIR)/a52dec.do_prepare: bootstrap @DEPENDS_a52dec@
 	@PREPARE_a52dec@
 	touch $@
@@ -723,21 +936,29 @@ $(DEPDIR)/a52dec.do_compile: $(DEPDIR)/a52dec.do_prepare
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
-			--prefix=$(targetprefix)/usr && \
-		$(MAKE) install
+			--prefix=/usr && \
+		$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-a52dec $(DEPDIR)/std-a52dec $(DEPDIR)/max-a52dec \
 $(DEPDIR)/a52dec: \
 $(DEPDIR)/%a52dec: a52dec.do_compile
+	$(start_build)
 	cd @DIR_a52dec@ && \
 		@INSTALL_a52dec@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_a52dec@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdvdcss
 #
+DESCRIPTION_libdvdcss = "libdvdcss"
+
+FILES_libdvdcss = \
+/usr/lib/libdvdcss.so*
+
 $(DEPDIR)/libdvdcss.do_prepare: bootstrap @DEPENDS_libdvdcss@
 	@PREPARE_libdvdcss@
 	touch $@
@@ -756,14 +977,23 @@ $(DEPDIR)/libdvdcss.do_compile: $(DEPDIR)/libdvdcss.do_prepare
 $(DEPDIR)/min-libdvdcss $(DEPDIR)/std-libdvdcss $(DEPDIR)/max-libdvdcss \
 $(DEPDIR)/libdvdcss: \
 $(DEPDIR)/%libdvdcss: libdvdcss.do_compile
+	$(start_build)
 	cd @DIR_libdvdcss@ && \
 		@INSTALL_libdvdcss@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdvdcss@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdvdnav
 #
+DESCRIPTION_libdvdnav = "libdvdnav"
+
+FILES_libdvdnav = \
+/usr/lib/*.so* \
+/usr/bin/dvdnav-config
+
 $(DEPDIR)/libdvdnav.do_prepare: bootstrap libdvdread @DEPENDS_libdvdnav@
 	@PREPARE_libdvdnav@
 	touch $@
@@ -788,17 +1018,26 @@ $(DEPDIR)/libdvdnav.do_compile: $(DEPDIR)/libdvdnav.do_prepare
 $(DEPDIR)/min-libdvdnav $(DEPDIR)/std-libdvdnav $(DEPDIR)/max-libdvdnav \
 $(DEPDIR)/libdvdnav: \
 $(DEPDIR)/%libdvdnav: libdvdnav.do_compile
-	cd @DIR_libdvdnav@ && \
+	 $(start_build)
+	 cd @DIR_libdvdnav@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < misc/dvdnav-config > $(crossprefix)/bin/dvdnav-config && \
 		chmod 755 $(crossprefix)/bin/dvdnav-config && \
 		@INSTALL_libdvdnav@
 		rm -f $(targetprefix)/usr/bin/dvdnav-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdvdnav@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libdvdread
 #
+DESCRIPTION_libdvdread = "libdvdread"
+
+FILES_libdvdread = \
+/usr/lib/*.so* \
+/usr/bin/dvdread-config
+
 $(DEPDIR)/libdvdread.do_prepare: bootstrap @DEPENDS_libdvdread@
 	@PREPARE_libdvdread@
 	touch $@
@@ -823,17 +1062,27 @@ $(DEPDIR)/libdvdread.do_compile: $(DEPDIR)/libdvdread.do_prepare
 $(DEPDIR)/min-libdvdread $(DEPDIR)/std-libdvdread $(DEPDIR)/max-libdvdread \
 $(DEPDIR)/libdvdread: \
 $(DEPDIR)/%libdvdread: libdvdread.do_compile
+	$(start_build)
 	cd @DIR_libdvdread@ && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < misc/dvdread-config > $(crossprefix)/bin/dvdread-config && \
 		chmod 755 $(crossprefix)/bin/dvdread-config && \
 		@INSTALL_libdvdread@
 		rm -f $(targetprefix)/usr/bin/dvdread-config
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libdvdread@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # ffmpeg
 #
+DESCRIPTION_ffmpeg = "ffmpeg"
+
+FILES_ffmpeg = \
+/usr/lib/*.so* \
+/usr/bin/ffmpeg \
+/usr/bin/ffprobe
+
 $(DEPDIR)/ffmpeg.do_prepare: bootstrap libass rtmpdump @DEPENDS_ffmpeg@
 	@PREPARE_ffmpeg@
 	touch $@
@@ -919,14 +1168,22 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 $(DEPDIR)/min-ffmpeg $(DEPDIR)/std-ffmpeg $(DEPDIR)/max-ffmpeg \
 $(DEPDIR)/ffmpeg: \
 $(DEPDIR)/%ffmpeg: $(DEPDIR)/ffmpeg.do_compile
+	$(start_build)
 	cd @DIR_ffmpeg@ && \
 		@INSTALL_ffmpeg@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_ffmpeg@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libass
 #
+DESCRIPTION_libass = "libass"
+
+FILES_libass = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libass.do_prepare: bootstrap freetype @DEPENDS_libass@
 	@PREPARE_libass@
 	touch $@
@@ -945,14 +1202,22 @@ $(DEPDIR)/libass.do_compile: $(DEPDIR)/libass.do_prepare
 $(DEPDIR)/min-libass $(DEPDIR)/std-libass $(DEPDIR)/max-libass \
 $(DEPDIR)/libass: \
 $(DEPDIR)/%libass: $(DEPDIR)/libass.do_compile
+	$(start_build)
 	cd @DIR_libass@ && \
 		@INSTALL_libass@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libass@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # WebKitDFB
 #
+DESCRIPTION_webkitdfb = "webkitdfb"
+
+FILES_webkitdfb = \
+/usr/lib*
+
 $(DEPDIR)/webkitdfb.do_prepare: bootstrap glib2 icu4c libxml2 enchant lite curl fontconfig sqlite libsoup cairo jpeg @DEPENDS_webkitdfb@
 	@PREPARE_webkitdfb@
 	touch $@
@@ -991,14 +1256,24 @@ $(DEPDIR)/webkitdfb.do_compile: $(DEPDIR)/webkitdfb.do_prepare
 $(DEPDIR)/min-webkitdfb $(DEPDIR)/std-webkitdfb $(DEPDIR)/max-webkitdfb \
 $(DEPDIR)/webkitdfb: \
 $(DEPDIR)/%webkitdfb: $(DEPDIR)/webkitdfb.do_compile
+	$(start_build)
 	cd @DIR_webkitdfb@ && \
 		@INSTALL_webkitdfb@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_webkitdfb@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # icu4c
 #
+DESCRIPTION_icu4c = "icu4c"
+
+FILES_icu4c = \
+/usr/lib/*.so* \
+/usr/bin/* \
+/usr/sbin/*
+
 $(DEPDIR)/icu4c.do_prepare: bootstrap @DEPENDS_icu4c@
 	@PREPARE_icu4c@
 	cd @DIR_icu4c@ && \
@@ -1029,15 +1304,24 @@ $(DEPDIR)/icu4c.do_compile: $(DEPDIR)/icu4c.do_prepare
 $(DEPDIR)/min-icu4c $(DEPDIR)/std-icu4c $(DEPDIR)/max-icu4c \
 $(DEPDIR)/icu4c: \
 $(DEPDIR)/%icu4c: $(DEPDIR)/icu4c.do_compile
+	$(start_build)
 	cd @DIR_icu4c@ && \
 		unset TARGET && \
 		@INSTALL_icu4c@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_icu4c@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # enchant
 #
+DESCRIPTION_enchant = "libenchant -- Generic spell checking library"
+
+FILES_enchant = \
+/usr/lib/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/enchant.do_prepare: bootstrap @DEPENDS_enchant@
 	@PREPARE_enchant@
 	touch $@
@@ -1057,14 +1341,23 @@ $(DEPDIR)/enchant.do_compile: $(DEPDIR)/enchant.do_prepare
 $(DEPDIR)/min-enchant $(DEPDIR)/std-enchant $(DEPDIR)/max-enchant \
 $(DEPDIR)/enchant: \
 $(DEPDIR)/%enchant: $(DEPDIR)/enchant.do_compile
+	$(start_build)
 	cd @DIR_enchant@ && \
 		@INSTALL_enchant@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_enchant@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # lite
 #
+DESCRIPTION_lite = "LiTE is a Toolkit Engine"
+
+FILES_lite = \
+/usr/lib/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/lite.do_prepare: bootstrap directfb @DEPENDS_lite@
 	@PREPARE_lite@
 	touch $@
@@ -1085,14 +1378,23 @@ $(DEPDIR)/lite.do_compile: $(DEPDIR)/lite.do_prepare
 $(DEPDIR)/min-lite $(DEPDIR)/std-lite $(DEPDIR)/max-lite \
 $(DEPDIR)/lite: \
 $(DEPDIR)/%lite: $(DEPDIR)/lite.do_compile
+	$(start_build)
 	cd @DIR_lite@ && \
 		@INSTALL_lite@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lite@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # sqlite
 #
+DESCRIPTION_sqlite = "sqlite"
+
+FILES_sqlite = \
+/usr/lib/*.so* \
+/usr/bin/sqlite3
+
 $(DEPDIR)/sqlite.do_prepare: bootstrap @DEPENDS_sqlite@
 	@PREPARE_sqlite@
 	touch $@
@@ -1113,14 +1415,22 @@ $(DEPDIR)/sqlite.do_compile: $(DEPDIR)/sqlite.do_prepare
 $(DEPDIR)/min-sqlite $(DEPDIR)/std-sqlite $(DEPDIR)/max-sqlite \
 $(DEPDIR)/sqlite: \
 $(DEPDIR)/%sqlite: $(DEPDIR)/sqlite.do_compile
+	$(start_build)
 	cd @DIR_sqlite@ && \
 		@INSTALL_sqlite@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_sqlite@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libsoup
 #
+DESCRIPTION_libsoup = "libsoup is an HTTP client/server library"
+
+FILES_libsoup = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libsoup.do_prepare: bootstrap @DEPENDS_libsoup@
 	@PREPARE_libsoup@
 	touch $@
@@ -1139,14 +1449,22 @@ $(DEPDIR)/libsoup.do_compile: $(DEPDIR)/libsoup.do_prepare
 $(DEPDIR)/min-libsoup $(DEPDIR)/std-libsoup $(DEPDIR)/max-libsoup \
 $(DEPDIR)/libsoup: \
 $(DEPDIR)/%libsoup: $(DEPDIR)/libsoup.do_compile
+	$(start_build)
 	cd @DIR_libsoup@ && \
 		@INSTALL_libsoup@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libsoup@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # pixman
 #
+DESCRIPTION_pixman = "pixman is a library that provides low-level pixel manipulation"
+
+FILES_pixman = \
+/usr/lib/*.so*
+
 $(DEPDIR)/pixman.do_prepare: bootstrap @DEPENDS_pixman@
 	@PREPARE_pixman@
 	touch $@
@@ -1163,14 +1481,22 @@ $(DEPDIR)/pixman.do_compile: $(DEPDIR)/pixman.do_prepare
 $(DEPDIR)/min-pixman $(DEPDIR)/std-pixman $(DEPDIR)/max-pixman \
 $(DEPDIR)/pixman: \
 $(DEPDIR)/%pixman: $(DEPDIR)/pixman.do_compile
+	$(start_build)
 	cd @DIR_pixman@ && \
 		@INSTALL_pixman@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_pixman@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # cairo
 #
+DESCRIPTION_cairo = "Cairo - Multi-platform 2D graphics library"
+
+FILES_cairo = \
+/usr/lib/*.so*
+
 $(DEPDIR)/cairo.do_prepare: bootstrap libpng pixman @DEPENDS_cairo@
 	@PREPARE_cairo@
 	touch $@
@@ -1198,14 +1524,22 @@ $(DEPDIR)/cairo.do_compile: $(DEPDIR)/cairo.do_prepare
 $(DEPDIR)/min-cairo $(DEPDIR)/std-cairo $(DEPDIR)/max-cairo \
 $(DEPDIR)/cairo: \
 $(DEPDIR)/%cairo: $(DEPDIR)/cairo.do_compile
+	$(start_build)
 	cd @DIR_cairo@ && \
 		@INSTALL_cairo@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_cairo@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libogg
 #
+DESCRIPTION_libogg = "distribution includes libogg and nothing else"
+
+FILES_libogg = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libogg.do_prepare: bootstrap @DEPENDS_libogg@
 	@PREPARE_libogg@
 	touch $@
@@ -1222,14 +1556,23 @@ $(DEPDIR)/libogg.do_compile: $(DEPDIR)/libogg.do_prepare
 $(DEPDIR)/min-libogg $(DEPDIR)/std-libogg $(DEPDIR)/max-libogg \
 $(DEPDIR)/libogg: \
 $(DEPDIR)/%libogg: $(DEPDIR)/libogg.do_compile
+	$(start_build)
 	cd @DIR_libogg@ && \
 		@INSTALL_libogg@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libogg@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libflac
 #
+DESCRIPTION_libflac = "libflac is Open Source lossless audio codec"
+
+FILES_libflac = \
+/usr/lib/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/libflac.do_prepare: bootstrap @DEPENDS_libflac@
 	@PREPARE_libflac@
 	touch $@
@@ -1258,8 +1601,11 @@ $(DEPDIR)/libflac.do_compile: $(DEPDIR)/libflac.do_prepare
 $(DEPDIR)/min-libflac $(DEPDIR)/std-libflac $(DEPDIR)/max-libflac \
 $(DEPDIR)/libflac: \
 $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
+	$(start_build)
 	cd @DIR_libflac@ && \
 		@INSTALL_libflac@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libflac@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -1269,6 +1615,11 @@ $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
 #
 # elementtree
 #
+
+DESCRIPTION_elementtree = "Provides light-weight components for working with XML"
+FILES_elementtree = \
+/usr/lib/python2.6
+
 $(DEPDIR)/elementtree.do_prepare: bootstrap @DEPENDS_elementtree@
 	@PREPARE_elementtree@
 	touch $@
@@ -1279,15 +1630,25 @@ $(DEPDIR)/elementtree.do_compile: $(DEPDIR)/elementtree.do_prepare
 $(DEPDIR)/min-elementtree $(DEPDIR)/std-elementtree $(DEPDIR)/max-elementtree \
 $(DEPDIR)/elementtree: \
 $(DEPDIR)/%elementtree: %python elementtree.do_compile
+	$(start_build)
 	cd @DIR_elementtree@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_elementtree@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libxml2
 #
+
+DESCRIPTION_libxml2 = "XML parsing library, version 2"
+FILES_libxml2 = \
+/usr/lib/libxml2* \
+/usr/lib/python2.6/site-packages/*libxml2.py
+
 $(DEPDIR)/libxml2.do_prepare: bootstrap @DEPENDS_libxml2@
 	@PREPARE_libxml2@
 	touch $@
@@ -1310,20 +1671,29 @@ $(DEPDIR)/libxml2.do_compile: $(DEPDIR)/libxml2.do_prepare
 $(DEPDIR)/min-libxml2 $(DEPDIR)/std-libxml2 $(DEPDIR)/max-libxml2 \
 $(DEPDIR)/libxml2: \
 $(DEPDIR)/%libxml2: libxml2.do_compile
+	$(start_build)
 	cd @DIR_libxml2@ && \
-		@INSTALL_libxml2@; \
-		[ -f "$(targetprefix)/usr/lib/python2.6/site-packages/libxml2mod.la" ] && \
-		sed -e "/^dependency_libs/ s,/usr/lib/libxml2.la,$(targetprefix)/usr/lib/libxml2.la,g" -i $(targetprefix)/usr/lib/python2.6/site-packages/libxml2mod.la; \
-		sed -e "s,^prefix=,prefix=$(targetprefix)," < xml2-config > $(crossprefix)/bin/xml2-config; \
-		chmod 755 $(crossprefix)/bin/xml2-config; \
-		sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(targetprefix)/usr/lib,g" -i $(targetprefix)/usr/lib/xml2Conf.sh; \
-		sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(targetprefix)/usr/include,g" -i $(targetprefix)/usr/lib/xml2Conf.sh
+		@INSTALL_libxml2@ && \
+		sed -e "s,^prefix=,prefix=$(targetprefix)," < xml2-config > $(crossprefix)/bin/xml2-config && \
+		chmod 755 $(crossprefix)/bin/xml2-config
+	$(tocdk_build_start)
+		sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(targetprefix)/usr/lib,g" -i $(ipkgbuilddir)/libxml2/usr/lib/xml2Conf.sh
+		sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(targetprefix)/usr/include,g" -i $(ipkgbuilddir)/libxml2/usr/lib/xml2Conf.sh
+	$(call do_build_pkg,install,cdk)
+	$(toflash_build)
 #	@DISTCLEANUP_libxml2@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libxslt
 #
+
+DESCRIPTION_libxslt = "XML stylesheet transformation library"
+FILES_libxslt = \
+/usr/lib/libxslt* \
+/usr/lib/libexslt* \
+/usr/lib/python2.6/site-packages/libxslt.py
+
 $(DEPDIR)/libxslt.do_prepare: bootstrap libxml2 @DEPENDS_libxslt@
 	@PREPARE_libxslt@
 	touch $@
@@ -1350,21 +1720,27 @@ $(DEPDIR)/libxslt.do_compile: $(DEPDIR)/libxslt.do_prepare
 $(DEPDIR)/min-libxslt $(DEPDIR)/std-libxslt $(DEPDIR)/max-libxslt \
 $(DEPDIR)/libxslt: \
 $(DEPDIR)/%libxslt: %libxml2 libxslt.do_compile
+	$(start_build)
 	cd @DIR_libxslt@ && \
 		@INSTALL_libxslt@ && \
-		sed -e "/^dependency_libs/ s,/usr/lib/libxslt.la,$(targetprefix)/usr/lib/libxslt.la,g" -i $(targetprefix)/usr/lib/python2.6/site-packages/libxsltmod.la && \
-		sed -e "/^dependency_libs/ s,/usr/lib/libexslt.la,$(targetprefix)/usr/lib/libexslt.la,g" -i $(targetprefix)/usr/lib/python2.6/site-packages/libxsltmod.la && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < xslt-config > $(crossprefix)/bin/xslt-config && \
-		chmod 755 $(crossprefix)/bin/xslt-config && \
-		sed -e "/^dependency_libs/ s,/usr/lib/libxslt.la,$(targetprefix)/usr/lib/libxslt.la,g" -i $(targetprefix)/usr/lib/libexslt.la && \
-		sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(targetprefix)/usr/lib,g" -i $(targetprefix)/usr/lib/xsltConf.sh && \
-		sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(targetprefix)/usr/include,g" -i $(targetprefix)/usr/lib/xsltConf.sh
+		chmod 755 $(crossprefix)/bin/xslt-config
+	$(tocdk_build_start)
+	sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(targetprefix)/usr/lib,g" -i $(ipkgbuilddir)/libxslt/usr/lib/xsltConf.sh
+	sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(targetprefix)/usr/include,g" -i $(ipkgbuilddir)/libxslt/usr/lib/xsltConf.sh
+	$(call do_build_pkg,install,cdk)
+	$(toflash_build)
 #	@DISTCLEANUP_libxslt@
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # lxml
 #
+
+DESCRIPTION_lxml = "Python binding for the libxml2 and libxslt libraries"
+FILES_lxml = \
+/usr/lib/python2.6
+
 $(DEPDIR)/lxml.do_prepare: bootstrap python @DEPENDS_lxml@
 	@PREPARE_lxml@
 	touch $@
@@ -1381,16 +1757,30 @@ $(DEPDIR)/lxml.do_compile: $(DEPDIR)/lxml.do_prepare
 $(DEPDIR)/min-lxml $(DEPDIR)/std-lxml $(DEPDIR)/max-lxml \
 $(DEPDIR)/lxml: \
 $(DEPDIR)/%lxml: lxml.do_compile
+	$(start_build)
 	cd @DIR_lxml@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_lxml@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # setuptools
 #
+DESCRIPTION_setuptools = "setuptools"
+
+FILES_setuptools = \
+/usr/lib/python2.6/site-packages/*.py \
+/usr/lib/python2.6/site-packages/*.pyo \
+/usr/lib/python2.6/site-packages/setuptools/*.py \
+/usr/lib/python2.6/site-packages/setuptools/*.pyo \
+/usr/lib/python2.6/site-packages/setuptools/command/*.py \
+/usr/lib/python2.6/site-packages/setuptools/command/*.pyo
+
 $(DEPDIR)/setuptools.do_prepare: bootstrap @DEPENDS_setuptools@
 	@PREPARE_setuptools@
 	touch $@
@@ -1403,14 +1793,35 @@ $(DEPDIR)/setuptools.do_compile: $(DEPDIR)/setuptools.do_prepare
 $(DEPDIR)/min-setuptools $(DEPDIR)/std-setuptools $(DEPDIR)/max-setuptools \
 $(DEPDIR)/setuptools: \
 $(DEPDIR)/%setuptools: setuptools.do_compile
+	$(start_build)
 	cd @DIR_setuptools@ && \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_setuptools@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # twisted
 #
+
+DESCRIPTION_twisted = "Asynchronous networking framework written in Python"
+FILES_twisted = \
+/usr/lib/python2.6/site-packages/twisted/copyright.* \
+/usr/lib/python2.6/site-packages/twisted/cred \
+/usr/lib/python2.6/site-packages/twisted/im.* \
+/usr/lib/python2.6/site-packages/twisted/__init__.* \
+/usr/lib/python2.6/site-packages/twisted/internet \
+/usr/lib/python2.6/site-packages/twisted/persisted \
+/usr/lib/python2.6/site-packages/twisted/plugin.* \
+/usr/lib/python2.6/site-packages/twisted/plugins \
+/usr/lib/python2.6/site-packages/twisted/protocols \
+/usr/lib/python2.6/site-packages/twisted/python \
+/usr/lib/python2.6/site-packages/twisted/spread \
+/usr/lib/python2.6/site-packages/twisted/_version.py \
+/usr/lib/python2.6/site-packages/twisted/_version.pyo \
+/usr/lib/python2.6/site-packages/twisted/web
+
 $(DEPDIR)/twisted.do_prepare: bootstrap setuptools @DEPENDS_twisted@
 	@PREPARE_twisted@
 	touch $@
@@ -1425,16 +1836,28 @@ $(DEPDIR)/twisted.do_compile: $(DEPDIR)/twisted.do_prepare
 $(DEPDIR)/min-twisted $(DEPDIR)/std-twisted $(DEPDIR)/max-twisted \
 $(DEPDIR)/twisted: \
 $(DEPDIR)/%twisted: twisted.do_compile
+	$(start_build)
 	cd @DIR_twisted@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_twisted@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
-# twistetweb2
+# twistedweb2
 #
+DESCRIPTION_twistedweb2 = "twistedweb2"
+
+FILES_twistedweb2 = \
+/usr/lib/python2.6/site-packages/twisted/*.py \
+/usr/lib/python2.6/site-packages/twisted/*.pyo \
+/usr/lib/python2.6/site-packages/twisted/web2 \
+/usr/lib/python2.6/site-packages/twisted/plugins  
+
 $(DEPDIR)/twistedweb2.do_prepare: bootstrap setuptools @DEPENDS_twistedweb2@
 	@PREPARE_twistedweb2@
 	touch $@
@@ -1449,18 +1872,27 @@ $(DEPDIR)/twistedweb2.do_compile: $(DEPDIR)/twistedweb2.do_prepare
 $(DEPDIR)/min-twistedweb2 $(DEPDIR)/std-twistedweb2 $(DEPDIR)/max-twistedweb2 \
 $(DEPDIR)/twistedweb2: \
 $(DEPDIR)/%twistedweb2: twistedweb2.do_compile
+	$(start_build)
 	cd @DIR_twistedweb2@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_twistedweb2@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # pilimaging
 #
+DESCRIPTION_pilimaging = "pilimaging"
+FILES_pilimaging = \
+/usr/lib/python2.6/site-packages \
+/usr/bin/*
+
 $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 	@PREPARE_pilimaging@
+	$(start_build)
 	cd @DIR_pilimaging@ && \
 		echo 'JPEG_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' > setup_site.py && \
 		echo 'ZLIB_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
@@ -1468,7 +1900,9 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
 		$(crossprefix)/bin/python ./setup.py build && \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr && \
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr && \
+	$(tocdk_build)
+	$(toflash_build)
 		@DISTCLEANUP_pilimaging@
 	@DISTCLEANUP_pilimaging@
 	@touch $@
@@ -1477,6 +1911,12 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 #
 # pyopenssl
 #
+
+DESCRIPTION_pyopenssl = "Python wrapper module around the OpenSSL library"
+FILES_pyopenssl = \
+/usr/lib/python2.6/site-packages/OpenSSL/*py \
+/usr/lib/python2.6/site-packages/OpenSSL/*so
+
 $(DEPDIR)/pyopenssl.do_prepare: bootstrap setuptools @DEPENDS_pyopenssl@
 	@PREPARE_pyopenssl@
 	touch $@
@@ -1491,15 +1931,39 @@ $(DEPDIR)/pyopenssl.do_compile: $(DEPDIR)/pyopenssl.do_prepare
 $(DEPDIR)/min-pyopenssl $(DEPDIR)/std-pyopenssl $(DEPDIR)/max-pyopenssl \
 $(DEPDIR)/pyopenssl: \
 $(DEPDIR)/%pyopenssl: pyopenssl.do_compile
+	$(start_build)
 	cd @DIR_pyopenssl@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_pyopenssl@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # python
 #
+
+DESCRIPTION_python = "A high-level scripting language"
+FILES_python = \
+/usr/bin/python \
+/usr/lib/libpython2.6.* \
+/usr/lib/python2.6/*.py \
+/usr/lib/python2.6/encodings \
+/usr/lib/python2.6/hotshot \
+/usr/lib/python2.6/idlelib \
+/usr/lib/python2.6/json \
+/usr/lib/python2.6/lib-dynload \
+/usr/lib/python2.6/lib-tk \
+/usr/lib/python2.6/lib2to3 \
+/usr/lib/python2.6/logging \
+/usr/lib/python2.6/multiprocessing \
+/usr/lib/python2.6/plat-linux3 \
+/usr/lib/python2.6/sqlite3 \
+/usr/lib/python2.6/wsgiref \
+/usr/lib/python2.6/xml
+
 $(DEPDIR)/python.do_prepare: bootstrap host_python openssl openssl-dev sqlite @DEPENDS_python@
 	@PREPARE_python@ && \
 	touch $@
@@ -1539,19 +2003,27 @@ $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
 $(DEPDIR)/min-python $(DEPDIR)/std-python $(DEPDIR)/max-python \
 $(DEPDIR)/python: \
 $(DEPDIR)/%python: python.do_compile
+	$(start_build)
 	( cd @DIR_python@ && \
 		$(MAKE) $(MAKE_ARGS) \
 			TARGET_OS=$(target) \
 			HOSTPYTHON=$(crossprefix)/bin/python \
 			HOSTPGEN=$(crossprefix)/bin/pgen \
-			install DESTDIR=$(prefix)/$*cdkroot ) && \
-	$(LN_SF) ../../libpython2.6.so.1.0 $(prefix)/$*cdkroot/usr/lib/python2.6/config/libpython2.6.so
+			install DESTDIR=$(PKDIR) ) && \
+	$(LN_SF) ../../libpython2.6.so.1.0 $(PKDIR)/usr/lib/python2.6/config/libpython2.6.so
 #	@DISTCLEANUP_python@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # pythonwifi
 #
+DESCRIPTION_pythonwifi = "pythonwifi"
+FILES_pythonwifi =\
+/usr/lib/python2.6/site-packages/pythonwifi
+
 $(DEPDIR)/pythonwifi.do_prepare: bootstrap setuptools @DEPENDS_pythonwifi@
 	@PREPARE_pythonwifi@
 	touch $@
@@ -1566,15 +2038,22 @@ $(DEPDIR)/pythonwifi.do_compile: $(DEPDIR)/pythonwifi.do_prepare
 $(DEPDIR)/min-pythonwifi $(DEPDIR)/std-pythonwifi $(DEPDIR)/max-pythonwifi \
 $(DEPDIR)/pythonwifi: \
 $(DEPDIR)/%pythonwifi: pythonwifi.do_compile
+	$(start_build)
 	cd @DIR_pythonwifi@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_pythonwifi@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # pythoncheetah
 #
+DESCRIPTION_pythoncheetah = "pythoncheetah"
+FILES_pythoncheetah = \
+/usr/lib/python2.6/site-packages/Cheetah
+
 $(DEPDIR)/pythoncheetah.do_prepare: bootstrap setuptools @DEPENDS_pythoncheetah@
 	@PREPARE_pythoncheetah@
 	touch $@
@@ -1589,15 +2068,23 @@ $(DEPDIR)/pythoncheetah.do_compile: $(DEPDIR)/pythoncheetah.do_prepare
 $(DEPDIR)/min-pythoncheetah $(DEPDIR)/std-pythoncheetah $(DEPDIR)/max-pythoncheetah \
 $(DEPDIR)/pythoncheetah: \
 $(DEPDIR)/%pythoncheetah: pythoncheetah.do_compile
+	$(start_build)
 	cd @DIR_pythoncheetah@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_pythoncheetah@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # zope interface
 #
+
+DESCRIPTION_zope_interface = "Zope Interfaces for Python2"
+FILES_zope_interface = \
+/usr/lib/python2.6
+
 $(DEPDIR)/zope_interface.do_prepare: bootstrap python setuptools @DEPENDS_zope_interface@
 	@PREPARE_zope_interface@
 	touch $@
@@ -1612,10 +2099,14 @@ $(DEPDIR)/zope_interface.do_compile: $(DEPDIR)/zope_interface.do_prepare
 $(DEPDIR)/min-zope_interface $(DEPDIR)/std-zope_interface $(DEPDIR)/max-zope_interface \
 $(DEPDIR)/zope_interface: \
 $(DEPDIR)/%zope_interface: zope_interface.do_compile
+	$(start_build)
 	cd @DIR_zope_interface@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_zope_interface@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 
@@ -1630,6 +2121,7 @@ DESCRIPTION_gstreamer = "GStreamer Multimedia Framework"
 
 FILES_gstreamer = \
 /usr/bin/gst-launch* \
+/usr/lib/libgst* \
 /usr/lib/gstreamer-0.10/libgstcoreelements.so \
 /usr/lib/gstreamer-0.10/libgstcoreindexers.so
 
@@ -1659,6 +2151,7 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 		@INSTALL_gstreamer@
 #	@DISTCLEANUP_gstreamer@
 	$(tocdk_build)
+	sh4-linux-strip --strip-unneeded $(PKDIR)/usr/bin/gst-launch*
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
@@ -1670,6 +2163,7 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 DESCRIPTION_gst_plugins_base = "GStreamer Multimedia Framework base plugins"
 
 FILES_gst_plugins_base = \
+/usr/lib/libgst* \
 /usr/lib/gstreamer-0.10/libgstalsa.so \
 /usr/lib/gstreamer-0.10/libgstapp.so \
 /usr/lib/gstreamer-0.10/libgstaudioconvert.so \
@@ -1719,7 +2213,8 @@ $(DEPDIR)/%gst_plugins_base: $(DEPDIR)/gst_plugins_base.do_compile
 DESCRIPTION_gst_plugins_good = "GStreamer Multimedia Framework good plugins"
 
 FILES_gst_plugins_good = \
-/usr/lib/gstreamer-0.10/libgstaudioparsersbad.so \
+/usr/lib/libgst* \
+/usr/lib/gstreamer-0.10/libgstaudioparsers.so \
 /usr/lib/gstreamer-0.10/libgstautodetect.so \
 /usr/lib/gstreamer-0.10/libgstavi.so \
 /usr/lib/gstreamer-0.10/libgstflac.so \
@@ -1774,6 +2269,7 @@ $(DEPDIR)/%gst_plugins_good: $(DEPDIR)/gst_plugins_good.do_compile
 DESCRIPTION_gst_plugins_bad = "GStreamer Multimedia Framework bad plugins"
 
 FILES_gst_plugins_bad = \
+/usr/lib/libgst* \
 /usr/lib/gstreamer-0.10/libgstassrender.so \
 /usr/lib/gstreamer-0.10/libgstcdxaparse.so \
 /usr/lib/gstreamer-0.10/libgstfragmented.so \
@@ -1924,6 +2420,8 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
 
 DESCRIPTION_gst_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
+FILES_gst_fluendo_mpegdemux = \
+/usr/lib/gstreamer-0.10/*.so
 
 
 $(DEPDIR)/gst_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_fluendo_mpegdemux@
@@ -1945,9 +2443,9 @@ $(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_fluendo_mpegdemux.do_compile
 	$(start_build)
 	cd @DIR_gst_fluendo_mpegdemux@ && \
 		@INSTALL_gst_fluendo_mpegdemux@
-#	@DISTCLEANUP_gst_ffmpeg@
 	$(tocdk_build)
 	$(toflash_build)
+#	@DISTCLEANUP_gst_fluendo_mpegdemux@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -2104,6 +2602,10 @@ $(DEPDIR)/%libgd2: $(DEPDIR)/libgd2.do_compile
 #
 # libusb2
 #
+DESCRIPTION_libusb2 = "libusb2"
+FILES_libusb2 = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libusb2.do_prepare: bootstrap @DEPENDS_libusb2@
 	@PREPARE_libusb2@
 	touch $@
@@ -2121,14 +2623,21 @@ $(DEPDIR)/libusb2.do_compile: $(DEPDIR)/libusb2.do_prepare
 $(DEPDIR)/min-libusb2 $(DEPDIR)/std-libusb2 $(DEPDIR)/max-libusb2 \
 $(DEPDIR)/libusb2: \
 $(DEPDIR)/%libusb2: $(DEPDIR)/libusb2.do_compile
+	$(start_build)
 	cd @DIR_libusb2@ && \
 		@INSTALL_libusb2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libusb2@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libusbcompat
 #
+DESCRIPTION_libusbcompat = "A compatibility layer allowing applications written for libusb-0.1 to work with libusb-1.0"
+FILES_libusbcompat = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libusbcompat.do_prepare: bootstrap libusb2 @DEPENDS_libusbcompat@
 	@PREPARE_libusbcompat@
 	touch $@
@@ -2145,8 +2654,11 @@ $(DEPDIR)/libusbcompat.do_compile: $(DEPDIR)/libusbcompat.do_prepare
 $(DEPDIR)/min-libusbcompat $(DEPDIR)/std-libusbcompat $(DEPDIR)/max-libusbcompat \
 $(DEPDIR)/libusbcompat: \
 $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
+	$(start_build)
 	cd @DIR_libusbcompat@ && \
 		@INSTALL_libusbcompat@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libusbcompat@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -2156,6 +2668,13 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 #
 # eve-browser
 #
+DESCRIPTION_evebrowser = "evebrowser for HbbTv"
+SRC_URI_evebrowser = https://eve-browser.googlecode.com/svn/trunk/
+FILES_evebrowser = \
+/usr/lib/*.so* \
+/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-sh4 \
+/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/*.py
+
 $(DEPDIR)/evebrowser.do_prepare: bootstrap webkitdfb @DEPENDS_evebrowser@
 	svn checkout https://eve-browser.googlecode.com/svn/trunk/ @DIR_evebrowser@
 	touch $@
@@ -2178,15 +2697,25 @@ $(DEPDIR)/evebrowser.do_compile: $(DEPDIR)/evebrowser.do_prepare
 $(DEPDIR)/min-evebrowser $(DEPDIR)/std-evebrowser $(DEPDIR)/max-evebrowser \
 $(DEPDIR)/evebrowser: \
 $(DEPDIR)/%evebrowser: $(DEPDIR)/evebrowser.do_compile
+	$(start_build)
+	mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/ && \
 	cd @DIR_evebrowser@ && \
 		@INSTALL_evebrowser@ && \
-		cp -ar enigma2/HbbTv $(targetprefix)/usr/lib/enigma2/python/Plugins/SystemPlugins/
+		cp -ar enigma2/HbbTv $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/ && \
+		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-mipsel && \
+		rm -r $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-powerpc && \
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_evebrowser@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # brofs
 #
+DESCRIPTION_brofs = "BROFS (BroadcastReadOnlyFileSystem)"
+FILES_brofs = \
+/usr/bin/*
+
 $(DEPDIR)/brofs.do_prepare: bootstrap @DEPENDS_brofs@
 	@PREPARE_brofs@
 	touch $@
@@ -2201,14 +2730,28 @@ $(DEPDIR)/brofs.do_compile: $(DEPDIR)/brofs.do_prepare
 $(DEPDIR)/min-brofs $(DEPDIR)/std-brofs $(DEPDIR)/max-brofs \
 $(DEPDIR)/brofs: \
 $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
+	$(start_build)
+	mkdir -p $(PKDIR)/usr/bin/
 	cd @DIR_brofs@ && \
 		@INSTALL_brofs@
+		mv -b $(PKDIR)/BroFS $(PKDIR)/usr/bin/ && \
+		mv -b $(PKDIR)/BroFSCommand $(PKDIR)/usr/bin/ && \
+		rm -r $(PKDIR)/BroFSd && \
+		cd $(PKDIR)/usr/bin/ && \
+		ln -sf BroFS BroFSd && \
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_brofs@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libcap
 #
+DESCRIPTION_libcap = "This is a library for getting and setting POSIX"
+FILES_libcap = \
+/usr/lib/*.so* \
+/usr/sbin/*
+
 $(DEPDIR)/libcap.do_prepare: bootstrap @DEPENDS_libcap@
 	@PREPARE_libcap@
 	touch $@
@@ -2217,11 +2760,11 @@ $(DEPDIR)/libcap.do_compile: $(DEPDIR)/libcap.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_libcap@ && \
 	$(MAKE) \
-	DESTDIR=$(prefix)/cdkroot \
-	PREFIX=$(prefix)/cdkroot/usr \
-	LIBDIR=$(prefix)/cdkroot/usr/lib \
-	SBINDIR=$(prefix)/cdkroot/usr/sbin \
-	INCDIR=$(prefix)/cdkroot/usr/include \
+	DESTDIR=$(PKDIR) \
+	PREFIX=$(PKDIR)/usr \
+	LIBDIR=$(PKDIR)/usr/lib \
+	SBINDIR=$(PKDIR)/usr/sbin \
+	INCDIR=$(PKDIR)/usr/include \
 	BUILD_CC=gcc \
 	PAM_CAP=no \
 	LIBATTR=no \
@@ -2232,17 +2775,20 @@ $(DEPDIR)/min-libcap $(DEPDIR)/std-libcap $(DEPDIR)/max-libcap \
 $(DEPDIR)/libcap: \
 $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 	@[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
 	cd @DIR_libcap@ && \
 		@INSTALL_libcap@ \
-		DESTDIR=$(prefix)/cdkroot \
-		PREFIX=$(prefix)/cdkroot/usr \
-		LIBDIR=$(prefix)/cdkroot/usr/lib \
-		SBINDIR=$(prefix)/cdkroot/usr/sbin \
-		INCDIR=$(prefix)/cdkroot/usr/include \
+		DESTDIR=$(PKDIR)/ \
+		PREFIX=$(PKDIR)/usr \
+		LIBDIR=$(PKDIR)/usr/lib \
+		SBINDIR=$(PKDIR)/usr/sbin \
+		INCDIR=$(PKDIR)/usr/include \
 		BUILD_CC=gcc \
 		PAM_CAP=no \
 		LIBATTR=no \
 		CC=sh4-linux-gcc
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_libcap@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -3081,6 +3627,12 @@ $(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
 #
 # djmount
 #
+DESCRIPTION_djmount = "djmount is a UPnP AV client. It mounts as a Linux filesystem the media content of compatible UPnP AV devices."
+
+FILES_djmount = \
+/usr/bin/* \
+/usr/lib/*
+
 $(DEPDIR)/djmount.do_prepare: bootstrap libupnp fuse @DEPENDS_djmount@
 	@PREPARE_djmount@
 	touch $@
@@ -3098,14 +3650,22 @@ $(DEPDIR)/djmount.do_compile: $(DEPDIR)/djmount.do_prepare
 $(DEPDIR)/min-djmount $(DEPDIR)/std-djmount $(DEPDIR)/max-djmount \
 $(DEPDIR)/djmount: \
 $(DEPDIR)/%djmount: $(DEPDIR)/djmount.do_compile
+	$(start_build)
 	cd @DIR_djmount@ && \
 		@INSTALL_djmount@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_djmount@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # libupnp
 #
+DESCRIPTION_libupnp = "The portable SDK for UPnP™ Devices (libupnp) provides developers with an API and open source code for building control points"
+
+FILES_libupnp = \
+/usr/lib/*.so*
+
 $(DEPDIR)/libupnp.do_prepare: bootstrap @DEPENDS_libupnp@
 	@PREPARE_libupnp@
 	touch $@
@@ -3123,31 +3683,47 @@ $(DEPDIR)/libupnp.do_compile: $(DEPDIR)/libupnp.do_prepare
 $(DEPDIR)/min-libupnp $(DEPDIR)/std-libupnp $(DEPDIR)/max-libupnp \
 $(DEPDIR)/libupnp: \
 $(DEPDIR)/%libupnp: $(DEPDIR)/libupnp.do_compile
+	$(start_build)
 	cd @DIR_libupnp@ && \
 		@INSTALL_libupnp@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_djmount@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # rarfs
 #
+DESCRIPTION_rarfs = ""
+
+FILES_rarfs = \
+/usr/lib/*.so* \
+/usr/bin/*
+
 $(DEPDIR)/rarfs.do_prepare: bootstrap fuse @DEPENDS_rarfs@
 	@PREPARE_rarfs@
 	touch $@
 
 $(DEPDIR)/rarfs.do_compile: $(DEPDIR)/rarfs.do_prepare
-	cd @DIR_libexif@ && \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	export PKG_CONFIG_PATH="$(targetprefix)/usr/lib/pkgconfig"
+	cd @DIR_rarfs@ && \
 	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os -D_FILE_OFFSET_BITS=64" \
 	./configure \
 		--host=$(target) \
-		--disable-FEATURE \
+		--disable-option-checking \
+		--includedir=/usr/include/fuse \
 		--prefix=/usr
 	touch $@
 
 $(DEPDIR)/min-rarfs $(DEPDIR)/std-rarfs $(DEPDIR)/max-rarfs \
 $(DEPDIR)/rarfs: \
 $(DEPDIR)/%rarfs: $(DEPDIR)/rarfs.do_compile
+	$(start_build)
 	cd @DIR_rarfs@ && \
 		@INSTALL_rarfs@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_rarfs@
 	[ "x$*" = "x" ] && touch $@ || true

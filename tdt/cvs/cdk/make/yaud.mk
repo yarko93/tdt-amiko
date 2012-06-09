@@ -11,9 +11,10 @@ $(DEPDIR)/min-bootstrap $(DEPDIR)/std-bootstrap $(DEPDIR)/max-bootstrap $(DEPDIR
 $(DEPDIR)/%bootstrap: \
 		%libtool \
 		%$(FILESYSTEM) \
-		| %$(GLIBC) \
+		%$(GLIBC) \
 		%$(CROSS_LIBGCC) \
 		%$(LIBSTDC)
+
 	@[ "x$*" = "x" ] && touch -r RPMS/sh4/$(STLINUX)-sh4-$(LIBSTDC)-$(GCC_VERSION).sh4.rpm $@ || true
 
 #
@@ -30,7 +31,6 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%$(BASE_FILES) \
 		%module_init_tools \
 		%busybox \
-		\
 		%libz \
 		%grep \
 		%$(INITSCRIPTS) \
@@ -42,7 +42,7 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		\
 		%e2fsprogs \
 		%u-boot-utils \
-		%diverse-tools
+		%diverse-tools 
 #		%$(RELEASE) \
 #		%$(FINDUTILS) \
 #
@@ -145,7 +145,6 @@ yaud-none: \
 		net-utils \
 		disk-utils \
 		driver \
-		ipkg-utils \
 		misc-tools 
 	@TUXBOX_YAUD_CUSTOMIZE@
 

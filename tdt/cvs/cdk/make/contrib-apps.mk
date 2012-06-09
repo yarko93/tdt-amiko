@@ -1,6 +1,11 @@
 #
 #bzip2
 #
+DESCRIPTION_bzip2 = "bzip2"
+
+FILES_bzip2 = \
+/usr/bin/*
+
 $(DEPDIR)/bzip2.do_prepare: bootstrap @DEPENDS_bzip2@
 	@PREPARE_bzip2@
 	touch $@
@@ -14,8 +19,11 @@ $(DEPDIR)/bzip2.do_compile: $(DEPDIR)/bzip2.do_prepare
 $(DEPDIR)/min-bzip2 $(DEPDIR)/std-bzip2 $(DEPDIR)/max-bzip2 \
 $(DEPDIR)/bzip2: \
 $(DEPDIR)/%bzip2: $(DEPDIR)/bzip2.do_compile
+	$(start_build)
 	cd @DIR_bzip2@ && \
 		@INSTALL_bzip2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_bzip2@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -49,6 +57,11 @@ $(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS:%=root/etc/%) $
 #
 # GREP
 #
+DESCRIPTION_grep = "grep"
+
+FILES_grep = \
+/usr/bin/grep
+
 $(DEPDIR)/grep.do_prepare: bootstrap @DEPENDS_grep@
 	@PREPARE_grep@
 	cd @DIR_grep@ && \
@@ -73,14 +86,23 @@ $(DEPDIR)/grep.do_compile: $(DEPDIR)/grep.do_prepare
 $(DEPDIR)/min-grep $(DEPDIR)/std-grep $(DEPDIR)/max-grep \
 $(DEPDIR)/grep: \
 $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
+	$(start_build)
 	cd @DIR_grep@ && \
 		@INSTALL_grep@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_grep@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # PPPD
 #
+DESCRIPTION_pppd = "pppd"
+
+FILES_pppd = \
+/sbin/* \
+/lib/modules/*.so
+
 $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 	@PREPARE_pppd@
 	cd @DIR_pppd@ && \
@@ -104,8 +126,13 @@ $(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
 $(DEPDIR)/min-pppd $(DEPDIR)/std-pppd $(DEPDIR)/max-pppd \
 $(DEPDIR)/pppd: \
 $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
+	$(start_build)
 	cd @DIR_pppd@  && \
 		@INSTALL_pppd@
+	$(tocdk_build)
+	mkdir $(PKDIR)/lib/modules/
+	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
+	$(toflash_build)
 #	@DISTCLEANUP_pppd@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
@@ -131,6 +158,11 @@ $(DEPDIR)/%lsb: $(DEPDIR)/lsb.do_compile
 #
 # PORTMAP
 #
+DESCRIPTION_portmap = "the program supports access control in the style of the tcp wrapper (log_tcp) packag"
+FILES_portmap = \
+/sbin/* \
+/etc/init.d/
+
 $(DEPDIR)/portmap.do_prepare: bootstrap @DEPENDS_portmap@
 	@PREPARE_portmap@
 	cd @DIR_portmap@ && \
@@ -148,10 +180,16 @@ $(DEPDIR)/portmap.do_compile: $(DEPDIR)/portmap.do_prepare
 $(DEPDIR)/min-portmap $(DEPDIR)/std-portmap $(DEPDIR)/max-portmap \
 $(DEPDIR)/portmap: \
 $(DEPDIR)/%portmap: $(DEPDIR)/%lsb $(PORTMAP_ADAPTED_ETC_FILES:%=root/etc/%) $(DEPDIR)/portmap.do_compile
+	$(start_build)
+	mkdir -p $(PKDIR)/sbin/
+	mkdir -p $(PKDIR)/etc/init.d/
+	mkdir -p $(PKDIR)/usr/share/man/man8
 	cd @DIR_portmap@ && \
 		@INSTALL_portmap@
 	$(call adapted-etc-files,$(PORTMAP_ADAPTED_ETC_FILES))
 	$(call initdconfig,portmap)
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_portmap@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -193,6 +231,12 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 #
 # E2FSPROGS
 #
+DESCRIPTION_e2fsprogs = "e2fsprogs"
+FILES_e2fsprogs = \
+/sbin/* \
+/lib/*.so* \
+/usr/lib/*.so*
+
 $(DEPDIR)/e2fsprogs.do_prepare: bootstrap @DEPENDS_e2fsprogs@
 	@PREPARE_e2fsprogs@
 	touch $@
@@ -251,12 +295,15 @@ endif !STM24
 
 if STM24
 $(DEPDIR)/e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
+	$(start_build)
 	cd @DIR_e2fsprogs@ && \
 	$(BUILDENV) \
 	$(MAKE) install install-libs \
 		LDCONFIG=true \
-		DESTDIR=$(targetprefix) && \
-	$(INSTALL) e2fsck/e2fsck.static $(targetprefix)/sbin
+		DESTDIR=$(PKDIR) && \
+	$(INSTALL) e2fsck/e2fsck.static $(PKDIR)/sbin
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_e2fsprogs@
 	touch $@
 else !STM24
@@ -266,8 +313,8 @@ $(DEPDIR)/%e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
 	cd @DIR_e2fsprogs@ && \
 		@INSTALL_e2fsprogs@
 	[ "x$*" = "x" ] && ( cd @DIR_e2fsprogs@ && \
-		$(MAKE) install -C lib/uuid DESTDIR=$(targetprefix) && \
-		$(MAKE) install -C lib/blkid DESTDIR=$(targetprefix) ) || true
+		$(MAKE) install -C lib/uuid DESTDIR=$(PKDIR) && \
+		$(MAKE) install -C lib/blkid DESTDIR=$(PKDIR) ) || true
 #	@DISTCLEANUP_e2fsprogs@
 	[ "x$*" = "x" ] && touch $@ || true
 endif !STM24
@@ -275,6 +322,11 @@ endif !STM24
 #
 # XFSPROGS
 #
+DESCRIPTION_xfsprogs = "xfsprogs"
+
+FILES_xfsprogs = \
+/bin/*
+
 $(DEPDIR)/xfsprogs.do_prepare: bootstrap $(DEPDIR)/e2fsprogs $(DEPDIR)/libreadline @DEPENDS_xfsprogs@
 	@PREPARE_xfsprogs@
 	touch $@
@@ -305,15 +357,26 @@ $(DEPDIR)/xfsprogs.do_compile: $(DEPDIR)/xfsprogs.do_prepare
 $(DEPDIR)/min-xfsprogs $(DEPDIR)/std-xfsprogs $(DEPDIR)/max-xfsprogs \
 $(DEPDIR)/xfsprogs: \
 $(DEPDIR)/%xfsprogs: $(DEPDIR)/xfsprogs.do_compile
+	$(start_build)
 	cd @DIR_xfsprogs@ && \
 		export top_builddir=`pwd` && \
 		@INSTALL_xfsprogs@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_xfsprogs@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # MC
 #
+DESCRIPTION_mc = "Midnight Commander"
+
+FILES_mc = \
+/usr/bin/* \
+/usr/etc/mc/* \
+/usr/libexec/mc/extfs.d/* \
+/usr/libexec/mc/fish/*
+
 $(DEPDIR)/mc.do_prepare: bootstrap glib2 @DEPENDS_mc@
 	@PREPARE_mc@
 	touch $@
@@ -334,8 +397,11 @@ $(DEPDIR)/mc.do_compile: $(DEPDIR)/mc.do_prepare | $(NCURSES_DEV)
 $(DEPDIR)/min-mc $(DEPDIR)/std-mc $(DEPDIR)/max-mc \
 $(DEPDIR)/mc: \
 $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
+	$(start_build)
 	cd @DIR_mc@ && \
 		@INSTALL_mc@
+	$(tocdk_build)
+	$(toflash_build)
 #		export top_builddir=`pwd` && \
 #		$(MAKE) install DESTDIR=$(prefix)/$*cdkroot
 #	@DISTCLEANUP_mc@
@@ -344,6 +410,11 @@ $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
 #
 # SDPARM
 #
+DESCRIPTION_sdparm = "sdparm"
+
+FILES_sdparm = \
+/usr/bin/sdparm
+
 $(DEPDIR)/sdparm.do_prepare: bootstrap @DEPENDS_sdparm@
 	@PREPARE_sdparm@
 	touch $@
@@ -365,11 +436,12 @@ $(DEPDIR)/sdparm.do_compile: $(DEPDIR)/sdparm.do_prepare
 $(DEPDIR)/min-sdparm $(DEPDIR)/std-sdparm $(DEPDIR)/max-sdparm \
 $(DEPDIR)/sdparm: \
 $(DEPDIR)/%sdparm: $(DEPDIR)/sdparm.do_compile
+	$(start_build)
 	cd @DIR_sdparm@ && \
 		export PATH=$(MAKE_PATH) && \
 		@INSTALL_sdparm@
-	@( cd $(prefix)/$*cdkroot/usr/share/man/man8 && \
-		gzip -v9 sdparm.8 )
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_sdparm@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -528,6 +600,14 @@ $(DEPDIR)/%rsync: $(DEPDIR)/rsync.do_compile
 #
 # LM_SENSORS
 #
+DESCRIPTION_lm_sensors = "lm_sensors"
+
+FILES_lm_sensors = \
+/usr/bin/sensors \
+/etc/sensors.conf \
+/usr/lib/*.so* \
+/usr/sbin/*
+
 $(DEPDIR)/lm_sensors.do_prepare: bootstrap @DEPENDS_lm_sensors@
 	@PREPARE_lm_sensors@
 	touch $@
@@ -540,20 +620,31 @@ $(DEPDIR)/lm_sensors.do_compile: $(DEPDIR)/lm_sensors.do_prepare
 $(DEPDIR)/min-lm_sensors $(DEPDIR)/std-lm_sensors $(DEPDIR)/max-lm_sensors \
 $(DEPDIR)/lm_sensors: \
 $(DEPDIR)/%lm_sensors: $(DEPDIR)/lm_sensors.do_compile
+	$(start_build)
 	cd @DIR_lm_sensors@ && \
 		@INSTALL_lm_sensors@ && \
-		rm $(prefix)/$*cdkroot/usr/bin/*.pl && \
-		rm $(prefix)/$*cdkroot/usr/sbin/*.pl && \
-		rm $(prefix)/$*cdkroot/usr/sbin/sensors-detect && \
-		rm $(prefix)/$*cdkroot/usr/share/man/man8/sensors-detect.8 && \
-		rm $(prefix)/$*cdkroot/usr/include/linux/i2c-dev.h && \
-		rm $(prefix)/$*cdkroot/usr/bin/ddcmon
+		rm $(PKDIR)/usr/bin/*.pl && \
+		rm $(PKDIR)/usr/sbin/*.pl && \
+		rm $(PKDIR)/usr/sbin/sensors-detect && \
+		rm $(PKDIR)/usr/share/man/man8/sensors-detect.8 && \
+		rm $(PKDIR)/usr/include/linux/i2c-dev.h && \
+		rm $(PKDIR)/usr/bin/ddcmon
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lm_sensors@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # FUSE
 #
+DESCRIPTION_fuse = "With FUSE it is possible to implement a fully functional filesystem in a userspace program.  Features include:"
+
+FILES_fuse = \
+/usr/lib/*.so* \
+/etc/init.d/* \
+/etc/udev/* \
+Usr/bin/*
+
 $(DEPDIR)/fuse.do_prepare: bootstrap curl glib2 @DEPENDS_fuse@
 	@PREPARE_fuse@
 	touch $@
@@ -575,7 +666,8 @@ $(DEPDIR)/fuse.do_compile: $(DEPDIR)/fuse.do_prepare
 $(DEPDIR)/min-fuse $(DEPDIR)/std-fuse $(DEPDIR)/max-fuse \
 $(DEPDIR)/fuse: \
 $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
-	cd @DIR_fuse@ && \
+	  $(start_build)
+	  cd @DIR_fuse@ && \
 		@INSTALL_fuse@
 	-rm $(prefix)/$*cdkroot/etc/udev/rules.d/99-fuse.rules
 	-rmdir $(prefix)/$*cdkroot/etc/udev/rules.d
@@ -586,6 +678,8 @@ $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
 		for s in fuse ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_fuse@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -741,6 +835,10 @@ $(DEPDIR)/%mencoder: $(DEPDIR)/mencoder.do_compile
 if STM24
 # for stm24, look in contrib-apps-specs.mk
 else !STM24
+DESCRIPTION_util_linux = "util-linux"
+FILES_util_linux = \
+/sbin/*
+
 $(DEPDIR)/util-linux.do_prepare: bootstrap @DEPENDS_util_linux@
 	@PREPARE_util_linux@
 	cd @DIR_util_linux@ && \
@@ -766,16 +864,19 @@ $(DEPDIR)/util-linux.do_compile: $(DEPDIR)/util-linux.do_prepare
 $(DEPDIR)/min-util-linux $(DEPDIR)/std-util-linux $(DEPDIR)/max-util-linux \
 $(DEPDIR)/util-linux: \
 $(DEPDIR)/%util-linux: util-linux.do_compile
+	$(start_build)
 	cd @DIR_util_linux@ && \
-		install -d $(targetprefix)/sbin && \
-		install -m 755 fdisk/sfdisk $(targetprefix)/sbin/
+		install -d $(PKDIR)/sbin && \
+		install -m 755 fdisk/sfdisk $(PKDIR)/sbin/
+	$(tocdk_build)
+	$(toflash_build)
 #		$(MAKE) ARCH=sh4 HAVE_SLANG=no HAVE_SHADOW=yes HAVE_PAM=no \
 #		USE_TTY_GROUP=no INSTALLSUID='$(INSTALL) -m $(SUIDMODE)' \
-#		DESTDIR=$(targetprefix) install && \
-#		ln -s agetty $(targetprefix)/sbin/getty && \
-#		ln -s agetty.8.gz $(targetprefix)/usr/man/man8/getty.8.gz && \
-#		install -m 755 debian/hwclock.sh $(targetprefix)/etc/init.d/hwclock.sh && \
-#		( cd po && make install DESTDIR=$(targetprefix) )
+#		DESTDIR=$(PKDIR) install && \
+#		ln -s agetty $(PKDIR)/sbin/getty && \
+#		ln -s agetty.8.gz $(PKDIR)/usr/man/man8/getty.8.gz && \
+#		install -m 755 debian/hwclock.sh $(PKDIR)/etc/init.d/hwclock.sh && \
+#		( cd po && make install DESTDIR=$(PKDIR) )
 #		@INSTALL_util_linux@
 #	@DISTCLEANUP_util_linux@
 	[ "x$*" = "x" ] && touch $@ || true
@@ -784,6 +885,10 @@ endif !STM24
 #
 # jfsutils
 #
+DESCRIPTION_jfsutils = "jfsutils"
+FILES_jfsutils = \
+/sbin/*
+
 $(DEPDIR)/jfsutils.do_prepare: bootstrap @DEPENDS_jfsutils@
 	@PREPARE_jfsutils@
 	touch $@
@@ -802,14 +907,23 @@ $(DEPDIR)/jfsutils.do_compile: $(DEPDIR)/jfsutils.do_prepare
 $(DEPDIR)/min-jfsutils $(DEPDIR)/std-jfsutils $(DEPDIR)/max-jfsutils \
 $(DEPDIR)/jfsutils: \
 $(DEPDIR)/%jfsutils: $(DEPDIR)/jfsutils.do_compile
+	$(start_build)
 	cd @DIR_jfsutils@ && \
 		@INSTALL_jfsutils@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_jfsutils@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # opkg
 #
+
+DESCRIPTION_opkg = "lightweight package management system"
+FILES_opkg = \
+/usr/bin \
+/usr/lib
+
 $(DEPDIR)/opkg.do_prepare: bootstrap @DEPENDS_opkg@
 	@PREPARE_opkg@
 	touch $@
@@ -830,8 +944,11 @@ $(DEPDIR)/opkg.do_compile: $(DEPDIR)/opkg.do_prepare
 $(DEPDIR)/min-opkg $(DEPDIR)/std-opkg $(DEPDIR)/max-opkg \
 $(DEPDIR)/opkg: \
 $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
+	$(start_build)
 	cd @DIR_opkg@ && \
 		@INSTALL_opkg@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_opkg@
 	[ "x$*" = "x" ] && touch $@ || true
 

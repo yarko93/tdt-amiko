@@ -714,6 +714,8 @@ $(DEPDIR)/%$(STRACE): $(DEPDIR)/%$(GLIBC) $(STRACE_RPM)
 # 
 if STM24
 UTIL_LINUX = util-linux
+FILES_util_linux = \
+/usr/lib
 UTIL_LINUX_VERSION = 2.16.1-22
 UTIL_LINUX_SPEC = stm-target-$(UTIL_LINUX).spec
 UTIL_LINUX_SPEC_PATCH =
@@ -739,5 +741,7 @@ $(DEPDIR)/$(UTIL_LINUX): $(UTIL_LINUX_RPM)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/blkid.pc
 	$(REWRITE_LIBDEP)/lib{blkid,uuid}.la
 	$(REWRITE_LIBDIR)/lib{blkid,uuid}.la
+	$(start_build)
+	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 endif STM24

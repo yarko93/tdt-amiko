@@ -36,7 +36,9 @@
 #  http:// - http wget download
 #  ftp:// - ftp wget download
 #  file:// - look for file in Patches directory
-# svn and git coming soon...
+#  git://www.gitserver.com/gitrepo:r=revision:b=branch:sub=subdir_in_git_tree
+#  revision, branch and subdirectory to use arguments are optional.
+# svn coming soon...
 #
 # if rule command doesn't match ones listed above, this is treated as install/uninstall rule.
 # 
@@ -210,8 +212,7 @@ busybox
   1.20.0
   {PN}-{PV}
   extract:http://www.{PN}.net/downloads/{PN}-{PV}.tar.bz2
-  make:install:CONFIG_PREFIX=TARGETS
-  shellconfigadd:/bin/ash:5
+  make:install:CONFIG_PREFIX=PKDIR
 ;
 lsb
   3.2-20
@@ -243,14 +244,14 @@ bzip2
   {PN}-{PV}
   extract:http://www.bzip.org/{PV}/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:PREFIX=TARGET/usr
+  make:install:DESTDIR=PKDIR
 ;
 grep
   2.5.1
   {PN}-{PV}
   extract:ftp://mirrors.kernel.org/gnu/{PN}/{PN}-{PV}.tar.bz2
   nothing:http://64studio.hivelocity.net/apt/pool/main/g/{PN}/{PN}_{PV}.ds2-6.diff.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 openrdate
   1.1.2
@@ -264,29 +265,27 @@ e2fsprogs
   extract:http://prdownloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
   patch:file://{PN}-1.41.11-relative-usrlib-path.patch
   patch:file://{PN}-1.41.11-no-lib-deps.patch
-  rewrite-pkgconfig:lib/e2p/e2p.pc:lib/com_err.pc:lib/uuid.pc:lib/blkid.pc:lib/ss/ss.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libblkid.la:TARGETS/usr/lib/libblkid.la:TARGETS/usr/lib/libuuid.la
+  make:install:DESTDIR=PKDIR
 ;
 xfsprogs
   2.9.4-1
   {PN}-2.9.4
-  extract:ftp://oss.sgi.com/projects/xfs/cmd_tars/{PN}_{PV}.tar.gz
+  extract:http://pkgs.fedoraproject.org/repo/pkgs/xfsprogs/xfsprogs_2.9.4-1.tar.gz/174683e3b86b587ed59823fdbbb96ea4/{PN}_{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:prefix=TARGETS
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 mc
   4.8.0
   {PN}-{PV}
   extract:http://www.midnight-commander.org/downloads/{PN}-{PV}.tar.bz2
-  nothing:file://{PN}.diff
-  make:install:DESTDIR=TARGETS
+#nothing:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
 ;
 sdparm
   1.07
   {PN}-{PV}
   extract:http://sg.danny.cz/sg/p/{PN}-{PV}.tgz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 sg3_utils
   1.24
@@ -317,16 +316,14 @@ lm_sensors
   2.9.2
   lm_sensors-{PV}
   extract:http://dl.{PN}.org/{PN}/releases/lm_sensors-{PV}.tar.gz
-  make:user_install:MACHINE=sh:PREFIX=/usr:MANDIR=/usr/share/man:DESTDIR=TARGETS
+  make:user_install:MACHINE=sh:PREFIX=/usr:MANDIR=/usr/share/man:DESTDIR=PKDIR
 ;
 fuse
-  2.7.2
+  2.9.0
   {PN}-{PV}
   extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
-  rewrite-pkgconfig:{PN}.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 curlftpfs
   0.9.1
@@ -374,23 +371,20 @@ jfsutils
   1.1.15
   {PN}-{PV}
   extract:http://jfs.sourceforge.net/project/pub/{PN}-{PV}.tar.gz
-  make:install:mandir=/usr/share/man:DESTDIR=TARGET
+  make:install:mandir=/usr/share/man:DESTDIR=PKDIR
 ;
 opkg
   0.1.8
   {PN}-{PV}
   extract:http://{PN}.googlecode.com/files/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:lib{PN}.pc
-  make:install:DESTDIR=TARGETS
-  link:/usr/bin/{PN}-cl:TARGETS/usr/bin/{PN}
-  mkdir:TARGETS/var/{PN}
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
+  link:/usr/bin/{PN}-cl:PKDIR/usr/bin/{PN}
 ;
 pppd
   2.4.5
   ppp-{PV}
   extract:ftp://ftp.samba.org/pub/ppp/ppp-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 sysstat
   10.0.4
@@ -447,14 +441,14 @@ libz
   1.2.3
   zlib-{PV}
   extract:http://kent.dl.sourceforge.net/sourceforge/libpng/zlib-{PV}.tar.bz2
-  make:install:prefix=TARGETS/usr
+  make:install:prefix=PKDIR/usr
   install:-m644:{PN}.a:TARGETS/usr/lib
 ;
 libreadline
   5.2
   readline-{PV}
   extract:ftp://ftp.cwru.edu/pub/bash/readline-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 freetype_old
   2.1.4
@@ -467,144 +461,107 @@ freetype
   2.3.5
   {PN}-{PV}
   extract:http://download.savannah.gnu.org/releases/{PN}/{PN}-{PV}.tar.bz2
-  rewrite-pkgconfig:builds/unix/{PN}2.pc
-  make:install:libdir=TARGETS/usr/lib:includedir=TARGETS/usr/include:bindir=TARGETS/usr/bin:prefix=TARGETS/usr
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 lirc
   0.9.0
   {PN}-{PV}
   extract:http://prdownloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}-try_first_last_remote.diff
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}_client.la
+  make:install:DESTDIR=PKDIR
 ;
 jpeg
   8d
   {PN}-{PV}
   extract:http://www.ijg.org/files/{PN}src.v{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:prefix=TARGETS/usr
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libpng
   1.5.6
   {PN}-{PV}
   extract:http://www.fhloston-paradise.de/{PN}-{PV}.tar.gz
   nothing:file://{PN}.diff
-  rewrite-pkgconfig:{PN}15.pc
-  make:install:prefix=TARGETS/usr
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la:TARGETS/usr/lib/{PN}15.la
+  make:install:prefix=PKDIR/usr
 ;
 libungif
   4.1.4
   {PN}-{PV}
   extract:http://heanet.dl.sourceforge.net/sourceforge/giflib/{PN}-{PV}.tar.bz2
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libgif
   4.1.6
   giflib-{PV}
   extract:http://heanet.dl.sourceforge.net/sourceforge/giflib/giflib-{PV}.tar.bz2
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 curl
   7.25.0
   {PN}-{PV}
   extract:http://{PN}.haxx.se/download/{PN}-{PV}.tar.gz
   patch:file://lib{PN}.diff
-  rewrite-pkgconfig:lib{PN}.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libfribidi
   0.10.4
   fribidi-{PV}
   extract:http://fribidi.org/download/fribidi-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/fribidi.pc
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libsigc
   1.2.5
   {PN}++-{PV}
   extract:http://ftp.gnome.org/pub/GNOME/sources/{PN}++/1.2/{PN}++-{PV}.tar.gz
   rewrite-pkgconfig:sigc++-1.2.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}-1.2.la
-  rewrite-dependency:TARGETS/usr/lib/{PN}-1.2.la
+  make:install:DESTDIR=PKDIR
 ;
 libmad
   0.15.1b
   {PN}-{PV}
   extract:ftp://ftp.mars.org/pub/mpeg/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
-  rewrite-pkgconfig:mad.pc
-  make:install:DESTDIR=TARGETS
-  install:-m644:mad.pc:TARGETS/usr/lib/pkgconfig
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libid3tag
   0.15.1b
   {PN}-{PV}
   extract:http://bent.latency.net/bent/darcs/{PN}-{PV}/src/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
-  rewrite-pkgconfig:id3tag.pc
-  make:install:DESTDIR=TARGETS
-  install:-m644:id3tag.pc:TARGETS/usr/lib/pkgconfig
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libvorbisidec
   1.0.2+svn16259
   {PN}-{PV}
   extract:http://ftp.debian.org/debian/pool/main/libv/{PN}/{PN}_{PV}.orig.tar.gz
   patch:file://tremor.diff
-  make:install:DESTDIR=TARGETS
-  install:-m644:vorbisidec.pc:TARGETS/usr/lib/pkgconfig
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/vorbisidec.pc
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 glib2
   2.28.3
   glib-{PV}
   extract:http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.28/glib-{PV}.tar.gz
   patch:file://glib-{PV}.patch
-  rewrite-pkgconfig:glib-2.0.pc:gmodule-2.0.pc:gio-2.0.pc:gio-unix-2.0.pc:gmodule-export-2.0.pc:gmodule-no-export-2.0.pc:gobject-2.0.pc:gthread-2.0.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libglib-2.0.la
-  rewrite-libtool:TARGETS/usr/lib/libgmodule-2.0.la
-  rewrite-dependency:TARGETS/usr/lib/libgmodule-2.0.la
-  rewrite-libtool:TARGETS/usr/lib/libgio-2.0.la
-  rewrite-dependency:TARGETS/usr/lib/libgio-2.0.la
-  rewrite-libtool:TARGETS/usr/lib/libgobject-2.0.la
-  rewrite-dependency:TARGETS/usr/lib/libgobject-2.0.la
-  rewrite-libtool:TARGETS/usr/lib/libgthread-2.0.la
-  rewrite-dependency:TARGETS/usr/lib/libgthread-2.0.la
+  make:install:DESTDIR=PKDIR
 ;
 libiconv
   1.14
   {PN}-{PV}
   extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libmng
   1.0.10
   {PN}-{PV}
   extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.bz2
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
-  rewrite-dependency:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 lcms
   1.17
   {PN}-{PV}
   extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 openssl
   0.9.6m
@@ -619,193 +576,146 @@ directfb
   patch:file://{PN}-{PV}+STM2010.12.15-4.no-vt.diff
   patch:file://{PN}-libpng.diff
   patch:file://{PN}-{PV}+STM2010.12.15-4.enigma2remote.diff
-  rewrite-pkgconfig:{PN}.pc
-  rewrite-pkgconfig:{PN}-internal.pc
-  rewrite-pkgconfig:lib/direct/direct.pc
-  rewrite-pkgconfig:lib/fusion/fusion.pc
-  make:install:DESTDIR=TARGETS:LD=sh4-linux-ld
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
-  rewrite-libtool:TARGETS/usr/lib/libdirect.la
-  rewrite-libtool:TARGETS/usr/lib/libfusion.la
-  rewrite-dependency:TARGETS/usr/lib/lib{PN}.la
-  rewrite-dependency:TARGETS/usr/lib/libfusion.la
+  make:install:DESTDIR=PKDIR:LD=sh4-linux-ld
 ;
 dfbpp
   1.0.0
   DFB++-{PV}
   extract:http://www.directfb.org/downloads/Extras/DFB++-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-pkgconfig:dfb++.pc
-  rewrite-libtool:TARGETS/usr/lib/libdfb++.la
+  make:install:DESTDIR=PKDIR
 ;
 webkitdfb
   2010-11-18
   {PN}_{PV}
   extract:http://www.duckbox.info/files/packages/{PN}_{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libwebkitgtk-1.0.la
-  rewrite-dependency:TARGETS/usr/lib/libwebkitgtk-1.0.la
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/webkit-1.0.pc
+  make:install:DESTDIR=PKDIR
 ;
 icu4c
   4_4_1
   icu/source
   extract:http://download.icu-project.org/files/{PN}/4.4.1/{PN}-4_4_1-src.tgz
   nothing:file://{PN}-4_4_1_locales.patch
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 enchant
   1.5.0
   {PN}-{PV}
   extract:http://www.abisource.com/downloads/{PN}/{PV}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
-  rewrite-dependency:TARGETS/usr/lib/lib{PN}.la
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}.pc
+  make:install:DESTDIR=PKDIR
 ;
 lite
   0.9.0
   {PN}-{PV}+git0.7982ccc
   extract:http://www.duckbox.info/files/packages/{PN}-{PV}+git0.7982ccc.tar.bz2
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la:TARGETS/usr/lib/libleck.la
-  rewrite-dependency:TARGETS/usr/lib/lib{PN}.la:TARGETS/usr/lib/libleck.la
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}.pc:TARGETS/usr/lib/pkgconfig/leck.pc
+  make:install:DESTDIR=PKDIR
 ;
 sqlite
   3.7.11
   {PN}-autoconf-3071100
   extract:http://www.{PN}.org/{PN}-autoconf-3071100.tar.gz
-  rewrite-pkgconfig:{PN}3.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}3.la
-  rewrite-dependency:TARGETS/usr/lib/lib{PN}3.la
+  make:install:DESTDIR=PKDIR
 ;
 libsoup
   2.33.90
   {PN}-{PV}
   extract:http://download.gnome.org/sources/{PN}/2.33/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:{PN}-2.4.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}-2.4.la
-  rewrite-dependency:TARGETS/usr/lib/{PN}-2.4.la
+  make:install:DESTDIR=PKDIR
 ;
 pixman
   0.18.0
   {PN}-{PV}
   extract:http://cairographics.org/releases/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}-1.la
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}-1.pc
+  make:install:DESTDIR=PKDIR
 ;
 cairo
   1.8.10
   {PN}-{PV}
   extract:http://{PN}graphics.org/releases/{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}.diff
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
-  rewrite-pkgconfig:TARGETS/usr/lib/pkgconfig/{PN}.pc:TARGETS/usr/lib/pkgconfig/{PN}-directfb.pc:TARGETS/usr/lib/pkgconfig/{PN}-ft.pc:TARGETS/usr/lib/pkgconfig/{PN}-png.pc
+  make:install:DESTDIR=PKDIR
 ;
 expat
   2.0.1
   {PN}-{PV}
   extract:http://kent.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 fontconfig
   2.5.93
   {PN}-{PV}
   extract:http://{PN}.org/release/{PN}-{PV}.tar.gz
   rewrite-pkgconfig:{PN}.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/lib{PN}.la
-  rewrite-dependency:TARGETS/usr/lib/lib{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libxmlccwrap
   0.0.12
   {PN}-{PV}
   extract:http://www.ant.uni-bremen.de/whomes/rinas/{PN}/download/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 a52dec
   0.7.4
   {PN}-{PV}
   extract:http://liba52.sourceforge.net/files/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 libdvdcss
   1.2.10
   {PN}-{PV}
   extract:http://download.videolan.org/pub/{PN}/{PV}/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:src/{PN}.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libdvdnav
   4.1.3
   {PN}-{PV}
   extract:http://www.mplayerhq.hu/MPlayer/releases/dvdnav-old/{PN}-{PV}.tar.bz2
   patch:file://{PN}_{PV}-3.diff
-  rewrite-pkgconfig:misc/dvdnav.pc:misc/dvdnavmini.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la:TARGETS/usr/lib/{PN}mini.la
+  make:install:DESTDIR=PKDIR
 ;
 libdvdread
   4.1.3
   {PN}-{PV}
   extract:http://www.mplayerhq.hu/MPlayer/releases/dvdnav-old/{PN}-{PV}.tar.bz2
   patch:file://{PN}_{PV}-5.diff
-  rewrite-pkgconfig:misc/dvdread.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 ffmpeg
   0.8.11
   {PN}-{PV}
   extract:http://{PN}.org/releases/{PN}-{PV}.tar.gz
   patch:file://{PN}.patch
-  rewrite-pkgconfig:libavcodec/libavcodec.pc:libavdevice/libavdevice.pc:libavformat/libavformat.pc:libavutil/libavutil.pc:libswscale/libswscale.pc
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 libass
   0.9.11
   {PN}-{PV}
   extract:http://{PN}.googlecode.com/files/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:{PN}.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libcap
   2.22
   {PN}-{PV}
   extract:http://mirror.linux.org.au/linux/libs/security/linux-privs/{PN}2/{PN}-{PV}.tar.bz2
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 libogg
   1.2.2
   {PN}-{PV}
   extract:http://downloads.xiph.org/releases/ogg/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:ogg.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
+  make:install:DESTDIR=PKDIR
 ;
 libflac
   1.2.1
   flac-{PV}
   extract:http://ignum.dl.sourceforge.net/project/flac/flac-src/flac-{PV}-src/flac-{PV}.tar.gz
   patch:file://flac-{PV}.patch
-  rewrite-pkgconfig:src/libFLAC/flac.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libFLAC.la
+  make:install:DESTDIR=PKDIR
 ;
 evebrowser
   0.0.1
   {PN}-{PV}
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 dvbdata
   0.6
@@ -816,7 +726,7 @@ brofs
   1.2
   BroFS{PV}
   extract:http://www.avalpa.com/assets/freesoft/other/BroFS{PV}.tgz
-  make:install:DESTDIR=TARGETS/usr/bin
+  make:install:prefix=/usr/bin:DESTDIR=PKDIR
 ;
 libalsa
   1.0.21a
@@ -942,6 +852,24 @@ vlc
   extract:http://download.videolan.org/pub/videolan/{PN}/{PV}/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
 ;
+djmount
+  0.71
+  {PN}-{PV}
+  extract:http://sourceforge.net/projects/{PN}/files/{PN}/{PV}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+libupnp
+  1.3.1
+  {PN}-{PV}
+  extract:http://sourceforge.net/projects/upnp/files/latest/download/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+rarfs
+  0.0.10
+  {PN}-{PV}
+  extract:http://sourceforge.net/projects/{PN}/files/latest/download/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
 elementtree
   1.2.6-20050316
   {PN}-{PV}
@@ -952,19 +880,13 @@ libxml2
   {PN}-{PV}
   extract:http://xmlsoft.org/sources//{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}.diff
-  rewrite-pkgconfig:libxml-2.0.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la
-  rewrite-dependency:TARGETS/usr/lib/
-  rewrite-libtool:TARGETS/usr/lib/python2.6/site-packages/{PN}mod.la
+  make:install:DESTDIR=PKDIR
 ;
 libxslt
   1.1.24
   {PN}-{PV}
   extract:http://xmlsoft.org/sources/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:{PN}.pc:libexslt.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/{PN}.la:TARGETS/usr/lib/libexslt.la:TARGETS/usr/lib/python2.6/site-packages/{PN}mod.la
+  make:install:DESTDIR=PKDIR
 ;
 lxml
   2.0.5
@@ -1088,8 +1010,8 @@ gst_ffmpeg
 gst_fluendo_mpegdemux
   0.10.69
   gst-fluendo-mpegdemux-{PV}
-  extract:http://core.fluendo.com/gstreamer/src/{PN}/{PN}-{PV}.tar.gz
-  patch:file://gst-plugins-fluendo-mpegdemux-{PV}-add_dts_hd_detection.diff
+  extract:http://core.fluendo.com/gstreamer/src/gst-fluendo-mpegdemux/gst-fluendo-mpegdemux-{PV}.tar.gz
+  patch:file://{PN}-{PV}-add_dts_hd_detection.diff
   make:install:DESTDIR=PKDIR
 ;
 gst_plugins_dvbmediasink
@@ -1115,17 +1037,13 @@ libusb2
   1.0.8
   libusb-{PV}
   extract:http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-{PV}/libusb-{PV}.tar.bz2
-  rewrite-pkgconfig:libusb-1.0.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libusb-1.0.la
+  make:install:DESTDIR=PKDIR
 ;
 libusbcompat
   0.1.3
   libusb-compat-{PV}
   extract:http://downloads.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-{PV}/libusb-compat-{PV}.tar.bz2
-  rewrite-pkgconfig:libusb.pc
-  make:install:DESTDIR=TARGETS
-  rewrite-libtool:TARGETS/usr/lib/libusb.la
+  make:install:DESTDIR=PKDIR
 ;
 libgd2
   2.0.35
@@ -1139,34 +1057,34 @@ portmap
   extract:http://neil.brown.name/{PN}/{PN}-{PV}.tgz
   patch:file://{PN}_{PV}.diff
   nothing:http://debian.osuosl.org/debian/pool/main/p/{PN}/{PN}_{PV}.0-2.diff.gz
-  make:install:BASEDIR=TARGETS
-  install:-m755:debian/init.d:TARGETS/etc/init.d/{PN}
+  make:install:BASEDIR=PKDIR
+  install:-m755:debian/init.d:PKDIR/etc/init.d/{PN}
 ;
 nfs_utils
   1.1.1
   {PN}-{PV}
-  extract:ftp://ftp.kernel.org/pub/linux/utils/nfs/{PN}-{PV}.tar.bz2
-  nothing:http://ftp.de.debian.org/debian/pool/main/n/{PN}/{PN}_{PV}-12.diff.gz
-  make:install:DESTDIR=TARGETS
-  install:-m644:debian/nfs-common.default:TARGETS/etc/default/nfs-common
-  install:-m755:debian/nfs-common.init:TARGETS/etc/init.d/nfs-common
-  install:-m644:debian/nfs-kernel-server.default:TARGETS/etc/default/nfs-kernel-server
-  install:-m755:debian/nfs-kernel-server.init:TARGETS/etc/init.d/nfs-kernel-server
-  install:-m644:debian/etc.exports:TARGETS/etc/exports
-  remove:TARGETS/sbin/mount.nfs4:TARGETS/sbin/umount.nfs4
+  extract:ftp://ftp.piotrkosoft.net/pub/mirrors/ftp.kernel.org/linux/utils/nfs/{PN}-{PV}.tar.bz2
+  patch:file://{PN}_{PV}-12.diff.gz
+  make:install:DESTDIR=PKDIR
+  install:-m644:debian/nfs-common.default:PKDIR/etc/default/nfs-common
+  install:-m755:debian/nfs-common.init:PKDIR/etc/init.d/nfs-common
+  install:-m644:debian/nfs-kernel-server.default:PKDIR/etc/default/nfs-kernel-server
+  install:-m755:debian/nfs-kernel-server.init:PKDIR/etc/init.d/nfs-kernel-server
+  install:-m644:debian/etc.exports:PKDIR/etc/exports
+  remove:PKDIR/sbin/mount.nfs4:PKDIR/sbin/umount.nfs4
 ;
 vsftpd
   2.3.5
   {PN}-{PV}
   extract:http://centos.googlecode.com/files/{PN}-{PV}.tar.gz
   patch:file://{PN}_{PV}.diff
-  make:install:PREFIX=TARGETS
+  make:install:PREFIX=PKDIR
 ;
 netkit_ftp
   0.17
   {PN}-{PV}
-  extract:ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/{PN}-{PV}.tar.gz
-  patch:file://{PN}.diff
+  extract:http://ibiblio.org/pub/linux/system/network/netkit//{PN}-{PV}.tar.gz
+#patch:file://{PN}.diff
   make:install:MANDIR=/usr/share/man:INSTALLROOT=TARGETS
 ;
 samba
@@ -1174,20 +1092,20 @@ samba
   {PN}-{PV}
   extract:http://www.{PN}.org/{PN}/ftp/stable/{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}.diff
-  make:install bin/smbd bin/nmbd:DESTDIR=TARGETS:prefix=./.
+  make:install bin/smbd bin/nmbd:DESTDIR=PKDIR:prefix=./.
 ;
 netio
   1.26
   {PN}126
   extract:http://bnsmb.de/files/public/windows/{PN}126.zip
-  install:-m755:{PN}:TARGETS/usr/bin
+  install:-m755:{PN}:PKDIR/usr/bin
   install:-m755:bin/linux-i386:HOST/bin/{PN}
 ;
 lighttpd
   1.4.15
   {PN}-{PV}
   extract:http://www.{PN}.net/download/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 zd1211
   2_15_0_0
@@ -1199,17 +1117,17 @@ wireless_tools
   29
   wireless_tools.{PV}
   extract:http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/wireless_tools.{PV}.tar.gz
-  make:install:INSTALL_MAN=TARGETS/usr/share/man:PREFIX=TARGETS/usr
+  make:install:INSTALL_MAN=PKDIR/usr/share/man:PREFIX=PKDIR/usr
 ;
 wpa_supplicant
   0.5.9
   wpa_supplicant-{PV}
   extract:http://hostap.epitest.fi/releases/wpa_supplicant-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 ethtool
   6
   {PN}-{PV}
   extract:http://downloads.openwrt.org/sources/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
