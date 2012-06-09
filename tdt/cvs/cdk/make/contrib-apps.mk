@@ -1065,8 +1065,10 @@ $(DEPDIR)/sysstat: bootstrap @DEPENDS_sysstat@
 # hotplug-e2
 #
 DESCRIPTION_hotplug_e2 = "hotplug_e2"
+SRC_URI_hotplug_e2 = git clone git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper
 FILES_hotplug_e2 = \
-/usr/lib/*
+/sbin/bdpoll \
+/usr/bin/hotplug_e2_helper
 
 $(DEPDIR)/hotplug_e2.do_prepare: bootstrap @DEPENDS_hotplug_e2@
 	@PREPARE_hotplug_e2@
@@ -1095,6 +1097,8 @@ $(DEPDIR)/%hotplug_e2: $(DEPDIR)/hotplug_e2.do_compile
 	cd @DIR_hotplug_e2@ && \
 		@INSTALL_hotplug_e2@
 	$(tocdk_build)
+	mkdir $(PKDIR)/sbin
+	cp -f $(PKDIR)/usr/bin/* $(PKDIR)/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_hotplug_e2@
 	[ "x$*" = "x" ] && touch $@ || true
