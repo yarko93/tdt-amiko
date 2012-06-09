@@ -105,8 +105,11 @@ $(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
 	rm -rf $(PKDIR)/usr/local/share/meta
 	$(toflash_build)
 	touch $@
-
-enigma2-nightly-clean enigma2-nightly-distclean:
+enigma2-nightly-clean:
+	rm -f $(DEPDIR)/enigma2-nightly.do_compile
+	cd $(appsdir)/enigma2-nightly && \
+		$(MAKE) clean
+enigma2-nightly-distclean:
 	rm -f $(DEPDIR)/enigma2-nightly
 	rm -f $(DEPDIR)/enigma2-nightly.do_compile
 	rm -f $(DEPDIR)/enigma2-nightly.do_prepare
