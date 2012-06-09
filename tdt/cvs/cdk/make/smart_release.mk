@@ -21,6 +21,7 @@ release_common_utils:
 	ln -sf ../init.d/sendsigs $(prefix)/release/etc/rc.d/rc6.d/S20sendsigs
 	ln -sf ../init.d/umountfs $(prefix)/release/etc/rc.d/rc6.d/S40umountfs
 	ln -sf ../init.d/reboot $(prefix)/release/etc/rc.d/rc6.d/S90reboot
+	cp -f $(buildprefix)/root/release/reboot $(prefix)/release/etc/init.d/ && \
 	mkdir -p $(prefix)/release/etc/opkg
 	mkdir -p $(prefix)/release/usr/lib/locale
 	cp -f $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
@@ -93,11 +94,18 @@ release_base:
 # udhcpc
 	$(INSTALL_DIR) $(prefix)/release/usr/share/udhcpc && \
 	cp -aR $(buildprefix)/root/usr/share/udhcpc/* $(prefix)/release/usr/share/udhcpc/ && \
+	cp -dp $(buildprefix)/root/etc/init.d/udhcpc $(prefix)/release/etc/init.d/ && \
+	cp $(buildprefix)/root/etc/timezone.xml $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/etc/network/options $(prefix)/release/etc/network/ && \
+	ln -sf /etc/timezone.xml $(prefix)/release/etc/tuxbox/timezone.xml && \
 	ln -sf /usr/local/share/keymaps $(prefix)/release/usr/share/keymaps
 	if [ -e $(targetprefix)/usr/share/alsa ]; then \
 	mkdir $(prefix)/release/usr/share/alsa/; \
 	mkdir $(prefix)/release/usr/share/alsa/cards/; \
 	mkdir $(prefix)/release/usr/share/alsa/pcm/; \
+	cp $(targetprefix)/etc/tuxbox/satellites.xml $(prefix)/release/etc/tuxbox/ && \
+	cp $(targetprefix)/etc/tuxbox/cables.xml $(prefix)/release/etc/tuxbox/ && \
+	cp $(targetprefix)/etc/tuxbox/terrestrial.xml $(prefix)/release/etc/tuxbox/ && \
 	cp $(kernelprefix)/linux-sh4/arch/sh/boot/uImage $(prefix)/release/boot/ && \
 	cp $(targetprefix)/usr/share/alsa/alsa.conf          $(prefix)/release/usr/share/alsa/alsa.conf; \
 	cp $(targetprefix)/usr/share/alsa/cards/aliases.conf $(prefix)/release/usr/share/alsa/cards/; \
@@ -128,6 +136,7 @@ release_base:
 	cp -f $(buildprefix)/root/bin/vdstandby $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin/ && \
+	cp -dp $(targetprefix)/etc/image-version $(prefix)/release/etc/ && \
 	cp -a $(targetprefix)/dev/* $(prefix)/release/dev/ && \
 	cp -dp $(targetprefix)/etc/fstab $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/group $(prefix)/release/etc/ && \
