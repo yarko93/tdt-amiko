@@ -1629,7 +1629,7 @@ $(DEPDIR)/elementtree.do_compile: $(DEPDIR)/elementtree.do_prepare
 
 $(DEPDIR)/min-elementtree $(DEPDIR)/std-elementtree $(DEPDIR)/max-elementtree \
 $(DEPDIR)/elementtree: \
-$(DEPDIR)/%elementtree: %python elementtree.do_compile
+$(DEPDIR)/%elementtree: $(DEPDIR)/elementtree.do_compile
 	$(start_build)
 	cd @DIR_elementtree@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
@@ -1670,7 +1670,7 @@ $(DEPDIR)/libxml2.do_compile: $(DEPDIR)/libxml2.do_prepare
 
 $(DEPDIR)/min-libxml2 $(DEPDIR)/std-libxml2 $(DEPDIR)/max-libxml2 \
 $(DEPDIR)/libxml2: \
-$(DEPDIR)/%libxml2: libxml2.do_compile
+$(DEPDIR)/%libxml2: $(DEPDIR)/libxml2.do_compile
 	$(start_build)
 	cd @DIR_libxml2@ && \
 		@INSTALL_libxml2@ && \
@@ -1756,7 +1756,7 @@ $(DEPDIR)/lxml.do_compile: $(DEPDIR)/lxml.do_prepare
 
 $(DEPDIR)/min-lxml $(DEPDIR)/std-lxml $(DEPDIR)/max-lxml \
 $(DEPDIR)/lxml: \
-$(DEPDIR)/%lxml: lxml.do_compile
+$(DEPDIR)/%lxml: $(DEPDIR)/lxml.do_compile
 	$(start_build)
 	cd @DIR_lxml@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
@@ -1792,15 +1792,59 @@ $(DEPDIR)/setuptools.do_compile: $(DEPDIR)/setuptools.do_prepare
 
 $(DEPDIR)/min-setuptools $(DEPDIR)/std-setuptools $(DEPDIR)/max-setuptools \
 $(DEPDIR)/setuptools: \
-$(DEPDIR)/%setuptools: setuptools.do_compile
+$(DEPDIR)/%setuptools: $(DEPDIR)/setuptools.do_compile
 	$(start_build)
 	cd @DIR_setuptools@ && \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
-	$(toflash_build)
 #	@DISTCLEANUP_setuptools@
 	[ "x$*" = "x" ] && touch $@ || true
 
+#
+#gdata
+#
+DESCRIPTION_gdata = "The Google Data APIs (Google Data) provide a simple protocol for reading and writing data on the web. Though it is possible to use these services with a simple HTTP client, this library provides helpful tools to streamline your code and keep up with server-side changes. "
+FILES_gdata = \
+/usr/lib/python2.6/site-packages/atom/*.py \
+/usr/lib/python2.6/site-packages/atom/*.pyo \
+/usr/lib/python2.6/site-packages/gdata/*.py \
+/usr/lib/python2.6/site-packages/gdata/*.pyo \
+/usr/lib/python2.6/site-packages/gdata/*.pyo \
+/usr/lib/python2.6/site-packages/gdata/youtube/*.py \
+/usr/lib/python2.6/site-packages/gdata/youtube/*.pyo \
+/usr/lib/python2.6/site-packages/gdata/geo/*.py \
+/usr/lib/python2.6/site-packages/gdata/geo/*.pyo \
+/usr/lib/python2.6/site-packages/gdata/media/*.py \
+/usr/lib/python2.6/site-packages/gdata/media/*.pyo \
+/usr/lib/python2.6/site-packages/gdata/oauth/*.py \
+/usr/lib/python2.6/site-packages/gdata/oauth/*.pyo \
+/usr/lib/python2.6/site-packages/gdata/tlslite/*.py \
+/usr/lib/python2.6/site-packages/gdata/tlslite/*.pyo
+
+$(DEPDIR)/gdata.do_prepare: bootstrap setuptools @DEPENDS_gdata@
+	@PREPARE_gdata@
+	touch $@
+
+$(DEPDIR)/gdata.do_compile: $(DEPDIR)/gdata.do_prepare
+	cd @DIR_gdata@ && \
+		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
+		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		$(crossprefix)/bin/python -c "import setuptools; execfile('setup.py')" build
+	touch $@
+
+$(DEPDIR)/min-gdata $(DEPDIR)/std-gdata $(DEPDIR)/max-gdata \
+$(DEPDIR)/gdata: \
+$(DEPDIR)/%gdata: $(DEPDIR)/gdata.do_compile
+	$(start_build)
+	cd @DIR_gdata@ && \
+		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
+		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+#	@DISTCLEANUP_gdata@
+	$(tocdk_build)
+	$(remove_pyo)
+	$(toflash_build)
+	[ "x$*" = "x" ] && touch $@ || true
 #
 # twisted
 #
@@ -1835,7 +1879,7 @@ $(DEPDIR)/twisted.do_compile: $(DEPDIR)/twisted.do_prepare
 
 $(DEPDIR)/min-twisted $(DEPDIR)/std-twisted $(DEPDIR)/max-twisted \
 $(DEPDIR)/twisted: \
-$(DEPDIR)/%twisted: twisted.do_compile
+$(DEPDIR)/%twisted: $(DEPDIR)/twisted.do_compile
 	$(start_build)
 	cd @DIR_twisted@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
@@ -1871,7 +1915,7 @@ $(DEPDIR)/twistedweb2.do_compile: $(DEPDIR)/twistedweb2.do_prepare
 
 $(DEPDIR)/min-twistedweb2 $(DEPDIR)/std-twistedweb2 $(DEPDIR)/max-twistedweb2 \
 $(DEPDIR)/twistedweb2: \
-$(DEPDIR)/%twistedweb2: twistedweb2.do_compile
+$(DEPDIR)/%twistedweb2: $(DEPDIR)/twistedweb2.do_compile
 	$(start_build)
 	cd @DIR_twistedweb2@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
@@ -1930,7 +1974,7 @@ $(DEPDIR)/pyopenssl.do_compile: $(DEPDIR)/pyopenssl.do_prepare
 
 $(DEPDIR)/min-pyopenssl $(DEPDIR)/std-pyopenssl $(DEPDIR)/max-pyopenssl \
 $(DEPDIR)/pyopenssl: \
-$(DEPDIR)/%pyopenssl: pyopenssl.do_compile
+$(DEPDIR)/%pyopenssl: $(DEPDIR)/pyopenssl.do_compile
 	$(start_build)
 	cd @DIR_pyopenssl@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -2002,7 +2046,7 @@ $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
 
 $(DEPDIR)/min-python $(DEPDIR)/std-python $(DEPDIR)/max-python \
 $(DEPDIR)/python: \
-$(DEPDIR)/%python: python.do_compile
+$(DEPDIR)/%python: $(DEPDIR)/python.do_compile
 	$(start_build)
 	( cd @DIR_python@ && \
 		$(MAKE) $(MAKE_ARGS) \
@@ -2037,7 +2081,7 @@ $(DEPDIR)/pythonwifi.do_compile: $(DEPDIR)/pythonwifi.do_prepare
 
 $(DEPDIR)/min-pythonwifi $(DEPDIR)/std-pythonwifi $(DEPDIR)/max-pythonwifi \
 $(DEPDIR)/pythonwifi: \
-$(DEPDIR)/%pythonwifi: pythonwifi.do_compile
+$(DEPDIR)/%pythonwifi: $(DEPDIR)/pythonwifi.do_compile
 	$(start_build)
 	cd @DIR_pythonwifi@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -2067,7 +2111,7 @@ $(DEPDIR)/pythoncheetah.do_compile: $(DEPDIR)/pythoncheetah.do_prepare
 
 $(DEPDIR)/min-pythoncheetah $(DEPDIR)/std-pythoncheetah $(DEPDIR)/max-pythoncheetah \
 $(DEPDIR)/pythoncheetah: \
-$(DEPDIR)/%pythoncheetah: pythoncheetah.do_compile
+$(DEPDIR)/%pythoncheetah: $(DEPDIR)/pythoncheetah.do_compile
 	$(start_build)
 	cd @DIR_pythoncheetah@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -2098,7 +2142,7 @@ $(DEPDIR)/zope_interface.do_compile: $(DEPDIR)/zope_interface.do_prepare
 
 $(DEPDIR)/min-zope_interface $(DEPDIR)/std-zope_interface $(DEPDIR)/max-zope_interface \
 $(DEPDIR)/zope_interface: \
-$(DEPDIR)/%zope_interface: zope_interface.do_compile
+$(DEPDIR)/%zope_interface: $(DEPDIR)/zope_interface.do_compile
 	$(start_build)
 	cd @DIR_zope_interface@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \

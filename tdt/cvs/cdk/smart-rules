@@ -898,6 +898,11 @@ setuptools
   {PN}-{PV}
   extract:http://pypi.python.org/packages/source/s/{PN}/{PN}-{PV}.tar.gz
 ;
+gdata
+  2.0.17
+  gdata-{PV}
+  extract:http://gdata-python-client.googlecode.com/files/gdata-{PV}.tar.gz
+;
 twisted
   8.2.0
   Twisted-{PV}
