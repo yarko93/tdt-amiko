@@ -162,6 +162,11 @@ release_base:
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/sbin/init $(prefix)/release/sbin/init && \
+	cp -rd $(targetprefix)/lib/* $(prefix)/release/lib/ && \
+	rm -f $(prefix)/release/lib/*.a && \
+	rm -f $(prefix)/release/lib/*.o && \
+	rm -f $(prefix)/release/lib/*.la && \
 	find $(targetprefix)/lib/modules/ -name '*ko' -exec cp -dp {} $(prefix)/release/lib/modules/ \;
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 	
