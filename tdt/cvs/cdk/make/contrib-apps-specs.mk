@@ -715,6 +715,8 @@ $(DEPDIR)/%$(STRACE): $(DEPDIR)/%$(GLIBC) $(STRACE_RPM)
 if STM24
 UTIL_LINUX = util-linux
 FILES_util_linux = \
+/sbin/mkfs \
+/sbin/sfdisk \
 /usr/lib
 UTIL_LINUX_VERSION = 2.16.1-22
 UTIL_LINUX_SPEC = stm-target-$(UTIL_LINUX).spec
