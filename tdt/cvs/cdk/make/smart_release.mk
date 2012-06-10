@@ -58,6 +58,7 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/etc/init.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-down.d && \
+	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-down.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-pre-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-up.d && \
@@ -143,9 +144,10 @@ release_base:
 	cp -f $(buildprefix)/root/bootscreen/bootlogo.mvi $(prefix)/release/boot/ && \
 	cp -f $(buildprefix)/root/bin/autologin $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/bin/vdstandby $(prefix)/release/bin/ && \
+	cp -f $(buildprefix)/root/etc/vdstandby.cfg $(prefix)/release/etc/ && \
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin/ && \
-	cp -dp $(targetprefix)/etc/image-version $(prefix)/release/etc/ && \
+	cp -f $(buildprefix)/root/etc/image-version $(prefix)/release/etc/ && \
 	cp -a $(targetprefix)/dev/* $(prefix)/release/dev/ && \
 	cp -dp $(targetprefix)/etc/fstab $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/group $(prefix)/release/etc/ && \
@@ -163,6 +165,8 @@ release_base:
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
+	mkdir -p $(prefix)/release/var/run/lirc && \
+	echo "576i50" > $(prefix)/release/etc/videomode && \
 	find $(targetprefix)/lib/modules/ -name '*ko' -exec cp -dp {} $(prefix)/release/lib/modules/ \;
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 	
