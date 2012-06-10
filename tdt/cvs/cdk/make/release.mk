@@ -943,8 +943,10 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/etc/init.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-down.d && \
+	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-down.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-pre-up.d && \
+	$(INSTALL_DIR) $(prefix)/release/etc/network/if-pre-down.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/tuxbox && \
 	$(INSTALL_DIR) $(prefix)/release/etc/enigma2 && \

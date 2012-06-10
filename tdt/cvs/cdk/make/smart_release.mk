@@ -86,6 +86,7 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/ram && \
 	$(INSTALL_DIR) $(prefix)/release/var && \
 	$(INSTALL_DIR) $(prefix)/release/var/etc && \
+	mkdir -p $(prefix)/release/var/run/lirc && \
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/opkg && \
 	ln -sf /usr/bin/opkg-cl  $(prefix)/release/usr/bin/ipkg-cl && \
 	ln -sf /usr/bin/opkg-cl  $(prefix)/release/usr/bin/opkg && \
