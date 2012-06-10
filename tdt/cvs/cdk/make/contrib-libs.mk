@@ -1080,8 +1080,7 @@ DESCRIPTION_ffmpeg = "ffmpeg"
 
 FILES_ffmpeg = \
 /usr/lib/*.so* \
-/usr/bin/ffmpeg \
-/usr/bin/ffprobe
+/sbin/ffmpeg
 
 $(DEPDIR)/ffmpeg.do_prepare: bootstrap libass rtmpdump @DEPENDS_ffmpeg@
 	@PREPARE_ffmpeg@
@@ -1172,6 +1171,7 @@ $(DEPDIR)/%ffmpeg: $(DEPDIR)/ffmpeg.do_compile
 	cd @DIR_ffmpeg@ && \
 		@INSTALL_ffmpeg@
 	$(tocdk_build)
+	mv $(PKDIR)/usr/bin $(PKDIR)/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_ffmpeg@
 	[ "x$*" = "x" ] && touch $@ || true
