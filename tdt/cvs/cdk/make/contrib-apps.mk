@@ -425,7 +425,7 @@ $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
 DESCRIPTION_sdparm = "sdparm"
 
 FILES_sdparm = \
-/usr/bin/sdparm
+/sbin/sdparm
 
 $(DEPDIR)/sdparm.do_prepare: bootstrap @DEPENDS_sdparm@
 	@PREPARE_sdparm@
@@ -449,10 +449,12 @@ $(DEPDIR)/min-sdparm $(DEPDIR)/std-sdparm $(DEPDIR)/max-sdparm \
 $(DEPDIR)/sdparm: \
 $(DEPDIR)/%sdparm: $(DEPDIR)/sdparm.do_compile
 	$(start_build)
+	mkdir $(PKDIR)/sbin
 	cd @DIR_sdparm@ && \
 		export PATH=$(MAKE_PATH) && \
 		@INSTALL_sdparm@
 	$(tocdk_build)
+	mv -f $(PKDIR)/usr/bin/sdparm $(PKDIR)/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_sdparm@
 	[ "x$*" = "x" ] && touch $@ || true
