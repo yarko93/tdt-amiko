@@ -163,6 +163,7 @@ NFS=`grep -c nfs /proc/cmdline`
         cd /etc/enigma2
         sed -i "/$config.skin./d" "settings"
       fi
+      /usr/local/bin/enigma2
       rtv=$?
       echo "e2 ended <- RTV: " $rtv
       case "$rtv" in
