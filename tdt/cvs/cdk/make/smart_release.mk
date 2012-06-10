@@ -58,7 +58,6 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/etc/init.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-down.d && \
-	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-down.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-pre-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-up.d && \
@@ -165,7 +164,6 @@ release_base:
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
-	mkdir -p $(prefix)/release/var/run/lirc && \
 	echo "576i50" > $(prefix)/release/etc/videomode && \
 	find $(targetprefix)/lib/modules/ -name '*ko' -exec cp -dp {} $(prefix)/release/lib/modules/ \;
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;

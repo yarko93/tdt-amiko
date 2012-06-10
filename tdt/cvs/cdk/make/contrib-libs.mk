@@ -1765,6 +1765,7 @@ $(DEPDIR)/%lxml: $(DEPDIR)/lxml.do_compile
 #	@DISTCLEANUP_lxml@
 	$(tocdk_build)
 	$(remove_pyo)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -2884,7 +2885,8 @@ DESCRIPTION_rtmpdump = "rtmpdump is a tool for dumping media content streamed ov
 
 FILES_rtmpdump = \
 /usr/bin/rtmpdump \
-/usr/lib/librtmp* 
+/usr/lib/librtmp* \
+/usr/sbin/rtmpgw
 
 $(DEPDIR)/rtmpdump.do_prepare: bootstrap openssl openssl-dev libz @DEPENDS_rtmpdump@
 	@PREPARE_rtmpdump@
