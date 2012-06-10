@@ -694,8 +694,6 @@ $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 		for s in sysfs udev ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
-	$(start_build)
-	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
