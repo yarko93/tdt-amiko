@@ -1006,7 +1006,9 @@ $(DEPDIR)/linux-kernel.%.do_compile: \
 DESCRIPTION_linux_kernel = "The Linux Kernel and modules"
 PKGV_linux_kernel = $(KERNELVERSION)
 SRC_URI_linux_kernel = stlinux.com
-FILES_linux_kernel = /
+FILES_linux_kernel = \
+/lib/modules \
+/boot/uImage
 
 $(DEPDIR)/min-linux-kernel $(DEPDIR)/std-linux-kernel $(DEPDIR)/max-linux-kernel \
 $(DEPDIR)/linux-kernel: \
