@@ -92,6 +92,8 @@ $(DEPDIR)/$(GLIBC_DEV): \
 $(DEPDIR)/%$(GLIBC_DEV): $(DEPDIR)/%$(GLIBC) $(GLIBC_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #Wrote: RPMS/sh4/stlinux23-sh4-glibc-prof-2.5-27.sh4.rpm
@@ -497,6 +499,8 @@ $(DEPDIR)/$(NCURSES_DEV): \
 $(DEPDIR)/%$(NCURSES_DEV): $(DEPDIR)/%$(NCURSES_BASE) $(NCURSES_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
