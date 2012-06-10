@@ -168,6 +168,10 @@ release_base:
 	echo "576i50" > $(prefix)/release/etc/videomode && \
 	find $(targetprefix)/lib/modules/ -name '*ko' -exec cp -dp {} $(prefix)/release/lib/modules/ \;
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
+	rm -rf $(prefix)/release/lib/modules/$(KERNELVERSION)
+	
+	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts
+	cp $(buildprefix)/root/usr/share/fonts/* $(prefix)/release/usr/share/fonts
 	
 release_cube_common:
 	cp $(buildprefix)/root/release/reboot_cuberevo $(prefix)/release/etc/init.d/reboot

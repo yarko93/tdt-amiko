@@ -176,6 +176,9 @@ endif !STM22
 #
 OPENSSL := openssl
 OPENSSL_DEV := openssl-dev
+FILES_openssl_dev = \
+/usr/lib
+
 if STM22
 OPENSSL_VERSION := 0.9.8-6
 OPENSSL_SPEC := stm-target-$(OPENSSL).spec
@@ -225,6 +228,8 @@ $(DEPDIR)/%$(OPENSSL_DEV): %$(OPENSSL) $(OPENSSL_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
+	$(start_build)
+	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
