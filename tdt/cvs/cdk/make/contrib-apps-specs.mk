@@ -19,6 +19,15 @@ $(DEPDIR)/console_data: bootstrap @DEPENDS_console_data@
 #
 SYSVINIT := sysvinit
 INITSCRIPTS := initscripts
+FILES_sysvinit = \
+/bin \
+/sbin/fsck.nfs \
+/sbin/killall5 \
+/sbin/init \
+/sbin/halt \
+/sbin/poweroff \
+/sbin/reboot
+
 if STM22
 SYSVINIT_VERSION := 2.86-6
 SYSVINIT_SPEC := stm-target-$(SYSVINIT).spec
@@ -62,6 +71,8 @@ $(DEPDIR)/%$(SYSVINIT): $(SYSVINIT_ADAPTED_ETC_FILES:%=root/etc/%) \
 		[ -f $$i ] && $(INSTALL) -m644 $$i $(prefix)/$*cdkroot/etc/$$i || true; \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done )
 	[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
+	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 $(DEPDIR)/min-$(INITSCRIPTS) $(DEPDIR)/std-$(INITSCRIPTS) $(DEPDIR)/max-$(INITSCRIPTS) \
