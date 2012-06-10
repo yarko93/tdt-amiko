@@ -101,7 +101,7 @@ $(crossprefix)/bin/opkg: @DEPENDS_opkg_host@
 		$(MAKE) install && \
 	$(LN_SF) opkg-cl $@
 	install -d $(targetprefix)/usr/lib/opkg
-	install -d $(prefix)/release/usr/lib/opkg
+	install -d $(prefix)/pkgroot/usr/lib/opkg
 	echo "dest root /" >$(OPKG_CONF)
 	( echo "lists_dir ext /usr/lib/opkg"; \
 	  echo "arch sh4 10"; \

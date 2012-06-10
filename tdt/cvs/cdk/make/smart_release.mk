@@ -45,8 +45,9 @@ release_common_utils:
 	$(if $(SPARK)$(UFS912)$(WHITEBOX),cp -f $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf )
 	
 release_base:
-#	rm -rf $(prefix)/release || true
+	rm -rf $(prefix)/release || true
 	$(INSTALL_DIR) $(prefix)/release && \
+	cp -rp $(prefix)/pkgroot/* $(prefix)/release
 	$(INSTALL_DIR) $(prefix)/release/bin && \
 	$(INSTALL_DIR) $(prefix)/release/sbin && \
 	$(INSTALL_DIR) $(prefix)/release/boot && \
