@@ -240,10 +240,15 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 #
 DESCRIPTION_e2fsprogs = "e2fsprogs"
 FILES_e2fsprogs = \
-/sbin/* \
+/sbin/e2fsck \
+/sbin/fsck \
+/sbin/fsck* \
+/sbin/mkfs* \
+/sbin/mke2fs \
+/sbin/tune2fs \
 /usr/lib/e2initrd_helper \
 /lib/*.so* \
-/usr/lib/*.so*
+/usr/lib/*.so
 
 $(DEPDIR)/e2fsprogs.do_prepare: bootstrap @DEPENDS_e2fsprogs@
 	@PREPARE_e2fsprogs@
