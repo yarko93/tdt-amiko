@@ -50,6 +50,8 @@ clean-local: mostlyclean-local depsclean rpmdepsclean
 	-rm -rf $(configprefix)/
 	-rm -rf $(devkitprefix)/
 	-rm -rf $(prefix)/*cdkroot/
+	-rm -rf $(prefix)/ipkcdk/
+	-rm -rf $(prefix)/ipkbox/
 	-rm -rf $(prefix)/*cdkroot-rpmdb
 	-rm -rf $(prefix)/*cdkroot-tftpboot
 	-rm -rf $(rpmdbprefix)
@@ -88,6 +90,8 @@ distclean-local:
 	-rm -rf $(configprefix)/
 	-rm -rf $(devkitprefix)/
 	-rm -rf $(prefix)/*cdkroot/
+	-rm -rf $(prefix)/ipkcdk/
+	-rm -rf $(prefix)/ipkbox/
 	-rm -rf $(prefix)/*cdkroot-rpmdb
 	-rm -rf $(prefix)/*cdkroot-tftpboot
 	-rm -rf $(rpmdbprefix)/

@@ -64,7 +64,7 @@ $(DEPDIR)/enigma2-pli-nightly.do_compile: $(DIR_enigma2_pli)/config.status
 DESCRIPTION_enigma2_pli := a framebuffer-based zapping application (GUI) for linux
 SRC_URI_enigma2_pli := git://openpli.git.sourceforge.net/gitroot/openpli/enigma2
 # neccecary for get_git_version:
-FILES_enigma2_pli := /usr/bin /usr/lib/ /etc/enigma2 /usr/local/share
+FILES_enigma2_pli := /usr/lib/ /etc/enigma2 /usr/local/share /usr/local/bin
 
 $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_prepare enigma2-pli-nightly.do_compile
 	$(call parent_pk,enigma2_pli)
@@ -77,7 +77,9 @@ $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_prepare enigma2-pli-nightl
 	if [ -e $(PKDIR)/usr/local/bin/enigma2 ]; then \
 		$(target)-strip $(PKDIR)/usr/local/bin/enigma2; \
 	fi
+	mkdir -p $(PKDIR)/usr/local/bin
 	$(tocdk_build)
+	cp $(PKDIR)/usr/bin/enigma2 $(PKDIR)/usr/local/bin/
 	$(toflash_build)
 	touch $@
 enigma2-pli-nightly-clean:

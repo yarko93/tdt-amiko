@@ -241,6 +241,7 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 DESCRIPTION_e2fsprogs = "e2fsprogs"
 FILES_e2fsprogs = \
 /sbin/* \
+/usr/lib/e2initrd_helper \
 /lib/*.so* \
 /usr/lib/*.so*
 
@@ -262,6 +263,7 @@ $(DEPDIR)/e2fsprogs.do_compile: $(DEPDIR)/e2fsprogs.do_prepare | $(UTIL_LINUX)
 		--enable-elf-shlibs \
 		--with-root-prefix= \
 		--enable-verbose-makecmds \
+		--enable-e2initrd-helper \
 		--enable-symlink-install \
 		--enable-compression \
 		--disable-libblkid \
@@ -317,11 +319,14 @@ else !STM24
 $(DEPDIR)/min-e2fsprogs $(DEPDIR)/std-e2fsprogs $(DEPDIR)/max-e2fsprogs \
 $(DEPDIR)/e2fsprogs: \
 $(DEPDIR)/%e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
+	$(start_build)
 	cd @DIR_e2fsprogs@ && \
 		@INSTALL_e2fsprogs@
 	[ "x$*" = "x" ] && ( cd @DIR_e2fsprogs@ && \
 		$(MAKE) install -C lib/uuid DESTDIR=$(PKDIR) && \
 		$(MAKE) install -C lib/blkid DESTDIR=$(PKDIR) ) || true
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_e2fsprogs@
 	[ "x$*" = "x" ] && touch $@ || true
 endif !STM24
@@ -420,7 +425,7 @@ $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
 DESCRIPTION_sdparm = "sdparm"
 
 FILES_sdparm = \
-/usr/bin/sdparm
+/sbin/sdparm
 
 $(DEPDIR)/sdparm.do_prepare: bootstrap @DEPENDS_sdparm@
 	@PREPARE_sdparm@
@@ -444,10 +449,12 @@ $(DEPDIR)/min-sdparm $(DEPDIR)/std-sdparm $(DEPDIR)/max-sdparm \
 $(DEPDIR)/sdparm: \
 $(DEPDIR)/%sdparm: $(DEPDIR)/sdparm.do_compile
 	$(start_build)
+	mkdir $(PKDIR)/sbin
 	cd @DIR_sdparm@ && \
 		export PATH=$(MAKE_PATH) && \
 		@INSTALL_sdparm@
 	$(tocdk_build)
+	mv -f $(PKDIR)/usr/bin/sdparm $(PKDIR)/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_sdparm@
 	[ "x$*" = "x" ] && touch $@ || true
@@ -1064,6 +1071,12 @@ $(DEPDIR)/sysstat: bootstrap @DEPENDS_sysstat@
 #
 # hotplug-e2
 #
+DESCRIPTION_hotplug_e2 = "hotplug_e2"
+SRC_URI_hotplug_e2 = git clone git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper
+FILES_hotplug_e2 = \
+/sbin/bdpoll \
+/usr/bin/hotplug_e2_helper
+
 $(DEPDIR)/hotplug_e2.do_prepare: bootstrap @DEPENDS_hotplug_e2@
 	@PREPARE_hotplug_e2@
 	git clone git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper;
@@ -1087,8 +1100,13 @@ $(DEPDIR)/hotplug_e2.do_compile: $(DEPDIR)/hotplug_e2.do_prepare
 $(DEPDIR)/min-hotplug_e2 $(DEPDIR)/std-hotplug_e2 $(DEPDIR)/max-hotplug_e2 \
 $(DEPDIR)/hotplug_e2: \
 $(DEPDIR)/%hotplug_e2: $(DEPDIR)/hotplug_e2.do_compile
+	$(start_build)
 	cd @DIR_hotplug_e2@ && \
 		@INSTALL_hotplug_e2@
+	$(tocdk_build)
+	mkdir $(PKDIR)/sbin
+	cp -f $(PKDIR)/usr/bin/* $(PKDIR)/sbin
+	$(toflash_build)
 #	@DISTCLEANUP_hotplug_e2@
 	[ "x$*" = "x" ] && touch $@ || true
 

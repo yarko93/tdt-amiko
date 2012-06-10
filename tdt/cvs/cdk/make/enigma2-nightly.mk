@@ -101,7 +101,9 @@ $(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
 	if [ -e $(PKDIR)/usr/local/bin/enigma2 ]; then \
 		$(target)-strip $(PKDIR)/usr/local/bin/enigma2; \
 	fi
+	mkdir -p $(PKDIR)/usr/local/bin
 	$(tocdk_build)
+	cp $(PKDIR)/usr/bin/enigma2 $(PKDIR)/usr/local/bin/
 	rm -rf $(PKDIR)/usr/local/share/meta
 	$(toflash_build)
 	touch $@

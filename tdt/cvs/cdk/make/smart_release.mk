@@ -87,6 +87,7 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/var/etc && \
 	$(INSTALL_DIR) $(prefix)/release/usr/lib/opkg && \
 	ln -sf /usr/bin/opkg-cl  $(prefix)/release/usr/bin/ipkg-cl && \
+	ln -sf /usr/bin/opkg-cl  $(prefix)/release/usr/bin/opkg && \
 	ln -sf /usr/bin/opkg-cl  $(prefix)/release/usr/bin/ipkg
 # zoneinfo
 	$(INSTALL_DIR) $(prefix)/release/usr/share/zoneinfo && \
@@ -111,6 +112,13 @@ release_base:
 	cp $(targetprefix)/usr/share/alsa/cards/aliases.conf $(prefix)/release/usr/share/alsa/cards/; \
 	cp $(targetprefix)/usr/share/alsa/pcm/default.conf   $(prefix)/release/usr/share/alsa/pcm/; \
 	cp $(targetprefix)/usr/share/alsa/pcm/dmix.conf      $(prefix)/release/usr/share/alsa/pcm/; fi
+# AUTOFS
+	if [ -d $(prefix)/release/usr/lib/autofs ]; then \
+		cp -f $(buildprefix)/root/release/auto.hotplug $(prefix)/release/etc/; \
+		cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release/etc/; \
+		cp -f $(buildprefix)/root/release/auto.network $(prefix)/release/etc/; \
+		cp -f $(buildprefix)/root/release/autofs $(prefix)/release/etc/init.d/; \
+	fi
 	
 # Copy rcS
 	cp -f $(buildprefix)/root/release/rcS$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2),_$(VIP1_V2))$(if $(VIP2_V1),_$(VIP2_V1))$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO),_$(CUBEREVO))$(if $(CUBEREVO_MINI),_$(CUBEREVO_MINI))$(if $(CUBEREVO_MINI2),_$(CUBEREVO_MINI2))$(if $(CUBEREVO_MINI_FTA),_$(CUBEREVO_MINI_FTA))$(if $(CUBEREVO_250HD),_$(CUBEREVO_250HD))$(if $(CUBEREVO_2000HD),_$(CUBEREVO_2000HD))$(if $(CUBEREVO_9500HD),_$(CUBEREVO_9500HD))$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900),_$(IPBOX9900))$(if $(IPBOX99),_$(IPBOX99))$(if $(IPBOX55),_$(IPBOX55))$(if $(ADB_BOX),_$(ADB_BOX)) $(prefix)/release/etc/init.d/rcS
@@ -154,6 +162,11 @@ release_base:
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
+	cp -dp $(targetprefix)/sbin/init $(prefix)/release/sbin/init && \
+	cp -rd $(targetprefix)/lib/* $(prefix)/release/lib/ && \
+	rm -f $(prefix)/release/lib/*.a && \
+	rm -f $(prefix)/release/lib/*.o && \
+	rm -f $(prefix)/release/lib/*.la && \
 	find $(targetprefix)/lib/modules/ -name '*ko' -exec cp -dp {} $(prefix)/release/lib/modules/ \;
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 	

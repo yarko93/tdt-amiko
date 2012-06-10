@@ -316,7 +316,7 @@ FILES_wireless_tools = \
 /usr/sbin/* \
 /usr/lib/*.so*
 
-$(DEPDIR)/wireless_tools.do_prepare: @DEPENDS_wireless_tools@
+$(DEPDIR)/wireless_tools.do_prepare: wpa_supplicant @DEPENDS_wireless_tools@
 	@PREPARE_wireless_tools@
 	touch $@
 
@@ -341,7 +341,7 @@ $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 #
 DESCRIPTION_wpa_supplicant = "wpa_supplicant"
 FILES_wpa_supplicant = \
-/usr/local/sbin/*
+/usr/sbin/*
 
 $(DEPDIR)/wpa_supplicant.do_prepare: @DEPENDS_wpa_supplicant@
 	@PREPARE_wpa_supplicant@
@@ -360,6 +360,8 @@ $(DEPDIR)/%wpa_supplicant: $(DEPDIR)/wpa_supplicant.do_compile
 	cd @DIR_wpa_supplicant@  && \
 		@INSTALL_wpa_supplicant@
 	$(tocdk_build)
+	mkdir $(PKDIR)/usr/sbin
+	cp -f $(PKDIR)/usr/local/sbin/* $(PKDIR)/usr/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_wpa_supplicant@
 	@[ "x$*" = "x" ] && touch $@ || true
