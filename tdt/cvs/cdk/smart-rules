@@ -490,6 +490,12 @@ libpng
   nothing:file://{PN}.diff
   make:install:prefix=PKDIR/usr
 ;
+libpng12
+  1.2.49
+  libpng-{PV}
+  extract:http://ftp.de.debian.org/debian/pool/main/libp/libpng/libpng_{PV}.orig.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
 libungif
   4.1.4
   {PN}-{PV}

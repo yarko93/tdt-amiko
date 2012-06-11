@@ -237,7 +237,7 @@ $(DEPDIR)/%jpeg: $(DEPDIR)/jpeg.do_compile
 DESCRIPTION_libjpeg6b = "libjpeg6b"
 
 FILES_libjpeg6b = \
-/usr/lib/*.so* 
+/usr/lib/libjpeg.so.* 
 
 $(DEPDIR)/libjpeg6b.do_prepare: bootstrap @DEPENDS_libjpeg6b@
 	@PREPARE_libjpeg6b@
@@ -304,6 +304,46 @@ $(DEPDIR)/%libpng: $(DEPDIR)/libpng.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libpng@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libpng12
+#
+DESCRIPTION_libpng12 = "libpng12"
+
+FILES_libpng12 = \
+/usr/lib/libpng12.so*
+
+$(DEPDIR)/libpng12.do_prepare: bootstrap libz @DEPENDS_libpng12@
+	@PREPARE_libpng12@
+	touch $@
+
+$(DEPDIR)/libpng12.do_compile: $(DEPDIR)/libpng12.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libpng12@ && \
+		./autogen.sh && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr && \
+		export ECHO="echo" && \
+		echo "Echo cmd =" $(ECHO) && \
+		$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libpng12 $(DEPDIR)/std-libpng12 $(DEPDIR)/max-libpng12 \
+$(DEPDIR)/libpng12: \
+$(DEPDIR)/%libpng12: $(DEPDIR)/libpng12.do_compile
+	$(start_build)
+	cd @DIR_libpng12@ && \
+		sed -e "s,^prefix=,prefix=$(PKDIR)," < libpng-config > $(crossprefix)/bin/libpng-config && \
+		chmod 755 $(crossprefix)/bin/libpng-config && \
+		@INSTALL_libpng@
+		rm -f $(PKDIR)/usr/bin/libpng*-config
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_libpng12@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
