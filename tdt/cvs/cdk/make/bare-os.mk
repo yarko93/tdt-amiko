@@ -427,7 +427,7 @@ $(DEPDIR)/%$(LIBTERMCAP): bootstrap $(LIBTERMCAP_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	ln -sf libtermcap.so.2 $(prefix)/$*cdkroot/usr/lib/libtermcap.so && \
-	$(INSTALL) -m 644 $(buildprefix)/root/etc/termcap $(prefix)/$*cdkroot/etc && \
+	$(INSTALL) -m 644 $(buildprefix)/root/etc/termcap $(prefix)/$*cdkroot/etc
 	$(start_build)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
