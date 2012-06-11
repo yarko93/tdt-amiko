@@ -311,8 +311,7 @@ $(DEPDIR)/%libungif: $(DEPDIR)/libungif.do_compile
 DESCRIPTION_libgif = "libgif"
 
 FILES_libgif = \
-/usr/lib/*.so* \
-/usr/bin/*
+/usr/lib/*.so*
 
 $(DEPDIR)/libgif.do_prepare: bootstrap @DEPENDS_libgif@
 	@PREPARE_libgif@
