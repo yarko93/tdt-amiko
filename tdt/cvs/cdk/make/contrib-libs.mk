@@ -232,6 +232,41 @@ $(DEPDIR)/%jpeg: $(DEPDIR)/jpeg.do_compile
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
+# jpeg-6b
+#
+DESCRIPTION_libjpeg6b = "libjpeg6b"
+
+FILES_libjpeg6b = \
+/usr/lib/*.so* 
+
+$(DEPDIR)/libjpeg6b.do_prepare: bootstrap @DEPENDS_libjpeg6b@
+	@PREPARE_libjpeg6b@
+	touch $@
+
+$(DEPDIR)/libjpeg6b.do_compile: $(DEPDIR)/libjpeg6b.do_prepare
+	cd @DIR_libjpeg6b@ && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--enable-shared \
+			--enable-static \
+			--prefix=/usr && \
+		$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libjpeg6b $(DEPDIR)/std-libjpeg6b $(DEPDIR)/max-libjpeg6b \
+$(DEPDIR)/libjpeg6b: \
+$(DEPDIR)/%libjpeg6b: $(DEPDIR)/libjpeg6b.do_compile
+	$(start_build)
+	cd @DIR_libjpeg6b@ && \
+		@INSTALL_libjpeg6b@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_libjpeg6b@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
 # libpng
 #
 DESCRIPTION_libpng = "libpng"

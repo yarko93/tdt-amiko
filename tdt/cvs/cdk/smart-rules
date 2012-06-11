@@ -477,6 +477,12 @@ jpeg
   patch:file://{PN}.diff
   make:install:DESTDIR=PKDIR
 ;
+libjpeg6b
+  6b1
+  jpeg-{PV}
+  extract:http://ftp.de.debian.org/debian/pool/main/libj/libjpeg6b/{PN}_{PV}.orig.tar.gz
+  make:install:DESTDIR=PKDIR
+;
 libpng
   1.5.6
   {PN}-{PV}
