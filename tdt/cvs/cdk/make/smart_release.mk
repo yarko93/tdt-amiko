@@ -58,8 +58,10 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/etc/init.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-down.d && \
+	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-down.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-pre-up.d && \
+	$(INSTALL_DIR) $(prefix)/release/etc/network/if-pre-down.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/tuxbox && \
 	$(INSTALL_DIR) $(prefix)/release/etc/enigma2 && \
@@ -169,13 +171,14 @@ release_base:
 	find $(targetprefix)/lib/modules/ -name '*ko' -exec cp -dp {} $(prefix)/release/lib/modules/ \;
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 	rm -rf $(prefix)/release/lib/modules/$(KERNELVERSION)
-	
+# install fonts	
 	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts
+	ln -s /usr/share/fonts $(prefix)/release/usr/local/share/fonts && \
 	cp $(buildprefix)/root/usr/share/fonts/* $(prefix)/release/usr/share/fonts
 	
 release_cube_common:
-	cp $(buildprefix)/root/release/reboot_cuberevo $(prefix)/release/etc/init.d/reboot
-	chmod 777 $(prefix)/release/etc/init.d/reboot
+	cp $(buildprefix)/root/release/reboot_cuberevo $(prefix)/release/etc/init.d/reboot && \
+	chmod 777 $(prefix)/release/etc/init.d/reboot && \
 	cp $(targetprefix)/bin/eeprom $(prefix)/release/bin
 	
 release_cuberevo_9500hd: release_cube_common
@@ -200,15 +203,15 @@ release_cuberevo: release_cube_common
 	echo "cuberevo" > $(prefix)/release/etc/hostname
 	
 release_spark:
-	echo "spark" > $(prefix)/release/etc/hostname
-	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
-	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
+	echo "spark" > $(prefix)/release/etc/hostname && \
+	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw && \
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml && \
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
 	
 release_spark7162:
-	echo "spark7162" > $(prefix)/release/etc/hostname
-	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml
-	cp -dp $(buildprefix)/root/etc/lircd_spark7162.conf $(prefix)/release/etc/lircd.conf
+	echo "spark7162" > $(prefix)/release/etc/hostname && \
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml && \
+	cp -dp $(buildprefix)/root/etc/lircd_spark7162.conf $(prefix)/release/etc/lircd.conf && \
 	cp -f $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/spark7162.ko
 	
 # The main target depends on the model.
