@@ -46,7 +46,6 @@ $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpe
 			--datadir=/usr/local/share \
 			--libdir=/usr/lib \
 			--prefix=/usr \
-			--datadir=/usr/local/share \
 			--sysconfdir=/etc \
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
