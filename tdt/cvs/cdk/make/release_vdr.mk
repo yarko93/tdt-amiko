@@ -16,6 +16,8 @@ release_vdr:
 	$(INSTALL_DIR) $(prefix)/release_vdr/etc/network/if-post-down.d && \
 	$(INSTALL_DIR) $(prefix)/release_vdr/etc/network/if-pre-up.d && \
 	$(INSTALL_DIR) $(prefix)/release_vdr/etc/network/if-up.d && \
+	$(INSTALL_DIR) $(prefix)/release_vdr/etc/network/if-pre-down.d && \
+	$(INSTALL_DIR) $(prefix)/release_vdr/etc/network/if-post-up.d && \
 	$(INSTALL_DIR) $(prefix)/release_vdr/etc/tuxbox && \
 	$(INSTALL_DIR) $(prefix)/release_vdr/hdd && \
 	$(INSTALL_DIR) $(prefix)/release_vdr/hdd/movie && \
@@ -28,7 +30,7 @@ release_vdr:
 	$(INSTALL_DIR) $(prefix)/release_vdr/var/etc && \
 	$(INSTALL_DIR) $(prefix)/release_vdr/var/run/lirc && \
 	export CROSS_COMPILE=$(target)- && \
-		$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/release_vdr && \
+	$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/release_vdr && \
 	touch $(prefix)/release_vdr/var/etc/.firstboot && \
 	cp -a $(targetprefix)/bin/* $(prefix)/release_vdr/bin/ && \
 	ln -s /bin/showiframe $(prefix)/release_vdr/usr/bin/showiframe && \
@@ -51,11 +53,14 @@ release_vdr:
 	cp -dp $(targetprefix)/etc/init.d/portmap $(prefix)/release_vdr/etc/init.d/ && \
 	cp -dp $(buildprefix)/root/etc/init.d/udhcpc $(prefix)/release_vdr/etc/init.d/ && \
 	cp -dp $(targetprefix)/usr/bin/grep $(prefix)/release_vdr/bin/ && \
-	$(if $(ADB_BOX)$(VIP2_V1),cp $(targetprefix)/boot/video_7100.elf $(prefix)/release_vdr/boot/video.elf &&) \
+	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910),cp $(targetprefix)/boot/video_7100.elf $(prefix)/release_vdr/boot/video.elf &&) \
+	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910),cp $(targetprefix)/boot/audio_7100.elf $(prefix)/release_vdr/boot/audio.elf &&) \
 	$(if $(ATEVIO7500)$(SPARK7162),cp $(targetprefix)/boot/video_7105.elf $(prefix)/release_vdr/boot/video.elf &&) \
+	$(if $(ATEVIO7500)$(SPARK7162),cp $(targetprefix)/boot/audio_7105.elf $(prefix)/release_vdr/boot/audio.elf &&) \
 	$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(FORTIS_HDBOX)$(HL101)$(TF7700)$(VIP1_V2)$(UFS922),cp $(targetprefix)/boot/video_7109.elf $(prefix)/release_vdr/boot/video.elf &&) \
-	$(if $(SPARK)$(UFS912),cp $(targetprefix)/boot/video_7111.elf $(prefix)/release_vdr/boot/video.elf &&) \
-	$(if $(SPARK)$(UFS912),cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release_vdr/boot/audio.elf &&) \
+	$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(FORTIS_HDBOX)$(HL101)$(TF7700)$(VIP1_V2)$(UFS922),cp $(targetprefix)/boot/audio_7109.elf $(prefix)/release_vdr/boot/audio.elf &&) \
+	$(if $(SPARK)$(UFS912)$(WHITEBOX),cp $(targetprefix)/boot/video_7111.elf $(prefix)/release_vdr/boot/video.elf &&) \
+	$(if $(SPARK)$(UFS912)$(WHITEBOX),cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release_vdr/boot/audio.elf &&) \
 	cp -a $(targetprefix)/dev/* $(prefix)/release_vdr/dev/ && \
 	cp -dp $(targetprefix)/etc/fstab $(prefix)/release_vdr/etc/ && \
 	cp -dp $(targetprefix)/etc/group $(prefix)/release_vdr/etc/ && \
@@ -63,7 +68,6 @@ release_vdr:
 	cp -dp $(targetprefix)/etc/hostname $(prefix)/release_vdr/etc/ && \
 	cp -dp $(targetprefix)/etc/hosts $(prefix)/release_vdr/etc/ && \
 	cp -dp $(targetprefix)/etc/inittab $(prefix)/release_vdr/etc/ && \
-	$(if $(UFS910),cp -dp $(targetprefix)/etc/lircd.conf $(prefix)/release_vdr/etc/ &&) \
 ##	cp -dp $(targetprefix)/etc/localtime $(prefix)/release_vdr/etc/ && \
 	cp -dp $(targetprefix)/etc/mtab $(prefix)/release_vdr/etc/ && \
 	cp -dp $(targetprefix)/etc/passwd $(prefix)/release_vdr/etc/ && \
@@ -80,6 +84,24 @@ release_vdr:
 	cp -dp $(targetprefix)/etc/network/options $(prefix)/release_vdr/etc/network/ && \
 	cp -dp $(targetprefix)/etc/init.d/umountfs $(prefix)/release_vdr/etc/init.d/ && \
 	cp -dp $(targetprefix)/etc/init.d/sendsigs $(prefix)/release_vdr/etc/init.d/ && \
+	cp -f $(targetprefix)/sbin/shutdown $(prefix)/release_vdr/sbin/ && \
+	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/ && \
+	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/ && \
+	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/ && \
+	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs && \
+	chmod 755 $(prefix)/release_vdr/etc/init.d/rc && \
+	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs && \
+	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d && \
+	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d && \
+	ln -fs halt $(prefix)/release_vdr/sbin/reboot && \
+	ln -fs halt $(prefix)/release_vdr/sbin/poweroff && \
+	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs && \
+	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs && \
+	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt && \
+	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d && \
+	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs && \
+	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs && \
+	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot && \
 	cp -dp $(targetprefix)/etc/init.d/halt $(prefix)/release_vdr/etc/init.d/ && \
 	cp $(buildprefix)/root/release/reboot $(prefix)/release_vdr/etc/init.d/ && \
 	echo "576i50" > $(prefix)/release_vdr/etc/videomode && \
@@ -87,6 +109,8 @@ release_vdr:
 	chmod 755 $(prefix)/release_vdr/etc/init.d/rcS && \
 	mkdir -p $(prefix)/release_vdr/usr/local/share/vdr && \
 	mkdir -p $(prefix)/release_vdr/usr/local/share/vdr/plugins && \
+	mkdir -p $(prefix)/release_vdr/usr/local/share/vdr/plugins/setup && \
+	mkdir -p $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin && \
 	mkdir -p $(prefix)/release_vdr/usr/local/share/vdr/themes && \
 	mkdir -p $(prefix)/release_vdr/usr/local/bin && \
 	mkdir -p $(prefix)/release_vdr/usr/lib/locale && \
@@ -113,6 +137,7 @@ release_vdr:
 	cp $(buildprefix)/root/release/bootclean.sh $(prefix)/release_vdr/etc/init.d/ && \
 	cp $(buildprefix)/root/release/networking $(prefix)/release_vdr/etc/init.d/ && \
 	cp $(buildprefix)/root/bin/autologin $(prefix)/release_vdr/bin/ && \
+	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release_vdr/usr/bin/ && \
 	cp -rd $(buildprefix)/root/usr/lib/locale/* $(prefix)/release_vdr/usr/lib/locale/ && \
 	cp -rd $(targetprefix)/lib/* $(prefix)/release_vdr/lib/ && \
 	rm -f $(prefix)/release_vdr/lib/*.a && \
@@ -124,12 +149,28 @@ release_vdr:
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/boxtype/boxtype.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/simu_button/simu_button.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/e2_proc/e2_proc.ko $(prefix)/release_vdr/lib/modules/
-	$(if $(UFS922),cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/ufs922_fan/fan_ctrl.ko $(prefix)/release_vdr/lib/modules/)
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt2870sta/rt2870sta.ko $(prefix)/release_vdr/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt3070sta/rt3070sta.ko $(prefix)/release_vdr/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu/8192cu.ko $(prefix)/release_vdr/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko $(prefix)/release_vdr/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt5370sta/rt5370sta.ko $(prefix)/release_vdr/lib/modules/
+	cp $(buildprefix)/root/bootscreen/bootlogo.mvi $(prefix)/release_vdr/boot/
+#	install autofs
+	cp -f $(targetprefix)/usr/sbin/automount $(prefix)/release_vdr/usr/sbin/
+	cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release_vdr/etc/
+
 if ENABLE_VDR1722
 	cp $(buildprefix)/root/var/vdr/plugins_vdrdev2.load $(prefix)/release_vdr/usr/local/share/vdr/plugins.load 
 endif
 if ENABLE_VDR1727
 	cp $(buildprefix)/root/var/vdr/plugins.load $(prefix)/release_vdr/usr/local/share/vdr/plugins.load
+	cp $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/setup/examples/x-vdr/vdr-menu.xml $(prefix)/release_vdr/usr/local/share/vdr/plugins/setup
+	cp -dpR $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/PearlHD $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin
+	cp -dpR $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/anthra_1280_FS $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin
+	cp -dpR $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/anthra_1920_OSo $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin
+	cp -dpR $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/EgalT2 $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin
+	cp -dpR $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/HD-Ready-anthras $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin
+	cp -dpR $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/NarrowHD $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin
 endif
 	
 
@@ -140,32 +181,11 @@ if ENABLE_TF7700
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
 	cp -f $(targetprefix)/sbin/shutdown $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_tf7700 $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
+	chmod 755 $(prefix)/release_vdr/etc/init.d/halt	
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/tffp/tffp.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release_vdr/lib/modules/
 	cp -f $(buildprefix)/root/release/fstab_tf7700 $(prefix)/release_vdr/etc/fstab
-
-#	install autofs
-	cp -f $(targetprefix)/usr/sbin/automount $(prefix)/release_vdr/usr/sbin/
-	cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release_vdr/etc/
 
 	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-cx21143.fw
 	rm -f $(prefix)/release_vdr/bin/gotosleep
@@ -173,6 +193,7 @@ else
 if ENABLE_UFS922
 
 	echo "ufs922" > $(prefix)/release_vdr/etc/hostname
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/ufs922_fan/fan_ctrl.ko $(prefix)/release_vdr/lib/modules/)
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/micom/micom.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release_vdr/lib/modules/
 
@@ -185,36 +206,13 @@ if ENABLE_UFS912
 	echo "ufs912" > $(prefix)/release_vdr/etc/hostname
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_ufs912 $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
+	chmod 755 $(prefix)/release_vdr/etc/init.d/halt		
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/micom/micom.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release_vdr/lib/modules/
-##	cp $(targetprefix)/boot/video_7111.elf $(prefix)/release_vdr/boot/video.elf
-##	cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release_vdr/boot/audio.elf
-#	install autofs
-	cp -f $(targetprefix)/usr/sbin/automount $(prefix)/release_vdr/usr/sbin/
-	cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release_vdr/etc/
 
 	mv $(prefix)/release_vdr/lib/firmware/component_7111_mb618.fw $(prefix)/release_vdr/lib/firmware/component.fw
 	rm $(prefix)/release_vdr/lib/firmware/component_7105_pdk7105.fw
-
 	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-avl2108.fw
 	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-stv6306.fw
 	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-cx24116.fw
@@ -228,25 +226,8 @@ if ENABLE_CUBEREVO
 #       remove the slink to busybox
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_cuberevo $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
+	chmod 755 $(prefix)/release_vdr/etc/init.d/halt	
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cubefp/fp.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release_vdr/lib/modules/
 
@@ -262,25 +243,8 @@ if ENABLE_CUBEREVO_MINI
 #       remove the slink to busybox
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_cuberevo $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cubefp/fp.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release_vdr/lib/modules/
 
@@ -296,23 +260,8 @@ if ENABLE_CUBEREVO_MINI2
 #       remove the slink to busybox
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_cuberevo $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cubefp/fp.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release_vdr/lib/modules/
 
@@ -328,25 +277,8 @@ if ENABLE_CUBEREVO_MINI_FTA
 #       remove the slink to busybox
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_cuberevo $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cubefp/fp.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release_vdr/lib/modules/
 
@@ -362,25 +294,8 @@ if ENABLE_CUBEREVO_250HD
 #       remove the slink to busybox
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_cuberevo $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdrd/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cubefp/fp.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release_vdr/lib/modules/
 
@@ -396,25 +311,8 @@ if ENABLE_CUBEREVO_2000HD
 #       remove the slink to busybox
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_cuberevo $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cubefp/fp.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release_vdr/lib/modules/
 
@@ -425,45 +323,37 @@ if ENABLE_CUBEREVO_2000HD
 	rm -f $(prefix)/release_vdr/bin/evremote
 	rm -f $(prefix)/release_vdr/bin/tfd2mtd
 else
-if ENABLE_SPARK
-	echo "Amiko" > $(prefix)/release_vdr/etc/hostname
+if ENABLE_WHITEBOX
+	echo "whitebox" > $(prefix)/release_vdr/etc/hostname
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/halt_spark $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
+	cp $(buildprefix)/root/release/halt_whitebox $(prefix)/release_vdr/etc/init.d/halt
 	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/lnb/lnb.ko $(prefix)/release_vdr/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(prefix)/release_vdr/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release_vdr/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/smartcard/smartcard.ko $(prefix)/release_vdr/lib/modules/
+
+	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-avl2108.fw
+	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-stv6306.fw
+	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-cx24116.fw
+	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-cx21143.fw
+	rm -f $(prefix)/release_vdr/bin/evremote
+	rm -f $(prefix)/release_vdr/bin/gotosleep
+
+	mv $(prefix)/release_vdr/lib/firmware/component_7111_mb618.fw $(prefix)/release_vdr/lib/firmware/component.fw
+	rm $(prefix)/release_vdr/lib/firmware/component_7105_pdk7105.fw
+else
+if ENABLE_SPARK
+	echo "spark" > $(prefix)/release_vdr/etc/hostname
+	rm -f $(prefix)/release_vdr/sbin/halt
+	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
+	cp $(buildprefix)/root/release/halt_spark $(prefix)/release_vdr/etc/init.d/halt
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/aotom/aotom.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release_vdr/lib/modules/
-	cp $(targetprefix)/boot/video_7111.elf $(prefix)/release_vdr/boot/video.elf
-	cp $(targetprefix)/boot/audio_7111.elf $(prefix)/release_vdr/boot/audio.elf
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt2870sta/rt2870sta.ko $(prefix)/release_vdr/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt3070sta/rt3070sta.ko $(prefix)/release_vdr/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu/8192cu.ko $(prefix)/release_vdr/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko $(prefix)/release_vdr/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt5370sta/rt5370sta.ko $(prefix)/release_vdr/lib/modules/
-#	install autofs
-	cp -f $(targetprefix)/usr/sbin/automount $(prefix)/release_vdr/usr/sbin/
-	cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release_vdr/etc/
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release_vdr/sbin
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release_vdr/sbin
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release_vdr/etc/lircd.conf
-	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release_vdr/usr/bin/
 	mv $(prefix)/release_vdr/lib/firmware/component_7111_mb618.fw $(prefix)/release_vdr/lib/firmware/component.fw
 	rm $(prefix)/release_vdr/lib/firmware/component_7105_pdk7105.fw
 
@@ -479,41 +369,13 @@ if ENABLE_SPARK7162
 	echo "spark7162" > $(prefix)/release_vdr/etc/hostname
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_spark7162 $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/aotom/aotom.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(prefix)/release_vdr/lib/modules/
-	cp $(targetprefix)/boot/video_7105.elf $(prefix)/release_vdr/boot/video.elf
-	cp $(targetprefix)/boot/audio_7105.elf $(prefix)/release_vdr/boot/audio.elf
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt2870sta/rt2870sta.ko $(prefix)/release_vdr/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt3070sta/rt3070sta.ko $(prefix)/release_vdr/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl8192cu/8192cu.ko $(prefix)/release_vdr/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rtl871x/8712u.ko $(prefix)/release_vdr/lib/modules/
-	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/wireless/rt5370sta/rt5370sta.ko $(prefix)/release_vdr/lib/modules/
-#	install autofs
-	cp -f $(targetprefix)/usr/sbin/automount $(prefix)/release_vdr/usr/sbin/
-	cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release_vdr/etc/
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release_vdr/sbin
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release_vdr/sbin
 	cp -dp $(buildprefix)/root/etc/lircd_spark7162.conf $(prefix)/release_vdr/etc/lircd.conf
-	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release_vdr/usr/bin/
 	mv $(prefix)/release_vdr/lib/firmware/component_7105_pdk7105.fw $(prefix)/release_vdr/lib/firmware/component.fw
 	rm $(prefix)/release_vdr/lib/firmware/component_7111_mb618.fw
 
@@ -530,25 +392,8 @@ if ENABLE_CUBEREVO_9500HD
 #       remove the slink to busybox
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_cuberevo $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cubefp/fp.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release_vdr/lib/modules/
 
@@ -592,41 +437,15 @@ if ENABLE_ADB_BOX
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
 	cp -f $(targetprefix)/sbin/shutdown $(prefix)/release_vdr/sbin/
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release_vdr/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release_vdr/etc/init.d/
 	cp $(buildprefix)/root/release/halt_adb_box $(prefix)/release_vdr/etc/init.d/halt
-	chmod 755 $(prefix)/release_vdr/etc/init.d/umountfs
-	chmod 755 $(prefix)/release_vdr/etc/init.d/rc
-	chmod 755 $(prefix)/release_vdr/etc/init.d/sendsigs
 	chmod 755 $(prefix)/release_vdr/etc/init.d/halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc0.d
-	ln -s ../init.d $(prefix)/release_vdr/etc/rc.d
-	ln -fs halt $(prefix)/release_vdr/sbin/reboot
-	ln -fs halt $(prefix)/release_vdr/sbin/poweroff
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc0.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc0.d/S40umountfs
-	ln -s ../init.d/halt $(prefix)/release_vdr/etc/rc.d/rc0.d/S90halt
-	mkdir -p $(prefix)/release_vdr/etc/rc.d/rc6.d
-	ln -s ../init.d/sendsigs $(prefix)/release_vdr/etc/rc.d/rc6.d/S20sendsigs
-	ln -s ../init.d/umountfs $(prefix)/release_vdr/etc/rc.d/rc6.d/S40umountfs
-	ln -s ../init.d/reboot $(prefix)/release_vdr/etc/rc.d/rc6.d/S90reboot
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/adb_box_vfd/vfd.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7100.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/smartcard/smartcard.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/adb_box_fan/cooler.ko $(prefix)/release_vdr/lib/modules/
 	cp -f $(buildprefix)/root/release/fstab_adb_box $(prefix)/release_vdr/etc/fstab
-
-#	install autofs
-	cp -f $(targetprefix)/usr/sbin/automount $(prefix)/release_vdr/usr/sbin/
-	cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release_vdr/etc/
-	echo 'sda    -fstype=auto,noatime,nodiratime          :/dev/sda' >> $(prefix)/release_vdr/etc/auto.usb
-	echo 'sda1   -fstype=auto,noatime,nodiratime          :/dev/sda1' >> $(prefix)/release_vdr/etc/auto.usb
-	echo 'sda2   -fstype=auto,noatime,nodiratime          :/dev/sda2' >> $(prefix)/release_vdr/etc/auto.usb
-	echo 'sda3   -fstype=auto,noatime,nodiratime          :/dev/sda3' >> $(prefix)/release_vdr/etc/auto.usb
-
+	
 	rm -f $(prefix)/release/bin/vdstandby
-
 	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-cx24116.fw
 	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-cx21143.fw
 	rm -f $(prefix)/release_vdr/bin/evremote
@@ -643,6 +462,7 @@ else
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7100.ko $(prefix)/release_vdr/lib/modules/
 
 	rm -f $(prefix)/release_vdr/lib/firmware/dvb-fe-cx21143.fw
+endif
 endif
 endif
 endif
@@ -799,11 +619,11 @@ endif
 	$(INSTALL_DIR) $(prefix)/release_vdr/usr/bin
 	cp -p $(targetprefix)/usr/sbin/vsftpd $(prefix)/release_vdr/usr/bin/
 if ENABLE_TF7700
-	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release_vdr/usr/bin/
+	
 endif
 
 if ENABLE_UFS910
-#	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release_vdr/usr/bin/
+#	
 	touch $(prefix)/release_vdr/usr/bin/lircd
 endif
 
@@ -957,5 +777,3 @@ if STM24
 	[ -e $(kernelprefix)/linux-sh4/fs/ntfs/ntfs.ko ] && cp $(kernelprefix)/linux-sh4/fs/ntfs/ntfs.ko $(prefix)/release_vdr/lib/modules || true
 	[ -e $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cpu_frequ/cpu_frequ.ko ] && cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cpu_frequ/cpu_frequ.ko $(prefix)/release_vdr/lib/modules || true
 endif
-
-	touch $@

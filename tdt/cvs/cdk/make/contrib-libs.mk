@@ -423,7 +423,7 @@ FILES_curl = \
 /usr/lib/*.so* \
 /usr/bin/curl
 
-$(DEPDIR)/curl.do_prepare: bootstrap libz @DEPENDS_curl@
+$(DEPDIR)/curl.do_prepare: bootstrap openssl rtmpdump libz @DEPENDS_curl@
 	@PREPARE_curl@
 	touch $@
 
@@ -435,6 +435,10 @@ $(DEPDIR)/curl.do_compile: $(DEPDIR)/curl.do_prepare
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr \
+			--with-ssl \
+			--disable-debug \
+			--disable-verbose \
+			--disable-manual \
 			--mandir=/usr/share/man \
 			--with-random && \
 		$(MAKE) all
@@ -1168,6 +1172,7 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-shared \
 		--enable-cross-compile \
 		--disable-ffserver \
+		--disable-ffplay \
 		--disable-altivec \
 		--disable-debug \
 		--disable-asm \
@@ -1181,7 +1186,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--disable-armv6 \
 		--disable-armv6t2 \
 		--disable-armvfp \
-		--disable-iwmmxt \
 		--disable-mmi \
 		--disable-neon \
 		--disable-vis \
@@ -1197,6 +1201,7 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-muxer=h263 \
 		--enable-muxer=h264 \
 		--enable-muxer=mpeg1video \
+		--enable-muxer=mpeg2video \
 		--enable-muxer=image2 \
 		--disable-encoders \
 		--enable-encoder=aac \
@@ -1209,6 +1214,7 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-encoder=mjpeg \
 		--enable-encoder=png \
 		--enable-encoder=mpeg1video \
+		--enable-encoder=mpeg2video \
 		--disable-decoders \
 		--enable-decoder=aac \
 		--enable-decoder=mp3 \
@@ -1217,15 +1223,16 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-decoder=h263 \
 		--enable-decoder=h263i \
 		--enable-decoder=h264 \
+		--enable-decoder=mpeg1video \
 		--enable-decoder=mpeg2video \
 		--enable-decoder=png \
 		--enable-decoder=ljpeg \
 		--enable-decoder=mjpeg \
 		--enable-decoder=vorbis \
 		--enable-decoder=flac \
-		--enable-small \
 		--enable-decoder=dvbsub \
 		--enable-decoder=iff_byterun1 \
+		--enable-small \
 		--enable-pthreads \
 		--enable-bzlib \
 		--enable-librtmp \
@@ -2567,9 +2574,37 @@ $(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_fluendo_mpegdemux.do_compile
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
+# GST-PLUGIN-SUBSINK
+#
+$(DEPDIR)/gst_plugin_subsink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly @DEPENDS_gst_plugin_subsink@
+	@PREPARE_gst_plugin_subsink@
+	touch $@
+
+$(DEPDIR)/gst_plugin_subsink.do_compile: $(DEPDIR)/gst_plugin_subsink.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_gst_plugin_subsink@ && \
+	aclocal -I $(hostprefix)/share/aclocal -I m4 && \
+	autoheader && \
+	autoconf && \
+	automake --foreign && \
+	libtoolize --force && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr
+	touch $@
+
+$(DEPDIR)/min-gst_plugin_subsink $(DEPDIR)/std-gst_plugin_subsink $(DEPDIR)/max-gst_plugin_subsink \
+$(DEPDIR)/gst_plugin_subsink: \
+$(DEPDIR)/%gst_plugin_subsink: $(DEPDIR)/gst_plugin_subsink.do_compile
+	cd @DIR_gst_plugin_subsink@ && \
+		@INSTALL_gst_plugin_subsink@
+#	@DISTCLEANUP_gst_plugin_subsink@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
 # GST-PLUGINS-DVBMEDIASINK
 #
-
 DESCRIPTION_gst_plugins_dvbmediasink = "GStreamer Multimedia Framework dvbmediasink"
 SRC_URI_gst_plugins_dvbmediasink = git://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko.git
 
@@ -2577,7 +2612,7 @@ FILES_gst_plugins_dvbmediasink = \
 /usr/lib/gstreamer-0.10/libgstdvbaudiosink.so \
 /usr/lib/gstreamer-0.10/libgstdvbvideosink.so
 
-$(DEPDIR)/gst_plugins_dvbmediasink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly @DEPENDS_gst_plugins_dvbmediasink@
+$(DEPDIR)/gst_plugins_dvbmediasink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly gst_plugin_subsink @DEPENDS_gst_plugins_dvbmediasink@
 	@PREPARE_gst_plugins_dvbmediasink@
 	touch $@
 
@@ -2605,6 +2640,8 @@ $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compi
 	$(tocdk_build)
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
+
+
 
 ##############################   EXTERNAL_LCD   ################################
 
@@ -3753,7 +3790,7 @@ FILES_djmount = \
 /usr/bin/* \
 /usr/lib/*
 
-$(DEPDIR)/djmount.do_prepare: bootstrap libupnp fuse @DEPENDS_djmount@
+$(DEPDIR)/djmount.do_prepare: bootstrap fuse @DEPENDS_djmount@
 	@PREPARE_djmount@
 	touch $@
 
@@ -3763,8 +3800,8 @@ $(DEPDIR)/djmount.do_compile: $(DEPDIR)/djmount.do_prepare
 	CFLAGS="$(TARGET_CFLAGS) -Os" \
 	./configure \
 		--host=$(target) \
-		--disable-FEATURE \
-		--prefix=/usr
+		--prefix=/usr && \
+	$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-djmount $(DEPDIR)/std-djmount $(DEPDIR)/max-djmount \
@@ -3796,8 +3833,8 @@ $(DEPDIR)/libupnp.do_compile: $(DEPDIR)/libupnp.do_prepare
 	CFLAGS="$(TARGET_CFLAGS) -Os" \
 	./configure \
 		--host=$(target) \
-		--enable-debug \
-		--prefix=/usr
+		--prefix=/usr && \
+	$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-libupnp $(DEPDIR)/std-libupnp $(DEPDIR)/max-libupnp \
@@ -3808,7 +3845,7 @@ $(DEPDIR)/%libupnp: $(DEPDIR)/libupnp.do_compile
 		@INSTALL_libupnp@
 	$(tocdk_build)
 	$(toflash_build)
-#	@DISTCLEANUP_djmount@
+#	@DISTCLEANUP_libupnp@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -3820,14 +3857,14 @@ FILES_rarfs = \
 /usr/lib/*.so* \
 /usr/bin/*
 
-$(DEPDIR)/rarfs.do_prepare: bootstrap fuse @DEPENDS_rarfs@
+$(DEPDIR)/rarfs.do_prepare: bootstrap libstdc++-dev fuse @DEPENDS_rarfs@
 	@PREPARE_rarfs@
 	touch $@
 
 $(DEPDIR)/rarfs.do_compile: $(DEPDIR)/rarfs.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
-	export PKG_CONFIG_PATH="$(targetprefix)/usr/lib/pkgconfig"
 	cd @DIR_rarfs@ && \
+	export PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig && \
 	$(BUILDENV) \
 	CFLAGS="$(TARGET_CFLAGS) -Os -D_FILE_OFFSET_BITS=64" \
 	./configure \
@@ -3846,4 +3883,92 @@ $(DEPDIR)/%rarfs: $(DEPDIR)/rarfs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_rarfs@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# sshfs
+#
+$(DEPDIR)/sshfs.do_prepare: bootstrap fuse @DEPENDS_sshfs@
+	@PREPARE_sshfs@
+	touch $@
+
+$(DEPDIR)/sshfs.do_compile: $(DEPDIR)/sshfs.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_sshfs@ && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr
+	touch $@
+
+$(DEPDIR)/min-sshfs $(DEPDIR)/std-sshfs $(DEPDIR)/max-sshfs \
+$(DEPDIR)/sshfs: \
+$(DEPDIR)/%sshfs: $(DEPDIR)/sshfs.do_compile
+	cd @DIR_sshfs@ && \
+		@INSTALL_sshfs@
+#	@DISTCLEANUP_sshfs@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# gmediarender
+#
+$(DEPDIR)/gmediarender.do_prepare: bootstrap libstdc++-dev gst_plugins_dvbmediasink libupnp @DEPENDS_gmediarender@
+	@PREPARE_gmediarender@
+	touch $@
+
+$(DEPDIR)/gmediarender.do_compile: $(DEPDIR)/gmediarender.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_gmediarender@ && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr \
+		--with-libupnp=$(targetprefix)/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-gmediarender $(DEPDIR)/std-gmediarender $(DEPDIR)/max-gmediarender \
+$(DEPDIR)/gmediarender: \
+$(DEPDIR)/%gmediarender: $(DEPDIR)/gmediarender.do_compile
+	cd @DIR_gmediarender@ && \
+		@INSTALL_gmediarender@
+#	@DISTCLEANUP_gmediarender@
+	[ "x$*" = "x" ] && touch $@ || true
+#
+# mediatomb
+#
+$(DEPDIR)/mediatomb.do_prepare: bootstrap libstdc++-dev ffmpeg curl sqlite expat @DEPENDS_mediatomb@
+	@PREPARE_mediatomb@
+	touch $@
+
+$(DEPDIR)/mediatomb.do_compile: $(DEPDIR)/mediatomb.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_mediatomb@ && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--disable-ffmpegthumbnailer \
+		--disable-libmagic \
+		--disable-mysql \
+		--disable-id3lib \
+		--disable-taglib \
+		--disable-lastfmlib \
+		--disable-libexif \
+		--disable-libmp4v2 \
+		--disable-inotify \
+		--with-avformat-h=$(targetprefix)/usr/include \
+		--disable-rpl-malloc \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-mediatomb $(DEPDIR)/std-mediatomb $(DEPDIR)/max-mediatomb \
+$(DEPDIR)/mediatomb: \
+$(DEPDIR)/%mediatomb: $(DEPDIR)/mediatomb.do_compile
+	cd @DIR_mediatomb@ && \
+		@INSTALL_mediatomb@
+#	@DISTCLEANUP_mediatomb@
 	[ "x$*" = "x" ] && touch $@ || true
