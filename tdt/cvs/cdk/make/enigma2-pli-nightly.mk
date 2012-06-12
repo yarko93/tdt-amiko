@@ -62,7 +62,6 @@ $(DEPDIR)/enigma2-pli-nightly.do_compile: $(DIR_enigma2_pli)/config.status
 
 DESCRIPTION_enigma2_pli := a framebuffer-based zapping application (GUI) for linux
 SRC_URI_enigma2_pli := git://openpli.git.sourceforge.net/gitroot/openpli/enigma2
-# neccecary for get_git_version:
 FILES_enigma2_pli := /usr/lib/ /etc/enigma2 /usr/local/share /usr/local/bin
 
 $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_prepare enigma2-pli-nightly.do_compile
