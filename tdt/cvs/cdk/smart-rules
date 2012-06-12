@@ -183,14 +183,14 @@ cramfs
 ipkg_utils
   050831
   {PN}-{PV}
-  extract:ftp.gwdg.de/linux/handhelds/packages/{PN}/{PN}-{PV}.tar.gz
+  extract:ftp://ftp.gwdg.de/linux/handhelds/packages/{PN}/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
   make:install
 ;
 ipkg_host
   0.99.163
   {PN}
-  dirextract:ftp.gwdg.de/linux/handhelds/packages/ipkg/ipkg-{PV}.tar.gz
+  dirextract:ftp://ftp.gwdg.de/linux/handhelds/packages/ipkg/ipkg-{PV}.tar.gz
   patch:file://{PN}.diff
 ;
 host_python
