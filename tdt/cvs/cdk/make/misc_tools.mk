@@ -46,8 +46,6 @@ $(DEPDIR)/%misc-tools: driver libstdc++-dev libdvdnav libdvdcss libpng jpeg ffmp
 	$(if $(VDR1722), -DVDR1722) \
 	$(if $(VDR1727), -DVDR1727)"
 	$(tocdk_build)
-	mkdir $(PKDIR)/sbin
-	mv  $(PKDIR)/bin/hotplug $(PKDIR)/sbin/
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
