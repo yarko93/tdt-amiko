@@ -114,7 +114,7 @@ define remove_docs
 endef
 
 define strip_libs
-	find $(PKDIR) -type f -regex '.*/lib/.*so\(\.[0-9]+\)*' \
+	find $(PKDIR) -type f -regex '.*/lib/.*\.so\(\.[0-9]+\)*' \
 		-exec echo strip {} \; \
 		-exec sh4-linux-strip --strip-unneeded {} \;
 endef
