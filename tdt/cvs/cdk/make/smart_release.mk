@@ -172,7 +172,8 @@ release_base:
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 	rm -rf $(prefix)/release/lib/modules/$(KERNELVERSION)
 # install fonts	
-	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts
+	mv -f $(prefix)/release/usr/local/share/fonts $(prefix)/release/usr/share/ && \
+	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts && \
 	ln -s /usr/share/fonts $(prefix)/release/usr/local/share/fonts && \
 	cp $(buildprefix)/root/usr/share/fonts/* $(prefix)/release/usr/share/fonts
 	
