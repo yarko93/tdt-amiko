@@ -142,41 +142,45 @@ NFS=`grep -c nfs /proc/cmdline`
    fi
 
    echo "run" > /dev/vfd
+   echo "LOADING E2"
    # cron daemon
    (sleep 60; /usr/sbin/crond) & 
    until false
    do
       echo "starting e2->"
       crontab /var/spool/cron/crontabs/root
- echo "LOADING VDR" > /dev/vfd
-   echo "LOADING VDR"
+      /usr/lib/enigma2/python/Plugins/Extensions/AR-P/automount.sh
 
-   export LANG=de_DE.utf8
-   export LC_COLLATE=de_DE.utf8
-
-   until false
-   do
-      echo "starting VDR->"
-      /usr/local/bin/runvdr
+      STARTUP=`grep -c 'titan' /etc/init.d/start`
+      if [ "$STARTUP" -eq "1" ]; then
+      /usr/local/bin/titan /etc/titan/titan.cfg
+      else
+      if [ ls /hdd/enigma2_crash_??????????.log >/dev/null 2>&1 ]; then
+        mv /hdd/enigma2_crash_??????????.log /hdd/enigma2_crash_??????????_.log
+        cd /etc/enigma2
+        sed -i "/$config.skin./d" "settings"
+      fi
+      /usr/local/bin/enigma2
+      fi
       rtv=$?
-      echo "VDR ended <- RTV: " $rtv
+      echo "e2 ended <- RTV: " $rtv
       case "$rtv" in
 		0) echo "0"
-		   echo "VDR ERROR"
-      	   init 6;;
+		   echo "E2 ERROR"
+      		   init 6;;
 		1) echo "1"
 		   echo "SHUTDOWN"
-		   init 0;;
+                   init 0;;
 		2) echo "2"
 		   echo "REBOOT"
 		   init 6;;
 		3) echo "3"
-		   echo "VDR RESTART"
+		   echo "E2 RESTART"
 		   echo "0" > /proc/progress
 		   showiframe -p /boot/bootlogo.mvi &;;
 		*) echo "*"
 		   echo "ERROR"
-           init 6;;
+		   killall -9 enigma2;;
       esac
    done 
 fi
