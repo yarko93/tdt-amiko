@@ -117,6 +117,9 @@ $(crossprefix)/bin/opkg: @DEPENDS_opkg_host@
 #
 # PYTHON-HOST
 #
+
+python := $(crossprefix)/bin/python
+
 $(DEPDIR)/host_python: @DEPENDS_host_python@
 	@PREPARE_host_python@ && \
 	( cd @DIR_host_python@ && \
