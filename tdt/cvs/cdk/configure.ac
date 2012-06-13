@@ -981,6 +981,9 @@ TUXBOX_RULES_MAKE(vlc)
 TUXBOX_RULES_MAKE(djmount)
 TUXBOX_RULES_MAKE(libupnp)
 TUXBOX_RULES_MAKE(rarfs)
+TUXBOX_RULES_MAKE(sshfs)
+TUXBOX_RULES_MAKE(gmediarender)
+TUXBOX_RULES_MAKE(mediatomb)
 
 #
 # python
@@ -1011,6 +1014,7 @@ TUXBOX_RULES_MAKE(gst_plugins_ugly)
 TUXBOX_RULES_MAKE(gst_ffmpeg)
 TUXBOX_RULES_MAKE(gst_fluendo_mpegdemux)
 TUXBOX_RULES_MAKE(gst_plugins_dvbmediasink)
+TUXBOX_RULES_MAKE(gst_plugin_subsink)
 
 #
 # enigma2
