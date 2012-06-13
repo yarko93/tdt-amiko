@@ -71,3 +71,21 @@ $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 	$(extra_build)
 #	@DISTCLEANUP_enigma2_networkbrowser@
 	[ "x$*" = "x" ] && touch $@ || true
+
+$(DEPDIR)/%-openpli: $(DEPDIR)/%-openpli.do_prepare
+	$(call git_fetch_prepare,$*_openpli,git://github.com/E2OpenPlugins/e2openplugin-$*.git)
+	$(eval FILES_$*_openpli += /usr/lib/enigma2/python/Plugins)
+	$(start_build)
+	$(get_git_version)
+	cd $(DIR_$*_openpli) && \
+		$(python) setup.py install --root=$(PKDIR) --install-lib=/usr/lib/enigma2/python/Plugins
+	$(remove_pyo)
+	$(extra_build)
+	touch $@
+
+DESCRIPTION_NewsReader_openpli = RSS reader
+
+openpli_plugin_list = \
+NewsReader
+
+openpli-plugins: $(addprefix $(DEPDIR)/,$(addsuffix -openpli,$(openpli_plugin_list)))
