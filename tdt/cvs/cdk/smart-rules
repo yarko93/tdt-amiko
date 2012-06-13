@@ -1060,7 +1060,7 @@ gst_plugins_dvbmediasink
 gst_plugin_subsink
   1.0
   {PN}
-  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/gstsubsink:r=8182abe751364f6eb1ed45377b0625102aeb68d5:b=HEAD
+  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/gstsubsink:r=8182abe751364f6eb1ed45377b0625102aeb68d5
   make:install:DESTDIR=TARGETS
 ;
 graphlcd
