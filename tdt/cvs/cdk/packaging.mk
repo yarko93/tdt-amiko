@@ -170,6 +170,19 @@ define parent_pk
 	$(eval $@: PARENT_PK = $1)
 endef
 
+define git_fetch_prepare
+	@echo git fetching $1
+	$(eval DIR_$(1) ?= $(buildprefix)/$(1)-git)
+	$(eval SRC_URI_$(1) += $(2))
+	@echo 'setting dir DIR_$(1)=$(DIR_$(1))'
+	@echo 'setting uri SRC_URI_$(1)=$(SRC_URI_$(1))'
+	if [ -d $(DIR_$(1)) ]; then \
+		cd $(DIR_$(1)) && git pull; \
+	else \
+		git clone $(2) $(DIR_$(1)); \
+	fi
+endef
+
 package-index: $(ipkprefix)/Packages
 $(ipkprefix)/Packages: $(ipkprefix)
 	cd $(ipkprefix) && \
