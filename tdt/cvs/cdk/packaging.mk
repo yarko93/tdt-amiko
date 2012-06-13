@@ -74,6 +74,7 @@ define do_build_pkg
 endef
 
 define start_build
+	$(eval export $(EXPORT_ENV))$(warning MANUAL_EXPORT)
 	@echo
 	@echo "====> checking for PARENT_PK variable"
 	$(eval $(if $(filter '',$(PARENT_PK)), $@: PARENT_PK = $(subst -,_,$(notdir $@))))
