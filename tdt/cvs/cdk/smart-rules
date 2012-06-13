@@ -1001,7 +1001,7 @@ enigma2_networkbrowser
 enigma2_openwebif
   1.0
   e2openplugin-OpenWebif
-  nothing:git://github.com/E2OpenPlugins/e2openplugin-OpenWebif.git
+  nothing:git://github.com/schpuntik/e2openplugin-OpenWebif.git
   make:install:DESTDIR=TARGETS
 ;
 gstreamer
