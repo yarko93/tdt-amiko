@@ -1846,7 +1846,7 @@ $(DEPDIR)/%lxml: $(DEPDIR)/lxml.do_compile
 #	@DISTCLEANUP_lxml@
 	$(tocdk_build)
 	$(remove_pyo)
-	$(toflash_build)
+	$(extra_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
