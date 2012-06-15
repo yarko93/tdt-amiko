@@ -72,7 +72,7 @@ $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 #	@DISTCLEANUP_enigma2_networkbrowser@
 	[ "x$*" = "x" ] && touch $@ || true
 
-$(DEPDIR)/%-openpli: $(DEPDIR)/%-openpli.do_prepare
+$(DEPDIR)/%-openpli:
 	$(call git_fetch_prepare,$*_openpli,git://github.com/E2OpenPlugins/e2openplugin-$*.git)
 	$(eval FILES_$*_openpli += /usr/lib/enigma2/python/Plugins)
 	$(start_build)
@@ -84,8 +84,10 @@ $(DEPDIR)/%-openpli: $(DEPDIR)/%-openpli.do_prepare
 	touch $@
 
 DESCRIPTION_NewsReader_openpli = RSS reader
+DESCRIPTION_AddStreamUrl_openpli = Add a stream url to your channellist
 
 openpli_plugin_list = \
+AddStreamUrl \
 NewsReader
 
 openpli-plugins: $(addprefix $(DEPDIR)/,$(addsuffix -openpli,$(openpli_plugin_list)))
