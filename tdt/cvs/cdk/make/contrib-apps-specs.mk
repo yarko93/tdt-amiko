@@ -20,12 +20,12 @@ $(DEPDIR)/console_data: bootstrap @DEPENDS_console_data@
 SYSVINIT := sysvinit
 INITSCRIPTS := initscripts
 FILES_sysvinit = \
-/bin \
 /sbin/fsck.nfs \
 /sbin/killall5 \
 /sbin/init \
 /sbin/halt \
 /sbin/poweroff \
+/sbin/shutdown \
 /sbin/reboot
 
 if STM22
