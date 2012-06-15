@@ -1,8 +1,5 @@
 # auxiliary targets for model-specific builds
 release_common_utils:
-#       remove the slink to busybox
-	rm -f $(prefix)/release/sbin/halt
-	cp -f $(targetprefix)/sbin/halt $(prefix)/release/sbin/
 	cp $(buildprefix)/root/release/umountfs $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/rc $(prefix)/release/etc/init.d/
 	cp $(buildprefix)/root/release/sendsigs $(prefix)/release/etc/init.d/
@@ -12,8 +9,6 @@ release_common_utils:
 	chmod 755 $(prefix)/release/etc/init.d/halt
 	mkdir -p $(prefix)/release/etc/rc.d/rc0.d
 	ln -sf ../init.d $(prefix)/release/etc/rc.d
-	ln -sf halt $(prefix)/release/sbin/reboot
-	ln -sf halt $(prefix)/release/sbin/poweroff
 	ln -sf ../init.d/sendsigs $(prefix)/release/etc/rc.d/rc0.d/S20sendsigs
 	ln -sf ../init.d/umountfs $(prefix)/release/etc/rc.d/rc0.d/S40umountfs
 	ln -sf ../init.d/halt $(prefix)/release/etc/rc.d/rc0.d/S90halt
