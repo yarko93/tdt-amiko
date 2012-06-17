@@ -313,6 +313,8 @@ def write_control_file(fdir, full_package):
 		var = bb_get(ext(l[1][0]))
 		if l[1][0] == 'NAME':
 			var = var.replace('_', '-').lower()
+		elif l[1][0] == 'RDEPENDS':
+			var = var.replace(' ',',')
 		if not var: continue
 		var = l[0] % var
 		s += var
