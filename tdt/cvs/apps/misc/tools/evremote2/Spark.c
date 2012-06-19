@@ -307,7 +307,7 @@ static tButton cButtonsSparDefault[] = {
     {"LEFT" 	      , "BF", KEY_LEFT},
     {"RIGHT"	      , "FD", KEY_RIGHT},
     {"OK"	      , "05", KEY_OK},
-    {"PORTAL"	      , "05", KEY_TITLE},
+    {"PORTAL"	      , "25", KEY_TITLE},
     {"EXIT"           , "F9", KEY_HOME},
     {"EPG"            , "45", KEY_EPG},
     {"FAV"	      , "3D", KEY_FAVORITES},
