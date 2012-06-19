@@ -29,8 +29,8 @@ fi
 
 # --- KERNEL ---
 # Size 8MB !
-cp $TMPKERNELDIR/uImage $OUTDIR/uImage
-#$PAD 0x800000 $CURDIR/uImage $CURDIR/mtd_kernel.pad.bin
+cp -f $TMPKERNELDIR/uImage $OUTDIR/uImage
+#$PAD 0x800000 $CURDIR/uImage $CURDIR/mtd_kernel.pad.bin #padding of kernel uImage is not needed
 
 # --- ROOT ---
 # Size 64MB !
@@ -68,4 +68,4 @@ mv $CURDIR/mtd_root.sum.pad.bin $OUTDIR/e2jffs2.img
 #rm -f $CURDIR/mtd_kernel.pad.bin
 rm -f $CURDIR/mtd_root.sum.pad.bin
 
-#zip -D $OUTFILE.zip $OUTDIR/e2jffs2.img $OUTDIR/uImage
+cd $OUTDIR;zip $OUTFILE.zip e2jffs2.img uImage
