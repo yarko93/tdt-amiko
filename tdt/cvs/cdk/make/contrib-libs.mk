@@ -2070,6 +2070,8 @@ $(DEPDIR)/%pyopenssl: $(DEPDIR)/pyopenssl.do_compile
 # python
 #
 
+PACKAGES_python = python python_ctypes
+
 DESCRIPTION_python = "A high-level scripting language"
 FILES_python = \
 /usr/bin/python \
@@ -2089,15 +2091,21 @@ FILES_python = \
 /usr/lib/python2.6/wsgiref \
 /usr/lib/python2.6/xml
 
+DESCRIPTION_python_ctypes = python ctypes module
+FILES_python_ctypes = \
+/usr/lib/python2.6/ctypes
+
 $(DEPDIR)/python.do_prepare: bootstrap host_python openssl openssl-dev sqlite @DEPENDS_python@
-	@PREPARE_python@ && \
+	@PREPARE_python@
+	which autoconf
 	touch $@
 
 $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
 	( cd @DIR_python@ && \
-		autoconf && \
 		CONFIG_SITE= \
 		$(BUILDENV) \
+		autoreconf -Wcross --verbose --install --force Modules/_ctypes/libffi && \
+		autoconf && \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
