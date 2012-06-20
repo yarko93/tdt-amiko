@@ -354,12 +354,14 @@ def do_finish():
 		
 		for data in DATAS:
 			if not bb_get(data+'_'+p):
-				bb_set(data+'_'+p, bb_get(data+'_'+parent_pkg))
+				if data == 'NAME':
+					bb_set(data+'_'+p, p)
+				else:
+					bb_set(data+'_'+p, bb_get(data+'_'+parent_pkg))
 		
 		bb.mkdirhier(pjoin(pack_dir, 'CONTROL'))
 		write_control_file(pjoin(pack_dir, 'CONTROL'), p)
-	
-	#print 'QQQ', bb_get("PKGV_" + parent_pkg)
+
 
 if __name__ == "__main__":
 	do_finish()
