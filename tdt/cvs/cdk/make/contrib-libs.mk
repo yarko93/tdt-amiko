@@ -1295,7 +1295,7 @@ $(DEPDIR)/%libass: $(DEPDIR)/libass.do_compile
 # WebKitDFB
 #
 DESCRIPTION_webkitdfb = "webkitdfb"
-
+RDEPENDS_webkitdfb = lite enchant fontconfig sqlite cairo enchant
 FILES_webkitdfb = \
 /usr/lib*
 
@@ -2832,6 +2832,7 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 # eve-browser
 #
 DESCRIPTION_evebrowser = "evebrowser for HbbTv"
+RDEPENDS_evebrowser = webkitdfb
 SRC_URI_evebrowser = https://eve-browser.googlecode.com/svn/trunk/
 FILES_evebrowser = \
 /usr/lib/*.so* \
