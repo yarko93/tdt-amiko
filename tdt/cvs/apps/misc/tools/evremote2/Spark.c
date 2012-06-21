@@ -294,8 +294,8 @@ static tButton cButtonsSparDefault[] = {
     {"9BUTTON"        , "F5", KEY_9},
     {"TV/RADIO"       , "CD", KEY_TV2}, //WE USE TV2 AS TV/RADIO SWITCHB
     {"RECALL"         , "CF", KEY_BACK},
-    {"PAGE+"          , "ED", KEY_PAGEUP},
-    {"PAGE-"          , "DD", KEY_PAGEDOWN},
+    {"PAGE+"          , "ED", KEY_CHANNELUP},
+    {"PAGE-"          , "DD", KEY_CHANNELDOWN},
     {"FIND"           , "C5", KEY_FIND},
     {"FOLDER"	      , "67", KEY_ARCHIVE},
     {"VOL+"           , "AF", KEY_VOLUMEUP},
