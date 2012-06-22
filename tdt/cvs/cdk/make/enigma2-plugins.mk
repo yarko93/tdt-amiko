@@ -75,6 +75,7 @@ $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 $(DEPDIR)/%-openpli:
 	$(call git_fetch_prepare,$*_openpli,git://github.com/E2OpenPlugins/e2openplugin-$*.git)
 	$(eval FILES_$*_openpli += /usr/lib/enigma2/python/Plugins)
+	$(eval NAME_$*_openpli = enigma2-plugin-extensions-$*)
 	$(start_build)
 	$(get_git_version)
 	cd $(DIR_$*_openpli) && \
