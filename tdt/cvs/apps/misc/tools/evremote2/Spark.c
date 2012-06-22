@@ -329,7 +329,7 @@ static tButton cButtonsSparDefault[] = {
     {"PLAY_MODE"      , "B5", KEY_P},
     {"USB"  	      , "DF", KEY_CLOSE},
     {"Tms"	      , "55", KEY_T},
-    {"F1"             , "95", KEY_F1},
+    {"F1"             , "95", KEY_HELP},
     {"F2"             , "15", KEY_F1},
     {"F3"             , "D7", KEY_F1},
     {""               , ""  , KEY_NULL},
