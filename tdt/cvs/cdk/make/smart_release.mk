@@ -96,6 +96,7 @@ release_base:
 	cp -aR $(buildprefix)/root/usr/share/udhcpc/* $(prefix)/release/usr/share/udhcpc/ && \
 	cp -dp $(buildprefix)/root/etc/init.d/udhcpc $(prefix)/release/etc/init.d/ && \
 	cp $(buildprefix)/root/etc/timezone.xml $(prefix)/release/etc/ && \
+	cp -a $(buildprefix)/root/etc/Wireless $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/network/options $(prefix)/release/etc/network/ && \
 	ln -sf /etc/timezone.xml $(prefix)/release/etc/tuxbox/timezone.xml && \
 	ln -sf /usr/local/share/keymaps $(prefix)/release/usr/share/keymaps
@@ -167,7 +168,7 @@ release_base:
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 	rm -rf $(prefix)/release/lib/modules/$(KERNELVERSION)
 # install fonts	
-	mv -f $(prefix)/release/usr/local/share/fonts $(prefix)/release/usr/share/ && \
+	mv -fb $(prefix)/release/usr/local/share/fonts $(prefix)/release/usr/share/ && \
 	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts && \
 	ln -s /usr/share/fonts $(prefix)/release/usr/local/share/fonts && \
 	cp $(buildprefix)/root/usr/share/fonts/* $(prefix)/release/usr/share/fonts
