@@ -237,6 +237,11 @@ sub process_make_prepare (@)
     }
     elsif ( $p eq "git" )
     {
+      if ( not $opts{"r"} )
+      {
+         $output .= "echo '\\\$(shell cd " . "\\\$(archivedir)/" . $f . " && git pull) ' &&";
+      }
+      $output .= "\\\$(eval export PKGV_$package = \\\$(shell cd \\\$(archivedir)/".$f." && \\\$(git_version))) ";
       $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
     }
     elsif ( $cmd eq "dirextract" )
