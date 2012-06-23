@@ -2831,16 +2831,15 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 #
 # eve-browser
 #
-DESCRIPTION_evebrowser = "evebrowser for HbbTv"
+DESCRIPTION_evebrowser = evebrowser for HbbTv
 RDEPENDS_evebrowser = webkitdfb
-SRC_URI_evebrowser = https://eve-browser.googlecode.com/svn/trunk/
 FILES_evebrowser = \
 /usr/lib/*.so* \
 /usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-sh4 \
 /usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/*.py
 
 $(DEPDIR)/evebrowser.do_prepare: bootstrap webkitdfb @DEPENDS_evebrowser@
-	svn checkout https://eve-browser.googlecode.com/svn/trunk/ @DIR_evebrowser@
+	@PREPARE_evebrowser@
 	touch $@
 
 $(DEPDIR)/evebrowser.do_compile: $(DEPDIR)/evebrowser.do_prepare

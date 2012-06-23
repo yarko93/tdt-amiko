@@ -78,6 +78,8 @@ enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
 	$(call parent_pk,e2skin)
 	$(start_build)
 	$(get_git_version)
+	rm -rf $(ipkgbuilddir)/*
+	$(flash_prebuild)
 	$(MAKE) -C $(appsdir)/skins install DESTDIR=$(packagingtmpdir)
 	@echo 'next variables are exported to enviroment:'
 	@echo $(EXPORT_ENV) | tr ' ' '\n'
@@ -85,7 +87,7 @@ enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
 	print bb_data; \
 	do_split_packages(bb_data, $(enigma2_skindir), '(.*?)/.*', 'enigma2-skin-%s', 'Enigma2 Skin: %s', recursive=True, match_path=True, prepend=True); \
 	do_finish()"
-	$(extra_build)
+	$(call do_build_pkg,none,flash)
 
 $(DEPDIR)/enigma2-skins-sh4: enigma2-skins-sh4.do_prepare enigma2-skins-sh4.do_compile enigma2-skins-sh4-package
 	touch $@

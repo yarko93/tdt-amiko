@@ -727,6 +727,7 @@ libflac
 evebrowser
   0.0.1
   {PN}-{PV}
+  svn://eve-browser.googlecode.com/svn/trunk/
   make:install:DESTDIR=PKDIR
 ;
 dvbdata
