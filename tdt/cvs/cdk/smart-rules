@@ -37,8 +37,9 @@
 #  ftp:// - ftp wget download
 #  file:// - look for file in Patches directory
 #  git://www.gitserver.com/gitrepo:r=revision:b=branch:sub=subdir_in_git_tree
-#  revision, branch and subdirectory to use arguments are optional.
-# svn coming soon...
+#   revision, branch and subdirectory to use (arguments are optional).
+#  svn://www.gitserver.com/gitrepo:r=revision
+#   only revision option
 #
 # if rule command doesn't match ones listed above, this is treated as install/uninstall rule.
 # 
@@ -52,6 +53,18 @@
 #   make:install:DESTDIR=TARGETS
 #   rewrite-libtool:TARGETS/usr/lib/liblirc_client.la
 # ;
+#
+# Using smart-rules is optional, but smart-rules.pl generates macroses to make downloading, patching etc. tasks a bit easier.
+# You can find the output of smart-rules.pl script in cdk/ruledir directory.
+# These files are imported to Makefile after running ./configure (runs automaticaly).
+#
+# So for example for udpxy you'll have:
+#   @DIR_ntpclient@ directory where sources are extracted (buid dir)
+#   @DEPENDS_ntpclient@ is list of all files to built package from.
+#     Place into target depends, so changing one of them invokes rebuild.
+#   @PREPARE_ntpclient@ rules for download, extract and patch files above.
+#   SOURCES_udpxy list of files above. Used later in package Control file.
+#   VERSION_udpxy Used later in package Control file too.
 
 ntpclient
   #second param is version
