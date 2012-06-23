@@ -2584,6 +2584,12 @@ $(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_fluendo_mpegdemux.do_compile
 #
 # GST-PLUGIN-SUBSINK
 #
+DESCRIPTION_gst_plugin_subsink = GStreamer Multimedia Framework gstsubsink
+SRC_URI_gst_plugin_subsink = git://openpli.git.sourceforge.net/gitroot/openpli/gstsubsink
+
+FILES_gst_plugin_subsink = \
+/usr/lib/gstreamer-0.10/*.so
+
 $(DEPDIR)/gst_plugin_subsink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly @DEPENDS_gst_plugin_subsink@
 	@PREPARE_gst_plugin_subsink@
 	touch $@
@@ -2605,8 +2611,11 @@ $(DEPDIR)/gst_plugin_subsink.do_compile: $(DEPDIR)/gst_plugin_subsink.do_prepare
 $(DEPDIR)/min-gst_plugin_subsink $(DEPDIR)/std-gst_plugin_subsink $(DEPDIR)/max-gst_plugin_subsink \
 $(DEPDIR)/gst_plugin_subsink: \
 $(DEPDIR)/%gst_plugin_subsink: $(DEPDIR)/gst_plugin_subsink.do_compile
+	$(start_build)
 	cd @DIR_gst_plugin_subsink@ && \
 		@INSTALL_gst_plugin_subsink@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_gst_plugin_subsink@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -3620,7 +3629,6 @@ $(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
 #
 
 DESCRIPTION_xupnpd = eXtensible UPnP agent
-RDEPENDS_xupnpd
 FILES_xupnpd = \
 /
 
