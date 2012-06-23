@@ -938,12 +938,12 @@ gdata
 twisted
   8.2.0
   Twisted-{PV}
-  extract:http://tmrc.mit.edu/mirror/{PN}/Twisted/8.2/Twisted-{PV}.tar.bz2
+  extract:http://twistedmatrix.com/Releases/Twisted/8.2/Twisted-{PV}.tar.bz2
 ;
 twistedweb2
   8.1.0
   TwistedWeb2-{PV}
-  extract:http://tmrc.mit.edu/mirror/twisted/Web2/8.1/TwistedWeb2-{PV}.tar.bz2
+  extract:http://twistedmatrix.com/Releases/Web2/8.1/TwistedWeb2-{PV}.tar.bz2
 ;
 pilimaging
   1.1.7
