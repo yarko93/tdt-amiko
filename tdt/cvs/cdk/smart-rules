@@ -839,6 +839,12 @@ mysql
   extract:http://downloads.{PN}.com/archives/{PN}-5.1/{PN}-{PV}.tar.gz
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
+xupnpd
+  r306
+  {PN}-{PV}
+  patch-0:file://{PN}-{PV}.diff
+  make:install:DESTDIR=PKDIR
+;
 libmicrohttpd
   0.9.19
   {PN}-{PV}

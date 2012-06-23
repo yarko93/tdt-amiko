@@ -3616,7 +3616,45 @@ $(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
 #	@DISTCLEANUP_mysql@
 	[ "x$*" = "x" ] && touch $@ || true
 
+#
+# xupnpd
+#
+SRC_URI_xupnpd = http://tsdemuxer.googlecode.com/svn/trunk/xupnpd/src/
+DESCRIPTION_xupnpd = eXtensible UPnP agent
+FILES_xupnpd = \
+/
 
+$(DEPDIR)/xupnpd.do_prepare: bootstrap @DEPENDS_xupnpd@
+	svn checkout http://tsdemuxer.googlecode.com/svn/trunk/xupnpd/src/ @DIR_xupnpd@
+	@PREPARE_xupdpd@
+	touch $@
+
+$(DEPDIR)/xupnpd.do_compile: $(DEPDIR)/xupnpd.do_prepare
+	cd @DIR_xupnpd@ && \
+	    $(BUILDENV) \
+	$(MAKE) embedded
+	touch $@
+
+$(DEPDIR)/min-xupnpd $(DEPDIR)/std-xupnpd $(DEPDIR)/max-xupnpd \
+$(DEPDIR)/xupnpd: \
+$(DEPDIR)/%xupnpd: $(DEPDIR)/xupnpd.do_compile
+	$(start_build)
+	cd @DIR_xupnpd@  && \
+	  install -m 0755 xupnpd-$(PACKAGE_ARCH_xupnpd) $(PKDIR)/usr/bin/xupnpd; \
+	  install -D -m 0644  $(PKDIR)/usr/share/xupnpd/{ui,www,plugins,config,playlists}; \
+	  install -m 0644 *.lua $(PKDIR)/usr/share/xupnpd; \
+	  install -m 0644 ui/* $(PKDIR)/usr/share/xupnpd/ui; \
+	  install -m 0644 www/* $(PKDIR)/usr/share/xupnpd/www; \
+	  install -m 0644 plugins/* $(PKDIR)/usr/share/xupnpd/plugins; \
+	  $(CP) playlists/* $(PKDIR)/usr/share/xupnpd/playlists; \
+	  $(LN_SF) xupnpd.lua $(PKDIR)/etc/xupnpd.lua
+#	  install -D -m 0755 xupnpd-init.file $(PKDIR)/etc/init.d/xupnpd
+
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_xupnpd@
+	[ "x$*" = "x" ] && touch $@ || true
+   
 #
 # libmicrohttpd
 #

@@ -10,7 +10,7 @@ $(DEPDIR)/enigma2-plugins: enigma2_openwebif enigma2_networkbrowser
 DESCRIPTION_enigma2_openwebif = "open webinteface plugin for enigma2 by openpli team"
 RDEPENDS_enigma2_openwebif = libpng12 libjpeg6b
 
-$(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap python pythoncheetah @DEPENDS_enigma2_openwebif@
+$(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap python libpng12 libjpeg6b pythoncheetah @DEPENDS_enigma2_openwebif@
 	@PREPARE_enigma2_openwebif@
 	touch $@
 
