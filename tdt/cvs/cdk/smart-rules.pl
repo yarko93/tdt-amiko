@@ -116,7 +116,6 @@ sub process_rule($) {
     my @a = split("/", $url);
     $f = $a[-1];
   }
-  #warn "command: $cmd protocol: $p file: $f\n";
 
   my %args = ();
   my $arg;
@@ -124,7 +123,14 @@ sub process_rule($) {
   {
     $args{$1} = $2 if $arg =~ m/(\w+)=(.*)/;
     #warn "arg " . $1 . ' = ' . $2 . "\n";
-  }    
+  }
+
+  if ( $url =~ m#^svn://# )
+  {
+      $f = $package . ".svn"
+  }
+
+  #warn "protocol: $p file: $f command: $cmd url: $url\n";
 
   return ($p, $f, $cmd, $url, %args);
 }
@@ -190,7 +196,7 @@ sub process_make_prepare (@)
       $output .= " && ";
     }
     
-    if ( $cmd eq "rpm" || $cmd eq "extract")
+    if ( ($cmd eq "rpm" || $cmd eq "extract") and $p !~ m#(git|svn)#)
     {
       if ( $_[1] =~ m#\.tar\.bz2$# )
       {
@@ -233,7 +239,11 @@ sub process_make_prepare (@)
     }
     elsif ( $p eq "svn" )
     {
-      $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
+      if ( not $opts{"r"} )
+      {
+         $output .= "echo '\\\$(shell cd " . "\\\$(archivedir)/" . $f . " && svn update) ' &&";
+      }
+      $output .= "cp -a \\\$(archivedir)/" . $f . $subdir . " " . $dir;
     }
     elsif ( $p eq "git" )
     {
@@ -594,6 +604,8 @@ sub process_download ($$)
 #     }
     elsif ( $_ =~ m#^svn://# )
     {
+      my $tmpurl = $url;
+      $url =~ s#svn://#http://# ;
       $output .= " || \\\n\tsvn checkout $url" . " \$(archivedir)/" . $f;
       $output .= " -r " . $opts{"r"} if $opts{"r"};
     }
