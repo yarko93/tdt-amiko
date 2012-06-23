@@ -86,9 +86,11 @@ $(DEPDIR)/%-openpli:
 
 DESCRIPTION_NewsReader_openpli = RSS reader
 DESCRIPTION_AddStreamUrl_openpli = Add a stream url to your channellist
+DESCRIPTION_Satscan_openpli = Alternative blind scan plugin for DVB-S
 
 openpli_plugin_list = \
 AddStreamUrl \
-NewsReader
+NewsReader \
+Satscan
 
 openpli-plugins: $(addprefix $(DEPDIR)/,$(addsuffix -openpli,$(openpli_plugin_list)))
