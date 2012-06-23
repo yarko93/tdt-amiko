@@ -843,6 +843,7 @@ mysql
 xupnpd
   r306
   {PN}-{PV}
+  svn://tsdemuxer.googlecode.com/svn/trunk/xupnpd/src/
   patch-0:file://{PN}-{PV}.diff
   make:install:DESTDIR=PKDIR
 ;

@@ -3618,14 +3618,14 @@ $(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
 #
 # xupnpd
 #
-SRC_URI_xupnpd = http://tsdemuxer.googlecode.com/svn/trunk/xupnpd/src/
+
 DESCRIPTION_xupnpd = eXtensible UPnP agent
+RDEPENDS_xupnpd
 FILES_xupnpd = \
 /
 
 $(DEPDIR)/xupnpd.do_prepare: bootstrap @DEPENDS_xupnpd@
-	svn checkout http://tsdemuxer.googlecode.com/svn/trunk/xupnpd/src/ @DIR_xupnpd@
-	@PREPARE_xupdpd@
+	@PREPARE_xupnpd@
 	touch $@
 
 $(DEPDIR)/xupnpd.do_compile: $(DEPDIR)/xupnpd.do_prepare
@@ -3639,14 +3639,15 @@ $(DEPDIR)/xupnpd: \
 $(DEPDIR)/%xupnpd: $(DEPDIR)/xupnpd.do_compile
 	$(start_build)
 	cd @DIR_xupnpd@  && \
-	  install -m 0755 xupnpd-$(PACKAGE_ARCH_xupnpd) $(PKDIR)/usr/bin/xupnpd; \
-	  install -D -m 0644  $(PKDIR)/usr/share/xupnpd/{ui,www,plugins,config,playlists}; \
+	  install -d 0644  $(PKDIR)/{etc,usr/bin}; \
+	  install -m 0755 xupnpd- $(PKDIR)/usr/bin/xupnpd; \
+	  install -d 0644  $(PKDIR)/usr/share/xupnpd/{ui,www,plugins,config,playlists}; \
 	  install -m 0644 *.lua $(PKDIR)/usr/share/xupnpd; \
 	  install -m 0644 ui/* $(PKDIR)/usr/share/xupnpd/ui; \
 	  install -m 0644 www/* $(PKDIR)/usr/share/xupnpd/www; \
 	  install -m 0644 plugins/* $(PKDIR)/usr/share/xupnpd/plugins; \
-	  $(CP) playlists/* $(PKDIR)/usr/share/xupnpd/playlists; \
-	  $(LN_SF) xupnpd.lua $(PKDIR)/etc/xupnpd.lua
+	  cp -a playlists/*.m3u $(PKDIR)/usr/share/xupnpd/playlists; \
+	  $(LN_SF)  /usr/share/xupnpd/xupnpd.lua $(PKDIR)/etc/xupnpd.lua
 #	  install -D -m 0755 xupnpd-init.file $(PKDIR)/etc/init.d/xupnpd
 
 	$(tocdk_build)
@@ -3830,8 +3831,8 @@ $(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
 #
 # djmount
 #
-DESCRIPTION_djmount = "djmount is a UPnP AV client. It mounts as a Linux filesystem the media content of compatible UPnP AV devices."
-
+DESCRIPTION_djmount = djmount is a UPnP AV client. It mounts as a Linux filesystem the media content of compatible UPnP AV devices.
+RDEPENDS_djmount = fuse
 FILES_djmount = \
 /usr/bin/* \
 /usr/lib/*
