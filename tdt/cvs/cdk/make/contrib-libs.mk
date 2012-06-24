@@ -3997,6 +3997,11 @@ $(DEPDIR)/%gmediarender: $(DEPDIR)/gmediarender.do_compile
 #
 # mediatomb
 #
+DESCRIPTION_mediatomb = MediaTomb is an open source (GPL) UPnP MediaServer with a nice web user interfaces
+FILES_mediatomb = \
+/usr/bin/* \
+/usr/share/mediatomb/*
+
 $(DEPDIR)/mediatomb.do_prepare: bootstrap libstdc++-dev ffmpeg curl sqlite expat @DEPENDS_mediatomb@
 	@PREPARE_mediatomb@
 	touch $@
@@ -4026,7 +4031,10 @@ $(DEPDIR)/mediatomb.do_compile: $(DEPDIR)/mediatomb.do_prepare
 $(DEPDIR)/min-mediatomb $(DEPDIR)/std-mediatomb $(DEPDIR)/max-mediatomb \
 $(DEPDIR)/mediatomb: \
 $(DEPDIR)/%mediatomb: $(DEPDIR)/mediatomb.do_compile
+	$(start_build)
 	cd @DIR_mediatomb@ && \
 		@INSTALL_mediatomb@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_mediatomb@
 	[ "x$*" = "x" ] && touch $@ || true
