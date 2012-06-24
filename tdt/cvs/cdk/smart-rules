@@ -408,6 +408,8 @@ sysstat
 hotplug_e2
   1.0
   {PN}-helper
+  git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper
+  patch:file://hotplug-e2-helper-support_fw_upload.patch
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 autofs

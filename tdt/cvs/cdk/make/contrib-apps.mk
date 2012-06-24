@@ -1113,15 +1113,12 @@ $(DEPDIR)/sysstat: bootstrap @DEPENDS_sysstat@
 # hotplug-e2
 #
 DESCRIPTION_hotplug_e2 = "hotplug_e2"
-SRC_URI_hotplug_e2 = git clone git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper
 FILES_hotplug_e2 = \
 /sbin/bdpoll \
 /usr/bin/hotplug_e2_helper
 
 $(DEPDIR)/hotplug_e2.do_prepare: bootstrap @DEPENDS_hotplug_e2@
 	@PREPARE_hotplug_e2@
-	git clone git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper;
-	cd @DIR_hotplug_e2@ && patch -p1 < $(buildprefix)/Patches/hotplug-e2-helper-support_fw_upload.patch
 	touch $@
 
 $(DEPDIR)/hotplug_e2.do_compile: $(DEPDIR)/hotplug_e2.do_prepare
