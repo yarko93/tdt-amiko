@@ -349,7 +349,7 @@ $(DEPDIR)/wpa_supplicant.do_prepare: @DEPENDS_wpa_supplicant@
 
 $(DEPDIR)/wpa_supplicant.do_compile: bootstrap $(DEPDIR)/wpa_supplicant.do_prepare
 	cd @DIR_wpa_supplicant@/wpa_supplicant  && \
-		mv wpa_supplicant.config .config && \
+		mv ../wpa_supplicant.config .config && \
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
