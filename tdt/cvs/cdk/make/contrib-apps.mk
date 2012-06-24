@@ -617,6 +617,33 @@ $(DEPDIR)/%rsync: $(DEPDIR)/rsync.do_compile
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
+# RFKILL
+#
+DESCRIPTION_rfkill = rfkill is a small tool to query the state of the rfkill switches, buttons and subsystem interfaces
+FILES_rfkill = \
+/usr/sbin/*
+
+$(DEPDIR)/rfkill.do_prepare: bootstrap @DEPENDS_rfkill@
+	@PREPARE_rfkill@
+	touch $@
+
+$(DEPDIR)/rfkill.do_compile: $(DEPDIR)/rfkill.do_prepare
+	cd @DIR_rfkill@ && \
+		$(MAKE) $(MAKE_OPTS)
+	touch $@
+
+$(DEPDIR)/min-rfkill $(DEPDIR)/std-rfkill $(DEPDIR)/max-rfkill \
+$(DEPDIR)/rfkill: \
+$(DEPDIR)/%rfkill: $(DEPDIR)/rfkill.do_compile
+	$(start_build)
+	cd @DIR_rfkill@ && \
+		@INSTALL_rfkill@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_rfkill@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
 # LM_SENSORS
 #
 DESCRIPTION_lm_sensors = "lm_sensors"
