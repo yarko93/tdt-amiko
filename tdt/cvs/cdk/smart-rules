@@ -893,6 +893,12 @@ djmount
   extract:http://sourceforge.net/projects/{PN}/files/{PN}/{PV}/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
 ;
+rfkill
+  0.4
+  {PN}-{PV}
+  nothing:git://git.sipsolutions.net/rfkill.git
+  make:install:DESTDIR=PKDIR
+;
 libupnp
   1.6.17
   {PN}-{PV}
