@@ -1166,6 +1166,7 @@ $(DEPDIR)/min-hotplug_e2 $(DEPDIR)/std-hotplug_e2 $(DEPDIR)/max-hotplug_e2 \
 $(DEPDIR)/hotplug_e2: \
 $(DEPDIR)/%hotplug_e2: $(DEPDIR)/hotplug_e2.do_compile
 	$(start_build)
+	$(get_git_version)
 	cd @DIR_hotplug_e2@ && \
 		@INSTALL_hotplug_e2@
 	$(tocdk_build)

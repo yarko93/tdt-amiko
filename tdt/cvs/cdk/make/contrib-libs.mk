@@ -2586,7 +2586,6 @@ $(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_fluendo_mpegdemux.do_compile
 # GST-PLUGIN-SUBSINK
 #
 DESCRIPTION_gst_plugin_subsink = GStreamer Multimedia Framework gstsubsink
-SRC_URI_gst_plugin_subsink = git://openpli.git.sourceforge.net/gitroot/openpli/gstsubsink
 
 FILES_gst_plugin_subsink = \
 /usr/lib/gstreamer-0.10/*.so
@@ -2613,6 +2612,7 @@ $(DEPDIR)/min-gst_plugin_subsink $(DEPDIR)/std-gst_plugin_subsink $(DEPDIR)/max-
 $(DEPDIR)/gst_plugin_subsink: \
 $(DEPDIR)/%gst_plugin_subsink: $(DEPDIR)/gst_plugin_subsink.do_compile
 	$(start_build)
+	$(get_git_version)
 	cd @DIR_gst_plugin_subsink@ && \
 		@INSTALL_gst_plugin_subsink@
 	$(tocdk_build)
@@ -2624,7 +2624,6 @@ $(DEPDIR)/%gst_plugin_subsink: $(DEPDIR)/gst_plugin_subsink.do_compile
 # GST-PLUGINS-DVBMEDIASINK
 #
 DESCRIPTION_gst_plugins_dvbmediasink = "GStreamer Multimedia Framework dvbmediasink"
-SRC_URI_gst_plugins_dvbmediasink = git://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko.git
 
 FILES_gst_plugins_dvbmediasink = \
 /usr/lib/gstreamer-0.10/libgstdvbaudiosink.so \
@@ -2652,6 +2651,7 @@ $(DEPDIR)/min-gst_plugins_dvbmediasink $(DEPDIR)/std-gst_plugins_dvbmediasink $(
 $(DEPDIR)/gst_plugins_dvbmediasink: \
 $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compile
 	$(start_build)
+	$(get_git_version)
 	cd @DIR_gst_plugins_dvbmediasink@ && \
 		@INSTALL_gst_plugins_dvbmediasink@
 #	@DISTCLEANUP_gst_plugins_dvbmediasink@
@@ -3114,6 +3114,7 @@ $(DEPDIR)/min-tuxtxtlib $(DEPDIR)/std-tuxtxtlib $(DEPDIR)/max-tuxtxtlib \
 $(DEPDIR)/tuxtxtlib: \
 $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
 	$(start_build)
+	$(get_git_version)
 	cd @DIR_tuxtxtlib@ && \
 		@INSTALL_tuxtxtlib@
 	$(tocdk_build)
@@ -3158,6 +3159,7 @@ $(DEPDIR)/min-tuxtxt32bpp $(DEPDIR)/std-tuxtxt32bpp $(DEPDIR)/max-tuxtxt32bpp \
 $(DEPDIR)/tuxtxt32bpp: \
 $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
 	$(start_build)
+	$(get_git_version)
 	cd @DIR_tuxtxt32bpp@ && \
 		@INSTALL_tuxtxt32bpp@
 	$(tocdk_build)
