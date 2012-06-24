@@ -20,6 +20,7 @@ my %ruletypes =
   install => \&process_install,
 );
 
+my $patchesdir .= "\\\$(buildprefix)/Patches";
 
 sub load ($$);
 
@@ -125,12 +126,20 @@ sub process_rule($) {
     #warn "arg " . $1 . ' = ' . $2 . "\n";
   }
 
-  if ( $url =~ m#^svn://# )
+  if ( $url and $url =~ m#^svn://# )
   {
       $f = $package . ".svn"
   }
+  if ( $url =~ m#^file://# )
+  {
+      $f = "$patchesdir/$f";
+  }
+  elsif ( $url =~ m#^($supported_protocols)# )
+  {
+      $f = "\\\$(archivedir)/$f";
+  }
 
-  #warn "protocol: $p file: $f command: $cmd url: $url\n";
+  warn "protocol: $p file: $f command: $cmd url: $url\n";
 
   return ($p, $f, $cmd, $url, %args);
 }
@@ -148,13 +157,9 @@ sub process_make_depends (@)
     my ($p, $f) = process_rule($_);
     next if ( $p eq "none" );
 
-    if ( $p =~ m#^(file)$# )
+    if ( $p =~ m#^(file)$# or $p =~ m#^($supported_protocols)$#  )
     {
-      $output .= "Patches/" . $f . " ";
-    }
-    elsif ( $p =~ m#^($supported_protocols)$# )
-    {
-      $output .= "\\\$(archivedir)/" . $f . " ";
+      $output .= "$f ";
     }
     else
     {
@@ -186,7 +191,7 @@ sub process_make_prepare (@)
     $subdir = "/" . $opts{"sub"} if $opts{"sub"};
     local @_ = ($p, $f);
 
-    if ( ($cmd eq "nothing" || $cmd !~ m#$make_commands#) and $p !~ m#(git|svn)# )
+    if ( $cmd !~ m#$make_commands# and $p !~ m#(git|svn)# )
     {
       next;
     }
@@ -200,27 +205,27 @@ sub process_make_prepare (@)
     {
       if ( $_[1] =~ m#\.tar\.bz2$# )
       {
-        $output .= "bunzip2 -cd \\\$(archivedir)/" . $_[1] . " | TAPE=- tar -x";
+        $output .= "bunzip2 -cd " . $f . " | TAPE=- tar -x";
       }
       elsif ( $_[1] =~ m#\.tar\.gz$# )
       {
-        $output .= "gunzip -cd \\\$(archivedir)/" . $_[1] . " | TAPE=- tar -x";
+        $output .= "gunzip -cd " . $f . " | TAPE=- tar -x";
       }
       elsif ( $_[1] =~ m#\.tgz$# )
       {
-        $output .= "gunzip -cd \\\$(archivedir)/" . $_[1] . " | TAPE=- tar -x";
+        $output .= "gunzip -cd " . $f . " | TAPE=- tar -x";
       }
       elsif ( $_[1] =~ m#\.exe$# )
       {
-        $output .= "cabextract \\\$(archivedir)/" . $_[1];
+        $output .= "cabextract " . $f;
       }
       elsif ( $_[1] =~ m#\.zip$# )
       {
-        $output .= "unzip -d $dir \\\$(archivedir)/" . $_[1];
+        $output .= "unzip -d $dir " . $f;
       }
       elsif ( $_[1] =~ m#\.src\.rpm$# )
       {
-        $output .= "rpm \${DRPM} -Uhv  \\\$(archivedir)/" . $_[1];
+        $output .= "rpm \${DRPM} -Uhv " . $f;
       }
       elsif ( $_[1] =~ m#\.cvs# )
       {
@@ -229,11 +234,11 @@ sub process_make_prepare (@)
         {
           $target = $_[2] 
         }
-        $output .= "cp -a \\\$(archivedir)/" . $_[1] . " " . $target;
+        $output .= "cp -a " . $f . " " . $target;
       }
       else
       {
-        warn "can't recognize type of archive " . $_[1] . " skip";
+        warn "can't recognize type of archive " . $f . " skip";
         $output .= "true";
       }
     }
@@ -241,17 +246,21 @@ sub process_make_prepare (@)
     {
       if ( not $opts{"r"} )
       {
-         $output .= "echo '\\\$(shell cd " . "\\\$(archivedir)/" . $f . " && svn update) ' &&";
+         $output .= "echo '\\\$(shell cd " . $f . " && svn update) ' && ";
       }
-      $output .= "cp -a \\\$(archivedir)/" . $f . $subdir . " " . $dir;
+      $output .= "cp -a " . $f . $subdir . " " . $dir;
     }
     elsif ( $p eq "git" )
     {
       if ( not $opts{"r"} )
       {
-         $output .= "echo '\\\$(shell cd " . "\\\$(archivedir)/" . $f . " && git pull) ' &&";
+         $output .= "echo '\\\$(shell cd " . $f . " && git pull) ' && ";
       }
-      $output .= "cp -a \\\$(archivedir)/" . $_[1] . $subdir . " " . $dir;
+      $output .= "cp -a " . $f . $subdir . " " . $dir;
+    }
+    elsif ( $cmd eq "nothing" )
+    {
+      $output .= "cp $f $dir";
     }
     elsif ( $cmd eq "dirextract" )
     {
@@ -260,19 +269,19 @@ sub process_make_prepare (@)
 
       if ( $_[1] =~ m#\.tar\.bz2$# )
       {
-        $output .= "bunzip2 -cd \\\$(archivedir)/" . $_[1] . " | tar -x";
+        $output .= "bunzip2 -cd " . $f . " | tar -x";
       }
       elsif ( $_[1] =~ m#\.tar\.gz$# )
       {
-        $output .= "gunzip -cd \\\$(archivedir)/" . $_[1] . " | tar -x";
+        $output .= "gunzip -cd " . $f . " | tar -x";
       }
       elsif ( $_[1] =~ m#\.exe$# )
       {
-        $output .= "cabextract \\\$(archivedir)/" . $_[1];
+        $output .= "cabextract " . $f;
       }
       else
       {
-        die "can't recognize type of archive " . $_[1];
+        die "can't recognize type of archive " . $f;
       }
 
       $output .= " )";
@@ -284,39 +293,30 @@ sub process_make_prepare (@)
       $_ = "-p$3 " if defined $3;
       $_ .= "-Z " if defined $1;
 
-      my $patchesdir = "";
-      my @level = split ( /\//, $dir );
-      foreach ( @level )
-      {
-        $patchesdir .= "../";
-      }
-      
-      $patchesdir .= "Patches/";
-
       if ( $_[1] =~ m#\.bz2$# )
       {
-        $output .= "( cd " . $dir . " && chmod +w -R .; bunzip2 -cd \\\$(archivedir)/" . $_[1] . " | patch $_ )";
+        $output .= "( cd " . $dir . " && chmod +w -R .; bunzip2 -cd " . $f . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.deb\.diff\.gz$# )
       {
-        $output .= "( cd " . $dir . "; gunzip -cd $patchesdir" . $_[1] . " | patch $_ )";
+        $output .= "( cd " . $dir . "; gunzip -cd " . $f . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.gz$# )
       {
-        $output .= "( cd " . $dir . " && chmod +w -R .; gunzip -cd \\\$(archivedir)/" . $_[1] . " | patch $_ )";
+        $output .= "( cd " . $dir . " && chmod +w -R .; gunzip -cd " . $f . " | patch $_ )";
       }
       elsif ( $_[1] =~ m#\.spec\.diff$# )
       {
-        $output .= "( cd SPECS && patch $_ < $patchesdir" . $_[1] . " )";
+        $output .= "( cd SPECS && patch $_ < " . $f . " )";
       }
       else
       {
-        $output .= "( cd " . $dir . " && chmod +w -R .; patch $_ < $patchesdir" . $_[1] . " )";
+        $output .= "( cd " . $dir . " && chmod +w -R .; patch $_ < " . $f . " )";
       }
     }
     elsif ( $cmd eq "rpmbuild" )
     {
-      $output .= "rpmbuild \${DRPMBUILD} -bb -v --clean --target=sh4-linux SPECS/stm-" . $f . ".spec ";
+      $output .= "rpmbuild \${DRPMBUILD} -bb -v --clean --target=sh4-linux " . $f;
     }
     elsif ( $cmd eq "pmove" )
     {
@@ -572,6 +572,11 @@ sub process_download ($$)
     next if ( $p eq "file" || $p eq "none" );
     
     $_ =~ s/$cmd:// if ($cmd ne "");
+    
+    $f =~ s/\\//;
+
+    my $file = $f;
+    $file =~ s/\$\(archivedir\)//;
 
     my $suburl = subs_vars($_);
     if( $suburl ~~ @allurls )
@@ -583,8 +588,8 @@ sub process_download ($$)
     
     #warn "download: " . $url . "\n";
     
-    $head .= " \$(archivedir)/" . $f;
-    $output .= " \$(archivedir)/" . $f . ":\n\tfalse";
+    $head .= " " . $f;
+    $output .= " " . $f . ":\n\tfalse";
 
     if ( $_ =~ m#^ftp://# )
     {
@@ -606,19 +611,19 @@ sub process_download ($$)
     {
       my $tmpurl = $url;
       $url =~ s#svn://#http://# ;
-      $output .= " || \\\n\tsvn checkout $url" . " \$(archivedir)/" . $f;
+      $output .= " || \\\n\tsvn checkout $url" . " " . $f;
       $output .= " -r " . $opts{"r"} if $opts{"r"};
     }
     elsif ( $url =~ m#^git://# )
     {
-      $output .= " || \\\n\tgit clone $url" . " \$(archivedir)/" . $f;
+      $output .= " || \\\n\tgit clone $url" . " " . $f;
       $output .= " -b " . $opts{"b"} if $opts{"b"};
-      $output .= " && (cd \$(archivedir)/" . $f . "; git checkout " . $opts{"r"} . "; cd -) " if $opts{"r"};
+      $output .= " && (cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) " if $opts{"r"};
     }
 
     elsif ( $f =~ m/gz$/ )
     {
-      $output .= " || \\\n\twget -c -P \$(archivedir) ftp://ftp.stlinux.com/pub/stlinux/2.0/ST_Linux_2.0/RPM_Distribution/sh4-target-glibc-packages/" . $f;
+      $output .= " || \\\n\twget -c -P \$(archivedir) ftp://ftp.stlinux.com/pub/stlinux/2.0/ST_Linux_2.0/RPM_Distribution/sh4-target-glibc-packages/" . $file;
       $output .= "\n\t\@touch \$\@";
     }
   #   elsif ( $file =~ m/cvs$/ )
@@ -631,7 +636,7 @@ sub process_download ($$)
   #   }
     else
     {
-      $output .= " || \\\n\twget -c -P \$(archivedir) http://tuxbox.berlios.de/pub/tuxbox/cdk/src/" . $f;
+      $output .= " || \\\n\twget -c -P \$(archivedir) http://tuxbox.berlios.de/pub/tuxbox/cdk/src/" . $file;
       $output .= "\n\t\@touch \$\@";
     }
     $output .= "\n\n";
