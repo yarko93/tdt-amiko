@@ -2254,6 +2254,7 @@ DESCRIPTION_gstreamer = "GStreamer Multimedia Framework"
 
 FILES_gstreamer = \
 /usr/bin/gst-launch* \
+/usr/bin/gst-inspect* \
 /usr/lib/libgst* \
 /usr/lib/gstreamer-0.10/libgstcoreelements.so \
 /usr/lib/gstreamer-0.10/libgstcoreindexers.so
