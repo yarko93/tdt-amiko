@@ -1185,9 +1185,10 @@ wireless_tools
   make:install:INSTALL_MAN=PKDIR/usr/share/man:PREFIX=PKDIR/usr
 ;
 wpa_supplicant
-  0.5.9
+  1.0
   wpa_supplicant-{PV}
   extract:http://hostap.epitest.fi/releases/wpa_supplicant-{PV}.tar.gz
+  nothing:file://wpa_supplicant.config
   make:install:DESTDIR=PKDIR
 ;
 ethtool
