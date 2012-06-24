@@ -73,6 +73,7 @@ define do_build_pkg
 		); done
 endef
 
+
 define start_build
 	$(eval export $(EXPORT_ENV))$(warning MANUAL_EXPORT)
 	@echo
@@ -82,6 +83,14 @@ define start_build
 	@echo "====> start_build $(PARENT_PK)"
 	rm -rf $(PKDIR)
 	mkdir $(PKDIR)
+	$(if $(findstring $(PKGV_$(PARENT_PK)),git),
+	@echo determine version from git
+	$(get_git_version)
+	)
+	$(if $(findstring $(PKGV_$(PARENT_PK)),svn),
+	@echo determine version from svn
+	$(get_svn_version)
+	)
 endef
 
 define package_rpm_get
