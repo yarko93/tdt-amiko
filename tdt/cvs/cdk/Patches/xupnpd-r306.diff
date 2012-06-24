@@ -1,0 +1,17 @@
+--- Makefile.org	2012-06-23 20:13:44.033858984 +0200
++++ Makefile	2012-06-23 20:14:30.541858984 +0200
+@@ -39,10 +39,10 @@
+ 
+ embedded:
+ 	export PATH
+-	make -C $(LUA) CC=$(SDK)/gcc a
+-	$(SDK)/gcc -O2 -c -o md5.o md5c.c
+-	$(SDK)/gcc $(CFLAGS) -DWITH_URANDOM -o xupnpd-$(TARGET) $(SRC) md5.o -lm -llua -ldl
+-	$(SDK)/strip xupnpd-$(TARGET)
++	make -C $(LUA) CC=$(CC) a
++	$(CC) -O2 -c -o md5.o md5c.c
++	$(CC) $(CFLAGS) -DWITH_URANDOM -o xupnpd-$(TARGET) $(SRC) md5.o -lm -llua -ldl
++	$(STRIP) xupnpd-$(TARGET)
+ 
+ clean:
+ 	make -C $(LUA) clean
