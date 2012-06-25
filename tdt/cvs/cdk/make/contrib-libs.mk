@@ -2624,6 +2624,7 @@ $(DEPDIR)/%gst_plugin_subsink: $(DEPDIR)/gst_plugin_subsink.do_compile
 # GST-PLUGINS-DVBMEDIASINK
 #
 DESCRIPTION_gst_plugins_dvbmediasink = "GStreamer Multimedia Framework dvbmediasink"
+SRC_URI_gst_plugins_dvbmediasink = "git://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko.git"
 
 FILES_gst_plugins_dvbmediasink = \
 /usr/lib/gstreamer-0.10/libgstdvbaudiosink.so \
