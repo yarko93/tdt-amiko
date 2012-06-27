@@ -68,7 +68,7 @@ define do_build_pkg
 		ipkg-build -o root -g root $(ipkgbuilddir)/$$pkg $(if $(filter cdk,$(2)),$(ipkcdk),$(ipkprefix)) |tee tmpname \
 		$(if $(filter install,$(1)), && \
 			pkgn=`cat tmpname |perl -ne 'if (m/Packaged contents/) { print ((split / /)[-1])}'` && \
-			(opkg remove $(if $(filter cdk,$(2)),$(cdk_ipkg_args),$(flash_ipkg_args)) `echo $${pkg/_/-}| tr A-Z a-z` || true) && \
+			(opkg --force-depends remove $(if $(filter cdk,$(2)),$(cdk_ipkg_args),$(flash_ipkg_args)) `echo $${pkg/_/-}| tr A-Z a-z` || true) && \
 			opkg install $(if $(filter cdk,$(2)),$(cdk_ipkg_args),$(flash_ipkg_args)) $$pkgn \
 		); done
 endef
@@ -121,6 +121,7 @@ endef
 define remove_docs
 	rm -rf $(PKDIR)/usr/share/doc
 	rm -rf $(PKDIR)/usr/share/man
+	rm -rf $(PKDIR)/usr/share/gtk-doc
 endef
 
 define strip_libs
