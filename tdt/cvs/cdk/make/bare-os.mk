@@ -676,6 +676,128 @@ $(DEPDIR)/%$(BASE_FILES): $(BASE_FILES_ADAPTED_ETC_FILES:%=root/etc/%) \
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
+# LIBATTR
+#
+if STM24
+LIBATTR := libattr
+LIBATTR_DEV := libattr-dev
+LIBATTR_VERSION := 2.4.43-4
+LIBATTR_SPEC := stm-target-$(LIBATTR).spec
+LIBATTR_SPEC_PATCH :=
+LIBATTR_PATCHES :=
+
+LIBATTR_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBATTR)-$(LIBATTR_VERSION).sh4.rpm
+LIBATTR_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBATTR_DEV)-$(LIBATTR_VERSION).sh4.rpm
+
+$(LIBATTR_RPM) $(LIBATTR_DEV_RPM): \
+		$(if $(LIBATTR_SPEC_PATCH),Patches/$(LIBATTR_SPEC_PATCH)) \
+		$(if $(LIBATTR_PATCHES),$(LIBATTR_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-target-$(LIBATTR)-$(LIBATTR_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(LIBATTR_SPEC_PATCH),( cd SPECS && patch -p1 $(LIBATTR_SPEC) < $(buildprefix)/Patches/$(LIBATTR_SPEC_PATCH) ) &&) \
+	$(if $(LIBATTR_PATCHES),cp $(LIBATTR_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(LIBATTR_SPEC)
+
+$(DEPDIR)/min-$(LIBATTR) $(DEPDIR)/std-$(LIBATTR) $(DEPDIR)/max-$(LIBATTR) $(DEPDIR)/$(LIBATTR): \
+$(DEPDIR)/%$(LIBATTR): $(LIBATTR_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
+	[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+$(DEPDIR)/min-$(LIBATTR_DEV) $(DEPDIR)/std-$(LIBATTR_DEV) $(DEPDIR)/max-$(LIBATTR_DEV) $(DEPDIR)/$(LIBATTR_DEV): \
+$(DEPDIR)/%$(LIBATTR_DEV): $(LIBATTR_DEV_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+#	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/libattr.la
+#	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libattr.la
+	[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+endif
+
+
+#
+# LIBACL
+#
+if STM24
+LIBACL := libacl
+LIBACL_DEV := libacl-dev
+LIBACL_VERSION := 2.2.47-3
+LIBACL_SPEC := stm-target-$(LIBACL).spec
+LIBACL_SPEC_PATCH :=
+LIBACL_PATCHES :=
+
+LIBACL_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBACL)-$(LIBACL_VERSION).sh4.rpm
+LIBACL_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBACL_DEV)-$(LIBACL_VERSION).sh4.rpm
+
+$(LIBACL_RPM) $(LIBACL_DEV_RPM): \
+		$(if $(LIBACL_SPEC_PATCH),Patches/$(LIBACL_SPEC_PATCH)) \
+		$(if $(LIBACL_PATCHES),$(LIBACL_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-target-$(LIBACL)-$(LIBACL_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(LIBACL_SPEC_PATCH),( cd SPECS && patch -p1 $(LIBACL_SPEC) < $(buildprefix)/Patches/$(LIBACL_SPEC_PATCH) ) &&) \
+	$(if $(LIBACL_PATCHES),cp $(LIBACL_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(LIBACL_SPEC)
+
+$(DEPDIR)/min-$(LIBACL) $(DEPDIR)/std-$(LIBACL) $(DEPDIR)/max-$(LIBACL) $(DEPDIR)/$(LIBACL): \
+$(DEPDIR)/%$(LIBACL): $(LIBACL_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
+	$(fromrpm_build)
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+$(DEPDIR)/min-$(LIBACL_DEV) $(DEPDIR)/std-$(LIBACL_DEV) $(DEPDIR)/max-$(LIBACL_DEV) $(DEPDIR)/$(LIBACL_DEV): \
+$(DEPDIR)/%$(LIBACL_DEV): $(LIBACL_DEV_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+#	$(REWRITE_LIBDIR)/libacl.la
+	$(REWRITE_LIBDEP)/libacl.la
+	[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+
+endif
+
+
+#
+# USBUTILS
+#
+if STM24
+USBUTILS := usbutils
+USBUTILS_VERSION := 0.86-10
+USBUTILS_SPEC := stm-target-$(USBUTILS).spec
+USBUTILS_SPEC_PATCH :=
+USBUTILS_PATCHES :=
+
+USBUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(USBUTILS)-$(USBUTILS_VERSION).sh4.rpm
+
+$(USBUTILS_RPM): \
+		$(if $(USBUTILS_SPEC_PATCH),Patches/$(USBUTILS_SPEC_PATCH)) \
+		$(if $(USBUTILS_PATCHES),$(USBUTILS_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-target-$(USBUTILS)-$(USBUTILS_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(USBUTILS_SPEC_PATCH),( cd SPECS && patch -p1 $(USBUTILS_SPEC) < $(buildprefix)/Patches/$(USBUTILS_SPEC_PATCH) ) &&) \
+	$(if $(USBUTILS_PATCHES),cp $(USBUTILS_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(USBUTILS_SPEC)
+
+$(DEPDIR)/min-$(USBUTILS) $(DEPDIR)/std-$(USBUTILS) $(DEPDIR)/max-$(USBUTILS) $(DEPDIR)/$(USBUTILS): \
+$(DEPDIR)/%$(USBUTILS): $(USBUTILS_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+endif
+
+#
 # UDEV
 #
 UDEV := udev
@@ -701,6 +823,8 @@ endif !STM23
 endif !STM22
 UDEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV)-$(UDEV_VERSION).sh4.rpm
 
+RDEPENDS_udev = libacl libattr
+
 $(UDEV_RPM): \
 		$(if $(UDEV_SPEC_PATCH),Patches/$(UDEV_SPEC_PATCH)) \
 		$(if $(UDEV_PATCHES),$(UDEV_PATCHES:%=Patches/%)) \
@@ -719,6 +843,8 @@ $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 		for s in sysfs udev ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
