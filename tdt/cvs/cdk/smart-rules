@@ -858,10 +858,10 @@ mysql
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 xupnpd
-  r306
+  svn
   {PN}-{PV}
   svn://tsdemuxer.googlecode.com/svn/trunk/xupnpd/src/
-  patch-0:file://{PN}-{PV}.diff
+  patch-0:file://{PN}.diff
   make:install:DESTDIR=PKDIR
 ;
 libmicrohttpd
