@@ -199,7 +199,7 @@ $(ipkprefix)/Packages: $(ipkprefix)
 		$(crossprefix)/bin/ipkg-make-index . > Packages && \
 		cat Packages | gzip > Packages.gz
 
-svn_version := svn info | awk '/Revision:/ { print $2 }'
+svn_version := svn info | awk '/Revision:/ { print $$2 }'
 get_svn_version = $(eval export PKGV_$(PARENT_PK) = $(shell cd $(DIR_$(PARENT_PK)) && $(svn_version)))
 
 git_version := git log -1 --format=%cd --date=short -- . |sed s/-//g
