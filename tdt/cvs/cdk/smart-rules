@@ -65,6 +65,8 @@
 #   @PREPARE_ntpclient@ rules for download, extract and patch files above.
 #   SOURCES_udpxy list of files above. Used later in package Control file.
 #   VERSION_udpxy Used later in package Control file too.
+#   AUTOPKGV_udpxy If there is svn or git repo in rules, this command will be generated and you can run it
+#     to eval PKGV_udpxy based on git date or svn revision.
 
 ntpclient
   #second param is version
@@ -894,7 +896,7 @@ djmount
   make:install:DESTDIR=PKDIR
 ;
 rfkill
-  0.4
+  git
   {PN}-{PV}
   nothing:git://git.sipsolutions.net/rfkill.git
   make:install:DESTDIR=PKDIR

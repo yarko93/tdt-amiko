@@ -182,6 +182,7 @@ sub process_make_prepare (@)
   my $dir = shift;
 
   my $output = "( rm -rf " . $dir . " || /bin/true )";
+  my $autoversion = "";
 
   foreach ( @_ )
   {
@@ -249,6 +250,7 @@ sub process_make_prepare (@)
          $output .= "echo '\\\$(shell cd " . $f . " && svn update) ' && ";
       }
       $output .= "cp -a " . $f . $subdir . " " . $dir;
+      $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(svn_version)))";
     }
     elsif ( $p eq "git" )
     {
@@ -257,6 +259,7 @@ sub process_make_prepare (@)
          $output .= "echo '\\\$(shell cd " . $f . " && git pull) ' && ";
       }
       $output .= "cp -a " . $f . $subdir . " " . $dir;
+      $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(git_version)))";
     }
     elsif ( $cmd eq "nothing" )
     {
@@ -340,7 +343,9 @@ sub process_make_prepare (@)
     }
   }
 
-  return "\"$output\"";
+  $output = "\"$output\"";
+  $output .= "\nAUTOPKGV_$package=\"$autoversion\"" if $autoversion;
+  return $output
 }
 
 sub process_make_version (@)

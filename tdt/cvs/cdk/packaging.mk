@@ -85,11 +85,11 @@ define start_build
 	mkdir $(PKDIR)
 	$(if $(findstring $(PKGV_$(PARENT_PK)),git),
 	@echo determine version from git
-	$(get_git_version)
+	$(AUTOPKGV_$(PARENT_PK))
 	)
 	$(if $(findstring $(PKGV_$(PARENT_PK)),svn),
 	@echo determine version from svn
-	$(get_svn_version)
+	$(AUTOPKGV_$(PARENT_PK))
 	)
 endef
 
