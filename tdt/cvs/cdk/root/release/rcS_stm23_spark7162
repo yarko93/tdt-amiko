@@ -4,13 +4,12 @@ MODDIR=/lib/modules
 echo "init frontpanel"
 insmod $MODDIR/aotom.ko
 insmod $MODDIR/simu_button.ko
-#insmod $MODDIR/encrypt.ko
 
 if [ -e /var/etc/.firstboot ]; then
    echo "WAIT 1 min" >/dev/vfd
    echo "WAIT 1 min"
    rm /var/etc/.firstboot
-   touch /dev/.devfsd
+   /etc/init.d/makedev start
 fi
 
 /etc/init.d/mountvirtfs start
@@ -18,9 +17,7 @@ fi
 
 insmod $MODDIR/e2_proc.ko
 
-# start automounter with umount timeout of 5 seconds
-insmod $MODDIR/autofs4.ko
-/usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
+/etc/init.d/autofs start
 
 if [ ! -e /var/etc/.firstboot ]; then
 
@@ -29,10 +26,10 @@ if [ ! -e /var/etc/.firstboot ]; then
    /etc/init.d/hostname start
 
    echo "starting telnetd"
-   /usr/sbin/telnetd -l /bin/login
+   /usr/sbin/telnetd -l /bin/autologin
 
    echo "init stmfb"
-   insmod $MODDIR/stmcore-display-sti7111.ko
+   insmod $MODDIR/stmcore-display-sti7105.ko
    insmod $MODDIR/stmfb.ko display0=1280x720-32@50:15m:pal:yuv:yuv
 
    echo "LOADING MODULES"   
@@ -55,7 +52,6 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "init AVS"
    insmod $MODDIR/avs.ko type=avs_pio
-
    player=`cat /proc/stb/player/version | awk '{ print substr( $0, length($0) - 2, length($0) ) }'`
    echo "init player $player"
 
@@ -69,7 +65,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    fi
    insmod $MODDIR/pseudocard.ko
 
-   insmod $MODDIR/stv090x.ko
+   insmod $MODDIR/spark7162.ko
    if [ $player -gt 131 ]; then
       # Full feature pti
       insmod $MODDIR/pti.ko waitMS=20 videoMem=4096
@@ -85,13 +81,13 @@ if [ ! -e /var/etc/.firstboot ]; then
       insmod $MODDIR/stmdvb.ko
       insmod $MODDIR/stm_monitor.ko
    fi
-   insmod $MODDIR/player2.ko
+   insmod $MODDIR/player2.ko discardlateframe=0
    insmod $MODDIR/sth264pp.ko
    insmod $MODDIR/stmalloc.ko
    insmod $MODDIR/platform.ko
    insmod $MODDIR/silencegen.ko
    insmod $MODDIR/smartcard.ko
-
+   /etc/init.d/wlan
    insmod $MODDIR/bpamem.ko
    mknod /dev/bpamem c 153 0 
 
@@ -116,42 +112,65 @@ if [ ! -e /var/etc/.firstboot ]; then
    /etc/init.d/hostname start
 
    echo "starting telnetd"
-   /usr/sbin/telnetd -l /bin/login
+   /usr/sbin/telnetd -l /bin/autologin
    /etc/init.d/vsftpd start
    /usr/sbin/inetd
 
-   NFS=`grep -c nfs /proc/cmdline`
+	mknod /dev/dvb/adapter0/frontend1 c 212 19
+	mknod /dev/dvb/adapter0/frontend2 c 212 35
+	mknod /dev/dvb/adapter0/frontend3 c 212 51
+	
+NFS=`grep -c nfs /proc/cmdline`
    if [ "$NFS" -eq "1" ]; then 
       echo "Booting from nfs, don't set network" 
    else 
       if [ -e /etc/network/interfaces ]; then 
-	 ip addr flush eth0 
-	 /etc/init.d/networking stop 
-	 DHCP=`grep -c dhcp /etc/network/interfaces`
-	 if [ "$DHCP" -eq "1" ]; then 
-	    echo "Starting dhcp"
-            /etc/init.d/udhcpc start 
+	  ip addr flush eth0
+	 /etc/init.d/networking stop
+	 DHCP1=`grep -c 'auto wlan0' /etc/network/interfaces`
+	 DHCP2=`grep -c 'auto eth0' /etc/network/interfaces`
+	 if [ "$DHCP1" -eq "1" ]; then 
+	    echo "Starting wlan0 dhcp"
+         /etc/init.d/networking start
+	  /etc/init.d/avahi-daemon start
+	 ifconfig eth0 down
+	 elif [ "$DHCP2" -eq "1" ]; then 
+	    echo "Starting eth0 dhcp"
+            /etc/init.d/networking start
 	 fi 
-	 /etc/init.d/networking start 
       fi 
    fi
 
    echo "run" > /dev/vfd
    echo "LOADING E2"
-
+   # cron daemon
+   (sleep 60; /usr/sbin/crond) & 
    until false
    do
       echo "starting e2->"
+      crontab /var/spool/cron/crontabs/root
+      /usr/lib/enigma2/python/Plugins/Extensions/AR-P/automount.sh
+
+      STARTUP=`grep -c 'titan' /etc/init.d/start`
+      if [ "$STARTUP" -eq "1" ]; then
+      /usr/local/bin/titan /etc/titan/titan.cfg
+      else
+      if [ ls /hdd/enigma2_crash_??????????.log >/dev/null 2>&1 ]; then
+        mv /hdd/enigma2_crash_??????????.log /hdd/enigma2_crash_??????????_.log
+        cd /etc/enigma2
+        sed -i "/$config.skin./d" "settings"
+      fi
       /usr/local/bin/enigma2
+      fi
       rtv=$?
       echo "e2 ended <- RTV: " $rtv
       case "$rtv" in
 		0) echo "0"
 		   echo "E2 ERROR"
-		   init 6;;
+      		   init 6;;
 		1) echo "1"
 		   echo "SHUTDOWN"
-		   init 0;;
+                   init 0;;
 		2) echo "2"
 		   echo "REBOOT"
 		   init 6;;
@@ -161,13 +180,12 @@ if [ ! -e /var/etc/.firstboot ]; then
 		   showiframe -p /boot/bootlogo.mvi &;;
 		*) echo "*"
 		   echo "ERROR"
-		   init 6;;
+		   killall -9 enigma2;;
       esac
    done 
 fi
 
 #never reached
-echo "REBOOT SPARK" > /dev/vfd
-echo "REBOOT SPARK"
+echo "REBOOT SPARK-7162" > /dev/vfd
+echo "REBOOT SPARK-7162"
 reboot -f
-

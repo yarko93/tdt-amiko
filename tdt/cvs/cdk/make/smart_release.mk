@@ -23,21 +23,21 @@ release_common_utils:
 	cp -f $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
 
 # Copy video_7100
-	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910),cp -f $(targetprefix)/boot/video_7100.elf $(prefix)/release/boot/video.elf)
+	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910)$(HOMECAST5101),cp -f $(targetprefix)/boot/video_7100.elf $(prefix)/release/boot/video.elf)
 # Copy audio_7100
-	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910),cp -f $(targetprefix)/boot/audio_7100.elf $(prefix)/release/boot/audio.elf)
+	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910)$(HOMECAST5101),cp -f $(targetprefix)/boot/audio_7100.elf $(prefix)/release/boot/audio.elf)
 # Copy video_7105
 	$(if $(ATEVIO7500)$(SPARK7162),cp -f $(targetprefix)/boot/video_7105.elf $(prefix)/release/boot/video.elf)
 # Copy audio_7105
 	$(if $(ATEVIO7500)$(SPARK7162),cp -f $(targetprefix)/boot/audio_7105.elf $(prefix)/release/boot/audio.elf)
 # Copy video_7109
-	$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(FORTIS_HDBOX)$(HL101)$(TF7700)$(VIP1_V2)$(UFS922),cp -f $(targetprefix)/boot/video_7109.elf $(prefix)/release/boot/video.elf)
+	$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(FORTIS_HDBOX)$(OCTAGON1008)$(HL101)$(TF7700)$(VIP1_V2)$(VIP2_V1)$(UFS922)$(IPBOX9900)$(IPBOX99)$(IPBOX55),cp -f $(targetprefix)/boot/video_7109.elf $(prefix)/release/boot/video.elf)
 # Copy audio_7109
-	$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(FORTIS_HDBOX)$(HL101)$(TF7700)$(VIP1_V2)$(UFS922),cp -f $(targetprefix)/boot/audio_7109.elf $(prefix)/release/boot/audio.elf)
+	$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(FORTIS_HDBOX)$(OCTAGON1008)$(HL101)$(TF7700)$(VIP1_V2)$(VIP2_V1)$(UFS922)$(IPBOX9900)$(IPBOX99)$(IPBOX55),cp -f $(targetprefix)/boot/audio_7109.elf $(prefix)/release/boot/audio.elf)
 # Copy video_7111
-	$(if $(SPARK)$(UFS912)$(WHITEBOX),cp -f $(targetprefix)/boot/video_7111.elf $(prefix)/release/boot/video.elf)
+	$(if $(SPARK)$(UFS912)$(HS7810A)$(HS7110)$(WHITEBOX),cp -f $(targetprefix)/boot/video_7111.elf $(prefix)/release/boot/video.elf)
 # Copy audio_7111
-	$(if $(SPARK)$(UFS912)$(WHITEBOX),cp -f $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf )
+	$(if $(SPARK)$(UFS912)$(HS7810A)$(HS7110)$(WHITEBOX),cp -f $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf )
 	
 release_base:
 	rm -rf $(prefix)/release || true
@@ -121,11 +121,13 @@ release_base:
 	fi
 	
 # Copy rcS
-	cp -f $(buildprefix)/root/release/rcS$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2),_$(VIP1_V2))$(if $(VIP2_V1),_$(VIP2_V1))$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO),_$(CUBEREVO))$(if $(CUBEREVO_MINI),_$(CUBEREVO_MINI))$(if $(CUBEREVO_MINI2),_$(CUBEREVO_MINI2))$(if $(CUBEREVO_MINI_FTA),_$(CUBEREVO_MINI_FTA))$(if $(CUBEREVO_250HD),_$(CUBEREVO_250HD))$(if $(CUBEREVO_2000HD),_$(CUBEREVO_2000HD))$(if $(CUBEREVO_9500HD),_$(CUBEREVO_9500HD))$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900),_$(IPBOX9900))$(if $(IPBOX99),_$(IPBOX99))$(if $(IPBOX55),_$(IPBOX55))$(if $(ADB_BOX),_$(ADB_BOX)) $(prefix)/release/etc/init.d/rcS
+	cp -f $(buildprefix)/root/release/rcS_stm23$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2),_$(VIP1_V2))$(if $(VIP2_V1),_$(VIP2_V1))$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO),_$(CUBEREVO))$(if $(CUBEREVO_MINI),_$(CUBEREVO_MINI))$(if $(CUBEREVO_MINI2),_$(CUBEREVO_MINI2))$(if $(CUBEREVO_MINI_FTA),_$(CUBEREVO_MINI_FTA))$(if $(CUBEREVO_250HD),_$(CUBEREVO_250HD))$(if $(CUBEREVO_2000HD),_$(CUBEREVO_2000HD))$(if $(CUBEREVO_9500HD),_$(CUBEREVO_9500HD))$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900),_$(IPBOX9900))$(if $(IPBOX99),_$(IPBOX99))$(if $(IPBOX55),_$(IPBOX55))$(if $(ADB_BOX),_$(ADB_BOX)) $(prefix)/release/etc/init.d/rcS
+# Copy lircd.conf
+	cp -f $(buildprefix)/root/etc/lircd$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2),_vip2)$(if $(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO),_$(CUBEREVO))$(if $(CUBEREVO_MINI),_$(CUBEREVO_MINI))$(if $(CUBEREVO_MINI2),_$(CUBEREVO_MINI2))$(if $(CUBEREVO_MINI_FTA),_$(CUBEREVO_MINI_FTA))$(if $(CUBEREVO_250HD),_$(CUBEREVO_250HD))$(if $(CUBEREVO_2000HD),_$(CUBEREVO_2000HD))$(if $(CUBEREVO_9500HD),_$(CUBEREVO_9500HD))$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).conf $(prefix)/release/etc/lircd.conf
 # Copy halt
 	cp -f $(buildprefix)/root/release/halt$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2)$(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD),_cuberevo)$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)) $(prefix)/release/etc/init.d/halt
 # Copy keymap.xml
-	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2)$(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK)$(SPARK7162),_spark)$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD),_cuberevo)$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).xml $(prefix)/release/usr/local/share/enigma2/keymap.xml && \
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2)$(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK)$(SPARK7162),_spark)$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD),_cuberevo)$(if $(HOMECAST5101),_ufs910)$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).xml $(prefix)/release/usr/local/share/enigma2/keymap.xml && \
 	touch $(prefix)/release/var/etc/.firstboot && \
 	chmod 755 $(prefix)/release/etc/init.d/rcS && \
 	chmod 755 $(prefix)/release/etc/init.d/halt && \
@@ -167,17 +169,18 @@ release_base:
 	find $(targetprefix)/lib/modules/ -name '*ko' -exec cp -dp {} $(prefix)/release/lib/modules/ \;
 	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 	rm -rf $(prefix)/release/lib/modules/$(KERNELVERSION)
+
 # install fonts	
 	mv -fb $(prefix)/release/usr/local/share/fonts $(prefix)/release/usr/share/ && \
 	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts && \
 	ln -s /usr/share/fonts $(prefix)/release/usr/local/share/fonts && \
 	cp $(buildprefix)/root/usr/share/fonts/* $(prefix)/release/usr/share/fonts
-	
+
 release_cube_common:
 	cp $(buildprefix)/root/release/reboot_cuberevo $(prefix)/release/etc/init.d/reboot && \
 	chmod 777 $(prefix)/release/etc/init.d/reboot && \
 	cp $(targetprefix)/bin/eeprom $(prefix)/release/bin
-	
+
 release_cuberevo_9500hd: release_cube_common
 	echo "cuberevo-9500hd" > $(prefix)/release/etc/hostname
 
@@ -199,18 +202,129 @@ release_cuberevo_mini: release_cube_common
 release_cuberevo: release_cube_common
 	echo "cuberevo" > $(prefix)/release/etc/hostname
 	
+release_ufs922:
+	echo "ufs922" > $(prefix)/release/etc/hostname
+
+release_ufs912:
+	echo "ufs912" > $(prefix)/release/etc/hostname && \
+	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+	
 release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw && \
-	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml && \
-	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
-	
+	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname && \
-	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_spark.xml $(prefix)/release/usr/local/share/enigma2/keymap.xml && \
-	cp -dp $(buildprefix)/root/etc/lircd_spark7162.conf $(prefix)/release/etc/lircd.conf && \
+	cp $(targetprefix)/lib/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw && \
 	cp -f $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/spark7162.ko
+
+release_fortis_hdbox:
+	echo "fortis" > $(prefix)/release/etc/hostname
 	
+release_atevio7500:
+	echo "atevio7500" > $(prefix)/release/etc/hostname && \
+	cp $(targetprefix)/lib/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw
+
+release_octagon1008:
+	echo "octagon1008" > $(prefix)/release/etc/hostname && \
+	cp $(targetprefix)/lib/firmware/dvb-fe-avl2108.fw $(prefix)/release/lib/firmware/ && \
+	cp $(targetprefix)/lib/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
+
+release_hs7810a:
+	echo "hs7810a" > $(prefix)/release/etc/hostname && \
+	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+
+release_hs7110:
+	echo "hs7110" > $(prefix)/release/etc/hostname && \
+	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+
+release_whitebox:
+	echo "whitebox" > $(prefix)/release/etc/hostname && \
+	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+
+release_ufs910:
+	echo "ufs910" > $(prefix)/release/etc/hostname && \
+	cp $(targetprefix)/lib/firmware/dvb-fe-cx21143.fw $(prefix)/release/lib/firmware/dvb-fe-cx24116.fw
+
+release_hl101:
+	echo "hl101" > $(prefix)/release/etc/hostname && \
+	cp -f $(buildprefix)/root/release/fstab_hl101 $(prefix)/release/etc/fstab
+	cp $(targetprefix)/lib/firmware/dvb-fe-avl2108.fw $(prefix)/release/lib/firmware/ && \
+	cp $(targetprefix)/lib/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
+
+release_adb_box:
+	echo "Adb_Box" > $(prefix)/release/etc/hostname && \
+	cp -f $(buildprefix)/root/release/fstab_adb_box $(prefix)/release/etc/fstab
+	cp $(targetprefix)/lib/firmware/dvb-fe-avl2108.fw $(prefix)/release/lib/firmware/ && \
+	cp $(targetprefix)/lib/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
+
+release_vip1_v2: release_common_utils
+	echo "Edision-v2" > $(prefix)/release/etc/hostname && \
+	cp -f $(buildprefix)/root/release/vfd_vip2_stm23_0123.ko $(prefix)/release/lib/modules/vfd.ko && \
+	cp -f $(buildprefix)/root/release/fstab_vip2 $(prefix)/release/etc/fstab
+
+release_vip2_v1: release_vip1_v2
+	echo "Edision-v1" > $(prefix)/release/etc/hostname
+
+release_hs5101:
+	echo "hs5101" > $(prefix)/release/etc/hostname
+
+release_tf7700: release_common_utils
+	echo "tf7700" > $(prefix)/release/etc/hostname
+	cp -f $(buildprefix)/root/release/fstab_tf7700 $(prefix)/release/etc/fstab
+
+release_ipbox9900: release_common_utils
+	echo "ipbox9900" > $(prefix)/release/etc/hostname && \
+	cp -f $(buildprefix)/root/release/fstab_ipbox $(prefix)/release/etc/fstab && \
+	cp -p $(buildprefix)/root/release/tvmode_ipbox $(prefix)/release/usr/bin/tvmode && \
+	cp -p $(buildprefix)/root/release/lircd_ipbox $(prefix)/release/usr/bin/lircd && \
+	rm -f $(prefix)/release/lib/firmware/* && \
+	rm -f $(prefix)/release/lib/modules/boxtype.ko && \
+	rm -f $(prefix)/release/lib/modules/bpamem.ko && \
+	rm -f $(prefix)/release/lib/modules/lzo*.ko && \
+	rm -f $(prefix)/release/lib/modules/ramzswap.ko && \
+	rm -f $(prefix)/release/lib/modules/simu_button.ko && \
+	rm -f $(prefix)/release/lib/modules/stmvbi.ko && \
+	rm -f $(prefix)/release/lib/modules/stmvout.ko && \
+	rm -f $(prefix)/release/bin/gotosleep && \
+	rm -f $(prefix)/release/etc/network/interfaces && \
+	echo "config.usage.hdd_standby=0" >> $(prefix)/release/etc/enigma2/settings
+	
+release_ipbox99: release_common_utils
+	echo "ipbox99" > $(prefix)/release/etc/hostname && \
+	cp -f $(buildprefix)/root/release/fstab_ipbox $(prefix)/release/etc/fstab && \
+	cp -p $(buildprefix)/root/release/tvmode_ipbox $(prefix)/release/usr/bin/tvmode && \
+	cp -p $(buildprefix)/root/release/lircd_ipbox $(prefix)/release/usr/bin/lircd && \
+	rm -f $(prefix)/release/lib/firmware/* && \
+	rm -f $(prefix)/release/lib/modules/boxtype.ko && \
+	rm -f $(prefix)/release/lib/modules/bpamem.ko && \
+	rm -f $(prefix)/release/lib/modules/lzo*.ko && \
+	rm -f $(prefix)/release/lib/modules/ramzswap.ko && \
+	rm -f $(prefix)/release/lib/modules/simu_button.ko && \
+	rm -f $(prefix)/release/lib/modules/stmvbi.ko && \
+	rm -f $(prefix)/release/lib/modules/stmvout.ko && \
+	rm -f $(prefix)/release/bin/gotosleep && \
+	rm -f $(prefix)/release/etc/network/interfaces && \
+	echo "config.usage.hdd_standby=0" >> $(prefix)/release/etc/enigma2/settings
+
+release_ipbox55: release_common_utils
+	echo "ipbox55" > $(prefix)/release/etc/hostname && \
+	cp -f $(buildprefix)/root/release/fstab_ipbox $(prefix)/release/etc/fstab && \
+	cp -p $(buildprefix)/root/release/tvmode_ipbox $(prefix)/release/usr/bin/tvmode && \
+	cp -p $(buildprefix)/root/release/lircd_ipbox $(prefix)/release/usr/bin/lircd && \
+	rm -f $(prefix)/release/lib/firmware/* && \
+	rm -f $(prefix)/release/lib/modules/boxtype.ko && \
+	rm -f $(prefix)/release/lib/modules/bpamem.ko && \
+	rm -f $(prefix)/release/lib/modules/lzo*.ko && \
+	rm -f $(prefix)/release/lib/modules/ramzswap.ko && \
+	rm -f $(prefix)/release/lib/modules/simu_button.ko && \
+	rm -f $(prefix)/release/lib/modules/stmvbi.ko && \
+	rm -f $(prefix)/release/lib/modules/stmvout.ko && \
+	rm -f $(prefix)/release/bin/gotosleep && \
+	rm -f $(prefix)/release/etc/network/interfaces && \
+	echo "config.usage.hdd_standby=0" >> $(prefix)/release/etc/enigma2/settings
+
+
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #

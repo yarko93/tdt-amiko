@@ -1213,6 +1213,9 @@ $(DEPDIR)/%autofs: $(DEPDIR)/autofs.do_compile
 #
 # imagemagick
 #
+DESCRIPTION_imagemagick = "imagemagick"
+FILES_imagemagick = \
+/usr/*
 $(DEPDIR)/imagemagick.do_prepare: bootstrap @DEPENDS_imagemagick@
 	@PREPARE_imagemagick@
 	touch $@
@@ -1245,7 +1248,10 @@ $(DEPDIR)/imagemagick.do_compile: $(DEPDIR)/imagemagick.do_prepare
 $(DEPDIR)/min-imagemagick $(DEPDIR)/std-imagemagick $(DEPDIR)/max-imagemagick \
 $(DEPDIR)/imagemagick: \
 $(DEPDIR)/%imagemagick: $(DEPDIR)/imagemagick.do_compile
+	$(start_build)
 	cd @DIR_imagemagick@ && \
 		@INSTALL_imagemagick@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_imagemagick@
 	[ "x$*" = "x" ] && touch $@ || true

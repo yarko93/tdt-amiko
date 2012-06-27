@@ -436,9 +436,7 @@ imagemagick
   6.7.7-0
   ImageMagick-{PV}
   extract:ftp://ftp.fifi.org/pub/ImageMagick/ImageMagick-{PV}.tar.bz2
-  rewrite-pkgconfig:magick/ImageMagick.pc:magick/MagickCore.pc:wand/MagickWand.pc:wand/Wand.pc:Magick++/lib/ImageMagick++.pc:Magick++/lib/Magick++.pc
-  make:install:prefix=/usr:DESTDIR=TARGET
-  rewrite-libtool:TARGET/usr/lib/libMagickCore.la:TARGET/usr/lib/libMagickWand.la:TARGET/usr/lib/libMagick++.la
+  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libboost
   boost-1.49.0
@@ -1034,7 +1032,7 @@ enigma2_networkbrowser
 enigma2_openwebif
   1.0
   e2openplugin-OpenWebif
-  nothing:git://github.com/E2OpenPlugins/e2openplugin-OpenWebif.git
+  nothing:git://github.com/schpuntik/e2openplugin-OpenWebif.git
   make:install:DESTDIR=TARGETS
 ;
 gstreamer

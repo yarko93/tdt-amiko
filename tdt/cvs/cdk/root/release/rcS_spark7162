@@ -4,12 +4,13 @@ MODDIR=/lib/modules
 echo "init frontpanel"
 insmod $MODDIR/aotom.ko
 insmod $MODDIR/simu_button.ko
+insmod $MODDIR/encrypt.ko
 
 if [ -e /var/etc/.firstboot ]; then
    echo "WAIT 1 min" >/dev/vfd
    echo "WAIT 1 min"
    rm /var/etc/.firstboot
-   /etc/init.d/makedev start
+   touch /dev/.devfsd
 fi
 
 /etc/init.d/mountvirtfs start
@@ -17,7 +18,9 @@ fi
 
 insmod $MODDIR/e2_proc.ko
 
-/etc/init.d/autofs start
+# start automounter with umount timeout of 5 seconds
+insmod $MODDIR/autofs4.ko
+/usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
 
 if [ ! -e /var/etc/.firstboot ]; then
 
@@ -26,7 +29,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    /etc/init.d/hostname start
 
    echo "starting telnetd"
-   /usr/sbin/telnetd -l /bin/autologin
+   /usr/sbin/telnetd -l /bin/login
 
    echo "init stmfb"
    insmod $MODDIR/stmcore-display-sti7105.ko
@@ -52,6 +55,8 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "init AVS"
    insmod $MODDIR/avs.ko type=avs_pio
+
+   player=`cat /proc/stb/player/version`
    player=`cat /proc/stb/player/version | awk '{ print substr( $0, length($0) - 2, length($0) ) }'`
    echo "init player $player"
 
@@ -60,34 +65,29 @@ if [ ! -e /var/etc/.firstboot ]; then
    insmod $MODDIR/p2div64.ko
    insmod $MODDIR/stm_v4l2.ko
    if [ $player -gt 131 ]; then
-      insmod $MODDIR/stmvout.ko
-      insmod $MODDIR/stmvbi.ko
+	insmod $MODDIR/stmvout.ko
+	insmod $MODDIR/stmvbi.ko
    fi
    insmod $MODDIR/pseudocard.ko
 
    insmod $MODDIR/spark7162.ko
    if [ $player -gt 131 ]; then
-      # Full feature pti
-      insmod $MODDIR/pti.ko waitMS=20 videoMem=4096
-      if [ $?=='2' ]; then
-         # Simple pti
-         insmod $MODDIR/pti.ko
-      fi
-      insmod $MODDIR/stm_monitor.ko
-      insmod $MODDIR/stmsysfs.ko
-      insmod $MODDIR/stmdvb.ko
+	insmod $MODDIR/pti.ko waitMS=20 videoMem=4096
+	insmod $MODDIR/stm_monitor.ko
+	insmod $MODDIR/stmsysfs.ko
+	insmod $MODDIR/stmdvb.ko
    else
-      insmod $MODDIR/pti.ko
-      insmod $MODDIR/stmdvb.ko
-      insmod $MODDIR/stm_monitor.ko
-   fi
-   insmod $MODDIR/player2.ko discardlateframe=0
+	insmod $MODDIR/pti.ko
+	insmod $MODDIR/stmdvb.ko
+	insmod $MODDIR/stm_monitor.ko
+   fi	
+   insmod $MODDIR/player2.ko
    insmod $MODDIR/sth264pp.ko
    insmod $MODDIR/stmalloc.ko
    insmod $MODDIR/platform.ko
    insmod $MODDIR/silencegen.ko
    insmod $MODDIR/smartcard.ko
-   /etc/init.d/wlan
+
    insmod $MODDIR/bpamem.ko
    mknod /dev/bpamem c 153 0 
 
@@ -104,7 +104,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    rm -f /dev/sparkid
    mknod /dev/sparkid c $major 0 
 
-   /bin/evremote2 10 100 &
+   /bin/evremote2 spark 100 &
 
    stfbcontrol a 255
 
@@ -112,7 +112,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    /etc/init.d/hostname start
 
    echo "starting telnetd"
-   /usr/sbin/telnetd -l /bin/autologin
+   /usr/sbin/telnetd -l /bin/login
    /etc/init.d/vsftpd start
    /usr/sbin/inetd
 
@@ -120,50 +120,35 @@ if [ ! -e /var/etc/.firstboot ]; then
 	mknod /dev/dvb/adapter0/frontend2 c 212 35
 	mknod /dev/dvb/adapter0/frontend3 c 212 51
 	
-NFS=`grep -c nfs /proc/cmdline`
+   NFS=`grep -c nfs /proc/cmdline`
    if [ "$NFS" -eq "1" ]; then 
       echo "Booting from nfs, don't set network" 
    else 
       if [ -e /etc/network/interfaces ]; then 
-	  ip addr flush eth0
-	 /etc/init.d/networking stop
-	 DHCP1=`grep -c 'auto wlan0' /etc/network/interfaces`
-	 DHCP2=`grep -c 'auto eth0' /etc/network/interfaces`
-	 if [ "$DHCP1" -eq "1" ]; then 
-	    echo "Starting wlan0 dhcp"
-         /etc/init.d/networking start
-	  /etc/init.d/avahi-daemon start
-	 ifconfig eth0 down
-	 elif [ "$DHCP2" -eq "1" ]; then 
-	    echo "Starting eth0 dhcp"
-            /etc/init.d/networking start
+	 ip addr flush eth0 
+	 /etc/init.d/networking stop 
+	 DHCP=`grep -c dhcp /etc/network/interfaces`
+	 if [ "$DHCP" -eq "1" ]; then 
+	    echo "Starting dhcp"
+            /etc/init.d/udhcpc start 
 	 fi 
+	 /etc/init.d/networking start 
       fi 
    fi
 
    echo "run" > /dev/vfd
-   # cron daemon
-   (sleep 60; /usr/sbin/crond) & 
+   echo "LOADING E2"
+
    until false
    do
       echo "starting e2->"
-      crontab /var/spool/cron/crontabs/root
- echo "LOADING VDR" > /dev/vfd
-   echo "LOADING VDR"
-
-   export LANG=de_DE.utf8
-   export LC_COLLATE=de_DE.utf8
-
-   until false
-   do
-      echo "starting VDR->"
-      /usr/local/bin/runvdr
+      /usr/local/bin/enigma2
       rtv=$?
-      echo "VDR ended <- RTV: " $rtv
+      echo "e2 ended <- RTV: " $rtv
       case "$rtv" in
 		0) echo "0"
-		   echo "VDR ERROR"
-      	   init 6;;
+		   echo "E2 ERROR"
+		   init 6;;
 		1) echo "1"
 		   echo "SHUTDOWN"
 		   init 0;;
@@ -171,12 +156,12 @@ NFS=`grep -c nfs /proc/cmdline`
 		   echo "REBOOT"
 		   init 6;;
 		3) echo "3"
-		   echo "VDR RESTART"
+		   echo "E2 RESTART"
 		   echo "0" > /proc/progress
 		   showiframe -p /boot/bootlogo.mvi &;;
 		*) echo "*"
 		   echo "ERROR"
-           init 6;;
+		   init 6;;
       esac
    done 
 fi
