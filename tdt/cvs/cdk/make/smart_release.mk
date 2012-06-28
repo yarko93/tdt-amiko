@@ -166,9 +166,7 @@ release_base:
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
 	echo "576i50" > $(prefix)/release/etc/videomode && \
-	find $(targetprefix)/lib/modules/ -name '*ko' -exec cp -dp {} $(prefix)/release/lib/modules/ \;
-	find $(prefix)/release/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
-	rm -rf $(prefix)/release/lib/modules/$(KERNELVERSION)
+	depmod -b $(prefix)/release $(KERNELVERSION)
 
 # install fonts	
 	mv -fb $(prefix)/release/usr/local/share/fonts $(prefix)/release/usr/share/ && \
