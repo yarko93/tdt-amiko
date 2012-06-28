@@ -1004,10 +1004,19 @@ $(DEPDIR)/linux-kernel.%.do_compile: \
 
 DESCRIPTION_linux_kernel = "The Linux Kernel and modules"
 PKGV_linux_kernel = $(KERNELVERSION)
+PKGR_linux_kernel = r0
 SRC_URI_linux_kernel = stlinux.com
 FILES_linux_kernel = \
 /lib/modules \
 /boot/uImage
+
+define postinst_linux_kernel
+#!/bin/sh
+flash_eraseall /dev/mtd5
+nandwrite -p /dev/mtd5 /boot/uImage
+rm /boot/uImage
+depmod
+endef
 
 $(DEPDIR)/min-linux-kernel $(DEPDIR)/std-linux-kernel $(DEPDIR)/max-linux-kernel \
 $(DEPDIR)/linux-kernel: \
@@ -1056,9 +1065,15 @@ $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 DESCRIPTION_driver = "Drivers for stm box"
+PKGR_driver = r0
 FILES_driver = /
 SRC_URI_driver = "http://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko"
 DIR_driver = $(driverdir)
+
+define postinst_driver
+#!/bin/sh
+depmod
+endef
 
 $(DEPDIR)/driver: $(driverdir)/Makefile linux-kernel.do_compile
 #	$(MAKE) -C $(KERNEL_DIR) $(MAKE_OPTS) ARCH=sh modules_prepare
