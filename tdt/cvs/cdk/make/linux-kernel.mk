@@ -1004,10 +1004,10 @@ $(DEPDIR)/linux-kernel.%.do_compile: \
 
 DESCRIPTION_linux_kernel = "The Linux Kernel and modules"
 PKGV_linux_kernel = $(KERNELVERSION)
-PKGR_linux_kernel = r0
+PKGR_linux_kernel = r1
 SRC_URI_linux_kernel = stlinux.com
 FILES_linux_kernel = \
-/lib/modules \
+/lib/modules/$(KERNELVERSION)/kernel \
 /boot/uImage
 
 define postinst_linux_kernel
@@ -1065,8 +1065,8 @@ $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 DESCRIPTION_driver = "Drivers for stm box"
-PKGR_driver = r0
-FILES_driver = /
+PKGR_driver = r1
+FILES_driver = /lib/modules/$(KERNELVERSION)/extra
 SRC_URI_driver = "http://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko"
 DIR_driver = $(driverdir)
 
