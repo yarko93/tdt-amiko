@@ -69,6 +69,7 @@ openpli-plugins-enigma2
 jpeg-*
 enigma2-networkbrowser
 host-python-*
+xupnpd-*
 libtuxtxt
 ruledir
 opkg-host
