@@ -17,11 +17,13 @@ $(DEPDIR)/enigma2-pli-nightly.do_prepare:
 	echo "---- REVISIONS ----"; \
 	echo "1) Sat, 17 Mar 2012 19:51 - E2 OpenPli 945aeb939308b3652b56bc6c577853369d54a537"; \
 	echo "2) Sat, 18 May 2012 15:26  - E2 OpenPli 839e96b79600aba73f743fd39628f32bc1628f4c"; \
+	echo "3) Sat, 18 May 2012 15:26  - E2 OpenPli current Amiko"; \
 	read -p "Select: "; \
 	echo "Selection: " $$REPLY; \
 	[ "$$REPLY" == "0" ] && DIFF="0" && HEAD="experimental"; \
 	[ "$$REPLY" == "1" ] && DIFF="1" && REVISION="945aeb939308b3652b56bc6c577853369d54a537" && REPO="git://openpli.git.sourceforge.net/gitroot/openpli/enigma2"; \
 	[ "$$REPLY" == "2" ] && DIFF="2" && REVISION="839e96b79600aba73f743fd39628f32bc1628f4c" && REPO="git://openpli.git.sourceforge.net/gitroot/openpli/enigma2"; \
+	[ "$$REPLY" == "3" ] && DIFF="3" && REPO="git://github.com/technic/amiko-e2-pli.git"; \
 	echo "Revision: " $$REVISION; \
 	[ -d "$(DIR_enigma2_pli)" ] && \
 	git pull $(DIR_enigma2_pli) $$HEAD;\

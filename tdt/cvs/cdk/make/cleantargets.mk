@@ -52,6 +52,7 @@ clean-local: mostlyclean-local depsclean rpmdepsclean
 	-rm -rf $(prefix)/*cdkroot/
 	-rm -rf $(prefix)/ipkcdk/
 	-rm -rf $(prefix)/ipkbox/
+	-rm -rf $(prefix)/pkgroot/
 	-rm -rf $(prefix)/*cdkroot-rpmdb
 	-rm -rf $(prefix)/*cdkroot-tftpboot
 	-rm -rf $(rpmdbprefix)
@@ -92,8 +93,10 @@ distclean-local:
 	-rm -rf $(prefix)/*cdkroot/
 	-rm -rf $(prefix)/ipkcdk/
 	-rm -rf $(prefix)/ipkbox/
+	-rm -rf $(prefix)/pkgroot/
 	-rm -rf $(prefix)/*cdkroot-rpmdb
 	-rm -rf $(prefix)/*cdkroot-tftpboot
+	-rm -rf $(prefix)/cdkrootrewrite-pkgconfig
 	-rm -rf $(rpmdbprefix)/
 	-rm -rf SOURCES SPECS BUILD BUILDROOT SRPMS RPMS
 	-rm -rf $(prefix)/ccache

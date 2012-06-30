@@ -1027,13 +1027,13 @@ enigma2_networkbrowser
   {PN}
   nothing:git://openpli.git.sourceforge.net/gitroot/openpli/plugins-enigma2:sub=networkbrowser
   patch:file://{PN}-support_autofs.patch
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 enigma2_openwebif
   1.0
   e2openplugin-OpenWebif
   nothing:git://github.com/schpuntik/e2openplugin-OpenWebif.git
-  make:install:DESTDIR=TARGETS
+  make:install:DESTDIR=PKDIR
 ;
 gstreamer
   0.10.35.2
