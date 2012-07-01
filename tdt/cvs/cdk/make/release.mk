@@ -218,9 +218,6 @@ endif
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
 	cp -dp $(buildprefix)/root/etc/lircd_spark.conf $(prefix)/release/etc/lircd.conf
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
-	cp -f $(buildprefix)/root/usr/lib/lib* $(prefix)/release/usr/lib
-	cp -f $(buildprefix)/root/usr/sbin/iw* $(prefix)/release/usr/sbin
-	cp -f $(buildprefix)/root/usr/sbin/wpa* $(prefix)/release/usr/sbin
 	cp -f $(buildprefix)/root/firmware/rt73.bin $(prefix)/release/lib/firmware
 	cp -f $(buildprefix)/root/firmware/rt2870.bin $(prefix)/release/lib/firmware
 	mkdir -p $(prefix)/release/var/run/lirc
@@ -297,9 +294,6 @@ release_spark7162:
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin
 
 	cp -dp $(buildprefix)/root/etc/lircd_spark7162.conf $(prefix)/release/etc/lircd.conf
-	cp -f $(buildprefix)/root/usr/lib/lib* $(prefix)/release/usr/lib
-	cp -f $(buildprefix)/root/usr/sbin/iw* $(prefix)/release/usr/sbin
-	cp -f $(buildprefix)/root/usr/sbin/wpa* $(prefix)/release/usr/sbin
 	cp -f $(buildprefix)/root/firmware/rt73.bin $(prefix)/release/lib/firmware
 	cp -f $(buildprefix)/root/firmware/rt2870.bin $(prefix)/release/lib/firmware
 	cp -p $(targetprefix)/usr/bin/lircd $(prefix)/release/usr/bin/
