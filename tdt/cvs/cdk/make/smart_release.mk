@@ -97,6 +97,7 @@ release_base:
 	cp -dp $(buildprefix)/root/etc/init.d/udhcpc $(prefix)/release/etc/init.d/ && \
 	cp $(buildprefix)/root/etc/timezone.xml $(prefix)/release/etc/ && \
 	cp -a $(buildprefix)/root/etc/Wireless $(prefix)/release/etc/ && \
+	cp -dp $(buildprefix)/root/firmware/*.bin $(prefix)/release/lib/firmware/ && \
 	cp -dp $(targetprefix)/etc/network/options $(prefix)/release/etc/network/ && \
 	ln -sf /etc/timezone.xml $(prefix)/release/etc/tuxbox/timezone.xml && \
 	ln -sf /usr/local/share/keymaps $(prefix)/release/usr/share/keymaps
@@ -214,7 +215,7 @@ release_spark:
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname && \
 	cp $(targetprefix)/lib/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw && \
-	cp -f $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/spark7162.ko
+	cp -aR $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/spark7162.ko
 
 release_fortis_hdbox:
 	echo "fortis" > $(prefix)/release/etc/hostname
