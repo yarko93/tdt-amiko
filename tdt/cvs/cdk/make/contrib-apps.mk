@@ -1238,6 +1238,7 @@ $(DEPDIR)/imagemagick.do_compile: $(DEPDIR)/imagemagick.do_prepare
 		--without-xml \
 		--without-perl \
 		--disable-openmp \
+		--disable-opencl \
 		--without-zlib \
 		--enable-shared \
 		--enable-static \
