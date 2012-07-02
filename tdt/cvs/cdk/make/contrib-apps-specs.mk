@@ -255,6 +255,8 @@ $(DEPDIR)/%$(FINDUTILS): $(FINDUTILS_RPM)
 # DISTRIBUTIONUTILS
 #
 DISTRIBUTIONUTILS := distributionutils
+DESCRIPTION_distributionutils = utilities to setup system
+FILES_distributionutils = /usr/sbin/initdconfig
 DISTRIBUTIONUTILS_DOC := distributionutils-doc
 if STM22
 DISTRIBUTIONUTILS_VERSION := 2.17-6
@@ -297,6 +299,8 @@ $(DEPDIR)/%$(DISTRIBUTIONUTILS): $(DISTRIBUTIONUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
+	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 $(DEPDIR)/min-$(DISTRIBUTIONUTILS_DOC) $(DEPDIR)/std-$(DISTRIBUTIONUTILS_DOC) $(DEPDIR)/max-$(DISTRIBUTIONUTILS_DOC) \
