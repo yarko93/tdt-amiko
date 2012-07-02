@@ -4,27 +4,21 @@ model=`cat /proc/stb/info/model`
 
 if [ $# -eq 1 ]; then
    if [ "$1" = "-a" ]; then
-       echo "enter standby..."
-       #clear display
-       fp_control -c
-       #disable hdmi
-       stfbcontrol hd
-       #call fp_control in a "sleep" loop, display time if 
-       #configured in /etc/vdstandby.cfg and make receiver
-       #specific stuff
-       /bin/fp_control -p 00:00:00 01-01-2030 &
+	echo "enter standby..."
+	/bin/stfbcontrol hd 
+	echo off > /dev/vfd 
+	sleep 2 
+	DISPL7162=`grep -c 'spark7162' /proc/stb/info/model`
+	if [ "$DISPL7162" -eq "1" ]; then
+	/bin/fp_control -c
+	/bin/fp_control -s `date +"%H:%M:%S %d-%m-%Y"`
+   else
+	/bin/fp_control -s `date +"%H:%M:%S %d-%m-%Y"`
+   fi
+	echo "done"
    elif [ "$1" = "-d" ]; then
-       echo "end standby..."
+	echo "end standby..."
        #enable hdmi
        stfbcontrol he
-       #clear display
-       fp_control -c
-       #the next two should only be done on cuberevos
-       #but I'm to lazy to enter a modelspecific part here :D
-       fp_control -i 1 0
-       fp_control -dt 0
-       pid=`pidof fp_control`
-       echo pid = $pid
-       kill -9 $pid
    fi
 fi
