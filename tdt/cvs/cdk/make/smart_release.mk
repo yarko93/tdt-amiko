@@ -132,7 +132,6 @@ release_base:
 	chmod 755 $(prefix)/release/etc/init.d/rcS && \
 	chmod 755 $(prefix)/release/etc/init.d/halt && \
 	cp -dp $(targetprefix)/sbin/MAKEDEV $(prefix)/release/sbin/MAKEDEV && \
-	cp -f $(buildprefix)/root/release/makedev $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/release/mountvirtfs $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/release/mme_check $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/release/mountall $(prefix)/release/etc/init.d/ && \
@@ -148,7 +147,6 @@ release_base:
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/etc/image-version $(prefix)/release/etc/ && \
-	cp -a $(targetprefix)/dev/* $(prefix)/release/dev/ && \
 	cp -dp $(targetprefix)/etc/fstab $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/group $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/host.conf $(prefix)/release/etc/ && \
