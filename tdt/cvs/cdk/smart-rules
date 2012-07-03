@@ -1206,3 +1206,21 @@ ethtool
   extract:http://downloads.openwrt.org/sources/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
 ;
+init_scripts
+  0.1
+  {PN}-{PV}
+  nothing:file://../root/etc/inittab
+  nothing:file://../root/release/hostname
+  nothing:file://../root/release/inetd
+# for 'nothing:' only 'cp' is executed so '*' is ok.
+  nothing:file://../root/release/initmodules_*
+  nothing:file://../root/release/halt_*
+  nothing:file://../root/release/mountall
+  nothing:file://../root/release/mountsysfs
+  nothing:file://../root/release/networking
+  nothing:file://../root/release/rc
+  nothing:file://../root/release/reboot
+  nothing:file://../root/release/sendsigs
+  nothing:file://../root/release/telnetd
+  nothing:file://../root/release/umountfs
+;

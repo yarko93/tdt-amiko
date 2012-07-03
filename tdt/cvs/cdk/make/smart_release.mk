@@ -1,3 +1,49 @@
+DESCRIPTION_init_scripts = init scripts and rules for system start
+init_scripts_initd_files = \
+halt \
+hostname \
+inetd \
+initmodules \
+mountall \
+mountsysfs \
+networking \
+reboot \
+sendsigs \
+telnetd \
+umountfs
+
+define postinst_init_scripts
+#!/bin/sh
+$(foreach f,$(init_scripts_initd_files), initdconfig --add $f
+)
+endef
+
+define prerm_init_scripts
+#!/bin/sh
+$(foreach f,$(init_scripts_initd_files), initdconfig --del $f
+)
+endef
+
+$(DEPDIR)/init-scripts: @DEPENDS_init_scripts@
+	@PREPARE_init_scripts@
+	$(start_build)
+	$(INSTALL_DIR) $(PKDIR)/etc/init.d
+
+# select initmodules
+	cd $(DIR_init_scripts) && \
+	mv initmodules$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162)) initmodules
+# select halt
+	cd $(DIR_init_scripts) && \
+	mv halt\$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2)$(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD),_cuberevo)$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)) halt
+# init.d scripts
+	cd $(DIR_init_scripts) && \
+		$(INSTALL) inittab $(PKDIR)/etc/ && \
+		$(INSTALL) -m 755 rc $(PKDIR)/etc/init.d/rc && \
+		$(foreach f,$(init_scripts_initd_files), $(INSTALL) -m 755 $f $(PKDIR)/etc/init.d && ) true
+	$(toflash_build)
+	touch $@
+
+
 # auxiliary targets for model-specific builds
 release_common_utils:
 	cp $(buildprefix)/root/release/umountfs $(prefix)/release/etc/init.d/
@@ -9,13 +55,7 @@ release_common_utils:
 	chmod 755 $(prefix)/release/etc/init.d/halt
 	mkdir -p $(prefix)/release/etc/rc.d/rc0.d
 	ln -sf ../init.d $(prefix)/release/etc/rc.d
-	ln -sf ../init.d/sendsigs $(prefix)/release/etc/rc.d/rc0.d/S20sendsigs
-	ln -sf ../init.d/umountfs $(prefix)/release/etc/rc.d/rc0.d/S40umountfs
-	ln -sf ../init.d/halt $(prefix)/release/etc/rc.d/rc0.d/S90halt
 	mkdir -p $(prefix)/release/etc/rc.d/rc6.d
-	ln -sf ../init.d/sendsigs $(prefix)/release/etc/rc.d/rc6.d/S20sendsigs
-	ln -sf ../init.d/umountfs $(prefix)/release/etc/rc.d/rc6.d/S40umountfs
-	ln -sf ../init.d/reboot $(prefix)/release/etc/rc.d/rc6.d/S90reboot
 	cp -f $(buildprefix)/root/release/reboot $(prefix)/release/etc/init.d/ && \
 	mkdir -p $(prefix)/release/etc/opkg
 	mkdir -p $(prefix)/release/usr/lib/locale
@@ -132,14 +172,7 @@ release_base:
 	chmod 755 $(prefix)/release/etc/init.d/rcS && \
 	chmod 755 $(prefix)/release/etc/init.d/halt && \
 	cp -dp $(targetprefix)/sbin/MAKEDEV $(prefix)/release/sbin/MAKEDEV && \
-	cp -f $(buildprefix)/root/release/mountvirtfs $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/release/mme_check $(prefix)/release/etc/init.d/ && \
-	cp -f $(buildprefix)/root/release/mountall $(prefix)/release/etc/init.d/ && \
-	cp -f $(buildprefix)/root/release/hostname $(prefix)/release/etc/init.d/ && \
-	cp -f $(buildprefix)/root/release/vsftpd $(prefix)/release/etc/init.d/ && \
-	cp -f $(buildprefix)/root/release/bootclean.sh $(prefix)/release/etc/init.d/ && \
-	cp -f $(buildprefix)/root/release/network $(prefix)/release/etc/init.d/ && \
-	cp -f $(buildprefix)/root/release/networking $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/bootscreen/bootlogo.mvi $(prefix)/release/boot/ && \
 	cp -f $(buildprefix)/root/bin/autologin $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/bin/vdstandby $(prefix)/release/bin/ && \
@@ -163,8 +196,11 @@ release_base:
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
-	echo "576i50" > $(prefix)/release/etc/videomode && \
+	echo "576i50" > $(prefix)/release/etc/videomode
+# Post tweaks
 	depmod -b $(prefix)/release $(KERNELVERSION)
+	$(initdconfig)
+
 
 # install fonts	
 	mv -fb $(prefix)/release/usr/local/share/fonts $(prefix)/release/usr/share/ && \

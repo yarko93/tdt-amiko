@@ -855,6 +855,7 @@ TUXBOX_RULES_MAKE(lsb)
 #TUXBOX_RULES_MAKE(ipkg)
 TUXBOX_RULES_MAKE(module_init_tools)
 TUXBOX_RULES_MAKE(sysvinit)
+TUXBOX_RULES_MAKE(init_scripts)
 
 #
 # net apps
