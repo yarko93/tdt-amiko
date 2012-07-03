@@ -2,7 +2,7 @@
 #
 # Load all necessary st modules
 # 
-# chkconfig: S 6 0
+# chkconfig: S 9 0
 #
 
 echo "init frontpanel"
