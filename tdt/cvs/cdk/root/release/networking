@@ -85,6 +85,7 @@ case "$1" in
 
         echo -n "Configuring network interfaces... "
 				wpa_supplicantcheck
+        ifdown -a
         ifup -a
 	echo "done."
 	;;
