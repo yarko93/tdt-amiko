@@ -47,7 +47,7 @@ include make/contrib-apps.mk
 include make/net-apps.mk
 
 # Include divers tools targets
-include make/diverse-tools.mk
+#include make/diverse-tools.mk
 
 # More misc libs, mostly nonessential
 include make/misc_libs.mk

@@ -41,8 +41,8 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%$(DISTRIBUTIONUTILS) \
 		\
 		%e2fsprogs \
-		%u-boot-utils \
-		%diverse-tools 
+		%u-boot-utils
+#		%diverse-tools 
 #		%$(RELEASE) \
 #		%$(FINDUTILS) \
 #
