@@ -132,6 +132,8 @@ sub process_rule($) {
   }
   if ( $url =~ m#^file://# )
   {
+      $f = $url;
+      $f =~ s#^file://##;
       $f = "$patchesdir/$f";
   }
   elsif ( $url =~ m#^($supported_protocols)# )
@@ -181,7 +183,7 @@ sub process_make_prepare (@)
   shift;
   my $dir = shift;
 
-  my $output = "( rm -rf " . $dir . " || /bin/true )";
+  my $output = "( rm -rf " . $dir . " || /bin/true && mkdir $dir)";
   my $autoversion = "";
 
   foreach ( @_ )
@@ -249,7 +251,7 @@ sub process_make_prepare (@)
       {
          $output .= "echo '\\\$(shell cd " . $f . " && svn update) ' && ";
       }
-      $output .= "cp -a " . $f . $subdir . " " . $dir;
+      $output .= "cp -a " . $f . "/*" . $subdir . " " . $dir;
       $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(svn_version)))";
     }
     elsif ( $p eq "git" )
@@ -258,7 +260,7 @@ sub process_make_prepare (@)
       {
          $output .= "echo '\\\$(shell cd " . $f . " && git pull) ' && ";
       }
-      $output .= "cp -a " . $f . $subdir . " " . $dir;
+      $output .= "cp -a " . $f . "/*" . $subdir . " " . $dir;
       $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(git_version)))";
     }
     elsif ( $cmd eq "nothing" )
@@ -671,6 +673,7 @@ sub subs_vars($)
   $output =~ s#BUILD#\$\(buildprefix\)#g;
   $output =~ s#PKDIR#\$\(packagingtmpdir\)#g;
   $output =~ s#\{PV\}#$version#g;
+  $output =~ s#\{PF\}#../Files/$package#g;
   my $dashpackage = $package;
   $dashpackage =~ s#_#\-#g;
   $output =~ s#\{PN\}#$dashpackage#g;
