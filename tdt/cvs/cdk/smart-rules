@@ -327,6 +327,12 @@ rsync
   extract:http://samba.anu.edu.au/ftp/{PN}/{PN}-{PV}.tar.gz
   make:install:DESTDIR=TARGETS
 ;
+ntfs_3g
+  2012.1.15
+  ntfs-3g_ntfsprogs-{PV}
+  extract:http://tuxera.com/opensource/ntfs-3g_ntfsprogs-{PV}.tgz
+  make:install:DESTDIR=PKDIR
+;
 lm_sensors
   2.9.2
   lm_sensors-{PV}

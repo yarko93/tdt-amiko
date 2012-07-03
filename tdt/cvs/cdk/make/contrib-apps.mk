@@ -136,6 +136,47 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 #	@DISTCLEANUP_pppd@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
+	
+#
+# NTFS-3G
+#
+DESCRIPTION_ntfs_3g = ntfs-3g
+RDEPENDS_ntfs_3g = fuse
+FILES_ntfs_3g = \
+/bin/ntfs-3g \
+/sbin/mount.ntfs-3g \
+/usr/lib/* \
+/lib/*
+
+$(DEPDIR)/ntfs_3g.do_prepare: @DEPENDS_ntfs_3g@
+	@PREPARE_ntfs_3g@
+	touch $@
+
+$(DEPDIR)/ntfs_3g.do_compile: bootstrap fuse $(DEPDIR)/ntfs_3g.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	LDCONFIG=$(prefix)/cdkroot/sbin/ldconfig \
+	cd @DIR_ntfs_3g@  && \
+		$(BUILDENV) \
+		PKG_CONFIG=$(hostprefix)/bin/pkg-config \
+		./configure \
+			--build=$(build) \
+			--disable-ldconfig \
+			--host=$(target) \
+			--prefix=/usr
+		$(MAKE) $(MAKE_OPTS)
+	touch $@
+
+$(DEPDIR)/min-ntfs_3g $(DEPDIR)/std-ntfs_3g $(DEPDIR)/max-ntfs_3g \
+$(DEPDIR)/ntfs_3g: \
+$(DEPDIR)/%ntfs_3g: $(DEPDIR)/ntfs_3g.do_compile
+	$(start_build)
+	cd @DIR_ntfs_3g@  && \
+		@INSTALL_ntfs_3g@
+	$(tocdk_build)	
+	$(toflash_build)
+#	@DISTCLEANUP_ntfs_3g@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
 # LSB
@@ -1238,6 +1279,7 @@ $(DEPDIR)/imagemagick.do_compile: $(DEPDIR)/imagemagick.do_prepare
 		--without-xml \
 		--without-perl \
 		--disable-openmp \
+		--disable-opencl \
 		--without-zlib \
 		--enable-shared \
 		--enable-static \
