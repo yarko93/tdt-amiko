@@ -70,6 +70,7 @@ jpeg-*
 enigma2-networkbrowser
 host-python-*
 xupnpd-*
+udpxy-*
 libtuxtxt
 ruledir
 opkg-host
