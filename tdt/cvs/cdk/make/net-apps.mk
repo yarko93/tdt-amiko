@@ -312,7 +312,7 @@ $(DEPDIR)/%netkit_ftp: $(DEPDIR)/netkit_ftp.do_compile
 # WIRELESS_TOOLS
 #
 DESCRIPTION_wireless_tools = wireless-tools
-RDEPENDS_wireless_tools = rfkill wpa-supplicant
+RDEPENDS_wireless_tools = rfkill wpa_supplicant
 FILES_wireless_tools = \
 /usr/sbin/* \
 /usr/lib/*.so*
@@ -341,6 +341,7 @@ $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 # WPA_SUPPLICANT
 #
 DESCRIPTION_wpa_supplicant = "wpa_supplicant"
+RDEPENDS_wpa_supplicant = wireless_tools
 FILES_wpa_supplicant = \
 /usr/sbin/*
 
