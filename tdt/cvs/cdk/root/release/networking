@@ -1,6 +1,8 @@
 #!/bin/sh
 #
 # manage network interfaces and configure some networking options
+# chkconfig: S 40 40
+#
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
