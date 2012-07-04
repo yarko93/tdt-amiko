@@ -1209,6 +1209,7 @@ ethtool
 init_scripts
   0.1
   {PN}-{PV}
+  pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
   nothing:file://../root/release/hostname
   nothing:file://../root/release/inetd
