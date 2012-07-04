@@ -215,7 +215,9 @@ release_spark:
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname && \
 	cp $(targetprefix)/lib/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw && \
-	cp -aR $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/spark7162.ko
+	mkdir -p $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends/ && \
+	cp -dp $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends/spark7162.ko && \
+	depmod -b $(prefix)/release $(KERNELVERSION)
 
 release_fortis_hdbox:
 	echo "fortis" > $(prefix)/release/etc/hostname
