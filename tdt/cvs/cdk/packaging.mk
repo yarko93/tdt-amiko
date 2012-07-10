@@ -43,9 +43,9 @@ define tocdk_build_start
 	rm -rf $(ipkgbuilddir)/*
 	export FILES_$(PARENT_PK)="/" && \
 	python split_packages.py
-	$(rewrite_libtool)
-	$(rewrite_pkgconfig)
-	$(rewrite_dependency)
+#	$(rewrite_libtool)
+#	$(rewrite_pkgconfig)
+#	$(rewrite_dependency)
 endef
 
 define tocdk_build
