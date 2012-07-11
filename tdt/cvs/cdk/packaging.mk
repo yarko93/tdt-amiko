@@ -45,7 +45,7 @@ define tocdk_build_start
 	python split_packages.py
 #	$(rewrite_libtool)
 #	$(rewrite_pkgconfig)
-#	$(rewrite_dependency)
+	$(rewrite_dependency)
 endef
 
 define tocdk_build
