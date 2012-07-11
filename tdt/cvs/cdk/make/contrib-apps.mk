@@ -1046,6 +1046,7 @@ $(DEPDIR)/ntpclient.do_compile: $(DEPDIR)/ntpclient.do_prepare
 	touch $@
 
 $(DEPDIR)/ntpclient: $(DEPDIR)/ntpclient.do_compile
+	$(start_build)
 	cd @DIR_ntpclient@  && \
 		install -D -m 0755 ntpclient $(PKDIR)/sbin/ntpclient; \
 		install -D -m 0755 adjtimex $(PKDIR)/sbin/adjtimex; \
@@ -1118,6 +1119,21 @@ $(DEPDIR)/udpxy: $(DEPDIR)/udpxy.do_compile
 		$(MAKE) install
 	$(extra_build)
 	touch $@
+
+# Some words about git and svn.
+# It is available to automatically determine version from git and svn
+# If there is git/svn rule in smart-rules and the version equals git/svn then the version will be automatically evaluated during $(start_build)
+# Note: it is assumed that there is only one repo for the utility.
+
+# FILES variable
+# FILES variable is the filter for your $(PKDIR), by default it equals "/" so all files from $(PKDIR) are built into the package. It is list of files and directories separated by space. Wildcards are supported.
+# Wildcards used in the FILES variables are processed via the python function fnmatch. The following items are of note about this function:
+#   /<dir>/*: This will match all files and directories in the dir - it will not match other directories.
+#   /<dir>/a*: This will only match files, and not directories.
+#   /dir: will include the directory dir in the package, which in turn will include all files in the directory and all subdirectories.
+
+# Info about some additional variables
+# ........
 
 # sysstat
 #
