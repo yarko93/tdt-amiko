@@ -843,6 +843,7 @@ $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 		for s in sysfs udev ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
+	$(REWRITE_LIBDEP)/libgudev-1.0.la
 	$(start_build)
 	$(fromrpm_get)
 # start udevadm earlier
