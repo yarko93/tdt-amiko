@@ -77,10 +77,9 @@ modprobe e2_proc
    stfbcontrol a 0
 
    echo "init lircd"
+   ln -s lirc0 /dev/lirc
    /usr/bin/lircd
-#   mknod /dev/rc c 147 1 
-#   mknod /dev/sci0 c 169 0
-#   mknod /dev/sci1 c 169 1
+
    major=$(awk "\$2==\"sparkid\" {print \$1}" /proc/devices)
 #   rm -f /dev/sparkid
 #   mknod /dev/sparkid c $major 0 

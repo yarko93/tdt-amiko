@@ -193,6 +193,12 @@ define git_fetch_prepare
 	fi
 endef
 
+opkgl-%:
+	opkg files $(cdk_ipkg_args) $*
+
+opkgl:
+	opkg list-installed $(cdk_ipkg_args)
+
 package-index: $(ipkprefix)/Packages
 $(ipkprefix)/Packages: $(ipkprefix)
 	cd $(ipkprefix) && \
