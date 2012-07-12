@@ -187,7 +187,6 @@ release_base:
 	cp -dp $(targetprefix)/etc/hosts $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/inetd.conf $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/inittab $(prefix)/release/etc/ && \
-	cp -dp $(targetprefix)/etc/localtime $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/mtab $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/passwd $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/profile $(prefix)/release/etc/ && \
@@ -243,12 +242,15 @@ release_ufs912:
 	
 release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw && \
+	cp -dp $(archivedir)/ptinp/$(if $(P0210),pti_210.ko)$(if $(P0209),pti_209.ko)$(if $(P0207),pti_207.ko)$(if $(P0123),pti_123.ko) $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko
 
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname && \
 	cp $(targetprefix)/lib/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw && \
-	cp -f $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/spark7162.ko
+	cp -dp $(archivedir)/ptinp/$(if $(P0207),pti_207s2.ko) $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
+	cp -dp $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends/spark7162.ko && \
+	depmod -b $(prefix)/release $(KERNELVERSION)
 
 release_fortis_hdbox:
 	echo "fortis" > $(prefix)/release/etc/hostname
