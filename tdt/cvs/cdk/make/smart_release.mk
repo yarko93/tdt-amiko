@@ -46,13 +46,6 @@ $(DEPDIR)/init-scripts: @DEPENDS_init_scripts@
 
 # auxiliary targets for model-specific builds
 release_common_utils:
-	cp $(buildprefix)/root/release/umountfs $(prefix)/release/etc/init.d/
-	cp $(buildprefix)/root/release/rc $(prefix)/release/etc/init.d/
-	cp $(buildprefix)/root/release/sendsigs $(prefix)/release/etc/init.d/
-	chmod 755 $(prefix)/release/etc/init.d/umountfs
-	chmod 755 $(prefix)/release/etc/init.d/rc
-	chmod 755 $(prefix)/release/etc/init.d/sendsigs
-	chmod 755 $(prefix)/release/etc/init.d/halt
 	mkdir -p $(prefix)/release/etc/rc.d/rc0.d
 	ln -sf ../init.d $(prefix)/release/etc/rc.d
 	mkdir -p $(prefix)/release/etc/rc.d/rc6.d
