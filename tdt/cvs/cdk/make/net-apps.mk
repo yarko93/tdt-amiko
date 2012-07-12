@@ -50,6 +50,7 @@ $(DEPDIR)/%nfs_utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
 # vsftpd
 #
 DESCRIPTION_vsftpd = "vsftpd"
+PKGR_vsftpd = r0
 FILES_vsftpd = \
 /etc/* \
 /usr/bin/*
