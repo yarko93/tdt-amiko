@@ -1,3 +1,7 @@
+#
+# INIT-SCRIPTS customized
+#
+
 DESCRIPTION_init_scripts = init scripts and rules for system start
 init_scripts_initd_files = \
 halt \
@@ -69,7 +73,7 @@ release_common_utils:
 # Copy audio_7111
 	$(if $(SPARK)$(UFS912)$(HS7810A)$(HS7110)$(WHITEBOX),cp -f $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf )
 	
-release_base:  init-scripts
+release_base:
 	rm -rf $(prefix)/release || true
 	$(INSTALL_DIR) $(prefix)/release && \
 	cp -rp $(prefix)/pkgroot/* $(prefix)/release

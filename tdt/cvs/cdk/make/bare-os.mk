@@ -826,6 +826,7 @@ UDEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV)-$(UDEV_VERSION).sh4.rpm
 RDEPENDS_udev = libacl libattr
 
 $(UDEV_RPM): \
+		libacl-dev libattr-dev libusb usbutils $(RDEPENDS_udev) \
 		$(if $(UDEV_SPEC_PATCH),Patches/$(UDEV_SPEC_PATCH)) \
 		$(if $(UDEV_PATCHES),$(UDEV_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX)-target-$(UDEV)-$(UDEV_VERSION).src.rpm
