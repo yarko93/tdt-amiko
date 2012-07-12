@@ -178,7 +178,6 @@ release_base:
 	cp -dp $(targetprefix)/etc/hostname $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/hosts $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/inetd.conf $(prefix)/release/etc/ && \
-	cp -dp $(targetprefix)/etc/inittab $(prefix)/release/etc/ && \
 	ln -s /usr/share/zoneinfo/Europe/Berlin $(prefix)/release/etc/localtime && \
 	cp -dp $(targetprefix)/etc/mtab $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/passwd $(prefix)/release/etc/ && \
