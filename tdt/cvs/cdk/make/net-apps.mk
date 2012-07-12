@@ -54,6 +54,16 @@ FILES_vsftpd = \
 /etc/* \
 /usr/bin/*
 
+define postinst_vsftpd
+#!/bin/sh
+initdconfig --add vsftpd
+endef
+
+define prerm_vsftpd
+#!/bin/sh
+initdconfig --del vsftpd
+endef
+
 $(DEPDIR)/vsftpd.do_prepare: @DEPENDS_vsftpd@
 	@PREPARE_vsftpd@
 	touch $@
@@ -74,7 +84,6 @@ $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
 	mkdir -p $(PKDIR)/usr/share/man/man5/
 	cd @DIR_vsftpd@ && \
 		@INSTALL_vsftpd@
-		cp $(buildprefix)/root/etc/vsftpd.conf $(PKDIR)/etc
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_vsftpd@
