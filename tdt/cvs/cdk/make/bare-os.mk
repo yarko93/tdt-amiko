@@ -775,7 +775,7 @@ USBUTILS_VERSION := 0.86-10
 USBUTILS_SPEC := stm-target-$(USBUTILS).spec
 USBUTILS_SPEC_PATCH :=
 USBUTILS_PATCHES :=
-
+USBUTILS_usbutils = libusb
 USBUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(USBUTILS)-$(USBUTILS_VERSION).sh4.rpm
 
 $(USBUTILS_RPM): \
@@ -814,16 +814,15 @@ UDEV_SPEC_PATCH :=
 UDEV_PATCHES :=
 else !STM23
 # if STM24
-UDEV_VERSION := 146-27
+UDEV_VERSION := 162-32
 UDEV_SPEC := stm-target-$(UDEV).spec
-UDEV_SPEC_PATCH :=
+UDEV_SPEC_PATCH := stm-target-udev.spec.diff
 UDEV_PATCHES :=
 # endif STM24
 endif !STM23
 endif !STM22
 UDEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV)-$(UDEV_VERSION).sh4.rpm
 
-RDEPENDS_udev = libacl libattr
 
 $(UDEV_RPM): \
 		$(if $(UDEV_SPEC_PATCH),Patches/$(UDEV_SPEC_PATCH)) \
