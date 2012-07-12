@@ -145,6 +145,8 @@ yaud-none: \
 		net-utils \
 		disk-utils \
 		driver \
+		init-scripts \
+		udev \
 		misc-tools 
 	@TUXBOX_YAUD_CUSTOMIZE@
 

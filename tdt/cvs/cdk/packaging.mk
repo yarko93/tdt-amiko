@@ -44,7 +44,7 @@ define tocdk_build_start
 	export FILES_$(PARENT_PK)="/" && \
 	python split_packages.py
 	$(rewrite_libtool)
-	$(rewrite_pkgconfig)
+#	$(rewrite_pkgconfig)
 	$(rewrite_dependency)
 endef
 
@@ -192,6 +192,12 @@ define git_fetch_prepare
 		git clone $(2) $(DIR_$(1)); \
 	fi
 endef
+
+opkgl-%:
+	opkg files $(cdk_ipkg_args) $*
+
+opkgl:
+	opkg list-installed $(cdk_ipkg_args)
 
 package-index: $(ipkprefix)/Packages
 $(ipkprefix)/Packages: $(ipkprefix)
