@@ -436,7 +436,7 @@ $(HOST_MTD_UTILS): $(HOST_MTD_UTILS_RPM)
 # BOOTSTRAP-HOST
 #
 $(DEPDIR)/bootstrap-host: | \
-		$(CCACHE_BIN) host-rpmconfig host-base-passwd host-distributionutils \
+		$(CCACHE_BIN) host-rpmconfig libtool host-base-passwd host-distributionutils \
 		host-filesystem host-autotools $(HOST_AUTOMAKE) $(HOST_AUTOCONF) $(HOST_PKGCONFIG) \
 		$(HOST_MTD_UTILS)
 	$(if $(HOST_MTD_UTILS_RPM),[ "x$*" = "x" ] && touch -r $(HOST_MTD_UTILS_RPM) $@ || true)
@@ -795,6 +795,32 @@ $(DEPDIR)/setup-cross-optional: \
 #
 # LIBTOOL
 #
+
+if STM24
+
+HOST_LIBTOOL := host-libtool
+HOST_LIBTOOL_VERSION := 2.2.6b-3
+HOST_LIBTOOL_SPEC := stm-$(HOST_LIBTOOL).spec
+HOST_LIBTOOL_RPM := RPMS/$(host_arch)/$(STLINUX)-$(HOST_LIBTOOL)-$(HOST_LIBTOOL_VERSION).$(host_arch).rpm
+
+$(HOST_LIBTOOL_RPM): \
+		$(if $(HOST_LIBTOOL_SPEC_PATCH),Patches/$(HOST_LIBTOOL_SPEC_PATCH)) \
+		$(if $(HOST_LIBTOOL_PATCHES),$(HOST_LIBTOOL_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STM_SRC)-$(HOST_LIBTOOL)-$(HOST_LIBTOOL_VERSION).src.rpm
+	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(HOST_LIBTOOL_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_LIBTOOL_SPEC) < $(buildprefix)/Patches/$(HOST_LIBTOOL_SPEC_PATCH) ) &&) \
+	$(if $(HOST_LIBTOOL_PATCHES),cp $(HOST_LIBTOOL_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild  $(DRPMBUILD) -bb -v --clean --target=$(host_arch) SPECS/$(HOST_LIBTOOL_SPEC)
+
+$(DEPDIR)/$(HOST_LIBTOOL): $(HOST_LIBTOOL_RPM)
+	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
+	touch $@
+
+$(DEPDIR)/libtool: $(DEPDIR)/$(HOST_LIBTOOL)
+
+else !STM24
+
 $(DEPDIR)/libtool.do_prepare: @DEPENDS_libtool@
 	@PREPARE_libtool@
 	touch $@
@@ -812,3 +838,5 @@ $(DEPDIR)/%libtool: $(DEPDIR)/libtool.do_compile
 	@INSTALL_libtool@
 ##		sed -i -e 's,\(hardcode_into_libs\)=yes,\1=no,g' $(hostprefix)/bin/libtool
 	touch $@
+
+endif !STM24
