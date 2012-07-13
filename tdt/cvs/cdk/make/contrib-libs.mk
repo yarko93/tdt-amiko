@@ -3084,6 +3084,7 @@ $(DEPDIR)/%libdvbsipp: $(DEPDIR)/libdvbsipp.do_compile
 # tuxtxtlib
 #
 DESCRIPTION_tuxtxtlib = "tuxtxt library"
+PKGR_tuxtxtlib = r0
 
 FILES_tuxtxtlib = \
 /usr/lib/libtuxtxt*
@@ -3115,7 +3116,7 @@ $(DEPDIR)/min-tuxtxtlib $(DEPDIR)/std-tuxtxtlib $(DEPDIR)/max-tuxtxtlib \
 $(DEPDIR)/tuxtxtlib: \
 $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
 	$(start_build)
-	$(get_git_version)
+	$(AUTOPKGV_tuxtxtlib)
 	cd @DIR_tuxtxtlib@ && \
 		@INSTALL_tuxtxtlib@
 	$(tocdk_build)
@@ -3127,6 +3128,7 @@ $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
 # tuxtxt32bpp
 #
 DESCRIPTION_tuxtxt32bpp = "tuxtxt plugin"
+PKGR_tuxtxt32bpp = r0
 
 FILES_tuxtxt32bpp = \
 /usr/lib/libtuxtxt32bpp* \
@@ -3160,7 +3162,7 @@ $(DEPDIR)/min-tuxtxt32bpp $(DEPDIR)/std-tuxtxt32bpp $(DEPDIR)/max-tuxtxt32bpp \
 $(DEPDIR)/tuxtxt32bpp: \
 $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
 	$(start_build)
-	$(get_git_version)
+	$(AUTOPKGV_tuxtxt32bpp)
 	cd @DIR_tuxtxt32bpp@ && \
 		@INSTALL_tuxtxt32bpp@
 	$(tocdk_build)
