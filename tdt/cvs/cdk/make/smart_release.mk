@@ -68,14 +68,14 @@ $(foreach f,$(fonts_extra_file_list), \
  $(eval FILES_font_$(subst -,_,$f) = /usr/share/fonts/$f*) \
 )
 
-$(DEPDIR)/font_valis_enigma: fonts_extra
+$(DEPDIR)/font-valis-enigma: fonts-extra
 	$(start_build)
 	$(INSTALL) -d $(PKDIR)/usr/share/fonts
 	$(INSTALL) -m 644 root/usr/share/fonts/valis_enigma.ttf $(PKDIR)/usr/share/fonts
 	$(toflash_build)
 	touch $@
 
-$(DEPDIR)/fonts_extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fonts_extra_file_list)))
+$(DEPDIR)/fonts-extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fonts_extra_file_list)))
 	$(start_build)
 	$(INSTALL) -d $(PKDIR)/usr/share/fonts
 	$(INSTALL) -m 644 $^ $(PKDIR)/usr/share/fonts
