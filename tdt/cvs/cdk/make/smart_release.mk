@@ -171,6 +171,7 @@ release_base:
 	cp -dp $(buildprefix)/root/etc/init.d/udhcpc $(prefix)/release/etc/init.d/ && \
 	cp $(buildprefix)/root/etc/timezone.xml $(prefix)/release/etc/ && \
 	cp -a $(buildprefix)/root/etc/Wireless $(prefix)/release/etc/ && \
+	cp -dp $(buildprefix)/root/firmware/*.bin $(prefix)/release/lib/firmware/ && \
 	cp -dp $(targetprefix)/etc/network/options $(prefix)/release/etc/network/ && \
 	ln -sf /etc/timezone.xml $(prefix)/release/etc/tuxbox/timezone.xml && \
 	ln -sf /usr/local/share/keymaps $(prefix)/release/usr/share/keymaps

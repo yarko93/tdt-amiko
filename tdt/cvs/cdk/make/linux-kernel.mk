@@ -1002,7 +1002,7 @@ $(DEPDIR)/linux-kernel.%.do_compile: \
 
 DESCRIPTION_linux_kernel = "The Linux Kernel and modules"
 PKGV_linux_kernel = $(KERNELVERSION)
-PKGR_linux_kernel = r1
+PKGR_linux_kernel = r2
 SRC_URI_linux_kernel = stlinux.com
 FILES_linux_kernel = \
 /lib/modules/$(KERNELVERSION)/kernel \
