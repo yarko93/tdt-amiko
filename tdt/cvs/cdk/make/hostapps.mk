@@ -90,7 +90,7 @@ OPKG_BIN = $(crossprefix)/bin/opkg
 OPKG_CONF = $(crossprefix)/etc/opkg.conf
 OPKG_CONFCDK = $(crossprefix)/etc/opkg-cdk.conf
 
-opkg-host: $(OPKG_BIN) $(ipkcdk) $(ipkprefix)
+opkg-host: $(OPKG_BIN) $(ipkcdk) $(ipkprefix) $(ipkextras)
 
 $(crossprefix)/bin/opkg: @DEPENDS_opkg_host@
 	@PREPARE_opkg_host@
