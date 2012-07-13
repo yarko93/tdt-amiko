@@ -1234,3 +1234,8 @@ init_scripts
   nothing:file://../root/release/telnetd
   nothing:file://../root/release/umountfs
 ;
+e2plugin
+  git
+  {PN}
+  git://github.com/schpuntik/enigma2-plugins-sh4.git
+;
