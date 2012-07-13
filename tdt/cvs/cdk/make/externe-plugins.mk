@@ -42,7 +42,8 @@ enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 $(DEPDIR)/enigma2-plugins-sh4: enigma2-plugins-sh4.do_compile
 	$(call parent_pk,e2plugin)
 	$(start_build)
-	$(MAKE) -C $(DIR_e2plugin) install DESTDIR=$(PKDIR)
+	cd $(DIR_e2plugin) && \
+		$(MAKE) install DESTDIR=$(PKDIR)
 	rm -rf $(ipkgbuilddir)/*
 	$(flash_prebuild)
 

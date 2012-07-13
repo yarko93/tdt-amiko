@@ -1239,3 +1239,8 @@ e2plugin
   {PN}
   git://github.com/schpuntik/enigma2-plugins-sh4.git
 ;
+e2skin
+  git
+  {PN}
+  git://github.com/schpuntik/enigma2-skins-sh4.git:b=master
+;
