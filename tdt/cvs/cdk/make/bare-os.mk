@@ -735,6 +735,7 @@ LIBACL_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBACL)-$(LIBACL_VERSION).sh4.rpm
 LIBACL_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBACL_DEV)-$(LIBACL_VERSION).sh4.rpm
 
 $(LIBACL_RPM) $(LIBACL_DEV_RPM): \
+		libattr libattr-dev \
 		$(if $(LIBACL_SPEC_PATCH),Patches/$(LIBACL_SPEC_PATCH)) \
 		$(if $(LIBACL_PATCHES),$(LIBACL_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX)-target-$(LIBACL)-$(LIBACL_VERSION).src.rpm
@@ -828,7 +829,7 @@ UDEV_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV_DEV)-$(UDEV_VERSION).sh4.rpm
 RDEPENDS_udev := libattr libacl
 
 $(UDEV_RPM) $(UDEV_DEV_RPM): \
-		glib2 libattr-dev libacl-dev libusb usbutils $(RDEPENDS_udev) \
+		glib2 libacl libacl-dev libusb usbutils \
 		$(if $(UDEV_SPEC_PATCH),Patches/$(UDEV_SPEC_PATCH)) \
 		$(if $(UDEV_PATCHES),$(UDEV_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX)-target-$(UDEV)-$(UDEV_VERSION).src.rpm
