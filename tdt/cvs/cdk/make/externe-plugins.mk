@@ -8,14 +8,14 @@ REPO_e2plugin = git://github.com/schpuntik/enigma2-plugins-sh4.git
 SRC_URI_e2plugin = $(REPO_e2plugin)
 PACKAGE_ARCH_e2plugin := sh4
 NAME_e2plugin_meta := enigma2-plugins-meta
-FILES_e2plugin_meta := /usr/local/share/meta
+FILES_e2plugin_meta := /usr/share/meta
 DESCRIPTION_e2plugin_meta := Enigma2 plugins metadata
 PACKAGES_e2plugin = e2plugin_meta
 
 enigma2-plugins-sh4:
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare:
 	rm -rf $(appsdir)/plugins; \
-	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
+	if [ -e $(targetprefix)/usr/bin/enigma2 ]; then \
 		git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins;\
 	fi
 	git clone git://github.com/schpuntik/enigma2-plugins-sh4.git $(appsdir)/plugins && \
@@ -30,7 +30,7 @@ $(appsdir)/plugins/config.status:
 		./configure \
 			--host=$(target) \
 			--with-libsdl=no \
-			--datadir=/usr/local/share \
+			--datadir=/usr/share \
 			--libdir=/usr/lib \
 			--prefix=/usr \
 			--sysconfdir=/etc \
@@ -47,7 +47,7 @@ $(DEPDIR)/enigma2-plugins-sh4.do_compile: $(appsdir)/plugins/config.status
 	touch $@
 
 enigma2-plugins-sh4-package: export PKGV_e2plugin = 3.2git$(shell cd $(appsdir)/plugins && git log -1 --format=%cd --date=short |sed s/-//g)
-PKGR_e2plugin = r0
+PKGR_e2plugin = r1
 enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 
 enigma2-plugins-sh4-package: enigma2-plugins-sh4.do_compile

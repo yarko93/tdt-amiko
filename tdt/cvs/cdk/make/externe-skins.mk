@@ -10,7 +10,7 @@ REPO_e2skin := git://github.com/schpuntik/enigma2-skins-sh4.git
 SRC_URI_e2skin := $(REPO_e2skin);branch=$(BRANCH_e2skin)
 PACKAGE_ARCH_e2skin := all
 NAME_e2skin_meta := enigma2-skins-meta
-FILES_e2skin_meta := /usr/local/share/meta
+FILES_e2skin_meta := /usr/share/meta
 DESCRIPTION_e2skin_meta := Enigma2 skins metadata
 PACKAGES_e2skin = e2skin_meta
 
@@ -30,7 +30,7 @@ $(appsdir)/skins/config.status:
 		./configure \
 			--host=$(target) \
 			--prefix=/usr \
-			--datadir=/usr/local/share \
+			--datadir=/usr/share \
 			--sysconfdir=/etc \
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
@@ -70,9 +70,9 @@ $(DEPDIR)/enigma2-skins-sh4.do_compile: $(appsdir)/skins/config.status
 		$(MAKE) all
 	touch $@
 
-PKGR_e2skin = r0
+PKGR_e2skin = r1
 DIR_e2skin = $(appsdir)/skins
-enigma2_skindir = '/usr/local/share/enigma2'
+enigma2_skindir = '/usr/share/enigma2'
 
 enigma2-skins-sh4-package: enigma2-skins-sh4.do_compile
 	$(call parent_pk,e2skin)

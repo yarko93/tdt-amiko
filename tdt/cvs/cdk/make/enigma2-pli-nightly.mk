@@ -46,9 +46,9 @@ $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpe
 		./configure \
 			--host=$(target) \
 			--with-libsdl=no \
-			--datadir=/usr/local/share \
+			--datadir=/usr/share \
 			--libdir=/usr/lib \
-			--bindir=/usr/local/bin \
+			--bindir=/usr/bin \
 			--prefix=/usr \
 			--sysconfdir=/etc \
 			STAGING_INCDIR=$(hostprefix)/usr/include \
@@ -65,16 +65,16 @@ $(DEPDIR)/enigma2-pli-nightly.do_compile: $(DIR_enigma2_pli)/config.status
 	touch $@
 
 DESCRIPTION_enigma2_pli := a framebuffer-based zapping application (GUI) for linux
-PKGR_enigma2_pli = r0
+PKGR_enigma2_pli = r1
 SRC_URI_enigma2_pli := git://openpli.git.sourceforge.net/gitroot/openpli/enigma2
-FILES_enigma2_pli := /usr/lib/ /etc/enigma2 /usr/local/share /usr/local/bin
+FILES_enigma2_pli := /usr/lib/ /etc/enigma2 /usr/share /usr/bin
 
 $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_prepare enigma2-pli-nightly.do_compile
 	$(call parent_pk,enigma2_pli)
 	$(start_build)
 	$(get_git_version)
 	$(MAKE) -C $(DIR_enigma2_pli) install DESTDIR=$(PKDIR)
-	$(target)-strip $(PKDIR)/usr/local/bin/enigma2
+	$(target)-strip $(PKDIR)/usr/bin/enigma2
 	$(tocdk_build)
 	$(toflash_build)
 	touch $@
