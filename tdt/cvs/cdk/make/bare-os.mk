@@ -825,9 +825,10 @@ endif !STM22
 UDEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV)-$(UDEV_VERSION).sh4.rpm
 UDEV_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV_DEV)-$(UDEV_VERSION).sh4.rpm
 
+RDEPENDS_udev := libattr libacl
 
 $(UDEV_RPM) $(UDEV_DEV_RPM): \
-		glib2 libacl-dev libattr-dev libusb usbutils $(RDEPENDS_udev) \
+		glib2 libattr-dev libacl-dev libusb usbutils $(RDEPENDS_udev) \
 		$(if $(UDEV_SPEC_PATCH),Patches/$(UDEV_SPEC_PATCH)) \
 		$(if $(UDEV_PATCHES),$(UDEV_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX)-target-$(UDEV)-$(UDEV_VERSION).src.rpm
