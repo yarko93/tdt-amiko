@@ -351,6 +351,7 @@ $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 # WPA_SUPPLICANT
 #
 DESCRIPTION_wpa_supplicant = "wpa_supplicant"
+PKGR_wpa_supplicant = r0
 FILES_wpa_supplicant = \
 /usr/sbin/*
 
@@ -371,8 +372,6 @@ $(DEPDIR)/%wpa_supplicant: $(DEPDIR)/wpa_supplicant.do_compile
 	cd @DIR_wpa_supplicant@/wpa_supplicant && \
 		@INSTALL_wpa_supplicant@
 	$(tocdk_build)
-	mkdir $(PKDIR)/usr/sbin
-	cp -f $(PKDIR)/usr/local/sbin/* $(PKDIR)/usr/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_wpa_supplicant@
 	@[ "x$*" = "x" ] && touch $@ || true

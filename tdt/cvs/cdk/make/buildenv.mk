@@ -177,3 +177,23 @@ query-%:
 		( for j in $$FOUND ; do \
 			echo "RPMS/$$i/$$j:" && \
 			rpm $(DRPM) -qplv --scripts RPMS/$$i/$$j || true; echo;done ) || true ; done
+
+
+# -----------------------------------------
+# Config gui
+# Usage:
+#   palce $(eval $(call guiconfig,util_name)) somewhere in *mk file
+#   then call make util_name.xcofig
+#
+define guiconfig
+
+$(1).menuconfig $(1).xconfig: \
+$(1).%:
+	$(MAKE) -C $(DIR_$(1)) ARCH=sh CROSS_COMPILE=sh4-linux- $$*
+	@echo
+	@echo "You have to edit m a n u a l l y Patches/...$(1)...*config to make changes permanent !!!"
+	@echo ""
+	diff $(DIR_$(1))/.config.old $(DIR_$(1))/.config
+	@echo ""
+
+endef

@@ -1203,7 +1203,7 @@ wpa_supplicant
   wpa_supplicant-{PV}
   extract:http://hostap.epitest.fi/releases/wpa_supplicant-{PV}.tar.gz
   nothing:file://wpa_supplicant.config
-  make:install:DESTDIR=PKDIR
+  make:install:DESTDIR=PKDIR:LIBDIR=/usr/lib:BINDIR=/usr/sbin
 ;
 ethtool
   6

@@ -36,3 +36,6 @@ $(DEPDIR)/%busybox: $(DEPDIR)/busybox.do_compile
 	$(toflash_build)
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
+
+
+$(eval $(call guiconfig,busybox))
