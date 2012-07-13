@@ -18,11 +18,15 @@ export IPKGBUILDDIR
 
 ipkcdk := $(prefix)/ipkcdk
 ipkprefix := $(prefix)/ipkbox
+ipkextras := $(prefix)/ipkextras
 
 $(ipkcdk):
 	$(INSTALL) -d $@
 
 $(ipkprefix):
+	$(INSTALL) -d $@
+
+$(ipkextras):
 	$(INSTALL) -d $@
 
 define extra_build
@@ -31,6 +35,14 @@ define extra_build
 	python split_packages.py
 	$(call do_build_pkg,none,flash)
 endef
+
+define e2extra_build
+	rm -rf $(ipkgbuilddir)/*
+	$(flash_prebuild)
+	python split_packages.py
+	$(call do_build_pkg,none,extra)
+endef
+
 
 define toflash_build
 	rm -rf $(ipkgbuilddir)/*
@@ -65,7 +77,8 @@ define do_build_pkg
 	@echo
 	@echo "====> do_build_pkg $(1) $(2)"
 	for pkg in `ls $(ipkgbuilddir)`; do \
-		ipkg-build -o root -g root $(ipkgbuilddir)/$$pkg $(if $(filter cdk,$(2)),$(ipkcdk),$(ipkprefix)) |tee tmpname \
+		ipkg-build -o root -g root $(ipkgbuilddir)/$$pkg \
+		$(if $(filter cdk,$(2)),$(ipkcdk))$(if $(filter extra,$(2)),$(ipkextras),$(ipkprefix)) |tee tmpname \
 		$(if $(filter install,$(1)), && \
 			pkgn=`cat tmpname |perl -ne 'if (m/Packaged contents/) { print ((split / /)[-1])}'` && \
 			(opkg --force-depends remove $(if $(filter cdk,$(2)),$(cdk_ipkg_args),$(flash_ipkg_args)) `echo $${pkg//_/-}| tr A-Z a-z` || true) && \
