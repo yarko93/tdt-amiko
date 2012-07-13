@@ -198,7 +198,7 @@ release_base:
 # Copy lircd.conf
 	cp -f $(buildprefix)/root/etc/lircd$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2),_vip2)$(if $(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO),_$(CUBEREVO))$(if $(CUBEREVO_MINI),_$(CUBEREVO_MINI))$(if $(CUBEREVO_MINI2),_$(CUBEREVO_MINI2))$(if $(CUBEREVO_MINI_FTA),_$(CUBEREVO_MINI_FTA))$(if $(CUBEREVO_250HD),_$(CUBEREVO_250HD))$(if $(CUBEREVO_2000HD),_$(CUBEREVO_2000HD))$(if $(CUBEREVO_9500HD),_$(CUBEREVO_9500HD))$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).conf $(prefix)/release/etc/lircd.conf
 # Copy keymap.xml
-	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2)$(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK)$(SPARK7162),_spark)$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD),_cuberevo)$(if $(HOMECAST5101),_ufs910)$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).xml $(prefix)/release/usr/local/share/enigma2/keymap.xml && \
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2)$(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK)$(SPARK7162),_spark)$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD),_cuberevo)$(if $(HOMECAST5101),_ufs910)$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).xml $(prefix)/release/usr/share/enigma2/keymap.xml && \
 	touch $(prefix)/release/var/etc/.firstboot && \
 	cp -dp $(targetprefix)/sbin/MAKEDEV $(prefix)/release/sbin/MAKEDEV && \
 	cp -f $(buildprefix)/root/release/mme_check $(prefix)/release/etc/init.d/ && \
@@ -209,18 +209,18 @@ release_base:
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/etc/image-version $(prefix)/release/etc/ && \
-	cp -dp $(targetprefix)/etc/fstab $(prefix)/release/etc/ && \
+	cp -dp $(buildprefix)/root/etc/fstab $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/group $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/host.conf $(prefix)/release/etc/ && \
-	cp -dp $(targetprefix)/etc/hostname $(prefix)/release/etc/ && \
+	cp -dp $(buildprefix)/root/etc/hostname $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/hosts $(prefix)/release/etc/ && \
-	cp -dp $(targetprefix)/etc/inetd.conf $(prefix)/release/etc/ && \
+	cp -dp $(buildprefix)/root/etc/inetd.conf $(prefix)/release/etc/ && \
 	ln -s /usr/share/zoneinfo/Europe/Berlin $(prefix)/release/etc/localtime && \
 	cp -dp $(targetprefix)/etc/mtab $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/passwd $(prefix)/release/etc/ && \
-	cp -dp $(targetprefix)/etc/profile $(prefix)/release/etc/ && \
+	cp -dp $(buildprefix)/root/etc/profile $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/protocols $(prefix)/release/etc/ && \
-	cp -dp $(targetprefix)/etc/resolv.conf $(prefix)/release/etc/ && \
+	cp -dp $(buildprefix)/root/etc/resolv.conf $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
@@ -232,7 +232,7 @@ release_base:
 release_cube_common:
 	cp $(buildprefix)/root/release/reboot_cuberevo $(prefix)/release/etc/init.d/reboot && \
 	chmod 777 $(prefix)/release/etc/init.d/reboot && \
-	cp $(targetprefix)/bin/eeprom $(prefix)/release/bin
+	cp $(buildprefix)/root/bin/eeprom $(prefix)/release/bin
 
 release_cuberevo_9500hd: release_cube_common
 	echo "cuberevo-9500hd" > $(prefix)/release/etc/hostname
@@ -260,17 +260,18 @@ release_ufs922:
 
 release_ufs912:
 	echo "ufs912" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
 	
 release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw && \
+	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw && \
 	cp -dp $(archivedir)/ptinp/$(if $(P0210),pti_210.ko)$(if $(P0209),pti_209.ko)$(if $(P0207),pti_207.ko)$(if $(P0123),pti_123.ko) $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko
 
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw && \
-	cp -dp $(archivedir)/ptinp/$(if $(P0207),pti_207s2.ko) $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
+	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw && \
+	cp -dp $(archivedir)/ptinp/$(if $(P0207),pti_207s2.ko) $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko && \
+	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends && \
 	cp -dp $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends/spark7162.ko && \
 	depmod -b $(prefix)/release $(KERNELVERSION)
 
@@ -279,40 +280,40 @@ release_fortis_hdbox:
 	
 release_atevio7500:
 	echo "atevio7500" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw
+	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw
 
 release_octagon1008:
 	echo "octagon1008" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/dvb-fe-avl2108.fw $(prefix)/release/lib/firmware/ && \
-	cp $(targetprefix)/lib/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
+	cp $(buildprefix)/root/firmware/dvb-fe-avl2108.fw $(prefix)/release/lib/firmware/ && \
+	cp $(buildprefix)/root/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
 
 release_hs7810a:
 	echo "hs7810a" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
 
 release_hs7110:
 	echo "hs7110" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
 
 release_whitebox:
 	echo "whitebox" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
+	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
 
 release_ufs910:
 	echo "ufs910" > $(prefix)/release/etc/hostname && \
-	cp $(targetprefix)/lib/firmware/dvb-fe-cx21143.fw $(prefix)/release/lib/firmware/dvb-fe-cx24116.fw
+	cp $(buildprefix)/root/firmware/dvb-fe-cx21143.fw $(prefix)/release/lib/firmware/dvb-fe-cx24116.fw
 
 release_hl101:
 	echo "hl101" > $(prefix)/release/etc/hostname && \
 	cp -f $(buildprefix)/root/release/fstab_hl101 $(prefix)/release/etc/fstab
-	cp $(targetprefix)/lib/firmware/dvb-fe-avl2108.fw $(prefix)/release/lib/firmware/ && \
-	cp $(targetprefix)/lib/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
+	cp $(buildprefix)/root/firmware/dvb-fe-avl2108.fw $(prefix)/release/lib/firmware/ && \
+	cp $(buildprefix)/root/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
 
 release_adb_box:
 	echo "Adb_Box" > $(prefix)/release/etc/hostname && \
 	cp -f $(buildprefix)/root/release/fstab_adb_box $(prefix)/release/etc/fstab
-	cp $(targetprefix)/lib/firmware/dvb-fe-avl2108.fw $(prefix)/release/lib/firmware/ && \
-	cp $(targetprefix)/lib/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
+	cp $(buildprefix)/root/firmware/dvb-fe-avl2108.fw $(prefix)/release/lib/firmware/ && \
+	cp $(buildprefix)/root/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
 
 release_vip1_v2: release_common_utils
 	echo "Edision-v2" > $(prefix)/release/etc/hostname && \

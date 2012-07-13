@@ -59,10 +59,10 @@ include make/misc_tools.mk
 include make/plugins.mk
 
 # Include enigma gui targets
-include make/enigma.mk
+#include make/enigma.mk
 
 # Include enigma2 gui targets
-include make/enigma2.mk
+#include make/enigma2.mk
 
 # Include enigma2 plugins targets
 include make/enigma2-plugins.mk
@@ -89,7 +89,7 @@ include make/neutrino.mk
 include make/vdr.mk
 
 # Include enigma1-hd gui targets
-include make/enigma1-hd.mk
+#include make/enigma1-hd.mk
 
 # Essential, and some less essential, libraries
 #include make/tuxbox_libs.mk
