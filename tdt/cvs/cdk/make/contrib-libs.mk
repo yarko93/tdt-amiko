@@ -3128,10 +3128,9 @@ $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
 # tuxtxt32bpp
 #
 DESCRIPTION_tuxtxt32bpp = "tuxtxt plugin"
-PKGR_tuxtxt32bpp = r1
+PKGR_tuxtxt32bpp = r0
 
 FILES_tuxtxt32bpp = \
-/usr/share/fonts \
 /usr/lib/libtuxtxt32bpp* \
 /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/* \
 /usr/tuxtxt/tuxtxt2.conf
