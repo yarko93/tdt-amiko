@@ -206,6 +206,7 @@ release_base:
 	cp -f $(buildprefix)/root/bin/autologin $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/bin/vdstandby $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/etc/vdstandby.cfg $(prefix)/release/etc/ && \
+	cp -f $(buildprefix)/root/etc/network/interfaces $(prefix)/release/etc/network/ && \
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/etc/image-version $(prefix)/release/etc/ && \
@@ -273,6 +274,7 @@ release_spark7162:
 	cp -dp $(archivedir)/ptinp/$(if $(P0207),pti_207s2.ko) $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko && \
 	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends && \
 	cp -dp $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends/spark7162.ko && \
+	rm $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7106.ko && \
 	depmod -b $(prefix)/release $(KERNELVERSION)
 
 release_fortis_hdbox:
