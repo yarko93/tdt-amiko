@@ -11,11 +11,3 @@
  Obsoletes:	%{_stm_pkg_prefix}-%{_stm_target_arch}-hotplug
  
  %define _docdir		%{_stm_cross_target_dir}%{_stm_target_doc_dir}
-@@ -171,6 +169,7 @@
- %target_setup
- %target_autoreconf
- %target_configure --libexecdir=%{udev_scriptdir} --disable-logging \
-+		  GLIB_CFLAGS="-I%{_stm_cross_target_dir}%{_stm_target_lib_dir}/glib-2.0/include -I%{_stm_cross_target_dir}/usr/include/glib-2.0" \
- 		  --disable-introspection
- 
- 
