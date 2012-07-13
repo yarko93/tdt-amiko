@@ -540,7 +540,6 @@ libsigc
   1.2.5
   {PN}++-{PV}
   extract:http://ftp.gnome.org/pub/GNOME/sources/{PN}++/1.2/{PN}++-{PV}.tar.gz
-  rewrite-pkgconfig:sigc++-1.2.pc
   make:install:DESTDIR=PKDIR
 ;
 libmad
@@ -672,7 +671,6 @@ fontconfig
   2.5.93
   {PN}-{PV}
   extract:http://{PN}.org/release/{PN}-{PV}.tar.gz
-  rewrite-pkgconfig:{PN}.pc
   make:install:DESTDIR=PKDIR
 ;
 libxmlccwrap
