@@ -47,6 +47,42 @@ $(DEPDIR)/init-scripts: @DEPENDS_init_scripts@
 	$(toflash_build)
 	touch $@
 
+#
+# EXTRA FONTS
+#
+
+DESCRIPTION_fonts_extra = Extra fonts to beautify your box
+SRC_URI_fonts_extra = git://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko.git
+PKGV_fonts_extra = 0.1
+SRC_URI_font_valis_enigma = $(SRC_URI_fonts_extra)
+PKGV_font_valis_enigma = $(PKGV_fonts_extra)
+
+fonts_extra_file_list = $(subst .ttf,,$(shell ls root/usr/share/fonts/))
+
+# This can be used as multipackaging example
+# Remember to replace '-' with '_' in variables and package names
+
+PACKAGES_fonts_extra = $(subst -,_,$(addprefix font_,$(fonts_extra_file_list)))
+$(foreach f,$(fonts_extra_file_list), \
+ $(eval DESCRIPTION_font_$(subst -,_,$f) = font $f ) \
+ $(eval FILES_font_$(subst -,_,$f) = /usr/share/fonts/$f*) \
+)
+
+$(DEPDIR)/font_valis_enigma: fonts_extra
+	$(start_build)
+	$(INSTALL) -d $(PKDIR)/usr/share/fonts
+	$(INSTALL) -m 644 root/usr/share/fonts/valis_enigma.ttf $(PKDIR)/usr/share/fonts
+	$(toflash_build)
+	touch $@
+
+$(DEPDIR)/fonts_extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fonts_extra_file_list)))
+	$(start_build)
+	$(INSTALL) -d $(PKDIR)/usr/share/fonts
+	$(INSTALL) -m 644 $^ $(PKDIR)/usr/share/fonts
+	$(extra_build)
+	touch $@
+
+
 
 # auxiliary targets for model-specific builds
 release_common_utils:
@@ -191,13 +227,6 @@ release_base:
 # Post tweaks
 	depmod -b $(prefix)/release $(KERNELVERSION)
 	$(call initdconfig,$(shell ls $(prefix)/release/etc/init.d))
-
-
-# install fonts	
-	mv -fb $(prefix)/release/usr/local/share/fonts $(prefix)/release/usr/share/ && \
-	$(INSTALL_DIR) $(prefix)/release/usr/share/fonts && \
-	ln -s /usr/share/fonts $(prefix)/release/usr/local/share/fonts && \
-	cp $(buildprefix)/root/usr/share/fonts/* $(prefix)/release/usr/share/fonts
 
 release_cube_common:
 	cp $(buildprefix)/root/release/reboot_cuberevo $(prefix)/release/etc/init.d/reboot && \
