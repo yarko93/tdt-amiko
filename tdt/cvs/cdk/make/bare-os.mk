@@ -801,6 +801,7 @@ endif
 # UDEV
 #
 UDEV := udev
+UDEV_DEV := udev-dev
 if STM22
 UDEV_VERSION := 054-6
 UDEV_SPEC := stm-target-$(UDEV).spec
@@ -822,10 +823,11 @@ UDEV_PATCHES :=
 endif !STM23
 endif !STM22
 UDEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV)-$(UDEV_VERSION).sh4.rpm
+UDEV_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV_DEV)-$(UDEV_VERSION).sh4.rpm
 
 
-$(UDEV_RPM): \
-		libacl-dev libattr-dev libusb usbutils $(RDEPENDS_udev) \
+$(UDEV_RPM) $(UDEV_DEV_RPM): \
+		glib2 libacl-dev libattr-dev libusb usbutils $(RDEPENDS_udev) \
 		$(if $(UDEV_SPEC_PATCH),Patches/$(UDEV_SPEC_PATCH)) \
 		$(if $(UDEV_PATCHES),$(UDEV_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX)-target-$(UDEV)-$(UDEV_VERSION).src.rpm
@@ -835,6 +837,14 @@ $(UDEV_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(UDEV_SPEC)
 
+$(DEPDIR)/min-$(UDEV_DEV) $(DEPDIR)/std-$(UDEV_DEV) $(DEPDIR)/max-$(UDEV_DEV) $(DEPDIR)/$(UDEV_DEV): \
+$(DEPDIR)/%$(UDEV_DEV): $(UDEV_DEV_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	[ "x$*" = "x" ] && touch $@ || true
+	$(REWRITE_LIBDEP)/libgudev-1.0.la
+	@TUXBOX_YAUD_CUSTOMIZE@
+
 $(DEPDIR)/min-$(UDEV) $(DEPDIR)/std-$(UDEV) $(DEPDIR)/max-$(UDEV) $(DEPDIR)/$(UDEV): \
 $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
@@ -843,7 +853,6 @@ $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 		for s in sysfs udev ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
-	$(REWRITE_LIBDEP)/libgudev-1.0.la
 	$(start_build)
 	$(fromrpm_get)
 # start udevadm earlier
