@@ -200,12 +200,12 @@ release_base:
 # Copy keymap.xml
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2)$(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK)$(SPARK7162),_spark)$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD),_cuberevo)$(if $(HOMECAST5101),_ufs910)$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).xml $(prefix)/release/usr/share/enigma2/keymap.xml && \
 	touch $(prefix)/release/var/etc/.firstboot && \
-	cp -dp $(targetprefix)/sbin/MAKEDEV $(prefix)/release/sbin/MAKEDEV && \
 	cp -f $(buildprefix)/root/release/mme_check $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/bootscreen/bootlogo.mvi $(prefix)/release/boot/ && \
 	cp -f $(buildprefix)/root/bin/autologin $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/bin/vdstandby $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/etc/vdstandby.cfg $(prefix)/release/etc/ && \
+	cp -f $(buildprefix)/root/etc/network/interfaces $(prefix)/release/etc/network/ && \
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/etc/image-version $(prefix)/release/etc/ && \
@@ -224,6 +224,12 @@ release_base:
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
+	$(INSTALL_DIR) $(prefix)/release/etc/tuxbox && \
+	$(INSTALL_FILE) root/etc/tuxbox/satellites.xml $(prefix)/release/etc/tuxbox/ && \
+	$(INSTALL_FILE) root/etc/tuxbox/tuxtxt2.conf $(prefix)/release/etc/tuxbox/ && \
+	$(INSTALL_FILE) root/etc/tuxbox/cables.xml $(prefix)/release/etc/tuxbox/ && \
+	$(INSTALL_FILE) root/etc/tuxbox/terrestrial.xml $(prefix)/release/etc/tuxbox/ && \
+	$(INSTALL_FILE) root/etc/tuxbox/timezone.xml $(prefix)/release/etc/ && \
 	echo "576i50" > $(prefix)/release/etc/videomode
 # Post tweaks
 	depmod -b $(prefix)/release $(KERNELVERSION)
@@ -273,6 +279,7 @@ release_spark7162:
 	cp -dp $(archivedir)/ptinp/$(if $(P0207),pti_207s2.ko) $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko && \
 	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends && \
 	cp -dp $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends/spark7162.ko && \
+	rm $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7106.ko && \
 	depmod -b $(prefix)/release $(KERNELVERSION)
 
 release_fortis_hdbox:
