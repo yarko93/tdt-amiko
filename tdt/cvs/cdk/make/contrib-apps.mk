@@ -1117,7 +1117,7 @@ DESCRIPTION_udpxy := udp to http stream proxy
 PKGR_udpxy = r0
 
 # Other variables are optional and have default values and another are taken from smart-rules (full list below)
-# Usually each utility is split into three targets. Target name and package name 'udpxy' should be the same.
+# Usually each utility is split into three make-targets. Target name and package name 'udpxy' should be the same.
 # Write
 #  $(DEPDIR)/udpxy.do_prepare:
 # But not
@@ -1149,8 +1149,9 @@ $(DEPDIR)/udpxy.do_compile: $(DEPDIR)/udpxy.do_prepare
 #  If you fill $(PKDIR) correctly then our scripts could proceed.
 #  You could call one of the following:
 #    $(tocdk_build) - copy all $(PKDIR) contents to tufsbox/cdkroot to use them later if something depends on them.
-#    $(extra_build) - perform strip and cleanup, then make package ready to install on your box. You can find it in tufsbox/ipkbox
+#    $(extra_build) - perform strip and cleanup, then make package ready to install on your box. You can find ipk in tufsbox/ipkbox
 #    $(toflash_build) - At first do exactly that $(extra_build) does. After install package to pkgroot to include it in image.
+#    $(e2extra_build) - same as $(extra_build) but copies ipk to tufsbox/ipkextras
 #  Tip: $(tocdk_build) and $(toflash_build) could be used simultaneously.
 
 $(DEPDIR)/udpxy: $(DEPDIR)/udpxy.do_compile
@@ -1161,10 +1162,15 @@ $(DEPDIR)/udpxy: $(DEPDIR)/udpxy.do_compile
 	$(extra_build)
 	touch $@
 
+# Note: all above defined variables has suffix 'udpxy' same as make-target name '$(DEPDIR)/udpxy'
+# If you want to change name of make-target for some reason add $(call parent_pk,udpxy) before $(start_build) line.
+# Of course place your variables suffix instead of udpxy.
+
 # Some words about git and svn.
 # It is available to automatically determine version from git and svn
 # If there is git/svn rule in smart-rules and the version equals git/svn then the version will be automatically evaluated during $(start_build)
 # Note: it is assumed that there is only one repo for the utility.
+# If you use your own git/svn fetch mechanism we provide you with $(get_git_version) or $(get_svn_version), but make sure that DIR_foo is git/svn repo.
 
 # FILES variable
 # FILES variable is the filter for your $(PKDIR), by default it equals "/" so all files from $(PKDIR) are built into the package. It is list of files and directories separated by space. Wildcards are supported.
@@ -1174,7 +1180,35 @@ $(DEPDIR)/udpxy: $(DEPDIR)/udpxy.do_compile
 #   /dir: will include the directory dir in the package, which in turn will include all files in the directory and all subdirectories.
 
 # Info about some additional variables
-# ........
+# PKGV_foo
+#  Taken from smart rules version. Set if you don't use smart-rules
+# SRC_URI_foo
+#  Sources from which package is built, taken from smart-rules file://, http://, git://, svn:// rules.
+# Next variables has default values and influence CONTROL file fields only:
+# MAINTAINER_foo := Ar-P team
+# PACKAGE_ARCH_foo := sh4
+# SECTION_foo := base
+# PRIORITY_foo := optional
+# LICENSE_foo := unknown
+# HOMEPAGE_foo := unknown
+# You set package dependencies in CONTROL file with:
+# RDEPENDS_foo :=
+# RREPLACES :=
+# RCONFLICTS :=
+
+# post/pre inst/rm Scripts
+# For these sripts use make define as following:
+
+define postinst_foo
+#!/bin/sh
+initdconfig --add foo
+endef
+
+# This is all
+# Note: init.d script starting and stopping is handled by initdconfig
+
+# Multi-Packaging
+# .........
 
 # sysstat
 #
