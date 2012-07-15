@@ -84,7 +84,11 @@ define do_build_pkg
 		$(if $(filter install,$(1)), && \
 			pkgn=`cat tmpname |perl -ne 'if (m/Packaged contents/) { print ((split / /)[-1])}'` && \
 			(opkg --force-depends remove $(if $(filter cdk,$(2)),$(cdk_ipkg_args),$(flash_ipkg_args)) `echo $${pkg//_/-}| tr A-Z a-z` || true) && \
+			if [ "`echo $(EXTRA_$(PARENT_PK)) |tr ' ' '\n' |grep -x $$pkg`" == "" -o "$(2)" == "cdk" ]; then \
 			opkg install $(if $(filter cdk,$(2)),$(cdk_ipkg_args),$(flash_ipkg_args)) $$pkgn \
+			; else \
+				echo "Not installing $$pkg" ; \
+			fi \
 		); done
 endef
 
