@@ -205,6 +205,8 @@ release_base:
 	cp -f $(buildprefix)/root/bin/autologin $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/bin/vdstandby $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/etc/vdstandby.cfg $(prefix)/release/etc/ && \
+	cp -f $(buildprefix)/root/etc/init.d/avahi-daemon $(prefix)/release/etc/init.d/ && \
+	chmod 777 $(prefix)/release/etc/init.d/avahi-daemon && \
 	cp -f $(buildprefix)/root/etc/network/interfaces $(prefix)/release/etc/network/ && \
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin/ && \
@@ -270,11 +272,15 @@ release_ufs912:
 	
 release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname && \
+	echo "src/gz AR-P http://alien.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
+	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw && \
 	cp -dp $(archivedir)/ptinp/$(if $(P0210),pti_210.ko)$(if $(P0209),pti_209.ko)$(if $(P0207),pti_207.ko)$(if $(P0123),pti_123.ko) $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko
 
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname && \
+	echo "src/gz AR-P http://alien2.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
+	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw && \
 	cp -dp $(archivedir)/ptinp/$(if $(P0207),pti_207s2.ko) $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko && \
 	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends && \
