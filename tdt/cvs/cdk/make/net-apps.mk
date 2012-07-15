@@ -350,9 +350,8 @@ $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 #
 # WPA_SUPPLICANT
 #
-DESCRIPTION_wpa_supplicant = "wpa_supplicant"
+DESCRIPTION_wpa_supplicant = "wpa-supplicant"
 PKGR_wpa_supplicant = r0
-RDEPENDS_wpa_supplicant = wireless-tools
 FILES_wpa_supplicant = \
 /usr/sbin/*
 
