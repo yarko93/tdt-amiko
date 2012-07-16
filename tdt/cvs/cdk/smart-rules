@@ -1216,7 +1216,7 @@ ethtool
   make:install:DESTDIR=PKDIR
 ;
 init_scripts
-  0.1
+  0.3
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
@@ -1244,3 +1244,5 @@ e2skin
   {PN}
   git://github.com/schpuntik/enigma2-skins-sh4.git:b=master
 ;
+#ralink-driver
+  

@@ -1174,3 +1174,13 @@ linux-kernel.%:
 	diff $(KERNEL_DIR)/.config.old $(KERNEL_DIR)/.config
 	@echo ""
 #-------------------
+wtfwifi-%:
+	$(MAKE) -C $(driverdir)/wireless/rt ARCH=sh CHIPSET=$*\
+		KERNEL_LOCATION=$(buildprefix)/$(KERNEL_DIR) \
+	all
+
+wtfwifi-clean:
+	$(MAKE) -C $(driverdir)/wireless/rt ARCH=sh \
+		KERNEL_LOCATION=$(buildprefix)/$(KERNEL_DIR) \
+	clean
+
