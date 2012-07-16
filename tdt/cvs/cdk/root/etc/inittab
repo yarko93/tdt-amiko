@@ -61,5 +61,4 @@ A0:2345:respawn:/sbin/getty -n -l /bin/autologin -L ttyAS0 115200 vt102
 
 # run enigma2 gui
 #
-e21:2:respawn:/usr/bin/enigma2.sh
-e22:3:respawn:/usr/bin/enigma2.sh
+e2:3:respawn:/usr/bin/enigma2.sh
