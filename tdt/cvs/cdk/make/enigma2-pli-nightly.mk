@@ -39,7 +39,6 @@ $(DEPDIR)/enigma2-pli-nightly.do_prepare:
 	touch $@
 
 $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline font-valis-enigma \
-		enigma2-pli-nightly.do_prepare \
 		libdvbsipp python libxml2 libxslt elementtree zope_interface twisted pyopenssl pythonwifi lxml libxmlccwrap ncurses-dev libdreamdvd2 tuxtxt32bpp sdparm hotplug_e2 $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
 	cd $(DIR_enigma2_pli) && \
 		./autogen.sh && \
@@ -69,7 +68,7 @@ PKGR_enigma2_pli = r1
 SRC_URI_enigma2_pli := git://openpli.git.sourceforge.net/gitroot/openpli/enigma2
 FILES_enigma2_pli := /usr/lib/ /etc/enigma2 /usr/share /usr/bin
 
-$(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_compile
+$(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_prepare enigma2-pli-nightly.do_compile
 	$(call parent_pk,enigma2_pli)
 	$(start_build)
 	$(get_git_version)
@@ -92,9 +91,4 @@ enigma2-pli-nightly-distclean:
 	rm -rf $(DIR_enigma2_pli).newest
 	rm -rf $(DIR_enigma2_pli).org
 	rm -rf $(DIR_enigma2_pli).patched
-
-$(DEPDIR)/enigma2-pli-nightly.keymap-xml:
-	$(start_build)
-	$(toflash_build)
-	touch $@
 

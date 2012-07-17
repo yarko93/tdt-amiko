@@ -161,7 +161,7 @@ release_base:
 	ln -sf /usr/bin/opkg-cl  $(prefix)/release/usr/bin/ipkg
 # rc.d directories
 	mkdir -p $(prefix)/release/etc/rc.d/rc{0,1,2,3,4,5,6,S}.d
-	ln -s ../init.d $(prefix)/release/etc/rc.d
+	ln -sf ../init.d $(prefix)/release/etc/rc.d
 # zoneinfo
 	$(INSTALL_DIR) $(prefix)/release/usr/share/zoneinfo && \
 	cp -aR $(buildprefix)/root/usr/share/zoneinfo/* $(prefix)/release/usr/share/zoneinfo/
@@ -195,6 +195,8 @@ release_base:
 		cp -f $(buildprefix)/root/release/autofs $(prefix)/release/etc/init.d/; \
 	fi
 
+# Copy lircd.conf
+	cp -f $(buildprefix)/root/etc/lircd$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2),_vip2)$(if $(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO),_$(CUBEREVO))$(if $(CUBEREVO_MINI),_$(CUBEREVO_MINI))$(if $(CUBEREVO_MINI2),_$(CUBEREVO_MINI2))$(if $(CUBEREVO_MINI_FTA),_$(CUBEREVO_MINI_FTA))$(if $(CUBEREVO_250HD),_$(CUBEREVO_250HD))$(if $(CUBEREVO_2000HD),_$(CUBEREVO_2000HD))$(if $(CUBEREVO_9500HD),_$(CUBEREVO_9500HD))$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).conf $(prefix)/release/etc/lircd.conf
 # Copy keymap.xml
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2)$(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK)$(SPARK7162),_spark)$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD),_cuberevo)$(if $(HOMECAST5101),_ufs910)$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).xml $(prefix)/release/usr/share/enigma2/keymap.xml && \
 	touch $(prefix)/release/var/etc/.firstboot && \
@@ -409,12 +411,3 @@ release-clean:
 
 ######## FOR YOUR OWN CHANGES use these folder in cdk/own_build/enigma2 #############
 	cp -RP $(buildprefix)/own_build/enigma2/* $(prefix)/release/
-
-wtf:
-	@echo $(KERNEL_DIR)
-if ENABLE_SPARK7162
-	@echo amiko2
-endif
-if ENABLE_SPARK
-	@echo amiko1
-endif

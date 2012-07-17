@@ -153,16 +153,10 @@ $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 # lirc
 #
 DESCRIPTION_lirc ="lirc"
-DESCRIPTION_liblircclient = liblircclient library
 
-PACKAGES_lirc = liblircclient lirc
-EXTRA_lirc = liblircclient
 FILES_lirc = \
 /usr/bin/lircd \
 /usr/lib/*.so*
-
-FILES_liblircclient = \
-/usr/lib/liblirc_client*
 
 $(DEPDIR)/lirc.do_prepare: bootstrap @DEPENDS_lirc@
 	@PREPARE_lirc@
