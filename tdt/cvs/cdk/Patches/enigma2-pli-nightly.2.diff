@@ -1402,6 +1402,17 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org.org/lib/dvb/ep
  			if ( it != descriptors.end() )
  			{
  				descriptorPair &p = it->second;
+@@ -650,8 +650,8 @@
+ 
+ 	// This fixed the EPG on the Multichoice irdeto systems
+ 	// the EIT packet is non-compliant.. their EIT packet stinks
+-	if ( data[ptr-1] < 0x40 )
+-		--ptr;
++//	if ( data[ptr-1] < 0x40 )
++//		--ptr;
+ 
+ 	int onid = HILO(eit->original_network_id);
+ 	int tsid  = HILO(eit->transport_stream_id);
 @@ -1745,6 +1773,46 @@
  {
  	int map;
