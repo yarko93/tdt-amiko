@@ -76,15 +76,9 @@ modprobe e2_proc
    showiframe -p /boot/bootlogo.mvi &
    stfbcontrol a 0
 
-   echo "init lircd"
-   ln -s lirc0 /dev/lirc
-   /usr/bin/lircd
-
    major=$(awk "\$2==\"sparkid\" {print \$1}" /proc/devices)
 #   rm -f /dev/sparkid
 #   mknod /dev/sparkid c $major 0 
-
-        /bin/evremote2 10 100 &
 
 	stfbcontrol a 255
 	echo " e2 "

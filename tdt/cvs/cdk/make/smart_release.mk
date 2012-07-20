@@ -14,6 +14,7 @@ networking \
 reboot \
 sendsigs \
 telnetd \
+lircd \
 umountfs
 
 define postinst_init_scripts

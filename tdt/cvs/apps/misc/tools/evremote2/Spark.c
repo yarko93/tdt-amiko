@@ -39,17 +39,21 @@
 #include "remotes.h"
 #include "Spark.h"
 
-
+#if 0
 #define	SPARK_RC04_PREDATA		"CC33"
 #define	SPARK_RC05_PREDATA		"11EE"
 #define	SPARK_RC08_PREDATA		"44BB"
 #define	SPARK_RC09_PREDATA		"9966"
 #define	SPARK_RC12_PREDATA		"08F7"
 #define	SPARK_DEFAUYLT_PREDATA	"A25D"
+#endif
 
 static tLongKeyPressSupport cLongKeyPressSupport = {
   10, 120,
 };
+
+static tButton cButtonsEdisionSpark[] = {};
+#if 0
 /* Edision argus-spark RCU */
 static tButton cButtonsEdisionSpark[] = {
     {"STANDBY"        , "25", KEY_POWER},
@@ -397,6 +401,7 @@ static tButton cButtonsSparkRc04[] = {
 
 	{""               , ""  , KEY_NULL},
 };
+#endif
 
 
 /* fixme: move this to a structure and
@@ -405,7 +410,7 @@ static tButton cButtonsSparkRc04[] = {
 static struct sockaddr_un  vAddr;
 
 
-
+#if 0
 static tButton *pSparkGetButton(char *pData)
 
 {
@@ -435,6 +440,93 @@ static tButton *pSparkGetButton(char *pData)
 		pButtons = cButtonsSparkRc04;
 	}
 	return pButtons;
+}
+#endif
+
+struct keyMap {
+	char *KeyName;
+	int KeyCode;
+};
+
+/* All possible keys on all remotes
+ * add if you have more
+ * Only these keys should be used in lircd.conf
+ */
+
+struct keyMap linuxKeys[] = {
+	{ "KEY_POWER", KEY_POWER },
+	{ "KEY_MUTE", KEY_MUTE },
+	{ "KEY_V", KEY_V },
+	{ "KEY_AUX", KEY_AUX },
+	{ "KEY_0", KEY_0 },
+	{ "KEY_1", KEY_1 },
+	{ "KEY_2", KEY_2 },
+	{ "KEY_3", KEY_3 },
+	{ "KEY_4", KEY_4 },
+	{ "KEY_5", KEY_5 },
+	{ "KEY_6", KEY_6 },
+	{ "KEY_7", KEY_7 },
+	{ "KEY_8", KEY_8 },
+	{ "KEY_9", KEY_9 },
+	{ "KEY_BACK", KEY_BACK },
+	{ "KEY_INFO", KEY_INFO },
+	{ "KEY_AUDIO", KEY_AUDIO },
+	{ "KEY_DOWN", KEY_DOWN },
+	{ "KEY_UP", KEY_UP },
+	{ "KEY_RIGHT", KEY_RIGHT },
+	{ "KEY_LEFT", KEY_LEFT },
+	{ "KEY_VOLUMEUP", KEY_VOLUMEUP },
+	{ "KEY_VOLUMEDOWN", KEY_VOLUMEDOWN },
+	{ "KEY_PAGEUP", KEY_PAGEUP },
+	{ "KEY_PAGEDOWN", KEY_PAGEDOWN },
+	{ "KEY_OK", KEY_OK },
+	{ "KEY_MENU", KEY_MENU },
+	{ "KEY_EPG", KEY_EPG },
+	{ "KEY_HOME", KEY_HOME },
+	{ "KEY_FAVORITES", KEY_FAVORITES },
+	{ "KEY_RED", KEY_RED },
+	{ "KEY_GREEN", KEY_GREEN },
+	{ "KEY_YELLOW", KEY_YELLOW },
+	{ "KEY_BLUE", KEY_BLUE },
+	{ "KEY_REWIND", KEY_REWIND },
+	{ "KEY_PAUSE", KEY_PAUSE },
+	{ "KEY_PLAY", KEY_PLAY },
+	{ "KEY_FASTFORWARD", KEY_FASTFORWARD },
+	{ "KEY_RECORD", KEY_RECORD },
+	{ "KEY_STOP", KEY_STOP },
+	{ "KEY_SLOW", KEY_SLOW },
+	{ "KEY_ARCHIVE", KEY_ARCHIVE },
+	{ "KEY_SAT", KEY_SAT },
+	{ "KEY_PREVIOUS", KEY_PREVIOUS },
+	{ "KEY_NEXT", KEY_NEXT },
+	{ "KEY_TV2", KEY_TV2 },
+	{ "KEY_CLOSE", KEY_CLOSE },
+	{ "KEY_TIME", KEY_TIME },
+	{ "KEY_NULL", KEY_NULL },
+	{ "KEY_F1", KEY_F1 },
+	{ "KEY_FIND", KEY_FIND },
+	{ "KEY_CHANNELDOWN", KEY_CHANNELDOWN },
+	{ "KEY_CHANNELUP", KEY_CHANNELUP },
+	{ "KEY_T", KEY_T },
+	{ "KEY_F", KEY_F },
+	{ "KEY_P", KEY_P },
+	{ "KEY_W", KEY_W },
+	{ "KEY_TITLE", KEY_TITLE },
+	{ "KEY_SUBTITLE", KEY_SUBTITLE },
+	{ "KEY_VIDEO", KEY_VIDEO },
+	{ "KEY_S", KEY_S },
+	{ "KEY_HELP", KEY_HELP },
+	{ "KEY_F2", KEY_F2 },
+	{ "KEY_F3", KEY_F3 },
+	{ "KEY_U", KEY_U },
+	{NULL, -1}
+};
+
+static int lookupKey(char *keyname){
+	struct keyMap *l = linuxKeys;
+	while (l->KeyName && strcmp(l->KeyName, keyname))
+		l++;
+	return l->KeyCode;
 }
 
 
@@ -469,46 +561,33 @@ static int pShutdown(Context_t* context ) {
 }
 
 static int pRead(Context_t* context ) {
-    char                vBuffer[128];
+	const int           cSize = 128;
+    char                vBuffer[cSize];
+	char                keyname[cSize];
+	int                 updown;
     char                vData[10];
-    const int           cSize         = 128;
     int                 vCurrentCode  = -1;
 	int					rc;
-	tButton 			*cButtons = cButtonsEdisionSpark;
 
 	memset(vBuffer, 0, 128);
     //wait for new command
     rc = read (context->fd, vBuffer, cSize);
 	if(rc <= 0)return -1;
 
-    //parse and send key event
-    vData[0] = vBuffer[17];
-    vData[1] = vBuffer[18];
-    vData[2] = '\0';
+	printf("[RCU] key: %s -> %s\n", vData, &vBuffer[0]);
 
-
-    vData[0] = vBuffer[8];
-    vData[1] = vBuffer[9];
-    vData[2] = vBuffer[10];
-    vData[3] = vBuffer[11];
-    vData[4] = '\0';
-	cButtons = pSparkGetButton(vData);
-
-    vData[0] = vBuffer[14];
-    vData[1] = vBuffer[15];
-    vData[2] = '\0';
-
-    printf("[RCU] key: %s -> %s\n", vData, &vBuffer[0]);
-    vCurrentCode = getInternalCode(cButtons, vData);
-
-	if(vCurrentCode != 0) {
-		static int nextflag = 0;
-		if (('0' == vBuffer[17]) && ('0' == vBuffer[18]))
-		{
-		    nextflag++;
+	if (2 == sscanf(vBuffer, "%*s %o %s %*s", &updown, keyname)) {
+		vCurrentCode = lookupKey(keyname);
+		if (vCurrentCode == -1) {
+			printf("[RCU] unknown key %s\n", keyname);
+			return -1;
 		}
+		static int nextflag = 0;
+		if (updown == 0)
+			nextflag++;
 		vCurrentCode += (nextflag << 16);
 	}
+
     return vCurrentCode;
 }
 
