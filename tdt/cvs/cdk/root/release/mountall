@@ -34,6 +34,5 @@ ln -sf /tmp /var/tmp
 # a file on a now mounted filesystem.
 #
 swapon -a 2> /dev/null
-mount usbfs /proc/bus/usb -t usbfs
 
 : exit 0
