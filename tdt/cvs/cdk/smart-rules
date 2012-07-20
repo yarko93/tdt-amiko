@@ -1216,7 +1216,7 @@ ethtool
   make:install:DESTDIR=PKDIR
 ;
 init_scripts
-  0.1
+  0.3
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
@@ -1233,6 +1233,7 @@ init_scripts
   nothing:file://../root/release/sendsigs
   nothing:file://../root/release/telnetd
   nothing:file://../root/release/umountfs
+  nothing:file://../root/release/lircd
 ;
 e2plugin
   git

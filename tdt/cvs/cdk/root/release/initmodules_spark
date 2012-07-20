@@ -8,7 +8,7 @@
 echo "init frontpanel"
 modprobe aotom
 modprobe simu_button
-
+mknod -m 644 /dev/vfd c 147 0
 modprobe e2_proc
 
    echo "init stmfb"
@@ -76,27 +76,9 @@ modprobe e2_proc
    showiframe -p /boot/bootlogo.mvi &
    stfbcontrol a 0
 
-   echo "init lircd"
-   ln -s lirc0 /dev/lirc
-   /usr/bin/lircd
-
    major=$(awk "\$2==\"sparkid\" {print \$1}" /proc/devices)
 #   rm -f /dev/sparkid
 #   mknod /dev/sparkid c $major 0 
 
-	var=`cat /proc/cmdline`
-	var=${var##*STB_ID=}
-	var=${var:0:8}
-	if [ $var = "09:00:0B" ]; then
-	/bin/evremote1 spark &
-	elif [ $var = "09:00:0A" ]; then
-	/bin/evremote2 spark &
-	elif [ $var = "09:00:07" ]; then
-	/bin/evremote3 spark &
-	elif [ $var = "09:00:08" ]; then
-	/bin/evremote4 spark &
-	else
-        /bin/evremote2 spark &
-	fi
 	stfbcontrol a 255
 	echo " e2 "

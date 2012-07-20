@@ -12,4 +12,8 @@ if [ -e /sys ] && grep -q sysfs /proc/filesystems; then
   mount sysfs /sys -t sysfs
 fi
 
+if [ -e /proc/bus/usb ] && grep -q sysfs /proc/filesystems; then
+  mount usbfs /proc/bus/usb -t usbfs
+fi
+
 exit 0
