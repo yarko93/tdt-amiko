@@ -11,9 +11,10 @@ $(DEPDIR)/min-bootstrap $(DEPDIR)/std-bootstrap $(DEPDIR)/max-bootstrap $(DEPDIR
 $(DEPDIR)/%bootstrap: \
 		%libtool \
 		%$(FILESYSTEM) \
-		| %$(GLIBC) \
+		%$(GLIBC) \
 		%$(CROSS_LIBGCC) \
 		%$(LIBSTDC)
+
 	@[ "x$*" = "x" ] && touch -r RPMS/sh4/$(STLINUX)-sh4-$(LIBSTDC)-$(GCC_VERSION).sh4.rpm $@ || true
 
 #
@@ -30,10 +31,8 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%$(BASE_FILES) \
 		%module_init_tools \
 		%busybox \
-		\
 		%libz \
 		%grep \
-		%pppd \
 		%$(INITSCRIPTS) \
 		%openrdate \
 		%$(NETBASE) \
@@ -42,8 +41,8 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%$(DISTRIBUTIONUTILS) \
 		\
 		%e2fsprogs \
-		%u-boot-utils \
-		%diverse-tools
+		%u-boot-utils
+#		%diverse-tools
 #		%$(RELEASE) \
 #		%$(FINDUTILS) \
 #
@@ -106,42 +105,43 @@ yaud-neutrino-hd2: yaud-none lirc stslave \
 		boot-elf remote firstboot neutrino-hd2 release_neutrino
 	@TUXBOX_YAUD_CUSTOMIZE@
 
-if STM22
-yaud-enigma2: yaud-none host_python lirc stslave \
-		boot-elf hotplug remote firstboot enigma2 enigma2-misc release
-	@TUXBOX_YAUD_CUSTOMIZE@
-else
-yaud-enigma2: yaud-none host_python lirc \
-		boot-elf remote firstboot enigma2 enigma2-misc release
-	@TUXBOX_YAUD_CUSTOMIZE@
-endif
+#if STM22
+#yaud-enigma2: yaud-none host_python lirc stslave \
+#		boot-elf hotplug remote firstboot enigma2 enigma2-misc release
+#	@TUXBOX_YAUD_CUSTOMIZE@
+#else
+#yaud-enigma2: yaud-none host_python lirc \
+#		boot-elf remote firstboot enigma2 enigma2-misc release
+#	@TUXBOX_YAUD_CUSTOMIZE@
+#endif
 
-if STM22
-yaud-enigma2-nightly: yaud-none host_python lirc stslave \
-		boot-elf hotplug remote firstboot enigma2-nightly enigma2-misc release
-	@TUXBOX_YAUD_CUSTOMIZE@
-else
-yaud-enigma2-nightly: yaud-none host_python lirc stslave \
-		boot-elf remote firstboot enigma2-nightly enigma2-misc release
-	@TUXBOX_YAUD_CUSTOMIZE@
-endif
+#if STM22
+#yaud-enigma2-nightly: yaud-none host_python lirc stslave \
+#		boot-elf hotplug remote firstboot enigma2-nightly enigma2-misc release
+#	@TUXBOX_YAUD_CUSTOMIZE@
+#else
+#yaud-enigma2-nightly: yaud-none host_python lirc stslave \
+#		boot-elf remote firstboot enigma2-nightly enigma2-misc release
+#	@TUXBOX_YAUD_CUSTOMIZE@
+#endif
 
-if STM22
-yaud-enigma1-hd: yaud-none lirc stslave \
-		boot-elf hotplug remote firstboot enigma1-hd release_enigma1_hd
-	@TUXBOX_YAUD_CUSTOMIZE@
-else
-yaud-enigma1-hd: yaud-none lirc stslave \
-		boot-elf remote firstboot enigma1-hd release_enigma1_hd
-	@TUXBOX_YAUD_CUSTOMIZE@
-endif
+#if STM22
+#yaud-enigma1-hd: yaud-none lirc stslave \
+#		boot-elf hotplug remote firstboot enigma1-hd release_enigma1_hd
+#	@TUXBOX_YAUD_CUSTOMIZE@
+#else
+#yaud-enigma1-hd: yaud-none lirc stslave \
+#		boot-elf remote firstboot enigma1-hd release_enigma1_hd
+#	@TUXBOX_YAUD_CUSTOMIZE@
+#endif
 
 yaud-enigma2-pli-nightly: yaud-none host_python lirc \
-		boot-elf remote firstboot enigma2-pli-nightly enigma2-misc enigma2-plugins release
+		boot-elf remote firstboot enigma2-pli-nightly enigma2-plugins release
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 yaud-none: \
 		bare-os \
+		opkg-host \
 		libdvdcss \
 		libdvdread \
 		libdvdnav \
@@ -149,7 +149,9 @@ yaud-none: \
 		net-utils \
 		disk-utils \
 		driver \
-		misc-tools
+		init-scripts \
+		udev \
+		misc-tools 
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 #

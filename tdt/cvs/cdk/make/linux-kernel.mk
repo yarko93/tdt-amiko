@@ -884,7 +884,6 @@ $(DEPDIR)/linux-kernel.do_compile: \
 		Patches/$(HAVANA_STM24_KERNEL_CONFIG) \
 		config.status \
 		| $(HOST_U_BOOT_TOOLS)
-	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -913,7 +912,6 @@ $(DEPDIR)/linux-kernel.do_compile: \
 		Patches/mb618se_defconfig \
 		config.status \
 		| $(HOST_U_BOOT_TOOLS)
-	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -954,9 +952,7 @@ $(DEPDIR)/linux-kernel.do_compile: \
 		bootstrap-cross \
 		linux-kernel.do_prepare \
 		Patches/$(HOST_KERNEL_CONFIG) \
-		config.status \
 		| $(HOST_U_BOOT_TOOLS)
-	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -996,9 +992,7 @@ $(DEPDIR)/linux-kernel.%.do_compile: \
 		linux-kernel.do_prepare \
 		Patches/linux-sh4-$(KERNELVERSION).stboards.c.m4 \
 		Patches/$(HOST_KERNEL_CONFIG) \
-		config.status \
 		| $(DEPDIR)/$(HOST_U_BOOT_TOOLS)
-	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -1011,16 +1005,33 @@ $(DEPDIR)/linux-kernel.%.do_compile: \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- uImage modules
 	touch $@
 
+DESCRIPTION_linux_kernel = "The Linux Kernel and modules"
+PKGV_linux_kernel = $(KERNELVERSION)
+PKGR_linux_kernel = r2
+SRC_URI_linux_kernel = stlinux.com
+FILES_linux_kernel = \
+/lib/modules/$(KERNELVERSION)/kernel \
+/boot/uImage
+
+define postinst_linux_kernel
+#!/bin/sh
+flash_eraseall /dev/mtd5
+nandwrite -p /dev/mtd5 /boot/uImage
+rm /boot/uImage
+depmod
+endef
+
 $(DEPDIR)/min-linux-kernel $(DEPDIR)/std-linux-kernel $(DEPDIR)/max-linux-kernel \
 $(DEPDIR)/linux-kernel: \
 $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
-	@$(INSTALL) -d $(prefix)/$*cdkroot/boot && \
+	$(start_build)
+	@$(INSTALL) -d $(PKDIR)/boot && \
 	$(INSTALL) -d $(prefix)/$*$(notdir $(bootprefix)) && \
 	$(INSTALL) -m644 $(KERNEL_DIR)/arch/sh/boot/uImage $(prefix)/$*$(notdir $(bootprefix))/vmlinux.ub && \
-	$(INSTALL) -m644 $(KERNEL_DIR)/vmlinux $(prefix)/$*cdkroot/boot/vmlinux-sh4-$(KERNELVERSION) && \
-	$(INSTALL) -m644 $(KERNEL_DIR)/System.map $(prefix)/$*cdkroot/boot/System.map-sh4-$(KERNELVERSION) && \
-	$(INSTALL) -m644 $(KERNEL_DIR)/COPYING $(prefix)/$*cdkroot/boot/LICENSE
-	cp $(KERNEL_DIR)/arch/sh/boot/uImage $(prefix)/$*cdkroot/boot/
+	$(INSTALL) -m644 $(KERNEL_DIR)/vmlinux $(PKDIR)/boot/vmlinux-sh4-$(KERNELVERSION) && \
+	$(INSTALL) -m644 $(KERNEL_DIR)/System.map $(PKDIR)/boot/System.map-sh4-$(KERNELVERSION) && \
+	$(INSTALL) -m644 $(KERNEL_DIR)/COPYING $(PKDIR)/boot/LICENSE
+	cp $(KERNEL_DIR)/arch/sh/boot/uImage $(PKDIR)/boot/
 #if STM22
 	echo -e "ST Linux Distribution - Binary Kernel\n \
 	CPU: sh4\n \
@@ -1045,17 +1056,32 @@ $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 	$(if $(IPBOX9900),PLATFORM: stb7109ref\n) \
 	$(if $(IPBOX99),PLATFORM: stb7109ref\n) \
 	$(if $(IPBOX55),PLATFORM: stb7109ref\n) \
-	KERNEL VERSION: $(KERNELVERSION)\n" > $(prefix)/$*cdkroot/README.ST && \
-	$(MAKE) -C $(KERNEL_DIR) ARCH=sh INSTALL_MOD_PATH=$(prefix)/$*cdkroot modules_install && \
-	rm $(prefix)/$*cdkroot/lib/modules/$(KERNELVERSION)/build || true && \
-	rm $(prefix)/$*cdkroot/lib/modules/$(KERNELVERSION)/source || true
+	KERNEL VERSION: $(KERNELVERSION)\n" > $(PKDIR)/README.ST && \
+	$(MAKE) -C $(KERNEL_DIR) ARCH=sh INSTALL_MOD_PATH=$(PKDIR) modules_install && \
+	rm $(PKDIR)/lib/modules/$(KERNELVERSION)/build || true && \
+	rm $(PKDIR)/lib/modules/$(KERNELVERSION)/source || true
 #else
 #endif
 	@[ "x$*" = "x" ] && touch $@ || true
+	$(tocdk_build)
+	$(toflash_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
+
+DESCRIPTION_driver = "Drivers for stm box"
+PKGR_driver = r1
+FILES_driver = /lib/modules/$(KERNELVERSION)/extra
+SRC_URI_driver = "http://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko"
+DIR_driver = $(driverdir)
+
+define postinst_driver
+#!/bin/sh
+depmod
+endef
 
 $(DEPDIR)/driver: $(driverdir)/Makefile linux-kernel.do_compile
 #	$(MAKE) -C $(KERNEL_DIR) $(MAKE_OPTS) ARCH=sh modules_prepare
+	$(start_build)
+	$(get_git_version)
 	$(if $(PLAYER131),cp $(driverdir)/stgfb/stmfb/Linux/video/stmfb.h $(targetprefix)/usr/include/linux)
 	$(if $(PLAYER179),cp $(driverdir)/stgfb/stmfb/linux/drivers/video/stmfb.h $(targetprefix)/usr/include/linux)
 	$(if $(PLAYER191),cp $(driverdir)/stgfb/stmfb/linux/drivers/video/stmfb.h $(targetprefix)/usr/include/linux)
@@ -1097,8 +1123,8 @@ $(DEPDIR)/driver: $(driverdir)/Makefile linux-kernel.do_compile
 		CROSS_COMPILE=$(target)-
 	$(MAKE) -C $(driverdir) ARCH=sh \
 		KERNEL_LOCATION=$(buildprefix)/$(KERNEL_DIR) \
-		BIN_DEST=$(targetprefix)/bin \
-		INSTALL_MOD_PATH=$(targetprefix) \
+		BIN_DEST=$(PKDIR)/bin \
+		INSTALL_MOD_PATH=$(PKDIR) \
 		$(if $(UFS910),UFS910=$(UFS910)) \
 		$(if $(FORTIS_HDBOX),FORTIS_HDBOX=$(FORTIS_HDBOX)) \
 		$(if $(ATEVIO7500),ATEVIO7500=$(ATEVIO7500)) \
@@ -1132,7 +1158,9 @@ $(DEPDIR)/driver: $(driverdir)/Makefile linux-kernel.do_compile
 		$(if $(PLAYER191),PLAYER191=$(PLAYER191)) \
 		$(if $(HAVANA_P0207_5),HAVANA_P0207_5=$(HAVANA_P0207_5)) \
 		install
-	$(DEPMOD) -ae -b $(targetprefix) -F $(buildprefix)/$(KERNEL_DIR)/System.map -r $(KERNELVERSION)
+	$(DEPMOD) -ae -b $(PKDIR) -F $(buildprefix)/$(KERNEL_DIR)/System.map -r $(KERNELVERSION)
+	$(tocdk_build)
+	$(toflash_build)
 	touch $@
 	@TUXBOX_YAUD_CUSTOMIZE@
 

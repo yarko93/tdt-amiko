@@ -2,8 +2,8 @@
 
 MODDIR=/lib/modules
 echo "init frontpanel"
-insmod $MODDIR/aotom.ko
-insmod $MODDIR/simu_button.ko
+modprobe aotom
+modprobe simu_button
 
 if [ -e /var/etc/.firstboot ]; then
    echo "WAIT 1 min" >/dev/vfd
@@ -15,7 +15,7 @@ fi
 /etc/init.d/mountvirtfs start
 /etc/init.d/portmap start
 
-insmod $MODDIR/e2_proc.ko
+modprobe e2_proc
 
 /etc/init.d/autofs start
 
@@ -29,8 +29,8 @@ if [ ! -e /var/etc/.firstboot ]; then
    /usr/sbin/telnetd -l /bin/autologin
 
    echo "init stmfb"
-   insmod $MODDIR/stmcore-display-sti7105.ko
-   insmod $MODDIR/stmfb.ko display0=1280x720-32@50:15m:pal:yuv:yuv
+   modprobe stmcore-display-sti7105
+   modprobe stmfb display0=1280x720-32@50:15m:pal:yuv:yuv
 
    echo "LOADING MODULES"   
    echo "LOAD" > /dev/vfd
@@ -45,50 +45,49 @@ if [ ! -e /var/etc/.firstboot ]; then
    /bin/ustslave /dev/st231-0 /boot/video.elf
 
    echo "init embx"
-   insmod $MODDIR/embxshell.ko
-   insmod $MODDIR/embxmailbox.ko mailbox0=0xfe211000:136:set2 mailbox1=0xfe212000:0 ;
-   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:512:0x40000000:0x10000000 ;
-   insmod $MODDIR/mme_host.ko transport0=shm
+   modprobe embxshell
+   modprobe embxmailbox mailbox0=0xfe211000:136:set2 mailbox1=0xfe212000:0 ;
+   modprobe embxshm mailbox0=shm:0:7:0x60000000:0:256:256:0:512:0x40000000:0x10000000 ;
+   modprobe mme_host transport0=shm
 
    echo "init AVS"
-   insmod $MODDIR/avs.ko type=avs_pio
+   modprobe avs type=avs_pio
    player=`cat /proc/stb/player/version | awk '{ print substr( $0, length($0) - 2, length($0) ) }'`
    echo "init player $player"
 
-   insmod $MODDIR/mmelog.ko
-   insmod $MODDIR/ksound.ko
-   insmod $MODDIR/p2div64.ko
-   insmod $MODDIR/stm_v4l2.ko
+   modprobe mmelog
+   modprobe ksound
+   modprobe p2div64
+   modprobe stm_v4l2
    if [ $player -gt 131 ]; then
-      insmod $MODDIR/stmvout.ko
-      insmod $MODDIR/stmvbi.ko
+      modprobe stmvout
+      modprobe stmvbi
    fi
-   insmod $MODDIR/pseudocard.ko
+   modprobe pseudocard
 
-   insmod $MODDIR/spark7162.ko
+   modprobe spark7162
    if [ $player -gt 131 ]; then
       # Full feature pti
-      insmod $MODDIR/pti.ko waitMS=20 videoMem=4096
+      modprobe pti waitMS=20 videoMem=4096
       if [ $?=='2' ]; then
          # Simple pti
-         insmod $MODDIR/pti.ko
+         modprobe pti
       fi
-      insmod $MODDIR/stm_monitor.ko
-      insmod $MODDIR/stmsysfs.ko
-      insmod $MODDIR/stmdvb.ko
+      modprobe stm_monitor
+      modprobe stmsysfs
+      modprobe stmdvb
    else
-      insmod $MODDIR/pti.ko
-      insmod $MODDIR/stmdvb.ko
-      insmod $MODDIR/stm_monitor.ko
+      modprobe pti
+      modprobe stmdvb
+      modprobe stm_monitor
    fi
-   insmod $MODDIR/player2.ko discardlateframe=0
-   insmod $MODDIR/sth264pp.ko
-   insmod $MODDIR/stmalloc.ko
-   insmod $MODDIR/platform.ko
-   insmod $MODDIR/silencegen.ko
-   insmod $MODDIR/smartcard.ko
-   /etc/init.d/wlan
-   insmod $MODDIR/bpamem.ko
+   modprobe player2 discardlateframe=0
+   modprobe sth264pp
+   modprobe stmalloc
+   modprobe platform
+   modprobe silencegen
+   modprobe smartcard
+   modprobe bpamem
    mknod /dev/bpamem c 153 0 
 
    showiframe -p /boot/bootlogo.mvi &

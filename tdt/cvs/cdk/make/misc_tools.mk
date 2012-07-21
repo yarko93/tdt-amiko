@@ -1,5 +1,10 @@
 # misc/tools
 
+DESCRIPTION_misc_tools = "misc tools for box"
+SRC_URI_misc_tools = "git://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko.git"
+DIR_misc_tools = $(appsdir)/misc/tools
+
+
 #$(appsdir)/misc/tools/config.status: bootstrap libpng
 $(appsdir)/misc/tools/config.status: bootstrap
 	export PATH=$(hostprefix)/bin:$(PATH) && \
@@ -10,7 +15,9 @@ $(appsdir)/misc/tools/config.status: bootstrap
 
 $(DEPDIR)/min-misc-tools $(DEPDIR)/std-misc-tools $(DEPDIR)/max-misc-tools $(DEPDIR)/misc-tools: \
 $(DEPDIR)/%misc-tools: driver libstdc++-dev libdvdnav libdvdcss libpng jpeg ffmpeg $(appsdir)/misc/tools/config.status
-	$(MAKE) -C $(appsdir)/misc/tools all install DESTDIR=$(prefix)/$*cdkroot \
+	$(start_build)
+	$(get_git_version)
+	$(MAKE) -C $(appsdir)/misc/tools all install DESTDIR=$(PKDIR) \
 	CPPFLAGS="\
 	$(if $(UFS910), -DPLATFORM_UFS910) \
 	$(if $(UFS912), -DPLATFORM_UFS912) \
@@ -39,6 +46,8 @@ $(DEPDIR)/%misc-tools: driver libstdc++-dev libdvdnav libdvdcss libpng jpeg ffmp
 	$(if $(PLAYER191), -DPLAYER191) \
 	$(if $(VDR1722), -DVDR1722) \
 	$(if $(VDR1727), -DVDR1727)"
+	$(tocdk_build)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 misc-tools-clean:

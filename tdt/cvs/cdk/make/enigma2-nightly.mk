@@ -53,7 +53,7 @@ $(DEPDIR)/enigma2-nightly.do_prepare:
 	touch $@
 
 $(appsdir)/enigma2-nightly/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline \
-	libdvbsi++ python libxml2 libxslt elementtree zope_interface twisted pyopenssl pythonwifi lxml libxmlccwrap ncurses-dev sdparm libdreamdvd $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
+		libdvbsi++ python libxml2 libxslt elementtree zope_interface twisted pyopenssl lxml libxmlccwrap ncurses-dev libdreamdvd sdparm opkg-host ipkg-utils $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
 	cd $(appsdir)/enigma2-nightly && \
 		./autogen.sh && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \
@@ -79,17 +79,39 @@ $(DEPDIR)/enigma2-nightly.do_compile: $(appsdir)/enigma2-nightly/config.status
 		$(MAKE) all
 	touch $@
 
-$(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
-	$(MAKE) -C $(appsdir)/enigma2-nightly install DESTDIR=$(targetprefix)
-	if [ -e $(targetprefix)/usr/bin/enigma2 ]; then \
-		$(target)-strip $(targetprefix)/usr/bin/enigma2; \
-	fi
-	if [ -e $(targetprefix)/usr/local/bin/enigma2 ]; then \
-		$(target)-strip $(targetprefix)/usr/local/bin/enigma2; \
-	fi
-	touch $@
+DESCRIPTION_enigma2 := a framebuffer-based zapping application (GUI) for linux
+SRC_URI_enigma2 := git://gitorious.org/open-duckbox-project-sh4/guigit.git
+# neccecary for get_git_version:
+DIR_enigma2 := $(appsdir)/enigma2-nightly
+FILES_enigma2 := /usr/bin /usr/lib/ /etc/enigma2 /usr/local/share
 
-enigma2-nightly-clean enigma2-nightly-distclean:
+#by default PARENT_PK equals $@ How to ovveride see below
+#****** word "private" here is critically important!!! Overvise other rules could be broken! only make 3.82
+#$(DEPDIR)/enigma2-nightly: private PARENT_PK = enigma2
+$(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
+#alternate you can do the following: (see packaging.mk)
+	$(call parent_pk,enigma2)
+	$(get_git_version)
+	@echo $$PKGV_$(PARENT_PK)
+	$(start_build)
+	$(MAKE) -C $(appsdir)/enigma2-nightly install DESTDIR=$(PKDIR)
+	if [ -e $(PKDIR)/usr/bin/enigma2 ]; then \
+		$(target)-strip $(PKDIR)/usr/bin/enigma2; \
+	fi
+	if [ -e $(PKDIR)/usr/local/bin/enigma2 ]; then \
+		$(target)-strip $(PKDIR)/usr/local/bin/enigma2; \
+	fi
+	mkdir -p $(PKDIR)/usr/local/bin
+	$(tocdk_build)
+	cp $(PKDIR)/usr/bin/enigma2 $(PKDIR)/usr/local/bin/
+	rm -rf $(PKDIR)/usr/local/share/meta
+	$(toflash_build)
+	touch $@
+enigma2-nightly-clean:
+	rm -f $(DEPDIR)/enigma2-nightly.do_compile
+	cd $(appsdir)/enigma2-nightly && \
+		$(MAKE) clean
+enigma2-nightly-distclean:
 	rm -f $(DEPDIR)/enigma2-nightly
 	rm -f $(DEPDIR)/enigma2-nightly.do_compile
 	rm -f $(DEPDIR)/enigma2-nightly.do_prepare

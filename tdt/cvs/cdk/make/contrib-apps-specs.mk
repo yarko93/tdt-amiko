@@ -19,6 +19,15 @@ $(DEPDIR)/console_data: bootstrap @DEPENDS_console_data@
 #
 SYSVINIT := sysvinit
 INITSCRIPTS := initscripts
+FILES_sysvinit = \
+/sbin/fsck.nfs \
+/sbin/killall5 \
+/sbin/init \
+/sbin/halt \
+/sbin/poweroff \
+/sbin/shutdown \
+/sbin/reboot
+
 if STM22
 SYSVINIT_VERSION := 2.86-6
 SYSVINIT_SPEC := stm-target-$(SYSVINIT).spec
@@ -62,6 +71,8 @@ $(DEPDIR)/%$(SYSVINIT): $(SYSVINIT_ADAPTED_ETC_FILES:%=root/etc/%) \
 		[ -f $$i ] && $(INSTALL) -m644 $$i $(prefix)/$*cdkroot/etc/$$i || true; \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done )
 	[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
+	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 $(DEPDIR)/min-$(INITSCRIPTS) $(DEPDIR)/std-$(INITSCRIPTS) $(DEPDIR)/max-$(INITSCRIPTS) \
@@ -244,6 +255,8 @@ $(DEPDIR)/%$(FINDUTILS): $(FINDUTILS_RPM)
 # DISTRIBUTIONUTILS
 #
 DISTRIBUTIONUTILS := distributionutils
+DESCRIPTION_distributionutils = utilities to setup system
+FILES_distributionutils = /usr/sbin/initdconfig
 DISTRIBUTIONUTILS_DOC := distributionutils-doc
 if STM22
 DISTRIBUTIONUTILS_VERSION := 2.17-6
@@ -286,6 +299,8 @@ $(DEPDIR)/%$(DISTRIBUTIONUTILS): $(DISTRIBUTIONUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
+	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 $(DEPDIR)/min-$(DISTRIBUTIONUTILS_DOC) $(DEPDIR)/std-$(DISTRIBUTIONUTILS_DOC) $(DEPDIR)/max-$(DISTRIBUTIONUTILS_DOC) \
@@ -714,6 +729,10 @@ $(DEPDIR)/%$(STRACE): $(DEPDIR)/%$(GLIBC) $(STRACE_RPM)
 # 
 if STM24
 UTIL_LINUX = util-linux
+FILES_util_linux = \
+/sbin/mkfs \
+/sbin/sfdisk \
+/usr/lib
 UTIL_LINUX_VERSION = 2.16.1-22
 UTIL_LINUX_SPEC = stm-target-$(UTIL_LINUX).spec
 UTIL_LINUX_SPEC_PATCH =
@@ -739,5 +758,7 @@ $(DEPDIR)/$(UTIL_LINUX): $(UTIL_LINUX_RPM)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/blkid.pc
 	$(REWRITE_LIBDEP)/lib{blkid,uuid}.la
 	$(REWRITE_LIBDIR)/lib{blkid,uuid}.la
+	$(start_build)
+	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 endif STM24

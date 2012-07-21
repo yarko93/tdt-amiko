@@ -1,5 +1,8 @@
 ## Makefile for Tuxbox
 
+#Some staff for building and splitting ipk packages with python
+include packaging.mk
+
 # Set up the build environment
 include make/buildenv.mk
 
@@ -44,7 +47,7 @@ include make/contrib-apps.mk
 include make/net-apps.mk
 
 # Include divers tools targets
-include make/diverse-tools.mk
+#include make/diverse-tools.mk
 
 # More misc libs, mostly nonessential
 include make/misc_libs.mk
@@ -56,10 +59,10 @@ include make/misc_tools.mk
 include make/plugins.mk
 
 # Include enigma gui targets
-include make/enigma.mk
+#include make/enigma.mk
 
 # Include enigma2 gui targets
-include make/enigma2.mk
+#include make/enigma2.mk
 
 # Include enigma2 plugins targets
 include make/enigma2-plugins.mk
@@ -72,9 +75,6 @@ include make/externe-plugins.mk
 
 # ExterneSkins
 include make/externe-skins.mk
-
-#Some staff for building and splitting ipk packages with python
-include packaging.mk
 
 # Include enigma2-pli-nightly gui targets
 include make/enigma2-pli-nightly.mk
@@ -90,7 +90,7 @@ include make/neutrino_hd2.mk
 include make/vdr.mk
 
 # Include enigma1-hd gui targets
-include make/enigma1-hd.mk
+#include make/enigma1-hd.mk
 
 # Essential, and some less essential, libraries
 #include make/tuxbox_libs.mk
@@ -115,7 +115,7 @@ include make/tags.mk
 include make/disttargets.mk
 
 #Trick
-include make/release.mk
+include make/smart_release.mk
 
 include make/release_neutrino.mk
 

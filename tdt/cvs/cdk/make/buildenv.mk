@@ -140,8 +140,9 @@ BUILDENV := \
 	LN_S="ln -s" \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	CXXFLAGS="$(TARGET_CFLAGS)" \
-	LDFLAGS="$(TARGET_LDFLAGS)" \
-	PKG_CONFIG_PATH="$(targetprefix)/usr/lib/pkgconfig"
+	LDFLAGS="$(TARGET_LDFLAGS) -Wl,-rpath-link,$(packagingtmpdir)/usr/lib" \
+	PKG_CONFIG_SYSROOT_DIR="$(targetprefix)" \
+	PKG_CONFIG_LIBDIR="$(targetprefix)/usr/lib/pkgconfig"
 
 MAKE_OPTS := \
 	CC=$(target)-gcc \
@@ -236,8 +237,7 @@ CONFIG_STATUS_DEPENDENCIES = \
 	$(top_srcdir)/smart-rules.pl \
 	$(top_srcdir)/smart-rules \
 	$(top_srcdir)/rules-install \
-	$(top_srcdir)/rules-make \
-	Makefile-archive
+	$(top_srcdir)/rules-make
 
 min-query std-query max-query query: \
 %query:
@@ -249,3 +249,23 @@ query-%:
 		( for j in $$FOUND ; do \
 			echo "RPMS/$$i/$$j:" && \
 			rpm $(DRPM) -qplv --scripts RPMS/$$i/$$j || true; echo;done ) || true ; done
+
+
+# -----------------------------------------
+# Config gui
+# Usage:
+#   palce $(eval $(call guiconfig,util_name)) somewhere in *mk file
+#   then call make util_name.xcofig
+#
+define guiconfig
+
+$(1).menuconfig $(1).xconfig: \
+$(1).%:
+	$(MAKE) -C $(DIR_$(1)) ARCH=sh CROSS_COMPILE=sh4-linux- $$*
+	@echo
+	@echo "You have to edit m a n u a l l y Patches/...$(1)...*config to make changes permanent !!!"
+	@echo ""
+	diff $(DIR_$(1))/.config.old $(DIR_$(1))/.config
+	@echo ""
+
+endef

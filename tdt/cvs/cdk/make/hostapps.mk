@@ -70,8 +70,56 @@ $(hostprefix)/bin/mksquashfs: @DEPENDS_squashfs@
 endif
 
 #
+# IPKG-UTILS
+#
+IPKG_BUILD_BIN = $(crossprefix)/bin/ipkg-build
+
+ipkg-utils: $(IPKG_BUILD_BIN)
+
+$(crossprefix)/bin/ipkg-build: filesystem @DEPENDS_ipkg_utils@ | $(ipkprefix)
+	@PREPARE_ipkg_utils@
+	cd @DIR_ipkg_utils@ && \
+		$(MAKE) all PREFIX=$(crossprefix) && \
+		$(MAKE) install PREFIX=$(crossprefix)
+#       @DISTCLEANUP_ipkg-utils@
+
+#
+# OPKG-HOST
+#
+OPKG_BIN = $(crossprefix)/bin/opkg
+OPKG_CONF = $(crossprefix)/etc/opkg.conf
+OPKG_CONFCDK = $(crossprefix)/etc/opkg-cdk.conf
+
+opkg-host: $(OPKG_BIN) $(ipkcdk) $(ipkprefix) $(ipkextras)
+
+$(crossprefix)/bin/opkg: @DEPENDS_opkg_host@
+	@PREPARE_opkg_host@
+	cd @DIR_opkg_host@/opkg-@VERSION_opkg_host@ && \
+		./configure \
+			--prefix=$(crossprefix) && \
+		$(MAKE) && \
+		$(MAKE) install && \
+	$(LN_SF) opkg-cl $@
+	install -d $(targetprefix)/usr/lib/opkg
+	install -d $(prefix)/pkgroot/usr/lib/opkg
+	echo "dest root /" >$(OPKG_CONF)
+	( echo "lists_dir ext /usr/lib/opkg"; \
+	  echo "arch sh4 10"; \
+	  echo "arch all 1"; \
+	  echo "src/gz cross file://$(ipkprefix)" ) >>$(OPKG_CONF)
+	echo "dest cdkroot /" >$(OPKG_CONFCDK)
+	( echo "lists_dir ext /usr/lib/opkg"; \
+	  echo "arch sh4 10"; \
+	  echo "arch all 1"; \
+	  echo "src/gz cross file://$(ipkcdk)" ) >>$(OPKG_CONFCDK)
+
+
+#
 # PYTHON-HOST
 #
+
+python := $(crossprefix)/bin/python
+
 $(DEPDIR)/host_python: @DEPENDS_host_python@
 	@PREPARE_host_python@ && \
 	( cd @DIR_host_python@ && \

@@ -40,6 +40,8 @@ $(DEPDIR)/%filesystem: bootstrap-cross
 #
 GLIBC := glibc
 GLIBC_DEV := glibc-dev
+FILES_glibc = /lib
+FILES_glibc_dev = /lib /usr/lib
 if STM22
 GLIBC_VERSION := 2.5-27
 GLIBC_RAWVERSION := $(firstword $(subst -, ,$(GLIBC_VERSION)))
@@ -82,6 +84,8 @@ $(DEPDIR)/$(GLIBC): \
 $(DEPDIR)/%$(GLIBC): $(GLIBC_RPM) | $(DEPDIR)/%filesystem
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 $(DEPDIR)/min-$(GLIBC_DEV) $(DEPDIR)/std-$(GLIBC_DEV) $(DEPDIR)/max-$(GLIBC_DEV) \
@@ -89,6 +93,8 @@ $(DEPDIR)/$(GLIBC_DEV): \
 $(DEPDIR)/%$(GLIBC_DEV): $(DEPDIR)/%$(GLIBC) $(GLIBC_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #Wrote: RPMS/sh4/stlinux23-sh4-glibc-prof-2.5-27.sh4.rpm
@@ -178,6 +184,8 @@ $(DEPDIR)/$(GMP): $(GMP_RPM)
 	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^) && \
 	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/libgmp.la
 	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libgmp.la
+	$(start_build)
+	$(fromrpm_build)
 	touch $@
 endif !STM22
 
@@ -216,6 +224,8 @@ $(DEPDIR)/$(MPFR): $(MPFR_RPM)
 	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^) && \
 	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/libmpfr.la
 	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libmpfr.la
+	$(start_build)
+	$(fromrpm_build)
 	touch .deps/$(notdir $@)
 endif !STM22
 
@@ -244,6 +254,8 @@ $(DEPDIR)/$(MPC): $(MPC_RPM)
 	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^) && \
 	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/libmpc.la
 	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libmpc.la
+	$(start_build)
+	$(fromrpm_build)
 	touch $@
 endif STM24
 
@@ -278,6 +290,13 @@ endif STM24
 GCC := gcc
 LIBSTDC := libstdc++
 LIBSTDC_DEV := libstdc++-dev
+FILES_libstdc++ = \
+/usr/lib/*.so \
+/usr/lib/*.so*
+FILES_libstdc++-dev = \
+/usr/lib/*.so \
+/usr/lib/*.so*
+
 LIBGCC := libgcc
 if STM22
 GCC_VERSION := 4.1.1-26
@@ -325,12 +344,16 @@ $(DEPDIR)/min-$(LIBSTDC) $(DEPDIR)/std-$(LIBSTDC) $(DEPDIR)/max-$(LIBSTDC) $(DEP
 $(DEPDIR)/%$(LIBSTDC): $(DEPDIR)/%$(CROSS_LIBGCC) $(LIBSTDC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 $(DEPDIR)/min-$(LIBSTDC_DEV) $(DEPDIR)/std-$(LIBSTDC_DEV) $(DEPDIR)/max-$(LIBSTDC_DEV) $(DEPDIR)/$(LIBSTDC_DEV): \
 $(DEPDIR)/%$(LIBSTDC_DEV): $(DEPDIR)/%$(LIBSTDC) $(LIBSTDC_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/lib{std,sup}c++.la
 	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/lib{std,sup}c++.la
@@ -339,6 +362,8 @@ $(DEPDIR)/min-$(LIBGCC) $(DEPDIR)/std-$(LIBGCC) $(DEPDIR)/max-$(LIBGCC) $(DEPDIR
 $(DEPDIR)/%$(LIBGCC): $(LIBGCC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #Wrote: RPMS/sh4/stlinux20-sh4-cpp-3.4.3-22.sh4.rpm
@@ -354,6 +379,13 @@ $(DEPDIR)/%$(LIBGCC): $(LIBGCC_RPM)
 LIBTERMCAP := libtermcap
 LIBTERMCAP_DEV := libtermcap-dev
 LIBTERMCAP_DOC := libtermcap-doc
+FILES_libtermcap = \
+/usr/lib/*.so \
+/usr/lib/*.so*
+FILES_libtermcap_dev = \
+/usr/lib/*.so \
+/usr/lib/*.so*
+
 if STM22
 LIBTERMCAP_VERSION := 2.0.8-8
 LIBTERMCAP_RAWVERSION := $(firstword $(subst -, ,$(LIBTERMCAP_VERSION)))
@@ -398,7 +430,9 @@ $(DEPDIR)/%$(LIBTERMCAP): bootstrap $(LIBTERMCAP_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	ln -sf libtermcap.so.2 $(prefix)/$*cdkroot/usr/lib/libtermcap.so && \
-	$(INSTALL) -m 644 $(buildprefix)/root/etc/termcap $(prefix)/$*cdkroot/etc && \
+	$(INSTALL) -m 644 $(buildprefix)/root/etc/termcap $(prefix)/$*cdkroot/etc
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
@@ -407,6 +441,8 @@ $(DEPDIR)/$(LIBTERMCAP_DEV): \
 $(DEPDIR)/%$(LIBTERMCAP_DEV): $(DEPDIR)/%$(LIBTERMCAP) $(LIBTERMCAP_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
@@ -474,6 +510,8 @@ $(DEPDIR)/$(NCURSES): \
 $(DEPDIR)/%$(NCURSES): $(DEPDIR)/%$(NCURSES_BASE) $(NCURSES_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
@@ -482,6 +520,8 @@ $(DEPDIR)/$(NCURSES_DEV): \
 $(DEPDIR)/%$(NCURSES_DEV): $(DEPDIR)/%$(NCURSES_BASE) $(NCURSES_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
@@ -636,9 +676,133 @@ $(DEPDIR)/%$(BASE_FILES): $(BASE_FILES_ADAPTED_ETC_FILES:%=root/etc/%) \
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
+# LIBATTR
+#
+if STM24
+LIBATTR := libattr
+LIBATTR_DEV := libattr-dev
+LIBATTR_VERSION := 2.4.43-4
+LIBATTR_SPEC := stm-target-$(LIBATTR).spec
+LIBATTR_SPEC_PATCH :=
+LIBATTR_PATCHES :=
+
+LIBATTR_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBATTR)-$(LIBATTR_VERSION).sh4.rpm
+LIBATTR_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBATTR_DEV)-$(LIBATTR_VERSION).sh4.rpm
+
+$(LIBATTR_RPM) $(LIBATTR_DEV_RPM): \
+		$(if $(LIBATTR_SPEC_PATCH),Patches/$(LIBATTR_SPEC_PATCH)) \
+		$(if $(LIBATTR_PATCHES),$(LIBATTR_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-target-$(LIBATTR)-$(LIBATTR_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(LIBATTR_SPEC_PATCH),( cd SPECS && patch -p1 $(LIBATTR_SPEC) < $(buildprefix)/Patches/$(LIBATTR_SPEC_PATCH) ) &&) \
+	$(if $(LIBATTR_PATCHES),cp $(LIBATTR_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(LIBATTR_SPEC)
+
+$(DEPDIR)/min-$(LIBATTR) $(DEPDIR)/std-$(LIBATTR) $(DEPDIR)/max-$(LIBATTR) $(DEPDIR)/$(LIBATTR): \
+$(DEPDIR)/%$(LIBATTR): $(LIBATTR_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
+	[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+$(DEPDIR)/min-$(LIBATTR_DEV) $(DEPDIR)/std-$(LIBATTR_DEV) $(DEPDIR)/max-$(LIBATTR_DEV) $(DEPDIR)/$(LIBATTR_DEV): \
+$(DEPDIR)/%$(LIBATTR_DEV): $(LIBATTR_DEV_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+#	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/libattr.la
+#	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libattr.la
+	[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+endif
+
+
+#
+# LIBACL
+#
+if STM24
+LIBACL := libacl
+LIBACL_DEV := libacl-dev
+LIBACL_VERSION := 2.2.47-3
+LIBACL_SPEC := stm-target-$(LIBACL).spec
+LIBACL_SPEC_PATCH :=
+LIBACL_PATCHES :=
+
+LIBACL_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBACL)-$(LIBACL_VERSION).sh4.rpm
+LIBACL_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBACL_DEV)-$(LIBACL_VERSION).sh4.rpm
+
+$(LIBACL_RPM) $(LIBACL_DEV_RPM): \
+		libattr libattr-dev \
+		$(if $(LIBACL_SPEC_PATCH),Patches/$(LIBACL_SPEC_PATCH)) \
+		$(if $(LIBACL_PATCHES),$(LIBACL_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-target-$(LIBACL)-$(LIBACL_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(LIBACL_SPEC_PATCH),( cd SPECS && patch -p1 $(LIBACL_SPEC) < $(buildprefix)/Patches/$(LIBACL_SPEC_PATCH) ) &&) \
+	$(if $(LIBACL_PATCHES),cp $(LIBACL_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(LIBACL_SPEC)
+
+$(DEPDIR)/min-$(LIBACL) $(DEPDIR)/std-$(LIBACL) $(DEPDIR)/max-$(LIBACL) $(DEPDIR)/$(LIBACL): \
+$(DEPDIR)/%$(LIBACL): $(LIBACL_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
+	$(fromrpm_build)
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+$(DEPDIR)/min-$(LIBACL_DEV) $(DEPDIR)/std-$(LIBACL_DEV) $(DEPDIR)/max-$(LIBACL_DEV) $(DEPDIR)/$(LIBACL_DEV): \
+$(DEPDIR)/%$(LIBACL_DEV): $(LIBACL_DEV_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+#	$(REWRITE_LIBDIR)/libacl.la
+	$(REWRITE_LIBDEP)/libacl.la
+	[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+
+endif
+
+
+#
+# USBUTILS
+#
+if STM24
+USBUTILS := usbutils
+USBUTILS_VERSION := 0.86-10
+USBUTILS_SPEC := stm-target-$(USBUTILS).spec
+USBUTILS_SPEC_PATCH :=
+USBUTILS_PATCHES :=
+USBUTILS_usbutils = libusb
+USBUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(USBUTILS)-$(USBUTILS_VERSION).sh4.rpm
+
+$(USBUTILS_RPM): \
+		$(if $(USBUTILS_SPEC_PATCH),Patches/$(USBUTILS_SPEC_PATCH)) \
+		$(if $(USBUTILS_PATCHES),$(USBUTILS_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-target-$(USBUTILS)-$(USBUTILS_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(USBUTILS_SPEC_PATCH),( cd SPECS && patch -p1 $(USBUTILS_SPEC) < $(buildprefix)/Patches/$(USBUTILS_SPEC_PATCH) ) &&) \
+	$(if $(USBUTILS_PATCHES),cp $(USBUTILS_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(USBUTILS_SPEC)
+
+$(DEPDIR)/min-$(USBUTILS) $(DEPDIR)/std-$(USBUTILS) $(DEPDIR)/max-$(USBUTILS) $(DEPDIR)/$(USBUTILS): \
+$(DEPDIR)/%$(USBUTILS): $(USBUTILS_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+endif
+
+#
 # UDEV
 #
 UDEV := udev
+UDEV_DEV := udev-dev
 if STM22
 UDEV_VERSION := 054-6
 UDEV_SPEC := stm-target-$(UDEV).spec
@@ -652,16 +816,20 @@ UDEV_SPEC_PATCH :=
 UDEV_PATCHES :=
 else !STM23
 # if STM24
-UDEV_VERSION := 146-27
+UDEV_VERSION := 162-32
 UDEV_SPEC := stm-target-$(UDEV).spec
-UDEV_SPEC_PATCH :=
+UDEV_SPEC_PATCH := stm-target-udev.spec.diff
 UDEV_PATCHES :=
 # endif STM24
 endif !STM23
 endif !STM22
 UDEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV)-$(UDEV_VERSION).sh4.rpm
+UDEV_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(UDEV_DEV)-$(UDEV_VERSION).sh4.rpm
 
-$(UDEV_RPM): \
+RDEPENDS_udev := libattr libacl
+
+$(UDEV_RPM) $(UDEV_DEV_RPM): \
+		glib2 libacl libacl-dev libusb usbutils \
 		$(if $(UDEV_SPEC_PATCH),Patches/$(UDEV_SPEC_PATCH)) \
 		$(if $(UDEV_PATCHES),$(UDEV_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX)-target-$(UDEV)-$(UDEV_VERSION).src.rpm
@@ -671,6 +839,14 @@ $(UDEV_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(UDEV_SPEC)
 
+$(DEPDIR)/min-$(UDEV_DEV) $(DEPDIR)/std-$(UDEV_DEV) $(DEPDIR)/max-$(UDEV_DEV) $(DEPDIR)/$(UDEV_DEV): \
+$(DEPDIR)/%$(UDEV_DEV): $(UDEV_DEV_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	[ "x$*" = "x" ] && touch $@ || true
+	$(REWRITE_LIBDEP)/libgudev-1.0.la
+	@TUXBOX_YAUD_CUSTOMIZE@
+
 $(DEPDIR)/min-$(UDEV) $(DEPDIR)/std-$(UDEV) $(DEPDIR)/max-$(UDEV) $(DEPDIR)/$(UDEV): \
 $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
@@ -679,6 +855,11 @@ $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 		for s in sysfs udev ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
+	$(start_build)
+	$(fromrpm_get)
+# start udevadm earlier
+	sed -i 's/# chkconfig: S 99 0/# chkconfig: S 6 0/' $(PKDIR)/etc/init.d/udevadm
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 

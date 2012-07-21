@@ -740,6 +740,14 @@ AC_SUBST(DISTCLEANUP)
 #
 # core
 #
+
+mkdir ${srcdir}/ruledir
+rm -f  ${srcdir}/ruledir/* 
+${srcdir}/smart-rules.pl ${srcdir}/smart-rules
+if test "$?" != "0"; then
+	AC_MSG_ERROR(smart-rule pareser failed)
+fi
+
 AC_SUBST(KERNELVERSION)
 AC_SUBST(KERNELSTMLABEL)
 AC_SUBST(KERNELLABEL)
@@ -843,6 +851,7 @@ fi
 TUXBOX_RULES_MAKE(squashfs)
 TUXBOX_RULES_MAKE(ccache)
 TUXBOX_RULES_MAKE(cramfs)
+TUXBOX_RULES_MAKE(ipkg_utils)
 TUXBOX_RULES_MAKE(host_python)
 TUXBOX_RULES_MAKE(libtool)
 
@@ -851,9 +860,10 @@ TUXBOX_RULES_MAKE(libtool)
 #
 TUXBOX_RULES_MAKE(busybox)
 TUXBOX_RULES_MAKE(lsb)
-TUXBOX_RULES_MAKE(ipkg)
+#TUXBOX_RULES_MAKE(ipkg)
 TUXBOX_RULES_MAKE(module_init_tools)
 TUXBOX_RULES_MAKE(sysvinit)
+TUXBOX_RULES_MAKE(init_scripts)
 
 #
 # net apps
@@ -884,6 +894,7 @@ TUXBOX_RULES_MAKE(sg3_utils)
 TUXBOX_RULES_MAKE(console_data)
 TUXBOX_RULES_MAKE(nano)
 TUXBOX_RULES_MAKE(rsync)
+TUXBOX_RULES_MAKE(rfkill)
 TUXBOX_RULES_MAKE(lm_sensors)
 TUXBOX_RULES_MAKE(fuse)
 TUXBOX_RULES_MAKE(curlftpfs)
@@ -894,7 +905,9 @@ TUXBOX_RULES_MAKE(mencoder)
 TUXBOX_RULES_MAKE(util_linux)
 TUXBOX_RULES_MAKE(jfsutils)
 TUXBOX_RULES_MAKE(opkg)
+TUXBOX_RULES_MAKE(opkg_host)
 TUXBOX_RULES_MAKE(pppd)
+TUXBOX_RULES_MAKE(ntfs_3g)
 TUXBOX_RULES_MAKE(sysstat)
 TUXBOX_RULES_MAKE(hotplug_e2)
 TUXBOX_RULES_MAKE(autofs)
@@ -903,8 +916,8 @@ TUXBOX_RULES_MAKE(imagemagick)
 #
 # contrib apps with smart rules
 #
-SMART_RULES_MAKE(ntpclient)
-SMART_RULES_MAKE(udpxy)
+TUXBOX_RULES_MAKE(ntpclient)
+TUXBOX_RULES_MAKE(udpxy)
 #
 # contrib libs
 #
@@ -916,7 +929,9 @@ TUXBOX_RULES_MAKE(freetype_old)
 TUXBOX_RULES_MAKE(freetype)
 TUXBOX_RULES_MAKE(lirc)
 TUXBOX_RULES_MAKE(jpeg)
+TUXBOX_RULES_MAKE(libjpeg6b)
 TUXBOX_RULES_MAKE(libpng)
+TUXBOX_RULES_MAKE(libpng12)
 TUXBOX_RULES_MAKE(libungif)
 TUXBOX_RULES_MAKE(libgif)
 TUXBOX_RULES_MAKE(curl)
@@ -970,6 +985,7 @@ TUXBOX_RULES_MAKE(libpcre)
 TUXBOX_RULES_MAKE(libcdio)
 TUXBOX_RULES_MAKE(jasper)
 TUXBOX_RULES_MAKE(mysql)
+TUXBOX_RULES_MAKE(xupnpd)
 TUXBOX_RULES_MAKE(libmicrohttpd)
 TUXBOX_RULES_MAKE(libexif)
 TUXBOX_RULES_MAKE(minidlna)
@@ -990,6 +1006,7 @@ TUXBOX_RULES_MAKE(libxml2)
 TUXBOX_RULES_MAKE(libxslt)
 TUXBOX_RULES_MAKE(lxml)
 TUXBOX_RULES_MAKE(setuptools)
+TUXBOX_RULES_MAKE(gdata)
 TUXBOX_RULES_MAKE(twisted)
 TUXBOX_RULES_MAKE(twistedweb2)
 TUXBOX_RULES_MAKE(pilimaging)
@@ -1008,7 +1025,7 @@ TUXBOX_RULES_MAKE(gst_plugins_good)
 TUXBOX_RULES_MAKE(gst_plugins_bad)
 TUXBOX_RULES_MAKE(gst_plugins_ugly)
 TUXBOX_RULES_MAKE(gst_ffmpeg)
-TUXBOX_RULES_MAKE(gst_plugins_fluendo_mpegdemux)
+TUXBOX_RULES_MAKE(gst_fluendo_mpegdemux)
 TUXBOX_RULES_MAKE(gst_plugins_dvbmediasink)
 TUXBOX_RULES_MAKE(gst_plugin_subsink)
 
@@ -1019,6 +1036,8 @@ TUXBOX_RULES_MAKE(tuxtxtlib)
 TUXBOX_RULES_MAKE(tuxtxt32bpp)
 TUXBOX_RULES_MAKE(enigma2_networkbrowser)
 TUXBOX_RULES_MAKE(enigma2_openwebif)
+TUXBOX_RULES_MAKE(e2plugin)
+TUXBOX_RULES_MAKE(e2skin)
 
 #
 # external lcd
@@ -1100,12 +1119,7 @@ AC_SUBST(DRPMBUILD)
 #
 # internal
 #
-AC_SUBST_FILE(ARCHIVE)
-ARCHIVE=Makefile-archive
-AC_CONFIG_COMMANDS_PRE([
-AC_MSG_NOTICE([creating Makefile-archive])
-${srcdir}/rules-archive.pl ${srcdir}/rules-archive > Makefile-archive
-])
+
 
 AC_SUBST(DOWNLOAD_FOR_SMART)
 AC_SUBST(SMART_DOWNLOAD_RULES)

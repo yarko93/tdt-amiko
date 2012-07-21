@@ -1,4 +1,4 @@
-bin_PROGRAMS = hotplug
+sbin_PROGRAMS = hotplug
 
 hotplug_SOURCES = bdpoll.c \
         hotplug.c hotplug_basename.c hotplug_devpath.c hotplug_pidfile.c \

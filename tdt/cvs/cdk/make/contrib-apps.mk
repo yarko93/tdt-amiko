@@ -1,6 +1,11 @@
 #
 #bzip2
 #
+DESCRIPTION_bzip2 = "bzip2"
+
+FILES_bzip2 = \
+/usr/bin/*
+
 $(DEPDIR)/bzip2.do_prepare: bootstrap @DEPENDS_bzip2@
 	@PREPARE_bzip2@
 	touch $@
@@ -14,8 +19,11 @@ $(DEPDIR)/bzip2.do_compile: $(DEPDIR)/bzip2.do_prepare
 $(DEPDIR)/min-bzip2 $(DEPDIR)/std-bzip2 $(DEPDIR)/max-bzip2 \
 $(DEPDIR)/bzip2: \
 $(DEPDIR)/%bzip2: $(DEPDIR)/bzip2.do_compile
+	$(start_build)
 	cd @DIR_bzip2@ && \
 		@INSTALL_bzip2@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_bzip2@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -49,6 +57,11 @@ $(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS:%=root/etc/%) $
 #
 # GREP
 #
+DESCRIPTION_grep = "grep"
+
+FILES_grep = \
+/usr/bin/grep
+
 $(DEPDIR)/grep.do_prepare: bootstrap @DEPENDS_grep@
 	@PREPARE_grep@
 	cd @DIR_grep@ && \
@@ -73,14 +86,23 @@ $(DEPDIR)/grep.do_compile: $(DEPDIR)/grep.do_prepare
 $(DEPDIR)/min-grep $(DEPDIR)/std-grep $(DEPDIR)/max-grep \
 $(DEPDIR)/grep: \
 $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
+	$(start_build)
 	cd @DIR_grep@ && \
 		@INSTALL_grep@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_grep@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # PPPD
 #
+DESCRIPTION_pppd = "pppd"
+
+FILES_pppd = \
+/sbin/* \
+/lib/modules/*.so
+
 $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 	@PREPARE_pppd@
 	cd @DIR_pppd@ && \
@@ -104,15 +126,65 @@ $(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
 $(DEPDIR)/min-pppd $(DEPDIR)/std-pppd $(DEPDIR)/max-pppd \
 $(DEPDIR)/pppd: \
 $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
+	$(start_build)
 	cd @DIR_pppd@  && \
 		@INSTALL_pppd@
+	$(tocdk_build)
+	mkdir $(PKDIR)/lib/modules/
+	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
+	$(toflash_build)
 #	@DISTCLEANUP_pppd@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+	
+#
+# NTFS-3G
+#
+DESCRIPTION_ntfs_3g = ntfs-3g
+RDEPENDS_ntfs_3g = fuse
+FILES_ntfs_3g = \
+/bin/ntfs-3g \
+/sbin/mount.ntfs-3g \
+/usr/lib/* \
+/lib/*
+
+$(DEPDIR)/ntfs_3g.do_prepare: @DEPENDS_ntfs_3g@
+	@PREPARE_ntfs_3g@
+	touch $@
+
+$(DEPDIR)/ntfs_3g.do_compile: bootstrap fuse $(DEPDIR)/ntfs_3g.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	LDCONFIG=$(prefix)/cdkroot/sbin/ldconfig \
+	cd @DIR_ntfs_3g@  && \
+		$(BUILDENV) \
+		PKG_CONFIG=$(hostprefix)/bin/pkg-config \
+		./configure \
+			--build=$(build) \
+			--disable-ldconfig \
+			--host=$(target) \
+			--prefix=/usr
+		$(MAKE) $(MAKE_OPTS)
+	touch $@
+
+$(DEPDIR)/min-ntfs_3g $(DEPDIR)/std-ntfs_3g $(DEPDIR)/max-ntfs_3g \
+$(DEPDIR)/ntfs_3g: \
+$(DEPDIR)/%ntfs_3g: $(DEPDIR)/ntfs_3g.do_compile
+	$(start_build)
+	cd @DIR_ntfs_3g@  && \
+		@INSTALL_ntfs_3g@
+	$(tocdk_build)	
+	$(toflash_build)
+#	@DISTCLEANUP_ntfs_3g@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
 # LSB
 #
+DESCRIPTION_lsb = "lsb"
+FILES_lsb = \
+/lib/lsb/*
+
 $(DEPDIR)/lsb.do_prepare: bootstrap @DEPENDS_lsb@
 	@PREPARE_lsb@
 	touch $@
@@ -123,14 +195,22 @@ $(DEPDIR)/lsb.do_compile: $(DEPDIR)/lsb.do_prepare
 $(DEPDIR)/min-lsb $(DEPDIR)/std-lsb $(DEPDIR)/max-lsb \
 $(DEPDIR)/lsb: \
 $(DEPDIR)/%lsb: $(DEPDIR)/lsb.do_compile
+	$(start_build)
 	cd @DIR_lsb@ && \
 		@INSTALL_lsb@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lsb@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # PORTMAP
 #
+DESCRIPTION_portmap = "the program supports access control in the style of the tcp wrapper (log_tcp) packag"
+FILES_portmap = \
+/sbin/* \
+/etc/init.d/
+
 $(DEPDIR)/portmap.do_prepare: bootstrap @DEPENDS_portmap@
 	@PREPARE_portmap@
 	cd @DIR_portmap@ && \
@@ -148,10 +228,16 @@ $(DEPDIR)/portmap.do_compile: $(DEPDIR)/portmap.do_prepare
 $(DEPDIR)/min-portmap $(DEPDIR)/std-portmap $(DEPDIR)/max-portmap \
 $(DEPDIR)/portmap: \
 $(DEPDIR)/%portmap: $(DEPDIR)/%lsb $(PORTMAP_ADAPTED_ETC_FILES:%=root/etc/%) $(DEPDIR)/portmap.do_compile
+	$(start_build)
+	mkdir -p $(PKDIR)/sbin/
+	mkdir -p $(PKDIR)/etc/init.d/
+	mkdir -p $(PKDIR)/usr/share/man/man8
 	cd @DIR_portmap@ && \
 		@INSTALL_portmap@
 	$(call adapted-etc-files,$(PORTMAP_ADAPTED_ETC_FILES))
 	$(call initdconfig,portmap)
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_portmap@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -193,6 +279,18 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 #
 # E2FSPROGS
 #
+DESCRIPTION_e2fsprogs = "e2fsprogs"
+FILES_e2fsprogs = \
+/sbin/e2fsck \
+/sbin/fsck \
+/sbin/fsck* \
+/sbin/mkfs* \
+/sbin/mke2fs \
+/sbin/tune2fs \
+/usr/lib/e2initrd_helper \
+/lib/*.so* \
+/usr/lib/*.so
+
 $(DEPDIR)/e2fsprogs.do_prepare: bootstrap @DEPENDS_e2fsprogs@
 	@PREPARE_e2fsprogs@
 	touch $@
@@ -211,6 +309,7 @@ $(DEPDIR)/e2fsprogs.do_compile: $(DEPDIR)/e2fsprogs.do_prepare | $(UTIL_LINUX)
 		--enable-elf-shlibs \
 		--with-root-prefix= \
 		--enable-verbose-makecmds \
+		--enable-e2initrd-helper \
 		--enable-symlink-install \
 		--enable-compression \
 		--disable-libblkid \
@@ -251,23 +350,29 @@ endif !STM24
 
 if STM24
 $(DEPDIR)/e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
+	$(start_build)
 	cd @DIR_e2fsprogs@ && \
 	$(BUILDENV) \
 	$(MAKE) install install-libs \
 		LDCONFIG=true \
-		DESTDIR=$(targetprefix) && \
-	$(INSTALL) e2fsck/e2fsck.static $(targetprefix)/sbin
+		DESTDIR=$(PKDIR) && \
+	$(INSTALL) e2fsck/e2fsck.static $(PKDIR)/sbin
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_e2fsprogs@
 	touch $@
 else !STM24
 $(DEPDIR)/min-e2fsprogs $(DEPDIR)/std-e2fsprogs $(DEPDIR)/max-e2fsprogs \
 $(DEPDIR)/e2fsprogs: \
 $(DEPDIR)/%e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
+	$(start_build)
 	cd @DIR_e2fsprogs@ && \
 		@INSTALL_e2fsprogs@
 	[ "x$*" = "x" ] && ( cd @DIR_e2fsprogs@ && \
-		$(MAKE) install -C lib/uuid DESTDIR=$(targetprefix) && \
-		$(MAKE) install -C lib/blkid DESTDIR=$(targetprefix) ) || true
+		$(MAKE) install -C lib/uuid DESTDIR=$(PKDIR) && \
+		$(MAKE) install -C lib/blkid DESTDIR=$(PKDIR) ) || true
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_e2fsprogs@
 	[ "x$*" = "x" ] && touch $@ || true
 endif !STM24
@@ -275,6 +380,11 @@ endif !STM24
 #
 # XFSPROGS
 #
+DESCRIPTION_xfsprogs = "xfsprogs"
+
+FILES_xfsprogs = \
+/bin/*
+
 $(DEPDIR)/xfsprogs.do_prepare: bootstrap $(DEPDIR)/e2fsprogs $(DEPDIR)/libreadline @DEPENDS_xfsprogs@
 	@PREPARE_xfsprogs@
 	touch $@
@@ -305,15 +415,26 @@ $(DEPDIR)/xfsprogs.do_compile: $(DEPDIR)/xfsprogs.do_prepare
 $(DEPDIR)/min-xfsprogs $(DEPDIR)/std-xfsprogs $(DEPDIR)/max-xfsprogs \
 $(DEPDIR)/xfsprogs: \
 $(DEPDIR)/%xfsprogs: $(DEPDIR)/xfsprogs.do_compile
+	$(start_build)
 	cd @DIR_xfsprogs@ && \
 		export top_builddir=`pwd` && \
 		@INSTALL_xfsprogs@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_xfsprogs@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # MC
 #
+DESCRIPTION_mc = "Midnight Commander"
+
+FILES_mc = \
+/usr/bin/* \
+/usr/etc/mc/* \
+/usr/libexec/mc/extfs.d/* \
+/usr/libexec/mc/fish/*
+
 $(DEPDIR)/mc.do_prepare: bootstrap glib2 @DEPENDS_mc@
 	@PREPARE_mc@
 	touch $@
@@ -334,8 +455,11 @@ $(DEPDIR)/mc.do_compile: $(DEPDIR)/mc.do_prepare | $(NCURSES_DEV)
 $(DEPDIR)/min-mc $(DEPDIR)/std-mc $(DEPDIR)/max-mc \
 $(DEPDIR)/mc: \
 $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
+	$(start_build)
 	cd @DIR_mc@ && \
 		@INSTALL_mc@
+	$(tocdk_build)
+	$(toflash_build)
 #		export top_builddir=`pwd` && \
 #		$(MAKE) install DESTDIR=$(prefix)/$*cdkroot
 #	@DISTCLEANUP_mc@
@@ -344,6 +468,11 @@ $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
 #
 # SDPARM
 #
+DESCRIPTION_sdparm = "sdparm"
+
+FILES_sdparm = \
+/sbin/sdparm
+
 $(DEPDIR)/sdparm.do_prepare: bootstrap @DEPENDS_sdparm@
 	@PREPARE_sdparm@
 	touch $@
@@ -365,11 +494,14 @@ $(DEPDIR)/sdparm.do_compile: $(DEPDIR)/sdparm.do_prepare
 $(DEPDIR)/min-sdparm $(DEPDIR)/std-sdparm $(DEPDIR)/max-sdparm \
 $(DEPDIR)/sdparm: \
 $(DEPDIR)/%sdparm: $(DEPDIR)/sdparm.do_compile
+	$(start_build)
+	mkdir $(PKDIR)/sbin
 	cd @DIR_sdparm@ && \
 		export PATH=$(MAKE_PATH) && \
 		@INSTALL_sdparm@
-	@( cd $(prefix)/$*cdkroot/usr/share/man/man8 && \
-		gzip -v9 sdparm.8 )
+	$(tocdk_build)
+	mv -f $(PKDIR)/usr/bin/sdparm $(PKDIR)/sbin
+	$(toflash_build)
 #	@DISTCLEANUP_sdparm@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -526,8 +658,43 @@ $(DEPDIR)/%rsync: $(DEPDIR)/rsync.do_compile
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
+# RFKILL
+#
+DESCRIPTION_rfkill = rfkill is a small tool to query the state of the rfkill switches, buttons and subsystem interfaces
+FILES_rfkill = \
+/usr/sbin/*
+
+$(DEPDIR)/rfkill.do_prepare: bootstrap @DEPENDS_rfkill@
+	@PREPARE_rfkill@
+	touch $@
+
+$(DEPDIR)/rfkill.do_compile: $(DEPDIR)/rfkill.do_prepare
+	cd @DIR_rfkill@ && \
+		$(MAKE) $(MAKE_OPTS)
+	touch $@
+
+$(DEPDIR)/min-rfkill $(DEPDIR)/std-rfkill $(DEPDIR)/max-rfkill \
+$(DEPDIR)/rfkill: \
+$(DEPDIR)/%rfkill: $(DEPDIR)/rfkill.do_compile
+	$(start_build)
+	cd @DIR_rfkill@ && \
+		@INSTALL_rfkill@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_rfkill@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
 # LM_SENSORS
 #
+DESCRIPTION_lm_sensors = "lm_sensors"
+
+FILES_lm_sensors = \
+/usr/bin/sensors \
+/etc/sensors.conf \
+/usr/lib/*.so* \
+/usr/sbin/*
+
 $(DEPDIR)/lm_sensors.do_prepare: bootstrap @DEPENDS_lm_sensors@
 	@PREPARE_lm_sensors@
 	touch $@
@@ -540,20 +707,31 @@ $(DEPDIR)/lm_sensors.do_compile: $(DEPDIR)/lm_sensors.do_prepare
 $(DEPDIR)/min-lm_sensors $(DEPDIR)/std-lm_sensors $(DEPDIR)/max-lm_sensors \
 $(DEPDIR)/lm_sensors: \
 $(DEPDIR)/%lm_sensors: $(DEPDIR)/lm_sensors.do_compile
+	$(start_build)
 	cd @DIR_lm_sensors@ && \
 		@INSTALL_lm_sensors@ && \
-		rm $(prefix)/$*cdkroot/usr/bin/*.pl && \
-		rm $(prefix)/$*cdkroot/usr/sbin/*.pl && \
-		rm $(prefix)/$*cdkroot/usr/sbin/sensors-detect && \
-		rm $(prefix)/$*cdkroot/usr/share/man/man8/sensors-detect.8 && \
-		rm $(prefix)/$*cdkroot/usr/include/linux/i2c-dev.h && \
-		rm $(prefix)/$*cdkroot/usr/bin/ddcmon
+		rm $(PKDIR)/usr/bin/*.pl && \
+		rm $(PKDIR)/usr/sbin/*.pl && \
+		rm $(PKDIR)/usr/sbin/sensors-detect && \
+		rm $(PKDIR)/usr/share/man/man8/sensors-detect.8 && \
+		rm $(PKDIR)/usr/include/linux/i2c-dev.h && \
+		rm $(PKDIR)/usr/bin/ddcmon
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_lm_sensors@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # FUSE
 #
+DESCRIPTION_fuse = "With FUSE it is possible to implement a fully functional filesystem in a userspace program.  Features include:"
+
+FILES_fuse = \
+/usr/lib/*.so* \
+/etc/init.d/* \
+/etc/udev/* \
+Usr/bin/*
+
 $(DEPDIR)/fuse.do_prepare: bootstrap curl glib2 @DEPENDS_fuse@
 	@PREPARE_fuse@
 	touch $@
@@ -575,7 +753,8 @@ $(DEPDIR)/fuse.do_compile: $(DEPDIR)/fuse.do_prepare
 $(DEPDIR)/min-fuse $(DEPDIR)/std-fuse $(DEPDIR)/max-fuse \
 $(DEPDIR)/fuse: \
 $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
-	cd @DIR_fuse@ && \
+	  $(start_build)
+	  cd @DIR_fuse@ && \
 		@INSTALL_fuse@
 	-rm $(prefix)/$*cdkroot/etc/udev/rules.d/99-fuse.rules
 	-rmdir $(prefix)/$*cdkroot/etc/udev/rules.d
@@ -586,6 +765,8 @@ $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
 		for s in fuse ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_fuse@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -741,6 +922,10 @@ $(DEPDIR)/%mencoder: $(DEPDIR)/mencoder.do_compile
 if STM24
 # for stm24, look in contrib-apps-specs.mk
 else !STM24
+DESCRIPTION_util_linux = "util-linux"
+FILES_util_linux = \
+/sbin/*
+
 $(DEPDIR)/util-linux.do_prepare: bootstrap @DEPENDS_util_linux@
 	@PREPARE_util_linux@
 	cd @DIR_util_linux@ && \
@@ -766,16 +951,19 @@ $(DEPDIR)/util-linux.do_compile: $(DEPDIR)/util-linux.do_prepare
 $(DEPDIR)/min-util-linux $(DEPDIR)/std-util-linux $(DEPDIR)/max-util-linux \
 $(DEPDIR)/util-linux: \
 $(DEPDIR)/%util-linux: util-linux.do_compile
+	$(start_build)
 	cd @DIR_util_linux@ && \
-		install -d $(targetprefix)/sbin && \
-		install -m 755 fdisk/sfdisk $(targetprefix)/sbin/
+		install -d $(PKDIR)/sbin && \
+		install -m 755 fdisk/sfdisk $(PKDIR)/sbin/
+	$(tocdk_build)
+	$(toflash_build)
 #		$(MAKE) ARCH=sh4 HAVE_SLANG=no HAVE_SHADOW=yes HAVE_PAM=no \
 #		USE_TTY_GROUP=no INSTALLSUID='$(INSTALL) -m $(SUIDMODE)' \
-#		DESTDIR=$(targetprefix) install && \
-#		ln -s agetty $(targetprefix)/sbin/getty && \
-#		ln -s agetty.8.gz $(targetprefix)/usr/man/man8/getty.8.gz && \
-#		install -m 755 debian/hwclock.sh $(targetprefix)/etc/init.d/hwclock.sh && \
-#		( cd po && make install DESTDIR=$(targetprefix) )
+#		DESTDIR=$(PKDIR) install && \
+#		ln -s agetty $(PKDIR)/sbin/getty && \
+#		ln -s agetty.8.gz $(PKDIR)/usr/man/man8/getty.8.gz && \
+#		install -m 755 debian/hwclock.sh $(PKDIR)/etc/init.d/hwclock.sh && \
+#		( cd po && make install DESTDIR=$(PKDIR) )
 #		@INSTALL_util_linux@
 #	@DISTCLEANUP_util_linux@
 	[ "x$*" = "x" ] && touch $@ || true
@@ -784,6 +972,10 @@ endif !STM24
 #
 # jfsutils
 #
+DESCRIPTION_jfsutils = "jfsutils"
+FILES_jfsutils = \
+/sbin/*
+
 $(DEPDIR)/jfsutils.do_prepare: bootstrap @DEPENDS_jfsutils@
 	@PREPARE_jfsutils@
 	touch $@
@@ -802,14 +994,23 @@ $(DEPDIR)/jfsutils.do_compile: $(DEPDIR)/jfsutils.do_prepare
 $(DEPDIR)/min-jfsutils $(DEPDIR)/std-jfsutils $(DEPDIR)/max-jfsutils \
 $(DEPDIR)/jfsutils: \
 $(DEPDIR)/%jfsutils: $(DEPDIR)/jfsutils.do_compile
+	$(start_build)
 	cd @DIR_jfsutils@ && \
 		@INSTALL_jfsutils@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_jfsutils@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # opkg
 #
+
+DESCRIPTION_opkg = "lightweight package management system"
+FILES_opkg = \
+/usr/bin \
+/usr/lib
+
 $(DEPDIR)/opkg.do_prepare: bootstrap @DEPENDS_opkg@
 	@PREPARE_opkg@
 	touch $@
@@ -830,8 +1031,11 @@ $(DEPDIR)/opkg.do_compile: $(DEPDIR)/opkg.do_prepare
 $(DEPDIR)/min-opkg $(DEPDIR)/std-opkg $(DEPDIR)/max-opkg \
 $(DEPDIR)/opkg: \
 $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
+	$(start_build)
 	cd @DIR_opkg@ && \
 		@INSTALL_opkg@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_opkg@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -840,18 +1044,21 @@ $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
 #
 
 # PARENT_PK defined as per rule variable below is main postfix
-# at first split_packages.py searches for variable PACKAGES_ + PARENT_PK
-PACKAGES_ntpclient = ntpclient
+# at first split_packages.py searches for variable PACKAGES_ + $(PARENT_PK)
+# PACKAGES_ntpclient = ntpclient
+# this is the default.
+# PACKAGES_ntpclient = $(PARENT_PK)
 # secondly for each package in the list it looks for control fields.
 # the default control field is PARENT_PK one.
 
 DESCRIPTION_ntpclient := time sync over ntp protocol
-MAINTAINER_ntpclient := Ar-P team
+#this is default
+#MAINTAINER_ntpclient := Ar-P team
 #Source: are handled by smart-rules
 #SRC_URI_ntpclient =
-PACKAGE_ARCH_ntpclient := sh4
+#PACKAGE_ARCH_ntpclient := sh4
 #the Package: field in control file
-NAME_ntpclient := ntpclient
+#NAME_ntpclient := ntpclient
 #mask for files to package
 FILES_ntpclient := /sbin /etc
 #version is handled by smart-rules
@@ -868,10 +1075,6 @@ define postrm_ntpclient
 update-rc.d mgcamd_1.35 remove
 endef
 
-#@DEPENDS_ntpclient@ is list of all files to built package from, so changing one of them invokes rebuild
-#@PREPARE_ntpclient@ rules for download, extract and patch files above.
-#@DIR_ntpclient@ directory where sources are extracted
-
 $(DEPDIR)/ntpclient.do_prepare: @DEPENDS_ntpclient@
 	@PREPARE_ntpclient@
 	touch $@
@@ -883,33 +1086,55 @@ $(DEPDIR)/ntpclient.do_compile: $(DEPDIR)/ntpclient.do_prepare
 		$(MAKE) adjtimex
 	touch $@
 
-$(DEPDIR)/ntpclient: PARENT_PK = ntpclient
 $(DEPDIR)/ntpclient: $(DEPDIR)/ntpclient.do_compile
-	rm -rf $(PKDIR)
-	rm -rf $(ipkgbuilddir)/ntpclient
+	$(start_build)
 	cd @DIR_ntpclient@  && \
 		install -D -m 0755 ntpclient $(PKDIR)/sbin/ntpclient; \
 		install -D -m 0755 adjtimex $(PKDIR)/sbin/adjtimex; \
 		install -D -m 0755 rate.awk $(PKDIR)/sbin/ntpclient-drift-rate.awk
 	install -D -m 0755 Patches/ntpclient-init.file $(PKDIR)/etc/init.d/ntpclient
-	python split_packages.py
-	ipkg-build -o root -g root $(ipkgbuilddir)/ntpclient $(ipkprefix);
+	$(extra_build)
 	touch $@
 
 #
 # udpxy
 #
-PACKAGES_udpxy = udpxy
+
+# The main variable to deal with packaging is PARENT_PK.
+
+# You can use it as example of building and making package for new utility.
+# First of all take a look at smart-rules file. Read the documentation at the beginning.
+#
+# At the first stage let's build one single package. For example udpxy. Be careful, each package name should be unique.
+# First of all you should define some necessary info about your package.
+# Such as 'Description:' field in control file
+
 DESCRIPTION_udpxy := udp to http stream proxy
-MAINTAINER_udpxy := Ar-P team
-PACKAGE_ARCH_udpxy := sh4
-NAME_udpxy := udpxy
-FILES_udpxy := /
+
+# Next set package release number and increase it each time you change something here in make scripts.
+# Release number is part of the package version, updating it tells others that they can upgrade their system now.
+
 PKGR_udpxy = r0
+
+# Other variables are optional and have default values and another are taken from smart-rules (full list below)
+# Usually each utility is split into three make-targets. Target name and package name 'udpxy' should be the same.
+# Write
+#  $(DEPDIR)/udpxy.do_prepare:
+# But not
+#  $(DEPDIR)/udpxy_proxy.do_prepare:
+# *exceptions of this rule discussed later.
+# Also target should contain only A-z characters and underscore "_".
+
+# Firstly, downloading and patching. Use @DEPENDS_udpxy@ from smart rules as target-depends.
+# In the body use @PREPARE_udpxy@ generated by smart-rules
+# You can add your special commands too.
 
 $(DEPDIR)/udpxy.do_prepare: @DEPENDS_udpxy@
 	@PREPARE_udpxy@
 	touch $@
+
+# Secondly, the configure and compilation stage
+# Each target should ends with 'touch $@'
 
 $(DEPDIR)/udpxy.do_compile: $(DEPDIR)/udpxy.do_prepare
 	cd $(DIR_udpxy) && \
@@ -917,16 +1142,73 @@ $(DEPDIR)/udpxy.do_compile: $(DEPDIR)/udpxy.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/udpxy: PARENT_PK = udpxy
+# Finally, install and packaging!
+# How does it works:
+#  start with line $(start_build) to prepare temporary directories and determine package name by the target name.
+#  At first all files should go to temporary directory $(PKDIR) which is cdk/packagingtmpdir.
+#  If you fill $(PKDIR) correctly then our scripts could proceed.
+#  You could call one of the following:
+#    $(tocdk_build) - copy all $(PKDIR) contents to tufsbox/cdkroot to use them later if something depends on them.
+#    $(extra_build) - perform strip and cleanup, then make package ready to install on your box. You can find ipk in tufsbox/ipkbox
+#    $(toflash_build) - At first do exactly that $(extra_build) does. After install package to pkgroot to include it in image.
+#    $(e2extra_build) - same as $(extra_build) but copies ipk to tufsbox/ipkextras
+#  Tip: $(tocdk_build) and $(toflash_build) could be used simultaneously.
+
 $(DEPDIR)/udpxy: $(DEPDIR)/udpxy.do_compile
-	rm -rf $(PKDIR)
-	rm -rf $(ipkgbuilddir)/$(@F)
-	cd $(DIR_$(@F))  && \
+	$(start_build)
+	cd $(DIR_udpxy)  && \
 		export INSTALLROOT=$(PKDIR)/usr && \
 		$(MAKE) install
-	python split_packages.py
-	ipkg-build -o root -g root $(ipkgbuilddir)/$(@F) $(ipkprefix);
+	$(extra_build)
 	touch $@
+
+# Note: all above defined variables has suffix 'udpxy' same as make-target name '$(DEPDIR)/udpxy'
+# If you want to change name of make-target for some reason add $(call parent_pk,udpxy) before $(start_build) line.
+# Of course place your variables suffix instead of udpxy.
+
+# Some words about git and svn.
+# It is available to automatically determine version from git and svn
+# If there is git/svn rule in smart-rules and the version equals git/svn then the version will be automatically evaluated during $(start_build)
+# Note: it is assumed that there is only one repo for the utility.
+# If you use your own git/svn fetch mechanism we provide you with $(get_git_version) or $(get_svn_version), but make sure that DIR_foo is git/svn repo.
+
+# FILES variable
+# FILES variable is the filter for your $(PKDIR), by default it equals "/" so all files from $(PKDIR) are built into the package. It is list of files and directories separated by space. Wildcards are supported.
+# Wildcards used in the FILES variables are processed via the python function fnmatch. The following items are of note about this function:
+#   /<dir>/*: This will match all files and directories in the dir - it will not match other directories.
+#   /<dir>/a*: This will only match files, and not directories.
+#   /dir: will include the directory dir in the package, which in turn will include all files in the directory and all subdirectories.
+
+# Info about some additional variables
+# PKGV_foo
+#  Taken from smart rules version. Set if you don't use smart-rules
+# SRC_URI_foo
+#  Sources from which package is built, taken from smart-rules file://, http://, git://, svn:// rules.
+# Next variables has default values and influence CONTROL file fields only:
+# MAINTAINER_foo := Ar-P team
+# PACKAGE_ARCH_foo := sh4
+# SECTION_foo := base
+# PRIORITY_foo := optional
+# LICENSE_foo := unknown
+# HOMEPAGE_foo := unknown
+# You set package dependencies in CONTROL file with:
+# RDEPENDS_foo :=
+# RREPLACES :=
+# RCONFLICTS :=
+
+# post/pre inst/rm Scripts
+# For these sripts use make define as following:
+
+define postinst_foo
+#!/bin/sh
+initdconfig --add foo
+endef
+
+# This is all
+# Note: init.d script starting and stopping is handled by initdconfig
+
+# Multi-Packaging
+# .........
 
 # sysstat
 #
@@ -948,10 +1230,13 @@ $(DEPDIR)/sysstat: bootstrap @DEPENDS_sysstat@
 #
 # hotplug-e2
 #
+DESCRIPTION_hotplug_e2 = "hotplug_e2"
+FILES_hotplug_e2 = \
+/sbin/bdpoll \
+/usr/bin/hotplug_e2_helper
+
 $(DEPDIR)/hotplug_e2.do_prepare: bootstrap @DEPENDS_hotplug_e2@
 	@PREPARE_hotplug_e2@
-	git clone git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper;
-	cd @DIR_hotplug_e2@ && patch -p1 < $(buildprefix)/Patches/hotplug-e2-helper-support_fw_upload.patch
 	touch $@
 
 $(DEPDIR)/hotplug_e2.do_compile: $(DEPDIR)/hotplug_e2.do_prepare
@@ -971,14 +1256,24 @@ $(DEPDIR)/hotplug_e2.do_compile: $(DEPDIR)/hotplug_e2.do_prepare
 $(DEPDIR)/min-hotplug_e2 $(DEPDIR)/std-hotplug_e2 $(DEPDIR)/max-hotplug_e2 \
 $(DEPDIR)/hotplug_e2: \
 $(DEPDIR)/%hotplug_e2: $(DEPDIR)/hotplug_e2.do_compile
+	$(start_build)
+	$(get_git_version)
 	cd @DIR_hotplug_e2@ && \
 		@INSTALL_hotplug_e2@
+	$(tocdk_build)
+	mkdir $(PKDIR)/sbin
+	cp -f $(PKDIR)/usr/bin/* $(PKDIR)/sbin
+	$(toflash_build)
 #	@DISTCLEANUP_hotplug_e2@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # autofs
 #
+DESCRIPTION_autofs = "autofs"
+FILES_autofs = \
+/usr/*
+
 $(DEPDIR)/autofs.do_prepare: bootstrap @DEPENDS_autofs@
 	@PREPARE_autofs@
 	touch $@
@@ -998,14 +1293,20 @@ $(DEPDIR)/autofs.do_compile: $(DEPDIR)/autofs.do_prepare
 $(DEPDIR)/min-autofs $(DEPDIR)/std-autofs $(DEPDIR)/max-autofs \
 $(DEPDIR)/autofs: \
 $(DEPDIR)/%autofs: $(DEPDIR)/autofs.do_compile
+	$(start_build)
 	cd @DIR_autofs@ && \
 		@INSTALL_autofs@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_autofs@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # imagemagick
 #
+DESCRIPTION_imagemagick = "imagemagick"
+FILES_imagemagick = \
+/usr/*
 $(DEPDIR)/imagemagick.do_prepare: bootstrap @DEPENDS_imagemagick@
 	@PREPARE_imagemagick@
 	touch $@
@@ -1039,7 +1340,10 @@ $(DEPDIR)/imagemagick.do_compile: $(DEPDIR)/imagemagick.do_prepare
 $(DEPDIR)/min-imagemagick $(DEPDIR)/std-imagemagick $(DEPDIR)/max-imagemagick \
 $(DEPDIR)/imagemagick: \
 $(DEPDIR)/%imagemagick: $(DEPDIR)/imagemagick.do_compile
+	$(start_build)
 	cd @DIR_imagemagick@ && \
 		@INSTALL_imagemagick@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_imagemagick@
 	[ "x$*" = "x" ] && touch $@ || true

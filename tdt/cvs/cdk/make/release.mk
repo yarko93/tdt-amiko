@@ -977,8 +977,10 @@ release_base:
 	$(INSTALL_DIR) $(prefix)/release/etc/init.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-down.d && \
+	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-down.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-pre-up.d && \
+	$(INSTALL_DIR) $(prefix)/release/etc/network/if-pre-down.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-up.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/tuxbox && \
 	$(INSTALL_DIR) $(prefix)/release/etc/enigma2 && \
@@ -1384,7 +1386,7 @@ endif
 		cp -a $(targetprefix)/usr/local/lib/enigma2/* $(prefix)/release/usr/lib/enigma2/; fi
 
 #	Dont remove pyo files, remove pyc instead
-	find $(prefix)/release/usr/lib/enigma2/ -name '*.pyo' -exec rm -f {} \;
+	find $(prefix)/release/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;

@@ -682,6 +682,8 @@ $(DEPDIR)/%$(CROSS_LIBGCC): $(CROSS_LIBGCC_RPM) | $(DEPDIR)/%$(GLIBC)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb  $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
+	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 $(CROSS_PROTOIZE): $(CROSS_PROTOIZE_RPM)
@@ -700,6 +702,8 @@ $(DEPDIR)/bootstrap-cross: | \
 		cross-sh4-cpp \
 		cross-sh4-gcc \
 		cross-sh4-g++ \
+		ipkg-utils \
+		opkg-host \
 		cross-sh4-libgcc
 	[ "x$*" = "x" ] && touch -r $(CROSS_G++_RPM) $@ || true
 

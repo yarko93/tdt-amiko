@@ -311,6 +311,10 @@ def write_control_file(fdir, full_package):
 	
 	for l in p:
 		var = bb_get(ext(l[1][0]))
+		if l[1][0] == 'NAME':
+			var = var.replace('_', '-').lower()
+		elif l[1][0] == 'RDEPENDS':
+			var = var.replace(' ',',')
 		if not var: continue
 		var = l[0] % var
 		s += var
@@ -350,12 +354,14 @@ def do_finish():
 		
 		for data in DATAS:
 			if not bb_get(data+'_'+p):
-				bb_set(data+'_'+p, bb_get(data+'_'+parent_pkg))
+				if data == 'NAME':
+					bb_set(data+'_'+p, p)
+				else:
+					bb_set(data+'_'+p, bb_get(data+'_'+parent_pkg))
 		
 		bb.mkdirhier(pjoin(pack_dir, 'CONTROL'))
 		write_control_file(pjoin(pack_dir, 'CONTROL'), p)
-	
-	#print 'QQQ', bb_get("PKGV_" + parent_pkg)
+
 
 if __name__ == "__main__":
 	do_finish()
