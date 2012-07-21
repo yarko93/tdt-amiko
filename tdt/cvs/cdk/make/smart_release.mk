@@ -177,9 +177,9 @@ release_base:
 	ln -sf /etc/timezone.xml $(prefix)/release/etc/tuxbox/timezone.xml && \
 	ln -sf /usr/local/share/keymaps $(prefix)/release/usr/share/keymaps
 	if [ -e $(targetprefix)/usr/share/alsa ]; then \
-	mkdir $(prefix)/release/usr/share/alsa/; \
-	mkdir $(prefix)/release/usr/share/alsa/cards/; \
-	mkdir $(prefix)/release/usr/share/alsa/pcm/; \
+	mkdir -p $(prefix)/release/usr/share/alsa/; \
+	mkdir -p $(prefix)/release/usr/share/alsa/cards/; \
+	mkdir -p $(prefix)/release/usr/share/alsa/pcm/; \
 	cp $(targetprefix)/etc/tuxbox/satellites.xml $(prefix)/release/etc/tuxbox/ && \
 	cp $(targetprefix)/etc/tuxbox/cables.xml $(prefix)/release/etc/tuxbox/ && \
 	cp $(targetprefix)/etc/tuxbox/terrestrial.xml $(prefix)/release/etc/tuxbox/ && \
@@ -236,7 +236,7 @@ release_base:
 	echo "576i50" > $(prefix)/release/etc/videomode
 # Post tweaks
 	depmod -b $(prefix)/release $(KERNELVERSION)
-	$(call initdconfig,$(shell ls $(prefix)/release/etc/init.d))
+	$(call initdconfig,$(init_scripts_initd_files))
 
 release_cube_common:
 	cp $(buildprefix)/root/release/reboot_cuberevo $(prefix)/release/etc/init.d/reboot && \
@@ -284,12 +284,12 @@ release_spark:
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname && \
 	echo "src/gz AR-P http://alien2.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
-	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
-	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw && \
-	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207s2.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
-	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends && \
-	cp -dp $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends/spark7162.ko && \
-	rm $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7106.ko && \
+	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf
+	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw
+	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207s2.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko)
+	mkdir -p $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends
+	cp -a $(buildprefix)/root/release/tuner.ko$(KERNELSTMLABEL)_spark7162 $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/frontends/spark7162.ko
+	rm -f $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7106.ko
 	depmod -b $(prefix)/release $(KERNELVERSION)
 
 release_fortis_hdbox:
@@ -403,7 +403,7 @@ release_ipbox55: release_common_utils
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
 $(DEPDIR)/min-release $(DEPDIR)/std-release $(DEPDIR)/max-release $(DEPDIR)/release: \
-$(DEPDIR)/%release: release_base release_common_utils release_$(TF7700)$(HL101)$(VIP1_V2)$(VIP2_V1)$(UFS910)$(UFS912)$(SPARK)$(SPARK7162)$(UFS922)$(OCTAGON1008)$(FORTIS_HDBOX)$(ATEVIO7500)$(HS7810A)$(HS7110)$(WHITEBOX)$(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(HOMECAST5101)$(IPBOX9900)$(IPBOX99)$(IPBOX55)$(ADB_BOX)
+$(DEPDIR)/%release:release_base release_common_utils release_$(TF7700)$(HL101)$(VIP1_V2)$(VIP2_V1)$(UFS910)$(UFS912)$(SPARK)$(SPARK7162)$(UFS922)$(OCTAGON1008)$(FORTIS_HDBOX)$(ATEVIO7500)$(HS7810A)$(HS7110)$(WHITEBOX)$(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(HOMECAST5101)$(IPBOX9900)$(IPBOX99)$(IPBOX55)$(ADB_BOX)
 	touch $@
 release-clean:
 
