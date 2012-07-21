@@ -1,9 +1,11 @@
 #!/bin/sh
 #
-# lirc daemon 
+# lirc daemon
 # chkconfig: S 36 80
 #
 PID=/var/run/lirc/lircd.pid
+
+test -e /dev/lirc || ln -s lirc0 /dev/lirc
 
 boxver()
 {

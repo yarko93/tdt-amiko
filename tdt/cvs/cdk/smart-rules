@@ -1216,7 +1216,7 @@ ethtool
   make:install:DESTDIR=PKDIR
 ;
 init_scripts
-  0.3
+  0.4
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
