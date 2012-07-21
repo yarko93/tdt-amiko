@@ -92,6 +92,7 @@ release_common_utils:
 	mkdir -p $(prefix)/release/usr/lib/locale
 	cp -f $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
 	cp -f $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
+	$(call initdconfig,$(shell ls $(prefix)/release/etc/init.d))
 
 # Copy video_7100
 	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910)$(HOMECAST5101),cp -f $(targetprefix)/boot/video_7100.elf $(prefix)/release/boot/video.elf)
@@ -236,7 +237,6 @@ release_base:
 	echo "576i50" > $(prefix)/release/etc/videomode
 # Post tweaks
 	depmod -b $(prefix)/release $(KERNELVERSION)
-	$(call initdconfig,$(init_scripts_initd_files))
 
 release_cube_common:
 	cp $(buildprefix)/root/release/reboot_cuberevo $(prefix)/release/etc/init.d/reboot && \
