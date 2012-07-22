@@ -576,7 +576,7 @@ static int pRead(Context_t* context ) {
 
 	printf("[RCU] key: %s -> %s\n", vData, &vBuffer[0]);
 
-	if (2 == sscanf(vBuffer, "%*s %o %s %*s", &updown, keyname)) {
+	if (2 == sscanf(vBuffer, "%*x %x %s %*s", &updown, keyname)) {
 		vCurrentCode = lookupKey(keyname);
 		if (vCurrentCode == -1) {
 			printf("[RCU] unknown key %s\n", keyname);
