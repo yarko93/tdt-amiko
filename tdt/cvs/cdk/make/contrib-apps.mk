@@ -136,7 +136,62 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 #	@DISTCLEANUP_pppd@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
-	
+#
+# USB MODESWITCH
+#
+DESCRIPTION_usb_modeswitch = usb-modeswitch
+RDEPENDS_usb_modeswitch = libusb usb-modeswitch-data
+FILES_usb_modeswitch = \
+/etc/* \
+/lib/udev/* \
+/usr/sbin/*
+
+$(DEPDIR)/usb_modeswitch.do_prepare: usb_modeswitch_data @DEPENDS_usb_modeswitch@
+	@PREPARE_usb_modeswitch@
+	touch $@
+
+$(DEPDIR)/usb_modeswitch.do_compile: bootstrap $(DEPDIR)/usb_modeswitch.do_prepare	
+$(DEPDIR)/usb_modeswitch: \
+$(DEPDIR)/%usb_modeswitch: $(DEPDIR)/usb_modeswitch.do_compile
+	$(start_build)
+	cd @DIR_usb_modeswitch@  && \
+	  $(BUILDENV) \
+		DESTDIR=$(PKDIR) \
+		PREFIX=$(PKDIR)/usr \
+	  $(MAKE) $(MAKE_OPTS) install
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_usb_modeswitch@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
+
+#
+# USB MODESWITCH DATA
+#
+DESCRIPTION_usb_modeswitch_data = "usb-modeswitch-data"
+
+FILES_usb_modeswitch_data = \
+/usr/* \
+/etc/* \
+/lib/udev/rules.d
+
+$(DEPDIR)/usb_modeswitch_data.do_prepare: @DEPENDS_usb_modeswitch_data@
+	@PREPARE_usb_modeswitch_data@
+	touch $@
+
+$(DEPDIR)/usb_modeswitch_data.do_compile: bootstrap $(DEPDIR)/usb_modeswitch_data.do_prepare
+$(DEPDIR)/usb_modeswitch_data: \
+$(DEPDIR)/%usb_modeswitch_data: $(DEPDIR)/usb_modeswitch_data.do_compile
+	$(start_build)
+	cd @DIR_usb_modeswitch_data@  && \
+		$(BUILDENV) \
+		DESTDIR=$(PKDIR) \
+		$(MAKE) install
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_usb_modeswitch_data@
+	@[ "x$*" = "x" ] && touch $@ || true
+	@TUXBOX_YAUD_CUSTOMIZE@
 #
 # NTFS-3G
 #
