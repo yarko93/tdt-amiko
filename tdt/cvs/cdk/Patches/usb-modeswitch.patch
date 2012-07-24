@@ -1,0 +1,11 @@
+--- usb-modeswitch-1.2.3/Makefile.old	2012-07-23 00:39:29.713448217 +0200
++++ usb-modeswitch-1.2.3/Makefile	2012-07-23 00:39:55.081448219 +0200
+@@ -46,7 +46,7 @@ distclean:
+ 	cd jim && $(MAKE) distclean
+ 
+ install-common:
+-	install -D -s --mode=755 usb_modeswitch $(SBINDIR)/usb_modeswitch
++	install -D --mode=755 usb_modeswitch $(SBINDIR)/usb_modeswitch
+ 	install -D --mode=755 usb_modeswitch.sh $(UDEVDIR)/usb_modeswitch
+ 	install -D --mode=644 usb_modeswitch.conf $(ETCDIR)/usb_modeswitch.conf
+ 	install -D --mode=644 usb_modeswitch.1 $(MANDIR)/usb_modeswitch.1

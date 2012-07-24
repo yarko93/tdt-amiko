@@ -425,9 +425,11 @@ void ignoreSIGPIPE()
        sigaction(SIGPIPE,  &vAction, (struct sigaction*)NULL);
 }
 
-
 int main (int argc, char* argv[])
 {
+    
+    freopen("/dev/console", "a", stdout);
+
     eBoxType vBoxType = Unknown;
     Context_t context;
 

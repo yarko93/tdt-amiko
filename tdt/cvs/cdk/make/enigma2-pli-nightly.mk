@@ -63,8 +63,11 @@ $(DEPDIR)/enigma2-pli-nightly.do_compile: $(DIR_enigma2_pli)/config.status
 		$(MAKE) all
 	touch $@
 
+# Select enigma2 keymap.xml
+enigma2_keymap_file = keymap$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2)$(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK)$(SPARK7162),_spark)$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD),_cuberevo)$(if $(HOMECAST5101),_ufs910)$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).xml
+
 DESCRIPTION_enigma2_pli := a framebuffer-based zapping application (GUI) for linux
-PKGR_enigma2_pli = r1
+PKGR_enigma2_pli = r2
 SRC_URI_enigma2_pli := git://openpli.git.sourceforge.net/gitroot/openpli/enigma2
 FILES_enigma2_pli := /usr/lib/ /etc/enigma2 /usr/share /usr/bin
 
@@ -74,6 +77,7 @@ $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_prepare enigma2-pli-nightl
 	$(get_git_version)
 	$(MAKE) -C $(DIR_enigma2_pli) install DESTDIR=$(PKDIR)
 	$(target)-strip $(PKDIR)/usr/bin/enigma2
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/$(enigma2_keymap_file) $(PKDIR)/usr/share/enigma2/keymap.xml
 	$(tocdk_build)
 	$(toflash_build)
 	touch $@

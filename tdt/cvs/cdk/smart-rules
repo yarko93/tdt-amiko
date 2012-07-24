@@ -224,7 +224,7 @@ libtool
   make:install
 ;
 busybox
-  1.20.1
+  1.20.2
   {PN}-{PV}
   extract:http://www.{PN}.net/downloads/{PN}-{PV}.tar.bz2
   make:install:CONFIG_PREFIX=PKDIR
@@ -405,6 +405,19 @@ pppd
   2.4.5
   ppp-{PV}
   extract:ftp://ftp.samba.org/pub/ppp/ppp-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+usb_modeswitch
+  1.2.3
+  {PN}-{PV}
+  extract:http://www.draisberghof.de/usb_modeswitch/{PN}-{PV}.tar.bz2
+  patch:file://{PN}.patch
+  make:install:DESTDIR=PKDIR
+;
+usb_modeswitch_data
+  20120531
+  {PN}-{PV}
+  extract:http://www.draisberghof.de/usb_modeswitch/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
 ;
 sysstat
@@ -1216,7 +1229,7 @@ ethtool
   make:install:DESTDIR=PKDIR
 ;
 init_scripts
-  0.3
+  0.4
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
