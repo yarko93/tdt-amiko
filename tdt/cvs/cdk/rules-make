@@ -68,8 +68,7 @@ pngquant;1.1;pngquant-1.1;pngquant-1.1-src.tgz;extract:pngquant-1.1-src.tgz
 mplayer;1.0;mplayer-export-*;mplayer-export-snapshot.tar.bz2;extract:mplayer-export-snapshot.tar.bz2
 mencoder;1.0;mplayer-export-*;mplayer-export-snapshot.tar.bz2;extract:mplayer-export-snapshot.tar.bz2
 jfsutils;1.1.15;jfsutils-1.1.15;jfsutils-1.1.15.tar.gz;extract:jfsutils-1.1.15.tar.gz
-<<<<<<< HEAD
-opkg;0.1.8;opkg-0.1.8;opkg-0.1.8.tar.gz;extract:opkg-0.1.8.tar.gz
+opkg;0.1.8+svnr587;opkg-0.1.8+svnr587;opkg-0.1.8+svnr587.tar.gz;extract:opkg-0.1.8+svnr587.tar.gz
 pppd;2.4.5;ppp-2.4.5;ppp-2.4.5.tar.gz;extract:ppp-2.4.5.tar.gz
 sysstat;10.0.4;sysstat-10.0.4;sysstat-10.0.4.tar.gz;extract:sysstat-10.0.4.tar.gz
 hotplug_e2;1.0;hotplug-e2-helper;;
@@ -163,18 +162,18 @@ tinyxml;2.6.2;tinyxml2.6.2;tinyxml_2_6_2.tar.gz;extract:tinyxml_2_6_2.tar.gz;mov
 elementtree;1.2.6-20050316;elementtree-1.2.6-20050316;elementtree-1.2.6-20050316.tar.gz;extract:elementtree-1.2.6-20050316.tar.gz
 #libxml2;2.6.30;libxml2-2.6.30;libxml2-2.6.30.tar.gz;extract:libxml2-2.6.30.tar.gz
 libxml2;2.7.8;libxml2-2.7.8;libxml2-2.7.8.tar.gz:libxml2-2.7.8.diff;extract:libxml2-2.7.8.tar.gz;patch:libxml2-2.7.8.diff
-libxslt;1.1.24;libxslt-1.1.24;libxslt-1.1.24.tar.gz;extract:libxslt-1.1.24.tar.gz
-lxml;2.0.5;lxml-2.0.5;lxml-2.0.5.tgz;extract:lxml-2.0.5.tgz
-setuptools;0.6c8;setuptools-0.6c8;setuptools-0.6c8.tar.gz;extract:setuptools-0.6c8.tar.gz
-twisted;8.2.0;Twisted-8.2.0;Twisted-8.2.0.tar.bz2;extract:Twisted-8.2.0.tar.bz2
+libxslt;1.1.26;libxslt-1.1.26;libxslt-1.1.26.tar.gz;extract:libxslt-1.1.26.tar.gz
+lxml;2.2.8;lxml-2.2.8;lxml-2.2.8.tgz;extract:lxml-2.2.8.tgz
+setuptools;0.6c11;setuptools-0.6c11;setuptools-0.6c11.tar.gz;extract:setuptools-0.6c11.tar.gz
+twisted;12.1.0;Twisted-12.1.0;Twisted-12.1.0.tar.bz2;extract:Twisted-12.1.0.tar.bz2
 twistedweb2;8.1.0;TwistedWeb2-8.1.0;TwistedWeb2-8.1.0.tar.bz2;extract:TwistedWeb2-8.1.0.tar.bz2
 pilimaging;1.1.7;Imaging-1.1.7;Imaging-1.1.7.tar.gz;extract:Imaging-1.1.7.tar.gz
-pyopenssl;0.8;pyOpenSSL-0.8;pyOpenSSL-0.8.tar.gz;extract:pyOpenSSL-0.8.tar.gz
+pyopenssl;0.9;pyOpenSSL-0.9;pyOpenSSL-0.9.tar.gz;extract:pyOpenSSL-0.9.tar.gz
 #python;2.6;python-2.6;Python-2.6.tar.bz2:python_2.6.diff:python-2.6-force_largefile_support.diff;extract:Python-2.6.tar.bz2;move:Python-2.6:python-2.6;patch:python_2.6.diff;patch:python-2.6-force_largefile_support.diff
 python;2.6.6;python-2.6.6;Python-2.6.6.tar.bz2:python_2.6.6.diff;extract:Python-2.6.6.tar.bz2;move:Python-2.6.6:python-2.6.6;patch:python_2.6.6.diff
 pythonwifi;0.5.0;python-wifi-0.5.0;python-wifi-0.5.0.tar.bz2;extract:python-wifi-0.5.0.tar.bz2
 pythoncheetah;2.4.4;Cheetah-2.4.4;Cheetah-2.4.4.tar.gz;extract:Cheetah-2.4.4.tar.gz
-zope_interface;3.3.0;zope.interface-3.3.0;zope.interface-3.3.0.tar.gz;extract:zope.interface-3.3.0.tar.gz
+zope_interface;4.0.1;zope.interface-4.0.1;zope.interface-4.0.1.tar.gz;extract:zope.interface-4.0.1.tar.gz
 
 #
 # GSTREAMER

@@ -1384,7 +1384,7 @@ endif
 		cp -a $(targetprefix)/usr/local/lib/enigma2/* $(prefix)/release/usr/lib/enigma2/; fi
 
 #	Dont remove pyo files, remove pyc instead
-	find $(prefix)/release/usr/lib/enigma2/ -name '*.pyo' -exec rm -f {} \;
+	find $(prefix)/release/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
@@ -1408,14 +1408,14 @@ endif
 	rm -rf $(prefix)/release/usr/lib/python2.6/test
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/Cheetah-2.4.4-py2.6.egg-info
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/lxml
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/lxml-2.0.5-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/lxml-2.2.8-py2.6.egg-info
 	rm -f $(prefix)/release/usr/lib/python2.6/site-packages/libxml2mod.so
 	rm -f $(prefix)/release/usr/lib/python2.6/site-packages/libxsltmod.so
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/OpenSSL/test
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/python_wiffi-0.5.0-py2.6.egg-info
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/setuptools
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/setuptools-0.6c8-py2.6.egg-info
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/zope.interface-3.3.0-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/setuptools-0.6c11-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/zope.interface-4.0.1-py2.6.egg-info
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/test
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/conch
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/mail
@@ -1433,7 +1433,7 @@ endif
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/scripts
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/tap
 	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/topfiles
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/Twisted-8.2.0-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/Twisted-12.1.0-py2.6.egg-info
 	rm -rf $(prefix)/release/usr/lib/python2.6/bsddb
 	rm -rf $(prefix)/release/usr/lib/python2.6/compiler
 	rm -rf $(prefix)/release/usr/lib/python2.6/config
@@ -1443,7 +1443,7 @@ endif
 	rm -rf $(prefix)/release/usr/lib/python2.6/email
 
 #	Dont remove pyo files, remove pyc instead
-	find $(prefix)/release/usr/lib/python2.6/ -name '*.pyo' -exec rm -f {} \;
+	find $(prefix)/release/usr/lib/python2.6/ -name '*.pyc' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.a' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.o' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/python2.6/ -name '*.la' -exec rm -f {} \;
