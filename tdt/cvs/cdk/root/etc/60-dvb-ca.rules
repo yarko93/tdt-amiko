@@ -1,0 +1,4 @@
+#DVB remove ca1
+RUN+="/bin/rm /dev/dvb/adapter0/ca1"
+#DVB create ca1
+RUN+="/bin/ln -s /dev/dvb/adapter0/ca0 /dev/dvb/adapter0/ca1"

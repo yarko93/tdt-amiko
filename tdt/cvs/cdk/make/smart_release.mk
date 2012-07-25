@@ -223,6 +223,7 @@ release_base:
 	cp -dp $(buildprefix)/root/etc/profile $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/protocols $(prefix)/release/etc/ && \
 	cp -dp $(buildprefix)/root/etc/resolv.conf $(prefix)/release/etc/ && \
+	cp -dp $(buildprefix)/root/etc/60-dvb-ca.rules $(prefix)/release/etc/udev/rules.d/ && \
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
@@ -273,6 +274,7 @@ release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname && \
 	echo "src/gz AR-P http://alien.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
+	cp $(buildprefix)/root/etc/lircd_spark.conf.09_00_0B $(prefix)/release/etc/lircd.conf.09_00_0B \
 	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw && \
 	$(if $(P0123),cp -dp $(archivedir)/ptinp/pti_123.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
