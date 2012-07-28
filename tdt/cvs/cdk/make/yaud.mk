@@ -55,6 +55,8 @@ min-net-utils std-net-utils max-net-utils net-utils: \
 		%$(NFSSERVER) \
 		%vsftpd \
 		%ethtool \
+		%pppd \
+		%wireless_tools \
 		%opkg \
 		%grep \
 		%$(CIFS)
