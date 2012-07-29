@@ -1,4 +1,4 @@
-*** linux-sh4-2.6.32.28_stm24_0207_orig/arch/sh/boards/mach-mb442/setup.c	2011-08-04 16:27:41.414157989 +0300
+*** linux-sh4-2.6.32.57_stm24_0210_orig/arch/sh/boards/mach-mb442/setup.c	2011-08-04 16:27:41.414157989 +0300
 --- linux-sh4/arch/sh/boards/mach-mb442/setup.c	2011-08-05 17:40:27.204158605 +0300
 ***************
 *** 22,35 ****
@@ -32,7 +32,7 @@
 +       {
 + 	      .name  = "LMI_VID",
 + 	      .start = 0x10800000,
-+ 	      .size  = 0x077FFFFF,
++ 	      .size  = 0x03800000,
 + 	      .flags = 0,
 + 	      .aka   = LMI_VID_partalias
 +       },
@@ -173,7 +173,7 @@
   			ARRAY_SIZE(mb442_devices));
   }
 --- 194,199 ----
-*** linux-sh4-2.6.32.28_stm24_0207_orig/drivers/net/phy/phy_device.c	2011-08-04 16:27:16.440157990 +0300
+*** linux-2.6.32.57_stm24_0210_orig/drivers/net/phy/phy_device.c	2011-08-04 16:27:16.440157990 +0300
 --- linux-sh4/drivers/net/phy/phy_device.c	2011-08-05 17:35:37.308158605 +0300
 ***************
 *** 962,968 ****
@@ -192,7 +192,7 @@
   
   	return 0;
   }
-*** linux-sh4-2.6.32.28_stm24_0207_orig/drivers/net/stmmac/stmmac_mdio.c	2011-08-04 16:27:14.747157990 +0300
+*** linux-sh4-2.6.32.57_stm24_0210_orig/drivers/net/stmmac/stmmac_mdio.c	2011-08-04 16:27:14.747157990 +0300
 --- linux-sh4/drivers/net/stmmac/stmmac_mdio.c	2011-08-05 17:35:30.704158605 +0300
 ***************
 *** 191,198 ****
@@ -220,13 +220,14 @@
   
   			act = (priv->plat->bus_id == mdio_bus_data->bus_id) &&
 
-*** linux-sh4-2.6.32.28_stm24_0207_orig/drivers/stm/gpio.c	2011-08-06 17:16:42.676314198 +0300
+*** linux-sh4-2.6.32.57_stm24_0210_orig/drivers/stm/gpio.c	2011-08-06 17:16:42.676314198 +0300
 --- linux-sh4/drivers/stm/gpio.c	2011-08-07 03:21:10.140239689 +0300
 ***************
-*** 27,38 ****
+*** 27,39 ****
   #include <linux/stm/platform.h>
   #include <linux/stm/pad.h>
   #include <linux/stm/pio.h>
+  #include <linux/stm/pm_sys.h>
   #include "reg_pio.h"
   
   
@@ -236,7 +237,7 @@
   	void (*func)(struct stpio_pin *pin, void *dev);
   	void* dev;
   	unsigned short port_no, pin_no;
---- 27,42 ----
+--- 27,43 ----
   #include <linux/stm/platform.h>
   #include <linux/stm/pad.h>
   #include <linux/stm/pio.h>
@@ -244,6 +245,7 @@
 + #include <linux/proc_fs.h>
 + #include <linux/kallsyms.h>
 + #endif
+  #include <linux/stm/pm_sys.h>
   #include "reg_pio.h"
   
   
@@ -254,7 +256,7 @@
   	void* dev;
   	unsigned short port_no, pin_no;
 ***************
-*** 41,47 ****
+*** 41,53 ****
   
   struct stm_gpio_pin {
   	unsigned char flags;
@@ -262,7 +264,13 @@
   #define PIN_IGNORE_EDGE_FLAG	2
   #define PIN_IGNORE_EDGE_VAL	1
   #define PIN_IGNORE_RISING_EDGE	(PIN_IGNORE_EDGE_FLAG | 0)
---- 45,51 ----
+  #define PIN_IGNORE_FALLING_EDGE	(PIN_IGNORE_EDGE_FLAG | 1)
+  #define PIN_IGNORE_EDGE_MASK	(PIN_IGNORE_EDGE_FLAG | PIN_IGNORE_EDGE_VAL)
+  
+  #ifdef CONFIG_HIBERNATION
+  	unsigned char pm_saved_data;
+  #endif
+--- 46,60 ----
   
   struct stm_gpio_pin {
   	unsigned char flags;
@@ -270,6 +278,14 @@
   #define PIN_IGNORE_EDGE_FLAG	2
   #define PIN_IGNORE_EDGE_VAL	1
   #define PIN_IGNORE_RISING_EDGE	(PIN_IGNORE_EDGE_FLAG | 0)
+  #define PIN_IGNORE_FALLING_EDGE	(PIN_IGNORE_EDGE_FLAG | 1)
+  #define PIN_IGNORE_EDGE_MASK	(PIN_IGNORE_EDGE_FLAG | PIN_IGNORE_EDGE_VAL)
+  
++ 	unsigned char direction;
++ 
+  #ifdef CONFIG_HIBERNATION
+  	unsigned char pm_saved_data;
+  #endif
 ***************
 *** 75,81 ****
   static struct sysdev_class stm_gpio_sysdev_class;
@@ -427,7 +443,7 @@
 + 		proc_stpio->read_proc = stpio_read_proc;
 + #endif
 + 
-  	ret = sysdev_class_register(&stm_gpio_sysdev_class);
+  	ret = platform_driver_register(&stm_gpio_driver);
   	if (ret)
   		return ret;
 
