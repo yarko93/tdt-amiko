@@ -238,7 +238,7 @@ all-extras:yaud-none \
 	evebrowser \
 	enigma2-plugins \
 	xupnpd \
-	ntfs-3g \
+	ntfs_3g \
 	wireless_tools \
 	package-index
 	
