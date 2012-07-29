@@ -109,7 +109,7 @@ $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 		patch -p1 < ../Patches/pppd.patch
 	touch $@
 
-$(DEPDIR)/pppd.do_compile: bootstrap usb_modeswitch $(DEPDIR)/pppd.do_prepare
+$(DEPDIR)/pppd.do_compile: bootstrap usb-modeswitch $(DEPDIR)/pppd.do_prepare
 	cd @DIR_pppd@  && \
 		$(BUILDENV) \
 	      CFLAGS="$(TARGET_CFLAGS) -I$(buildprefix)/linux/arch/sh" \
