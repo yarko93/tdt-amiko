@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# Load all necessary st modules
+# 
+# chkconfig: S 9 0
+#
+
+   echo "init frontpanel"
+   modprobe proton
+   modprobe simu_button
+   echo "WAIT 1 min"
+   echo "ОЖИДАЙТЕ" > /dev/vfd
+   mknod -m 644 /dev/vfd c 147 0
+   modprobe e2_proc
+
+   echo "init stmfb"
+   modprobe stmcore-display-stx7109c3
+   modprobe stmfb display0=1920x1080-32@50:12m:pal:yuv:yuv
+
+   echo "LOADING MODULES"   
+   echo "ЗАГРУЗКА" >/dev/vfd
+
+   /bin/ustslave /dev/st231-1 /boot/audio.elf
+   echo "load v firmware"
+   /bin/ustslave /dev/st231-0 /boot/video.elf
+
+   echo "init embx"
+   modprobe embxshell
+   modprobe embxmailbox mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0 ;
+   modprobe embxshm mailbox0=shm:0:7:0x60000000:0:256:256:0:512:0x40000000:0x10000000 ;
+   modprobe mme_host transport0=shm
+
+   echo "init AVS"
+   modprobe avs type=stv6418
+
+   modprobe mmelog
+   modprobe ksound
+   modprobe p2div64
+   modprobe stm_v4l2
+   modprobe pseudocard
+
+   modprobe fe-core demod=stv090x tuner=stv6110x
+   modprobe pti waitMS=20 videoMem=10240
+   modprobe stm_monitor
+   modprobe stmsysfs
+   modprobe stmdvb
+
+   modprobe player2 discardlateframe=0
+   modprobe sth264pp
+   modprobe stmalloc
+   modprobe platform
+   modprobe silencegen
+   modprobe smartcard
+   modprobe bpamem
+   
+  /var/bin/swap start
+  /var/bin/gmt.sh &
+  /var/bin/emustarter.sh &
+  /var/bin/opkg.sh &
+  /hdd/epg.conf &
+ 
+  showiframe -p /boot/bootlogo.mvi &
+  stfbcontrol a 0
+
+	stfbcontrol a 255
+	echo " e2 "
