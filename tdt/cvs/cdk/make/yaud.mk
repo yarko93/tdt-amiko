@@ -55,8 +55,6 @@ min-net-utils std-net-utils max-net-utils net-utils: \
 		%$(NFSSERVER) \
 		%vsftpd \
 		%ethtool \
-		%pppd \
-		%wireless_tools \
 		%opkg \
 		%grep \
 		%$(CIFS)
@@ -107,38 +105,38 @@ yaud-neutrino-hd2: yaud-none lirc stslave \
 		boot-elf remote firstboot neutrino-hd2 release_neutrino
 	@TUXBOX_YAUD_CUSTOMIZE@
 
-#if STM22
-#yaud-enigma2: yaud-none host_python lirc stslave \
-#		boot-elf hotplug remote firstboot enigma2 enigma2-misc release
-#	@TUXBOX_YAUD_CUSTOMIZE@
-#else
-#yaud-enigma2: yaud-none host_python lirc \
-#		boot-elf remote firstboot enigma2 enigma2-misc release
-#	@TUXBOX_YAUD_CUSTOMIZE@
-#endif
+if STM22
+yaud-enigma2: yaud-none host_python lirc stslave \
+		boot-elf hotplug remote firstboot enigma2 release
+	@TUXBOX_YAUD_CUSTOMIZE@
+else
+yaud-enigma2: yaud-none host_python lirc \
+		boot-elf remote firstboot enigma2 release
+	@TUXBOX_YAUD_CUSTOMIZE@
+endif
 
-#if STM22
-#yaud-enigma2-nightly: yaud-none host_python lirc stslave \
-#		boot-elf hotplug remote firstboot enigma2-nightly enigma2-misc release
-#	@TUXBOX_YAUD_CUSTOMIZE@
-#else
-#yaud-enigma2-nightly: yaud-none host_python lirc stslave \
-#		boot-elf remote firstboot enigma2-nightly enigma2-misc release
-#	@TUXBOX_YAUD_CUSTOMIZE@
-#endif
+if STM22
+yaud-enigma2-nightly: yaud-none host_python lirc stslave \
+		boot-elf hotplug remote firstboot enigma2-nightly release
+	@TUXBOX_YAUD_CUSTOMIZE@
+else
+yaud-enigma2-nightly: yaud-none host_python lirc stslave \
+		boot-elf remote firstboot enigma2-nightly release
+	@TUXBOX_YAUD_CUSTOMIZE@
+endif
 
-#if STM22
-#yaud-enigma1-hd: yaud-none lirc stslave \
-#		boot-elf hotplug remote firstboot enigma1-hd release_enigma1_hd
-#	@TUXBOX_YAUD_CUSTOMIZE@
-#else
-#yaud-enigma1-hd: yaud-none lirc stslave \
-#		boot-elf remote firstboot enigma1-hd release_enigma1_hd
-#	@TUXBOX_YAUD_CUSTOMIZE@
-#endif
+if STM22
+yaud-enigma1-hd: yaud-none lirc stslave \
+		boot-elf hotplug remote firstboot enigma1-hd release_enigma1_hd
+	@TUXBOX_YAUD_CUSTOMIZE@
+else
+yaud-enigma1-hd: yaud-none lirc stslave \
+		boot-elf remote firstboot enigma1-hd release_enigma1_hd
+	@TUXBOX_YAUD_CUSTOMIZE@
+endif
 
 yaud-enigma2-pli-nightly: yaud-none host_python lirc \
-		boot-elf remote firstboot enigma2-pli-nightly enigma2-plugins release
+		boot-elf remote firstboot enigma2-pli-nightly release
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 yaud-none: \
@@ -222,4 +220,26 @@ max-yaud-none: \
 		%linux-kernel \
 		%net-utils \
 		%disk-utils
+	@TUXBOX_YAUD_CUSTOMIZE@
+#
+# EXTRAS
+#
+min-extras:yaud-none \
+	usb_modeswitch \
+	pppd \
+	enigma2-plugins \
+	wireless_tools
+	
+	@TUXBOX_YAUD_CUSTOMIZE@
+	
+all-extras:yaud-none \
+	usb_modeswitch \
+	pppd \
+	evebrowser \
+	enigma2-plugins \
+	xupnpd \
+	ntfs_3g \
+	wireless_tools \
+	package-index
+	
 	@TUXBOX_YAUD_CUSTOMIZE@
