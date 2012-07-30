@@ -1,7 +1,7 @@
 #
 # Plugins
 #
-$(DEPDIR)/enigma2-plugins: enigma2_openwebif enigma2_networkbrowser
+$(DEPDIR)/enigma2-plugins: enigma2_openwebif enigma2_networkbrowser openpli-plugins
 
 #
 # enigma2-openwebif
@@ -10,7 +10,7 @@ $(DEPDIR)/enigma2-plugins: enigma2_openwebif enigma2_networkbrowser
 DESCRIPTION_enigma2_openwebif = "open webinteface plugin for enigma2 by openpli team"
 RDEPENDS_enigma2_openwebif = libpng12 libjpeg6b
 
-$(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap python pythoncheetah @DEPENDS_enigma2_openwebif@
+$(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap python libpng12 libjpeg6b pythoncheetah @DEPENDS_enigma2_openwebif@
 	@PREPARE_enigma2_openwebif@
 	touch $@
 
@@ -26,7 +26,7 @@ $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 		cp -a plugin $(PKDIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif && \
 		cp -a $(buildprefix)/root/usr/bin/grab $(PKDIR)/usr/bin/ && \
 		cp -a $(buildprefix)/root/usr/bin/grab.sh $(PKDIR)/usr/bin/
-	$(extra_build)
+	$(toflash_build)
 #	@DISTCLEANUP_enigma2_openwebif@
 	@[ "x$*" = "x" ] && touch $@ || true
 
@@ -72,7 +72,7 @@ $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 		cp -a src/* $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ && \
 		cp -a src/lib/netscan.so $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ && \
 		rm -rf $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/lib
-	$(extra_build)
+	$(extra)
 #	@DISTCLEANUP_enigma2_networkbrowser@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -85,7 +85,7 @@ $(DEPDIR)/%-openpli:
 	cd $(DIR_$*_openpli) && \
 		$(python) setup.py install --root=$(PKDIR) --install-lib=/usr/lib/enigma2/python/Plugins
 	$(remove_pyo)
-	$(extra_build)
+	$(extra)
 	touch $@
 
 DESCRIPTION_NewsReader_openpli = RSS reader

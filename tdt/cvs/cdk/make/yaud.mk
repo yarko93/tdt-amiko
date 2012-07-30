@@ -225,21 +225,22 @@ max-yaud-none: \
 # EXTRAS
 #
 min-extras:yaud-none \
-	usb_modeswitch \
+	usb-modeswitch \
 	pppd \
-	enigma2-plugins \
+	enigma2_openwebif \
 	wireless_tools
 	
 	@TUXBOX_YAUD_CUSTOMIZE@
 	
 all-extras:yaud-none \
-	usb_modeswitch \
+	usb-modeswitch \
 	pppd \
 	evebrowser \
 	enigma2-plugins \
 	xupnpd \
 	ntfs_3g \
 	wireless_tools \
+	enigma2-skins-sh4 \
 	package-index
 	
 	@TUXBOX_YAUD_CUSTOMIZE@
