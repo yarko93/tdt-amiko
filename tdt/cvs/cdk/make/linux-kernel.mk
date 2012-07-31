@@ -1073,6 +1073,8 @@ $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 	$(toflash_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 
+linux-kernel-distclean: $(KERNELHEADERS)-distclean
+
 DESCRIPTION_driver = "Drivers for stm box"
 PKGR_driver = r1
 FILES_driver = /lib/modules/$(KERNELVERSION)/extra
