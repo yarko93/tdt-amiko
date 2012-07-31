@@ -48,7 +48,7 @@ ABORT 'DELAYED'
 REPORT 'CONNECT'
 '' 'ATZ'
 SAY 'Calling CDMA/EVDO'
-'' 'ATDT#777'
+'OK' 'ATDT#777'
 'CONNECT' 'ATO'
 '' ''" > /etc/ppp/peers/1.chat
 
