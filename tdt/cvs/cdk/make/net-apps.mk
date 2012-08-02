@@ -44,7 +44,7 @@ $(DEPDIR)/%nfs_utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_nfs_utils@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # vsftpd
@@ -88,7 +88,7 @@ $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_vsftpd@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # ETHTOOL
@@ -121,7 +121,7 @@ $(DEPDIR)/%ethtool: $(DEPDIR)/ethtool.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_ethtool@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # SAMBA
@@ -134,11 +134,12 @@ FILES_samba = \
 /etc/samba/smb.conf \
 /usr/lib/vfs/*.so
 
-$(DEPDIR)/samba.do_prepare: @DEPENDS_samba@
+$(DEPDIR)/samba.do_prepare: bootstrap @DEPENDS_samba@
 	@PREPARE_samba@
 	touch $@
 
-$(DEPDIR)/samba.do_compile: bootstrap $(DEPDIR)/samba.do_prepare
+$(DEPDIR)/samba.do_compile: $(DEPDIR)/samba.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_samba@ && \
 		cd source3 && \
 		./autogen.sh && \
@@ -239,7 +240,7 @@ $(DEPDIR)/%netio: $(DEPDIR)/netio.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_netio@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # LIGHTTPD
@@ -284,7 +285,7 @@ $(DEPDIR)/%lighttpd: $(DEPDIR)/lighttpd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lighttpd@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # NETKIT_FTP
@@ -316,7 +317,7 @@ $(DEPDIR)/%netkit_ftp: $(DEPDIR)/netkit_ftp.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_netkit_ftp@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # WIRELESS_TOOLS
@@ -345,7 +346,7 @@ $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_wireless_tools@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # WPA_SUPPLICANT
@@ -374,4 +375,4 @@ $(DEPDIR)/%wpa_supplicant: $(DEPDIR)/wpa_supplicant.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_wpa_supplicant@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
