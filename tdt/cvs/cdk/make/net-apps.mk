@@ -38,7 +38,7 @@ $(DEPDIR)/%nfs-utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
 		[ -f $$i ] && $(INSTALL) -m644 $$i $(prefix)/$*cdkroot/etc/$$i || true; \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done )
 #	@DISTCLEANUP_nfs_utils@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # vsftpd
@@ -60,7 +60,7 @@ $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
 		@INSTALL_vsftpd@
 		cp $(buildprefix)/root/etc/vsftpd.conf $(targetprefix)/etc
 #	@DISTCLEANUP_vsftpd@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # ETHTOOL
@@ -86,16 +86,17 @@ $(DEPDIR)/%ethtool: $(DEPDIR)/ethtool.do_compile
 	cd @DIR_ethtool@  && \
 		@INSTALL_ethtool@
 #	@DISTCLEANUP_ethtool@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # SAMBA
 #
-$(DEPDIR)/samba.do_prepare: @DEPENDS_samba@
+$(DEPDIR)/samba.do_prepare: bootstrap @DEPENDS_samba@
 	@PREPARE_samba@
 	touch $@
 
-$(DEPDIR)/samba.do_compile: bootstrap $(DEPDIR)/samba.do_prepare
+$(DEPDIR)/samba.do_compile: $(DEPDIR)/samba.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_samba@ && \
 		cd source3 && \
 		./autogen.sh && \
@@ -186,7 +187,7 @@ $(DEPDIR)/%netio: $(DEPDIR)/netio.do_compile
 		$(INSTALL) -d $(prefix)/$*cdkroot/usr/bin && \
 		@INSTALL_netio@
 #	@DISTCLEANUP_netio@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # LIGHTTPD
@@ -220,7 +221,7 @@ $(DEPDIR)/%lighttpd: $(DEPDIR)/lighttpd.do_compile
 	$(INSTALL) -d $(prefix)/$*cdkroot/etc/lighttpd && $(INSTALL) -m755 root/etc/lighttpd/lighttpd.conf $(prefix)/$*cdkroot/etc/lighttpd
 	$(INSTALL) -d $(prefix)/$*cdkroot/etc/init.d && $(INSTALL) -m755 root/etc/init.d/lighttpd $(prefix)/$*cdkroot/etc/init.d
 #	@DISTCLEANUP_lighttpd@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # NETKIT_FTP
@@ -245,7 +246,7 @@ $(DEPDIR)/%netkit_ftp: $(DEPDIR)/netkit_ftp.do_compile
 	cd @DIR_netkit_ftp@  && \
 		@INSTALL_netkit_ftp@
 #	@DISTCLEANUP_netkit_ftp@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # WIRELESS_TOOLS
@@ -265,7 +266,7 @@ $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 	cd @DIR_wireless_tools@  && \
 		@INSTALL_wireless_tools@
 #	@DISTCLEANUP_wireless_tools@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # WPA_SUPPLICANT
@@ -275,15 +276,15 @@ $(DEPDIR)/wpa_supplicant.do_prepare: @DEPENDS_wpa_supplicant@
 	touch $@
 
 $(DEPDIR)/wpa_supplicant.do_compile: bootstrap Patches/wpa_supplicant.config $(DEPDIR)/wpa_supplicant.do_prepare
-	cd @DIR_wpa_supplicant@  && \
-		$(INSTALL) -m 644 ../$(word 2,$^) .config && \
+	cd @DIR_wpa_supplicant@/wpa_supplicant && \
+		$(INSTALL) -m 644 ../../$(word 2,$^) .config && \
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
 $(DEPDIR)/min-wpa_supplicant $(DEPDIR)/std-wpa_supplicant $(DEPDIR)/max-wpa_supplicant \
 $(DEPDIR)/wpa_supplicant: \
 $(DEPDIR)/%wpa_supplicant: $(DEPDIR)/wpa_supplicant.do_compile
-	cd @DIR_wpa_supplicant@  && \
+	cd @DIR_wpa_supplicant@/wpa_supplicant  && \
 		@INSTALL_wpa_supplicant@
 #	@DISTCLEANUP_wpa_supplicant@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
