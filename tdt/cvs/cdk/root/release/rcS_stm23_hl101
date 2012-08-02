@@ -2,7 +2,7 @@
 
 MODDIR=/lib/modules
 echo "init frontpanel"
-insmod $MODDIR/proton.ko gmt=+400
+insmod $MODDIR/proton.ko
 insmod $MODDIR/simu_button.ko
    echo "ОЖИДАЙТЕ" > /dev/vfd
    echo "WAIT 1 min"
@@ -12,7 +12,7 @@ if [ -e /var/etc/.firstboot ]; then
 fi
 
 /etc/init.d/mountvirtfs start
-
+/usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
 insmod $MODDIR/e2_proc.ko
 
 if [ ! -e /var/etc/.firstboot ]; then
@@ -23,7 +23,7 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "init stmfb"
    insmod $MODDIR/stmcore-display-stx7109c3.ko
-   insmod $MODDIR/stmfb.ko display0=1280x720-32@50:12m:pal:yuv:yuv
+   insmod $MODDIR/stmfb.ko display0=1920x1080-32@50:12m:pal:yuv:yuv
 
    echo "LOADING MODULES"
    echo "ЗАГРУЗКА" >/dev/vfd
@@ -42,7 +42,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    echo "init AVS"
    insmod $MODDIR/avs.ko type=stv6418
    insmod $MODDIR/mmelog.ko
-   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER1;
+   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
    insmod $MODDIR/ksound.ko
    insmod $MODDIR/kreplay.ko
    insmod $MODDIR/silencegen.ko
@@ -55,81 +55,77 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "init drivers"
    insmod $MODDIR/cimax.ko
-   insmod $MODDIR/pti.ko waitMS=30 videoMem=4096
+   insmod $MODDIR/pti.ko waitMS=20 videoMem=10240
    insmod $MODDIR/stm_monitor.ko
    insmod $MODDIR/stmdvb.ko
    insmod $MODDIR/player2.ko discardlateframe=0
    insmod $MODDIR/sth264pp.ko
    insmod $MODDIR/stmalloc.ko
    insmod $MODDIR/platform.ko
-   insmod $MODDIR/smartcard.ko debug=1
 
-   showiframe -p /boot/RUnigmaHD-VIP-start.mvi &
+   showiframe -p /boot/bootlogo.mvi &
    
    echo "init lircd"
    /usr/bin/lircd
-
-   mknod /dev/rc c 147 1 
-   mknod /dev/sci0 c 169 0
-   mknod /dev/sci1 c 169 1 
    
    /bin/evremote2 hl101 &
-
+   
    /etc/init.d/mountall start
    /etc/init.d/hostname start
 
+   /var/bin/swap start
    echo "starting telnetd"
    /usr/sbin/telnetd -l /bin/login
    /etc/init.d/vsftpd start
    /usr/sbin/inetd
  
-   if [ -e /etc/network/interfaces ]; then 
+   NFS=`grep -c nfs /proc/cmdline`
+   if [ "$NFS" -eq "1" ]; then 
+      echo "Booting from nfs, don't set network" 
+   else 
+      if [ -e /etc/network/interfaces ]; then 
 	 ip addr flush eth0 
 	 /etc/init.d/networking stop 
 	 DHCP=`grep -c dhcp /etc/network/interfaces`
-   if [ "$DHCP" -eq "1" ]; then 
+	 if [ "$DHCP" -eq "1" ]; then 
 	    echo "Starting dhcp"
             /etc/init.d/udhcpc start 
-   fi 
+	 fi 
 	 /etc/init.d/networking start 
-   fi 
-
-   touch /dev/.udev
-
+      fi 
+   fi
+   
+   mount /dev/sdb1 /hdd/movie
+   
    echo "РУНИГМА" > /dev/vfd
    echo "LOADING RUNIGMA"
 
    until false
    do
       echo "starting enigma2->"
-	  /usr/sbin/ntpdate ru.pool.ntp.org &
+	  /var/bin/gmt.sh &
 	  /var/bin/emustarter.sh &
 	  /var/bin/opkg.sh &
 	  /hdd/epg.conf &
-      /usr/local/bin/enigma2
+      /usr/local/bin/enigma2.sh
       rtv=$?
       echo "e2 ended <- RTV: " $rtv
       case "$rtv" in
 		0) echo "0"
 		   echo "E2 ERROR"
-           echo "0" > /proc/progress
-		   showiframe -p /boot/RUnigmaHD-VIP-restartGUI.mvi &;;
+           echo "0" > /proc/progress;;
 		1) echo "1"
 		   echo "SHUTDOWN"
 		   /bin/shutdown.sh;;
 		2) echo "2"
 		   echo "REBOOT"
-		   /etc/init.d/reboot
-           showiframe -p /boot/RUnigmaHD-VIP-restart.mvi &
-           /etc/init.d/reboot;;
+		   /etc/init.d/reboot;;
 		3) echo "3"
 		   echo "E2 RESTART"
-		   echo "0" > /proc/progress
-		   showiframe -p /boot/RUnigmaHD-VIP-restartGUI.mvi &;;
+		   echo "0" > /proc/progress;;
 		*) echo "*"
 		   echo "ERROR"
-           echo "0" > /proc/progress
-		   showiframe -p /boot/RUnigmaHD-VIP-restartGUI.mvi &;;
+           echo "0" > /proc/progress;;
       esac
    done 
 fi

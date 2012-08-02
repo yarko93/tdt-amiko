@@ -5,14 +5,13 @@ import telnetlib
 
 pkg = sys.argv[1]
 
-print "reinstall through telnet", pkg
+print "reinstall '%s' through telnet" % pkg
 
 HOST = '10.42.0.76'
 user = '' #'admin'
 password = '' #'admin'
 
-prompt = "spark7162:~# "
-#prompt = "spark:~# "
+prompt = ":~# "
 
 print "connecting to", HOST,
 tn = telnetlib.Telnet(HOST)
@@ -31,7 +30,7 @@ def read():
 	while 1:
 		d = tn.read_some()
 		sys.stdout.write(d)
-		if d == prompt:
+		if d.endswith(prompt):
 			break
 
 tn.read_until(prompt)
@@ -45,4 +44,3 @@ read()
 tn.write("exit\n")
 
 print tn.read_all()
- 

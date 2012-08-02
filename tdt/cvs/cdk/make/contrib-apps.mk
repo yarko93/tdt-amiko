@@ -106,6 +106,7 @@ FILES_pppd = \
 $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 	@PREPARE_pppd@
 	cd @DIR_pppd@ && \
+		sed -ie s:/usr/include/pcap-bpf.h:$(prefix)/cdkroot/usr/include/pcap-bpf.h: pppd/Makefile.linux && \
 		patch -p1 < ../Patches/pppd.patch
 	touch $@
 
@@ -1069,6 +1070,7 @@ $(DEPDIR)/opkg.do_prepare: bootstrap @DEPENDS_opkg@
 
 $(DEPDIR)/opkg.do_compile: $(DEPDIR)/opkg.do_prepare
 	cd @DIR_opkg@ && \
+		./autogen.sh && \
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
