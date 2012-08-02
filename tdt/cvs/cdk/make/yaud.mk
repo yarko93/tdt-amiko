@@ -238,3 +238,14 @@ all-extras:usb-modeswitch \
 	wireless_tools \
 	enigma2-skins-sh4 \
 	package-index
+
+#
+# FLASH IMAGE
+#
+
+flash-enigma2-pli-nightly: yaud-enigma2-pli-nightly
+	echo "Create image"
+	$(if $(SPARK)$(SPARK7162), \
+	cd $(prefix)/../flash/spark && \
+		echo -e "1\n1" | ./spark.sh \
+	)
