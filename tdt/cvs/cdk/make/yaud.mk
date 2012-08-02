@@ -224,22 +224,28 @@ max-yaud-none: \
 #
 # EXTRAS
 #
-min-extras:yaud-none \
-	usb_modeswitch \
+min-extras:usb-modeswitch \
 	pppd \
-	enigma2-plugins \
+	enigma2_openwebif \
 	wireless_tools
 	
-	@TUXBOX_YAUD_CUSTOMIZE@
-	
-all-extras:yaud-none \
-	usb_modeswitch \
+all-extras:usb-modeswitch \
 	pppd \
 	evebrowser \
 	enigma2-plugins \
 	xupnpd \
 	ntfs_3g \
 	wireless_tools \
+	enigma2-skins-sh4 \
 	package-index
-	
-	@TUXBOX_YAUD_CUSTOMIZE@
+
+#
+# FLASH IMAGE
+#
+
+flash-enigma2-pli-nightly: yaud-enigma2-pli-nightly
+	echo "Create image"
+	$(if $(SPARK)$(SPARK7162), \
+	cd $(prefix)/../flash/spark && \
+		echo -e "1\n1" | ./spark.sh \
+	)
