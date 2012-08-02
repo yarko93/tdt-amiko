@@ -52,24 +52,21 @@ $(DEPDIR)/enigma2-nightly.do_prepare:
 	cp -ra $(appsdir)/enigma2-nightly $(appsdir)/enigma2-nightly.patched
 	touch $@
 
-$(appsdir)/enigma2-nightly/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline \
+$(appsdir)/enigma2-nightly/config.status: bootstrap freetype expat fontconfig libpng12 jpeg libgif libfribidi libid3tag libmad libsigc libreadline \
 		libdvbsi++ python libxml2 libxslt elementtree zope_interface twisted pyopenssl lxml libxmlccwrap ncurses-dev libdreamdvd sdparm opkg-host ipkg-utils $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
 	cd $(appsdir)/enigma2-nightly && \
 		./autogen.sh && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \
 		./configure \
 			--host=$(target) \
-			--without-libsdl \
-			--with-datadir=/usr/local/share \
-			--with-libdir=/usr/lib \
-			--with-plugindir=/usr/lib/tuxbox/plugins \
+			--with-libsdl=no \
+			--datadir=/usr/share \
+			--libdir=/usr/lib \
+			--bindir=/usr/bin \
 			--prefix=/usr \
-			--datadir=/usr/local/share \
 			--sysconfdir=/etc \
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
-			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
-			PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
 			PY_PATH=$(targetprefix)/usr \
 			$(PLATFORM_CPPFLAGS)
 
@@ -91,26 +88,21 @@ FILES_enigma2 := /usr/bin /usr/lib/ /etc/enigma2 /usr/local/share
 $(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
 #alternate you can do the following: (see packaging.mk)
 	$(call parent_pk,enigma2)
-	$(get_git_version)
-	@echo $$PKGV_$(PARENT_PK)
 	$(start_build)
-	$(MAKE) -C $(appsdir)/enigma2-nightly install DESTDIR=$(PKDIR)
-	if [ -e $(PKDIR)/usr/bin/enigma2 ]; then \
-		$(target)-strip $(PKDIR)/usr/bin/enigma2; \
-	fi
-	if [ -e $(PKDIR)/usr/local/bin/enigma2 ]; then \
-		$(target)-strip $(PKDIR)/usr/local/bin/enigma2; \
-	fi
-	mkdir -p $(PKDIR)/usr/local/bin
+	$(get_git_version)
+	$(MAKE) -C $(DIR_enigma2) install DESTDIR=$(PKDIR)
+	$(target)-strip $(PKDIR)/usr/bin/enigma2
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/$(enigma2_keymap_file) $(PKDIR)/usr/share/enigma2/keymap.xml
 	$(tocdk_build)
-	cp $(PKDIR)/usr/bin/enigma2 $(PKDIR)/usr/local/bin/
-	rm -rf $(PKDIR)/usr/local/share/meta
 	$(toflash_build)
 	touch $@
+
 enigma2-nightly-clean:
 	rm -f $(DEPDIR)/enigma2-nightly.do_compile
 	cd $(appsdir)/enigma2-nightly && \
 		$(MAKE) clean
+	rm -f $(DEPDIR)/enigma2-nightly.do_compile
+	
 enigma2-nightly-distclean:
 	rm -f $(DEPDIR)/enigma2-nightly
 	rm -f $(DEPDIR)/enigma2-nightly.do_compile
