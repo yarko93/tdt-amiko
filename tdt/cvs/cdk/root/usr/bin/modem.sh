@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo $1 $2 >> /tmp/modem.log
+
 . /etc/modem.conf
 
 if [ -z "$MODEMTYPE" ]; then MODEMTYPE="0"; fi
@@ -12,8 +14,10 @@ if [ -z "$MODEMMTU" ]; then MODEMMTU="1460"; fi
 if [ -z "$MODEMMRU" ]; then MODEMMRU="1460"; fi
 if [ -z "$MODEMPPPDOPTS" ]; then MODEMPPPDOPTS=""; fi
 if [ -z "$DIALNUMBER" ]; then DIALNUMBER="*99#"; fi
+if [ -z "$DISABLEAUTOSTART" ]; then DISABLEAUTOSTART="0"; fi
 
-[ $DISABLEAUTOSTART = 1 ] && [ $1 = "add" ] &&  exit 0
+[ $2 != $MODEMPORT ] &&  exit 0
+[ $DISABLEAUTOSTART = "1" ] && [ $1 = "add" ] &&  exit 0
 
 killall pppd
 
