@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo $1 $2 >> /tmp/modem.log
+# echo $1 $2 >> /tmp/modem.log
 
 . /etc/modem.conf
 
