@@ -292,7 +292,8 @@ release_spark:
 	$(if $(P0123),cp -dp $(archivedir)/ptinp/pti_123.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0209),cp -dp $(archivedir)/ptinp/pti_209.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
-	$(if $(P0210),cp -dp $(archivedir)/ptinp/pti_210.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko)
+	$(if $(P0210),cp -dp $(archivedir)/ptinp/pti_210.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
+	$(if $(P0211),cp -dp $(archivedir)/ptinp/pti_211.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko)
 
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname && \
