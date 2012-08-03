@@ -53,7 +53,7 @@ $(DEPDIR)/enigma2-nightly.do_prepare:
 	touch $@
 
 $(appsdir)/enigma2-nightly/config.status: bootstrap freetype expat fontconfig libpng12 jpeg libgif libfribidi libid3tag libmad libsigc libreadline \
-		libdvbsi++ python libxml2 libxslt elementtree zope_interface twisted pyopenssl lxml libxmlccwrap ncurses-dev libdreamdvd sdparm opkg-host ipkg-utils $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
+		libdvbsipp python libxml2 libxslt elementtree zope_interface twisted pyopenssl lxml libxmlccwrap ncurses-dev libdreamdvd sdparm opkg-host ipkg-utils $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
 	cd $(appsdir)/enigma2-nightly && \
 		./autogen.sh && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \
@@ -80,7 +80,7 @@ DESCRIPTION_enigma2 := a framebuffer-based zapping application (GUI) for linux
 SRC_URI_enigma2 := git://gitorious.org/open-duckbox-project-sh4/guigit.git
 # neccecary for get_git_version:
 DIR_enigma2 := $(appsdir)/enigma2-nightly
-FILES_enigma2 := /usr/bin /usr/lib/ /etc/enigma2 /usr/local/share
+FILES_enigma2 := /usr/bin /usr/lib/ /etc/enigma2 /usr/share
 
 #by default PARENT_PK equals $@ How to ovveride see below
 #****** word "private" here is critically important!!! Overvise other rules could be broken! only make 3.82
