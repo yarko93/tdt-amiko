@@ -1,2 +1,2 @@
-ACTION=="add", SUBSYSTEM=="usb" , RUN+="/usr/bin/modemctrl.sh"
+ACTION=="add", SUBSYSTEM=="usb" , RUN+="/usr/bin/modemctrl.sh %k"
 
