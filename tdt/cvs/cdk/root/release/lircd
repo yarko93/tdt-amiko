@@ -26,6 +26,7 @@ case $1 in
 		/usr/bin/lircd $LIRCD_OPTS
 		start-stop-daemon -S -b -x /bin/evremote2
 		echo "."
+		echo "LIRCD_OPTS = $LIRCD_OPTS"
 		;;
 	stop)
 		echo -n "Stopping lircd "

@@ -1,7 +1,7 @@
 #
 # Plugins
 #
-$(DEPDIR)/enigma2-plugins: enigma2_openwebif enigma2_networkbrowser
+$(DEPDIR)/enigma2-plugins: enigma2_openwebif enigma2_networkbrowser openpli-plugins
 
 #
 # enigma2-openwebif
@@ -26,7 +26,7 @@ $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 		cp -a plugin $(PKDIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif && \
 		cp -a $(buildprefix)/root/usr/bin/grab $(PKDIR)/usr/bin/ && \
 		cp -a $(buildprefix)/root/usr/bin/grab.sh $(PKDIR)/usr/bin/
-	$(extra_build)
+	$(toflash_build)
 #	@DISTCLEANUP_enigma2_openwebif@
 	@[ "x$*" = "x" ] && touch $@ || true
 
@@ -72,7 +72,7 @@ $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 		cp -a src/* $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ && \
 		cp -a src/lib/netscan.so $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ && \
 		rm -rf $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/lib
-	$(extra_build)
+	$(extra)
 #	@DISTCLEANUP_enigma2_networkbrowser@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -85,13 +85,13 @@ $(DEPDIR)/%-openpli:
 	cd $(DIR_$*_openpli) && \
 		$(python) setup.py install --root=$(PKDIR) --install-lib=/usr/lib/enigma2/python/Plugins
 	$(remove_pyo)
-	$(extra_build)
+	$(extra)
 	touch $@
 
 DESCRIPTION_NewsReader_openpli = RSS reader
 DESCRIPTION_AddStreamUrl_openpli = Add a stream url to your channellist
 DESCRIPTION_Satscan_openpli = Alternative blind scan plugin for DVB-S
-
+PKGR_openpli_plugins = r1
 openpli_plugin_list = \
 AddStreamUrl \
 NewsReader \

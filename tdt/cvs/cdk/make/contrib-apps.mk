@@ -98,18 +98,21 @@ $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
 # PPPD
 #
 DESCRIPTION_pppd = "pppd"
-
+RDEPENDS_pppd = usb-modeswitch
 FILES_pppd = \
 /sbin/* \
-/lib/modules/*.so
+/lib/modules/*.so \
+/etc/* \
+/usr/bin/*
 
 $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 	@PREPARE_pppd@
 	cd @DIR_pppd@ && \
+		sed -ie s:/usr/include/pcap-bpf.h:$(prefix)/cdkroot/usr/include/pcap-bpf.h: pppd/Makefile.linux && \
 		patch -p1 < ../Patches/pppd.patch
 	touch $@
 
-$(DEPDIR)/pppd.do_compile: bootstrap $(DEPDIR)/pppd.do_prepare
+$(DEPDIR)/pppd.do_compile: bootstrap usb-modeswitch $(DEPDIR)/pppd.do_prepare
 	cd @DIR_pppd@  && \
 		$(BUILDENV) \
 	      CFLAGS="$(TARGET_CFLAGS) -I$(buildprefix)/linux/arch/sh" \
@@ -132,6 +135,20 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	$(tocdk_build)
 	mkdir $(PKDIR)/lib/modules/
 	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
+	mkdir -p $(PKDIR)/etc/ppp && \
+	mkdir -p $(PKDIR)/etc/ppp/peers && \
+	mkdir -p $(PKDIR)/usr/bin && \
+	mkdir -p $(PKDIR)/etc/udev/rules.d && \
+	cp -a $(buildprefix)/root/etc/ppp/ip-down $(PKDIR)/etc/ppp/ && \
+	cp -a $(buildprefix)/root/etc/ppp/ip-pre-up $(PKDIR)/etc/ppp/ && \
+	cp -a $(buildprefix)/root/etc/ppp/ip-up $(PKDIR)/etc/ppp/ && \
+	cp -a $(buildprefix)/root/usr/bin/modem.sh $(PKDIR)/usr/bin/ && \
+	chmod 755 $(PKDIR)/usr/bin/modem.sh && \
+	cp -a $(buildprefix)/root/usr/bin/modemctrl.sh $(PKDIR)/usr/bin/ && \
+	chmod 755 $(PKDIR)/usr/bin/modemctrl.sh && \
+	cp -a $(buildprefix)/root/etc/modem.conf $(PKDIR)/etc/ && \
+	cp -a $(buildprefix)/root/etc/55-modem.rules $(PKDIR)/etc/udev/rules.d/ && \
+	cp -a $(buildprefix)/root/etc/30-modemswitcher.rules $(PKDIR)/etc/udev/rules.d/
 	$(toflash_build)
 #	@DISTCLEANUP_pppd@
 	@[ "x$*" = "x" ] && touch $@ || true
@@ -146,13 +163,12 @@ FILES_usb_modeswitch = \
 /lib/udev/* \
 /usr/sbin/*
 
-$(DEPDIR)/usb_modeswitch.do_prepare: usb_modeswitch_data @DEPENDS_usb_modeswitch@
+$(DEPDIR)/usb-modeswitch.do_prepare: @DEPENDS_usb_modeswitch@ $(RDEPENDS_usb_modeswitch)
 	@PREPARE_usb_modeswitch@
 	touch $@
 
-$(DEPDIR)/usb_modeswitch.do_compile: bootstrap $(DEPDIR)/usb_modeswitch.do_prepare	
-$(DEPDIR)/usb_modeswitch: \
-$(DEPDIR)/%usb_modeswitch: $(DEPDIR)/usb_modeswitch.do_compile
+
+$(DEPDIR)/usb-modeswitch: bootstrap $(DEPDIR)/usb-modeswitch.do_prepare
 	$(start_build)
 	cd @DIR_usb_modeswitch@  && \
 	  $(BUILDENV) \
@@ -175,13 +191,11 @@ FILES_usb_modeswitch_data = \
 /etc/* \
 /lib/udev/rules.d
 
-$(DEPDIR)/usb_modeswitch_data.do_prepare: @DEPENDS_usb_modeswitch_data@
+$(DEPDIR)/usb-modeswitch-data.do_prepare: @DEPENDS_usb_modeswitch_data@
 	@PREPARE_usb_modeswitch_data@
 	touch $@
 
-$(DEPDIR)/usb_modeswitch_data.do_compile: bootstrap $(DEPDIR)/usb_modeswitch_data.do_prepare
-$(DEPDIR)/usb_modeswitch_data: \
-$(DEPDIR)/%usb_modeswitch_data: $(DEPDIR)/usb_modeswitch_data.do_compile
+$(DEPDIR)/usb-modeswitch-data: usb-modeswitch-data.do_prepare
 	$(start_build)
 	cd @DIR_usb_modeswitch_data@  && \
 		$(BUILDENV) \

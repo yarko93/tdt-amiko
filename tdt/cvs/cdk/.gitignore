@@ -76,3 +76,4 @@ ruledir
 opkg-host
 bb.pyo
 split_packages.pyo
+usb-modeswitch*

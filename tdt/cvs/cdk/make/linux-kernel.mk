@@ -453,6 +453,10 @@ if ENABLE_P0210
 PATCH_STR=_0210
 endif
 
+if ENABLE_P0211
+PATCH_STR=_0211
+endif
+
 if ENABLE_HAVANA_P0207_5
 PATCH_STR=_0207_5
 GIT_STR=207-5
@@ -476,8 +480,8 @@ COMMONPATCHES_24 = \
 		linux-ftdi_sio.c_stm24$(PATCH_STR).patch \
 		linux-sh4-lzma-fix_stm24$(PATCH_STR).patch \
 		linux-tune_stm24.patch \
-		$(if $(P0209)$(P0210),linux-sh4-mmap_stm24.patch) \
-		$(if $(P0209)$(P0210),linux-sh4-remove_pcm_reader_stm24.patch) \
+		$(if $(P0209)$(P0210)$(P0211),linux-sh4-mmap_stm24.patch) \
+		$(if $(P0209)$(P0210)$(P0211),linux-sh4-remove_pcm_reader_stm24.patch) \
 		$(if $(P0209),linux-sh4-dwmac_stm24_0209.patch) \
 		$(if $(P0207),linux-sh4-sti7100_missing_clk_alias_stm24$(PATCH_STR).patch)
 
@@ -521,7 +525,7 @@ ATEVIO7500PATCHES_24 = $(COMMONPATCHES_24) \
 		linux-sh4-lmb_stm24$(PATCH_STR).patch \
 		linux-sh4-atevio7500_setup_stm24$(PATCH_STR).patch \
 		linux-sh4-stmmac_stm24$(PATCH_STR).patch \
-		$(if $(P0209)$(P0210),linux-sh4-atevio7500_mtdconcat_stm24$(PATCH_STR).patch)
+		$(if $(P0209)$(P0210)$(P0211),linux-sh4-atevio7500_mtdconcat_stm24$(PATCH_STR).patch)
 
 HS7810APATCHES_24 = $(COMMONPATCHES_24) \
 		linux-sh4-lmb_stm24$(PATCH_STR).patch \
@@ -561,7 +565,7 @@ HL101_PATCHES_24 = $(COMMONPATCHES_24) \
 		linux-usbwait123_stm24.patch \
 		linux-sh4-stmmac_stm24$(PATCH_STR).patch \
 		linux-sh4-i2c-st40-pio_stm24$(PATCH_STR).patch \
-		$(if $(P0207),linux-sh4-fortis_hdbox_i2c_st40_stm24$(PATCH_STR).patch)
+		$(if $(P0207)$(P0209)$(P0210),linux-sh4-fortis_hdbox_i2c_st40_stm24$(PATCH_STR).patch)
 
 VIP2_PATCHES_24  = $(COMMONPATCHES_24) \
 		linux-sh4-vip2_setup_stm24$(PATCH_STR).patch \
@@ -577,7 +581,7 @@ SPARK_PATCHES_24 = $(COMMONPATCHES_24) \
 		$(if $(P0207),linux-sh4-i2c-stm-downgrade_stm24$(PATCH_STR).patch) \
 		$(if $(P0209),linux-sh4-linux_yaffs2_stm24_0209.patch) \
 		$(if $(P0207)$(P0209),linux-sh4-lirc_stm.patch) \
-		$(if $(P0210),linux-sh4-lirc_stm_stm24$(PATCH_STR).patch)
+		$(if $(P0210)$(P0211),linux-sh4-lirc_stm_stm24$(PATCH_STR).patch)
 
 SPARK7162_PATCHES_24 = $(COMMONPATCHES_24) \
 		linux-sh4-stmmac_stm24$(PATCH_STR).patch \
@@ -736,10 +740,14 @@ else
 if ENABLE_P0210
 KERNELHEADERS_VERSION := 2.6.32.46-45
 else
+if ENABLE_P0211
+KERNELHEADERS_VERSION := 2.6.32.46-45
+else
 if ENABLE_HAVANA_P0207_5
 KERNELHEADERS_VERSION := 2.6.32.16-44
 else
 KERNELHEADERS_VERSION := 2.6.32.10_stm24_0201-42
+endif
 endif
 endif
 endif
@@ -824,8 +832,12 @@ else
 if ENABLE_P0210
 HOST_KERNEL_VERSION := 2.6.32.57$(KERNELSTMLABEL)-$(KERNELLABEL)
 else
+if ENABLE_P0211
+HOST_KERNEL_VERSION := 2.6.32.59$(KERNELSTMLABEL)-$(KERNELLABEL)
+else
 if ENABLE_HAVANA_P0207_5
 HOST_KERNEL_VERSION := 2.6.32.28$(KERNELSTMLABEL)-$(KERNELLABEL)
+endif
 endif
 endif
 endif
@@ -884,6 +896,7 @@ $(DEPDIR)/linux-kernel.do_compile: \
 		Patches/$(HAVANA_STM24_KERNEL_CONFIG) \
 		config.status \
 		| $(HOST_U_BOOT_TOOLS)
+	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -912,6 +925,7 @@ $(DEPDIR)/linux-kernel.do_compile: \
 		Patches/mb618se_defconfig \
 		config.status \
 		| $(HOST_U_BOOT_TOOLS)
+	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -952,7 +966,9 @@ $(DEPDIR)/linux-kernel.do_compile: \
 		bootstrap-cross \
 		linux-kernel.do_prepare \
 		Patches/$(HOST_KERNEL_CONFIG) \
+		config.status \
 		| $(HOST_U_BOOT_TOOLS)
+	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -992,7 +1008,9 @@ $(DEPDIR)/linux-kernel.%.do_compile: \
 		linux-kernel.do_prepare \
 		Patches/linux-sh4-$(KERNELVERSION).stboards.c.m4 \
 		Patches/$(HOST_KERNEL_CONFIG) \
+		config.status \
 		| $(DEPDIR)/$(HOST_U_BOOT_TOOLS)
+	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
 		export PATH=$(hostprefix)/bin:$(PATH) && \
 		$(MAKE) ARCH=sh CROSS_COMPILE=$(target)- mrproper && \
@@ -1066,6 +1084,8 @@ $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
+
+linux-kernel-distclean: $(KERNELHEADERS)-distclean
 
 DESCRIPTION_driver = "Drivers for stm box"
 PKGR_driver = r1

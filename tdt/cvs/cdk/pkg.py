@@ -5,11 +5,13 @@ import telnetlib
 
 pkg = sys.argv[1]
 
-print "reinstall through telnet", pkg
+print "reinstall '%s' through telnet" % pkg
 
 HOST = '10.42.0.76'
 user = '' #'admin'
 password = '' #'admin'
+
+prompt = ":~# "
 
 print "connecting to", HOST,
 tn = telnetlib.Telnet(HOST)
@@ -24,15 +26,21 @@ if password:
     tn.read_until("Password: ")
     tn.write(password + "\n")
 
-tn.read_until("spark:~# ")
+def read():
+	while 1:
+		d = tn.read_some()
+		sys.stdout.write(d)
+		if d.endswith(prompt):
+			break
+
+tn.read_until(prompt)
 print "start commands"
 tn.write("ipkg update\n")
-#print tn.read_all()
+read()
 tn.write("ipkg remove %s\n" % pkg)
-#print tn.read_all()
+read()
 tn.write("ipkg install %s\n" % pkg)
-#print tn.read_all()
+read()
 tn.write("exit\n")
 
 print tn.read_all()
- 

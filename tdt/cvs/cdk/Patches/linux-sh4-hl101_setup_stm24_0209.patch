@@ -32,7 +32,7 @@
 +       {
 + 	      .name  = "LMI_VID",
 + 	      .start = 0x10800000,
-+ 	      .size  = 0x03800000,
++ 	      .size  = 0x077FFFFF,
 + 	      .flags = 0,
 + 	      .aka   = LMI_VID_partalias
 +       },
