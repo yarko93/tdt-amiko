@@ -1258,3 +1258,14 @@ e2skin
   {PN}
   git://github.com/schpuntik/enigma2-skins-sh4.git:b=master
 ;
+modem_scripts
+  0.1
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/ppp/ip-*
+  nothing:file://../root/usr/bin/modem.sh
+  nothing:file://../root/usr/bin/modemctrl.sh
+  nothing:file://../root/etc/modem.conf
+  nothing:file://../root/etc/55-modem.rules
+  nothing:file://../root/etc/30-modemswitcher.rules
+;

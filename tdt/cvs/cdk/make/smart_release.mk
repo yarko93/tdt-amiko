@@ -83,6 +83,25 @@ $(DEPDIR)/fonts-extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fon
 	$(extra_build)
 	touch $@
 
+#
+# 3G MODEMS
+#
+DESCRIPTION_modem_scripts = utils to setup 3G modems
+
+$(DEPDIR)/modem-scripts: @DEPENDS_modem_scripts@
+	@PREPARE_modem_scripts@
+	$(start_build)
+	cd $(DIR_modem_scripts) && \
+	$(INSTALL_DIR) $(PKDIR)/etc/ppp/peers && \
+	$(INSTALL_DIR) $(PKDIR)/etc/udev/rules.d/ && \
+	$(INSTALL_DIR) $(PKDIR)/usr/bin/ && \
+	$(INSTALL_BIN) ip-* $(PKDIR)/etc/ppp/ && \
+	$(INSTALL_BIN) modem.sh $(PKDIR)/usr/bin/ && \
+	$(INSTALL_BIN) modemctrl.sh $(PKDIR)/usr/bin/ && \
+	$(INSTALL_FILE) modem.conf $(PKDIR)/etc/ && \
+	$(INSTALL_FILE) 55-modem.rules $(PKDIR)/etc/udev/rules.d/ && \
+	$(INSTALL_FILE) 30-modemswitcher.rules $(PKDIR)/etc/udev/rules.d/
+	$(toflash_build)
 
 
 # auxiliary targets for model-specific builds

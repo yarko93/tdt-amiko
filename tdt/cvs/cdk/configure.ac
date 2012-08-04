@@ -892,6 +892,7 @@ TUXBOX_RULES_MAKE(wireless_tools)
 TUXBOX_RULES_MAKE(zd1211)
 TUXBOX_RULES_MAKE(wpa_supplicant)
 TUXBOX_RULES_MAKE(ethtool)
+TUXBOX_RULES_MAKE(modem_scripts)
 
 #
 # contrib apps
