@@ -1400,3 +1400,31 @@ $(DEPDIR)/%imagemagick: $(DEPDIR)/imagemagick.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_imagemagick@
 	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# grab
+#
+
+DESCRIPTION_grab = make enigma2 screenshots
+RDEPENDS_grab = libpng jpeg
+
+$(DEPDIR)/grab.do_prepare: bootstrap $(RDEPENDS_grab) @DEPENDS_grab@
+	@PREPARE_grab@
+	touch $@
+
+$(DEPDIR)/grab.do_compile: grab.do_prepare
+	cd @DIR_grab@ && \
+		$(BUILDENV) && \
+		autoreconf -i && \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr
+	touch $@
+
+$(DEPDIR)/grab: grab.do_compile
+	$(start_build)
+	cd @DIR_grab@ && \
+		@INSTALL_grab@
+	$(toflash_build)
+	touch $@
