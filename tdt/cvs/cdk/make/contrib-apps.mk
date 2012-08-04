@@ -101,9 +101,7 @@ DESCRIPTION_pppd = "pppd"
 RDEPENDS_pppd = usb-modeswitch
 FILES_pppd = \
 /sbin/* \
-/lib/modules/*.so \
-/etc/* \
-/usr/bin/*
+/lib/modules/*.so
 
 $(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
 	@PREPARE_pppd@
@@ -135,20 +133,6 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	$(tocdk_build)
 	mkdir $(PKDIR)/lib/modules/
 	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
-	mkdir -p $(PKDIR)/etc/ppp && \
-	mkdir -p $(PKDIR)/etc/ppp/peers && \
-	mkdir -p $(PKDIR)/usr/bin && \
-	mkdir -p $(PKDIR)/etc/udev/rules.d && \
-	cp -a $(buildprefix)/root/etc/ppp/ip-down $(PKDIR)/etc/ppp/ && \
-	cp -a $(buildprefix)/root/etc/ppp/ip-pre-up $(PKDIR)/etc/ppp/ && \
-	cp -a $(buildprefix)/root/etc/ppp/ip-up $(PKDIR)/etc/ppp/ && \
-	cp -a $(buildprefix)/root/usr/bin/modem.sh $(PKDIR)/usr/bin/ && \
-	chmod 755 $(PKDIR)/usr/bin/modem.sh && \
-	cp -a $(buildprefix)/root/usr/bin/modemctrl.sh $(PKDIR)/usr/bin/ && \
-	chmod 755 $(PKDIR)/usr/bin/modemctrl.sh && \
-	cp -a $(buildprefix)/root/etc/modem.conf $(PKDIR)/etc/ && \
-	cp -a $(buildprefix)/root/etc/55-modem.rules $(PKDIR)/etc/udev/rules.d/ && \
-	cp -a $(buildprefix)/root/etc/30-modemswitcher.rules $(PKDIR)/etc/udev/rules.d/
 	$(toflash_build)
 #	@DISTCLEANUP_pppd@
 	@[ "x$*" = "x" ] && touch $@ || true

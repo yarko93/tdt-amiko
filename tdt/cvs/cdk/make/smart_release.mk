@@ -255,6 +255,17 @@ release_base:
 	$(INSTALL_FILE) root/etc/tuxbox/timezone.xml $(prefix)/release/etc/ && \
 	echo "576i50" > $(prefix)/release/etc/videomode
 
+#3g modems
+	$(INSTALL_DIR) $(prefix)/release/etc/ppp/peers && \
+	$(INSTALL_BIN) root/etc/ppp/ip-down $(prefix)/release/etc/ppp/ && \
+	$(INSTALL_BIN) root/etc/ppp/ip-pre-up $(prefix)/release/etc/ppp/ && \
+	$(INSTALL_BIN) root/etc/ppp/ip-up $(prefix)/release/etc/ppp/ && \
+	$(INSTALL_BIN) root/usr/bin/modem.sh $(prefix)/release/usr/bin/ && \
+	$(INSTALL_BIN) root/usr/bin/modemctrl.sh $(prefix)/release/usr/bin/ && \
+	$(INSTALL_FILE) root/etc/modem.conf $(prefix)/release/etc/ && \
+	$(INSTALL_FILE) root/etc/55-modem.rules $(prefix)/release/etc/udev/rules.d/ && \
+	$(INSTALL_FILE) root/etc/30-modemswitcher.rules $(prefix)/release/etc/udev/rules.d/
+
 # Post tweaks
 	depmod -b $(prefix)/release $(KERNELVERSION)
 
