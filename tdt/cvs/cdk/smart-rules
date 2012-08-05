@@ -1272,6 +1272,7 @@ modem_scripts
   nothing:file://../root/usr/bin/modem.sh
   nothing:file://../root/usr/bin/modemctrl.sh
   nothing:file://../root/etc/modem.conf
+  nothing:file://../root/etc/modem.list
   nothing:file://../root/etc/55-modem.rules
   nothing:file://../root/etc/30-modemswitcher.rules
 ;

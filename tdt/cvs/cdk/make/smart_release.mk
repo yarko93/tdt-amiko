@@ -99,10 +99,11 @@ $(DEPDIR)/modem-scripts: @DEPENDS_modem_scripts@
 	$(INSTALL_BIN) modem.sh $(PKDIR)/usr/bin/ && \
 	$(INSTALL_BIN) modemctrl.sh $(PKDIR)/usr/bin/ && \
 	$(INSTALL_FILE) modem.conf $(PKDIR)/etc/ && \
+	$(INSTALL_FILE) modem.list $(PKDIR)/etc/ && \
 	$(INSTALL_FILE) 55-modem.rules $(PKDIR)/etc/udev/rules.d/ && \
 	$(INSTALL_FILE) 30-modemswitcher.rules $(PKDIR)/etc/udev/rules.d/
 	$(toflash_build)
-
+	touch $@
 
 # auxiliary targets for model-specific builds
 release_common_utils:
@@ -256,15 +257,15 @@ release_base:
 	echo "576i50" > $(prefix)/release/etc/videomode
 
 #3g modems
-	$(INSTALL_DIR) $(prefix)/release/etc/ppp/peers && \
-	$(INSTALL_BIN) root/etc/ppp/ip-down $(prefix)/release/etc/ppp/ && \
-	$(INSTALL_BIN) root/etc/ppp/ip-pre-up $(prefix)/release/etc/ppp/ && \
-	$(INSTALL_BIN) root/etc/ppp/ip-up $(prefix)/release/etc/ppp/ && \
-	$(INSTALL_BIN) root/usr/bin/modem.sh $(prefix)/release/usr/bin/ && \
-	$(INSTALL_BIN) root/usr/bin/modemctrl.sh $(prefix)/release/usr/bin/ && \
-	$(INSTALL_FILE) root/etc/modem.conf $(prefix)/release/etc/ && \
-	$(INSTALL_FILE) root/etc/55-modem.rules $(prefix)/release/etc/udev/rules.d/ && \
-	$(INSTALL_FILE) root/etc/30-modemswitcher.rules $(prefix)/release/etc/udev/rules.d/
+#	$(INSTALL_DIR) $(prefix)/release/etc/ppp/peers && \
+#	$(INSTALL_BIN) root/etc/ppp/ip-down $(prefix)/release/etc/ppp/ && \
+#	$(INSTALL_BIN) root/etc/ppp/ip-pre-up $(prefix)/release/etc/ppp/ && \
+#	$(INSTALL_BIN) root/etc/ppp/ip-up $(prefix)/release/etc/ppp/ && \
+#	$(INSTALL_BIN) root/usr/bin/modem.sh $(prefix)/release/usr/bin/ && \
+#	$(INSTALL_BIN) root/usr/bin/modemctrl.sh $(prefix)/release/usr/bin/ && \
+#	$(INSTALL_FILE) root/etc/modem.conf $(prefix)/release/etc/ && \
+#	$(INSTALL_FILE) root/etc/55-modem.rules $(prefix)/release/etc/udev/rules.d/ && \
+#	$(INSTALL_FILE) root/etc/30-modemswitcher.rules $(prefix)/release/etc/udev/rules.d/
 
 # Post tweaks
 	depmod -b $(prefix)/release $(KERNELVERSION)
