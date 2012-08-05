@@ -166,6 +166,12 @@ linuxp0210
   linux-sh4-2.6.32.57_stm24_0210
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.57_stm24_0210-210.src.rpm
 ;
+linuxp0211
+  2.6.32.59_stm24_0211
+  linux-sh4-2.6.32.59_stm24_0211
+  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.59_stm24_0211-211.src.rpm
+;
+
 squashfs
   3.0
   mk{PN}
