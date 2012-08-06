@@ -87,8 +87,9 @@ $(DEPDIR)/fonts-extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fon
 # 3G MODEMS
 #
 DESCRIPTION_modem_scripts = utils to setup 3G modems
+RDEPENDS_modem_scripts = pppd usb-modeswitch
 
-$(DEPDIR)/modem-scripts: @DEPENDS_modem_scripts@
+$(DEPDIR)/modem-scripts: @DEPENDS_modem_scripts@ $(RDEPENDS_modem_scripts)
 	@PREPARE_modem_scripts@
 	$(start_build)
 	cd $(DIR_modem_scripts) && \
