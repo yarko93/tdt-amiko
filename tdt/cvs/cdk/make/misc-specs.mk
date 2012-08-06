@@ -50,15 +50,6 @@ $(DEPDIR)/misc-cp:
 	cp -rd $(buildprefix)/root/etc/hotplug.d $(targetprefix)/etc
 	@[ "x$*" = "x" ] && touch $@ || true
 
-$(DEPDIR)/firstboot:
-	$(INSTALL_DIR) $(targetprefix)/var/etc
-	touch $(targetprefix)/var/etc/.firstboot
-	@[ "x$*" = "x" ] && touch $@ || true
-
-$(DEPDIR)/remote:
-	cp $(buildprefix)/root/etc/$(LIRCD_CONF) $(targetprefix)/etc/lircd.conf
-	@[ "x$*" = "x" ] && touch $@ || true
-
 $(DEPDIR)/misc-e2:
 	$(INSTALL_DIR) $(targetprefix)/media/hdd
 	$(INSTALL_DIR) $(targetprefix)/media/dvd
