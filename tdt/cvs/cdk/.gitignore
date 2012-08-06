@@ -77,3 +77,6 @@ opkg-host
 bb.pyo
 split_packages.pyo
 usb-modeswitch*
+modem-scripts-*
+init-scripts-*
+grab-*
