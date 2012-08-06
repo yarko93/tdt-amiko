@@ -1,28 +1,22 @@
 #!/bin/sh
 
-# echo $1 $2 $3 $4 >> /tmp/modem.log
+DEBUG=0
+
+[ $DEBUG ] && echo "ACTION $1 MODEMPORT $2" >> /tmp/modem.log || rm -rf /tmp/modem.log
 
 . /etc/modem.conf
 
 [ -z "$MODEMTYPE" ] && MODEMTYPE=0
-[ -z "$MODEMPORT" ] && MODEMPORT="ttyUSB0"
+[ -z "$MODEMPORT" ] && MODEMPORT=ttyUSB0
 [ -z "$MODEMSPEED" ] && MODEMSPEED=""
 [ -z "$APN" ] && APN="internet"
 [ -z "$MODEMUSERNAME" ] && MODEMUSERNAME=""
 [ -z "$MODEMPASSWORD" ] && MODEMPASSWORD=""
-[ -z "$MODEMMTU" ] && MODEMMTU="1460"
-[ -z "$MODEMMRU" ] && MODEMMRU="1460"
+[ -z "$MODEMMTU" ] || [ "$MODEMMTU" = "auto" ] && MODEMMTU=1492
+[ -z "$MODEMMRU" ] || [ "$MODEMMRU" = "auto" ] && MODEMMRU=1492
 [ -z "$MODEMPPPDOPTS" ] && MODEMPPPDOPTS=""
 [ -z "$DIALNUMBER" ] && DIALNUMBER="*99#"
-[ -z "$DISABLEAUTOSTART" ] && DISABLEAUTOSTART="0"
-
-[ $MODEMPORT = "auto" ] &&  MODEMPORT=`cat /etc/modem.list | grep "$3\:$4"|cut -f 3 -d : -s`
-if [ -z $MODEMPORT ]; then
-echo "Unknown modem $3\:$4 Please specify the modem port manually" >> /tmp/modem.log 
-# [ $MODEMTYPE = "0" ] && MODEMPORT=ttyUSB0 || MODEMPORT=ttyACM0
-fi
-[ $2 != $MODEMPORT ] &&  exit 0
-[ $DISABLEAUTOSTART = "1" ] && [ $1 = "add" ] &&  exit 0
+[ -z "$DISABLEAUTOSTART" ] && DISABLEAUTOSTART=0
 
 killall pppd
 rm -rf /etc/ppp/peers/0.chat
@@ -31,6 +25,17 @@ rm -rf /etc/ppp/peers/dialup
 rm -rf /etc/ppp/resolv.conf
 [ $1 = "remove" ] &&  exit 0
 
+if [ $MODEMPORT = "auto" ]; then
+ LIST=`lsusb | awk '{print $6}'`
+ for vidpid in $LIST; do
+  PORT=`cat /etc/modem.list | grep "$vidpid"|cut -f 3 -d : -s`
+  [ -z $PORT ] || break
+ done
+ MODEMPORT="tty$PORT"
+ [ $DEBUG ] && echo "Detected modem port is $MODEMPORT"  >> /tmp/modem.log
+fi
+[ "$2" = "$MODEMPORT" ] ||  exit 0
+[ $DISABLEAUTOSTART = 1 ] && [ $1 = "add" ] &&  exit 0
 [ -d /etc/ppp/peers ] || mkdir -p /etc/ppp/peers
 echo "ABORT '~'
 ABORT 'BUSY'
