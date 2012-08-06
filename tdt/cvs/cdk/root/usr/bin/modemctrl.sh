@@ -3,8 +3,7 @@
 DEBUG=0
 DEV=$1
 
-[ $DEBUG ] && echo "---------------------------------------------------------------" > /tmp/modemctrl.log
-[ $DEBUG ] && echo "DEVICE: $DEV" > /tmp/modemctrl.log
+[ $DEBUG ] && echo "DEVICE: $DEV" > /tmp/modemctrl.log  || rm -rf /tmp/modemctrl.log
 
 LIST=`find /sys/devices -name "$DEV" | sort -r 2>/dev/null`
 [ $DEBUG ] && echo "LIST: $LIST" >> /tmp/modemctrl.log
@@ -20,11 +19,10 @@ INTERFACE=$(udevadm info --query=all  --path=$DEVPATH | grep INTERFACE | sed 's/
 for var in DEVPATH MODALIAS TYPE PRODUCT INTERFACE; do
  [ $DEBUG ] && echo "$var:" >> /tmp/modemctrl.log 
  [ $DEBUG ] && eval "echo \$${var}" >> /tmp/modemctrl.log 
- [ -z "$(eval "echo \$${var}")" ] && [ $DEBUG ] && echo "Could not set uevent environment variable $var" >> /tmp/modemctrl.log && exit 1
+ [ -z "$(eval "echo \$${var}")" ] && exit 1
 done
 
-
-[ -z "$DEVPATH" ] && [ $DEBUG ] &&  echo "environment variable DEVPATH is unset" >> /tmp/modemctrl.log && exit 1
+[ -z "$DEVPATH" ] && exit 1
 if [ -d /sys${DEVPATH} ]; then
     cd /sys${DEVPATH}/..
     for var in id[PV]*; do
