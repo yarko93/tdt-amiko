@@ -98,19 +98,18 @@ $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
 # PPPD
 #
 DESCRIPTION_pppd = "pppd"
-RDEPENDS_pppd = usb-modeswitch
 FILES_pppd = \
 /sbin/* \
 /lib/modules/*.so
 
-$(DEPDIR)/pppd.do_prepare: @DEPENDS_pppd@
+$(DEPDIR)/pppd.do_prepare: bootstrap @DEPENDS_pppd@
 	@PREPARE_pppd@
 	cd @DIR_pppd@ && \
 		sed -ie s:/usr/include/pcap-bpf.h:$(prefix)/cdkroot/usr/include/pcap-bpf.h: pppd/Makefile.linux && \
 		patch -p1 < ../Patches/pppd.patch
 	touch $@
 
-$(DEPDIR)/pppd.do_compile: bootstrap usb-modeswitch $(DEPDIR)/pppd.do_prepare
+$(DEPDIR)/pppd.do_compile: pppd.do_prepare
 	cd @DIR_pppd@  && \
 		$(BUILDENV) \
 	      CFLAGS="$(TARGET_CFLAGS) -I$(buildprefix)/linux/arch/sh" \
