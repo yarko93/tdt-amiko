@@ -135,12 +135,13 @@ yaud-enigma1-hd: yaud-none lirc stslave \
 	@TUXBOX_YAUD_CUSTOMIZE@
 endif
 
-yaud-enigma2-pli-nightly: yaud-none host_python lirc \
-		boot-elf enigma2-pli-nightly release
-	@TUXBOX_YAUD_CUSTOMIZE@
 
-extras-yaud-enigma2-pli-nightly: yaud-enigma2-pli-nightly min-extras
-	@TUXBOX_YAUD_CUSTOMIZE@
+yaud-enigma2-pli-nightly-base: yaud-none host_python lirc \
+		boot-elf enigma2-pli-nightly
+
+yaud-enigma2-pli-nightly: yaud-enigma2-pli-nightly-base release
+
+yaud-enigma2-pli-nightly-full: yaud-enigma2-pli-nightly-base min-extras release
 
 
 yaud-none: \
