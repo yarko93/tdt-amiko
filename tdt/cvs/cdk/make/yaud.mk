@@ -232,6 +232,7 @@ max-yaud-none: \
 min-extras:usb-modeswitch \
 	pppd \
 	modem-scripts \
+	ntfs_3g \
 	enigma2_openwebif \
 	wireless_tools
 	
