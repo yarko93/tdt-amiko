@@ -731,6 +731,7 @@ if STM24
 UTIL_LINUX = util-linux
 FILES_util_linux = \
 /sbin/mkfs \
+/sbin/blkid \
 /sbin/sfdisk \
 /usr/lib
 UTIL_LINUX_VERSION = 2.16.1-22
