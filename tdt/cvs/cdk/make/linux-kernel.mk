@@ -972,7 +972,6 @@ $(DEPDIR)/linux-kernel.do_compile: \
 		bootstrap-cross \
 		linux-kernel.do_prepare \
 		Patches/$(HOST_KERNEL_CONFIG) \
-		config.status \
 		| $(HOST_U_BOOT_TOOLS)
 	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
@@ -1015,7 +1014,6 @@ $(DEPDIR)/linux-kernel.%.do_compile: \
 		linux-kernel.do_prepare \
 		Patches/linux-sh4-$(KERNELVERSION).stboards.c.m4 \
 		Patches/$(HOST_KERNEL_CONFIG) \
-		config.status \
 		| $(DEPDIR)/$(HOST_U_BOOT_TOOLS)
 	-rm $(DEPDIR)/linux-kernel*.do_compile
 	cd $(KERNEL_DIR) && \
