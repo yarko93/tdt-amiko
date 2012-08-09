@@ -257,9 +257,6 @@ release_base:
 	$(INSTALL_FILE) root/etc/tuxbox/timezone.xml $(prefix)/release/etc/ && \
 	echo "576i50" > $(prefix)/release/etc/videomode
 
-# Post tweaks
-	depmod -b $(prefix)/release $(KERNELVERSION)
-
 release_cube_common:
 	cp $(buildprefix)/root/release/reboot_cuberevo $(prefix)/release/etc/init.d/reboot && \
 	chmod 777 $(prefix)/release/etc/init.d/reboot && \
@@ -312,7 +309,6 @@ release_spark7162:
 	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw
 	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207s2.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko)
 	rm -f $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-sti7106.ko
-	depmod -b $(prefix)/release $(KERNELVERSION)
 
 release_fortis_hdbox:
 	echo "fortis" > $(prefix)/release/etc/hostname
@@ -426,9 +422,11 @@ release_ipbox55: release_common_utils
 #
 $(DEPDIR)/min-release $(DEPDIR)/std-release $(DEPDIR)/max-release $(DEPDIR)/release: \
 $(DEPDIR)/%release:release_base release_common_utils release_$(TF7700)$(HL101)$(VIP1_V2)$(VIP2_V1)$(UFS910)$(UFS912)$(SPARK)$(SPARK7162)$(UFS922)$(OCTAGON1008)$(FORTIS_HDBOX)$(ATEVIO7500)$(HS7810A)$(HS7110)$(WHITEBOX)$(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(HOMECAST5101)$(IPBOX9900)$(IPBOX99)$(IPBOX55)$(ADB_BOX)
+# Post tweaks
+	depmod -b $(prefix)/release $(KERNELVERSION)
 	touch $@
-release-clean:
 
+release-clean:
 	rm -f $(DEPDIR)/release
 	rm -f $(DEPDIR)/release_base
 	rm -f $(DEPDIR)/release_$(TF7700)$(HL101)$(VIP1_V2)$(VIP2_V1)$(UFS910)$(UFS912)$(SPARK)$(SPARK7162)$(UFS922)$(OCTAGON1008)$(FORTIS_HDBOX)$(ATEVIO7500)$(HS7810A)$(HS7110)$(WHITEBOX)$(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(HOMECAST5101)$(IPBOX9900)$(IPBOX99)$(IPBOX55)$(ADB_BOX)
