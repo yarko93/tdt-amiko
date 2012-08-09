@@ -2,5 +2,3 @@
 #
 # <file system> <mount point>   <type>  <options>               <dump>  <pass>
 #/dev/root       /               auto    defaults,errors=remount-ro,noatime,nodiratime      0 0
-/dev/sda1        /hdd            auto    defaults,errors=remount-ro,noatime,nodiratime      0 0
-/dev/sr0     /media/dvd       auto     ro,noauto,user,exec 0 0
