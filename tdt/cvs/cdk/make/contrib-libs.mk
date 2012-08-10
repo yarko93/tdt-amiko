@@ -3145,7 +3145,7 @@ $(DEPDIR)/tuxtxt32bpp.do_compile: $(DEPDIR)/tuxtxt32bpp.do_prepare
 	aclocal -I $(hostprefix)/share/aclocal && \
 	autoheader && \
 	autoconf && \
-	automake --foreign && \
+	automake --foreign --add-missing && \
 	libtoolize --force && \
 	$(BUILDENV) \
 	./configure \
