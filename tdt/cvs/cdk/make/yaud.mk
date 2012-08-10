@@ -50,7 +50,6 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 min-net-utils std-net-utils max-net-utils net-utils: \
 %net-utils: \
 		%$(NETKIT_FTP) \
-		%autofs \
 		%portmap \
 		%$(NFSSERVER) \
 		%vsftpd \
