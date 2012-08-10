@@ -12,7 +12,6 @@ SUBDIRS = \
 	tffpctl \
 	tfd2mtd \
 	gitVCInfo \
-	hotplug \
 	vfdctl \
 	libmme_host \
 	libmmeimage \

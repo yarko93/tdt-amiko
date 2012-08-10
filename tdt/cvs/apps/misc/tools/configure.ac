@@ -42,7 +42,6 @@ ustslave/Makefile
 tffpctl/Makefile
 tfd2mtd/Makefile
 gitVCInfo/Makefile
-hotplug/Makefile
 vfdctl/Makefile
 libmme_host/Makefile
 libmmeimage/Makefile
