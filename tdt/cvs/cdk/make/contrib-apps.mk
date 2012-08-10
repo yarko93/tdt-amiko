@@ -226,7 +226,7 @@ $(DEPDIR)/%ntfs_3g: $(DEPDIR)/ntfs_3g.do_compile
 		@INSTALL_ntfs_3g@
 	$(tocdk_build)	
 	$(toflash_build)
-		cp -f $(buildprefix)/root/etc/11-usbhd-automount.rules $(prefix)/release/etc/udev/rules.d/
+		cp -f $(buildprefix)/root/etc/11-usbhd-automount.rules $(prefix)/pkgroot/etc/udev/rules.d/
 #	@DISTCLEANUP_ntfs_3g@
 	@[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@
