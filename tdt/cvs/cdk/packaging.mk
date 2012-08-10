@@ -81,15 +81,18 @@ define do_build_pkg
 		$(if $(filter cdk,$(2)),$(ipkcdk)) \
 		$(if $(filter extra,$(2)),$(ipkextras)) \
 		$(if $(filter flash,$(2)),$(ipkprefix)) |tee tmpname \
-		$(if $(filter install,$(1)), && \
+		&& \
 			pkgn=`cat tmpname |perl -ne 'if (m/Packaged contents/) { print ((split / /)[-1])}'` && \
 			(opkg --force-depends remove $(if $(filter cdk,$(2)),$(cdk_ipkg_args),$(flash_ipkg_args)) `echo $${pkg//_/-}| tr A-Z a-z` || true) && \
-			if [ "`echo $(EXTRA_$(PARENT_PK)) |tr ' ' '\n' |grep -x $$pkg`" == "" -o "$(2)" == "cdk" ]; then \
+			in_extra="`echo $(EXTRA_$(PARENT_PK)) |tr ' ' '\n' |grep -x $$pkg ||true`" && \
+			in_dist="`echo $(DIST_$(PARENT_PK)) |tr ' ' '\n' |grep -x $$pkg ||true`" && \
+			if [ "install" = "$(1)" -a \( -z "$$in_extra" -o "$(2)" = "cdk" \) \
+			   -o "$(2)" != "cdk" -a -n "$$in_dist" ]; then \
 			opkg install $(if $(filter cdk,$(2)),$(cdk_ipkg_args),$(flash_ipkg_args)) $$pkgn \
 			; else \
 				echo "Not installing $$pkg" ; \
 			fi \
-		); done
+		; done
 endef
 
 
