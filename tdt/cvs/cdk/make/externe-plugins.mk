@@ -18,7 +18,7 @@ $(DEPDIR)/enigma2-plugins-sh4.do_prepare: @DEPENDS_e2plugin@
 
 $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
 	cd $(DIR_e2plugin) && \
-		autoreconf --force --install -I$(hostprefix)/share/aclocal && \
+		autoreconf -i -I$(hostprefix)/share/aclocal && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i xml2po.py && \
 		$(BUILDENV) \
 		./configure \
@@ -33,17 +33,16 @@ $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
 			PY_PATH=$(targetprefix)/usr \
 			$(PLATFORM_CPPFLAGS)
 
-$(DEPDIR)/enigma2-plugins-sh4.do_compile: $(DIR_e2plugin)/config.status
-	cd $(DIR_e2plugin) && \
-		$(MAKE) all
-	touch $@
-
 enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 
-$(DEPDIR)/enigma2-plugins-sh4: enigma2-plugins-sh4.do_compile
+$(DEPDIR)/enigma2-plugins-sh4-networkbrowser \
+$(DEPDIR)/enigma2-plugins-sh4: \
+$(DEPDIR)/enigma2-plugins-sh4%: $(DIR_e2plugin)/config.status
 	$(call parent_pk,e2plugin)
+#	Don't build meta
+	$(if $*,$(eval PACKAGES_e2plugin = ))
 	$(start_build)
-	cd $(DIR_e2plugin) && \
+	cd $(DIR_e2plugin)/`echo $* |sed s/^-//` && \
 		$(MAKE) install DESTDIR=$(PKDIR)
 	rm -rf $(ipkgbuilddir)/*
 	$(flash_prebuild)
