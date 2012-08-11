@@ -121,8 +121,7 @@ endef
 
 define fromrpm_get
 	$(eval export DESCRIPTION_$(PARENT_PK) = $(call package_rpm_get,'%{SUMMARY}' -qp $(lastword $^)))
-	$(eval export PKGV_$(PARENT_PK) = $(call package_rpm_get,'%{VERSION}' -qp $(lastword $^)))
-	$(eval export PKGR_$(PARENT_PK) = $(call package_rpm_get,'%{RELEASE}' -qp $(lastword $^)))
+	$(eval export PKGV_$(PARENT_PK) = $(call package_rpm_get,'%{VERSION}-%{RELEASE}' -qp $(lastword $^)))
 	$(eval export SRC_URI_$(PARENT_PK) = "stlinux.com")
 	@echo "rpm got descr $(DESCRIPTION_$(PARENT_PK))"
 	@echo "rpm got version $(PKGV_$(PARENT_PK))"
