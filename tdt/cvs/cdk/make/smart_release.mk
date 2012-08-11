@@ -14,6 +14,7 @@ networking \
 reboot \
 sendsigs \
 telnetd \
+syslogd \
 lircd \
 umountfs
 

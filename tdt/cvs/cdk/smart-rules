@@ -1235,7 +1235,7 @@ ethtool
   make:install:DESTDIR=PKDIR
 ;
 init_scripts
-  0.4
+  0.5
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
@@ -1251,6 +1251,7 @@ init_scripts
   nothing:file://../root/release/reboot
   nothing:file://../root/release/sendsigs
   nothing:file://../root/release/telnetd
+  nothing:file://../root/release/syslogd
   nothing:file://../root/release/umountfs
   nothing:file://../root/release/lircd
 ;
