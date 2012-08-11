@@ -10,6 +10,7 @@ NAME_e2plugin_meta := enigma2-plugins-meta
 FILES_e2plugin_meta := /usr/share/meta
 DESCRIPTION_e2plugin_meta := Enigma2 plugins metadata
 PACKAGES_e2plugin = e2plugin_meta
+DIST_e2plugin = enigma2_plugin_systemplugins_networkbrowser
 
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare: @DEPENDS_e2plugin@
 	@PREPARE_e2plugin@
@@ -49,7 +50,7 @@ $(DEPDIR)/enigma2-plugins-sh4: enigma2-plugins-sh4.do_compile
 
 	echo -e "\
 	from split_packages import * \n\
-	print bb_data \n\
+	#print bb_data \n\
 	do_split_packages(bb_data, '$(enigma2_plugindir)', '(.*?/.*?)/.*', 'enigma2-plugin-%s', 'Enigma2 Plugin: %s', recursive=True, match_path=True, prepend=True) \n\
 	for package in bb_get('PACKAGES').split(): \n\
 		pk = bb_get('NAME_' + package).split('-')[-1] \n\
