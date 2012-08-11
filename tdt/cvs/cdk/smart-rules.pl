@@ -174,7 +174,7 @@ sub process_make_depends (@)
 
 sub process_make_dir (@)
 {
-  return $_[1];
+  return "\"$_[1]\"";
 }
 
 
@@ -249,7 +249,7 @@ sub process_make_prepare (@)
     {
       if ( not $opts{"r"} )
       {
-         $output .= "echo '\\\$(shell cd " . $f . " && svn update) ' && ";
+         $output .= "(cd " . $f . " && svn update) && ";
       }
       $output .= "cp -a " . $f . $subdir . " " . $dir;
       $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(svn_version)))";
@@ -258,7 +258,7 @@ sub process_make_prepare (@)
     {
       if ( not $opts{"r"} )
       {
-         $output .= "echo '\\\$(shell cd " . $f . " && git pull) ' && ";
+         $output .= "(cd " . $f . " && git pull) && ";
       }
       $output .= "cp -a " . $f . $subdir . " " . $dir;
       $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(git_version)))";

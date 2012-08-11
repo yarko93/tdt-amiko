@@ -233,6 +233,7 @@ min-extras:usb-modeswitch \
 	modem-scripts \
 	ntfs_3g \
 	enigma2_openwebif \
+	enigma2-plugins-sh4-networkbrowser \
 	wireless_tools
 	
 all-extras:usb-modeswitch \

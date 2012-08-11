@@ -314,7 +314,7 @@ def write_control_file(fdir, full_package):
 		if l[1][0] == 'NAME':
 			var = var.replace('_', '-').lower()
 		elif l[1][0] == 'RDEPENDS':
-			var = var.replace(' ',',')
+			var = var.replace(' ',',').replace('_', '-')
 		if not var: continue
 		var = l[0] % var
 		s += var

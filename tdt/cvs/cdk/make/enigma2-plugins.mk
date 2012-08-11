@@ -8,9 +8,10 @@ $(DEPDIR)/enigma2-plugins: enigma2_openwebif enigma2_networkbrowser openpli-plug
 #
 
 DESCRIPTION_enigma2_openwebif = "open webinteface plugin for enigma2 by openpli team"
-RDEPENDS_enigma2_openwebif = libpng12 libjpeg6b
+PKGR_enigma2_openwebif = r0
+RDEPENDS_enigma2_openwebif = python pythoncheetah grab
 
-$(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap python libpng12 libjpeg6b pythoncheetah @DEPENDS_enigma2_openwebif@
+$(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap $(RDEPENDS_enigma2_openwebif) @DEPENDS_enigma2_openwebif@
 	@PREPARE_enigma2_openwebif@
 	touch $@
 
@@ -18,13 +19,11 @@ $(DEPDIR)/min-enigma2_openwebif $(DEPDIR)/std-enigma2_openwebif $(DEPDIR)/max-en
 $(DEPDIR)/enigma2_openwebif: \
 $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 	$(start_build)
-	$(get_git_version)
 	cd @DIR_enigma2_openwebif@ && \
 		$(BUILDENV) \
 		mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/Extensions && \
 		mkdir -p $(PKDIR)/usr/bin/ && \
 		cp -a plugin $(PKDIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif && \
-		cp -a $(buildprefix)/root/usr/bin/grab $(PKDIR)/usr/bin/ && \
 		cp -a $(buildprefix)/root/usr/bin/grab.sh $(PKDIR)/usr/bin/
 	$(toflash_build)
 #	@DISTCLEANUP_enigma2_openwebif@
