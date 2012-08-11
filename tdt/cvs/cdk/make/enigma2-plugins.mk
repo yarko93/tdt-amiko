@@ -18,7 +18,6 @@ $(DEPDIR)/min-enigma2_openwebif $(DEPDIR)/std-enigma2_openwebif $(DEPDIR)/max-en
 $(DEPDIR)/enigma2_openwebif: \
 $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 	$(start_build)
-	$(get_git_version)
 	cd @DIR_enigma2_openwebif@ && \
 		$(BUILDENV) \
 		mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/Extensions && \

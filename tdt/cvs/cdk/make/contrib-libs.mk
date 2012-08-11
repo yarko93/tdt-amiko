@@ -2612,7 +2612,6 @@ $(DEPDIR)/min-gst_plugin_subsink $(DEPDIR)/std-gst_plugin_subsink $(DEPDIR)/max-
 $(DEPDIR)/gst_plugin_subsink: \
 $(DEPDIR)/%gst_plugin_subsink: $(DEPDIR)/gst_plugin_subsink.do_compile
 	$(start_build)
-	$(get_git_version)
 	cd @DIR_gst_plugin_subsink@ && \
 		@INSTALL_gst_plugin_subsink@
 	$(tocdk_build)

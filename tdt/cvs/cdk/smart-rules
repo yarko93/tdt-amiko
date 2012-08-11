@@ -433,7 +433,7 @@ sysstat
   make:install:DESTDIR=TARGETS
 ;
 hotplug_e2
-  1.0
+  git
   {PN}-helper
   git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper
   patch:file://hotplug-e2-helper-support_fw_upload.patch
@@ -763,7 +763,7 @@ libflac
   make:install:DESTDIR=PKDIR
 ;
 evebrowser
-  0.0.1
+  svn
   {PN}-{PV}
   svn://eve-browser.googlecode.com/svn/trunk/
   make:install:DESTDIR=PKDIR
@@ -1046,14 +1046,14 @@ tuxtxt32bpp
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 enigma2_networkbrowser
-  1.0
-  {PN}
+  git
+  {PN}-{PV}
   nothing:git://openpli.git.sourceforge.net/gitroot/openpli/plugins-enigma2:sub=networkbrowser
   patch:file://{PN}-support_autofs.patch
   make:install:DESTDIR=PKDIR
 ;
 enigma2_openwebif
-  1.0
+  git
   e2openplugin-OpenWebif
   nothing:git://github.com/schpuntik/e2openplugin-OpenWebif.git
   make:install:DESTDIR=PKDIR
@@ -1112,13 +1112,13 @@ gst_plugins_dvbmediasink
   make:install:DESTDIR=PKDIR
 ;
 gst_plugin_subsink
-  1.0
+  git
   {PN}
   nothing:git://openpli.git.sourceforge.net/gitroot/openpli/gstsubsink:r=8182abe751364f6eb1ed45377b0625102aeb68d5
   make:install:DESTDIR=PKDIR
 ;
 graphlcd
-  base-touchcol
+  git
   {PN}-{PV}
   nothing:git://projects.vdr-developer.org/{PN}-base.git:r=a39f265732d0bc28cb66b58b5ecf1964a130d02b:b=touchcol
   patch:file://{PN}.patch
