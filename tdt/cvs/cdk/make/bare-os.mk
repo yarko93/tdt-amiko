@@ -817,9 +817,10 @@ UDEV_PATCHES :=
 else !STM23
 # if STM24
 UDEV_VERSION := 162-32
+PKGR_udev := r0
 UDEV_SPEC := stm-target-$(UDEV).spec
 UDEV_SPEC_PATCH := stm-target-udev.spec.diff
-UDEV_PATCHES :=
+UDEV_PATCHES := usbhd-automount.rules
 # endif STM24
 endif !STM23
 endif !STM22
