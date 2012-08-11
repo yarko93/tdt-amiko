@@ -1279,6 +1279,6 @@ modem_scripts
 grab
   git
   {PN}-{PV}
-  git://openpli.git.sourceforge.net/gitroot/openpli/aio-grab
+  git://github.com/technic/aio-grab.git
   make:install:DESTDIR=PKDIR
 ;
