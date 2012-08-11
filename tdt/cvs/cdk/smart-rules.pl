@@ -174,7 +174,7 @@ sub process_make_depends (@)
 
 sub process_make_dir (@)
 {
-  return $_[1];
+  return "\"$_[1]\"";
 }
 
 
