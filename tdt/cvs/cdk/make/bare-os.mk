@@ -849,7 +849,7 @@ $(DEPDIR)/%$(UDEV_DEV): $(UDEV_DEV_RPM)
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 $(DEPDIR)/min-$(UDEV) $(DEPDIR)/std-$(UDEV) $(DEPDIR)/max-$(UDEV) $(DEPDIR)/$(UDEV): \
-$(DEPDIR)/%$(UDEV): $(UDEV_RPM)
+$(DEPDIR)/%$(UDEV): @DEPENDS_udev@ $(UDEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	( export HHL_CROSS_TARGET_DIR=$(prefix)/$*cdkroot && cd $(prefix)/$*cdkroot/etc/init.d && \
@@ -860,6 +860,7 @@ $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 	$(fromrpm_get)
 # start udevadm earlier
 	sed -i 's/# chkconfig: S 99 0/# chkconfig: S 6 0/' $(PKDIR)/etc/init.d/udevadm
+	@INSTALL_udev@
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	@TUXBOX_YAUD_CUSTOMIZE@

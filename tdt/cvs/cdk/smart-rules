@@ -1298,3 +1298,9 @@ enigma2_pli
   # patch:file://enigma2-pli-nightly.2.gstreamer.diff
   # patch:file://enigma2-pli-nightly.2.graphlcd.diff
 ;
+udev
+  # overwrite/add our files to udev package
+  none
+  {PN}-{PV}
+  install_bin:file://../root/etc/60-dvb-ca.rules:PKDIR/etc/udev/rules.d
+;

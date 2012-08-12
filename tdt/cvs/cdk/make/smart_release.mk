@@ -246,7 +246,6 @@ release_base:
 	cp -dp $(buildprefix)/root/etc/profile $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/protocols $(prefix)/release/etc/ && \
 	cp -dp $(buildprefix)/root/etc/resolv.conf $(prefix)/release/etc/ && \
-	cp -dp $(buildprefix)/root/etc/60-dvb-ca.rules $(prefix)/release/etc/udev/rules.d/ && \
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
