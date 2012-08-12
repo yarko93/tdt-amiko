@@ -269,10 +269,7 @@ sub process_make_prepare (@)
     {
       my $branch = "master";
       $branch = $opts{"b"} if $opts{"b"};
-      if ( not $opts{"r"} )
-      {
-         $output .= "(cd " . $f . " && git pull origin $branch) && ";
-      }
+      $output .= "(cd $f && git fetch && git checkout $branch && git pull origin $branch ; cd -) && ";
       $output .= "(cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) && " if $opts{"r"};
       $output .= "cp -a " . $f . $subdir . " " . $dir;
       $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(git_version)))";
