@@ -1,41 +1,7 @@
 # tuxbox/enigma2
 
-DIR_enigma2_pli := $(appsdir)/enigma2-pli-nightly
-
-$(DEPDIR)/enigma2-pli-nightly.do_prepare:
-	REVISION=""; \
-	HEAD="master"; \
-	DIFF="0"; \
-	REPO="git://gitorious.org/open-duckbox-project-sh4/guigit.git"; \
-	rm -rf $(DIR_enigma2_pli).org; \
-	rm -rf $(DIR_enigma2_pli).newest; \
-	rm -rf $(DIR_enigma2_pli).patched; \
-	clear; \
-	echo "Media Framwork: $(MEDIAFW)"; \
-	echo "Choose between the following revisions:"; \
-	echo " 0) Newest (Can fail due to outdated patch)"; \
-	echo "---- REVISIONS ----"; \
-	echo "1) Sat, 17 Mar 2012 19:51 - E2 OpenPli 945aeb939308b3652b56bc6c577853369d54a537"; \
-	echo "2) Sat, 18 May 2012 15:26  - E2 OpenPli 839e96b79600aba73f743fd39628f32bc1628f4c"; \
-	echo "3) Sat, 18 May 2012 15:26  - E2 OpenPli current Amiko"; \
-	read -p "Select: "; \
-	echo "Selection: " $$REPLY; \
-	[ "$$REPLY" == "0" ] && DIFF="0" && HEAD="experimental"; \
-	[ "$$REPLY" == "1" ] && DIFF="1" && REVISION="945aeb939308b3652b56bc6c577853369d54a537" && REPO="git://openpli.git.sourceforge.net/gitroot/openpli/enigma2"; \
-	[ "$$REPLY" == "2" ] && DIFF="2" && REVISION="839e96b79600aba73f743fd39628f32bc1628f4c" && REPO="git://openpli.git.sourceforge.net/gitroot/openpli/enigma2"; \
-	[ "$$REPLY" == "3" ] && DIFF="3" && REPO="git://github.com/technic/amiko-e2-pli.git"; \
-	echo "Revision: " $$REVISION; \
-	[ -d "$(DIR_enigma2_pli)" ] && \
-	git pull $(DIR_enigma2_pli) $$HEAD;\
-	[ -d "$(DIR_enigma2_pli)" ] || \
-	git clone -b $$HEAD $$REPO $(DIR_enigma2_pli); \
-	cp -ra $(DIR_enigma2_pli) $(DIR_enigma2_pli).newest; \
-	[ "$$REVISION" == "" ] || (cd $(DIR_enigma2_pli); git checkout "$$REVISION"; cd "$(buildprefix)";); \
-	cp -ra $(DIR_enigma2_pli) $(DIR_enigma2_pli).org; \
-	cd $(DIR_enigma2_pli) && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.diff"; \
-	cd $(DIR_enigma2_pli) && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.$(MEDIAFW).diff"; \
-	[ "$(EXTERNALLCD_DEP)" == "" ] || (cd $(DIR_enigma2_pli) && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.graphlcd.diff" ); \
-	cp -ra $(DIR_enigma2_pli) $(DIR_enigma2_pli).patched
+$(DEPDIR)/enigma2-pli-nightly.do_prepare: @DEPENDS_enigma2_pli@
+	@PREPARE_enigma2_pli@
 	touch $@
 
 $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline font-valis-enigma \
