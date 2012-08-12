@@ -1283,3 +1283,18 @@ grab
   git://github.com/technic/aio-grab.git
   make:install:DESTDIR=PKDIR
 ;
+enigma2_pli
+  git
+  \$(appsdir)/{PN}-nightly
+  git://github.com/technic/amiko-e2-pli.git:b=master
+  # --- select 1 ---
+  # git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
+  # patch:file://enigma2-pli-nightly.1.diff
+  # patch:file://enigma2-pli-nightly.1.gstreamer.diff
+  # patch:file://enigma2-pli-nightly.1.graphlcd.diff
+  # --- select 2 ---
+  # git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=839e96b79600aba73f743fd39628f32bc1628f4c
+  # patch:file://enigma2-pli-nightly.2.diff
+  # patch:file://enigma2-pli-nightly.2.gstreamer.diff
+  # patch:file://enigma2-pli-nightly.2.graphlcd.diff
+;
