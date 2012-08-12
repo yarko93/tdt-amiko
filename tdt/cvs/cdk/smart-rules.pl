@@ -261,8 +261,8 @@ sub process_make_prepare (@)
       {
          $output .= "(cd " . $f . " && svn update) && ";
       }
+      $output .= "(cd " . $f . "; svn up -r " . $opts{"r"} . "; cd -) && " if $opts{"r"};
       $output .= "cp -a " . $f . $subdir . " " . $dir;
-      $output .= " && (cd " . $f . "; svn up -r " . $opts{"r"} . "; cd -) " if $opts{"r"};
       $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(svn_version)))";
     }
     elsif ( $p eq "git" )
@@ -273,8 +273,8 @@ sub process_make_prepare (@)
       {
          $output .= "(cd " . $f . " && git pull origin $branch) && ";
       }
+      $output .= "(cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) && " if $opts{"r"};
       $output .= "cp -a " . $f . $subdir . " " . $dir;
-      $output .= " && (cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) " if $opts{"r"};
       $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(git_version)))";
     }
     elsif ( $cmd eq "nothing" )
