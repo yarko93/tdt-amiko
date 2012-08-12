@@ -262,15 +262,19 @@ sub process_make_prepare (@)
          $output .= "(cd " . $f . " && svn update) && ";
       }
       $output .= "cp -a " . $f . $subdir . " " . $dir;
+      $output .= " && (cd " . $f . "; svn up -r " . $opts{"r"} . "; cd -) " if $opts{"r"};
       $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(svn_version)))";
     }
     elsif ( $p eq "git" )
     {
+      my $branch = "master";
+      $branch = $opts{"b"} if $opts{"b"};
       if ( not $opts{"r"} )
       {
-         $output .= "(cd " . $f . " && git pull) && ";
+         $output .= "(cd " . $f . " && git pull origin $branch) && ";
       }
       $output .= "cp -a " . $f . $subdir . " " . $dir;
+      $output .= " && (cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) " if $opts{"r"};
       $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(git_version)))";
     }
     elsif ( $cmd eq "nothing" )
@@ -646,13 +650,11 @@ sub process_download ($$)
       my $tmpurl = $url;
       $url =~ s#svn://#http://# ;
       $output .= " || \\\n\tsvn checkout $url" . " " . $f;
-      $output .= " -r " . $opts{"r"} if $opts{"r"};
     }
     elsif ( $url =~ m#^git://# )
     {
       $output .= " || \\\n\tgit clone $url" . " " . $f;
       $output .= " -b " . $opts{"b"} if $opts{"b"};
-      $output .= " && (cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) " if $opts{"r"};
     }
 
     elsif ( $f =~ m/gz$/ )
