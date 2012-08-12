@@ -12,6 +12,7 @@ my $package = ""; # current processing package
 
 my $supported_protocols = "http|ftp|file|git|svn";
 my $make_commands = "nothing|extract|dirextract|patch(time)?(-(\\d+))?|pmove|premove|plink|pdircreate";
+my $install_commands = "install -.+|install_file|install_bin";
 
 my %ruletypes =
 (
@@ -96,7 +97,7 @@ sub process_rule($) {
     $p = $cmd;    
     $cmd = "extract";
   }
-  elsif ( $cmd =~ m#^($make_commands)$# )
+  elsif ( $cmd =~ m#^($make_commands|$install_commands)# )
   {
     $p = shift @l;
   }
@@ -119,11 +120,18 @@ sub process_rule($) {
   }
 
   my %args = ();
+  my @argv = ();
   my $arg;
   while($arg = shift @l)
   {
-    $args{$1} = $2 if $arg =~ m/(\w+)=(.*)/;
-    #warn "arg " . $1 . ' = ' . $2 . "\n";
+    if ($arg =~ m/(\w+)=(.*)/)
+    {
+      $args{$1} = $2 ;
+      #warn "arg " . $1 . ' = ' . $2 . "\n";
+    } else {
+      push(@argv, $arg);
+      #warn "argv " . $arg . "\n";
+    }
   }
 
   if ( $url and $url =~ m#^svn://# )
@@ -143,7 +151,7 @@ sub process_rule($) {
 
   warn "protocol: $p file: $f command: $cmd url: $url\n";
 
-  return ($p, $f, $cmd, $url, %args);
+  return ($p, $f, $cmd, $url, \%args, \@argv);
 }
 
 sub process_make_depends (@)
@@ -189,7 +197,9 @@ sub process_make_prepare (@)
   foreach ( @_ )
   {
     my @args = split( /:/, $_ );
-    my ($p, $f, $cmd, $url, %opts) = process_rule($_);
+    my ($p, $f, $cmd, $url, $opts_ref) = process_rule($_);
+    my %opts = %$opts_ref;
+
     my $subdir = "";
     $subdir = "/" . $opts{"sub"} if $opts{"sub"};
     local @_ = ($p, $f);
@@ -385,8 +395,9 @@ sub process_install_rule ($)
 {
   
   my $rule = shift;
-  my ($p, $f, $cmd) = process_rule($rule);
-  
+  my ($p, $f, $cmd, $url, $opts_ref, $dest_ref) = process_rule($rule);
+  my @dest = @$dest_ref;
+
   if ( $cmd =~ m#$make_commands# )
   {
     return "";
@@ -397,7 +408,20 @@ sub process_install_rule ($)
 
   my $output = "";
 
-  if ( $_ eq "make" )
+  if ( $cmd =~ m#$install_commands# )
+  {
+    if ( $cmd =~ m#install_file|install_bin# )
+    {
+      $cmd =~ y/a-z/A-Z/ ;
+      $output .= "\$\($cmd\) $f @dest";
+    }
+    else
+    {
+      $cmd =~ s/install/\$\(INSTALL\)/ ;
+      $output .=  "$cmd $f @dest" ;
+    }
+  }
+  elsif ( $_ eq "make" )
   {
     $output .= "\$\(MAKE\) " . join " ", @_;
   }
@@ -555,10 +579,12 @@ sub process_make_sources ($$$)
   
   foreach ( @_ )
   {
-    my ($p, $f, $cmd) = process_rule($_);
+    my ($p, $f, $cmd, $url, $opts_ref) = process_rule($_);
+    my %opts = %$opts_ref;
     next if ( $p eq "none" );
-    $_ =~ s/$cmd:// if ($cmd ne "");
-    $output .= $_ . " ";
+    my $rev = "";
+    $rev = ":r$opts{'r'}" if $opts{"r"};
+    $output .= "$url$rev ";
   }
   return "\"$output\""
 }
@@ -575,7 +601,8 @@ sub process_download ($$)
   shift @rules;
   foreach ( @rules )
   {
-    my ($p, $f, $cmd, $url, %opts) = process_rule($_);
+    my ($p, $f, $cmd, $url, $opts_ref) = process_rule($_);
+    my %opts = %$opts_ref;
     next if ( $p eq "file" || $p eq "none" );
     
     $_ =~ s/$cmd:// if ($cmd ne "");
