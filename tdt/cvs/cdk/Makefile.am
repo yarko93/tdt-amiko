@@ -117,6 +117,8 @@ include make/disttargets.mk
 #Trick
 include make/smart_release.mk
 
+include make/smart_release_xbmc.mk
+
 include make/release_neutrino.mk
 
 include make/release_neutrino_nightly.mk
