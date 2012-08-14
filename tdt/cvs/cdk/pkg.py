@@ -7,7 +7,7 @@ pkg = sys.argv[1]
 
 print "reinstall '%s' through telnet" % pkg
 
-HOST = '10.42.0.76'
+HOST = sys.argv[2]
 user = '' #'admin'
 password = '' #'admin'
 
