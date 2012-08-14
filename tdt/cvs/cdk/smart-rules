@@ -26,6 +26,15 @@
 #   dirextract - first cd to build directory, than extract
 #   patch - apply as patch
 #   rpmbuild - building from rpm package
+#
+# install commands
+#  install -.* - install file and pass (.*) arguments to install
+#  install_file - install with -m644
+#  install_bin - install with -m755
+# destination file is the last argument
+# for example
+#  install_bin:ftp://megaupload.com/superscript.sh:/bin/script.sh
+#
 # these are most common tasks, see smart-rules.pl for details and feel free to add more..
 # However, some special rules is better to write directly to .mk file
 #
@@ -67,6 +76,7 @@
 #   VERSION_udpxy Used later in package Control file too.
 #   AUTOPKGV_udpxy If there is svn or git repo in rules, this command will be generated and you can run it
 #     to eval PKGV_udpxy based on git date or svn revision.
+#   @INSTALL_udpxy@ command could be 'make install' and commands to copy other files to PKDIR.
 
 ntpclient
   #second param is version
