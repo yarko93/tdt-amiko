@@ -98,6 +98,8 @@ PACKAGES="\
 	${UBUNTU:+libgpgme11-dev} \
 	${UBUNTU:+libcurl4-openssl-dev} \
 	${UBUNTU:+bsdtar} \
+	${UBUNTU:+ruby} \
+	${UBUNTU:+cmake} \
 ";
 
 if [ `which arch > /dev/null 2>&1 && arch || uname -m` == x86_64 ]; then
