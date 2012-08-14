@@ -265,7 +265,7 @@ bzip2
   {PN}-{PV}
   extract:http://www.bzip.org/{PV}/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
-  make:install:DESTDIR=PKDIR
+  make:install:PREFIX=PKDIR
 ;
 grep
   2.5.1
@@ -633,6 +633,12 @@ dfbpp
   1.0.0
   DFB++-{PV}
   extract:http://www.directfb.org/downloads/Extras/DFB++-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+libstgles
+  1.0
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 webkitdfb
@@ -1303,4 +1309,11 @@ udev
   none
   {PN}-{PV}
   install_bin:file://../root/etc/60-dvb-ca.rules:PKDIR/etc/udev/rules.d
+;
+tinyxml
+  2.6.2
+  {PN}
+  extract:http://ignum.dl.sourceforge.net/project/tinyxml/tinyxml/{PV}/tinyxml_2_6_2.tar.gz
+  patch:file://{PN}{PV}.patch
+  make:install:PREFIX=PKDIR
 ;

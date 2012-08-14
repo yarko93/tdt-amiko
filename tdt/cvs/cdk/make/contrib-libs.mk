@@ -880,6 +880,44 @@ $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
+# LIBSTGLES
+#
+DESCRIPTION_libstgles = "libstgles"
+SRC_URI_libstgles = "https://code.google.com/p/tdt-amiko/"
+FILES_libstgles = \
+/usr/lib/*
+
+$(DEPDIR)/libstgles.do_prepare: bootstrap directfb @DEPENDS_libstgles@
+	@PREPARE_libstgles@
+	touch $@
+
+$(DEPDIR)/libstgles.do_compile: $(DEPDIR)/libstgles.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_libstgles@ && \
+	cp --remove-destination $(hostprefix)/share/libtool/config/ltmain.sh . && \
+	aclocal -I $(hostprefix)/share/aclocal && \
+	autoconf && \
+	automake --foreign --add-missing && \
+	libtoolize --force && \
+	$(BUILDENV) \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE)
+	touch $@
+
+$(DEPDIR)/min-libstgles $(DEPDIR)/std-libstgles $(DEPDIR)/max-libstgles \
+$(DEPDIR)/libstgles: \
+$(DEPDIR)/%libstgles: $(DEPDIR)/libstgles.do_compile
+	$(start_build)
+	cd @DIR_libstgles@ && \
+		@INSTALL_libstgles@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_libstgles@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
 # expat
 #
 DESCRIPTION_expat = "Expat is an XML parser library written in C. It is a stream-oriented parser in which an application registers handlers for things the parser might find in the XML document"
@@ -1413,7 +1451,12 @@ $(DEPDIR)/enchant.do_compile: $(DEPDIR)/enchant.do_prepare
 	libtoolize -f -c && \
 	autoreconf --verbose --force --install -I$(hostprefix)/share/aclocal && \
 	$(BUILDENV) \
-	./configure --disable-aspell --disable-ispell --disable-myspell --disable-zemberek \
+	./configure \
+		--build=$(build) \
+		--disable-aspell \
+		--disable-ispell \
+		--disable-myspell \
+		--disable-zemberek \
 		--host=$(target) \
 		--prefix=/usr && \
 	$(MAKE) LD=$(target)-ld
@@ -2422,7 +2465,6 @@ $(DEPDIR)/gst_plugins_bad.do_compile: $(DEPDIR)/gst_plugins_bad.do_prepare
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
-		--disable-sdl \
 		ac_cv_openssldir=no \
 		--with-check=no \
 		--disable-sdl
@@ -2568,7 +2610,8 @@ $(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_fluendo_mpegdemux.do_p
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
-		--prefix=/usr --with-check=no
+		--prefix=/usr \
+		--with-check=no
 	touch $@
 
 $(DEPDIR)/min-gst_fluendo_mpegdemux $(DEPDIR)/std-gst_fluendo_mpegdemux $(DEPDIR)/max-gst_fluendo_mpegdemux \
@@ -2623,7 +2666,7 @@ $(DEPDIR)/%gst_plugin_subsink: $(DEPDIR)/gst_plugin_subsink.do_compile
 # GST-PLUGINS-DVBMEDIASINK
 #
 DESCRIPTION_gst_plugins_dvbmediasink = "GStreamer Multimedia Framework dvbmediasink"
-SRC_URI_gst_plugins_dvbmediasink = "git://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko.git"
+SRC_URI_gst_plugins_dvbmediasink = "https://code.google.com/p/tdt-amiko/"
 
 FILES_gst_plugins_dvbmediasink = \
 /usr/lib/gstreamer-0.10/libgstdvbaudiosink.so \
@@ -4044,6 +4087,10 @@ $(DEPDIR)/%mediatomb: $(DEPDIR)/mediatomb.do_compile
 #
 # tinyxml
 #
+DESCRIPTION_tinyxml = tinyxml
+FILES_tinyxml = \
+/lib/*
+
 $(DEPDIR)/tinyxml.do_prepare: @DEPENDS_tinyxml@
 	@PREPARE_tinyxml@
 	touch $@
@@ -4051,14 +4098,17 @@ $(DEPDIR)/tinyxml.do_prepare: @DEPENDS_tinyxml@
 $(DEPDIR)/tinyxml.do_compile: $(DEPDIR)/tinyxml.do_prepare
 	cd @DIR_tinyxml@ && \
 	$(BUILDENV) \
-	$(MAKE)
+	$(MAKE) $(MAKE_OPTS)
 	touch $@
 
 $(DEPDIR)/min-tinyxml $(DEPDIR)/std-tinyxml $(DEPDIR)/max-tinyxml \
 $(DEPDIR)/tinyxml: \
 $(DEPDIR)/%tinyxml: $(DEPDIR)/tinyxml.do_compile
+	$(start_build)
 	cd @DIR_tinyxml@ && \
 		@INSTALL_tinyxml@
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_tinyxml@
 	[ "x$*" = "x" ] && touch $@ || true
 
