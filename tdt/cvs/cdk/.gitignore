@@ -84,3 +84,17 @@ fuse-*
 ntfs-3g_ntfsprogs-*
 wireless_tools*
 py-compile
+bzip2*
+jasper*
+libcdio*
+libmicrohttpd*
+libmodplug*
+libmpeg*
+libsamplerate*
+libstgles*
+libvorbis*
+lzo*
+pcre*
+tiff*
+tinyxml*
+yajl*
