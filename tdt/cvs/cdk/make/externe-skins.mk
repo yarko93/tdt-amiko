@@ -45,7 +45,7 @@ $(DEPDIR)/enigma2-skins-sh4: enigma2-skins-sh4.do_compile
 	cd $(DIR_e2skin) && \
 		$(MAKE) install DESTDIR=$(PKDIR)
 	$(crossprefix)/bin/python -c "from split_packages import *; \
-	do_split_packages(bb_data, $(enigma2_skindir), '(.*?)/.*', 'enigma2-skin-%s', 'Enigma2 Skin: %s', recursive=True, match_path=True, prepend=True); \
+	do_split_packages(bb_data, $(enigma2_skindir), '(.*?)/.*', 'enigma2-plugin-skin-%s', 'Enigma2 Skin: %s', recursive=True, match_path=True, prepend=True); \
 	do_finish()"
 	$(call do_build_pkg,none,extra)
 	touch $@
