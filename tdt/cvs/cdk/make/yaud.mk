@@ -142,6 +142,7 @@ yaud-enigma2-pli-nightly: yaud-enigma2-pli-nightly-base release
 
 yaud-enigma2-pli-nightly-full: yaud-enigma2-pli-nightly-base min-extras release
 
+yaud-xbmc-nightly: yaud-none host_python boot-elf xbmc-nightly release_xbmc
 
 yaud-none: \
 		bare-os \
