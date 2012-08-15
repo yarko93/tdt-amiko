@@ -4,7 +4,8 @@
 DESCRIPTION_bzip2 = "bzip2"
 
 FILES_bzip2 = \
-/usr/bin/*
+/bin/* \
+/lib/*
 
 $(DEPDIR)/bzip2.do_prepare: bootstrap @DEPENDS_bzip2@
 	@PREPARE_bzip2@
