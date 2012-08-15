@@ -2309,14 +2309,16 @@ $(DEPDIR)/gstreamer.do_prepare: bootstrap glib2 libxml2 @DEPENDS_gstreamer@
 $(DEPDIR)/gstreamer.do_compile: $(DEPDIR)/gstreamer.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_gstreamer@ && \
+	autoreconf --verbose --force --install -I$(hostprefix)/share/aclocal && \
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
 		--disable-docs-build \
 		--disable-dependency-tracking \
-		--with-check=no \
-		ac_cv_func_register_printf_function=no
+		--disable-check \
+		ac_cv_func_register_printf_function=no && \
+	$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-gstreamer $(DEPDIR)/std-gstreamer $(DEPDIR)/max-gstreamer \
@@ -2359,16 +2361,19 @@ $(DEPDIR)/gst_plugins_base.do_prepare: bootstrap glib2 gstreamer libogg libalsa 
 $(DEPDIR)/gst_plugins_base.do_compile: $(DEPDIR)/gst_plugins_base.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_gst_plugins_base@ && \
+	autoreconf --verbose --force --install -I$(hostprefix)/share/aclocal && \
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
 		--disable-theora \
+		--disable-gnome_vfs \
 		--disable-pango \
 		--disable-vorbis \
 		--disable-x \
-		--with-audioresample-format=int \
-		--with-check=no
+		--disable-examples \
+		--with-audioresample-format=int && \
+	$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_base $(DEPDIR)/std-gst_plugins_base $(DEPDIR)/max-gst_plugins_base \
@@ -2425,7 +2430,8 @@ $(DEPDIR)/gst_plugins_good.do_compile: $(DEPDIR)/gst_plugins_good.do_prepare
 		--disable-shout2 \
 		--disable-shout2test \
 		--disable-x \
-		--with-check=no
+		--with-check=no && \
+	$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_good $(DEPDIR)/std-gst_plugins_good $(DEPDIR)/max-gst_plugins_good \
@@ -2454,7 +2460,7 @@ FILES_gst_plugins_bad = \
 /usr/lib/gstreamer-0.10/libgstvcdsrc.so \
 /usr/lib/gstreamer-0.10/libgstrtmp.so
 
-$(DEPDIR)/gst_plugins_bad.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_bad@
+$(DEPDIR)/gst_plugins_bad.do_prepare: bootstrap gstreamer gst_plugins_base libmodplug @DEPENDS_gst_plugins_bad@
 	@PREPARE_gst_plugins_bad@
 	touch $@
 
@@ -2465,9 +2471,11 @@ $(DEPDIR)/gst_plugins_bad.do_compile: $(DEPDIR)/gst_plugins_bad.do_prepare
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
-		ac_cv_openssldir=no \
 		--with-check=no \
-		--disable-sdl
+		--disable-sdl \
+		--disable-modplug \
+		ac_cv_openssldir=no && \
+	$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_bad $(DEPDIR)/std-gst_plugins_bad $(DEPDIR)/max-gst_plugins_bad \
@@ -2505,7 +2513,8 @@ $(DEPDIR)/gst_plugins_ugly.do_compile: $(DEPDIR)/gst_plugins_ugly.do_prepare
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
-		--with-check=no
+		--disable-mpeg2dec && \
+	$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_ugly $(DEPDIR)/std-gst_plugins_ugly $(DEPDIR)/max-gst_plugins_ugly \
@@ -2611,7 +2620,8 @@ $(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_fluendo_mpegdemux.do_p
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
-		--with-check=no
+		--with-check=no && \
+	$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-gst_fluendo_mpegdemux $(DEPDIR)/std-gst_fluendo_mpegdemux $(DEPDIR)/max-gst_fluendo_mpegdemux \
@@ -2648,7 +2658,8 @@ $(DEPDIR)/gst_plugin_subsink.do_compile: $(DEPDIR)/gst_plugin_subsink.do_prepare
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
-		--prefix=/usr
+		--prefix=/usr && \
+	$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-gst_plugin_subsink $(DEPDIR)/std-gst_plugin_subsink $(DEPDIR)/max-gst_plugin_subsink \
@@ -2687,7 +2698,8 @@ $(DEPDIR)/gst_plugins_dvbmediasink.do_compile: $(DEPDIR)/gst_plugins_dvbmediasin
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
-		--prefix=/usr
+		--prefix=/usr && \
+	$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-gst_plugins_dvbmediasink $(DEPDIR)/std-gst_plugins_dvbmediasink $(DEPDIR)/max-gst_plugins_dvbmediasink \
@@ -4097,8 +4109,9 @@ $(DEPDIR)/tinyxml.do_prepare: @DEPENDS_tinyxml@
 
 $(DEPDIR)/tinyxml.do_compile: $(DEPDIR)/tinyxml.do_prepare
 	cd @DIR_tinyxml@ && \
+	$(AUTOPKGV_tinyxml) \
 	$(BUILDENV) \
-	$(MAKE) $(MAKE_OPTS)
+	$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-tinyxml $(DEPDIR)/std-tinyxml $(DEPDIR)/max-tinyxml \
