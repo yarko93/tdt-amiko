@@ -117,21 +117,21 @@ release_common_utils:
 	$(call initdconfig,$(shell ls $(prefix)/release/etc/init.d))
 
 # Copy video_7100
-	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910)$(HOMECAST5101),cp -f $(targetprefix)/boot/video_7100.elf $(prefix)/release/boot/video.elf)
+	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910)$(HOMECAST5101),cp -f $(archivedir)/boot/video_7100.elf $(prefix)/release/boot/video.elf)
 # Copy audio_7100
-	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910)$(HOMECAST5101),cp -f $(targetprefix)/boot/audio_7100.elf $(prefix)/release/boot/audio.elf)
+	$(if $(ADB_BOX)$(VIP2_V1)$(UFS910)$(HOMECAST5101),cp -f $(archivedir)/boot/audio_7100.elf $(prefix)/release/boot/audio.elf)
 # Copy video_7105
-	$(if $(ATEVIO7500)$(SPARK7162),cp -f $(targetprefix)/boot/video_7105.elf $(prefix)/release/boot/video.elf)
+	$(if $(ATEVIO7500)$(SPARK7162),cp -f $(archivedir)/boot/video_7105.elf $(prefix)/release/boot/video.elf)
 # Copy audio_7105
-	$(if $(ATEVIO7500)$(SPARK7162),cp -f $(targetprefix)/boot/audio_7105.elf $(prefix)/release/boot/audio.elf)
+	$(if $(ATEVIO7500)$(SPARK7162),cp -f $(archivedir)/boot/audio_7105.elf $(prefix)/release/boot/audio.elf)
 # Copy video_7109
-	$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(FORTIS_HDBOX)$(OCTAGON1008)$(HL101)$(TF7700)$(VIP1_V2)$(VIP2_V1)$(UFS922)$(IPBOX9900)$(IPBOX99)$(IPBOX55),cp -f $(targetprefix)/boot/video_7109.elf $(prefix)/release/boot/video.elf)
+	$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(FORTIS_HDBOX)$(OCTAGON1008)$(HL101)$(TF7700)$(VIP1_V2)$(VIP2_V1)$(UFS922)$(IPBOX9900)$(IPBOX99)$(IPBOX55),cp -f $(archivedir)/boot/video_7109.elf $(prefix)/release/boot/video.elf)
 # Copy audio_7109
-	$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(FORTIS_HDBOX)$(OCTAGON1008)$(HL101)$(TF7700)$(VIP1_V2)$(VIP2_V1)$(UFS922)$(IPBOX9900)$(IPBOX99)$(IPBOX55),cp -f $(targetprefix)/boot/audio_7109.elf $(prefix)/release/boot/audio.elf)
+	$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD)$(FORTIS_HDBOX)$(OCTAGON1008)$(HL101)$(TF7700)$(VIP1_V2)$(VIP2_V1)$(UFS922)$(IPBOX9900)$(IPBOX99)$(IPBOX55),cp -f $(archivedir)/boot/audio_7109.elf $(prefix)/release/boot/audio.elf)
 # Copy video_7111
-	$(if $(SPARK)$(UFS912)$(HS7810A)$(HS7110)$(WHITEBOX),cp -f $(targetprefix)/boot/video_7111.elf $(prefix)/release/boot/video.elf)
+	$(if $(SPARK)$(UFS912)$(HS7810A)$(HS7110)$(WHITEBOX),cp -f $(archivedir)/boot/video_7111.elf $(prefix)/release/boot/video.elf)
 # Copy audio_7111
-	$(if $(SPARK)$(UFS912)$(HS7810A)$(HS7110)$(WHITEBOX),cp -f $(targetprefix)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf )
+	$(if $(SPARK)$(UFS912)$(HS7810A)$(HS7110)$(WHITEBOX),cp -f $(archivedir)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf )
 	
 release_base:
 	rm -rf $(prefix)/release || true
