@@ -1061,7 +1061,7 @@ tuxtxt32bpp
   patch:file://{PN}-{PV}-fix_dbox_headers.diff
   make:install:prefix=/usr:DESTDIR=PKDIR
 # overwrite after make install
-  install_file:file://../root/usr/tuxtxt/tuxtxt2.conf:PKDIR/etc/tuxtxt/tuxtxt2.conf
+  install -m644 -D:file://../root/usr/tuxtxt/tuxtxt2.conf:PKDIR/etc/tuxtxt/tuxtxt2.conf
 ;
 enigma2_networkbrowser
   git

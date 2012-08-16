@@ -3181,12 +3181,12 @@ $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
 # tuxtxt32bpp
 #
 DESCRIPTION_tuxtxt32bpp = "tuxtxt plugin"
-PKGR_tuxtxt32bpp = r1
+PKGR_tuxtxt32bpp = r2
 
 FILES_tuxtxt32bpp = \
 /usr/lib/libtuxtxt32bpp* \
 /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/* \
-/usr/tuxtxt/tuxtxt2.conf
+/etc/tuxtxt/tuxtxt2.conf
 
 $(DEPDIR)/tuxtxt32bpp.do_prepare: tuxtxtlib @DEPENDS_tuxtxt32bpp@
 	@PREPARE_tuxtxt32bpp@
