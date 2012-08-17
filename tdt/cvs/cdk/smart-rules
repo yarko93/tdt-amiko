@@ -232,11 +232,10 @@ host_python
   patch:file://python_{PV}.diff
 ;
 libtool
-  2.2.6a
-  {PN}-2.2.6
+  2.4.2
+  {PN}-2.4.2
   extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
-  patch:file://{PN}-{PV}-cross_compile.patch
-  patch:file://{PN}-{PV}-trailing_slash.patch
+  patch:file://{PN}-{PV}-duckbox-branding.patch
   make:install
 ;
 busybox
@@ -259,9 +258,10 @@ ipkg
   make:install:DESTDIR=TARGETS
 ;
 module_init_tools
-  3.3-pre1
+  3.16
   {PN}-{PV}
   extract:http://ftp.tlk-l.net/pub/mirrors/kernel.org/linux/utils/kernel/{PN}/{PN}-{PV}.tar.bz2
+  patch:file://module-init-tools-no-man.patch
   make:INSTALL=install:install:sbin_PROGRAMS="depmod modinfo":bin_PROGRAMS=:mandir=/usr/share/man:DESTDIR=TARGETS
 ;
 sysvinit
@@ -291,11 +291,10 @@ openrdate
   make:install:DESTDIR=TARGETS
 ;
 e2fsprogs
-  1.41.14
+  1.42.4
   {PN}-{PV}
   extract:http://prdownloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
-  patch:file://{PN}-1.41.11-relative-usrlib-path.patch
-  patch:file://{PN}-1.41.11-no-lib-deps.patch
+  patch:file://{PN}-{PV}.patch
   make:install:DESTDIR=PKDIR
 ;
 xfsprogs
@@ -488,9 +487,10 @@ ncurses
   
 ;
 libz
-  1.2.3
+  1.2.7
   zlib-{PV}
-  extract:http://kent.dl.sourceforge.net/sourceforge/libpng/zlib-{PV}.tar.bz2
+  extract:http://zlib.net/zlib-{PV}.tar.bz2
+  patch:file://zlib-{PV}.patch
   make:install:prefix=PKDIR/usr
   install:-m644:{PN}.a:TARGETS/usr/lib
 ;
@@ -508,7 +508,7 @@ freetype_old
   make:install:DESTDIR=BUILD/freetype-{PV}/install_dir
 ;
 freetype
-  2.3.5
+  2.4.9
   {PN}-{PV}
   extract:http://download.savannah.gnu.org/releases/{PN}/{PN}-{PV}.tar.bz2
   make:install:prefix=/usr:DESTDIR=PKDIR
@@ -703,9 +703,9 @@ cairo
   make:install:DESTDIR=PKDIR
 ;
 expat
-  2.0.1
+  2.1.0
   {PN}-{PV}
-  extract:http://kent.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
+  extract:http://prdownloads.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
 ;
 fontconfig
@@ -727,9 +727,9 @@ a52dec
   make:install:DESTDIR=PKDIR
 ;
 libdvdcss
-  1.2.10
+  1.2.12
   {PN}-{PV}
-  extract:http://download.videolan.org/pub/{PN}/{PV}/{PN}-{PV}.tar.gz
+  extract:http://download.videolan.org/pub/{PN}/{PV}/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
 ;
 libdvdnav
@@ -990,9 +990,9 @@ libxslt
   make:install:DESTDIR=PKDIR
 ;
 lxml
-  2.0.5
+  2.2.8
   {PN}-{PV}
-  extract:http://launchpad.net/{PN}/2.0/{PV}/+download/{PN}-{PV}.tgz
+  extract:http://launchpad.net/{PN}/2.2/{PV}/+download/{PN}-{PV}.tgz
 ;
 setuptools
   0.6c8
@@ -1005,9 +1005,9 @@ gdata
   extract:http://gdata-python-client.googlecode.com/files/gdata-{PV}.tar.gz
 ;
 twisted
-  8.2.0
+  12.1.0
   Twisted-{PV}
-  extract:http://twistedmatrix.com/Releases/Twisted/8.2/Twisted-{PV}.tar.bz2
+  extract:http://twistedmatrix.com/Releases/Twisted/12.1/Twisted-{PV}.tar.bz2
 ;
 twistedweb2
   8.1.0
@@ -1020,9 +1020,9 @@ pilimaging
   extract:http://effbot.org/downloads/Imaging-{PV}.tar.gz
 ;
 pyopenssl
-  0.8
+  0.9
   pyOpenSSL-{PV}
-  extract:http://mirror.slitaz.org/sources/packages/p/pyOpenSSL-{PV}.tar.gz
+  extract:http://sourceforge.net/projects/pyopenssl/files/{PN}/{PV}/pyOpenSSL-{PV}.tar.gz
 ;
 python
   2.6.6
@@ -1043,9 +1043,9 @@ pythoncheetah
   extract:http://pypi.python.org/packages/source/C/Cheetah/Cheetah-{PV}.tar.gz
 ;
 zope_interface
-  3.3.0
+  4.0.1
   zope.interface-{PV}
-  extract:http://www.zope.org/Products/ZopeInterface/{PV}/zope.interface-{PV}.tar.gz
+  extract:http://pypi.python.org/packages/source/z/zope.interface/zope.interface-{PV}.tar.gz
 ;
 tuxtxtlib
   1.0
@@ -1060,6 +1060,8 @@ tuxtxt32bpp
   nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=tuxtxt
   patch:file://{PN}-{PV}-fix_dbox_headers.diff
   make:install:prefix=/usr:DESTDIR=PKDIR
+# overwrite after make install
+  install -m644 -D:file://../root/usr/tuxtxt/tuxtxt2.conf:PKDIR/etc/tuxtxt/tuxtxt2.conf
 ;
 enigma2_networkbrowser
   git
@@ -1326,4 +1328,17 @@ tinyxml
   extract:http://ignum.dl.sourceforge.net/project/tinyxml/tinyxml/{PV}/tinyxml_2_6_2.tar.gz
   patch:file://{PN}{PV}.patch
   make:install:PREFIX=PKDIR/usr
+;
+xbmc_nightly
+  git
+  \$(appsdir)/{PN}
+  # -- select 0 --
+  # git://github.com/xbmc/xbmc.git
+  # patch:file://xbmc-nightly.0.diff
+  # -- select 1 --
+  # git://github.com/xbmc/xbmc.git:r=460e79416c5cb13010456794f36f89d49d25da75
+  # patch:file://xbmc-nightly.1.diff
+  # -- select 2 --
+  git://github.com/xbmc/xbmc.git:r=327710767d2257dad27e3885effba1d49d4557f0
+  patch:file://xbmc-nightly.2.diff
 ;

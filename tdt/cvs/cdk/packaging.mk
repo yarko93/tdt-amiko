@@ -226,6 +226,10 @@ opkgcdkl:
 opkgl:
 	opkg list-installed $(flash_ipkg_args)
 
+opkg-sanitycheck:
+	dup=`cat $(prefix)/pkgroot/usr/lib/opkg/info/*list |sort |uniq -d` && test -z $$dup \
+		|| (echo "ERROR: opkg lists has duplicate files:"; echo $$dup; false)
+
 
 package-index: $(ipkprefix)/Packages
 $(ipkprefix)/Packages: $(ipkprefix)

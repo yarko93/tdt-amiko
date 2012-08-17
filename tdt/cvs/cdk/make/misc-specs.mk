@@ -1,14 +1,4 @@
-#Trick: ich haue mal das kopieren von /boot mal hier rein. ist fuer m82 und m84
 $(DEPDIR)/boot-elf:
-	$(INSTALL_DIR) $(targetprefix)/boot
-	for elf in video_7109.elf video_7100.elf video_7111.elf video_7105.elf audio.elf audio_7111.elf audio_7105.elf \
-	;do \
-		if [ -e $(buildprefix)/root/boot/$$elf ] ; then \
-			cp $(buildprefix)/root/boot/$$elf $(targetprefix)/boot/ ; \
-		else \
-			touch $(targetprefix)/boot/$$elf; \
-		fi; \
-	done
 	$(INSTALL_DIR) $(targetprefix)/lib/firmware
 	cp $(buildprefix)/root/firmware/*.fw $(targetprefix)/lib/firmware/
 	@[ "x$*" = "x" ] && touch $@ || true

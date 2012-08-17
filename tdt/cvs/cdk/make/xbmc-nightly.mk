@@ -1,36 +1,7 @@
 # tuxbox/enigma2
 
-$(DEPDIR)/xbmc-nightly.do_prepare:
-	REVISION=""; \
-	HEAD="master"; \
-	DIFF="0"; \
-	REPO="git://github.com/xbmc/xbmc.git"; \
-	rm -rf $(appsdir)/xbmc-nightly; \
-	rm -rf $(appsdir)/xbmc-nightly.org; \
-	rm -rf $(appsdir)/xbmc-nightly.newest; \
-	rm -rf $(appsdir)/xbmc-nightly.patched; \
-	clear; \
-	echo "Choose between the following revisions:"; \
-	echo " 0) Newest (Can fail due to outdated patch)"; \
-	echo "---- REVISIONS ----"; \
-	echo "1) Sat, 14 Apr 2012 12:36 - 460e79416c5cb13010456794f36f89d49d25da75"; \
-	echo "2) Sun, 10 Jun 2012 13:53 - 327710767d2257dad27e3885effba1d49d4557f0"; \
-	echo "3) current inactive... comming soon, here is the next stable (case 3 == DIFF=3)"; \
-	read -p "Select: "; \
-	echo "Selection: " $$REPLY; \
-	[ "$$REPLY" == "0" ] && DIFF="2"; \
-	[ "$$REPLY" == "1" ] && DIFF="1" && REVISION="460e79416c5cb13010456794f36f89d49d25da75"; \
-	[ "$$REPLY" == "2" ] && DIFF="2" && REVISION="327710767d2257dad27e3885effba1d49d4557f0"; \
-	echo "Revision: " $$REVISION; \
-	[ -d "$(appsdir)/xbmc-nightly" ] && \
-	git pull $(appsdir)/xbmc-nightly $$HEAD;\
-	[ -d "$(appsdir)/xbmc-nightly" ] || \
-	git clone -b $$HEAD $$REPO $(appsdir)/xbmc-nightly; \
-	cp -ra $(appsdir)/xbmc-nightly $(appsdir)/xbmc-nightly.newest; \
-	[ "$$REVISION" == "" ] || (cd $(appsdir)/xbmc-nightly; git checkout "$$REVISION"; cd "$(buildprefix)";); \
-	cp -ra $(appsdir)/xbmc-nightly $(appsdir)/xbmc-nightly.org; \
-	cd $(appsdir)/xbmc-nightly && patch -p1 < "../../cdk/Patches/xbmc-nightly.$$DIFF.diff"; \
-	cp -ra $(appsdir)/xbmc-nightly $(appsdir)/xbmc-nightly.patched
+$(DEPDIR)/xbmc-nightly.do_prepare: @DEPENDS_xbmc_nightly@
+	@PREPARE_xbmc_nightly
 	touch $@
 
 #			PYTHON_LDFLAGS='-L$(targetprefix)/usr/include/python2.6 -lpython2.6' \
