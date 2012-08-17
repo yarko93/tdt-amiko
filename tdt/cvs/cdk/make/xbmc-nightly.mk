@@ -1,7 +1,7 @@
 # tuxbox/enigma2
 
 $(DEPDIR)/xbmc-nightly.do_prepare: @DEPENDS_xbmc_nightly@
-	@PREPARE_xbmc_nightly
+	@PREPARE_xbmc_nightly@
 	touch $@
 
 #			PYTHON_LDFLAGS='-L$(targetprefix)/usr/include/python2.6 -lpython2.6' \

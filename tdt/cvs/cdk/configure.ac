@@ -1078,6 +1078,11 @@ TUXBOX_RULES_MAKE(e2plugin)
 TUXBOX_RULES_MAKE(e2skin)
 
 #
+# xbmc
+#
+TUXBOX_RULES_MAKE(xbmc_nightly)
+
+#
 # external lcd
 #
 TUXBOX_RULES_MAKE(graphlcd)
