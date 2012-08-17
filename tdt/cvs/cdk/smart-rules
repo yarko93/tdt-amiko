@@ -1329,3 +1329,16 @@ tinyxml
   patch:file://{PN}{PV}.patch
   make:install:PREFIX=PKDIR/usr
 ;
+xbmc_nightly
+  git
+  \$(appsdir)/{PN}
+  # -- select 0 --
+  # git://github.com/xbmc/xbmc.git
+  # patch:file://xbmc-nightly.0.diff
+  # -- select 1 --
+  # git://github.com/xbmc/xbmc.git:r=460e79416c5cb13010456794f36f89d49d25da75
+  # patch:file://xbmc-nightly.1.diff
+  # -- select 2 --
+  git://github.com/xbmc/xbmc.git:r=327710767d2257dad27e3885effba1d49d4557f0
+  patch:file://xbmc-nightly.2.diff
+;
