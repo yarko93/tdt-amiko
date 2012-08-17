@@ -30,7 +30,7 @@ $(DEPDIR)/libz.do_compile: $(DEPDIR)/libz.do_prepare
 		./configure \
 			--prefix=/usr \
 			--shared && \
-		$(MAKE) all libz.a AR="$(target)-ar rc" CFLAGS="-fpic -O2"
+		$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-libz $(DEPDIR)/std-libz $(DEPDIR)/max-libz \
