@@ -359,15 +359,21 @@ $(DEPDIR)/e2fsprogs.do_compile: $(DEPDIR)/e2fsprogs.do_prepare | $(UTIL_LINUX)
 		--host=$(target) \
 		--target=$(target) \
 		--with-linker=$(target)-ld \
-		--enable-elf-shlibs \
-		--with-root-prefix= \
-		--enable-verbose-makecmds \
 		--enable-e2initrd-helper \
-		--enable-symlink-install \
 		--enable-compression \
-		--disable-libblkid \
+		--disable-uuidd \
+		--disable-rpath \
+		--disable-quota \
+		--disable-defrag \
+		--disable-nls \
 		--disable-libuuid \
-		--disable-uuidd && \
+		--disable-libblkid \
+		--enable-elf-shlibs \
+		--enable-verbose-makecmds \
+		--enable-symlink-install \
+		--without-libintl-prefix \
+		--without-libiconv-prefix \
+		--with-root-prefix= && \
 	$(MAKE) all && \
 	$(MAKE) -C e2fsck e2fsck.static
 	touch $@

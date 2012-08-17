@@ -30,7 +30,7 @@ $(DEPDIR)/libz.do_compile: $(DEPDIR)/libz.do_prepare
 		./configure \
 			--prefix=/usr \
 			--shared && \
-		$(MAKE) all libz.a AR="$(target)-ar rc" CFLAGS="-fpic -O2"
+		$(MAKE) all
 	touch $@
 
 $(DEPDIR)/min-libz $(DEPDIR)/std-libz $(DEPDIR)/max-libz \
@@ -3138,7 +3138,7 @@ $(DEPDIR)/%libdvbsipp: $(DEPDIR)/libdvbsipp.do_compile
 # tuxtxtlib
 #
 DESCRIPTION_tuxtxtlib = "tuxtxt library"
-PKGR_tuxtxtlib = r0
+PKGR_tuxtxtlib = r1
 
 FILES_tuxtxtlib = \
 /usr/lib/libtuxtxt*
@@ -3160,7 +3160,6 @@ $(DEPDIR)/tuxtxtlib.do_compile: $(DEPDIR)/tuxtxtlib.do_prepare
 		--host=$(target) \
 		--prefix=/usr \
 		--with-boxtype=generic \
-		--with-configdir=/usr \
 		--with-datadir=/usr/share/tuxtxt \
 		--with-fontdir=/usr/share/fonts && \
 	$(MAKE) all
@@ -3182,12 +3181,12 @@ $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
 # tuxtxt32bpp
 #
 DESCRIPTION_tuxtxt32bpp = "tuxtxt plugin"
-PKGR_tuxtxt32bpp = r0
+PKGR_tuxtxt32bpp = r2
 
 FILES_tuxtxt32bpp = \
 /usr/lib/libtuxtxt32bpp* \
 /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/* \
-/usr/tuxtxt/tuxtxt2.conf
+/etc/tuxtxt/tuxtxt2.conf
 
 $(DEPDIR)/tuxtxt32bpp.do_prepare: tuxtxtlib @DEPENDS_tuxtxt32bpp@
 	@PREPARE_tuxtxt32bpp@
@@ -3206,7 +3205,6 @@ $(DEPDIR)/tuxtxt32bpp.do_compile: $(DEPDIR)/tuxtxt32bpp.do_prepare
 		--host=$(target) \
 		--prefix=/usr \
 		--with-boxtype=generic \
-		--with-configdir=/usr \
 		--with-datadir=/usr/share/tuxtxt \
 		--with-fontdir=/usr/share/fonts && \
 	$(MAKE) all
@@ -3220,7 +3218,6 @@ $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
 	cd @DIR_tuxtxt32bpp@ && \
 		@INSTALL_tuxtxt32bpp@
 	$(tocdk_build)
-	mv -f $(PKDIR)/usr/etc/tuxtxt $(PKDIR)/usr
 	$(toflash_build)
 #	@DISTCLEANUP_tuxtxt32bpp@
 	[ "x$*" = "x" ] && touch $@ || true

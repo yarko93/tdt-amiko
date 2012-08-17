@@ -1,4 +1,9 @@
 # tuxbox/enigma2
+if ENABLE_MEDIAFWGSTREAMER
+ENIGMA2_FLAGS =
+else
+ENIGMA2_FLAGS = --enable-libeplayer3
+endif
 
 $(DEPDIR)/enigma2-pli-nightly.do_prepare: @DEPENDS_enigma2_pli@
 	@PREPARE_enigma2_pli@
@@ -22,7 +27,7 @@ $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpe
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
 			PY_PATH=$(targetprefix)/usr \
-			$(PLATFORM_CPPFLAGS)
+			$(PLATFORM_CPPFLAGS) $(ENIGMA2_FLAGS)
 
 
 $(DEPDIR)/enigma2-pli-nightly.do_compile: $(DIR_enigma2_pli)/config.status

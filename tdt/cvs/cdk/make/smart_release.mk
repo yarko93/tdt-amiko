@@ -251,7 +251,6 @@ release_base:
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
 	$(INSTALL_DIR) $(prefix)/release/etc/tuxbox && \
 	$(INSTALL_FILE) root/etc/tuxbox/satellites.xml $(prefix)/release/etc/tuxbox/ && \
-	$(INSTALL_FILE) root/etc/tuxbox/tuxtxt2.conf $(prefix)/release/etc/tuxbox/ && \
 	$(INSTALL_FILE) root/etc/tuxbox/cables.xml $(prefix)/release/etc/tuxbox/ && \
 	$(INSTALL_FILE) root/etc/tuxbox/terrestrial.xml $(prefix)/release/etc/tuxbox/ && \
 	$(INSTALL_FILE) root/etc/tuxbox/timezone.xml $(prefix)/release/etc/ && \
