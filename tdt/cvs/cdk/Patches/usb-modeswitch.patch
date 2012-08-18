@@ -3,7 +3,7 @@
 @@ -46,7 +46,7 @@ distclean:
  	cd jim && $(MAKE) distclean
  
- install-common:
+ install-common: all
 -	install -D -s --mode=755 usb_modeswitch $(SBINDIR)/usb_modeswitch
 +	install -D --mode=755 usb_modeswitch $(SBINDIR)/usb_modeswitch
  	install -D --mode=755 usb_modeswitch.sh $(UDEVDIR)/usb_modeswitch
