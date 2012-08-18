@@ -3160,6 +3160,7 @@ $(DEPDIR)/tuxtxtlib.do_compile: $(DEPDIR)/tuxtxtlib.do_prepare
 		--host=$(target) \
 		--prefix=/usr \
 		--with-boxtype=generic \
+		--with-configdir=/etc \
 		--with-datadir=/usr/share/tuxtxt \
 		--with-fontdir=/usr/share/fonts && \
 	$(MAKE) all
@@ -3205,6 +3206,7 @@ $(DEPDIR)/tuxtxt32bpp.do_compile: $(DEPDIR)/tuxtxt32bpp.do_prepare
 		--host=$(target) \
 		--prefix=/usr \
 		--with-boxtype=generic \
+		--with-configdir=/etc \
 		--with-datadir=/usr/share/tuxtxt \
 		--with-fontdir=/usr/share/fonts && \
 	$(MAKE) all
