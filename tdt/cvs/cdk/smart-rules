@@ -1327,7 +1327,7 @@ tinyxml
   {PN}
   extract:http://ignum.dl.sourceforge.net/project/tinyxml/tinyxml/{PV}/tinyxml_2_6_2.tar.gz
   patch:file://{PN}{PV}.patch
-  make:install:PREFIX=PKDIR/usr
+  make:install:PREFIX=PKDIR/usr:LD=sh4-linux-ld
 ;
 xbmc_nightly
   git

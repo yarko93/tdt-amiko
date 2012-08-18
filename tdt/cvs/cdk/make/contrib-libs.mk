@@ -813,6 +813,8 @@ $(DEPDIR)/directfb.do_prepare: bootstrap freetype @DEPENDS_directfb@
 $(DEPDIR)/directfb.do_compile: $(DEPDIR)/directfb.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_directfb@ && \
+		cp $(hostprefix)/share/libtool/config/ltmain.sh . && \
+		cp $(hostprefix)/share/libtool/config/ltmain.sh .. && \
 		libtoolize -f -c && \
 		autoreconf --verbose --force --install -I$(hostprefix)/share/aclocal && \
 		$(BUILDENV) \
@@ -4108,7 +4110,6 @@ $(DEPDIR)/tinyxml.do_prepare: @DEPENDS_tinyxml@
 
 $(DEPDIR)/tinyxml.do_compile: $(DEPDIR)/tinyxml.do_prepare
 	cd @DIR_tinyxml@ && \
-	$(AUTOPKGV_tinyxml) \
 	$(BUILDENV) \
 	$(MAKE)
 	touch $@
