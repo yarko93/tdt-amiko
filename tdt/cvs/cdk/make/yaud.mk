@@ -229,7 +229,7 @@ max-yaud-none: \
 #
 # EXTRAS
 #
-min-extras:usb-modeswitch \
+min-extras:usb_modeswitch \
 	pppd \
 	modem-scripts \
 	ntfs_3g \
@@ -238,7 +238,7 @@ min-extras:usb-modeswitch \
 	wireless_tools \
 	release
 	
-all-extras:usb-modeswitch \
+all-extras:usb_modeswitch \
 	pppd \
 	modem-scripts \
 	evebrowser \

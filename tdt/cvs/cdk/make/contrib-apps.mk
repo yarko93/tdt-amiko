@@ -140,19 +140,21 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 #
 # USB MODESWITCH
 #
-DESCRIPTION_usb_modeswitch = usb-modeswitch
-RDEPENDS_usb_modeswitch = libusb usb-modeswitch-data
+DESCRIPTION_usb_modeswitch = usb_modeswitch
+RDEPENDS_usb_modeswitch = libusb usb_modeswitch_data
 FILES_usb_modeswitch = \
 /etc/* \
 /lib/udev/* \
 /usr/sbin/*
 
-$(DEPDIR)/usb-modeswitch.do_prepare: @DEPENDS_usb_modeswitch@ $(RDEPENDS_usb_modeswitch)
+$(DEPDIR)/usb_modeswitch.do_prepare: @DEPENDS_usb_modeswitch@ $(RDEPENDS_usb_modeswitch)
 	@PREPARE_usb_modeswitch@
 	touch $@
+$(DEPDIR)/usb_modeswitch.do_compile: $(DEPDIR)/usb_modeswitch.do_prepare
+	  touch $@
 
-
-$(DEPDIR)/usb-modeswitch: bootstrap $(DEPDIR)/usb-modeswitch.do_prepare
+$(DEPDIR)/usb_modeswitch: \
+$(DEPDIR)/%usb_modeswitch: $(DEPDIR)/usb_modeswitch.do_compile
 	$(start_build)
 	cd @DIR_usb_modeswitch@  && \
 	  $(BUILDENV) \
@@ -168,18 +170,22 @@ $(DEPDIR)/usb-modeswitch: bootstrap $(DEPDIR)/usb-modeswitch.do_prepare
 #
 # USB MODESWITCH DATA
 #
-DESCRIPTION_usb_modeswitch_data = "usb-modeswitch-data"
+DESCRIPTION_usb_modeswitch_data = usb_modeswitch_data
 
 FILES_usb_modeswitch_data = \
 /usr/* \
 /etc/* \
 /lib/udev/rules.d
 
-$(DEPDIR)/usb-modeswitch-data.do_prepare: @DEPENDS_usb_modeswitch_data@
+$(DEPDIR)/usb_modeswitch_data.do_prepare: @DEPENDS_usb_modeswitch_data@
 	@PREPARE_usb_modeswitch_data@
 	touch $@
+	
+$(DEPDIR)/usb_modeswitch_data.do_compile: $(DEPDIR)/usb_modeswitch_data.do_prepare
+	touch $@
 
-$(DEPDIR)/usb-modeswitch-data: usb-modeswitch-data.do_prepare
+$(DEPDIR)/usb_modeswitch_data: \
+$(DEPDIR)/%usb_modeswitch_data: $(DEPDIR)/usb_modeswitch_data.do_compile
 	$(start_build)
 	cd @DIR_usb_modeswitch_data@  && \
 		$(BUILDENV) \
