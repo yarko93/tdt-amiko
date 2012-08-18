@@ -1,21 +1,4 @@
 #
-# Makefile to build NEUTRINO
-#
-
-$(targetprefix)/var/etc/.version:
-	echo "imagename=NeutrinoHD2" > $@
-	echo "homepage=http://gitorious.org/open-duckbox-project-sh4" >> $@
-	echo "creator=`id -un`" >> $@
-	echo "docs=http://gitorious.org/open-duckbox-project-sh4/pages/Home" >> $@
-	echo "forum=http://gitorious.org/open-duckbox-project-sh4" >> $@
-	echo "version=0100`date +%Y%m%d%H%M`" >> $@
-	echo "git =`git describe`" >> $@
-
-N_CPPFLAGS =-DNEW_LIBCURL
-
-N_CONFIG_OPTS = --enable-silent-rules
-
-#
 # NEUTRINO HD2
 #
 $(DEPDIR)/neutrino-hd2.do_prepare:
