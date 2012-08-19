@@ -235,8 +235,7 @@ min-extras:usb_modeswitch \
 	ntfs_3g \
 	enigma2_openwebif \
 	enigma2-plugins-sh4-networkbrowser \
-	wireless_tools \
-	release
+	wireless_tools
 	
 all-extras:usb_modeswitch \
 	pppd \
@@ -253,7 +252,7 @@ all-extras:usb_modeswitch \
 # FLASH IMAGE
 #
 
-flash-enigma2-pli-nightly: yaud-enigma2-pli-nightly min-extras
+flash-enigma2-pli-nightly: yaud-enigma2-pli-nightly
 	echo "Create image"
 	$(if $(SPARK)$(SPARK7162), \
 	cd $(prefix)/../flash/spark && \
