@@ -14,11 +14,13 @@ $(appsdir)/xbmc-nightly/config.status: bootstrap libboost directfb libstgles lib
 		./configure \
 			--host=$(target) \
 			--prefix=/usr \
+			PKG_CONFIG_SYSROOT_DIR=$(targetprefix) \
 			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
 			PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
 			PYTHON_SITE_PKG=$(targetprefix)/usr/lib/python2.6/site-packages \
 			PYTHON_CPPFLAGS=-I$(targetprefix)/usr/include/python2.6 \
 			PY_PATH=$(targetprefix)/usr \
+			--includedir=$(targetprefix)/usr/include \
 			--disable-gl \
 			--enable-glesv1 \
 			--disable-gles \
@@ -41,8 +43,6 @@ $(appsdir)/xbmc-nightly/config.status: bootstrap libboost directfb libstgles lib
 			--disable-optical-drive \
 			--disable-libbluray \
 			--disable-texturepacker \
-			--disable-udev \
-			--disable-libusb \
 			--disable-libcec \
 			--enable-gstreamer \
 			--disable-paplayer \
@@ -55,12 +55,20 @@ $(DEPDIR)/xbmc-nightly.do_compile: $(appsdir)/xbmc-nightly/config.status
 	cd $(appsdir)/xbmc-nightly && \
 		$(MAKE) all
 	touch $@
+DESCRIPTION_xbmc_nightly = xbmc
+PKGR_xbmc_nightly =r1
+SRC_URI_xbmc_nigtly = git://github.com/xbmc/xbmc.git
+FILES_xbmc_nigtly = /usr/lib/xbmc/xbmc.bin
 
 $(DEPDIR)/xbmc-nightly: xbmc-nightly.do_prepare xbmc-nightly.do_compile
-	$(MAKE) -C $(appsdir)/xbmc-nightly install DESTDIR=$(targetprefix)
-	if [ -e $(targetprefix)/usr/lib/xbmc/xbmc.bin ]; then \
-		$(target)-strip $(targetprefix)/usr/lib/xbmc/xbmc.bin; \
+	$(start_build)
+	$(get_git_version)
+	$(MAKE) -C $(appsdir)/xbmc-nightly install DESTDIR=$(PKDIR)
+	if [ -e $(PKDIR)/usr/lib/xbmc/xbmc.bin ]; then \
+		$(target)-strip $(PKDIR)/usr/lib/xbmc/xbmc.bin; \
 	fi
+	$(tocdk_build)
+	$(toflash_build)
 	touch $@
 
 xbmc-nightly-clean xbmc-nightly-distclean:
