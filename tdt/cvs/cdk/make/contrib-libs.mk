@@ -4100,7 +4100,7 @@ $(DEPDIR)/%mediatomb: $(DEPDIR)/mediatomb.do_compile
 #
 DESCRIPTION_tinyxml = tinyxml
 FILES_tinyxml = \
-/lib/*
+/usr/lib/*
 
 $(DEPDIR)/tinyxml.do_prepare: @DEPENDS_tinyxml@
 	@PREPARE_tinyxml@
@@ -4108,10 +4108,8 @@ $(DEPDIR)/tinyxml.do_prepare: @DEPENDS_tinyxml@
 
 $(DEPDIR)/tinyxml.do_compile: $(DEPDIR)/tinyxml.do_prepare
 	cd @DIR_tinyxml@ && \
-	PKG_CONFIG=$(hostprefix)/bin/pkg-config \
-	PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
 	$(BUILDENV) \
-	$(MAKE)
+	$(MAKE) $(MAKE_OPTS)
 	touch $@
 
 $(DEPDIR)/min-tinyxml $(DEPDIR)/std-tinyxml $(DEPDIR)/max-tinyxml \
