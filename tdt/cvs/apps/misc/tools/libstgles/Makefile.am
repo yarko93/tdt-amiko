@@ -4,8 +4,8 @@ AM_CFLAGS = -Wall -g0 -Os -ftracer -fomit-frame-pointer -fvisibility=hidden -ldi
 	-Iincludes \
 	-Iincludes/EGL \
 	-Iincludes/GLES \
-	-I../../../../../tufsbox/cdkroot/usr/include \
-	-I../../../../../tufsbox/cdkroot/usr/include/directfb
+	-I../../../../../tufsbox/cdkroot/usr/include/ \
+	-I../../../../../tufsbox/cdkroot/usr/include/directfb/
 
 
 libstgles_la_SOURCES = \

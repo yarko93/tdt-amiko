@@ -832,7 +832,7 @@ $(DEPDIR)/directfb.do_compile: $(DEPDIR)/directfb.do_prepare
 			--disable-fbdev \
 			--enable-mme=yes && \
 			export top_builddir=`pwd` && \
-		$(MAKE) LD=$(target)-ld
+		$(MAKE)
 	touch $@
 
 $(DEPDIR)/min-directfb $(DEPDIR)/std-directfb $(DEPDIR)/max-directfb \
@@ -903,7 +903,7 @@ $(DEPDIR)/libstgles.do_compile: $(DEPDIR)/libstgles.do_prepare
 	./configure \
 		--host=$(target) \
 		--prefix=/usr && \
-	$(MAKE)
+	$(MAKE) $(MAKE_OPTS)
 	touch $@
 
 $(DEPDIR)/min-libstgles $(DEPDIR)/std-libstgles $(DEPDIR)/max-libstgles \
@@ -4108,7 +4108,8 @@ $(DEPDIR)/tinyxml.do_prepare: @DEPENDS_tinyxml@
 
 $(DEPDIR)/tinyxml.do_compile: $(DEPDIR)/tinyxml.do_prepare
 	cd @DIR_tinyxml@ && \
-	$(AUTOPKGV_tinyxml) \
+	PKG_CONFIG=$(hostprefix)/bin/pkg-config \
+	PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
 	$(BUILDENV) \
 	$(MAKE)
 	touch $@

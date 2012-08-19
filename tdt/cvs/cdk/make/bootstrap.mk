@@ -724,8 +724,14 @@ $(DEPDIR)/libtool.do_prepare: @DEPENDS_libtool@
 	touch $@
 
 $(DEPDIR)/libtool.do_compile: $(DEPDIR)/libtool.do_prepare
+	echo "sys_lib_search_path_spec='$(targetprefix)/lib $(targetprefix)/usr/lib'" > @DIR_libtool@/config.cache
+	echo "lt_cv_sys_lib_dlsearch_path_spec='$(targetprefix)/lib $(targetprefix)/usr/lib'" >> @DIR_libtool@/config.cache
 	cd @DIR_libtool@ && \
-	./configure --prefix=$(hostprefix) && \
+		./configure \
+		lt_cv_sys_lib_search_path_spec="" \
+		lt_cv_sys_dlsearch_path="" \
+		--cache-file=config.cache \
+		--prefix=$(hostprefix) && \
 	$(MAKE)
 	touch $@
 
@@ -734,5 +740,5 @@ $(DEPDIR)/libtool: \
 $(DEPDIR)/%libtool: $(DEPDIR)/libtool.do_compile
 	cd @DIR_libtool@ && \
 	@INSTALL_libtool@
-##		sed -i -e 's,\(hardcode_into_libs\)=yes,\1=no,g' $(hostprefix)/bin/libtool
+#		sed -i -r -e 's,\(hardcode_into_libs)=yes,\1=no,g' $(hostprefix)/bin/libtool
 	touch $@
