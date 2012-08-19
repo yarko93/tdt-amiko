@@ -83,7 +83,7 @@ grab-*
 fuse-*
 ntfs-3g_ntfsprogs-*
 wireless_tools*
-py-compile
+compile
 bzip2*
 jasper*
 libcdio*
@@ -98,3 +98,6 @@ pcre*
 tiff*
 tinyxml*
 yajl*
+libdvdcss*
+module-init-tools*
+zlib*
