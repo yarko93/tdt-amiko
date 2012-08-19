@@ -802,7 +802,7 @@ FILES_directfb = \
 /usr/lib/directfb-1.4-5/gfxdrivers/*.so* \
 /usr/lib/directfb-1.4-5/inputdrivers/*.so* \
 /usr/lib/directfb-1.4-5/interfaces/*.so* \
-/usr/lib/directfb-1.4-5/systems/*.so* \
+/usr/lib/directfb-1.4-5/systems/libdirectfb_stmfbdev.so \
 /usr/lib/directfb-1.4-5/wm/*.so* \
 /usr/bin/*
 
@@ -813,6 +813,8 @@ $(DEPDIR)/directfb.do_prepare: bootstrap freetype @DEPENDS_directfb@
 $(DEPDIR)/directfb.do_compile: $(DEPDIR)/directfb.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd @DIR_directfb@ && \
+		cp $(hostprefix)/share/libtool/config/ltmain.sh . && \
+		cp $(hostprefix)/share/libtool/config/ltmain.sh .. && \
 		libtoolize -f -c && \
 		autoreconf --verbose --force --install -I$(hostprefix)/share/aclocal && \
 		$(BUILDENV) \
@@ -4100,7 +4102,7 @@ $(DEPDIR)/%mediatomb: $(DEPDIR)/mediatomb.do_compile
 #
 DESCRIPTION_tinyxml = tinyxml
 FILES_tinyxml = \
-/lib/*
+/usr/lib/*
 
 $(DEPDIR)/tinyxml.do_prepare: @DEPENDS_tinyxml@
 	@PREPARE_tinyxml@
@@ -4108,8 +4110,7 @@ $(DEPDIR)/tinyxml.do_prepare: @DEPENDS_tinyxml@
 
 $(DEPDIR)/tinyxml.do_compile: $(DEPDIR)/tinyxml.do_prepare
 	cd @DIR_tinyxml@ && \
-	PKG_CONFIG=$(hostprefix)/bin/pkg-config \
-	PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
+	libtoolize -f -c && \
 	$(BUILDENV) \
 	$(MAKE)
 	touch $@
