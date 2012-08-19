@@ -229,7 +229,8 @@ max-yaud-none: \
 #
 # EXTRAS
 #
-min-extras:usb_modeswitch \
+min-extras: \
+	usb_modeswitch \
 	pppd \
 	modem-scripts \
 	ntfs_3g \
@@ -237,7 +238,8 @@ min-extras:usb_modeswitch \
 	enigma2-plugins-sh4-networkbrowser \
 	wireless_tools
 	
-all-extras:usb_modeswitch \
+all-extras: \
+	usb_modeswitch \
 	pppd \
 	modem-scripts \
 	evebrowser \
