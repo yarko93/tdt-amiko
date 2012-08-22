@@ -7,10 +7,10 @@ $(DEPDIR)/xbmc-nightly.do_prepare: @DEPENDS_xbmc_nightly@
 #			PYTHON_LDFLAGS='-L$(targetprefix)/usr/include/python2.6 -lpython2.6' \
 #			PYTHON_VERSION='2.6' \
 #endable webserver else httpapihandler will fail
-$(appsdir)/xbmc-nightly/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd python tinyxml gstreamer gst_plugins_dvbmediasink expat sdparm
+$(appsdir)/xbmc-nightly/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd tinyxml python gstreamer gst_plugins_dvbmediasink expat sdparm lirc
 	cd $(appsdir)/xbmc-nightly && \
-		$(BUILDENV) \
 		./bootstrap && \
+		$(BUILDENV) \
 		./configure \
 			--host=$(target) \
 			--prefix=/usr \
@@ -71,12 +71,11 @@ $(DEPDIR)/xbmc-nightly: xbmc-nightly.do_prepare xbmc-nightly.do_compile
 	$(toflash_build)
 	touch $@
 
-xbmc-nightly-clean xbmc-nightly-distclean:
+xbmc-nightly-clean:
+	rm -f $(DEPDIR)/xbmc-nightly.do_compile
+xbmc-nightly-distclean:
 	rm -f $(DEPDIR)/xbmc-nightly
 	rm -f $(DEPDIR)/xbmc-nightly.do_compile
 	rm -f $(DEPDIR)/xbmc-nightly.do_prepare
 	rm -rf $(appsdir)/xbmc-nightly
-	rm -rf $(appsdir)/xbmc-nightly.newest
-	rm -rf $(appsdir)/xbmc-nightly.org
-	rm -rf $(appsdir)/xbmc-nightly.patched
 
