@@ -90,6 +90,7 @@ $(DEPDIR)/%-openpli:
 DESCRIPTION_NewsReader_openpli = RSS reader
 DESCRIPTION_AddStreamUrl_openpli = Add a stream url to your channellist
 DESCRIPTION_Satscan_openpli = Alternative blind scan plugin for DVB-S
+DESCRIPTION_SimpleUmount_openpli = list of mounted mass storage devices and umount one of them
 PKGR_openpli_plugins = r1
 openpli_plugin_list = \
 AddStreamUrl \
