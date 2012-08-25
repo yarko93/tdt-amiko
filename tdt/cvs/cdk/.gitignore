@@ -83,7 +83,7 @@ grab-*
 fuse-*
 ntfs-3g_ntfsprogs-*
 wireless_tools*
-compile
+*compile
 bzip2*
 jasper*
 libcdio*
@@ -101,3 +101,4 @@ yajl*
 libdvdcss*
 module-init-tools*
 zlib*
+e2plugin

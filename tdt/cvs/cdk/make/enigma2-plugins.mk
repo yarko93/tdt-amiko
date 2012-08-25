@@ -71,7 +71,7 @@ $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 		cp -a src/* $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ && \
 		cp -a src/lib/netscan.so $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ && \
 		rm -rf $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/lib
-	$(extra)
+	$(e2extra_build)
 #	@DISTCLEANUP_enigma2_networkbrowser@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -84,16 +84,18 @@ $(DEPDIR)/%-openpli:
 	cd $(DIR_$*_openpli) && \
 		$(python) setup.py install --root=$(PKDIR) --install-lib=/usr/lib/enigma2/python/Plugins
 	$(remove_pyo)
-	$(extra)
+	$(e2extra_build)
 	touch $@
 
 DESCRIPTION_NewsReader_openpli = RSS reader
 DESCRIPTION_AddStreamUrl_openpli = Add a stream url to your channellist
 DESCRIPTION_Satscan_openpli = Alternative blind scan plugin for DVB-S
+DESCRIPTION_SimpleUmount_openpli = list of mounted mass storage devices and umount one of them
 PKGR_openpli_plugins = r1
 openpli_plugin_list = \
 AddStreamUrl \
 NewsReader \
+SimpleUmount \
 Satscan
 
 openpli-plugins: $(addprefix $(DEPDIR)/,$(addsuffix -openpli,$(openpli_plugin_list)))

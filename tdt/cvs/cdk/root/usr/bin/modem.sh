@@ -2,7 +2,7 @@
 
 DEBUG=0
 
-[ $DEBUG ] && echo "ACTION $1 MODEMPORT $2" >> /tmp/modem.log || rm -rf /tmp/modem.log
+[ $DEBUG -eq 1 ] && echo "ACTION $1 MODEMPORT $2" >> /tmp/modem.log || rm -rf /tmp/modem.log
 
 . /etc/modem.conf
 
@@ -32,7 +32,7 @@ if [ $MODEMPORT = "auto" ]; then
   [ -z $PORT ] || break
  done
  MODEMPORT="tty$PORT"
- [ $DEBUG ] && echo "Detected modem port is $MODEMPORT"  >> /tmp/modem.log
+ [ $DEBUG -eq 1 ] && echo "Detected modem port is $MODEMPORT"  >> /tmp/modem.log
 fi
 [ "$2" = "$MODEMPORT" ] ||  exit 0
 [ $DISABLEAUTOSTART = 1 ] && [ $1 = "add" ] &&  exit 0

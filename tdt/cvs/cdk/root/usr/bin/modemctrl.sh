@@ -3,10 +3,10 @@
 DEBUG=0
 DEV=$1
 
-[ $DEBUG ] && echo "DEVICE: $DEV" > /tmp/modemctrl.log  || rm -rf /tmp/modemctrl.log
+[ $DEBUG -eq 1 ] && echo "DEVICE: $DEV" > /tmp/modemctrl.log  || rm -rf /tmp/modemctrl.log
 
 LIST=`find /sys/devices -name "$DEV" | sort -r 2>/dev/null`
-[ $DEBUG ] && echo "LIST: $LIST" >> /tmp/modemctrl.log
+[ $DEBUG -eq 1 ] && echo "LIST: $LIST" >> /tmp/modemctrl.log
 for path in $LIST; do
  DEVPATH=${path#/sys}
 done
@@ -17,8 +17,8 @@ PRODUCT=$(echo $MODALIAS | sed 's!^usb:\(.*\)dc.*!\1!;s![vpd]!/!g;s!/0\{1,3\}!/!
 INTERFACE=$(udevadm info --query=all  --path=$DEVPATH | grep INTERFACE | sed 's/E: INTERFACE=//')
 
 for var in DEVPATH MODALIAS TYPE PRODUCT INTERFACE; do
- [ $DEBUG ] && echo "$var:" >> /tmp/modemctrl.log 
- [ $DEBUG ] && eval "echo \$${var}" >> /tmp/modemctrl.log 
+ [ $DEBUG -eq 1 ] && echo "$var:" >> /tmp/modemctrl.log 
+ [ $DEBUG -eq 1 ] && eval "echo \$${var}" >> /tmp/modemctrl.log 
  [ -z "$(eval "echo \$${var}")" ] && exit 1
 done
 
@@ -38,13 +38,13 @@ case $TYPE in
 
     8/6/*)
 	if [ -f "/usr/share/usb_modeswitch/${idVendor}:${idProduct}" ]; then
-	    [ $DEBUG ] && echo "${idVendor}:${idProduct} may be 3G modem in zero CD mode" >> /tmp/modemctrl.log
+	    [ $DEBUG -eq 1 ] && echo "${idVendor}:${idProduct} may be 3G modem in zero CD mode" >> /tmp/modemctrl.log
 	    usb_modeswitch -v ${idVendor} -p ${idProduct} -c /usr/share/usb_modeswitch/${idVendor}:${idProduct} && exit 0
 	fi
         ;;
     255/255/255)
 	if [ -f "/usr/share/usb_modeswitch/${idVendor}:${idProduct}" ]; then
-	    [ $DEBUG ] && echo "${idVendor}:${idProduct} $TYPE may be 3G modem" >> /tmp/modemctrl.log
+	    [ $DEBUG -eq 1 ] && echo "${idVendor}:${idProduct} $TYPE may be 3G modem" >> /tmp/modemctrl.log
 	    if [ "${idVendor}" != "0af0" ]; then
 		if [ ! -d /sys/module/usbserial ]; then
 		    modprobe -q usbserial vendor=0x${idVendor} product=0x${idProduct}
@@ -55,7 +55,7 @@ case $TYPE in
 #		fi
 	    fi
 	else
-	    [ $DEBUG ] && echo "${idVendor}:${idProduct} $TYPE unknow serial device! Try load all serial drivers." >> /tmp/modemctrl.log
+	    [ $DEBUG -eq 1 ] && echo "${idVendor}:${idProduct} $TYPE unknow serial device! Try load all serial drivers." >> /tmp/modemctrl.log
 	    if [ ! -d /sys/module/usbserial ]; then
 		modprobe -q usbserial
 	    fi
@@ -71,14 +71,14 @@ case $TYPE in
 	fi
         ;;
     2/*/*)
-	[ $DEBUG ] && echo "${idVendor}:${idProduct} $TYPE may be ACM device " >> /tmp/modemctrl.log
+	[ $DEBUG -eq 1 ] && echo "${idVendor}:${idProduct} $TYPE may be ACM device " >> /tmp/modemctrl.log
 	    if [ ! -d /sys/module/cdc-acm ]; then
 		    modprobe -q cdc-acm
 	    fi
 	;;	
 
     *)
-	[ $DEBUG ] && echo "${idVendor}:${idProduct} $TYPE unknow device!" >> /tmp/modemctrl.log
+	[ $DEBUG -eq 1 ] && echo "${idVendor}:${idProduct} $TYPE unknow device!" >> /tmp/modemctrl.log
         ;;
         
         
