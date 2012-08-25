@@ -61,10 +61,12 @@ typedef struct Output_s {
 
 extern Output_t LinuxDvbOutput;
 extern Output_t SubtitleOutput;
+extern Output_t PipeOutput;
 
 static Output_t * AvailableOutput[] = {
     &LinuxDvbOutput,
     &SubtitleOutput,
+    &PipeOutput,
     NULL
 };
 
@@ -73,6 +75,8 @@ typedef struct OutputHandler_s {
     Output_t * audio;
     Output_t * video;
     Output_t * subtitle;
+    Output_t * dvbsubtitle;
+    Output_t * teletext;
     int (* Command) (/*Context_t*/void  *, OutputCmd_t, void *);
 } OutputHandler_t;
 

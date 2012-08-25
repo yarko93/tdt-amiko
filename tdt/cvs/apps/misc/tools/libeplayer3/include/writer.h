@@ -73,6 +73,8 @@ extern Writer_t WriterVideoH263;
 extern Writer_t WriterVideoFLV;
 extern Writer_t WriterVideoVC1;
 extern Writer_t WriterFramebuffer;
+extern Writer_t WriterPipe;
+extern Writer_t WriterDVBSubtitle;
 
 static Writer_t * AvailableWriter[] = {
     &WriterAudioIPCM,

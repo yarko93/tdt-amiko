@@ -69,11 +69,11 @@ if (debug_level >= level) printf("[%s:%s] " fmt, __FILE__, __FUNCTION__, ## x );
 #define cERR_LINUXDVB_NO_ERROR      0
 #define cERR_LINUXDVB_ERROR        -1
 
-static const char VIDEODEV[] 	= "/dev/dvb/adapter0/video0";
-static const char AUDIODEV[] 	= "/dev/dvb/adapter0/audio0";
+static const char VIDEODEV[] = "/dev/dvb/adapter0/video0";
+static const char AUDIODEV[] = "/dev/dvb/adapter0/audio0";
 
-static int videofd 	= -1;
-static int audiofd 	= -1;
+static int videofd = -1;
+static int audiofd = -1;
 
 unsigned long long int sCURRENT_PTS = 0;
 
@@ -88,29 +88,30 @@ int LinuxDvbStop(Context_t  *context, char * type);
 /* MISC Functions                */
 /* ***************************** */
 
-void getLinuxDVBMutex(const char *filename, const char *function, int line) {
+void getLinuxDVBMutex(const char *filename, const char *function, int line)
+{
 
     linuxdvb_printf(250, "requesting mutex\n");
-
     pthread_mutex_lock(&LinuxDVBmutex);
-
     linuxdvb_printf(250, "received mutex\n");
 }
 
-void releaseLinuxDVBMutex(const char *filename, const char *function, int line) {
+void releaseLinuxDVBMutex(const char *filename, const char *function, int line)
+{
     pthread_mutex_unlock(&LinuxDVBmutex);
-
     linuxdvb_printf(250, "released mutex\n");
 
 }
 
-int LinuxDvbOpen(Context_t  *context, char * type) {
+int LinuxDvbOpen(Context_t  *context, char * type)
+{
     unsigned char video = !strcmp("video", type);
     unsigned char audio = !strcmp("audio", type);
 
     linuxdvb_printf(10, "v%d a%d\n", video, audio);
 
-    if (video && videofd == -1) {
+    if (video && videofd == -1)
+    {
         videofd = open(VIDEODEV, O_RDWR);
 
         if (videofd <= 0)
@@ -145,7 +146,8 @@ int LinuxDvbOpen(Context_t  *context, char * type) {
         }
 
     }
-    if (audio && audiofd == -1) {
+    if (audio && audiofd == -1)
+    {
         audiofd = open(AUDIODEV, O_RDWR);
 
         if (audiofd <= 0)
@@ -194,11 +196,13 @@ int LinuxDvbClose(Context_t  *context, char * type) {
 
     getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
-    if (video && videofd != -1) {
+    if (video && videofd != -1)
+    {
         close(videofd);
         videofd = -1;
     }
-    if (audio && audiofd != -1) {
+    if (audio && audiofd != -1)
+    {
         close(audiofd);
         audiofd = -1;
     }
@@ -207,7 +211,8 @@ int LinuxDvbClose(Context_t  *context, char * type) {
     return cERR_LINUXDVB_NO_ERROR;
 }
 
-int LinuxDvbPlay(Context_t  *context, char * type) {
+int LinuxDvbPlay(Context_t  *context, char * type)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
     Writer_t* writer;
 
@@ -216,14 +221,12 @@ int LinuxDvbPlay(Context_t  *context, char * type) {
 
     linuxdvb_printf(10, "v%d a%d\n", video, audio);
 
-    if (video && videofd != -1) {
+    if (video && videofd != -1)
+    {
         char * Encoding = NULL;
         context->manager->video->Command(context, MANAGER_GETENCODING, &Encoding);
-
         linuxdvb_printf(10, "V %s\n", Encoding);
-
         writer = getWriter(Encoding);
-
         if (writer == NULL)
         {
             linuxdvb_err("cannot found writer for encoding %s using default\n", Encoding);
@@ -233,7 +236,8 @@ int LinuxDvbPlay(Context_t  *context, char * type) {
                 linuxdvb_err("VIDEO_SET_ENCODING: %s\n", strerror(errno));
                 ret = cERR_LINUXDVB_ERROR;
             }
-        } else
+        }
+        else
         {
             linuxdvb_printf(20, "found writer %s for encoding %s\n", writer->caps->name, Encoding);
             if (ioctl( videofd, VIDEO_SET_ENCODING, (void*) writer->caps->dvbEncoding) == -1)
@@ -252,7 +256,8 @@ int LinuxDvbPlay(Context_t  *context, char * type) {
         }
         free(Encoding);
     }
-    if (audio && audiofd != -1) {
+    if (audio && audiofd != -1)
+    {
         char * Encoding = NULL;
         context->manager->audio->Command(context, MANAGER_GETENCODING, &Encoding);
 
@@ -269,7 +274,8 @@ int LinuxDvbPlay(Context_t  *context, char * type) {
                 linuxdvb_err("AUDIO_SET_ENCODING: %s\n", strerror(errno));
                 ret = cERR_LINUXDVB_ERROR;
             }
-        } else
+        }
+        else
         {
             linuxdvb_printf(20, "found writer %s for encoding %s\n", writer->caps->name, Encoding);
             if (ioctl( audiofd, AUDIO_SET_ENCODING, (void*) writer->caps->dvbEncoding) == -1)
@@ -301,7 +307,8 @@ int LinuxDvbStop(Context_t  *context, char * type) {
 
     getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
-    if (video && videofd != -1) {
+    if (video && videofd != -1)
+    {
         if (ioctl(videofd, VIDEO_CLEAR_BUFFER, NULL) == -1)
         {
             linuxdvb_err("ioctl failed with errno %d\n", errno);
@@ -322,7 +329,8 @@ int LinuxDvbStop(Context_t  *context, char * type) {
             ret = cERR_LINUXDVB_ERROR;
         }
     }
-    if (audio && audiofd != -1) {
+    if (audio && audiofd != -1)
+    {
         if (ioctl(audiofd, AUDIO_CLEAR_BUFFER, NULL) == -1)
         {
             linuxdvb_err("ioctl failed with errno %d\n", errno);
@@ -349,16 +357,16 @@ int LinuxDvbStop(Context_t  *context, char * type) {
     return ret;
 }
 
-int LinuxDvbPause(Context_t  *context, char * type) {
+int LinuxDvbPause(Context_t  *context, char * type)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
     unsigned char video = !strcmp("video", type);
     unsigned char audio = !strcmp("audio", type);
-
     linuxdvb_printf(10, "v%d a%d\n", video, audio);
-
     getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
-    if (video && videofd != -1) {
+    if (video && videofd != -1)
+    {
         if (ioctl(videofd, VIDEO_FREEZE, NULL) == -1)
         {
             linuxdvb_err("ioctl failed with errno %d\n", errno);
@@ -366,7 +374,8 @@ int LinuxDvbPause(Context_t  *context, char * type) {
             ret = cERR_LINUXDVB_ERROR;
         }
     }
-    if (audio && audiofd != -1) {
+    if (audio && audiofd != -1)
+    {
         if (ioctl(audiofd, AUDIO_PAUSE, NULL) == -1)
         {
             linuxdvb_err("ioctl failed with errno %d\n", errno);
@@ -380,14 +389,15 @@ int LinuxDvbPause(Context_t  *context, char * type) {
     return ret;
 }
 
-int LinuxDvbContinue(Context_t  *context, char * type) {
+int LinuxDvbContinue(Context_t  *context, char * type)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
     unsigned char video = !strcmp("video", type);
     unsigned char audio = !strcmp("audio", type);
-
     linuxdvb_printf(10, "v%d a%d\n", video, audio);
 
-    if (video && videofd != -1) {
+    if (video && videofd != -1)
+    {
         if (ioctl(videofd, VIDEO_CONTINUE, NULL) == -1)
         {
             linuxdvb_err("ioctl failed with errno %d\n", errno);
@@ -395,7 +405,8 @@ int LinuxDvbContinue(Context_t  *context, char * type) {
             ret = cERR_LINUXDVB_ERROR;
         }
     }
-    if (audio && audiofd != -1) {
+    if (audio && audiofd != -1)
+    {
         if (ioctl(audiofd, AUDIO_CONTINUE, NULL) == -1)
         {
             linuxdvb_err("ioctl failed with errno %d\n", errno);
@@ -403,17 +414,15 @@ int LinuxDvbContinue(Context_t  *context, char * type) {
             ret = cERR_LINUXDVB_ERROR;
         }
     }
-
     linuxdvb_printf(10, "exiting\n");
-
 
     return ret;
 }
 
-int LinuxDvbReverseDiscontinuity(Context_t  *context, int* surplus) {
+int LinuxDvbReverseDiscontinuity(Context_t  *context, int* surplus)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
     int dis_type = VIDEO_DISCONTINUITY_CONTINUOUS_REVERSE | *surplus;
-    
     linuxdvb_printf(50, "\n");
 
     if (ioctl( videofd, VIDEO_DISCONTINUITY, (void*) dis_type) == -1)
@@ -421,15 +430,14 @@ int LinuxDvbReverseDiscontinuity(Context_t  *context, int* surplus) {
         linuxdvb_err("ioctl failed with errno %d\n", errno);
         linuxdvb_err("VIDEO_DISCONTINUITY: %s\n", strerror(errno));
     }
-
     linuxdvb_printf(50, "exiting\n");
 
     return ret;
 }
 
-int LinuxDvbAudioMute(Context_t  *context, char *flag) {
+int LinuxDvbAudioMute(Context_t  *context, char *flag)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
-
     linuxdvb_printf(10, "\n");
 
     if (audiofd != -1) {
@@ -458,23 +466,24 @@ int LinuxDvbAudioMute(Context_t  *context, char *flag) {
             }
         }
     }
-
     linuxdvb_printf(10, "exiting\n");
 
     return ret;
 }
 
 
-int LinuxDvbFlush(Context_t  *context, char * type) {
+int LinuxDvbFlush(Context_t  *context, char * type)
+{
     unsigned char video = !strcmp("video", type);
     unsigned char audio = !strcmp("audio", type);
-
     linuxdvb_printf(10, "v%d a%d\n", video, audio);
 
-    if ( (video && videofd != -1) || (audio && audiofd != -1) ) {
+    if ( (video && videofd != -1) || (audio && audiofd != -1) )
+    {
         getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
-        if (video && videofd != -1) {
+        if (video && videofd != -1)
+        {
             if (ioctl(videofd, VIDEO_FLUSH ,NULL) == -1)
             {
                 linuxdvb_err("ioctl failed with errno %d\n", errno);
@@ -488,39 +497,37 @@ int LinuxDvbFlush(Context_t  *context, char * type) {
             }
         }
 
-        if (audio && audiofd != -1) {
+        if (audio && audiofd != -1)
+        {
             if (ioctl(audiofd, AUDIO_FLUSH ,NULL) == -1)
             {
                 linuxdvb_err("ioctl failed with errno %d\n", errno);
                 linuxdvb_err("AUDIO_FLUSH: %s\n", strerror(errno));
             }
+
             if (ioctl(audiofd, AUDIO_STOP, NULL) == -1)
             {
                 linuxdvb_err("ioctl failed with errno %d\n", errno);
                 linuxdvb_err("AUDIO_STOP: %s\n", strerror(errno));
             }
-
         }
-
         releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
     }
-
     linuxdvb_printf(10, "exiting\n");
 
     return cERR_LINUXDVB_NO_ERROR;
 }
 
 #ifndef use_set_speed_instead_ff
-int LinuxDvbFastForward(Context_t  *context, char * type) {
+int LinuxDvbFastForward(Context_t  *context, char * type)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
-
     unsigned char video = !strcmp("video", type);
     unsigned char audio = !strcmp("audio", type);
-
     linuxdvb_printf(10, "v%d a%d speed %d\n", video, audio, context->playback->Speed);
 
-    if (video && videofd != -1) {
-
+    if (video && videofd != -1)
+    {
         getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
         /* konfetti comment: speed is a value given in skipped frames */
@@ -531,10 +538,8 @@ int LinuxDvbFastForward(Context_t  *context, char * type) {
             linuxdvb_err("VIDEO_FAST_FORWARD: %s\n", strerror(errno));
             ret = cERR_LINUXDVB_ERROR;
         }
-
         releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
     }
-
     linuxdvb_printf(10, "exiting with value %d\n", ret);
 
     return ret;
@@ -543,56 +548,61 @@ int LinuxDvbFastForward(Context_t  *context, char * type) {
 
 static unsigned int SpeedList[] =
 {
-    1000, 1100, 1200, 1300, 1500, 
-    2000, 3000, 4000, 5000, 8000, 
-    12000, 16000, 
-    125, 250, 500, 700, 800, 900
+    1000,
+    1100,
+    1200,
+    1300,
+    1500,
+    2000,
+    3000,
+    4000,
+    5000,
+    8000,
+    12000,
+    16000,
+    125,
+    250,
+    500,
+    700,
+    800,
+    900
 };
 
-int LinuxDvbFastForward(Context_t  *context, char * type) {
+int LinuxDvbFastForward(Context_t  *context, char * type)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
     int speedIndex;
     unsigned char video = !strcmp("video", type);
     unsigned char audio = !strcmp("audio", type);
-
     linuxdvb_printf(10, "v%d a%d\n", video, audio);
 
-    if (video && videofd != -1) {
-
+    if (video && videofd != -1)
+    {
         getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
-
         speedIndex = context->playback->Speed % (sizeof (SpeedList) / sizeof (int));
-
         linuxdvb_printf(1, "speedIndex %d\n", speedIndex);
-
         if (ioctl(videofd, VIDEO_SET_SPEED, SpeedList[speedIndex]) == -1)
         {
             linuxdvb_err("ioctl failed with errno %d\n", errno);
             linuxdvb_err("VIDEO_SET_SPEED: %s\n", strerror(errno));
             ret = cERR_LINUXDVB_ERROR;
         }
-
         releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
     }
 
-    if (audio && audiofd != -1) {
-
+    if (audio && audiofd != -1)
+    {
         getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
-
         speedIndex = context->playback->Speed % (sizeof (SpeedList) / sizeof (int));
-
         linuxdvb_printf(1, "speedIndex %d\n", speedIndex);
-
         if (ioctl(audiofd, AUDIO_SET_SPEED, SpeedList[speedIndex]) == -1)
         {
             linuxdvb_err("ioctl failed with errno %d\n", errno);
             linuxdvb_err("AUDIO_SET_SPEED: %s\n", strerror(errno));
             ret = cERR_LINUXDVB_ERROR;
         }
-
         releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
     }
-
     linuxdvb_printf(10, "exiting with value %d\n", ret);
 
     return ret;
@@ -600,16 +610,14 @@ int LinuxDvbFastForward(Context_t  *context, char * type) {
 #endif
 
 
-int LinuxDvbReverse(Context_t  *context, char * type) {
+int LinuxDvbReverse(Context_t  *context, char * type)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
 #ifdef reverse_playback_2
     int speed;
-
     unsigned char video = !strcmp("video", type);
     unsigned char audio = !strcmp("audio", type);
-
     linuxdvb_printf(10, "v%d a%d\n", video, audio);
-
     if (context->playback->Speed >= 0)
     {
         linuxdvb_err("error speed is greater 0, but should be a neg value in skipped frames (or zero)\n");
@@ -623,9 +631,9 @@ int LinuxDvbReverse(Context_t  *context, char * type) {
             context->playback->Speed * DVB_SPEED_NORMAL_PLAY;
 
     linuxdvb_printf(10, "speed %d - %d\n", speed, context->playback->Speed);
-    
-    if (video && videofd != -1) {
 
+    if (video && videofd != -1)
+    {
         getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
         if (ioctl(videofd, VIDEO_SET_SPEED, speed) == -1)
@@ -634,41 +642,36 @@ int LinuxDvbReverse(Context_t  *context, char * type) {
             linuxdvb_err("VIDEO_SET_SPEED: %s\n", strerror(errno));
             ret = cERR_LINUXDVB_ERROR;
         }
-
         releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
     }
 
-    if (audio && audiofd != -1) {
-
+    if (audio && audiofd != -1)
+    {
         getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
-
         if (ioctl(audiofd, AUDIO_SET_SPEED, speed) == -1)
         {
             linuxdvb_err("ioctl failed with errno %d\n", errno);
             linuxdvb_err("AUDIO_SET_SPEED: %s\n", strerror(errno));
             ret = cERR_LINUXDVB_ERROR;
         }
-
         releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
     }
-
     linuxdvb_printf(10, "exiting with value %d\n", ret);
-
 #endif
+
     return ret;
 }
 
-int LinuxDvbSlowMotion(Context_t  *context, char * type) {
+int LinuxDvbSlowMotion(Context_t  *context, char * type)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
-
     unsigned char video = !strcmp("video", type);
     unsigned char audio = !strcmp("audio", type);
-
     linuxdvb_printf(10, "v%d a%d\n", video, audio);
 
-    if ( (video && videofd != -1) || (audio && audiofd != -1) ) {
+    if ( (video && videofd != -1) || (audio && audiofd != -1) )
+    {
         getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
-
         if (video && videofd != -1) {
             if (ioctl(videofd, VIDEO_SLOWMOTION, context->playback->SlowMotion) == -1)
             {
@@ -677,16 +680,15 @@ int LinuxDvbSlowMotion(Context_t  *context, char * type) {
                 ret = cERR_LINUXDVB_ERROR;
             }
         }
-
         releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
     }
-
     linuxdvb_printf(10, "exiting with value %d\n", ret);
 
     return ret;
 }
 
-int LinuxDvbAVSync(Context_t  *context, char * type) {
+int LinuxDvbAVSync(Context_t  *context, char * type)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
     /* konfetti: this one is dedicated to audiofd so we
      * are ignoring what is given by type! I think we should
@@ -694,33 +696,34 @@ int LinuxDvbAVSync(Context_t  *context, char * type) {
      * setOn or something like that instead, this would remove
      * using a variable inside the structure.
      */
-    if (audiofd != -1) {
+    if (audiofd != -1)
+    {
         getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
-
         if (ioctl(audiofd, AUDIO_SET_AV_SYNC, context->playback->AVSync) == -1)
         {
             linuxdvb_err("ioctl failed with errno %d\n", errno);
             linuxdvb_err("AUDIO_SET_AV_SYNC: %s\n", strerror(errno));
             ret = cERR_LINUXDVB_ERROR;
         }
-
         releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
     }
 
     return ret;
 }
 
-int LinuxDvbClear(Context_t  *context, char * type) {
+int LinuxDvbClear(Context_t  *context, char * type)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
     unsigned char video = !strcmp("video", type);
     unsigned char audio = !strcmp("audio", type);
-
     linuxdvb_printf(10, "v%d a%d\n", video, audio);
 
-    if ( (video && videofd != -1) || (audio && audiofd != -1) ) {
+    if ( (video && videofd != -1) || (audio && audiofd != -1) )
+    {
         getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
-        if (video && videofd != -1) {
+        if (video && videofd != -1)
+        {
             if (ioctl(videofd, VIDEO_CLEAR_BUFFER, NULL) == -1)
             {
                 linuxdvb_err("ioctl failed with errno %d\n", errno);
@@ -728,7 +731,8 @@ int LinuxDvbClear(Context_t  *context, char * type) {
                 ret = cERR_LINUXDVB_ERROR;
             }
         }
-        if (audio && audiofd != -1) {
+        if (audio && audiofd != -1)
+        {
             if (ioctl(audiofd, AUDIO_CLEAR_BUFFER, NULL) == -1)
             {
                 linuxdvb_err("ioctl failed with errno %d\n", errno);
@@ -736,20 +740,17 @@ int LinuxDvbClear(Context_t  *context, char * type) {
                 ret = cERR_LINUXDVB_ERROR;
             }
         }
-
         releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
     }
-
     linuxdvb_printf(10, "exiting\n");
 
     return ret;
 }
 
-int LinuxDvbPts(Context_t  *context, unsigned long long int* pts) {
+int LinuxDvbPts(Context_t  *context, unsigned long long int* pts)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
-    
     linuxdvb_printf(50, "\n");
-
     // pts is a non writting requests and can be done in parallel to other requests
     //getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
@@ -771,24 +772,22 @@ int LinuxDvbPts(Context_t  *context, unsigned long long int* pts) {
             ret = cERR_LINUXDVB_ERROR;
         }
     }
-    else {
+    else
+    {
         sCURRENT_PTS = 0;
         ret = cERR_LINUXDVB_ERROR;
     }
-
     *((unsigned long long int *)pts)=(unsigned long long int)sCURRENT_PTS;
-
     //releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
     return ret;
 }
 
-int LinuxDvbGetFrameCount(Context_t  *context, unsigned long long int* frameCount) {
+int LinuxDvbGetFrameCount(Context_t  *context, unsigned long long int* frameCount)
+{
     int ret = cERR_LINUXDVB_NO_ERROR;
     dvb_play_info_t playInfo;
-
     linuxdvb_printf(50, "\n");
-
     getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
     if (videofd != -1)
@@ -811,51 +810,46 @@ int LinuxDvbGetFrameCount(Context_t  *context, unsigned long long int* frameCoun
         }
         else linuxdvb_err("A: %ull\n", playInfo.frame_count);
     }
-    else {
+    else
+    {
         ret = cERR_LINUXDVB_ERROR;
     }
 
     if(ret == cERR_LINUXDVB_NO_ERROR)
         *((unsigned long long int *)frameCount) = playInfo.frame_count;
-
     releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
 
     return ret;
 }
 
-int LinuxDvbSwitch(Context_t  *context, char * type) {
+int LinuxDvbSwitch(Context_t  *context, char * type)
+{
     unsigned char audio = !strcmp("audio", type);
     unsigned char video = !strcmp("video", type);
     Writer_t* writer;
-
     linuxdvb_printf(10, "v%d a%d\n", video, audio);
 
-    if ( (video && videofd != -1) || (audio && audiofd != -1) ) {
+    if ( (video && videofd != -1) || (audio && audiofd != -1) )
+    {
         getLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
-
-        if (audio && audiofd != -1) {
+        if (audio && audiofd != -1)
+        {
             char * Encoding = NULL;
-            if (context && context->manager && context->manager->audio) {
+            if (context && context->manager && context->manager->audio)
+            {
                 context->manager->audio->Command(context, MANAGER_GETENCODING, &Encoding);
-
                 linuxdvb_printf(10, "A %s\n", Encoding);
-
                 writer = getWriter(Encoding);
-
                 if (ioctl(audiofd, AUDIO_STOP ,NULL) == -1)
                 {
                     linuxdvb_err("ioctl failed with errno %d\n", errno);
                     linuxdvb_err("AUDIO_STOP: %s\n", strerror(errno));
-
                 }
-
                 if (ioctl(audiofd, AUDIO_CLEAR_BUFFER ,NULL) == -1)
                 {
                     linuxdvb_err("ioctl failed with errno %d\n", errno);
                     linuxdvb_err("AUDIO_CLEAR_BUFFER: %s\n", strerror(errno));
-
                 }
-
                 if (writer == NULL)
                 {
                     linuxdvb_err("cannot found writer for encoding %s using default\n", Encoding);
@@ -864,7 +858,8 @@ int LinuxDvbSwitch(Context_t  *context, char * type) {
                         linuxdvb_err("ioctl failed with errno %d\n", errno);
                         linuxdvb_err("AUDIO_SET_ENCODING: %s\n", strerror(errno));
                     }
-                } else
+                }
+                else
                 {
                     linuxdvb_printf(10, "found writer %s for encoding %s\n", writer->caps->name, Encoding);
                     if (ioctl( audiofd, AUDIO_SET_ENCODING, (void*) writer->caps->dvbEncoding) == -1)
@@ -884,28 +879,24 @@ int LinuxDvbSwitch(Context_t  *context, char * type) {
             else
                 linuxdvb_printf(20, "no context for Audio\n");
         }
-
-        if (video && videofd != -1) {
+        if (video && videofd != -1)
+        {
             char * Encoding = NULL;
-            if (context && context->manager && context->manager->video) {
+            if (context && context->manager && context->manager->video)
+            {
                 context->manager->video->Command(context, MANAGER_GETENCODING, &Encoding);
-
                 if (ioctl(videofd, VIDEO_STOP ,NULL) == -1)
                 {
                     linuxdvb_err("ioctl failed with errno %d\n", errno);
                     linuxdvb_err("VIDEO_STOP: %s\n", strerror(errno));
                 }
-
                 if (ioctl(videofd, VIDEO_CLEAR_BUFFER ,NULL) == -1)
                 {
                     linuxdvb_err("ioctl failed with errno %d\n", errno);
                     linuxdvb_err("VIDEO_CLEAR_BUFFER: %s\n", strerror(errno));
                 }
-
                 linuxdvb_printf(10, "V %s\n", Encoding);
-
                 writer = getWriter(Encoding);
-
                 if (writer == NULL)
                 {
                     linuxdvb_err("cannot found writer for encoding %s using default\n", Encoding);
@@ -914,7 +905,8 @@ int LinuxDvbSwitch(Context_t  *context, char * type) {
                         linuxdvb_err("ioctl failed with errno %d\n", errno);
                         linuxdvb_err("VIDEO_SET_ENCODING: %s\n", strerror(errno));
                     }
-                } else
+                }
+                else
                 {
                     linuxdvb_printf(10, "found writer %s for encoding %s\n", writer->caps->name, Encoding);
                     if (ioctl( videofd, VIDEO_SET_ENCODING, (void*) writer->caps->dvbEncoding) == -1)
@@ -923,7 +915,6 @@ int LinuxDvbSwitch(Context_t  *context, char * type) {
                         linuxdvb_err("VIDEO_SET_ENCODING: %s\n", strerror(errno));
                     }
                 }
-
                 if (ioctl(videofd, VIDEO_PLAY, NULL) == -1)
                 {
                     /* konfetti: fixme: think on this, I think we should
@@ -937,11 +928,8 @@ int LinuxDvbSwitch(Context_t  *context, char * type) {
             else
                 linuxdvb_printf(20, "no context for Video\n");
         }
-
         releaseLinuxDVBMutex(FILENAME, __FUNCTION__,__LINE__);
-
     }
-
     linuxdvb_printf(10, "exiting\n");
 
     return cERR_LINUXDVB_NO_ERROR;
@@ -963,20 +951,18 @@ static int Write(void  *_context, void* _out)
        linuxdvb_err("null pointer passed\n");
        return cERR_LINUXDVB_ERROR;
     }
-    
+
     video = !strcmp("video", out->type);
     audio = !strcmp("audio", out->type);
-  
-    linuxdvb_printf(20, "DataLength=%u PrivateLength=%u Pts=%llu FrameRate=%f\n", 
-                                                    out->len, out->extralen, out->pts, out->frameRate);
+
+    linuxdvb_printf(20, "DataLength=%u PrivateLength=%u Pts=%llu FrameRate=%f\n", out->len, out->extralen, out->pts, out->frameRate);
     linuxdvb_printf(20, "v%d a%d\n", video, audio);
 
-    if (video) {
+    if (video)
+    {
         char * Encoding = NULL;
         context->manager->video->Command(context, MANAGER_GETENCODING, &Encoding);
-
         linuxdvb_printf(20, "Encoding = %s\n", Encoding);
-
         writer = getWriter(Encoding);
 
         if (writer == NULL)
@@ -984,12 +970,12 @@ static int Write(void  *_context, void* _out)
             linuxdvb_printf(20, "searching default writer ... %s\n", Encoding);
             writer = getDefaultVideoWriter();
         }
-
         if (writer == NULL)
         {
             linuxdvb_err("unknown video codec and no default writer %s\n",Encoding);
             ret = cERR_LINUXDVB_ERROR;
-        } else
+        }
+        else
         {
             call.fd           = videofd;
             call.data         = out->data;
@@ -1013,14 +999,13 @@ static int Write(void  *_context, void* _out)
                 ret = cERR_LINUXDVB_ERROR;
             }
         }
-
         free(Encoding);
-    } else if (audio) {
+    }
+    else if (audio)
+    {
         char * Encoding = NULL;
         context->manager->audio->Command(context, MANAGER_GETENCODING, &Encoding);
-
         linuxdvb_printf(20, "%s::%s Encoding = %s\n", FILENAME, __FUNCTION__, Encoding);
-
         writer = getWriter(Encoding);
 
         if (writer == NULL)
@@ -1033,7 +1018,8 @@ static int Write(void  *_context, void* _out)
         {
             linuxdvb_err("unknown audio codec %s and no default writer\n",Encoding);
             ret = cERR_LINUXDVB_ERROR;
-        } else
+        }
+        else
         {
             call.fd             = audiofd;
             call.data           = out->data;
@@ -1055,7 +1041,6 @@ static int Write(void  *_context, void* _out)
                 ret = cERR_LINUXDVB_ERROR;
             }
         }
-
         free(Encoding);
     }
 
@@ -1067,121 +1052,136 @@ static int reset(Context_t  *context)
     int ret = cERR_LINUXDVB_NO_ERROR;
     Writer_t*   writer;
     char * Encoding = NULL;
-
     context->manager->video->Command(context, MANAGER_GETENCODING, &Encoding);
-
     writer = getWriter(Encoding);
 
     if (writer == NULL)
     {
         linuxdvb_err("unknown video codec %s\n",Encoding);
         ret = cERR_LINUXDVB_ERROR;
-    } else
+    }
+    else
     {
         writer->reset();
     }
 
     free(Encoding);
-
     context->manager->audio->Command(context, MANAGER_GETENCODING, &Encoding);
-
     writer = getWriter(Encoding);
 
     if (writer == NULL)
     {
         linuxdvb_err("unknown video codec %s\n",Encoding);
         ret = cERR_LINUXDVB_ERROR;
-    } else
+    }
+    else
     {
         writer->reset();
     }
-
     free(Encoding);
 
     return ret;
 }
 
-static int Command(void  *_context, OutputCmd_t command, void * argument) {
+static int Command(void  *_context, OutputCmd_t command, void * argument)
+{
     Context_t* context = (Context_t*) _context;
     int ret = cERR_LINUXDVB_NO_ERROR;
-    
     linuxdvb_printf(50, "Command %d\n", command);
 
-    switch(command) {
-    case OUTPUT_OPEN: {
+    switch(command)
+    {
+    case OUTPUT_OPEN:
+    {
         ret = LinuxDvbOpen(context, (char*)argument);
         break;
     }
-    case OUTPUT_CLOSE: {
+    case OUTPUT_CLOSE:
+    {
         ret = LinuxDvbClose(context, (char*)argument);
         reset(context);
         sCURRENT_PTS = 0;
         break;
     }
-    case OUTPUT_PLAY: {	// 4
+    case OUTPUT_PLAY:
+    {
         sCURRENT_PTS = 0;
         ret = LinuxDvbPlay(context, (char*)argument);
         break;
     }
-    case OUTPUT_STOP: {
+    case OUTPUT_STOP:
+    {
         reset(context);
         ret = LinuxDvbStop(context, (char*)argument);
         sCURRENT_PTS = 0;
         break;
     }
-    case OUTPUT_FLUSH: {
+    case OUTPUT_FLUSH:
+    {
         ret = LinuxDvbFlush(context, (char*)argument);
         reset(context);
         sCURRENT_PTS = 0;
         break;
     }
-    case OUTPUT_PAUSE: {
+    case OUTPUT_PAUSE:
+    {
         ret = LinuxDvbPause(context, (char*)argument);
         break;
     }
-    case OUTPUT_CONTINUE: {
+    case OUTPUT_CONTINUE:
+    {
         ret = LinuxDvbContinue(context, (char*)argument);
         break;
     }
-    case OUTPUT_FASTFORWARD: {
+    case OUTPUT_FASTFORWARD:
+    {
         return LinuxDvbFastForward(context, (char*)argument);
         break;
     }
-    case OUTPUT_REVERSE: {
+    case OUTPUT_REVERSE:
+    {
         return LinuxDvbReverse(context, (char*)argument);
         break;
     }
-    case OUTPUT_AVSYNC: {
+    case OUTPUT_AVSYNC:
+    {
         ret = LinuxDvbAVSync(context, (char*)argument);
         break;
     }
-    case OUTPUT_CLEAR: {
+    case OUTPUT_CLEAR:
+    {
         ret = LinuxDvbClear(context, (char*)argument);
         break;
     }
-    case OUTPUT_PTS: {
+    case OUTPUT_PTS:
+    {
         unsigned long long int pts = 0;
         ret = LinuxDvbPts(context, &pts);
         *((unsigned long long int*)argument) = (unsigned long long int)pts;
         break;
     }
-    case OUTPUT_SWITCH: {
+    case OUTPUT_SWITCH:
+    {
         ret = LinuxDvbSwitch(context, (char*)argument);
         break;
     }
-    case OUTPUT_SLOWMOTION: {
+    case OUTPUT_SLOWMOTION:
+    {
         return LinuxDvbSlowMotion(context, (char*)argument);
         break;
     }
-    case OUTPUT_AUDIOMUTE: {
+    case OUTPUT_AUDIOMUTE:
+    {
         return LinuxDvbAudioMute(context, (char*)argument);
         break;
     }
-    case OUTPUT_DISCONTINUITY_REVERSE: {
+    case OUTPUT_DISCONTINUITY_REVERSE:
+    {
         return LinuxDvbReverseDiscontinuity(context, (int*)argument);
         break;
     }
-    case OUTPUT_GET_FRAME_COUNT: {
+    case OUTPUT_GET_FRAME_COUNT:
+    {
         unsigned long long int frameCount = 0;
         ret = LinuxDvbGetFrameCount(context, &frameCount);
         *((unsigned long long int*)argument) = (unsigned long long int)frameCount;

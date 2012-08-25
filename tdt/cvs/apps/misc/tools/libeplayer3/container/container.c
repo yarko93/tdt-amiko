@@ -47,12 +47,12 @@ static const char FILENAME[] = __FILE__;
 static void printContainerCapabilities() {
     int i, j;
 
-    //container_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
-    //container_printf(10, "Capabilities: ");
+    container_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
+    container_printf(10, "Capabilities: ");
 
     for (i = 0; AvailableContainer[i] != NULL; i++)
         for (j = 0; AvailableContainer[i]->Capabilities[j] != NULL; j++)
-            //container_printf(10, "%s ", AvailableContainer[i]->Capabilities[j]);
+            container_printf(10, "%s ", AvailableContainer[i]->Capabilities[j]);
     container_printf(10, "\n");
 }
 
@@ -60,7 +60,7 @@ static int selectContainer(Context_t  *context, char * extension) {
     int i, j;
     int ret = -1;
 
-    //container_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
+    container_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
 
     for (i = 0; AvailableContainer[i] != NULL; i++)
     {
@@ -88,7 +88,7 @@ static int Command(void  *_context, ContainerCmd_t command, void * argument) {
     Context_t* context = (Context_t*) _context;
     int ret = 0;
 
-    //container_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
+    container_printf(10, "%s::%s\n", FILENAME, __FUNCTION__);
 
     switch(command) {
     case CONTAINER_ADD: {
