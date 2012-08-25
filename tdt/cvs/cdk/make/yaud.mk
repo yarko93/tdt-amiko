@@ -236,6 +236,7 @@ min-extras: \
 	ntfs_3g \
 	enigma2_openwebif \
 	enigma2-plugins-sh4-networkbrowser \
+	$(addsuffix -openpli,$(openpli_plugin_distlist)) \
 	wireless_tools
 	
 all-extras: \

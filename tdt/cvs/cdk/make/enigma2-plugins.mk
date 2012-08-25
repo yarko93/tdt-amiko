@@ -92,10 +92,18 @@ DESCRIPTION_AddStreamUrl_openpli = Add a stream url to your channellist
 DESCRIPTION_Satscan_openpli = Alternative blind scan plugin for DVB-S
 DESCRIPTION_SimpleUmount_openpli = list of mounted mass storage devices and umount one of them
 PKGR_openpli_plugins = r1
+
 openpli_plugin_list = \
 AddStreamUrl \
 NewsReader \
-SimpleUmount \
 Satscan
+
+# openpli plugins that go to flash
+openpli_plugin_distlist = \
+SimpleUmount
+
+openpli_plugin_list += $(openpli_plugin_distlist)
+
+$(foreach p,$(openpli_plugin_distlist),$(eval DIST_$p_openpli = $p_openpli))
 
 openpli-plugins: $(addprefix $(DEPDIR)/,$(addsuffix -openpli,$(openpli_plugin_list)))
