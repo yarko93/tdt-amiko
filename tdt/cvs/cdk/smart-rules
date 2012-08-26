@@ -1281,7 +1281,7 @@ e2plugin
 e2skin
   git
   {PN}
-  git://github.com/schpuntik/enigma2-skins-sh4.git:b=master
+  git://github.com/schpuntik/enigma2-skins-sh4.git:b=bbhack-test
 ;
 modem_scripts
   0.1
