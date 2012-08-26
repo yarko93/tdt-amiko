@@ -140,6 +140,7 @@ release_xbmc_base:
 	cp -dp $(targetprefix)/etc/services $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/shells.conf $(prefix)/release/etc/ && \
+	ln -sf /usr/share/xbmc/language/German $(prefix)/release/usr/share/xbmc/language/English
 	$(INSTALL_DIR) $(prefix)/release/etc/tuxbox && \
 	$(INSTALL_FILE) root/etc/tuxbox/satellites.xml $(prefix)/release/etc/tuxbox/ && \
 	$(INSTALL_FILE) root/etc/tuxbox/tuxtxt2.conf $(prefix)/release/etc/tuxbox/ && \
