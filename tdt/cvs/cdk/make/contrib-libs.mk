@@ -1381,7 +1381,7 @@ $(DEPDIR)/%webkitdfb: $(DEPDIR)/webkitdfb.do_compile
 	cd @DIR_webkitdfb@ && \
 		@INSTALL_webkitdfb@
 	$(tocdk_build)
-	$(toflash_build)
+	$(e2extra_build)
 #	@DISTCLEANUP_webkitdfb@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -1430,7 +1430,7 @@ $(DEPDIR)/%icu4c: $(DEPDIR)/icu4c.do_compile
 		unset TARGET && \
 		@INSTALL_icu4c@
 	$(tocdk_build)
-	$(toflash_build)
+	$(e2extra_build)
 #	@DISTCLEANUP_icu4c@
 	[ "x$*" = "x" ] && touch $@ || true
 
