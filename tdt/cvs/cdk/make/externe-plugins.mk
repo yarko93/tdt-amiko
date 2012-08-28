@@ -53,7 +53,7 @@ $(DEPDIR)/enigma2-plugins-sh4%: $(DIR_e2plugin)/config.status
 	for package in bb_get('PACKAGES').split(): \n\
 		pk = bb_get('NAME_' + package).split('-')[-1] \n\
 		try: \n\
-			read_control_file('$(DIR_e2plugin)' + pk + '/CONTROL/control') \n\
+			read_control_file('$(DIR_e2plugin)/' + pk + '/CONTROL/control') \n\
 		except IOError: \n\
 			print 'skipping', pk \n\
 	do_finish() \n\
