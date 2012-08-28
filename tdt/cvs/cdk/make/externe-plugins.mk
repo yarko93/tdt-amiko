@@ -23,7 +23,6 @@ $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
 		$(BUILDENV) \
 		./configure \
 			--host=$(target) \
-			--with-libsdl=no \
 			--datadir=/usr/share \
 			--libdir=/usr/lib \
 			--prefix=/usr \
@@ -69,3 +68,4 @@ enigma2-plugins-sh4-clean:
 
 enigma2-plugins-sh4-distclean: enigma2-plugins-sh4-clean
 	rm -f $(DEPDIR)/enigma2-plugins-sh4.do_prepare
+	rm -rf $(DIR_e2plugin)
