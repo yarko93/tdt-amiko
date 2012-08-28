@@ -56,6 +56,11 @@ $(DEPDIR)/enigma2-plugins-sh4%: $(DIR_e2plugin)/config.status
 			read_control_file('$(DIR_e2plugin)/' + pk + '/CONTROL/control') \n\
 		except IOError: \n\
 			print 'skipping', pk \n\
+		for s in ['preinst', 'postinst', 'prerm', 'postrm']: \n\
+			try: \n\
+				bb_set(s + '_' + package, open('$(DIR_e2plugin)/' + pk + '/CONTROL/' + s).read()) \n\
+			except IOError: \n\
+				pass \n\
 	do_finish() \n\
 	" | $(crossprefix)/bin/python
 
