@@ -9,8 +9,8 @@ $(DEPDIR)/xbmc-nightly.do_prepare: @DEPENDS_xbmc_nightly@
 #endable webserver else httpapihandler will fail
 $(appsdir)/xbmc-nightly/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd tinyxml python gstreamer gst_plugins_dvbmediasink expat sdparm lirc
 	cd $(appsdir)/xbmc-nightly && \
-		./bootstrap && \
 		$(BUILDENV) \
+		./bootstrap && \
 		./configure \
 			--host=$(target) \
 			--prefix=/usr \
@@ -21,6 +21,7 @@ $(appsdir)/xbmc-nightly/config.status: bootstrap libboost directfb libstgles lib
 			PYTHON_CPPFLAGS=-I$(targetprefix)/usr/include/python2.6 \
 			PY_PATH=$(targetprefix)/usr \
 			--includedir=$(targetprefix)/usr/include \
+			--libdir=$(PKDIR)/usr/lib \
 			--disable-gl \
 			--enable-glesv1 \
 			--disable-gles \
