@@ -37,7 +37,7 @@ tn.read_until(prompt)
 print "start commands"
 tn.write("ipkg update\n")
 read()
-tn.write("ipkg remove %s\n" % pkg)
+tn.write("ipkg remove --force-depends %s\n" % pkg)
 read()
 tn.write("ipkg install %s\n" % pkg)
 read()
