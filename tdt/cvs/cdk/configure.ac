@@ -895,6 +895,7 @@ TUXBOX_RULES_MAKE(lsb)
 TUXBOX_RULES_MAKE(module_init_tools)
 TUXBOX_RULES_MAKE(sysvinit)
 TUXBOX_RULES_MAKE(init_scripts)
+TUXBOX_RULES_MAKE(init_scripts_xbmc)
 TUXBOX_RULES_MAKE_RPM(udev)
 
 #

@@ -1,3 +1,54 @@
+#
+# INIT-SCRIPTS customized
+#
+
+DESCRIPTION_init_scripts_xbmc = init scripts and rules for system start
+init_scripts_initd_xbmc_files = \
+halt \
+hostname \
+inetd \
+initmodules \
+mountall \
+mountsysfs \
+networking \
+reboot \
+sendsigs \
+telnetd \
+syslogd \
+lircd \
+umountfs
+
+define postinst_init_scripts
+#!/bin/sh
+$(foreach f,$(init_scripts_initd_xbmc_files), initdconfig --add $f
+)
+endef
+
+define prerm_init_scripts
+#!/bin/sh
+$(foreach f,$(init_scripts_initd_xbmc_files), initdconfig --del $f
+)
+endef
+
+$(DEPDIR)/init-scripts-xbmc: @DEPENDS_init_scripts_xbmc@
+	@PREPARE_init_scripts_xbmc@
+	$(start_build)
+	$(INSTALL_DIR) $(PKDIR)/etc/init.d
+
+# select initmodules
+	cd $(DIR_init_scripts_xbmc) && \
+	mv initmodules$(if $(SPARK),_xbmc_$(SPARK))$(if $(SPARK7162),_xbmc_$(SPARK7162))$(if $(HL101),_xbmc_$(HL101)) initmodules
+# select halt
+	cd $(DIR_init_scripts_xbmc) && \
+	mv halt$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2)$(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO)$(CUBEREVO_MINI)$(CUBEREVO_MINI2)$(CUBEREVO_MINI_FTA)$(CUBEREVO_250HD)$(CUBEREVO_2000HD)$(CUBEREVO_9500HD),_cuberevo)$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)) halt
+# init.d scripts
+	cd $(DIR_init_scripts_xbmc) && \
+		$(INSTALL) inittab_xbmc $(PKDIR)/etc/inittab && \
+		$(INSTALL) -m 755 rc $(PKDIR)/etc/init.d/rc && \
+		$(foreach f,$(init_scripts_initd_xbmc_files), $(INSTALL) -m 755 $f $(PKDIR)/etc/init.d && ) true
+	$(toflash_build)
+	touch $@
+	
 # auxiliary targets for model-specific builds
 release_xbmc_common_utils:
 # opkg config
