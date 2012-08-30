@@ -136,13 +136,15 @@ endif
 
 
 yaud-enigma2-pli-nightly-base: yaud-none host_python lirc \
-		boot-elf enigma2-pli-nightly
+		boot-elf \
+		init-scripts \
+		enigma2-pli-nightly
 
 yaud-enigma2-pli-nightly: yaud-enigma2-pli-nightly-base release
 
 yaud-enigma2-pli-nightly-full: yaud-enigma2-pli-nightly-base min-extras release
 
-yaud-xbmc-nightly: yaud-none host_python boot-elf xbmc-nightly release_xbmc
+yaud-xbmc-nightly: yaud-none host_python boot-elf xbmc-nightly init-scripts-xbmc release_xbmc
 
 yaud-none: \
 		bare-os \
@@ -154,7 +156,6 @@ yaud-none: \
 		net-utils \
 		disk-utils \
 		driver \
-		init-scripts \
 		udev \
 		misc-tools 
 	@TUXBOX_YAUD_CUSTOMIZE@
