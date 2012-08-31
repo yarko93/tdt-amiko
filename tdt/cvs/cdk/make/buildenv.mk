@@ -104,7 +104,7 @@ else
 PATH := $(crossprefix)/bin:$(PATH):/usr/sbin
 endif
 
-DEPMOD = /sbin/depmod
+DEPMOD = $(hostprefix)/bin/depmod
 SOCKSIFY=
 CMD_CVS=$(SOCKSIFY) $(shell which cvs)
 WGET=$(SOCKSIFY) wget
