@@ -1150,6 +1150,7 @@ $(DEPDIR)/driver: $(driverdir)/Makefile linux-kernel.do_compile
 		KERNEL_LOCATION=$(buildprefix)/$(KERNEL_DIR) \
 		BIN_DEST=$(PKDIR)/bin \
 		INSTALL_MOD_PATH=$(PKDIR) \
+		DEPMOD=$(DEPMOD) \
 		$(if $(UFS910),UFS910=$(UFS910)) \
 		$(if $(FORTIS_HDBOX),FORTIS_HDBOX=$(FORTIS_HDBOX)) \
 		$(if $(ATEVIO7500),ATEVIO7500=$(ATEVIO7500)) \
