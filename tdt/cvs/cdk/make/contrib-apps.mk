@@ -1165,8 +1165,6 @@ $(DEPDIR)/ntpclient: $(DEPDIR)/ntpclient.do_compile
 # udpxy
 #
 
-# The main variable to deal with packaging is PARENT_PK.
-
 # You can use it as example of building and making package for new utility.
 # First of all take a look at smart-rules file. Read the documentation at the beginning.
 #
@@ -1188,6 +1186,7 @@ PKGR_udpxy = r0
 # But not
 #  $(DEPDIR)/udpxy_proxy.do_prepare:
 # *exceptions of this rule discussed later.
+
 # Also target should contain only A-z characters and underscore "_".
 
 # Firstly, downloading and patching. Use @DEPENDS_udpxy@ from smart rules as target-depends.
@@ -1249,6 +1248,8 @@ $(DEPDIR)/udpxy: $(DEPDIR)/udpxy.do_compile
 #  Taken from smart rules version. Set if you don't use smart-rules
 # SRC_URI_foo
 #  Sources from which package is built, taken from smart-rules file://, http://, git://, svn:// rules.
+# NAME_foo
+#  If real package name is too long put it in this variable. By default it is like in varible names.
 # Next variables has default values and influence CONTROL file fields only:
 # MAINTAINER_foo := Ar-P team
 # PACKAGE_ARCH_foo := sh4
@@ -1269,11 +1270,24 @@ define postinst_foo
 initdconfig --add foo
 endef
 
-# This is all
+# This is all about scripts
 # Note: init.d script starting and stopping is handled by initdconfig
 
 # Multi-Packaging
-# .........
+# When you whant to split files from one target to different packages you should set PACKAGES_parentfoo value.
+# By default parentfoo is equals make target name. Place subpackages names to PACKAGES_parentfoo variable,
+# parentfoo could be also in the list. Example:
+## PACKAGES_megaprog = megaprog_extra megaprog
+# Then set FILES for each subpackage
+## FILES_megaprog = /bin/prog /lib/*.so*
+## FILES_megaprog_extra = /lib/megaprog-addon.so
+# NOTE: files are moving to pacakges in same order they are listed in PACKAGES variable.
+
+# Optional install to flash
+# When you call $(tocdk_build)/$(toflash_build) all packages are installed to image.
+# If you want to select some non-installing packages from the same target (multi-packaging case)
+# just list them in EXTRA_parentfoo variable
+# DIST_parentfoo variable works vice-versa
 
 # sysstat
 #
