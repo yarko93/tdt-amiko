@@ -1092,11 +1092,16 @@ $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 
 linux-kernel-distclean: $(KERNELHEADERS)-distclean
 
-DESCRIPTION_driver = "Drivers for stm box"
-PKGR_driver = r1
+DESCRIPTION_driver = Drivers for stm box
+PKGR_driver = r2
+PACKAGES_driver = driver_pti driver
 FILES_driver = /lib/modules/$(KERNELVERSION)/extra
 SRC_URI_driver = "http://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko"
 DIR_driver = $(driverdir)
+DESCRIPTION_driver_pti = open source st-pti kernel module
+RCONFLICTS_driver_pti = driver_ptinp
+FILES_driver_pti = /lib/modules/$(KERNELVERSION)/extra/pti
+EXTRA_driver = driver_pti
 
 define postinst_driver
 #!/bin/sh
