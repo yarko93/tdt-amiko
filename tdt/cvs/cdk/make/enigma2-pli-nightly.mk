@@ -5,6 +5,12 @@ else
 ENIGMA2_FLAGS = --enable-libeplayer3
 endif
 
+if ENABLE_EXTERNALLCD
+ENIGMA2_FLAGS_2 = --with-graphlcd
+else
+ENIGMA2_FLAGS_2 =
+endif
+
 $(DEPDIR)/enigma2-pli-nightly.do_prepare: @DEPENDS_enigma2_pli@
 	@PREPARE_enigma2_pli@
 	touch $@
@@ -27,7 +33,7 @@ $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpe
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
 			PY_PATH=$(targetprefix)/usr \
-			$(PLATFORM_CPPFLAGS) $(ENIGMA2_FLAGS)
+			$(PLATFORM_CPPFLAGS) $(ENIGMA2_FLAGS) $(ENIGMA2_FLAGS_2)
 
 
 $(DEPDIR)/enigma2-pli-nightly.do_compile: $(DIR_enigma2_pli)/config.status
@@ -57,6 +63,7 @@ $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_compile
 
 enigma2-pli-nightly-clean:
 	rm -f $(DEPDIR)/enigma2-pli-nightly.do_compile
+	cd $(DIR_enigma2_pli) && $(MAKE) clean
 
 enigma2-pli-nightly-distclean:
 	rm -f $(DEPDIR)/enigma2-pli-nightly
