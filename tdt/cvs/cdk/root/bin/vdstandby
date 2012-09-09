@@ -1,16 +1,14 @@
 #!/bin/sh
-
-model=`cat /proc/stb/info/model`
-
+DISPL7162=`grep -c 'spark7162' /proc/stb/info/model`
 if [ $# -eq 1 ]; then
    if [ "$1" = "-a" ]; then
 	echo "enter standby..."
 	/bin/stfbcontrol hd 
 	echo off > /dev/vfd 
 	sleep 2 
-	DISPL7162=`grep -c 'spark7162' /proc/stb/info/model`
-	if [ "$DISPL7162" -eq "1" ]; then
+   if [ "$DISPL7162" -eq "1" ]; then
 	/bin/fp_control -c
+	/bin/fp_control -i 36 1
 	/bin/fp_control -s `date +"%H:%M:%S %d-%m-%Y"`
    else
 	/bin/fp_control -s `date +"%H:%M:%S %d-%m-%Y"`
@@ -19,6 +17,11 @@ if [ $# -eq 1 ]; then
    elif [ "$1" = "-d" ]; then
 	echo "end standby..."
        #enable hdmi
+   if [ "$DISPL7162" -eq "1" ]; then
+       /bin/fp_control -i 36 0
        stfbcontrol he
+    else
+       stfbcontrol he
+       fi
    fi
 fi
