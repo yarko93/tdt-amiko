@@ -1287,9 +1287,8 @@ AC_SUBST(TUXBOX_TOUCH)
 
 AC_CONFIG_FILES([
 Makefile
-rules-downcheck.pl
 ])
 
-AC_CONFIG_COMMANDS([rules-downcheck-chmod],[chmod +x rules-downcheck.pl])
+# AC_CONFIG_COMMANDS([rules-downcheck-chmod],[chmod +x rules-downcheck.pl])
 
 AC_OUTPUT
