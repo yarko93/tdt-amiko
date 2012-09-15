@@ -1207,7 +1207,7 @@ netkit_ftp
   make:install:MANDIR=/usr/share/man:INSTALLROOT=TARGETS
 ;
 samba
-  3.6.4
+  3.6.7
   {PN}-{PV}
   extract:http://www.{PN}.org/{PN}/ftp/stable/{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}.diff
