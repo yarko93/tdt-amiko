@@ -1188,9 +1188,9 @@ nfs_utils
   remove:PKDIR/sbin/mount.nfs4:PKDIR/sbin/umount.nfs4
 ;
 vsftpd
-  2.3.5
+  3.0.0
   {PN}-{PV}
-  extract:http://centos.googlecode.com/files/{PN}-{PV}.tar.gz
+  extract:http://fossies.org/unix/misc/{PN}-{PV}.tar.gz
   patch:file://{PN}_{PV}.diff
   nothing:file://../root/release/vsftpd
   nothing:file://../root/etc/vsftpd.conf
