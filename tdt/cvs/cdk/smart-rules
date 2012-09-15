@@ -1322,25 +1322,9 @@ grab
   git://github.com/technic/aio-grab.git
   make:install:DESTDIR=PKDIR
 ;
-enigma2_pli
-  git
-  \$(appsdir)/{PN}-nightly
-  # git://github.com/technic/amiko-e2-pli.git:b=master
-  git://github.com/technic/amiko-e2-pli.git:b=testing
-  # --- select 1 ---
-  # git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
-  # patch:file://enigma2-pli-nightly.1.diff
-  # patch:file://enigma2-pli-nightly.1.gstreamer.diff
-  # patch:file://enigma2-pli-nightly.1.graphlcd.diff
-  # --- select 2 ---
-  # git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=839e96b79600aba73f743fd39628f32bc1628f4c
-  # patch:file://enigma2-pli-nightly.2.diff
-  # patch:file://enigma2-pli-nightly.2.gstreamer.diff
-  # patch:file://enigma2-pli-nightly.2.graphlcd.diff
-  # --- select 9 ---
-  # git://github.com/openaaf/enigma2.git:r=da889c777d5d3a144eab1a0cbabf8b15d44f082f
-  # patch:file://enigma2-pli-nightly.9.diff
-;
+# enigma2_pli
+>>>
+  smart-rules-e2
 tinyxml
   2.6.2
   {PN}
