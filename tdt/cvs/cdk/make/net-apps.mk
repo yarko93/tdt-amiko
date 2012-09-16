@@ -185,7 +185,7 @@ $(DEPDIR)/samba.do_compile: $(DEPDIR)/samba.do_prepare
 			--without-utmp \
 			--without-acl-support \
 			--with-configdir=/etc/samba \
-			--with-privatedir=/etc/samba/private \
+			--with-privatedir=/etc/samba \
 			--with-mandir=/usr/share/man \
 			--with-piddir=/var/run \
 			--with-logfilebase=/var/log \
