@@ -92,7 +92,7 @@ case $1 in
 	echo -e "\nSelected target: $REPLY\n"
 	;;
 	*)
-	read -p "Select target (1-27)? ";;
+	read -p "Select target (1-28)? ";;
 esac
 
 case "$REPLY" in
@@ -415,7 +415,6 @@ esac
 
 ##############################################
 
-CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $EXTERNAL_LCD"
 
 ##############################################
 
