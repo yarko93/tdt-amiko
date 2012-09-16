@@ -127,6 +127,7 @@ if ENABLE_SPARK7162
 	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207s2.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko)
 endif
 	$(toflash_build)
+	touch $@
 
 # auxiliary targets for model-specific builds
 release_common_utils:
