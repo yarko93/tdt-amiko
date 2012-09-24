@@ -153,10 +153,11 @@ $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 # lirc
 #
 DESCRIPTION_lirc ="lirc"
-
+PKGR_lirc = r1
 FILES_lirc = \
 /usr/bin/lircd \
-/usr/lib/*.so*
+/usr/lib/*.so* \
+/etc/lircd.conf
 
 $(DEPDIR)/lirc.do_prepare: bootstrap @DEPENDS_lirc@
 	@PREPARE_lirc@
@@ -192,6 +193,8 @@ $(DEPDIR)/%lirc: $(DEPDIR)/lirc.do_compile
 	cd @DIR_lirc@ && \
 		@INSTALL_lirc@
 	$(tocdk_build)
+	mkdir $(PKDIR)/etc
+	cp -f $(buildprefix)/root/etc/lircd$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2),_vip2)$(if $(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO),_$(CUBEREVO))$(if $(CUBEREVO_MINI),_$(CUBEREVO_MINI))$(if $(CUBEREVO_MINI2),_$(CUBEREVO_MINI2))$(if $(CUBEREVO_MINI_FTA),_$(CUBEREVO_MINI_FTA))$(if $(CUBEREVO_250HD),_$(CUBEREVO_250HD))$(if $(CUBEREVO_2000HD),_$(CUBEREVO_2000HD))$(if $(CUBEREVO_9500HD),_$(CUBEREVO_9500HD))$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).conf $(PKDIR)/etc/lircd.conf
 	$(toflash_build)
 #	@DISTCLEANUP_lirc@
 	[ "x$*" = "x" ] && touch $@ || true
@@ -2899,13 +2902,13 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 # eve-browser
 #
 DESCRIPTION_evebrowser = evebrowser for HbbTv
-RDEPENDS_evebrowser = webkitdfb
+#RDEPENDS_evebrowser = webkitdfb
 FILES_evebrowser = \
 /usr/lib/*.so* \
 /usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-sh4 \
 /usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/*.py
 
-$(DEPDIR)/evebrowser.do_prepare: bootstrap webkitdfb @DEPENDS_evebrowser@
+$(DEPDIR)/evebrowser.do_prepare: bootstrap @DEPENDS_evebrowser@
 	@PREPARE_evebrowser@
 	touch $@
 
