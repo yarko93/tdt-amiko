@@ -1112,6 +1112,7 @@ $(DEPDIR)/driver: $(driverdir)/Makefile linux-kernel.do_compile
 #	$(MAKE) -C $(KERNEL_DIR) $(MAKE_OPTS) ARCH=sh modules_prepare
 	$(start_build)
 	$(get_git_version)
+	$(eval export PKGV_driver = $(PKGV_driver)$(KERNELSTMLABEL))
 	$(if $(PLAYER131),cp $(driverdir)/stgfb/stmfb/Linux/video/stmfb.h $(targetprefix)/usr/include/linux)
 	$(if $(PLAYER179),cp $(driverdir)/stgfb/stmfb/linux/drivers/video/stmfb.h $(targetprefix)/usr/include/linux)
 	$(if $(PLAYER191),cp $(driverdir)/stgfb/stmfb/linux/drivers/video/stmfb.h $(targetprefix)/usr/include/linux)
