@@ -110,6 +110,7 @@ $(DEPDIR)/modem-scripts: @DEPENDS_modem_scripts@ $(RDEPENDS_modem_scripts)
 
 DESCRIPTION_driver_ptinp = pti non public
 PKGV_driver_ptinp = 0.1
+$(eval export PKGV_driver_ptinp = $(PKGV_driver_ptinp)$(KERNELSTMLABEL))
 RCONFLICTS_driver_ptinp = driver-pti
 SRC_URI_driver_ptinp = unknown
 
