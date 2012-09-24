@@ -8,7 +8,7 @@ $(DEPDIR)/enigma2-plugins: enigma2_openwebif enigma2_networkbrowser openpli-plug
 #
 
 DESCRIPTION_enigma2_openwebif = "open webinteface plugin for enigma2 by openpli team"
-PKGR_enigma2_openwebif = r0
+PKGR_enigma2_openwebif = r1
 RDEPENDS_enigma2_openwebif = python pythoncheetah grab
 
 $(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap $(RDEPENDS_enigma2_openwebif) @DEPENDS_enigma2_openwebif@
