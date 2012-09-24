@@ -1076,26 +1076,26 @@ enigma2_openwebif
   make:install:DESTDIR=PKDIR
 ;
 gstreamer
-  0.10.35.2
+  0.10.35.3
   {PN}-{PV}
   extract:http://{PN}.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
 ;
 gst_plugins_base
-  0.10.35.2
+  0.10.35.3
   {PN}-{PV}
   extract:http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
 ;
 gst_plugins_good
-  0.10.30.2
+  0.10.30.3
   {PN}-{PV}
   extract:http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
   patch:file://{PN}-0.10.29_avidemux_only_send_pts_on_keyframe.patch
   make:install:DESTDIR=PKDIR
 ;
 gst_plugins_bad
-  0.10.22.2
+  0.10.22.3
   {PN}-{PV}
   extract:http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
   patch:file://{PN}-0.10.22-mpegtsdemux_remove_bluray_pgs_detection.diff
@@ -1103,7 +1103,7 @@ gst_plugins_bad
   make:install:DESTDIR=PKDIR
 ;
 gst_plugins_ugly
-  0.10.18.2
+  0.10.18.3
   {PN}-{PV}
   extract:http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
