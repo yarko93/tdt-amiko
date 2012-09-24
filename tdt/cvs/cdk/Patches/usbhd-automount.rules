@@ -13,6 +13,8 @@ ENV{ID_FS_LABEL}=="", ENV{dir_name}="usbhd-%k"
 ACTION=="add", ENV{ID_FS_TYPE}=="ntfs", RUN+="/bin/mkdir -p /media/%E{dir_name}", \
 RUN+="/bin/ntfs-3g -o rw,umask=0 /dev/%k  /media/%E{dir_name}"
 
+ACTION=="add", ENV{ID_FS_TYPE}=="swap", RUN+="/sbin/swapon /dev/%k"
+
 ACTION=="add", ENV{ID_FS_TYPE}!="ntfs|swap",RUN+="/bin/mkdir -p /media/%E{dir_name}", \
 RUN+="/bin/mount /dev/%k /media/%E{dir_name}"
 
