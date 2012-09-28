@@ -1168,7 +1168,7 @@ libgd2
 portmap
   6.0
   {PN}_{PV}
-  extract:http://neil.brown.name/{PN}/{PN}-{PV}.tgz
+  extract:http://fossies.org/unix/misc/{PN}-{PV}.tgz
   patch:file://{PN}_{PV}.diff
   nothing:http://debian.osuosl.org/debian/pool/main/p/{PN}/{PN}_{PV}.0-2.diff.gz
   make:install:BASEDIR=PKDIR
@@ -1188,7 +1188,7 @@ nfs_utils
   remove:PKDIR/sbin/mount.nfs4:PKDIR/sbin/umount.nfs4
 ;
 vsftpd
-  3.0.0
+  3.0.2
   {PN}-{PV}
   extract:http://fossies.org/unix/misc/{PN}-{PV}.tar.gz
   patch:file://{PN}_{PV}.diff
