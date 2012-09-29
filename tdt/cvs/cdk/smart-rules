@@ -1322,9 +1322,6 @@ grab
   git://github.com/technic/aio-grab.git
   make:install:DESTDIR=PKDIR
 ;
-# enigma2_pli
->>>
-  smart-rules-e2
 tinyxml
   2.6.2
   {PN}
@@ -1344,4 +1341,8 @@ xbmc_nightly
   # -- select 2 --
   git://github.com/xbmc/xbmc.git:r=327710767d2257dad27e3885effba1d49d4557f0
   patch:file://xbmc-nightly.2.diff
+;
+# enigma2_pli
+>>>
+  smart-rules-e2
 ;
