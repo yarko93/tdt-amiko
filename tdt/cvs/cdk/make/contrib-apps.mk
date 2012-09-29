@@ -1468,14 +1468,14 @@ $(DEPDIR)/oscam.do_prepare: bootstrap @DEPENDS_oscam@
 $(DEPDIR)/oscam.do_compile: oscam.do_prepare
 	cd @DIR_oscam@ && \
 	$(BUILDENV) && \
-	$(MAKE) CROSS=$(target)-gcc CROSS_DIR=$(target) CONF_DIR=/usr/keys
+	$(MAKE) CROSS=$(prefix)/devkit/sh4/bin/$(target)-  CONF_DIR=/var/keys
 	touch $@
 
-$(DEPDIR)/oscam: $(DEPDIR)/oscam.do_compile
+$(DEPDIR)/oscam: oscam.do_compile
 	$(start_build)
 	cd @DIR_oscam@  && \
 		$(INSTALL_DIR) $(PKDIR)/usr/bin/cam; \
-		$(INSTALL_BIN) oscam $(PKDIR)/usr/bin/cam/oscam
+		$(INSTALL_BIN) Distribution/oscam*-sh4-linux $(PKDIR)/usr/bin/cam/oscam
 	$(tocdk_build)
 	$(toflash_build)
 	touch $@
