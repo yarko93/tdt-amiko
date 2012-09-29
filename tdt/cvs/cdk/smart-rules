@@ -1322,9 +1322,6 @@ grab
   git://github.com/technic/aio-grab.git
   make:install:DESTDIR=PKDIR
 ;
-# enigma2_pli
->>>
-  smart-rules-e2
 tinyxml
   2.6.2
   {PN}
@@ -1345,6 +1342,7 @@ xbmc_nightly
   git://github.com/xbmc/xbmc.git:r=327710767d2257dad27e3885effba1d49d4557f0
   patch:file://xbmc-nightly.2.diff
 ;
+<<<<<<< HEAD
 
 oscam
   svn
@@ -1352,4 +1350,9 @@ oscam
   svn://www.streamboard.tv/svn/oscam/trunk/
   # patch-0:file://{PN}.diff
   make:install:DESTDIR=PKDIR
+=======
+# enigma2_pli
+>>>
+  smart-rules-e2
+>>>>>>> ba369b81217fa4e8ba19600c9dd9e745146fbe6a
 ;
