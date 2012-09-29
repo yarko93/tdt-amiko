@@ -1,5 +1,5 @@
---- vsftpd-3.0.0-org/builddefs.h	2012-04-05 06:24:56.000000000 +0300
-+++ vsftpd-3.0.0/builddefs.h	2012-09-14 22:16:40.270056271 +0300
+--- vsftpd-3.0.2-org/builddefs.h	2012-04-05 06:24:56.000000000 +0300
++++ vsftpd-3.0.2/builddefs.h	2012-09-14 22:16:40.270056271 +0300
 @@ -2,7 +2,7 @@
  #define VSF_BUILDDEFS_H
  
@@ -9,8 +9,8 @@
  #undef VSF_BUILD_SSL
  
  #endif /* VSF_BUILDDEFS_H */
---- vsftpd-3.0.0-org/Makefile	2012-04-03 10:21:18.000000000 +0300
-+++ vsftpd-3.0.0/Makefile	2012-09-15 00:40:28.608148981 +0300
+--- vsftpd-3.0.2-org/Makefile	2012-04-03 10:21:18.000000000 +0300
++++ vsftpd-3.0.2/Makefile	2012-09-15 00:40:28.608148981 +0300
 @@ -3,14 +3,11 @@
  INSTALL	=	install
  IFLAGS  = -idirafter dummyinc
@@ -66,8 +66,8 @@
          !vsf_sysutil_statbuf_is_regfile(p_statbuf))
      {
        die("config file not owned by correct user, or not a file");
---- vsftpd-3.0.0-org/secutil.c	2012-03-28 06:08:28.000000000 +0300
-+++ vsftpd-3.0.0/secutil.c	2012-09-14 23:32:10.448520213 +0300
+--- vsftpd-3.0.2-org/secutil.c	2012-03-28 06:08:28.000000000 +0300
++++ vsftpd-3.0.2/secutil.c	2012-09-14 23:32:10.448520213 +0300
 @@ -132,13 +132,13 @@
    /* Misconfiguration check: don't ever chroot() to a directory writable by
     * the current user.
