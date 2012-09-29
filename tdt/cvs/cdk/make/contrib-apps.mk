@@ -1453,3 +1453,29 @@ $(DEPDIR)/grab: grab.do_compile
 		@INSTALL_grab@
 	$(toflash_build)
 	touch $@
+
+
+#
+# oscam
+#
+
+DESCRIPTION_oscam = Open Source Conditional Access Module software
+
+$(DEPDIR)/oscam.do_prepare: bootstrap @DEPENDS_oscam@
+	@PREPARE_oscam@
+	touch $@
+
+$(DEPDIR)/oscam.do_compile: oscam.do_prepare
+	cd @DIR_oscam@ && \
+	$(BUILDENV) && \
+	$(MAKE) CROSS=$(target)-gcc CROSS_DIR=$(target) CONF_DIR=/usr/keys
+	touch $@
+
+$(DEPDIR)/oscam: $(DEPDIR)/oscam.do_compile
+	$(start_build)
+	cd @DIR_oscam@  && \
+		$(INSTALL_DIR) $(PKDIR)/usr/bin/cam; \
+		$(INSTALL_BIN) oscam $(PKDIR)/usr/bin/cam/oscam
+	$(tocdk_build)
+	$(toflash_build)
+	touch $@

@@ -1345,3 +1345,11 @@ xbmc_nightly
   git://github.com/xbmc/xbmc.git:r=327710767d2257dad27e3885effba1d49d4557f0
   patch:file://xbmc-nightly.2.diff
 ;
+
+oscam
+  svn
+  {PN}-{PV}
+  svn://www.streamboard.tv/svn/oscam/trunk/
+  # patch-0:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
+;
