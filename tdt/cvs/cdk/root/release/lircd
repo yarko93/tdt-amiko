@@ -6,7 +6,7 @@
 PID=/var/run/lirc/lircd.pid
 
 test -e /dev/lirc || ln -s lirc0 /dev/lirc
-
+test -d /var/run/lirc || mkdir -p /var/run/lirc
 boxver()
 {
 	if test -z "$STB_ID"; then
