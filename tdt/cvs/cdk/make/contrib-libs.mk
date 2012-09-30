@@ -153,7 +153,7 @@ $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 # lirc
 #
 DESCRIPTION_lirc ="lirc"
-PKGR_lirc = r1
+PKGR_lirc = r2
 FILES_lirc = \
 /usr/bin/lircd \
 /usr/lib/*.so* \
@@ -193,8 +193,13 @@ $(DEPDIR)/%lirc: $(DEPDIR)/lirc.do_compile
 	cd @DIR_lirc@ && \
 		@INSTALL_lirc@
 	$(tocdk_build)
-	mkdir $(PKDIR)/etc
-	cp -f $(buildprefix)/root/etc/lircd$(if $(TF7700),_$(TF7700))$(if $(HL101),_$(HL101))$(if $(VIP1_V2),_vip2)$(if $(VIP2_V1),_vip2)$(if $(UFS912),_$(UFS912))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162))$(if $(UFS922),_$(UFS922))$(if $(OCTAGON1008),_$(OCTAGON1008))$(if $(FORTIS_HDBOX),_$(FORTIS_HDBOX))$(if $(ATEVIO7500),_$(ATEVIO7500))$(if $(HS7810A),_$(HS7810A))$(if $(HS7110),_$(HS7110))$(if $(WHITEBOX),_$(WHITEBOX))$(if $(CUBEREVO),_$(CUBEREVO))$(if $(CUBEREVO_MINI),_$(CUBEREVO_MINI))$(if $(CUBEREVO_MINI2),_$(CUBEREVO_MINI2))$(if $(CUBEREVO_MINI_FTA),_$(CUBEREVO_MINI_FTA))$(if $(CUBEREVO_250HD),_$(CUBEREVO_250HD))$(if $(CUBEREVO_2000HD),_$(CUBEREVO_2000HD))$(if $(CUBEREVO_9500HD),_$(CUBEREVO_9500HD))$(if $(HOMECAST5101),_$(HOMECAST5101))$(if $(IPBOX9900)$(IPBOX99)$(IPBOX55),_ipbox)$(if $(ADB_BOX),_$(ADB_BOX)).conf $(PKDIR)/etc/lircd.conf
+	$(INSTALL_DIR) $(PKDIR)/etc
+	$(INSTALL_DIR) $(PKDIR)/var/run/lirc/
+	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162)).conf $(PKDIR)/etc/lircd.conf
+if ENABLE_SPARK
+	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_0B $(PKDIR)/etc/lircd.conf.09_00_0B
+	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_07 $(PKDIR)/etc/lircd.conf.09_00_07
+endif
 	$(toflash_build)
 #	@DISTCLEANUP_lirc@
 	[ "x$*" = "x" ] && touch $@ || true
