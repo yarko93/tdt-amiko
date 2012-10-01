@@ -1,8 +1,8 @@
 enigma2_pli
   git
   \$(appsdir)/{PN}-nightly
-  git://github.com/technic/amiko-e2-pli.git:b=master
-  # git://github.com/technic/amiko-e2-pli.git:b=testing
+  # git://github.com/technic/amiko-e2-pli.git:b=test
+  git://github.com/technic/amiko-e2-pli.git:b=testing
   # --- select 1 ---
   # git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
   # patch:file://enigma2-pli-nightly.1.diff
