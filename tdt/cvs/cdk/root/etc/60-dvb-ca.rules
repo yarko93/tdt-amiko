@@ -1,4 +1,4 @@
-#udevadm info --query=all --path /sys/devices/virtual/dvb/dvb0.ca1
+#swap ca0 <-> ca1
 KERNEL=="dvb0.ca0",  NAME="dvb/adapter0/ca1", MODE="0660"
 KERNEL=="dvb0.ca1",  NAME="dvb/adapter0/ca0", MODE="0660"
 
