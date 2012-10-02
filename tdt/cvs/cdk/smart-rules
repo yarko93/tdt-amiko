@@ -1349,6 +1349,14 @@ oscam
   # patch-0:file://{PN}.diff
   make:install:DESTDIR=PKDIR:OSCAM_BIN = OSCAM_BIN
 ;
+
+udev_rules
+  0.1
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/60-dvb-ca.rules
+;
+
 # enigma2_pli
 >>>
   smart-rules-e2
