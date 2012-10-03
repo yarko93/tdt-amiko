@@ -103,3 +103,4 @@ module-init-tools*
 zlib*
 e2plugin
 smart-rules-e2
+udev-rules*

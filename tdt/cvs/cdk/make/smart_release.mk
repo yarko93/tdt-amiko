@@ -133,6 +133,22 @@ endif
 	$(toflash_build)
 	touch $@
 
+#
+# UDEV RULES
+#
+DESCRIPTION_udev_rules = custom udev rules
+RDEPENDS_udev_rules = udev
+
+$(DEPDIR)/udev-rules: @DEPENDS_udev_rules@ $(RDEPENDS_udev_rules)
+	@PREPARE_udev_rules@
+	$(start_build)
+	cd $(DIR_udev_rules) && \
+	$(INSTALL_DIR) $(PKDIR)/etc/udev/rules.d/ && \
+	$(INSTALL_FILE) 60-dvb-ca.rules $(PKDIR)/etc/udev/rules.d/
+	$(toflash_build)
+	touch $@
+
+
 # auxiliary targets for model-specific builds
 release_common_utils:
 # opkg config
@@ -212,6 +228,12 @@ release_base: driver-ptinp
 # rc.d directories
 	mkdir -p $(prefix)/release/etc/rc.d/rc{0,1,2,3,4,5,6,S}.d
 	ln -sf ../init.d $(prefix)/release/etc/rc.d
+# add version
+	echo "version=OpenAR-P_`date +%d-%m-%y-%T`_git-`git describe --always`" > $(buildprefix)/root/etc/image-version
+	echo ---------------------------------------------------------- >> $(buildprefix)/root/etc/image-version
+	echo ---------------------------------------------------------- >> $(buildprefix)/root/etc/image-version
+
+	cat $(buildprefix)/lastChoice |tr ' ' '\n'|grep enable >> $(buildprefix)/root/etc/image-version
 # zoneinfo
 	$(INSTALL_DIR) $(prefix)/release/usr/share/zoneinfo && \
 	cp -aR $(buildprefix)/root/usr/share/zoneinfo/* $(prefix)/release/usr/share/zoneinfo/

@@ -1,0 +1,3 @@
+#swap ca0 <-> ca1
+KERNEL=="dvb0.ca0",  NAME="dvb/adapter0/ca0", SYMLINK+="dvb/adapter0/ca1", MODE="0660"
+KERNEL=="dvb0.ca1",  NAME="dvb/adapter0/ca3", MODE="0660"
