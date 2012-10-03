@@ -1,1 +1,12 @@
-version=01231.04ARP
+version=OpenAR-P_03-10-12-10:55:49_git-ebc0888
+----------------------------------------------------------
+----------------------------------------------------------
+--enable-maintainer-mode
+--enable-ccache
+--enable-spark
+--enable-stm24
+--enable-p0210
+--enable-player191
+--enable-multicom324
+--enable-mediafwgstreamer
+--enable-externallcd
