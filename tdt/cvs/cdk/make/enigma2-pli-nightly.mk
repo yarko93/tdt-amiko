@@ -30,6 +30,7 @@ $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpe
 			--bindir=/usr/bin \
 			--prefix=/usr \
 			--sysconfdir=/etc \
+			--with-boxtype=none \
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
 			PY_PATH=$(targetprefix)/usr \
