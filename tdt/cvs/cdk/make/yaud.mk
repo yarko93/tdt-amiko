@@ -157,6 +157,7 @@ yaud-none: \
 		disk-utils \
 		driver \
 		udev \
+		udev-rules \
 		misc-tools 
 	@TUXBOX_YAUD_CUSTOMIZE@
 
