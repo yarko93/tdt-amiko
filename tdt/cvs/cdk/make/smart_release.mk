@@ -228,6 +228,12 @@ release_base: driver-ptinp
 # rc.d directories
 	mkdir -p $(prefix)/release/etc/rc.d/rc{0,1,2,3,4,5,6,S}.d
 	ln -sf ../init.d $(prefix)/release/etc/rc.d
+# add version
+	echo "version=OpenAR-P_`date +%d-%m-%y-%T`_git-`git describe --always`" > $(buildprefix)/root/etc/image-version
+	echo ---------------------------------------------------------- >> $(buildprefix)/root/etc/image-version
+	echo ---------------------------------------------------------- >> $(buildprefix)/root/etc/image-version
+
+	cat $(buildprefix)/lastChoice |tr ' ' '\n'|grep enable >> $(buildprefix)/root/etc/image-version
 # zoneinfo
 	$(INSTALL_DIR) $(prefix)/release/usr/share/zoneinfo && \
 	cp -aR $(buildprefix)/root/usr/share/zoneinfo/* $(prefix)/release/usr/share/zoneinfo/
