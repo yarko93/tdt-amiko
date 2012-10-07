@@ -1076,36 +1076,36 @@ enigma2_openwebif
   make:install:DESTDIR=PKDIR
 ;
 gstreamer
-  0.10.35.3
+  0.10.36
   {PN}-{PV}
-  extract:http://{PN}.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
+  extract:http://{PN}.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
 ;
 gst_plugins_base
-  0.10.35.3
+  0.10.36
   {PN}-{PV}
-  extract:http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
+  extract:http://gstreamer.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
 ;
 gst_plugins_good
-  0.10.30.3
+  0.10.31
   {PN}-{PV}
-  extract:http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
+  extract:http://gstreamer.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
   patch:file://{PN}-0.10.29_avidemux_only_send_pts_on_keyframe.patch
   make:install:DESTDIR=PKDIR
 ;
 gst_plugins_bad
-  0.10.22.3
+  0.10.23
   {PN}-{PV}
-  extract:http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
+  extract:http://gstreamer.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
   patch:file://{PN}-0.10.22-mpegtsdemux_remove_bluray_pgs_detection.diff
   patch:file://{PN}-0.10.22-mpegtsdemux_speedup.diff
   make:install:DESTDIR=PKDIR
 ;
 gst_plugins_ugly
-  0.10.18.3
+  0.10.19
   {PN}-{PV}
-  extract:http://gstreamer.freedesktop.org/src/{PN}/pre/{PN}-{PV}.tar.bz2
+  extract:http://gstreamer.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
 ;
 gst_ffmpeg
@@ -1116,7 +1116,7 @@ gst_ffmpeg
   make:install:DESTDIR=PKDIR
 ;
 gst_fluendo_mpegdemux
-  0.10.69
+  0.10.71
   gst-fluendo-mpegdemux-{PV}
   extract:http://core.fluendo.com/gstreamer/src/gst-fluendo-mpegdemux/gst-fluendo-mpegdemux-{PV}.tar.gz
   patch:file://{PN}-{PV}-add_dts_hd_detection.diff
