@@ -71,7 +71,9 @@ modprobe e2_proc
    modprobe silencegen
    modprobe smartcard
    modprobe bpamem
-   modprobe cec
+   if [ ! `grep 'hdmicec.enabled=false' /etc/enigma2/settings` ]; then
+    modprobe cec
+   fi
 #   mknod /dev/bpamem c 153 0 
 
    showiframe -p /boot/bootlogo.mvi &
