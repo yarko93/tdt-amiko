@@ -157,7 +157,7 @@ PKGR_lirc = r2
 FILES_lirc = \
 /usr/bin/lircd \
 /usr/lib/*.so* \
-/etc/lircd.conf
+/etc/lircd*
 
 $(DEPDIR)/lirc.do_prepare: bootstrap @DEPENDS_lirc@
 	@PREPARE_lirc@
