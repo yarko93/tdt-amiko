@@ -1119,7 +1119,7 @@ gst_fluendo_mpegdemux
   0.10.71
   gst-fluendo-mpegdemux-{PV}
   extract:http://core.fluendo.com/gstreamer/src/gst-fluendo-mpegdemux/gst-fluendo-mpegdemux-{PV}.tar.gz
-  patch:file://{PN}-{PV}-add_dts_hd_detection.diff
+  patch:file://{PN}-0.10.69-add_dts_hd_detection.diff
   make:install:DESTDIR=PKDIR
 ;
 gst_plugins_dvbmediasink
