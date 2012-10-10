@@ -763,3 +763,37 @@ $(DEPDIR)/$(UTIL_LINUX): $(UTIL_LINUX_RPM)
 	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 endif STM24
+
+
+#
+# IPTABLES
+# 
+if STM24
+IPTABLES = iptables
+FILES_iptables = \
+/*
+IPTABLES_VERSION = 1.4.10-15
+IPTABLES_SPEC = stm-target-$(IPTABLES).spec
+IPTABLES__SPEC_PATCH =
+IPTABLES__PATCHES =
+IPTABLES_RPM := RPMS/sh4/$(STLINUX)-sh4-$(IPTABLES)-$(IPTABLES_VERSION).sh4.rpm
+
+$(IPTABLES_RPM): \
+		$(if $(IPTABLES_SPEC_PATCH),Patches/$(IPTABLES_SPEC_PATCH)) \
+		$(if $(IPTABLES_PATCHES),$(IPTABLES_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-target-$(IPTABLES)-$(IPTABLES_VERSION).src.rpm \
+		| $(NCURSES_DEV)
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(IPTABLES_SPEC_PATCH),( cd SPECS && patch -p1 $(IPTABLES_SPEC) < $(buildprefix)/Patches/$(IPTABLES_SPEC_PATCH) ) &&) \
+	$(if $(IPTABLES_PATCHES),cp $(IPTABLES_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(IPTABLES_SPEC)
+
+$(DEPDIR)/$(IPTABLES): $(IPTABLES_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
+	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
+	$(start_build)
+	$(fromrpm_build)
+	@TUXBOX_YAUD_CUSTOMIZE@
+endif STM24
