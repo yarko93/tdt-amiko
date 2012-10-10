@@ -768,19 +768,17 @@ endif STM24
 # IPTABLES
 # 
 if STM24
-IPTABLES = iptables
-IPTABLES_DEV = iptables-dev
-FILES_iptables = \
-/*
-IPTABLES_VERSION = 1.4.10-15
-PKGR_dev = r0
-IPTABLES_SPEC = stm-target-$(IPTABLES).spec
-IPTABLES_SPEC_PATCH =
-IPTABLES_PATCHES =
+IPTABLES := iptables
+IPTABLES_DEV := iptables-dev
+IPTABLES_VERSION := 1.4.10-15
+PKGR_dev := r0
+IPTABLES_SPEC := stm-target-$(IPTABLES).spec
+IPTABLES_SPEC_PATCH :=
+IPTABLES_PATCHES :=
 IPTABLES_RPM := RPMS/sh4/$(STLINUX)-sh4-$(IPTABLES)-$(IPTABLES_VERSION).sh4.rpm
-IPTABLES_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(IPTABLES_DEV)-$(IPTABLES_VERSION).sh4.rpm
+IPTABLES_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(IPTABLES_DEV)-$(IPTABLES_DEV_VERSION).sh4.rpm
 
-RDEPENDS_iptables :=
+RDEPENDS_iptables := linux-kernel
 
 $(IPTABLES_RPM) $(IPTABLES_DEV_RPM) : \
 		$(if $(IPTABLES_SPEC_PATCH),Patches/$(IPTABLES_SPEC_PATCH)) \
@@ -804,8 +802,6 @@ $(DEPDIR)/%$(IPTABLES): $(IPTABLES_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	[ "x$*" = "x" ] && touch $@ || true
-
-
 	$(start_build)
 	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
