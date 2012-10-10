@@ -776,7 +776,7 @@ IPTABLES_SPEC := stm-target-$(IPTABLES).spec
 IPTABLES_SPEC_PATCH :=
 IPTABLES_PATCHES :=
 IPTABLES_RPM := RPMS/sh4/$(STLINUX)-sh4-$(IPTABLES)-$(IPTABLES_VERSION).sh4.rpm
-IPTABLES_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(IPTABLES_DEV)-$(IPTABLES_DEV_VERSION).sh4.rpm
+IPTABLES_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(IPTABLES_DEV)-$(IPTABLES_VERSION).sh4.rpm
 
 RDEPENDS_iptables := linux-kernel
 
@@ -795,6 +795,8 @@ $(DEPDIR)/%$(IPTABLES_DEV): $(IPTABLES_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	[ "x$*" = "x" ] && touch $@ || true
+	$(start_build)
+	$(fromrpm_build)
 	@TUXBOX_YAUD_CUSTOMIZE@
 
 $(DEPDIR)/min-$(IPTABLES) $(DEPDIR)/std-$(IPTABLES) $(DEPDIR)/max-$(IPTABLES) $(DEPDIR)/$(IPTABLES): \
