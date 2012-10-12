@@ -4,8 +4,8 @@ $(DEPDIR)/xbmc-nightly.do_prepare: @DEPENDS_xbmc_nightly@
 	@PREPARE_xbmc_nightly@
 	touch $@
 
-#			PYTHON_LDFLAGS='-L$(targetprefix)/usr/include/python2.6 -lpython2.6' \
-#			PYTHON_VERSION='2.6' \
+#			PYTHON_LDFLAGS='-L$(targetprefix)/usr/include/python2.7 -lpython2.7' \
+#			PYTHON_VERSION='2.7' \
 #endable webserver else httpapihandler will fail
 $(appsdir)/xbmc-nightly/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd tinyxml python gstreamer gst_plugins_dvbmediasink expat sdparm lirc
 	cd $(appsdir)/xbmc-nightly && \
@@ -17,8 +17,8 @@ $(appsdir)/xbmc-nightly/config.status: bootstrap libboost directfb libstgles lib
 			PKG_CONFIG_SYSROOT_DIR=$(targetprefix) \
 			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
 			PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
-			PYTHON_SITE_PKG=$(targetprefix)/usr/lib/python2.6/site-packages \
-			PYTHON_CPPFLAGS=-I$(targetprefix)/usr/include/python2.6 \
+			PYTHON_SITE_PKG=$(targetprefix)/usr/lib/python2.7/site-packages \
+			PYTHON_CPPFLAGS=-I$(targetprefix)/usr/include/python2.7 \
 			PY_PATH=$(targetprefix)/usr \
 			--includedir=$(targetprefix)/usr/include \
 			--libdir=$(PKDIR)/usr/lib \

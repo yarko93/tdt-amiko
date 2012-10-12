@@ -872,7 +872,7 @@ endif
 #
 #
 	cp -R $(targetprefix)/usr/lib/* $(prefix)/release/usr/lib/
-	rm -rf $(prefix)/release/usr/lib/{engines,enigma2,gconv,ldscripts,libxslt-plugins,pkgconfig,python2.6,sigc++-1.2,X11}
+	rm -rf $(prefix)/release/usr/lib/{engines,enigma2,gconv,ldscripts,libxslt-plugins,pkgconfig,python2.7,sigc++-1.2,X11}
 	rm -f $(prefix)/release/usr/lib/*.{a,o,la}
 	find $(prefix)/release/usr/lib/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 
@@ -903,23 +903,23 @@ endif
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/CommonInterfaceAssignment
 	rm -rf $(prefix)/release/usr/lib/enigma2/python/Plugins/SystemPlugins/CrashlogAutoSubmit
 
-	$(INSTALL_DIR) $(prefix)/release/usr/lib/python2.6
-	cp -a $(targetprefix)/usr/lib/python2.6/* $(prefix)/release/usr/lib/python2.6/
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/Cheetah-2.4.4-py2.6.egg-info
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/elementtree-1.2.6_20050316-py2.6.egg-info
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/lxml
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/lxml-2.2.8-py2.6.egg-info
-	rm -f $(prefix)/release/usr/lib/python2.6/site-packages/libxml2mod.so
-	rm -f $(prefix)/release/usr/lib/python2.6/site-packages/libxsltmod.so
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/OpenSSL/test
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/pyOpenSSL-0.8-py2.6.egg-info
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/python_wifi-0.5.0-py2.6.egg-info
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/setuptools
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/setuptools-0.6c11-py2.6.egg-info
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/zope.interface-4.0.1-py2.6.egg-info
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/Twisted-12.1.0-py2.6.egg-info
-	rm -rf $(prefix)/release/usr/lib/python2.6/site-packages/twisted/{test,conch,mail,manhole,names,news,trial,words,application,enterprise,flow,lore,pair,runner,scripts,tap,topfiles}
-	rm -rf $(prefix)/release/usr/lib/python2.6/{bsddb,compiler,config,ctypes,curses,distutils,email,plat-linux3,test}
+	$(INSTALL_DIR) $(prefix)/release/usr/lib/python2.7
+	cp -a $(targetprefix)/usr/lib/python2.7/* $(prefix)/release/usr/lib/python2.7/
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/Cheetah-2.4.4-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/elementtree-1.2.6_20050316-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/lxml
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/lxml-2.2.8-py2.6.egg-info
+	rm -f $(prefix)/release/usr/lib/python2.7/site-packages/libxml2mod.so
+	rm -f $(prefix)/release/usr/lib/python2.7/site-packages/libxsltmod.so
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/OpenSSL/test
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/pyOpenSSL-0.8-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/python_wifi-0.5.0-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/setuptools
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/setuptools-0.6c11-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/zope.interface-4.0.1-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/Twisted-12.1.0-py2.6.egg-info
+	rm -rf $(prefix)/release/usr/lib/python2.7/site-packages/twisted/{test,conch,mail,manhole,names,news,trial,words,application,enterprise,flow,lore,pair,runner,scripts,tap,topfiles}
+	rm -rf $(prefix)/release/usr/lib/python2.7/{bsddb,compiler,config,ctypes,curses,distutils,email,plat-linux3,test}
 
 #
 # Dont remove pyo files, remove pyc instead
@@ -930,11 +930,11 @@ endif
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
 	find $(prefix)/release/usr/lib/enigma2/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 
-	find $(prefix)/release/usr/lib/python2.6/ -name '*.pyc' -exec rm -f {} \;
-	find $(prefix)/release/usr/lib/python2.6/ -name '*.a' -exec rm -f {} \;
-	find $(prefix)/release/usr/lib/python2.6/ -name '*.o' -exec rm -f {} \;
-	find $(prefix)/release/usr/lib/python2.6/ -name '*.la' -exec rm -f {} \;
-	find $(prefix)/release/usr/lib/python2.6/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
+	find $(prefix)/release/usr/lib/python2.7/ -name '*.pyc' -exec rm -f {} \;
+	find $(prefix)/release/usr/lib/python2.7/ -name '*.a' -exec rm -f {} \;
+	find $(prefix)/release/usr/lib/python2.7/ -name '*.o' -exec rm -f {} \;
+	find $(prefix)/release/usr/lib/python2.7/ -name '*.la' -exec rm -f {} \;
+	find $(prefix)/release/usr/lib/python2.7/ -name '*.so*' -exec sh4-linux-strip --strip-unneeded {} \;
 
 #
 # alsa
