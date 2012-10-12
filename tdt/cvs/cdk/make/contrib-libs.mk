@@ -2113,7 +2113,7 @@ $(DEPDIR)/pyopenssl.do_prepare: bootstrap setuptools @DEPENDS_pyopenssl@
 
 $(DEPDIR)/pyopenssl.do_compile: $(DEPDIR)/pyopenssl.do_prepare
 	cd @DIR_pyopenssl@ && \
-		CPPFLAGS="$(CPPFLAGS) -I$(targetprefix)/usr/include/python2.6" \
+		CPPFLAGS="$(CPPFLAGS) -I$(targetprefix)/usr/include/python2.7" \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.7/site-packages \
 		$(crossprefix)/bin/python ./setup.py build
