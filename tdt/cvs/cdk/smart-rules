@@ -225,7 +225,7 @@ ipkg_host
   patch:file://{PN}.diff
 ;
 host_python
-  2.6.6
+  2.7.2
   {PN}-{PV}
   extract:http://www.python.org/ftp/python/{PV}/Python-{PV}.tar.bz2
   pmove:Python-{PV}:{PN}-{PV}
@@ -994,7 +994,7 @@ lxml
   extract:http://launchpad.net/{PN}/2.2/{PV}/+download/{PN}-{PV}.tgz
 ;
 setuptools
-  0.6c8
+  0.6c11
   {PN}-{PV}
   extract:http://pypi.python.org/packages/source/s/{PN}/{PN}-{PV}.tar.gz
 ;
@@ -1024,7 +1024,7 @@ pyopenssl
   extract:http://sourceforge.net/projects/pyopenssl/files/{PN}/{PV}/pyOpenSSL-{PV}.tar.gz
 ;
 python
-  2.6.6
+  2.7.2
   {PN}-{PV}
   extract:http://www.{PN}.org/ftp/{PN}/{PV}/Python-{PV}.tar.bz2
   pmove:Python-{PV}:{PN}-{PV}
