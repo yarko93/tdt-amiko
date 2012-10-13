@@ -7,9 +7,9 @@ This fixes configure issues with recent autoconf, e.g:
 
 The problem is still present in python-2.6.5 but fixed in python-svn.
 
-diff -pruN Python-2.6.4.orig//Modules/_ctypes/libffi/configure.ac Python-2.6.4/Modules/_ctypes/libffi/configure.ac
---- Python-2.6.4.orig//Modules/_ctypes/libffi/configure.ac      2009-04-28 22:01:18.000000000 +0200
-+++ Python-2.6.4/Modules/_ctypes/libffi/configure.ac    2010-04-20 22:46:02.000000000 +0200
+diff -pruN Python-2.7.2.orig//Modules/_ctypes/libffi/configure.ac Python-2.7.2/Modules/_ctypes/libffi/configure.ac
+--- Python-2.7.2.orig//Modules/_ctypes/libffi/configure.ac      2009-04-28 22:01:18.000000000 +0200
++++ Python-2.7.2/Modules/_ctypes/libffi/configure.ac    2010-04-20 22:46:02.000000000 +0200
 @@ -409,7 +409,7 @@
  
  AC_CONFIG_LINKS(include/ffitarget.h:src/$TARGETDIR/ffitarget.h)
@@ -19,9 +19,9 @@ diff -pruN Python-2.6.4.orig//Modules/_ctypes/libffi/configure.ac Python-2.6.4/M
  
  AC_CONFIG_LINKS(include/ffi_common.h:include/ffi_common.h)
  
-diff -pruN Python-2.6.4.orig//Modules/_ctypes/libffi/Makefile.am Python-2.6.4/Modules/_ctypes/libffi/Makefile.am
---- Python-2.6.4.orig//Modules/_ctypes/libffi/Makefile.am       2008-03-04 21:09:11.000000000 +0100
-+++ Python-2.6.4/Modules/_ctypes/libffi/Makefile.am     2010-04-20 22:54:03.000000000 +0200
+diff -pruN Python-2.7.2.orig//Modules/_ctypes/libffi/Makefile.am Python-2.7.2/Modules/_ctypes/libffi/Makefile.am
+--- Python-2.7.2.orig//Modules/_ctypes/libffi/Makefile.am       2008-03-04 21:09:11.000000000 +0100
++++ Python-2.7.2/Modules/_ctypes/libffi/Makefile.am     2010-04-20 22:54:03.000000000 +0200
 @@ -2,7 +2,7 @@
  
  AUTOMAKE_OPTIONS = foreign subdir-objects
