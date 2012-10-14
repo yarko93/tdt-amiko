@@ -983,7 +983,7 @@ libxml2
   make:install:DESTDIR=PKDIR
 ;
 libxslt
-  1.1.24
+  1.1.27
   {PN}-{PV}
   extract:http://xmlsoft.org/sources/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
