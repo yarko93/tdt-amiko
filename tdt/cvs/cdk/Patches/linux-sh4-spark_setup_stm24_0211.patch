@@ -104,17 +104,17 @@
 +0x4A000000 - 0x4FFFFFFF - lmi_io  ( 96mb)
 +*/
 +static struct bpa2_partition_desc bpa2_parts_table[] = {
-+    {
-+ 	    .name  = "bigphysarea",
-+ 	    .start = 0x48000000,
-+ 	    .size  = 0x02000000, /* 32 Mb */
-+ 	    .flags = 0,
-+ 	    .aka   = NULL
-+    },
++
++
++
++
++
++
++
 +    {
 + 	    .name  = "LMI_IO",
-+ 	    .start = 0x4A000000,
-+ 	    .size  = 0x06000000, /* 96 Mb */
++ 	    .start = 0x49800000,
++ 	    .size  = 0x05000000, /* 104 Mb */
 + 	    .flags = 0,
 + 	    .aka   = LMI_IO_partalias
 +    },
