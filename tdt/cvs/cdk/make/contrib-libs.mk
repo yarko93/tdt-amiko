@@ -2191,8 +2191,7 @@ $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
 			PYTHON_DISABLE_MODULES="_tkinter" \
 			PYTHON_MODULES_INCLUDE="$(prefix)/$*cdkroot/usr/include" \
 			PYTHON_MODULES_LIB="$(prefix)/$*cdkroot/usr/lib" \
-			CROSS_COMPILE=sh4-linux- \
-			CROSS_COMPILE_TARGET=yes \
+			CROSS_COMPILE=yes \
 			CFLAGS="$(TARGET_CFLAGS) -fno-inline" \
 			LDFLAGS="$(TARGET_LDFLAGS)" \
 			LD="$(target)-gcc" \
