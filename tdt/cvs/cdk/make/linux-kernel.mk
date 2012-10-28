@@ -578,6 +578,7 @@ SPARK_PATCHES_24 = $(COMMONPATCHES_24) \
 		linux-sh4-stmmac_stm24$(PATCH_STR).patch \
 		linux-sh4-lmb_stm24$(PATCH_STR).patch \
 		linux-sh4-spark_setup_stm24$(PATCH_STR).patch \
+		bpa2-ignore-bigphysarea-kernel-parameter.patch \
 		$(if $(P0207),linux-sh4-i2c-stm-downgrade_stm24$(PATCH_STR).patch) \
 		$(if $(P0209),linux-sh4-linux_yaffs2_stm24_0209.patch) \
 		$(if $(P0207)$(P0209),linux-sh4-lirc_stm.patch) \
@@ -585,6 +586,7 @@ SPARK_PATCHES_24 = $(COMMONPATCHES_24) \
 
 SPARK7162_PATCHES_24 = $(COMMONPATCHES_24) \
 		linux-sh4-stmmac_stm24$(PATCH_STR).patch \
+		bpa2-ignore-bigphysarea-kernel-parameter.patch \
 		linux-sh4-lmb_stm24$(PATCH_STR).patch \
 		linux-sh4-spark7162_setup_stm24$(PATCH_STR).patch
 
