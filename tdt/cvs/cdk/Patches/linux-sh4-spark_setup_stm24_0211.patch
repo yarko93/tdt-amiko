@@ -1,11 +1,9 @@
-*** a/arch/sh/kernel/setup.c	2011-01-05 10:45:31.000000000 +0100
---- b/setup.c	2011-01-22 12:22:31.340928000 +0100
-***************
-*** 388,393 ****
---- 388,421 ----
-  #endif
-  #endif
-  
+--- a/arch/sh/kernel/setup.c	2011-01-05 10:45:31.000000000 +0100
++++ b/setup.c	2011-01-22 12:22:31.340928000 +0100
+@@ -420,6 +420,34 @@
+ #endif
+ #endif
+ 
 + 	{
 + 	char org_command_line[] = "console=ttyAS1,115200 root=/dev/mtdblock6";
 + 	char tdt_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock6 rw rootfstype=jffs2 init=/bin/devinit coprocessor_mem=4m@0x40000000,4m@0x40400000 printk=1 stmmaceth=ethaddr:";
@@ -34,9 +32,9 @@
 + 	}
 + 	}
 + 
-  	/* Save unparsed command line copy for /proc/cmdline */
-  	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
-  	*cmdline_p = command_line;
+ 	/* Save unparsed command line copy for /proc/cmdline */
+ 	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
+ 	*cmdline_p = command_line;
 --- a/arch/sh/Kconfig.org	2012-03-08 08:58:51.000000000 -0800
 +++ b/arch/sh/Kconfig	2012-03-09 08:48:35.000000000 -0800
 @@ -924,6 +924,10 @@
@@ -75,22 +73,22 @@
 +/*
 +0x40000000 - 0x403FFFFF - cocpu 1 ram (4mb)
 +0x40400000 - 0x407FFFFF - cocpu 2 ram (4mb)
-+0x40800000 - 0x475FFFFF - linux   (110mb) 
-+0x47600000 - 0x4F1FFFFF - lmi_io  ( 124mb (0x07C00000))
-+0x4F200000 - 0x4FFFFFFF - bigphys (  14mb (0x00E00000))
++0x40800000 - 0x47FFFFFF - linux   (120mb) 
++0x48000000 - 0x483FFFFF - bigphys ( 4mb (0x00400000))
++0x48400000 - 0x4FFFFFFF - lmi_io  ( 124mb (0x07C00000))
 +*/
 +static struct bpa2_partition_desc bpa2_parts_table[] = {
 +    {
 + 	    .name  = "LMI_IO",
-+ 	    .start = 0x47600000,
++ 	    .start = 0x48400000,
 + 	    .size  = 0x07C00000, /* 124 Mb */
 + 	    .flags = 0,
 + 	    .aka   = LMI_IO_partalias
 +    }, 
 +    {
 + 	    .name  = "bigphysarea",
-+ 	    .start = 0x4F200000,
-+ 	    .size  = 0x00E00000, /* 14 Mb */
++ 	    .start = 0x48000000,
++ 	    .size  = 0x00400000, /* 4 Mb */
 + 	    .flags = 0,
 + 	    .aka   = NULL
 +    }, 
@@ -251,19 +249,19 @@
 +	     {
 +		 .name = "Spark Kernel",
 +		 .size = 0x0800000,
-+		 .offset = 0
++		 .offset = 0,
 +	     }, {
 +		 .name = "Spark Rootfs",
 +		 .size = 0x17800000,
-+		 .offset = 0x800000
++		 .offset = 0x800000,
 +	     }, {
 +		 .name = "E2 Kernel",
 +		 .size = 0x800000,
-+		 .offset = 0x18000000
++		 .offset = 0x18000000,
 +	     }, {
 +		 .name = "E2 RootFs",
 +		 .size = 0x7700000,
-+		 .offset = 0x18800000
++		 .offset = 0x18800000,
 +	     },
  	},
  	.timing_data	= &(struct stm_nand_timing_data) {
@@ -339,56 +337,36 @@
  	return platform_add_devices(sat7111_devices,
  				    ARRAY_SIZE(sat7111_devices));
  }
-*** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/net/stmmac/stmmac_mdio.c	2011-11-24 22:22:25.000000000 +0200
---- linux-sh4/drivers/net/stmmac/stmmac_mdio.c	2011-11-24 23:33:55.732873713 +0200
-***************
-*** 169,174 ****
---- 169,175 ----
-  	priv->mii = new_bus;
-  
-  	found = 0;
-+ 
-  	for (addr = 0; addr < PHY_MAX_ADDR; addr++) {
-  		struct phy_device *phydev = new_bus->phy_map[addr];
-  		if (phydev) {
-***************
-*** 191,202 ****
-  			 * and no PHY number was provided to the MAC,
-  			 * use the one probed here.
-  			 */
-! 			if ((priv->plat->bus_id == mdio_bus_data->bus_id) &&
-! 			    (priv->plat->phy_addr == -1))
-  				priv->plat->phy_addr = addr;
-  
-- 			act = (priv->plat->bus_id == mdio_bus_data->bus_id) &&
-- 				(priv->plat->phy_addr == addr);
-  			switch (phydev->irq) {
-  			case PHY_POLL:
-  				irq_str = "POLL";
---- 192,214 ----
-  			 * and no PHY number was provided to the MAC,
-  			 * use the one probed here.
-  			 */
-! 
-! 			act = 0;
-! 
-! 			if ((priv->plat->bus_id == mdio_bus_data->bus_id) && (/*(priv->plat->phy_addr == -1) ||*/
-! 					(phydev->phy_id == 0x0181b880) || // Davicom DM9161E
-! 					(phydev->phy_id == 0x0181b8a0) || // Davicom DM9161A
-! 					(phydev->phy_id == 0x00181b80) || // Davicom DM9131
-! 					(phydev->phy_id == 0x1c040011) || // STe100p
-! 					(phydev->phy_id == 0x00061c50) || // STe101p
-! 					(phydev->phy_id == 0x00008201) || //
-! 					(phydev->phy_id == 0x0007c0f1) || // Pingulux
-! 					(phydev->phy_id == 0x001cc912)))  // RTL821x
-! 			{
-  				priv->plat->phy_addr = addr;
-+ 				act=1;
-+ 			}
-  
-  			switch (phydev->irq) {
-  			case PHY_POLL:
-  				irq_str = "POLL";
+--- linux-sh4-2.6.32.46_stm24_0209.orig/drivers/net/stmmac/stmmac_mdio.c	2011-11-24 22:22:25.000000000 +0200
++++ linux-sh4/drivers/net/stmmac/stmmac_mdio.c	2011-11-24 23:33:55.732873713 +0200
+@@ -194,12 +195,23 @@
+ 			 * and no PHY number was provided to the MAC,
+ 			 * use the one probed here.
+ 			 */
+-			if ((priv->plat->bus_id == mdio_bus_data->bus_id) &&
+-			    (priv->plat->phy_addr == -1))
++
++			act = 0;
++
++			if ((priv->plat->bus_id == mdio_bus_data->bus_id) && (/*(priv->plat->phy_addr == -1) ||*/
++					(phydev->phy_id == 0x0181b880) || // Davicom DM9161E
++					(phydev->phy_id == 0x0181b8a0) || // Davicom DM9161A
++					(phydev->phy_id == 0x00181b80) || // Davicom DM9131
++					(phydev->phy_id == 0x1c040011) || // STe100p
++					(phydev->phy_id == 0x00061c50) || // STe101p
++					(phydev->phy_id == 0x00008201) || //
++					(phydev->phy_id == 0x0007c0f1) || // Pingulux
++					(phydev->phy_id == 0x001cc912)))  // RTL821x
++			{
+ 				priv->plat->phy_addr = addr;
++				act=1;
++			}
+ 
+-			act = (priv->plat->bus_id == mdio_bus_data->bus_id) &&
+-				(priv->plat->phy_addr == addr);
+ 			switch (phydev->irq) {
+ 			case PHY_POLL:
+ 				irq_str = "POLL";
 *** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/net/stmmac/dwmac_lib.c	2011-11-24 22:22:25.000000000 +0200
 --- linux-sh4/drivers/net/stmmac/dwmac_lib.c	2011-11-24 23:33:55.732873713 +0200
 @@ -210,7 +210,7 @@
@@ -402,10 +380,38 @@
  	writel((intr_status & 0x1ffff), ioaddr + DMA_STATUS);
 --- linux-sh4/drivers/mtd/nand/nand_ids.c.org	2012-08-03 16:51:16.000000000 +0200
 +++ linux-sh4/drivers/mtd/nand/nand_ids.c	2012-08-20 18:34:23.000000000 +0200
-@@ -638,6 +638,15 @@
- 	    id[1] == 0xD3 && id[2] == 0x90 && id[3] == 0x26 && id[4] == 0x76)
- 		id_len = 5;
+@@ -611,21 +611,6 @@
+ 			len--;
+ 	}
  
+-	/*
+-	 * Some Toshiba devices return additional, undocumented, READID bytes
+-	 * (e.g. TC58NVG3S0F).  Cap ID length to 5 bytes.
+-	 */
+-	if (id[0] == NAND_MFR_TOSHIBA && len > 5)
+-		len = 5;
+-
+-	/*
+-	 * Some Samsung devices return 'NAND_MFR_SAMSUNG' as a 6th READID
+-	 * byte. (e.g. K9F4G08U0D). Use ID length of 5 bytes.
+-	 */
+-	if (id[0] == NAND_MFR_SAMSUNG && len == 6 &&
+-	    id[5] == NAND_MFR_SAMSUNG && id[6] == NAND_MFR_SAMSUNG)
+-		len = 5;
+-
+ 	return len;
+ }
+ 
+@@ -647,6 +632,21 @@
+ 		return 1;
+ 	}
+ 
++	 /* TC58NVG3S0F: device returns additional, undocumented READID bytes.
++	 * Assume id_len = 5. */
++	if (id[0] == NAND_MFR_TOSHIBA && id_len == max_id_len &&
++	    id[1] == 0xD3 && id[2] == 0x90 && id[3] == 0x26 && id[4] == 0x76)
++		id_len = 5;
++
 +	printk("id_len = %d\n", id_len);
 +	printk("type->pagesize = %d\n", type->pagesize);
 +
@@ -418,3 +424,4 @@
  	/*
  	 * Decode ID string
  	 */
+
