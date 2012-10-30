@@ -559,7 +559,7 @@ libgif
   make:install:DESTDIR=PKDIR
 ;
 curl
-  7.26.0
+  7.28.0
   {PN}-{PV}
   extract:http://{PN}.haxx.se/download/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
