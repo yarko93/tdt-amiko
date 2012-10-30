@@ -2148,6 +2148,7 @@ FILES_python = \
 /usr/lib/python2.7/hotshot \
 /usr/lib/python2.7/idlelib \
 /usr/lib/python2.7/json \
+/usr/lib/python2.7/config \
 /usr/lib/python2.7/lib-dynload \
 /usr/lib/python2.7/lib-tk \
 /usr/lib/python2.7/lib2to3 \
@@ -2156,6 +2157,7 @@ FILES_python = \
 /usr/lib/python2.7/plat-linux3 \
 /usr/lib/python2.7/sqlite3 \
 /usr/lib/python2.7/wsgiref \
+/usr/include/python2.7/pyconfig.h \
 /usr/lib/python2.7/xml
 
 DESCRIPTION_python_ctypes = python ctypes module
@@ -2191,7 +2193,9 @@ $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
 			PYTHON_DISABLE_MODULES="_tkinter" \
 			PYTHON_MODULES_INCLUDE="$(prefix)/$*cdkroot/usr/include" \
 			PYTHON_MODULES_LIB="$(prefix)/$*cdkroot/usr/lib" \
-			CROSS_COMPILE=yes \
+			CROSS_COMPILE_TARGET=yes \
+			CROSS_COMPILE=$(target) \
+			HOSTARCH=sh4-linux \
 			CFLAGS="$(TARGET_CFLAGS) -fno-inline" \
 			LDFLAGS="$(TARGET_LDFLAGS)" \
 			LD="$(target)-gcc" \
@@ -2213,7 +2217,7 @@ $(DEPDIR)/%python: $(DEPDIR)/python.do_compile
 	$(LN_SF) ../../libpython2.7.so.1.0 $(PKDIR)/usr/lib/python2.7/config/libpython2.7.so
 #	@DISTCLEANUP_python@
 	$(tocdk_build)
-	$(remove_pyo)
+	$(remove_pyc)
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
