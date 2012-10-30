@@ -83,7 +83,7 @@ $(DEPDIR)/%-openpli:
 	$(get_git_version)
 	cd $(DIR_$*_openpli) && \
 		$(python) setup.py install --root=$(PKDIR) --install-lib=/usr/lib/enigma2/python/Plugins
-	$(remove_pyo)
+	$(remove_pyc)
 	$(e2extra_build)
 	touch $@
 
