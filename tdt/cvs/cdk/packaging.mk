@@ -67,6 +67,7 @@ endef
 
 define fromrpm_build
 	$(fromrpm_get)
+	$(remove_includedir)
 	$(toflash_build)
 endef
 
@@ -134,7 +135,6 @@ endef
 define flash_prebuild
 	$(remove_libs)
 	$(remove_pkgconfigs)
-	$(remove_includedir)
 	$(strip_libs)
 	$(remove_docs)
 endef
@@ -169,6 +169,10 @@ define remove_pyo
 	rm -rf $(PKDIR)/usr/lib/python2.7/site-packages/*-py2.7.egg-info
 endef
 
+define remove_pyc
+	find $(PKDIR) -name "*.pyc" -type f -exec rm -f {} \;
+	rm -rf $(PKDIR)/usr/lib/python2.7/site-packages/*-py2.7.egg-info
+endef
 
 define prepare_pkginfo_for_flash
 	export OPKG_OFFLINE_ROOT=$(flashprefix)/root/ \
