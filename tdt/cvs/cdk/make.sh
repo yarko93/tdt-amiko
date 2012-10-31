@@ -254,9 +254,9 @@ esac
 
 echo -e "\nMulticom:"
 echo "   1) Multicom 3.2.2     (Recommended for Player179)"
-echo "   3) Multicom 3.2.4     (Recommended for Player191)"
+echo "   2) Multicom 3.2.4     (Recommended for Player191)"
 case $5 in
-        [1-3]) REPLY=$5
+        [1-2]) REPLY=$5
         echo -e "\nSelected multicom: $REPLY\n"
         ;;
         *)
@@ -282,7 +282,7 @@ case "$REPLY" in
        echo "export CONFIG_MULTICOM322=y" >> .config
        cd -
     ;;
-	2 | 3) MULTICOM="--enable-multicom324"
+	2) MULTICOM="--enable-multicom324"
        cd ../driver/include/
        if [ -L multicom ]; then
           rm multicom
@@ -306,8 +306,8 @@ esac
 ##############################################
 
 echo -e "\nMedia Framework:"
-echo "   1) eplayer3  (Recommended for Enigma1/2, Neutrino/HD, VDR)"
-echo "   2) gstreamer (Recommended for Enigma2 / PLI, XBMC)"
+echo "   1) eplayer3  (Recommended for Enigma1/2/PLI, Neutrino/HD, VDR)"
+echo "   2) gstreamer (Recommended for Enigma2/PLI, XBMC)"
 case $6 in
         [1-2]) REPLY=$6
         echo -e "\nSelected media framwork: $REPLY\n"
@@ -389,7 +389,7 @@ esac
 ##############################################
 
 echo -e "\nGraphic Framework:"
-echo "   1) Framebuffer (Enigma1/2, Neutrino1/HD, VDR)"
+echo "   1) Framebuffer (Enigma1/2/PLI, Neutrino1/HD, VDR)"
 echo "   2) DirectFB    (XBMC for UFS912, UFS913, Atevio7500)"
 case $9 in
         [1-2]) REPLY=$9
