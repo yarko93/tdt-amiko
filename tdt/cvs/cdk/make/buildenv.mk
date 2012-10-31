@@ -238,8 +238,8 @@ ACLOCAL_AMFLAGS = -I .
 
 CONFIG_STATUS_DEPENDENCIES = \
 	$(top_srcdir)/smart-rules.pl \
-	$(top_srcdir)/smart-rules
-	$(top_srcdir)/smart-rules-* \
+	$(top_srcdir)/smart-rules \
+	$(top_srcdir)/smart-rules-*
 
 min-query std-query max-query query: \
 %query:
