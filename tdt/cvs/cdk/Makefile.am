@@ -75,15 +75,9 @@ include make/externe-skins.mk
 # Include enigma2-pli-nightly gui targets
 include make/enigma2-pli-nightly.mk
 
-# Include xbmc-nightly gui targets
-include make/xbmc-nightly.mk
-
 # Include neutrino gui targets
 include make/neutrino.mk
 include make/neutrino_hd2.mk
-
-# Include vdr gui targets
-include make/vdr.mk
 
 # Include enigma1-hd gui targets
 #include make/enigma1-hd.mk
