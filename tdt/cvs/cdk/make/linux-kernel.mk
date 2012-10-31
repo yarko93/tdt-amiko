@@ -96,6 +96,7 @@ KERNELHEADERS_VERSION := 2.6.32.46-45
 endif
 endif
 endif
+endif
 
 KERNELHEADERS_SPEC := stm-target-kernel-headers-kbuild.spec
 KERNELHEADERS_SPEC_PATCH :=
@@ -145,6 +146,7 @@ HOST_KERNEL_VERSION := 2.6.32.57$(KERNELSTMLABEL)-$(KERNELLABEL)
 else
 if ENABLE_P0211
 HOST_KERNEL_VERSION := 2.6.32.59$(KERNELSTMLABEL)-$(KERNELLABEL)
+endif
 endif
 endif
 endif

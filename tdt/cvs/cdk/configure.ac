@@ -517,7 +517,6 @@ if test "$enable_stm24" = "yes"; then
 		KERNELLABEL="210"
 	fi
 fi
-fi
 
 AC_SUBST(EXTERNALLCD_DEP)
 
@@ -909,7 +908,6 @@ GraphicFw                   : $GRAPHICFW
 GraphicFw Dep               : $GRAPHICFW_DEP
 EXTERNALLCD                 : $enable_externallcd
 EXTERNALLCD_DEP             : $EXTERNALLCD_DEP
-NOLCD			    : $NO_LCD
 ])
 
 if test "$dircheck" = "fail"; then
