@@ -20,14 +20,6 @@ AM_MAINTAINER_MODE
 
 AC_PROG_CC
 
-AC_ARG_ENABLE(player131,
-	AS_HELP_STRING(--enable-player131,	set up the CDK to use player131),
-	[case "${enableval}" in
-		yes) PLAYER131=player131 ;;
-	esac],[enable_player131=no])
-AM_CONDITIONAL(ENABLE_PLAYER131,test "$enable_player131" = "yes")
-AC_SUBST(PLAYER131)
-
 AC_ARG_ENABLE(player179,
 	AS_HELP_STRING(--enable-player179,	set up the CDK to use player179),
 	[case "${enableval}" in
@@ -60,75 +52,10 @@ AC_ARG_ENABLE(multicom324,
 AM_CONDITIONAL(ENABLE_MULTICOM324,test "$enable_multicom324" = "yes")
 AC_SUBST(MULTICOM324)
 
-AC_ARG_ENABLE(stm22,
-	AS_HELP_STRING(--enable-stm22,	set up the CDK to use the STLinux 2.2),
-	,[enable_stm22=no])
-AM_CONDITIONAL(STM22,test "$enable_stm22" = "yes")
-
-AC_ARG_ENABLE(stm23,
-	AS_HELP_STRING(--enable-stm23,	set up the CDK to use the STLinux 2.3),
-	,[enable_stm23=no])
-AM_CONDITIONAL(STM23,test "$enable_stm23" = "yes")
-
-AC_ARG_ENABLE(havana,
-	AS_HELP_STRING(--enable-havana,	set up the CDK to use the STLinux 2.3 Havana),
-	,[enable_havana=no])
-AM_CONDITIONAL(STM23_HAVANA,test "$enable_havana" = "yes")
-
 AC_ARG_ENABLE(stm24,
 	AS_HELP_STRING(--enable-stm24,	set up the CDK to use the STLinux 2.4),
 	,[enable_stm24=no])
 AM_CONDITIONAL(STM24,test "$enable_stm24" = "yes")
-
-AC_ARG_ENABLE(p0040,
-	AS_HELP_STRING(--enable-p0040,	set up the CDK to use the STLinux 2.2 with patchlevel 0040),
-	,[enable_p0040=no])
-AM_CONDITIONAL(P0040,test "$enable_p0040" = "yes")
-
-AC_ARG_ENABLE(p0041,
-	AS_HELP_STRING(--enable-p0041,	set up the CDK to use the STLinux 2.2 with patchlevel 0041),
-	,[enable_p0041=no])
-AM_CONDITIONAL(P0041,test "$enable_p0041" = "yes")
-
-AC_ARG_ENABLE(p0119,
-	AS_HELP_STRING(--enable-p0119,  set up the CDK to use the STLinux 2.3 with patchlevel 0119),
-	[case "${enableval}" in
-		yes) P0119=p0119 ;;
-	esac], [enable_p0119=no])
-AM_CONDITIONAL(ENABLE_P0119,test "$enable_p0119" = "yes")
-AC_SUBST(P0119)
-
-AC_ARG_ENABLE(p0123,
-	AS_HELP_STRING(--enable-p0123,  set up the CDK to use the STLinux 2.3 with patchlevel 0123),
-	[case "${enableval}" in
-		yes) P0123=p0123 ;;
-	esac], [enable_p0123=no])
-AM_CONDITIONAL(ENABLE_P0123,test "$enable_p0123" = "yes")
-AC_SUBST(P0123)
-
-AC_ARG_ENABLE(p0201,
-	AS_HELP_STRING(--enable-p0201,  set up the CDK to use the STLinux 2.4 with patchlevel 0201),
-	[case "${enableval}" in
-		yes) P0201=p0201 ;;
-	esac], [enable_p0201=no])
-AM_CONDITIONAL(ENABLE_P0201,test "$enable_p0201" = "yes")
-AC_SUBST(P0201)
-
-AC_ARG_ENABLE(p0205,
-	AS_HELP_STRING(--enable-p0205,  set up the CDK to use the STLinux 2.4 with patchlevel 0205),
-	[case "${enableval}" in
-		yes) P0205=p0205 ;;
-	esac], [enable_p0205=no])
-AM_CONDITIONAL(ENABLE_P0205,test "$enable_p0205" = "yes")
-AC_SUBST(P0205)
-
-AC_ARG_ENABLE(p0206,
-	AS_HELP_STRING(--enable-p0206,  set up the CDK to use the STLinux 2.4 with patchlevel 0206),
-	[case "${enableval}" in
-		yes) P0206=p0206 ;;
-	esac], [enable_p0206=no])
-AM_CONDITIONAL(ENABLE_P0206,test "$enable_p0206" = "yes")
-AC_SUBST(P0206)
 
 AC_ARG_ENABLE(p0207,
 	AS_HELP_STRING(--enable-p0207,  set up the CDK to use the STLinux 2.4 with patchlevel 0207),
@@ -161,14 +88,6 @@ AC_ARG_ENABLE(p0211,
 	esac], [enable_p0211=no])
 AM_CONDITIONAL(ENABLE_P0211,test "$enable_p0211" = "yes")
 AC_SUBST(P0211)
-
-AC_ARG_ENABLE(havana_p0207_5,
-	AS_HELP_STRING(enable-havana-p0207_5,  set up the CDK to use the STLinux 2.4 with Havana patchlevel 0207_5),
-	[case "${enableval}" in
-		yes) HAVANA_P0207_5=havana_p0207_5 ;;
-	esac], [enable_havana_p0207_5=no])
-AM_CONDITIONAL(ENABLE_HAVANA_P0207_5,test "$enable_havana_p0207_5" = "yes")
-AC_SUBST(HAVANA_P0207_5)
 
 AC_ARG_ENABLE(debug,
 	AS_HELP_STRING(--enable-debug,	set up the CDK to use debug kernel configs),
@@ -203,6 +122,9 @@ AC_ARG_ENABLE(externallcd,
 AM_CONDITIONAL(ENABLE_EXTERNALLCD,test "$enable_externallcd" = "yes")
 AC_SUBST(EXTERNALLCD)
 
+if test "$enable_externallcd" != "yes"  ; then
+    AC_DEFINE(NO_LCD,1,[disable all lcd])
+fi
 
 if test -z "$CFLAGS" ; then
 	CFLAGS="-g -O2"
@@ -294,38 +216,6 @@ AC_ARG_ENABLE(ccache,
 AM_CONDITIONAL(ENABLE_CCACHE,test "$enable_ccache" = "yes")
 AC_SUBST(CCACHE_BIN)
 
-AC_ARG_ENABLE(fortis_hdbox,
-	AS_HELP_STRING(--enable-fortis_hdbox,    enable Fortis/hdbox FS-9200HD PVR stuff),
-	[case "${enableval}" in
-		yes) FORTIS_HDBOX=fortis_hdbox ;;
-	esac],[enable_fortis_hdbox=no])
-AM_CONDITIONAL(ENABLE_FORTIS_HDBOX,test "$enable_fortis_hdbox" = "yes")
-AC_SUBST(FORTIS_HDBOX)
-
-AC_ARG_ENABLE(atevio7500,
-	AS_HELP_STRING(--enable-atevio7500,    enable Atevio 7500 PVR stuff),
-	[case "${enableval}" in
-		yes) ATEVIO7500=atevio7500 ;;
-	esac],[enable_atevio7500=no])
-AM_CONDITIONAL(ENABLE_ATEVIO7500,test "$enable_atevio7500" = "yes")
-AC_SUBST(ATEVIO7500)
-
-AC_ARG_ENABLE(octagon1008,
-	AS_HELP_STRING(--enable-octagon1008,    enable Octagon 1008 stuff),
-	[case "${enableval}" in
-		yes) OCTAGON1008=octagon1008 ;;
-	esac],[enable_octagon1008=no])
-AM_CONDITIONAL(ENABLE_OCTAGON1008,test "$enable_octagon1008" = "yes")
-AC_SUBST(OCTAGON1008)
-
-AC_ARG_ENABLE(tf7700,
-	AS_HELP_STRING(--enable-tf7700,    enable topfield tf7700 stuff),
-	[case "${enableval}" in
-		yes) TF7700=tf7700 ;;
-	esac],[enable_tf7700=no])
-AM_CONDITIONAL(ENABLE_TF7700,test "$enable_tf7700" = "yes")
-AC_SUBST(TF7700)
-
 AC_ARG_ENABLE(hl101,
 	AS_HELP_STRING(--enable-hl101,    enable spider box hl101 stuff),
 	[case "${enableval}" in
@@ -333,22 +223,6 @@ AC_ARG_ENABLE(hl101,
 	esac],[enable_hl101=no])
 AM_CONDITIONAL(ENABLE_HL101,test "$enable_hl101" = "yes")
 AC_SUBST(HL101)
-
-AC_ARG_ENABLE(vip2_v1,
-	AS_HELP_STRING(--enable-vip2_v1,    enable edision argus vip2_v1 stuff),
-	[case "${enableval}" in
-		yes) VIP2_V1=vip2_v1 ;;
-	esac],[enable_vip2_v1=no])
-AM_CONDITIONAL(ENABLE_VIP2_V1,test "$enable_vip2_v1" = "yes")
-AC_SUBST(VIP2_V1)
-
-AC_ARG_ENABLE(vip1_v2,
-	AS_HELP_STRING(--enable-vip1_v2,    enable edision argus vip1_v2 stuff),
-	[case "${enableval}" in
-		yes) VIP1_V2=vip1_v2 ;;
-	esac],[enable_vip1_v2=no])
-AM_CONDITIONAL(ENABLE_VIP1_V2,test "$enable_vip1_v2" = "yes")
-AC_SUBST(VIP1_V2)
 
 AC_ARG_ENABLE(spark,
 	AS_HELP_STRING(--enable-spark,    enable spark),
@@ -365,157 +239,6 @@ AC_ARG_ENABLE(spark7162,
 	esac],[enable_spark7162=no])
 AM_CONDITIONAL(ENABLE_SPARK7162,test "$enable_spark7162" = "yes")
 AC_SUBST(SPARK7162)
-
-AC_ARG_ENABLE(adb_box,
-	AS_HELP_STRING(--enable-adb_box,    enable adb_box stuff),
-	[case "${enableval}" in
-		yes) ADB_BOX=adb_box ;;
-	esac],[enable_adb_box=no])
-AM_CONDITIONAL(ENABLE_ADB_BOX,test "$enable_adb_box" = "yes")
-AC_SUBST(ADB_BOX)
-AC_ARG_ENABLE(ufs922,
-	AS_HELP_STRING(--enable-ufs922,    enable kathrein ufs922 stuff),
-	[case "${enableval}" in
-		yes) UFS922=ufs922 ;;
-	esac],[enable_ufs922=no])
-AM_CONDITIONAL(ENABLE_UFS922,test "$enable_ufs922" = "yes")
-AC_SUBST(UFS922)
-
-AC_ARG_ENABLE(ufs910,
-	AS_HELP_STRING(--enable-ufs910,    enable kathrein ufs910 stuff),
-	[case "${enableval}" in
-		yes) UFS910=ufs910 ;;
-	esac],[enable_ufs910=no])
-AM_CONDITIONAL(ENABLE_UFS910,test "$enable_ufs910" = "yes")
-AC_SUBST(UFS910)
-
-AC_ARG_ENABLE(ufs912,
-	AS_HELP_STRING(--enable-ufs912,    enable kathrein ufs912 stuff),
-	[case "${enableval}" in
-		yes) UFS912=ufs912 ;;
-	esac],[enable_ufs912=no])
-AM_CONDITIONAL(ENABLE_UFS912,test "$enable_ufs912" = "yes")
-AC_SUBST(UFS912)
-
-AC_ARG_ENABLE(ufs913,
-	AS_HELP_STRING(--enable-ufs913,    enable kathrein ufs913 stuff),
-	[case "${enableval}" in
-		yes) UFS913=ufs913 ;;
-	esac],[enable_ufs913=no])
-AM_CONDITIONAL(ENABLE_UFS913,test "$enable_ufs913" = "yes")
-AC_SUBST(UFS913)
-
-AC_ARG_ENABLE(hs7810a,
-	AS_HELP_STRING(--enable-hs7810a,    enable fortis hs7810a stuff),
-	[case "${enableval}" in
-		yes) HS7810A=hs7810a ;;
-	esac],[enable_hs7810a=no])
-AM_CONDITIONAL(ENABLE_HS7810A,test "$enable_hs7810a" = "yes")
-AC_SUBST(HS7810A)
-
-AC_ARG_ENABLE(hs7110,
-	AS_HELP_STRING(--enable-hs7110,    enable fortis hs7110 stuff),
-	[case "${enableval}" in
-		yes) HS7110=hs7110 ;;
-	esac],[enable_hs7110=no])
-AM_CONDITIONAL(ENABLE_HS7110,test "$enable_hs7110" = "yes")
-AC_SUBST(HS7110)
-
-AC_ARG_ENABLE(whitebox,
-	AS_HELP_STRING(--enable-whitebox,    enable fortis whitebox stuff),
-	[case "${enableval}" in
-		yes) WHITEBOX=whitebox ;;
-	esac],[enable_WHITEBOX=no])
-AM_CONDITIONAL(ENABLE_WHITEBOX,test "$enable_whitebox" = "yes")
-AC_SUBST(WHITEBOX)
-
-AC_ARG_ENABLE(cuberevo,
-	AS_HELP_STRING(--enable-cuberevo,    enable cuberevo stuff),
-	[case "${enableval}" in
-		yes) CUBEREVO=cuberevo ;;
-	esac],[enable_cuberevo=no])
-AM_CONDITIONAL(ENABLE_CUBEREVO,test "$enable_cuberevo" = "yes")
-AC_SUBST(CUBEREVO)
-
-AC_ARG_ENABLE(cuberevo_mini,
-	AS_HELP_STRING(--enable-cuberevo_mini,    enable cuberevo mini stuff),
-	[case "${enableval}" in
-		yes) CUBEREVO_MINI=cuberevo_mini ;;
-	esac],[enable_cuberevo_mini=no])
-AM_CONDITIONAL(ENABLE_CUBEREVO_MINI,test "$enable_cuberevo_mini" = "yes")
-AC_SUBST(CUBEREVO_MINI)
-
-AC_ARG_ENABLE(cuberevo_mini2,
-	AS_HELP_STRING(--enable-cuberevo_mini2,    enable cuberevo mini 2 stuff),
-	[case "${enableval}" in
-		yes) CUBEREVO_MINI2=cuberevo_mini2 ;;
-	esac],[enable_cuberevo_mini2=no])
-AM_CONDITIONAL(ENABLE_CUBEREVO_MINI2,test "$enable_cuberevo_mini2" = "yes")
-AC_SUBST(CUBEREVO_MINI2)
-
-AC_ARG_ENABLE(cuberevo_mini_fta,
-	AS_HELP_STRING(--enable-cuberevo_mini_fta,    enable cuberevo mini fta stuff),
-	[case "${enableval}" in
-		yes) CUBEREVO_MINI_FTA=cuberevo_mini_fta ;;
-	esac],[enable_cuberevo_mini_fta=no])
-AM_CONDITIONAL(ENABLE_CUBEREVO_MINI_FTA,test "$enable_cuberevo_mini_fta" = "yes")
-AC_SUBST(CUBEREVO_MINI_FTA)
-
-AC_ARG_ENABLE(cuberevo_250hd,
-	AS_HELP_STRING(--enable-cuberevo_250hd,    enable cuberevo 250hd stuff),
-	[case "${enableval}" in
-		yes) CUBEREVO_250HD=cuberevo_250hd ;;
-	esac],[enable_cuberevo_250hd=no])
-AM_CONDITIONAL(ENABLE_CUBEREVO_250HD,test "$enable_cuberevo_250hd" = "yes")
-AC_SUBST(CUBEREVO_250HD)
-
-AC_ARG_ENABLE(cuberevo_2000hd,
-	AS_HELP_STRING(--enable-cuberevo_2000hd,    enable cuberevo 2000hd stuff),
-	[case "${enableval}" in
-		yes) CUBEREVO_2000HD=cuberevo_2000hd ;;
-	esac],[enable_cuberevo_2000hd=no])
-AM_CONDITIONAL(ENABLE_CUBEREVO_2000HD,test "$enable_cuberevo_2000hd" = "yes")
-AC_SUBST(CUBEREVO_2000HD)
-
-AC_ARG_ENABLE(cuberevo_9500hd,
-	AS_HELP_STRING(--enable-cuberevo_9500hd,    enable cuberevo 9500hd stuff),
-	[case "${enableval}" in
-		yes) CUBEREVO_9500HD=cuberevo_9500hd ;;
-	esac],[enable_cuberevo_9500hd=no])
-AM_CONDITIONAL(ENABLE_CUBEREVO_9500HD,test "$enable_cuberevo_9500hd" = "yes")
-AC_SUBST(CUBEREVO_9500HD)
-
-AC_ARG_ENABLE(homecast5101,
-	AS_HELP_STRING(--enable-homecast5101,    enable homecast 5101 stuff),
-	[case "${enableval}" in
-		yes) HOMECAST5101=hs5101 ;;
-	esac],[enable_homecast5101=no])
-AM_CONDITIONAL(ENABLE_HOMECAST5101,test "$enable_homecast5101" = "yes")
-AC_SUBST(HOMECAST5101)
-
-AC_ARG_ENABLE(ipbox9900,
-	AS_HELP_STRING(--enable-ipbox9900,    enable ipbox 9900 stuff),
-	[case "${enableval}" in
-		yes) IPBOX9900=ipbox9900 ;;
-	esac],[enable_ipbox9900=no])
-AM_CONDITIONAL(ENABLE_IPBOX9900,test "$enable_ipbox9900" = "yes")
-AC_SUBST(IPBOX9900)
-
-AC_ARG_ENABLE(ipbox99,
-	AS_HELP_STRING(--enable-ipbox99,    enable ipbox 99 stuff),
-	[case "${enableval}" in
-		yes) IPBOX99=ipbox99 ;;
-	esac],[enable_ipbox99=no])
-AM_CONDITIONAL(ENABLE_IPBOX99,test "$enable_ipbox99" = "yes")
-AC_SUBST(IPBOX99)
-
-AC_ARG_ENABLE(ipbox55,
-	AS_HELP_STRING(--enable-ipbox55,    enable ipbox 55 stuff),
-	[case "${enableval}" in
-		yes) IPBOX55=ipbox55 ;;
-	esac],[enable_ipbox55=no])
-AM_CONDITIONAL(ENABLE_IPBOX55,test "$enable_ipbox55" = "yes")
-AC_SUBST(IPBOX55)
 
 AC_ARG_ENABLE(vdr1722,
 	AS_HELP_STRING(--enable-vdr1722,    enable vdr-1.7.22 stuff),
@@ -765,49 +488,14 @@ fi
 AC_SUBST(KERNELVERSION)
 AC_SUBST(KERNELSTMLABEL)
 AC_SUBST(KERNELLABEL)
-TUXBOX_RULES_MAKE(linux)
-TUXBOX_RULES_MAKE(linuxp0040)
-TUXBOX_RULES_MAKE(linuxp0041)
-TUXBOX_RULES_MAKE(linux23)
-TUXBOX_RULES_MAKE(linuxp0119)
-TUXBOX_RULES_MAKE(linuxp0123)
 TUXBOX_RULES_MAKE(linux24)
-TUXBOX_RULES_MAKE(linuxp0201)
-TUXBOX_RULES_MAKE(linuxp0205)
-TUXBOX_RULES_MAKE(linuxp0206)
 TUXBOX_RULES_MAKE(linuxp0207)
 TUXBOX_RULES_MAKE(linuxp0209)
 TUXBOX_RULES_MAKE(linuxp0210)
 TUXBOX_RULES_MAKE(linuxp0211)
 
-if test "$enable_stm22" = "yes"; then
-	if test "$enable_p0040" == "yes"; then
-		KERNELVERSION=${VERSION_linuxp0040}
-		KERNELSTMLABEL="_${VERSION_linuxp0040#*_}"
-	elif test "$enable_p0041" == "yes"; then
-		KERNELVERSION=${VERSION_linuxp0041}
-		KERNELSTMLABEL="_${VERSION_linuxp0041#*_}"
-	else
-		KERNELVERSION=${VERSION_linux}
-		KERNELSTMLABEL="_${VERSION_linux#*_}"
-	fi
-else
-if test "$enable_stm23" = "yes"; then
-	if test "$enable_p0123" == "yes"; then
-		KERNELVERSION=${VERSION_linuxp0123}
-		KERNELSTMLABEL="_${VERSION_linuxp0123#*_}"
-		KERNELLABEL="123"
-	else
-		KERNELVERSION=${VERSION_linuxp0119}
-		KERNELSTMLABEL="_${VERSION_linuxp0119#*_}"
-		KERNELLABEL="119"
-	fi
-else
-	if test "$enable_havana_p0207_5" == "yes"; then
-		KERNELVERSION=${VERSION_linuxp0207}
-		KERNELSTMLABEL="_${VERSION_linuxp0207#*_}"
-		KERNELLABEL="207"
-	elif test "$enable_p0209" == "yes"; then
+if test "$enable_stm24" = "yes"; then
+	if test "$enable_p0209" == "yes"; then
 		KERNELVERSION=${VERSION_linuxp0209}
 		KERNELSTMLABEL="_${VERSION_linuxp0209#*_}"
 		KERNELLABEL="209"
@@ -823,18 +511,10 @@ else
 		KERNELVERSION=${VERSION_linuxp0207}
 		KERNELSTMLABEL="_${VERSION_linuxp0207#*_}"
 		KERNELLABEL="207"
-	elif test "$enable_p0206" == "yes"; then
-		KERNELVERSION=${VERSION_linuxp0206}
-		KERNELSTMLABEL="_${VERSION_linuxp0206#*_}"
-		KERNELLABEL="206"
-	elif test "$enable_p0205" == "yes"; then
-		KERNELVERSION=${VERSION_linuxp0205}
-		KERNELSTMLABEL="_${VERSION_linuxp0205#*_}"
-		KERNELLABEL="205"
 	else
-		KERNELVERSION=${VERSION_linuxp0201}
-		KERNELSTMLABEL="_${VERSION_linuxp0201#*_}"
-		KERNELLABEL="201"
+		KERNELVERSION=${VERSION_linuxp0210}
+		KERNELSTMLABEL="_${VERSION_linuxp0210#*_}"
+		KERNELLABEL="210"
 	fi
 fi
 fi
@@ -1182,22 +862,11 @@ target cpu                  : $CPU_MODEL
 linux kernel                : ${KERNELVERSION%.*}
 kernelversion               : $KERNELVERSION
 localversion                : $KERNELSTMLABEL
-STLinux 2.2                 : $enable_stm22
-STLinux 2.3                 : $enable_stm23
-STLinux 2.3_Havana          : $enable_havana
 STLinux 2.4                 : $enable_stm24
-Patchlevel P0040            : $enable_p0040
-Patchlevel P0041            : $enable_p0041
-Patchlevel P0119            : $enable_p0119
-Patchlevel P0123            : $enable_p0123
-Patchlevel P0201            : $enable_p0201
-Patchlevel P0205            : $enable_p0205
-Patchlevel P0206            : $enable_p0206
 Patchlevel P0207            : $enable_p0207
 Patchlevel P0209            : $enable_p0209
 Patchlevel P0210            : $enable_p0210
 Patchlevel P0211            : $enable_p0211
-HAVANA Patchlevel P0207_5   : $enable_havana_p0207_5
 vdr VDR 1.7.22              : $enable_vdr1722
 vdr VDR 1.7.27              : $enable_vdr1727
 ccache                      : $enable_ccache
@@ -1219,39 +888,15 @@ archive directory           : $archivedir
 GNU server                  : $gnuserver
 default server              : $defaultserver
 update http prefix          : $updatehttpprefix
-Fortis/hdbox stuff          : $enable_fortis_hdbox
-Fortis hs7810a stuff        : $enable_hs7810a
-Fortis hs7110 stuff         : $enable_hs7110
-Atevio 7500 stuff           : $enable_atevio7500
-octagon1008 stuff           : $enable_octagon1008
-topfield stuff              : $enable_tf7700
 spider-box hl101 stuff      : $enable_hl101
-edision argus vip1 v2 stuff : $enable_vip1_v2
-edision argus vip2 v1 stuff : $enable_vip2_v1
 spark box stuff             : $enable_spark
 spark7162 box stuff         : $enable_spark7162
-adb_box stuff               : $enable_adb_box
-ufs910 stuff                : $enable_ufs910
-ufs912 stuff                : $enable_ufs912
-ufs922 stuff                : $enable_ufs922
-cuberevo stuff              : $enable_cuberevo
-cuberevo mini stuff         : $enable_cuberevo_mini
-cuberevo mini 2 stuff       : $enable_cuberevo_mini2
-cuberevo mini fta stuff     : $enable_cuberevo_mini_fta
-cuberevo 250hd stuff        : $enable_cuberevo_250hd
-cuberevo 2000hd stuff       : $enable_cuberevo_2000hd
-cuberevo 9500hd stuff       : $enable_cuberevo_9500hd
-homecast 5101 stuff         : $enable_homecast5101
-ipbox 9900 stuff            : $enable_ipbox9900
-ipbox 99 stuff              : $enable_ipbox99
-ipbox 55 stuff              : $enable_ipbox55
 XFS support for IDE         : $enable_xfs
 NFS server                  : $enable_nfsserver
 Samba Clients               : $enable_cifs
 NTFS support for IDE        : $enable_ntfs
 sg3 utils                   : $enable_sg3
 DEBUG                       : $enable_debug
-Player131                   : $enable_player131
 Player179                   : $enable_player179
 Player191                   : $enable_player191
 Multicom322                 : $enable_multicom322
@@ -1264,6 +909,7 @@ GraphicFw                   : $GRAPHICFW
 GraphicFw Dep               : $GRAPHICFW_DEP
 EXTERNALLCD                 : $enable_externallcd
 EXTERNALLCD_DEP             : $EXTERNALLCD_DEP
+NOLCD			    : $NO_LCD
 ])
 
 if test "$dircheck" = "fail"; then
