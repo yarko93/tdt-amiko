@@ -16,11 +16,7 @@ include make/hostapps.mk
 include make/bootstrap.mk
 
 # Include u-boot targets
-if ENABLE_TF7700
-include make/tf_u-boot.mk
-else
 include make/u-boot.mk
-endif
 
 # Include adapted etc files and etc read-write files
 include make/root-etc.mk
@@ -79,15 +75,9 @@ include make/externe-skins.mk
 # Include enigma2-pli-nightly gui targets
 include make/enigma2-pli-nightly.mk
 
-# Include xbmc-nightly gui targets
-include make/xbmc-nightly.mk
-
 # Include neutrino gui targets
 include make/neutrino.mk
 include make/neutrino_hd2.mk
-
-# Include vdr gui targets
-include make/vdr.mk
 
 # Include enigma1-hd gui targets
 #include make/enigma1-hd.mk
@@ -125,8 +115,6 @@ include make/release_neutrino_nightly.mk
 
 include make/release_vdr.mk
 
-include make/release_enigma1_hd.mk
-
 # New static folder
 include make/release_neutrino_static.mk
 
@@ -134,9 +122,6 @@ include make/release_neutrino_static.mk
 # generated Makefile during make run, automake or configure does not
 # see it.)
 -include ./Makefile.local
-
-# installer image for TF7700
-include make/tfinstaller.mk
 
 download-for-smart: @DOWNLOAD_FOR_SMART@
 @SMART_DOWNLOAD_RULES@

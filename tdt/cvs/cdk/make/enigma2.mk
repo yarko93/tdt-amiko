@@ -16,16 +16,7 @@ $(appsdir)/enigma2/config.status: bootstrap freetype expat fontconfig libpng jpe
 			$(PLATFORM_CPPFLAGS)
 
 $(DEPDIR)/enigma2.do_prepare:
-if ENABLE_ADB_BOX
-	cd $(appsdir)/enigma2 && patch -p1 < ../../cdk/Patches/e2_api5.patch
-endif
 if ENABLE_HL101
-	cd $(appsdir)/enigma2 && patch -p1 < ../../cdk/Patches/e2_api5.patch
-endif
-if ENABLE_VIP2_V1
-	cd $(appsdir)/enigma2 && patch -p1 < ../../cdk/Patches/e2_api5.patch
-endif
-if ENABLE_VIP1_V2
 	cd $(appsdir)/enigma2 && patch -p1 < ../../cdk/Patches/e2_api5.patch
 endif
 	touch $@
@@ -73,11 +64,7 @@ $(DEPDIR)/enigma2-misc:
 	$(INSTALL_DIR) $(targetprefix)/hdd/{music,picture,movie} && \
 	$(INSTALL_DIR) $(targetprefix)/usr/tuxtxt && \
 	$(INSTALL_FILE) root/usr/tuxtxt/tuxtxt2.conf $(targetprefix)/usr/tuxtxt/
-if ENABLE_TF7700
-	cd $(targetprefix)/usr/local/share/enigma2/ && mv -f keymap_tf7700.xml keymap.xml
-else
-	rm -f $(targetprefix)/usr/local/share/enigma2/keymap_tf7700.xml
-endif
+
 	touch $@
 
 enigma2-clean enigma2-distclean:

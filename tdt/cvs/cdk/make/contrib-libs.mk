@@ -16,9 +16,7 @@ DESCRIPTION_libz = "Compression library implementing the deflate compression met
 FILES_libz = \
 /usr/lib
 
-if !STM22
 LIBZ_ORDER = binutils-dev
-endif !STM22
 
 $(DEPDIR)/libz.do_prepare: bootstrap @DEPENDS_libz@ $(if $(LIBZ_ORDER),| $(LIBZ_ORDER))
 	@PREPARE_libz@

@@ -1,8 +1,0 @@
-<html>
-	<head>
-		<title>Enigma Web Interface</title>
-	</head>
-	<script>
-		document.location = "/?screenWidth="+window.screen.width;
-	</script>
-</html>
