@@ -222,7 +222,6 @@ $(HOST_PKGCONFIG_RPM): \
 $(DEPDIR)/$(HOST_PKGCONFIG): $(HOST_PKGCONFIG_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
 	touch $@
-endif !STM22
 
 #
 # HOST-MTD-UTILS
