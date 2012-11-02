@@ -240,6 +240,198 @@ AC_ARG_ENABLE(spark7162,
 AM_CONDITIONAL(ENABLE_SPARK7162,test "$enable_spark7162" = "yes")
 AC_SUBST(SPARK7162)
 
+AC_ARG_ENABLE(e2pd0,
+	AS_HELP_STRING(--enable-e2pd0,  enable enigma2-pli-nigthly diff0 ),
+	[case "${enableval}" in
+		yes) E2PD0=e2pd0 ;;
+	esac], [enable_e2pd0=no])
+AM_CONDITIONAL(ENABLE_E2PD0,test "$enable_e2pd0" = "yes")
+AC_SUBST(E2PD0)
+
+AC_ARG_ENABLE(e2pd1,
+	AS_HELP_STRING(--enable-e2pd1,  enable enigma2-pli-nigthly diff1 ),
+	[case "${enableval}" in
+		yes) E2PD1=e2pd1 ;;
+	esac], [enable_e2pd1=no])
+AM_CONDITIONAL(ENABLE_E2PD1,test "$enable_e2pd1" = "yes")
+AC_SUBST(E2PD1)
+
+AC_ARG_ENABLE(e2pd2,
+	AS_HELP_STRING(--enable-e2pd2,  enable enigma2-pli-nigthly diff2 ),
+	[case "${enableval}" in
+		yes) E2PD2=e2pd2 ;;
+	esac], [enable_e2pd2=no])
+AM_CONDITIONAL(ENABLE_E2PD2,test "$enable_e2pd2" = "yes")
+AC_SUBST(E2PD2)
+
+AC_ARG_ENABLE(e2pd3,
+	AS_HELP_STRING(--enable-e2pd3,  enable enigma2-pli-nigthly diff3 ),
+	[case "${enableval}" in
+		yes) E2PD3=e2pd3 ;;
+	esac], [enable_e2pd3=no])
+AM_CONDITIONAL(ENABLE_E2PD3,test "$enable_e2pd3" = "yes")
+AC_SUBST(E2PD3)
+
+AC_ARG_ENABLE(e2pd4,
+	AS_HELP_STRING(--enable-e2pd4,  enable enigma2-pli-nigthly diff4 ),
+	[case "${enableval}" in
+		yes) E2PD4=e2pd4 ;;
+	esac], [enable_e2pd4=no])
+AM_CONDITIONAL(ENABLE_E2PD4,test "$enable_e2pd4" = "yes")
+AC_SUBST(E2PD4)
+
+AC_ARG_ENABLE(e2pd5,
+	AS_HELP_STRING(--enable-e2pd5,  enable enigma2-pli-nigthly diff5 ),
+	[case "${enableval}" in
+		yes) E2PD5=e2pd5 ;;
+	esac], [enable_e2pd5=no])
+AM_CONDITIONAL(ENABLE_E2PD5,test "$enable_e2pd5" = "yes")
+AC_SUBST(E2PD5)
+
+AC_ARG_ENABLE(e2pd6,
+	AS_HELP_STRING(--enable-e2pd6,  enable enigma2-pli-nigthly diff6 ),
+	[case "${enableval}" in
+		yes) E2PD6=e2pd6 ;;
+	esac], [enable_e2pd6=no])
+AM_CONDITIONAL(ENABLE_E2PD6,test "$enable_e2pd6" = "yes")
+AC_SUBST(E2PD6)
+
+AC_ARG_ENABLE(e2pd7,
+	AS_HELP_STRING(--enable-e2pd7,  enable enigma2-pli-nigthly diff7 ),
+	[case "${enableval}" in
+		yes) E2PD7=e2pd7 ;;
+	esac], [enable_e2pd7=no])
+AM_CONDITIONAL(ENABLE_E2PD7,test "$enable_e2pd7" = "yes")
+AC_SUBST(E2PD7)
+
+AC_ARG_ENABLE(e2pd8,
+	AS_HELP_STRING(--enable-e2pd8,  enable enigma2-pli-nigthly diff8 ),
+	[case "${enableval}" in
+		yes) E2PD8=e2pd8 ;;
+	esac], [enable_e2pd8=no])
+AM_CONDITIONAL(ENABLE_E2PD8,test "$enable_e2pd8" = "yes")
+AC_SUBST(E2PD8)
+
+AC_ARG_ENABLE(e2d0,
+	AS_HELP_STRING(--enable-e2d0,  enable enigma2-nigthly diff0 ),
+	[case "${enableval}" in
+		yes) E2D0=e2d0 ;;
+	esac], [enable_e2d0=no])
+AM_CONDITIONAL(ENABLE_E2D0,test "$enable_e2d0" = "yes")
+AC_SUBST(E2D0)
+
+AC_ARG_ENABLE(e2d1,
+	AS_HELP_STRING(--enable-e2d1,  enable enigma2-nigthly diff1 ),
+	[case "${enableval}" in
+		yes) E2D1=e2d1 ;;
+	esac], [enable_e2d1=no])
+AM_CONDITIONAL(ENABLE_E2D1,test "$enable_e2d1" = "yes")
+AC_SUBST(E2D1)
+
+AC_ARG_ENABLE(e2d2,
+	AS_HELP_STRING(--enable-e2d2,  enable enigma2-nigthly diff2 ),
+	[case "${enableval}" in
+		yes) E2D2=e2d2 ;;
+	esac], [enable_e2d2=no])
+AM_CONDITIONAL(ENABLE_E2D2,test "$enable_e2d2" = "yes")
+AC_SUBST(E2D2)
+
+AC_ARG_ENABLE(e2d3,
+	AS_HELP_STRING(--enable-e2d3,  enable enigma2-nigthly diff3 ),
+	[case "${enableval}" in
+		yes) E2D3=e2d3 ;;
+	esac], [enable_e2d3=no])
+AM_CONDITIONAL(ENABLE_E2D3,test "$enable_e2d3" = "yes")
+AC_SUBST(E2D3)
+
+AC_ARG_ENABLE(e2d4,
+	AS_HELP_STRING(--enable-e2d4,  enable enigma2-nigthly diff4 ),
+	[case "${enableval}" in
+		yes) E2D4=e2d4 ;;
+	esac], [enable_e2d4=no])
+AM_CONDITIONAL(ENABLE_E2D4,test "$enable_e2d4" = "yes")
+AC_SUBST(E2D4)
+
+AC_ARG_ENABLE(e2d5,
+	AS_HELP_STRING(--enable-e2d5,  enable enigma2-nigthly diff5 ),
+	[case "${enableval}" in
+		yes) E2D5=e2d5 ;;
+	esac], [enable_e2d5=no])
+AM_CONDITIONAL(ENABLE_E2D5,test "$enable_e2d5" = "yes")
+AC_SUBST(E2D5)
+
+AC_ARG_ENABLE(e2d6,
+	AS_HELP_STRING(--enable-e2d6,  enable enigma2-nigthly diff6 ),
+	[case "${enableval}" in
+		yes) E2D6=e2d6 ;;
+	esac], [enable_e2d6=no])
+AM_CONDITIONAL(ENABLE_E2D6,test "$enable_e2d6" = "yes")
+AC_SUBST(E2D6)
+
+AC_ARG_ENABLE(e2d7,
+	AS_HELP_STRING(--enable-e2d7,  enable enigma2-nigthly diff7 ),
+	[case "${enableval}" in
+		yes) E2D7=e2d7 ;;
+	esac], [enable_e2d7=no])
+AM_CONDITIONAL(ENABLE_E2D7,test "$enable_e2d7" = "yes")
+AC_SUBST(E2D7)
+
+AC_ARG_ENABLE(e2d8,
+	AS_HELP_STRING(--enable-e2d8,  enable enigma2-nigthly diff8 ),
+	[case "${enableval}" in
+		yes) E2D8=e2d8 ;;
+	esac], [enable_e2d8=no])
+AM_CONDITIONAL(ENABLE_E2D8,test "$enable_e2d8" = "yes")
+AC_SUBST(E2D8)
+
+AC_ARG_ENABLE(xbd0,
+	AS_HELP_STRING(--enable-xbd0,  enable xbmc-nigthly diff0 ),
+	[case "${enableval}" in
+		yes) XBD0=xbd0 ;;
+	esac], [enable_xbd0=no])
+AM_CONDITIONAL(ENABLE_XBD0,test "$enable_xbd0" = "yes")
+AC_SUBST(XBD0)
+
+AC_ARG_ENABLE(xbd1,
+	AS_HELP_STRING(--enable-xbd1,  enable xbmc-nigthly diff1 ),
+	[case "${enableval}" in
+		yes) XBD1=xbd1 ;;
+	esac], [enable_xbd1=no])
+AM_CONDITIONAL(ENABLE_XBD1,test "$enable_xbd1" = "yes")
+AC_SUBST(XBD1)
+
+AC_ARG_ENABLE(xbd2,
+	AS_HELP_STRING(--enable-xbd2,  enable xbmc-nigthly diff2 ),
+	[case "${enableval}" in
+		yes) XBD2=xbd2 ;;
+	esac], [enable_xbd2=no])
+AM_CONDITIONAL(ENABLE_XBD2,test "$enable_xbd2" = "yes")
+AC_SUBST(XBD2)
+
+AC_ARG_ENABLE(nhd0,
+	AS_HELP_STRING(--enable-nhd0,  enable neutrino-hd-nigthly diff0 ),
+	[case "${enableval}" in
+		yes) NHD0=nhd0 ;;
+	esac], [enable_nhd0=no])
+AM_CONDITIONAL(ENABLE_NHD0,test "$enable_nhd0" = "yes")
+AC_SUBST(NHD0)
+
+AC_ARG_ENABLE(nhd1,
+	AS_HELP_STRING(--enable-nhd1,  enable neutrino-hd-nigthly diff1 ),
+	[case "${enableval}" in
+		yes) NHD1=nhd1 ;;
+	esac], [enable_nhd1=no])
+AM_CONDITIONAL(ENABLE_NHD1,test "$enable_nhd1" = "yes")
+AC_SUBST(NHD1)
+
+AC_ARG_ENABLE(nhd2,
+	AS_HELP_STRING(--enable-nhd2,  enable neutrino-hd-nigthly diff2 ),
+	[case "${enableval}" in
+		yes) NHD2=nhd2 ;;
+	esac], [enable_nhd2=no])
+AM_CONDITIONAL(ENABLE_NHD2,test "$enable_nhd2" = "yes")
+AC_SUBST(NHD2)
+
 AC_ARG_ENABLE(vdr1722,
 	AS_HELP_STRING(--enable-vdr1722,    enable vdr-1.7.22 stuff),
 	[case "${enableval}" in
