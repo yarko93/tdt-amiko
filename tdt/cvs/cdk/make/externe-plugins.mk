@@ -2,6 +2,12 @@
 # Make Extern-Plugins
 #
 #
+if ENABLE_MEDIAFWGSTREAMER
+ENIGMA2_FLAGS =
+else
+ENIGMA2_FLAGS = --enable-libeplayer3
+endif
+
 DESCRIPTION_e2plugin := Additional plugins for Enigma2
 
 PKGR_e2plugin = r2
@@ -30,7 +36,7 @@ $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
 			PY_PATH=$(targetprefix)/usr \
-			$(PLATFORM_CPPFLAGS)
+			$(PLATFORM_CPPFLAGS) $(ENIGMA2_FLAGS)
 
 enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 
