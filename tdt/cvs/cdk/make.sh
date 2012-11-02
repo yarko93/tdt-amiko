@@ -441,6 +441,8 @@ if [ "$REPLY" == "OpenPli" ]; then
         esac
         
         echo "enigma2_pli" > smart-rules-e2
+        echo "  git" >> smart-rules-e2
+        echo '  \$(appsdir)/{PN}-nightly' >> smart-rules-e2
         case "$REPLY" in
         	0) echo "  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2" >> smart-rules-e2
         	echo "  patch:file://enigma2-pli-nightly.0.diff" >> smart-rules-e2;;
@@ -454,7 +456,7 @@ if [ "$REPLY" == "OpenPli" ]; then
         	echo "  patch:file://enigma2-pli-nightly.2.graphlcd.diff" >> smart-rules-e2;;
         	3) echo "  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=51a7b9349070830b5c75feddc52e97a1109e381e" >> smart-rules-e2
         	echo "  patch:file://enigma2-pli-nightly.3.diff" >> smart-rules-e2;;
-        	4) echo "  it://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880" >> smart-rules-e2
+        	4) echo "  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880" >> smart-rules-e2
         	echo "  patch:file://enigma2-pli-nightly.4.diff" >> smart-rules-e2;;
         	5) echo "  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=a869076762f6e24305d6a58f95c3918e02a1442a" >> smart-rules-e2
         	echo "  patch:file://enigma2-pli-nightly.5.diff" >> smart-rules-e2;;
