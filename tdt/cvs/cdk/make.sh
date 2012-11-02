@@ -306,7 +306,7 @@ esac
 ##############################################
 
 echo -e "\nMedia Framework:"
-echo "   1) eplayer3  (Recommended for Enigma1/2/PLI, Neutrino/HD, VDR)"
+echo "   1) eplayer3  (Recommended for Enigma2/PLI, Neutrino/HD, VDR)"
 echo "   2) gstreamer (Recommended for Enigma2/PLI, XBMC)"
 case $6 in
         [1-2]) REPLY=$6
@@ -389,7 +389,7 @@ esac
 ##############################################
 
 echo -e "\nGraphic Framework:"
-echo "   1) Framebuffer (Enigma1/2/PLI, Neutrino1/HD, VDR)"
+echo "   1) Framebuffer (Enigma2/PLI, Neutrino1/HD, VDR)"
 echo "   2) DirectFB    (XBMC for UFS912, UFS913, Atevio7500)"
 case $9 in
         [1-2]) REPLY=$9
@@ -404,6 +404,66 @@ case "$REPLY" in
 	2) GFW="--enable-graphicfwdirectfb";;
 	*) GFW="";;
 esac
+
+##############################################
+
+echo -e "\nMake enigma2 OpenPli:"
+echo "   1) No"
+echo "   2) Yes make enigma2 OpenPli"
+case $0 in
+        [1-2]) REPLY=$0
+        echo -e "\nSelected option: $REPLY\n"
+        ;;
+        *)
+        read -p "Select make enigma2 OpenPli (1-2):";;
+esac
+
+case "$REPLY" in
+        2) REPLY="OpenPli";;
+        *) REPLY="";;
+esac
+if [ "$REPLY" == "OpenPli" ]; then
+        echo -e "\nChoose enigma2 OpenPli revision:"
+        echo "   0) Newest (Can fail due to outdated patch)"
+        echo "   1) Sat, 17 Mar 2012 19:51 - E2 OpenPli 945aeb939308b3652b56bc6c577853369d54a537"
+        echo "   2) Sat, 18 May 2012 15:26 - E2 OpenPli 839e96b79600aba73f743fd39628f32bc1628f4c"
+        echo "   3) Mon, 20 Aug 2012 16:00 - E2 OpenPli 51a7b9349070830b5c75feddc52e97a1109e381e"
+        echo "   4) Fri, 24 Aug 2012 23:42 - E2 OpenPli 002b85aa8350e9d8e88f75af48c3eb8a6cdfb880"
+        echo "   5) Sun, 16 Sep 2012 14:53 - E2 OpenPli a869076762f6e24305d6a58f95c3918e02a1442a"
+        echo "   6) AR-P - E2 OpenPli branch testing"
+        echo "   7) AR-P - E2 OpenPli branch last"
+        case $1 in
+                [0-7]) REPLY=$1
+                echo -e "\nSelected enigma2 OpenPli revision: $REPLY\n"
+                ;;
+                *)
+                read -p "Select enigma2 OpenPli revision (0-7):";;
+        esac
+        
+        echo "enigma2_pli" > smart-rules-e2
+        case "$REPLY" in
+        	0) echo "  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2" >> smart-rules-e2
+        	echo "  patch:file://enigma2-pli-nightly.0.diff" >> smart-rules-e2;;
+        	1) echo "  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537" >> smart-rules-e2
+        	echo "  patch:file://enigma2-pli-nightly.1.diff" >> smart-rules-e2
+        	echo "  patch:file://enigma2-pli-nightly.1.gstreamer.diff" >> smart-rules-e2
+        	echo "  patch:file://enigma2-pli-nightly.1.graphlcd.diff" >> smart-rules-e2;;
+        	2) echo "  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=839e96b79600aba73f743fd39628f32bc1628f4c" >> smart-rules-e2
+        	echo "  patch:file://enigma2-pli-nightly.2.diff" >> smart-rules-e2
+        	echo "  patch:file://enigma2-pli-nightly.2.gstreamer.diff" >> smart-rules-e2
+        	echo "  patch:file://enigma2-pli-nightly.2.graphlcd.diff" >> smart-rules-e2;;
+        	3) echo "  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=51a7b9349070830b5c75feddc52e97a1109e381e" >> smart-rules-e2
+        	echo "  patch:file://enigma2-pli-nightly.3.diff" >> smart-rules-e2;;
+        	4) echo "  it://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880" >> smart-rules-e2
+        	echo "  patch:file://enigma2-pli-nightly.4.diff" >> smart-rules-e2;;
+        	5) echo "  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=a869076762f6e24305d6a58f95c3918e02a1442a" >> smart-rules-e2
+        	echo "  patch:file://enigma2-pli-nightly.5.diff" >> smart-rules-e2;;
+        	6) echo "  git://github.com/technic/amiko-e2-pli.git:b=testing" >> smart-rules-e2;;
+        	7) echo "  git://github.com/technic/amiko-e2-pli.git:b=last" >> smart-rules-e2;;
+        	*) echo "  git://github.com/technic/amiko-e2-pli.git:b=testing" >> smart-rules-e2;;
+        esac
+        echo ";" >> smart-rules-e2
+fi
 
 ##############################################
 
