@@ -72,6 +72,9 @@ include make/externe-plugins.mk
 # ExterneSkins
 include make/externe-skins.mk
 
+# Include xbmc-nightly gui targets
+include make/xbmc-nightly.mk
+
 # Include enigma2-pli-nightly gui targets
 include make/enigma2-pli-nightly.mk
 
