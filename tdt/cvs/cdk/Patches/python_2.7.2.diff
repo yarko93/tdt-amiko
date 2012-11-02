@@ -98,19 +98,6 @@ diff -urN Python-2.7.2/configure.in ltib/rpm/BUILD/Python-2.7.2/configure.in
  #ifdef HAVE_SYS_TYPES_H
  #include <sys/types.h>
  #endif
---- Python-2.7.2.orig/Modules/main.c	2010-06-13 02:50:39.000000000 -0400
-+++ Python-2.7.2/Modules/main.c	2010-12-26 10:09:34.300455892 -0500
-@@ -329,8 +329,7 @@
- 
-         /* case 'J': reserved for Jython */
- 
--        case 'O':
--            Py_OptimizeFlag++;
-+        case 'O': /* ignore it */
-             break;
- 
-         case 'B':
-
 
 --- Python-2.7.2.orig/Lib/distutils/unixccompiler.py	2010-06-27 08:36:16.000000000 -0400
 +++ Python-2.7.2/Lib/distutils/unixccompiler.py	2010-12-26 10:09:44.282632589 -0500
@@ -482,14 +469,5 @@ diff -urN Python-2.7.2/setup.py ltib/rpm/BUILD/Python-2.7.2/setup.py
  
                  res = os.system(cmd)
                  if res or not os.path.exists(ffi_configfile):
---- Python-2.7.2.orig/Python/compile.c
-+++ Python-2.7.2/Python/compile.c
-@@ -32,7 +32,7 @@
- #include "symtable.h"
- #include "opcode.h"
- 
--int Py_OptimizeFlag = 0;
-+int Py_OptimizeFlag = 1;
- 
- #define DEFAULT_BLOCK_SIZE 16
+
  #define DEFAULT_BLOCKS 8
