@@ -2,12 +2,6 @@
 # Make Extern-Plugins
 #
 #
-if ENABLE_MEDIAFWGSTREAMER
-ENIGMA2_FLAGS =
-else
-ENIGMA2_FLAGS = --enable-libeplayer3
-endif
-
 DESCRIPTION_e2plugin := Additional plugins for Enigma2
 
 PKGR_e2plugin = r2
