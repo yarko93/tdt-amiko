@@ -54,13 +54,15 @@ SPARK_PATCHES_24 = $(COMMONPATCHES_24) \
 		$(if $(P0207),linux-sh4-i2c-stm-downgrade_stm24$(PATCH_STR).patch) \
 		$(if $(P0209),linux-sh4-linux_yaffs2_stm24_0209.patch) \
 		$(if $(P0207)$(P0209),linux-sh4-lirc_stm.patch) \
-		$(if $(P0210)$(P0211),linux-sh4-lirc_stm_stm24$(PATCH_STR).patch)
+		$(if $(P0210)$(P0211),linux-sh4-lirc_stm_stm24$(PATCH_STR).patch) \
+		$(if $(P0211),linux-sh4-fix-crash-usb-reboot_stm24_0211.diff)
 
 SPARK7162_PATCHES_24 = $(COMMONPATCHES_24) \
 		linux-sh4-stmmac_stm24$(PATCH_STR).patch \
 		bpa2-ignore-bigphysarea-kernel-parameter.patch \
 		linux-sh4-lmb_stm24$(PATCH_STR).patch \
-		linux-sh4-spark7162_setup_stm24$(PATCH_STR).patch
+		linux-sh4-spark7162_setup_stm24$(PATCH_STR).patch \
+		$(if $(P0211),linux-sh4-fix-crash-usb-reboot_stm24_0211.diff)
 
 KERNELPATCHES_24 =  \
 		$(if $(HL101),$(HL101_PATCHES_24)) \
