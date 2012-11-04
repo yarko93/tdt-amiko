@@ -4,19 +4,16 @@ CURDIR=`pwd`
 KATIDIR=${CURDIR%/cvs/cdk}
 export PATH=/usr/sbin:/sbin:$PATH
 CONFIGPARAM=`cat lastChoice`
-
-
-echo "
-                                                db        MM°°°Mq.          MM°°°Mq.
-                                               ;MM        MM    MM.         MM    MM
- ,pW°Wq.    MMooMAo.  .gP°Ya    MMpMMMb.      ,V^MM.      MM   ,M9          MM   ,M9
-6W'    Wb   MM    Wb ,M'   Yb   MM    MM     ,M   MM      MMmmdM9           MMmmdM9  
-8M     M8   MM    M8 8M°°°°°°   MM    MM     AbmmmqMA     MM  YM.   mmmmm   MM       
-YA.   ,A9   MM   ,AP YM.    ,   MM    MM    A'     VML    MM    Mb          MM       
-  Ybmd9     MMbmmd'    Mbmmd   JMML  JMML  AMA     AMMA  JMML   JMM        JMML      
-            MM                                                                       
-           JMML"
-
+##############################################
+echo "			     ___  ______         ______		
+                            / _ \ | ___ \        | ___ \	
+  ___   _ __    ___  _ __  / /_\ \| |_/ / ______ | |_/ /	
+ / _ \ | '_ \  / _ \| '_ \ |  _  ||    / |______||  __/	
+| (_) || |_) ||  __/| | | || | | || |\ \         | |	
+ \___/ | .__/  \___||_| |_|\_| |_/\_| \_|        \_|	
+       | |	
+       |_|  "
+##############################################
 echo && \
 echo "Performing autogen.sh..." && \
 echo "------------------------" && \
