@@ -30,10 +30,19 @@ echo && \
 echo "-----------------------"
 echo "Your build enivroment is ready :-)"
 echo "Your next step could be:"
-echo "make yaud-enigma2-nightly"
-echo "make yaud-enigma2-pli-nightly"
-echo "make yaud-enigma2-pli-nightly-full"
-echo "make yaud-neutrino-hd2"
-echo "make yaud-vdr"
-echo "make yaud-xbmc-nightly"
+case "$CONFIGPARAM" in
+        *--enable-e2pd*)
+        echo "make yaud-enigma2-pli-nightly"
+        echo "make yaud-enigma2-pli-nightly-full";;
+        *--enable-e2d*)
+        echo "make yaud-enigma2-nightly";;
+        *--enable-nhd*)
+        echo "make yaud-neutrino-hd2";;
+        *--enable-xbd*)
+        echo "make yaud-xbmc-nightly";;
+        *--enable-vdr*)
+        echo "make yaud-vdr";;
+        *)
+        echo "Run ./make.sh an select Image!";;
+esac
 echo "-----------------------"
