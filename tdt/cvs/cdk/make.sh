@@ -1,15 +1,13 @@
 #!/bin/bash
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
- echo "Parameter 1: target system (1-28)"
- echo "Parameter 2: kernel (1-12)"
+ echo "Parameter 1: target system (1-3)"
+ echo "Parameter 2: kernel (1-4)"
  echo "Parameter 3: debug (Y/N)"
- echo "Parameter 4: player (1-3)"
- echo "Parameter 5: Multicom (1-3)"
- echo "Parameter 6: Media Framework (1-2)"
- echo "Parameter 7: External LCD support (1-2)"
- echo "Parameter 8: VDR (1-3)"
- echo "Parameter 9: Graphic Framework (1-2)"
+ echo "Parameter 4: player (1-2)"
+ echo "Parameter 5: Media Framework (1-2)"
+ echo "Parameter 6: External LCD support (1-2)"
+ echo "Parameter 7: Image  (1-5)"
  exit
 fi
 
@@ -26,16 +24,14 @@ CONFIGPARAM=" \
  --enable-ccache"
 
 ##############################################
-echo "
-                                                db        MM°°°Mq.          MM°°°Mq.
-                                               ;MM        MM    MM.         MM    MM
- ,pW°Wq.    MMooMAo.  .gP°Ya    MMpMMMb.      ,V^MM.      MM   ,M9          MM   ,M9
-6W'    Wb   MM    Wb ,M'   Yb   MM    MM     ,M   MM      MMmmdM9           MMmmdM9  
-8M     M8   MM    M8 8M°°°°°°   MM    MM     AbmmmqMA     MM  YM.   mmmmm   MM       
-YA.   ,A9   MM   ,AP YM.    ,   MM    MM    A'     VML    MM    Mb          MM       
-  Ybmd9     MMbmmd'    Mbmmd   JMML  JMML  AMA     AMMA  JMML   JMM        JMML      
-            MM                                                                       
-           JMML"
+echo "			     ___  ______         ______		
+                            / _ \ | ___ \        | ___ \	
+  ___   _ __    ___  _ __  / /_\ \| |_/ / ______ | |_/ /	
+ / _ \ | '_ \  / _ \| '_ \ |  _  ||    / |______||  __/	
+| (_) || |_) ||  __/| | | || | | || |\ \         | |	
+ \___/ | .__/  \___||_| |_|\_| |_/\_| \_|        \_|	
+       | |	
+       |_|  "
 ##############################################
 
 # config.guess generates different answers for some packages
@@ -123,13 +119,13 @@ echo "# Automatically generated config: don't edit" > .config
 echo "#" >> .config
 echo "export CONFIG_ZD1211REV_B=y" >> .config
 echo "export CONFIG_ZD1211=n"		>> .config
-cd -
+cd - &>/dev/null
 
 ##############################################
 
 echo -e "\nPlayer:"
-echo "   1) Player 179"
-echo "   2) Player 191 (Recommended)"
+echo "   1) Player 179 & Multicom 3.2.2 "
+echo "   2) Player 191 & Multicom 3.2.4 (Recommended)"
 case $4 in
         [1-2]) REPLY=$4
         echo -e "\nSelected player: $REPLY\n"
@@ -154,7 +150,7 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/
        if [ -L player2 ]; then
@@ -162,7 +158,7 @@ case "$REPLY" in
        fi
        ln -s player2_179 player2
        echo "export CONFIG_PLAYER_179=y" >> .config
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/stgfb
        if [ -L stmfb ]; then
@@ -173,7 +169,24 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
+       cd - &>/dev/null
+       MULTICOM="--enable-multicom322"
+       cd ../driver/include/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s multicom-3.2.2 multicom
+       cd - &>/dev/null
+
+       cd ../driver/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s multicom-3.2.2 multicom
+       echo "export CONFIG_MULTICOM322=y" >> .config
+       cd - &>/dev/null
     ;;
 	2) PLAYER="--enable-player191"
        cd ../driver/include/
@@ -190,7 +203,7 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/
        if [ -L player2 ]; then
@@ -198,7 +211,7 @@ case "$REPLY" in
        fi
        ln -s player2_191 player2
        echo "export CONFIG_PLAYER_191=y" >> .config
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/stgfb
        if [ -L stmfb ]; then
@@ -209,7 +222,24 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
+       cd - &>/dev/null
+       MULTICOM="--enable-multicom324"
+       cd ../driver/include/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s ../multicom-3.2.4/include multicom
+       cd - &>/dev/null
+
+       cd ../driver/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s multicom-3.2.4 multicom
+       echo "export CONFIG_MULTICOM324=y" >> .config
+       cd - &>/dev/null
     ;;
 	*) PLAYER="--enable-player191"
        cd ../driver/include/
@@ -226,7 +256,7 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/
        if [ -L player2 ]; then
@@ -234,7 +264,7 @@ case "$REPLY" in
        fi
        ln -s player2_191 player2
        echo "export CONFIG_PLAYER_191=y" >> .config
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/stgfb
        if [ -L stmfb ]; then
@@ -245,50 +275,15 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
-    ;;
-esac
-
-##############################################
-
-echo -e "\nMulticom:"
-echo "   1) Multicom 3.2.2     (Recommended for Player179)"
-echo "   2) Multicom 3.2.4     (Recommended for Player191)"
-case $5 in
-        [1-2]) REPLY=$5
-        echo -e "\nSelected multicom: $REPLY\n"
-        ;;
-        *)
-        read -p "Select multicom (1-3)? ";;
-esac
-
-case "$REPLY" in
-	1) MULTICOM="--enable-multicom322"
-       cd ../driver/include/
-       if [ -L multicom ]; then
-          rm multicom
-       fi
-
-       ln -s multicom-3.2.2 multicom
-       cd -
-
-       cd ../driver/
-       if [ -L multicom ]; then
-          rm multicom
-       fi
-
-       ln -s multicom-3.2.2 multicom
-       echo "export CONFIG_MULTICOM322=y" >> .config
-       cd -
-    ;;
-	2) MULTICOM="--enable-multicom324"
+       cd - &>/dev/null
+       MULTICOM="--enable-multicom324"
        cd ../driver/include/
        if [ -L multicom ]; then
           rm multicom
        fi
 
        ln -s ../multicom-3.2.4/include multicom
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/
        if [ -L multicom ]; then
@@ -297,29 +292,11 @@ case "$REPLY" in
 
        ln -s multicom-3.2.4 multicom
        echo "export CONFIG_MULTICOM324=y" >> .config
-       cd -
+       cd - &>/dev/null
     ;;
-	*) MULTICOM="--enable-multicom322";;
 esac
 
 ##############################################
-
-echo -e "\nMedia Framework:"
-echo "   1) eplayer3  (Recommended for Enigma2/PLI, Neutrino/HD, VDR)"
-echo "   2) gstreamer (Recommended for Enigma2/PLI, XBMC)"
-case $6 in
-        [1-2]) REPLY=$6
-        echo -e "\nSelected media framwork: $REPLY\n"
-        ;;
-        *)
-        read -p "Select media framwork (1-2)? ";;
-esac
-
-case "$REPLY" in
-	1) MEDIAFW="";;
-	2) MEDIAFW="--enable-mediafwgstreamer";;
-	*) MEDIAFW="";;
-esac
 
 ##############################################
 
@@ -341,21 +318,20 @@ case "$REPLY" in
 esac
 
 ##############################################
-echo -e "\Select Image (Enigma2/PLI, Neutrino, XBMC, VDR)"
+
+echo -e "\nSelect Image (Enigma2/PLI, Neutrino, XBMC, VDR): "
 echo "   1) Enigma2PLI"
 echo "   2) Enigma2"
 echo "   3) Neutrino"
 echo "   4) XBMC"
 echo "   5) VDR"
 case $8 in
-        [1-4]) REPLY=$8
+        [1-5]) REPLY=$8
         echo -e "\nSelected Image: $REPLY\n"
         ;;
         *)
         read -p "Select Image (1-5)? ";;
 esac
-case "$REPLY" in
-		[1-5])
 		if [ "$REPLY" == 1 ]; then
 		    echo -e "\nChoose enigma2 OpenPli revision:"
 			echo "   0) Newest (Can fail due to outdated patch)"
@@ -426,12 +402,12 @@ case "$REPLY" in
 			echo "	4) current inactive... comming soon"
 		    read -p "Select XBMC revision (0-2):"
 			case "$REPLY" in
-			0) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb";;
-			1) IMAGE="--enable-xbd1" GFW="--enable-graphicfwdirectfb";;
-			2) IMAGE="--enable-xbd2" GFW="--enable-graphicfwdirectfb";;
-			3) IMAGE="--enable-xbd3" GFW="--enable-graphicfwdirectfb";;
-			4) IMAGE="--enable-xbd4" GFW="--enable-graphicfwdirectfb";;
-			*) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb";;
+			0) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
+			1) IMAGE="--enable-xbd1" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
+			2) IMAGE="--enable-xbd2" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
+			3) IMAGE="--enable-xbd3" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
+			4) IMAGE="--enable-xbd4" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
+			*) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
 			esac
 		elif  [ "$REPLY" == 5 ]; then
 		    echo -e "\nChoose VDR revisions"
@@ -458,12 +434,27 @@ case "$REPLY" in
 			*) IMAGE="--enable-vdr1722";;
 			esac
 		fi
-		;;
-	*)
-esac
 
 ##############################################
 
+if [[ "$IMAGE" == --enable-e2* ]]; then
+  echo -e "\nMedia Framework:"
+  echo "   1) eplayer3 "
+  echo "   2) gstreamer "
+  case $6 in
+	  [1-2]) REPLY=$6
+	  echo -e "\nSelected media framwork: $REPLY\n"
+	  ;;
+	  *)
+	  read -p "Select media framwork (1-2)? ";;
+  esac
+
+  case "$REPLY" in
+	1) MEDIAFW="";;
+	2) MEDIAFW="--enable-mediafwgstreamer";;
+	*) MEDIAFW="";;
+  esac
+fi
 ##############################################
 
 CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $EXTERNAL_LCD $IMAGE $GFW"
@@ -487,10 +478,19 @@ echo $CONFIGPARAM >lastChoice
 echo "-----------------------"
 echo "Your build enivroment is ready :-)"
 echo "Your next step could be:"
-echo "make yaud-enigma2-nightly"
-echo "make yaud-enigma2-pli-nightly"
-echo "make yaud-enigma2-pli-nightly-full"
-echo "make yaud-neutrino-hd2"
-echo "make yaud-vdr"
-echo "make yaud-xbmc-nightly"
+case "$IMAGE" in
+        --enable-e2pd*)
+        echo "make yaud-enigma2-pli-nightly"
+        echo "make yaud-enigma2-pli-nightly-full";;
+        --enable-e2d*)
+        echo "make yaud-enigma2-nightly";;
+        --enable-nhd*)
+        echo "make yaud-neutrino-hd2";;
+        --enable-xbd*)
+        echo "make yaud-xbmc-nightly";;
+        --enable-vdr*)
+        echo "make yaud-vdr";;
+        *)
+        echo "Run ./make.sh again an select Image!";;
+esac   
 echo "-----------------------"
