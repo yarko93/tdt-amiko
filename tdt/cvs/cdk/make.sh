@@ -123,13 +123,13 @@ echo "# Automatically generated config: don't edit" > .config
 echo "#" >> .config
 echo "export CONFIG_ZD1211REV_B=y" >> .config
 echo "export CONFIG_ZD1211=n"		>> .config
-cd -
+cd - &>/dev/null
 
 ##############################################
 
 echo -e "\nPlayer:"
-echo "   1) Player 179"
-echo "   2) Player 191 (Recommended)"
+echo "   1) Player 179 & Multicom 3.2.2 "
+echo "   2) Player 191 & Multicom 3.2.4 (Recommended)"
 case $4 in
         [1-2]) REPLY=$4
         echo -e "\nSelected player: $REPLY\n"
@@ -154,7 +154,7 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/
        if [ -L player2 ]; then
@@ -162,7 +162,7 @@ case "$REPLY" in
        fi
        ln -s player2_179 player2
        echo "export CONFIG_PLAYER_179=y" >> .config
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/stgfb
        if [ -L stmfb ]; then
@@ -173,7 +173,24 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
+       cd - &>/dev/null
+       MULTICOM="--enable-multicom322"
+       cd ../driver/include/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s multicom-3.2.2 multicom
+       cd - &>/dev/null
+
+       cd ../driver/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s multicom-3.2.2 multicom
+       echo "export CONFIG_MULTICOM322=y" >> .config
+       cd - &>/dev/null
     ;;
 	2) PLAYER="--enable-player191"
        cd ../driver/include/
@@ -190,7 +207,7 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/
        if [ -L player2 ]; then
@@ -198,7 +215,7 @@ case "$REPLY" in
        fi
        ln -s player2_191 player2
        echo "export CONFIG_PLAYER_191=y" >> .config
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/stgfb
        if [ -L stmfb ]; then
@@ -209,7 +226,24 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
+       cd - &>/dev/null
+       MULTICOM="--enable-multicom324"
+       cd ../driver/include/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s ../multicom-3.2.4/include multicom
+       cd - &>/dev/null
+
+       cd ../driver/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s multicom-3.2.4 multicom
+       echo "export CONFIG_MULTICOM324=y" >> .config
+       cd - &>/dev/null
     ;;
 	*) PLAYER="--enable-player191"
        cd ../driver/include/
@@ -226,7 +260,7 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/
        if [ -L player2 ]; then
@@ -234,7 +268,7 @@ case "$REPLY" in
        fi
        ln -s player2_191 player2
        echo "export CONFIG_PLAYER_191=y" >> .config
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/stgfb
        if [ -L stmfb ]; then
@@ -245,50 +279,15 @@ case "$REPLY" in
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
-       cd -
-    ;;
-esac
-
-##############################################
-
-echo -e "\nMulticom:"
-echo "   1) Multicom 3.2.2     (Recommended for Player179)"
-echo "   2) Multicom 3.2.4     (Recommended for Player191)"
-case $5 in
-        [1-2]) REPLY=$5
-        echo -e "\nSelected multicom: $REPLY\n"
-        ;;
-        *)
-        read -p "Select multicom (1-3)? ";;
-esac
-
-case "$REPLY" in
-	1) MULTICOM="--enable-multicom322"
-       cd ../driver/include/
-       if [ -L multicom ]; then
-          rm multicom
-       fi
-
-       ln -s multicom-3.2.2 multicom
-       cd -
-
-       cd ../driver/
-       if [ -L multicom ]; then
-          rm multicom
-       fi
-
-       ln -s multicom-3.2.2 multicom
-       echo "export CONFIG_MULTICOM322=y" >> .config
-       cd -
-    ;;
-	2) MULTICOM="--enable-multicom324"
+       cd - &>/dev/null
+       MULTICOM="--enable-multicom324"
        cd ../driver/include/
        if [ -L multicom ]; then
           rm multicom
        fi
 
        ln -s ../multicom-3.2.4/include multicom
-       cd -
+       cd - &>/dev/null
 
        cd ../driver/
        if [ -L multicom ]; then
@@ -297,10 +296,11 @@ case "$REPLY" in
 
        ln -s multicom-3.2.4 multicom
        echo "export CONFIG_MULTICOM324=y" >> .config
-       cd -
+       cd - &>/dev/null
     ;;
-	*) MULTICOM="--enable-multicom322";;
 esac
+
+##############################################
 
 ##############################################
 
@@ -341,21 +341,20 @@ case "$REPLY" in
 esac
 
 ##############################################
-echo -e "\Select Image (Enigma2/PLI, Neutrino, XBMC, VDR)"
+
+echo -e "\nSelect Image (Enigma2/PLI, Neutrino, XBMC, VDR): "
 echo "   1) Enigma2PLI"
 echo "   2) Enigma2"
 echo "   3) Neutrino"
 echo "   4) XBMC"
 echo "   5) VDR"
 case $8 in
-        [1-4]) REPLY=$8
+        [1-5]) REPLY=$8
         echo -e "\nSelected Image: $REPLY\n"
         ;;
         *)
         read -p "Select Image (1-5)? ";;
 esac
-case "$REPLY" in
-		[1-5])
 		if [ "$REPLY" == 1 ]; then
 		    echo -e "\nChoose enigma2 OpenPli revision:"
 			echo "   0) Newest (Can fail due to outdated patch)"
@@ -458,9 +457,6 @@ case "$REPLY" in
 			*) IMAGE="--enable-vdr1722";;
 			esac
 		fi
-		;;
-	*)
-esac
 
 ##############################################
 
