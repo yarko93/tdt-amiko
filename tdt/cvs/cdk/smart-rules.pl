@@ -38,8 +38,22 @@ sub load ($$)
   }
   
   my $lines;
+  my $start = 0;
   while ( <$fh> )
   {
+   if ( $_ =~ m#^\]\]END# )
+    {
+      last;
+    }
+    if ( $_ =~ m#^BEGIN\[\[# )
+    {
+      $start = 1;
+      next;
+    }
+    if ( not $start)
+    {
+      next;
+    }
     $_ =~ s/#.*$//;
     $lines .= $_ if not $_ =~ m#^\s+$#;
   }

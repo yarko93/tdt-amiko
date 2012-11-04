@@ -171,7 +171,7 @@ cvs/cdk/openvpn-2.1.1/
 cvs/cdk/opkg-0.1.8/
 cvs/cdk/portmap_6.0/
 cvs/cdk/u-boot/
-cvs/cdk/rules-downcheck.pl
+cvs/cdk/smart-rules
 cvs/cdk/util-linux-2.12r/
 cvs/cdk/vsftpd-2.0.7/
 cvs/cdk/zlib-1.2.3/

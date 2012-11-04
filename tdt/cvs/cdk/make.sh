@@ -26,17 +26,16 @@ CONFIGPARAM=" \
  --enable-ccache"
 
 ##############################################
-
 echo "
-  _______                     _____              _     _         _
- |__   __|                   |  __ \            | |   | |       | |
-    | | ___  __ _ _ __ ___   | |  | |_   _  ____| | __| |_  __ _| | ___ ___
-    | |/ _ \/ _\` | '_ \` _ \  | |  | | | | |/  __| |/ /| __|/ _\` | |/ _ | __|
-    | |  __/ (_| | | | | | | | |__| | |_| |  (__|   < | |_| (_| | |  __|__ \\
-    |_|\___|\__,_|_| |_| |_| |_____/ \__,_|\____|_|\_\ \__|\__,_|_|\___|___/
-
-"
-
+                                                db        MM°°°Mq.          MM°°°Mq.
+                                               ;MM        MM    MM.         MM    MM
+ ,pW°Wq.    MMooMAo.  .gP°Ya    MMpMMMb.      ,V^MM.      MM   ,M9          MM   ,M9
+6W'    Wb   MM    Wb ,M'   Yb   MM    MM     ,M   MM      MMmmdM9           MMmmdM9  
+8M     M8   MM    M8 8M°°°°°°   MM    MM     AbmmmqMA     MM  YM.   mmmmm   MM       
+YA.   ,A9   MM   ,AP YM.    ,   MM    MM    A'     VML    MM    Mb          MM       
+  Ybmd9     MMbmmd'    Mbmmd   JMML  JMML  AMA     AMMA  JMML   JMM        JMML      
+            MM                                                                       
+           JMML"
 ##############################################
 
 # config.guess generates different answers for some packages
@@ -72,10 +71,10 @@ case $1 in
 esac
 
 case "$REPLY" in
-	 7) TARGET="--enable-hl101";;
-	18) TARGET="--enable-spark";;
-	20) TARGET="--enable-spark7162";;
-	 *) TARGET="--enable-spark";;
+	1) TARGET="--enable-hl101";;
+	2) TARGET="--enable-spark";;
+	3) TARGET="--enable-spark7162";;
+	*) TARGET="--enable-spark";;
 esac
 CONFIGPARAM="$CONFIGPARAM $TARGET"
 
@@ -98,11 +97,11 @@ case $2 in
 esac
 
 case "$REPLY" in
-	1)  KERNEL="--enable-stm24 --enable-p0207";STMFB="stm24";;
+	1) KERNEL="--enable-stm24 --enable-p0207";STMFB="stm24";;
 	2) KERNEL="--enable-stm24 --enable-p0209";STMFB="stm24";;
 	3) KERNEL="--enable-stm24 --enable-p0210";STMFB="stm24";;
 	4) KERNEL="--enable-stm24 --enable-p0211";STMFB="stm24";;
-	*)  KERNEL="--enable-stm24 --enable-p0210";STMFB="stm24";;
+	*) KERNEL="--enable-stm24 --enable-p0210";STMFB="stm24";;
 esac
 CONFIGPARAM="$CONFIGPARAM $KERNEL"
 
@@ -306,7 +305,7 @@ esac
 ##############################################
 
 echo -e "\nMedia Framework:"
-echo "   1) eplayer3  (Recommended for Enigma1/2/PLI, Neutrino/HD, VDR)"
+echo "   1) eplayer3  (Recommended for Enigma2/PLI, Neutrino/HD, VDR)"
 echo "   2) gstreamer (Recommended for Enigma2/PLI, XBMC)"
 case $6 in
         [1-2]) REPLY=$6
@@ -342,72 +341,132 @@ case "$REPLY" in
 esac
 
 ##############################################
-
-
-##############################################
-
-echo -e "\nVDR-1.7.XX:"
-echo "   1) No"
-echo "   2) VDR-1.7.22"
-echo "   3) VDR-1.7.27"
+echo -e "\Select Image (Enigma2/PLI, Neutrino, XBMC, VDR)"
+echo "   1) Enigma2PLI"
+echo "   2) Enigma2"
+echo "   3) Neutrino"
+echo "   4) XBMC"
+echo "   5) VDR"
 case $8 in
-	[1-3]) REPLY=$8
-        echo -e "\nSelected VDR-1.7.XX: $REPLY\n"
+        [1-4]) REPLY=$8
+        echo -e "\nSelected Image: $REPLY\n"
         ;;
         *)
-        read -p "Select VDR-1.7.XX (1-3)? ";;
+        read -p "Select Image (1-5)? ";;
 esac
 case "$REPLY" in
-	1) VDR=""
-       cd ../apps/vdr/
-       if [ -L vdr ]; then
-          rm vdr
-       fi
-       cd -
-    ;;
-	2) VDR="--enable-vdr1722"
-       cd ../apps/vdr/
-       if [ -L vdr ]; then
-          rm vdr
-       fi
-
-       ln -s vdr-1.7.22 vdr
-       cd -
-    ;;
-    	3) VDR="--enable-vdr1727"
-       cd ../apps/vdr/
-       if [ -L vdr ]; then
-          rm vdr
-       fi
-
-       ln -s vdr-1.7.27 vdr
-       cd -
-    ;;
-	*) VDR="--enable-vdr1722";;
+		[1-5])
+		if [ "$REPLY" == 1 ]; then
+		    echo -e "\nChoose enigma2 OpenPli revision:"
+			echo "   0) Newest (Can fail due to outdated patch)"
+			echo "   1) Sat, 17 Mar 2012 19:51 - E2 OpenPli 945aeb939308b3652b56bc6c577853369d54a537"
+			echo "   2) Sat, 18 May 2012 15:26 - E2 OpenPli 839e96b79600aba73f743fd39628f32bc1628f4c"
+			echo "   3) Mon, 20 Aug 2012 16:00 - E2 OpenPli 51a7b9349070830b5c75feddc52e97a1109e381e"
+			echo "   4) Fri, 24 Aug 2012 23:42 - E2 OpenPli 002b85aa8350e9d8e88f75af48c3eb8a6cdfb880"
+			echo "   5) Sun, 16 Sep 2012 14:53 - E2 OpenPli a869076762f6e24305d6a58f95c3918e02a1442a"
+			echo "   6) AR-P - E2 OpenPli branch testing"
+			echo "   7) AR-P - E2 OpenPli branch last"
+			echo "   8) AR-P - E2 OpenPli branch master"
+		    read -p "Select enigma2 OpenPli revision (0-8):"
+			
+			case "$REPLY" in
+			0) IMAGE="--enable-e2pd0";;
+			1) IMAGE="--enable-e2pd1";;
+			2) IMAGE="--enable-e2pd2";;
+			3) IMAGE="--enable-e2pd3";;
+			4) IMAGE="--enable-e2pd4";;
+			5) IMAGE="--enable-e2pd5";;
+			6) IMAGE="--enable-e2pd6";;
+			7) IMAGE="--enable-e2pd7";;
+			8) IMAGE="--enable-e2pd8";;
+			*) IMAGE="--enable-e2pd8";;
+			esac
+		elif [ "$REPLY" == 2 ]; then
+		    echo -e "\nChoose enigma2 revisions:"
+			echo "	0) Newest (Can fail due to outdated patch)"
+			echo "	1) Sat, 29 Mar 2011 13:49 - E2 V3.0 e013d09af0e010f15e225a12dcc217abc052ee19"
+			echo "	2) Current E2 gitgui arp-team no gstreamer"
+			echo "	3) Current E2 gitgui arp-team"
+			echo "	4) inactive"
+			echo "	5) Fri,  5 Nov 2010 00:16 - E2 V2.4 libplayer3 7fd4241a1d7b8d7c36385860b24882636517473b"
+			echo "	6) Wed,  6 Jul 2011 11:17 - E2 V3.1 gstreamer  388dcd814d4e99720cb9a6c769611be4951e4ad4"
+			echo "	7) current inactive... comming soon, here is the next stable (case 7 == DIFF=7)"
+			echo "	8) current inactive... comming soon, here is the next stable (case 8 == DIFF=8)"
+		    read -p "Select enigma2 revision (0-8):"
+			case "$REPLY" in
+			0) IMAGE="--enable-e2d0";;
+			1) IMAGE="--enable-e2d1";;
+			2) IMAGE="--enable-e2d2";;
+			3) IMAGE="--enable-e2d3";;
+			4) IMAGE="--enable-e2d4";;
+			5) IMAGE="--enable-e2d5";;
+			6) IMAGE="--enable-e2d6";;
+			7) IMAGE="--enable-e2d7";;
+			8) IMAGE="--enable-e2d8";;
+			*) IMAGE="--enable-e2d8";;
+			esac
+		elif [ "$REPLY" == 3 ]; then
+		    echo -e "\nChoose Neutrino revisions:"
+			echo "	0) current inactive... comming soon"
+			echo "	1) current inactive... comming soon"
+			echo "	2) current inactive... comming soon"
+		    read -p "Select Neutrino revision (0-2):"
+			case "$REPLY" in
+			0) IMAGE="--enable-nhd0";;
+			1) IMAGE="--enable-nhd1";;
+			2) IMAGE="--enable-nhd2";;
+			*) IMAGE="--enable-nhd0";;
+			esac
+		elif [ "$REPLY" == 4 ]; then
+		    echo -e "\nChoose XBMC revisions:"
+			echo "	0) Newest (Can fail due to outdated patch)"
+			echo "	1) Sat, 14 Apr 2012 12:36 - 460e79416c5cb13010456794f36f89d49d25da75"
+			echo "	2) Sun, 10 Jun 2012 13:53 - 327710767d2257dad27e3885effba1d49d4557f0"
+			echo "	3) Fr,  31 Aug 2012 22:34 - Frodo_alpha5 - 12840c28d8fbfd71c26be798ff6b13828b05b168"
+			echo "	4) current inactive... comming soon"
+		    read -p "Select XBMC revision (0-2):"
+			case "$REPLY" in
+			0) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb";;
+			1) IMAGE="--enable-xbd1" GFW="--enable-graphicfwdirectfb";;
+			2) IMAGE="--enable-xbd2" GFW="--enable-graphicfwdirectfb";;
+			3) IMAGE="--enable-xbd3" GFW="--enable-graphicfwdirectfb";;
+			4) IMAGE="--enable-xbd4" GFW="--enable-graphicfwdirectfb";;
+			*) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb";;
+			esac
+		elif  [ "$REPLY" == 5 ]; then
+		    echo -e "\nChoose VDR revisions"
+			echo "   1) VDR-1.7.22"
+			echo "   2) VDR-1.7.27"
+		    read -p "Select VDR-1.7.XX (1-2)? "
+			case "$REPLY" in
+			1) IMAGE="--enable-vdr1722"
+			    cd ../apps/vdr/
+			if [ -L vdr ]; then
+			    rm vdr
+			fi
+			    ln -s vdr-1.7.22 vdr
+			cd -
+			;;
+			2) IMAGE="--enable-vdr1727"
+			    cd ../apps/vdr/
+			if [ -L vdr ]; then
+			    rm vdr
+			fi
+			    ln -s vdr-1.7.27 vdr
+			cd -
+			;;
+			*) IMAGE="--enable-vdr1722";;
+			esac
+		fi
+		;;
+	*)
 esac
 
 ##############################################
 
-echo -e "\nGraphic Framework:"
-echo "   1) Framebuffer (Enigma1/2/PLI, Neutrino1/HD, VDR)"
-echo "   2) DirectFB    (XBMC for UFS912, UFS913, Atevio7500)"
-case $9 in
-        [1-2]) REPLY=$9
-        echo -e "\nSelected Graphic Framework: $REPLY\n"
-        ;;
-        *)
-        read -p "Select Graphic Framework (1-2)? ";;
-esac
-
-case "$REPLY" in
-	1) GFW="";;
-	2) GFW="--enable-graphicfwdirectfb";;
-	*) GFW="";;
-esac
-
 ##############################################
 
-CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $EXTERNAL_LCD $VDR $GFW"
+CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $EXTERNAL_LCD $IMAGE $GFW"
 
 ##############################################
 

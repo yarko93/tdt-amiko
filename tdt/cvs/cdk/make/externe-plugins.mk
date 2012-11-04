@@ -30,7 +30,7 @@ $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
 			PY_PATH=$(targetprefix)/usr \
-			$(PLATFORM_CPPFLAGS)
+			$(PLATFORM_CPPFLAGS) $(ENIGMA2_FLAGS)
 
 enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 
