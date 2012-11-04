@@ -300,25 +300,6 @@ esac
 
 ##############################################
 
-echo -e "\nMedia Framework:"
-echo "   1) eplayer3  (Recommended for Enigma2/PLI, Neutrino/HD, VDR)"
-echo "   2) gstreamer (Recommended for Enigma2/PLI, XBMC)"
-case $6 in
-        [1-2]) REPLY=$6
-        echo -e "\nSelected media framwork: $REPLY\n"
-        ;;
-        *)
-        read -p "Select media framwork (1-2)? ";;
-esac
-
-case "$REPLY" in
-	1) MEDIAFW="";;
-	2) MEDIAFW="--enable-mediafwgstreamer";;
-	*) MEDIAFW="";;
-esac
-
-##############################################
-
 echo -e "\nExternal LCD support:"
 echo "   1) No external LCD"
 echo "   2) graphlcd for external LCD"
@@ -421,12 +402,12 @@ esac
 			echo "	4) current inactive... comming soon"
 		    read -p "Select XBMC revision (0-2):"
 			case "$REPLY" in
-			0) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb";;
-			1) IMAGE="--enable-xbd1" GFW="--enable-graphicfwdirectfb";;
-			2) IMAGE="--enable-xbd2" GFW="--enable-graphicfwdirectfb";;
-			3) IMAGE="--enable-xbd3" GFW="--enable-graphicfwdirectfb";;
-			4) IMAGE="--enable-xbd4" GFW="--enable-graphicfwdirectfb";;
-			*) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb";;
+			0) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
+			1) IMAGE="--enable-xbd1" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
+			2) IMAGE="--enable-xbd2" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
+			3) IMAGE="--enable-xbd3" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
+			4) IMAGE="--enable-xbd4" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
+			*) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
 			esac
 		elif  [ "$REPLY" == 5 ]; then
 		    echo -e "\nChoose VDR revisions"
@@ -456,6 +437,24 @@ esac
 
 ##############################################
 
+if [[ "$IMAGE" == --enable-e2* ]]; then
+  echo -e "\nMedia Framework:"
+  echo "   1) eplayer3 "
+  echo "   2) gstreamer "
+  case $6 in
+	  [1-2]) REPLY=$6
+	  echo -e "\nSelected media framwork: $REPLY\n"
+	  ;;
+	  *)
+	  read -p "Select media framwork (1-2)? ";;
+  esac
+
+  case "$REPLY" in
+	1) MEDIAFW="";;
+	2) MEDIAFW="--enable-mediafwgstreamer";;
+	*) MEDIAFW="";;
+  esac
+fi
 ##############################################
 
 CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $EXTERNAL_LCD $IMAGE $GFW"
