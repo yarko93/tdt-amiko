@@ -1,15 +1,13 @@
 #!/bin/bash
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
- echo "Parameter 1: target system (1-28)"
- echo "Parameter 2: kernel (1-12)"
+ echo "Parameter 1: target system (1-3)"
+ echo "Parameter 2: kernel (1-4)"
  echo "Parameter 3: debug (Y/N)"
- echo "Parameter 4: player (1-3)"
- echo "Parameter 5: Multicom (1-3)"
- echo "Parameter 6: Media Framework (1-2)"
- echo "Parameter 7: External LCD support (1-2)"
- echo "Parameter 8: VDR (1-3)"
- echo "Parameter 9: Graphic Framework (1-2)"
+ echo "Parameter 4: player (1-2)"
+ echo "Parameter 5: Media Framework (1-2)"
+ echo "Parameter 6: External LCD support (1-2)"
+ echo "Parameter 7: Image  (1-5)"
  exit
 fi
 
@@ -26,16 +24,14 @@ CONFIGPARAM=" \
  --enable-ccache"
 
 ##############################################
-echo "
-                                                db        MM°°°Mq.          MM°°°Mq.
-                                               ;MM        MM    MM.         MM    MM
- ,pW°Wq.    MMooMAo.  .gP°Ya    MMpMMMb.      ,V^MM.      MM   ,M9          MM   ,M9
-6W'    Wb   MM    Wb ,M'   Yb   MM    MM     ,M   MM      MMmmdM9           MMmmdM9  
-8M     M8   MM    M8 8M°°°°°°   MM    MM     AbmmmqMA     MM  YM.   mmmmm   MM       
-YA.   ,A9   MM   ,AP YM.    ,   MM    MM    A'     VML    MM    Mb          MM       
-  Ybmd9     MMbmmd'    Mbmmd   JMML  JMML  AMA     AMMA  JMML   JMM        JMML      
-            MM                                                                       
-           JMML"
+echo "			     ___  ______         ______		
+                            / _ \ | ___ \        | ___ \	
+  ___   _ __    ___  _ __  / /_\ \| |_/ / ______ | |_/ /	
+ / _ \ | '_ \  / _ \| '_ \ |  _  ||    / |______||  __/	
+| (_) || |_) ||  __/| | | || | | || |\ \         | |	
+ \___/ | .__/  \___||_| |_|\_| |_/\_| \_|        \_|	
+       | |	
+       |_|  "
 ##############################################
 
 # config.guess generates different answers for some packages
