@@ -1,6 +1,6 @@
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/configure.ac enigma2-nightly.patched/configure.ac
---- enigma2-nightly.org/configure.ac	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/configure.ac	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/configure.ac enigma2-nightly.patched/configure.ac
+--- enigma2-nightly.org/configure.ac	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/configure.ac	2012-09-28 13:53:18.000000000 +0200
 @@ -34,6 +34,26 @@
  PKG_CHECK_MODULES(LIBDDVD, libdreamdvd, HAVE_LIBDDVD="yes", HAVE_LIBDDVD="no")
  AM_CONDITIONAL(HAVE_LIBDDVD, test "$HAVE_LIBDDVD" = "yes")
@@ -67,9 +67,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/configure.ac enigm
  lib/python/Tools/Makefile
  lib/service/Makefile
  lib/components/Makefile
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/include/shmE2.h enigma2-nightly.patched/include/shmE2.h
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/include/shmE2.h enigma2-nightly.patched/include/shmE2.h
 --- enigma2-nightly.org/include/shmE2.h	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/include/shmE2.h	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/include/shmE2.h	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,337 @@
 +#ifndef SHME2
 +#define SHME2
@@ -408,9 +408,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/include/shmE2.h en
 +}
 +
 +#endif
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/base/etpm.cpp enigma2-nightly.patched/lib/base/etpm.cpp
---- enigma2-nightly.org/lib/base/etpm.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/base/etpm.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/base/etpm.cpp enigma2-nightly.patched/lib/base/etpm.cpp
+--- enigma2-nightly.org/lib/base/etpm.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/base/etpm.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -6,14 +6,17 @@
  #include <string.h>
  #include <sys/un.h>
@@ -505,9 +505,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/base/etpm.cpp 
 +#endif
  	return "";
  }
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/base/filepush.cpp enigma2-nightly.patched/lib/base/filepush.cpp
---- enigma2-nightly.org/lib/base/filepush.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/base/filepush.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/base/filepush.cpp enigma2-nightly.patched/lib/base/filepush.cpp
+--- enigma2-nightly.org/lib/base/filepush.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/base/filepush.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -4,6 +4,21 @@
  #include <fcntl.h>
  #include <sys/ioctl.h>
@@ -740,9 +740,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/base/filepush.
  void eFilePushThread::start(int fd, int fd_dest)
  {
  	eRawFile *f = new eRawFile();
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/base/filepush.h enigma2-nightly.patched/lib/base/filepush.h
---- enigma2-nightly.org/lib/base/filepush.h	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/base/filepush.h	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/base/filepush.h enigma2-nightly.patched/lib/base/filepush.h
+--- enigma2-nightly.org/lib/base/filepush.h	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/base/filepush.h	2012-09-28 13:53:18.000000000 +0200
 @@ -13,6 +13,11 @@
  public:
  	virtual void getNextSourceSpan(off_t current_offset, size_t bytes_read, off_t &start, size_t &size)=0;
@@ -782,9 +782,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/base/filepush.
  	int m_buf_start, m_buf_end, m_filter_end;
  	int m_fd_dest;
  	int m_send_pvr_commit;
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/base/ioprio.cpp enigma2-nightly.patched/lib/base/ioprio.cpp
---- enigma2-nightly.org/lib/base/ioprio.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/base/ioprio.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/base/ioprio.cpp enigma2-nightly.patched/lib/base/ioprio.cpp
+--- enigma2-nightly.org/lib/base/ioprio.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/base/ioprio.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -28,6 +28,9 @@
  	#elif defined(__mips__)
  		#define __NR_ioprio_set		4284
@@ -795,9 +795,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/base/ioprio.cp
  	#else
  		#error "Unsupported arch"
  	#endif
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/base/object.h enigma2-nightly.patched/lib/base/object.h
---- enigma2-nightly.org/lib/base/object.h	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/base/object.h	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/base/object.h enigma2-nightly.patched/lib/base/object.h
+--- enigma2-nightly.org/lib/base/object.h	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/base/object.h	2012-09-28 13:53:18.000000000 +0200
 @@ -169,6 +169,50 @@
  				if (!ref) \
  					delete this; \
@@ -849,9 +849,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/base/object.h 
  	#else
  		#warning use non optimized implementation of refcounting.
  		#define DECLARE_REF(x) 			\
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/Makefile.am enigma2-nightly.patched/lib/driver/Makefile.am
---- enigma2-nightly.org/lib/driver/Makefile.am	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/driver/Makefile.am	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/driver/Makefile.am enigma2-nightly.patched/lib/driver/Makefile.am
+--- enigma2-nightly.org/lib/driver/Makefile.am	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/driver/Makefile.am	2012-09-28 13:53:18.000000000 +0200
 @@ -16,7 +16,8 @@
  	rc.cpp \
  	rcconsole.cpp \
@@ -862,9 +862,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/Makefil
  
  driverincludedir = $(pkgincludedir)/lib/driver
  driverinclude_HEADERS = \
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/rc.cpp enigma2-nightly.patched/lib/driver/rc.cpp
---- enigma2-nightly.org/lib/driver/rc.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/driver/rc.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/driver/rc.cpp enigma2-nightly.patched/lib/driver/rc.cpp
+--- enigma2-nightly.org/lib/driver/rc.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/driver/rc.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -10,6 +10,11 @@
  #include <lib/base/init_num.h>
  #include <lib/base/eerror.h>
@@ -899,9 +899,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/rc.cpp 
  		if (enabled && !input->islocked())
  			for (std::list<eRCDevice*>::iterator i(listeners.begin()); i!=listeners.end(); ++i)
  				(*i)->handleCode((long)&ev);
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/vfd.cpp enigma2-nightly.patched/lib/driver/vfd.cpp
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/driver/vfd.cpp enigma2-nightly.patched/lib/driver/vfd.cpp
 --- enigma2-nightly.org/lib/driver/vfd.cpp	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/driver/vfd.cpp	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/driver/vfd.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,522 @@
 +#include <stdarg.h>
 +#include <stdlib.h>
@@ -1027,7 +1027,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/vfd.cpp
 +	//ioctl(fpc, FRONTPANELSCROLLMODE, &scrollMode);
 +	
 +	// display string
-+	char str[] = "        AR-P TEAM ENIGMA2";
++	char str[] = "        AAF DEV-TEAM ENIGMA2";
 +	int length = strlen(str);
 +	char dispData[MAX_CHARS + 1];
 +	int offset = 0;
@@ -1091,7 +1091,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/vfd.cpp
 +	evfd vfd;
 +	blocked = true;
 +	//vfd.vfd_clear_icons();
-+	vfd.vfd_write_string("AR-P TEAM", true);
++	vfd.vfd_write_string("AAF DEV-TEAM", true);
 +	//run 2 times through all icons 
 +	for  (int vloop = 0; vloop < 128; vloop++) {
 +#if !defined(PLATFORM_FORTIS_HDBOX) && !defined(PLATFORM_OCTAGON1008) && !defined(PLATFORM_ATEVIO7500) && !defined(PLATFORM_CUBEREVO) && !defined(PLATFORM_CUBEREVO_MINI) && !defined(PLATFORM_CUBEREVO_MINI2) && !defined(PLATFORM_CUBEREVO_MINI_FTA) && !defined(PLATFORM_CUBEREVO_250HD) && !defined(PLATFORM_CUBEREVO_2000HD) && !defined(PLATFORM_CUBEREVO_9500HD)
@@ -1425,9 +1425,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/vfd.cpp
 +{
 +	VFD_CENTER=id;
 +}
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/vfd.h enigma2-nightly.patched/lib/driver/vfd.h
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/driver/vfd.h enigma2-nightly.patched/lib/driver/vfd.h
 --- enigma2-nightly.org/lib/driver/vfd.h	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/driver/vfd.h	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/driver/vfd.h	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,48 @@
 +#ifndef VFD_H_
 +#define VFD_H_
@@ -1477,9 +1477,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/driver/vfd.h e
 +
 +
 +#endif
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/decoder.cpp enigma2-nightly.patched/lib/dvb/decoder.cpp
---- enigma2-nightly.org/lib/dvb/decoder.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb/decoder.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb/decoder.cpp enigma2-nightly.patched/lib/dvb/decoder.cpp
+--- enigma2-nightly.org/lib/dvb/decoder.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb/decoder.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -166,7 +166,11 @@
  	pes.input    = DMX_IN_FRONTEND;
  	pes.output   = DMX_OUT_DECODER;
@@ -1680,9 +1680,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/decoder.cp
  			}
  			close(f);
  		}
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/demux.cpp enigma2-nightly.patched/lib/dvb/demux.cpp
---- enigma2-nightly.org/lib/dvb/demux.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb/demux.cpp	2011-05-23 02:04:18.000000000 +0200
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb/demux.cpp enigma2-nightly.patched/lib/dvb/demux.cpp
+--- enigma2-nightly.org/lib/dvb/demux.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb/demux.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -548,6 +548,9 @@
  		eDebug("FAILED to open dvr (%s) in ts recoder (%m)", filename);
  		return -3;
@@ -1753,68 +1753,34 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/demux.cpp 
  
  	if (state & 3)
  		::close(m_source_fd);
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/dvb.cpp enigma2-nightly.patched/lib/dvb/dvb.cpp
---- enigma2-nightly.org/lib/dvb/dvb.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb/dvb.cpp	2012-02-27 22:32:36.000000000 +0100
-@@ -100,6 +100,50 @@
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb/dvb.cpp enigma2-nightly.patched/lib/dvb/dvb.cpp
+--- enigma2-nightly.org/lib/dvb/dvb.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb/dvb.cpp	2012-09-28 13:53:36.000000000 +0200
+@@ -100,6 +100,10 @@
  		m_boxtype = DM800SE;
  	else if (!strncmp(tmp, "dm7020hd\n", rd))
  		m_boxtype = DM7020HD;
 +#if defined(__sh__)
-+	else if (!strncmp(tmp, "adb_box\n", rd))
-+		m_boxtype = ADB_BOX;   
-+	else if (!strncmp(tmp, "ufs910\n", rd))
-+		m_boxtype = UFS910;
-+	else if (!strncmp(tmp, "ufs912\n", rd))
-+		m_boxtype = UFS912;
-+	else if (!strncmp(tmp, "ufs922\n", rd))
-+		m_boxtype = UFS922;
-+	else if (!strncmp(tmp, "tf7700hdpvr\n", rd))
-+		m_boxtype = TF7700HDPVR;
-+	else if (!strncmp(tmp, "hdbox\n", rd))
-+		m_boxtype = HDBOX;
-+	else if (!strncmp(tmp, "hl101\n", rd))
-+		m_boxtype = HL101;
-+	else if (!strncmp(tmp, "spark\n", rd))
-+		m_boxtype = SPARK;
-+	else if (!strncmp(tmp, "spark7162\n", rd))
-+		m_boxtype = SPARK7162;
-+	else if (!strncmp(tmp, "vip1-v2\n", rd))
-+		m_boxtype = VIP1_V2;
-+	else if (!strncmp(tmp, "vip2-v1\n", rd))
-+		m_boxtype = VIP2_V1;
-+	else if (!strncmp(tmp, "cuberevo\n", rd))
-+		m_boxtype = CUBEREVO;
-+	else if (!strncmp(tmp, "cuberevo-9500hd\n", rd))
-+		m_boxtype = CUBEREVO_9500HD;
-+	else if (!strncmp(tmp, "cuberevo-mini\n", rd))
-+		m_boxtype = CUBEREVO_MINI;
-+	else if (!strncmp(tmp, "cuberevo-mini2\n", rd))
-+		m_boxtype = CUBEREVO_MINI2;
-+	else if (!strncmp(tmp, "cuberevo-2000hd\n", rd))
-+		m_boxtype = CUBEREVO_2000HD;
-+	else if (!strncmp(tmp, "cuberevo-250hd\n", rd))
-+		m_boxtype = CUBEREVO_250HD;
-+	else if (!strncmp(tmp, "cuberevo-mini-fta\n", rd))
-+		m_boxtype = CUBEREVO_MINI_FTA;
-+	else if (!strncmp(tmp, "octagon1008\n", rd)) m_boxtype = OCTAGON1008;
-+	else if (!strncmp(tmp, "hs7810a\n", rd)) m_boxtype = HS7810A;
-+	else if (!strncmp(tmp, "hs7110\n", rd)) m_boxtype = HS7110;
-+	else if (!strncmp(tmp, "whitebox\n", rd)) m_boxtype = WHITEBOX;
-+	else if (!strncmp(tmp, "atevio7500\n", rd))
-+		m_boxtype = ATEVIO7500;
-+#endif
++    else
++		m_boxtype = SH4;
++#else
  	else {
  		eDebug("boxtype detection via /proc/stb/info not possible... use fallback via demux count!\n");
  		if (m_demux.size() == 3)
-@@ -552,7 +595,58 @@
+@@ -109,6 +113,7 @@
+ 		else
+ 			m_boxtype = DM8000;
+ 	}
++#endif
+ 
+ 	eDebug("found %zd adapter, %zd frontends(%zd sim) and %zd demux, boxtype %d",
+ 		m_adapter.size(), m_frontend.size(), m_simulate_frontend.size(), m_demux.size(), m_boxtype);
+@@ -552,7 +557,56 @@
  			}
  		}
  	}
 +#if defined(__sh__) // we use our own algo for demux detection
-+	else if (m_boxtype == ADB_BOX ||  m_boxtype == UFS910 || m_boxtype == UFS912 || m_boxtype == SPARK || m_boxtype == SPARK7162 || m_boxtype == UFS922 || m_boxtype == TF7700HDPVR || m_boxtype == HDBOX ||
-+		m_boxtype == HL101 || m_boxtype == CUBEREVO || m_boxtype == CUBEREVO_MINI || m_boxtype == CUBEREVO_MINI2 || m_boxtype == VIP1_V2 || m_boxtype == VIP2_V1 || m_boxtype == HS7810A || m_boxtype == HS7110 || m_boxtype == WHITEBOX ||
-+		m_boxtype == CUBEREVO_MINI_FTA || m_boxtype == CUBEREVO_250HD || m_boxtype == CUBEREVO_2000HD || m_boxtype == CUBEREVO_9500HD || m_boxtype == OCTAGON1008 || m_boxtype == ATEVIO7500)
++	else if (m_boxtype == SH4)
 +	{
 +		for (; i != m_demux.end(); ++i, ++n)
 +		{
@@ -1866,7 +1832,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/dvb.cpp en
  	if (unused)
  	{
  		demux = new eDVBAllocatedDemux(unused);
-@@ -1799,6 +1893,12 @@
+@@ -1799,6 +1853,12 @@
  			return -ENODEV;
  		}
  #else
@@ -1879,7 +1845,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/dvb.cpp en
  		ePtr<eDVBAllocatedDemux> &demux = m_demux ? m_demux : m_decoder_demux;
  		if (demux)
  		{
-@@ -1815,6 +1915,7 @@
+@@ -1815,6 +1875,7 @@
  			return -ENODEV;
  		}
  #endif
@@ -1887,16 +1853,16 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/dvb.cpp en
  	}
  
  	m_pvr_thread = new eDVBChannelFilePush();
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/dvb.h enigma2-nightly.patched/lib/dvb/dvb.h
---- enigma2-nightly.org/lib/dvb/dvb.h	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb/dvb.h	2012-02-27 22:29:58.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb/dvb.h enigma2-nightly.patched/lib/dvb/dvb.h
+--- enigma2-nightly.org/lib/dvb/dvb.h	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb/dvb.h	2012-09-28 13:53:39.000000000 +0200
 @@ -135,7 +135,11 @@
  	DECLARE_REF(eDVBResourceManager);
  	int avail, busy;
  
 -	enum { DM7025, DM800, DM500HD, DM800SE, DM8000, DM7020HD };
 +#if defined(__sh__)
-+	enum { DM7025, DM800, DM500HD, DM800SE, DM8000, DM7020HD, ADB_BOX, UFS910, UFS912, UFS922, TF7700HDPVR, HDBOX, HL101, CUBEREVO, CUBEREVO_MINI, CUBEREVO_MINI2, CUBEREVO_MINI_FTA, CUBEREVO_250HD, CUBEREVO_9500HD, CUBEREVO_2000HD, OCTAGON1008, VIP1_V2, VIP2_V1, SPARK, SPARK7162, ATEVIO7500, HS7810A, HS7110, WHITEBOX};
++	enum { DM7025, DM800, DM500HD, DM800SE, DM8000, DM7020HD, SH4};
 +#else
 + 	enum { DM7025, DM800, DM500HD, DM800SE, DM8000, DM7020HD };
 +#endif
@@ -1913,9 +1879,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/dvb.h enig
  
  	RESULT connectStateChange(const Slot1<void,iDVBChannel*> &stateChange, ePtr<eConnection> &connection);
  	RESULT connectEvent(const Slot2<void,iDVBChannel*,int> &eventChange, ePtr<eConnection> &connection);
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/epgcache.cpp enigma2-nightly.patched/lib/dvb/epgcache.cpp
---- enigma2-nightly.org/lib/dvb/epgcache.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb/epgcache.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb/epgcache.cpp enigma2-nightly.patched/lib/dvb/epgcache.cpp
+--- enigma2-nightly.org/lib/dvb/epgcache.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb/epgcache.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -115,11 +115,25 @@
  	int tmp = ByteSize-10;
  	memcpy(data, EITdata, 10);
@@ -2100,9 +2066,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/epgcache.c
  					for ( int i=0; i <= descridx; ++i)
  					{
  						if (descr[i] == crc32)  // found...
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/volume.cpp enigma2-nightly.patched/lib/dvb/volume.cpp
---- enigma2-nightly.org/lib/dvb/volume.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb/volume.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb/volume.cpp enigma2-nightly.patched/lib/dvb/volume.cpp
+--- enigma2-nightly.org/lib/dvb/volume.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb/volume.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -29,7 +29,9 @@
  eDVBVolumecontrol::eDVBVolumecontrol()
  {
@@ -2113,9 +2079,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb/volume.cpp
  }
  
  int eDVBVolumecontrol::openMixer()
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_appmgr.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_appmgr.cpp
---- enigma2-nightly.org/lib/dvb_ci/dvbci_appmgr.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb_ci/dvbci_appmgr.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb_ci/dvbci_appmgr.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_appmgr.cpp
+--- enigma2-nightly.org/lib/dvb_ci/dvbci_appmgr.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb_ci/dvbci_appmgr.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -6,17 +6,32 @@
  
  eDVBCIApplicationManagerSession::eDVBCIApplicationManagerSession(eDVBCISlot *tslot)
@@ -2213,9 +2179,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_a
  	return 0;
  }
  
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_camgr.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_camgr.cpp
---- enigma2-nightly.org/lib/dvb_ci/dvbci_camgr.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb_ci/dvbci_camgr.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb_ci/dvbci_camgr.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_camgr.cpp
+--- enigma2-nightly.org/lib/dvb_ci/dvbci_camgr.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb_ci/dvbci_camgr.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -5,17 +5,32 @@
  
  eDVBCICAManagerSession::eDVBCICAManagerSession(eDVBCISlot *tslot)
@@ -2296,9 +2262,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_c
  	return 0;
  }
  
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci.cpp
---- enigma2-nightly.org/lib/dvb_ci/dvbci.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb_ci/dvbci.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb_ci/dvbci.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci.cpp
+--- enigma2-nightly.org/lib/dvb_ci/dvbci.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb_ci/dvbci.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -16,6 +16,10 @@
  #include <lib/dvb_ci/dvbci_appmgr.h>
  #include <lib/dvb_ci/dvbci_mmi.h>
@@ -2925,9 +2891,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci.c
  
  	return 0;
  }
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_datetimemgr.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_datetimemgr.cpp
---- enigma2-nightly.org/lib/dvb_ci/dvbci_datetimemgr.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb_ci/dvbci_datetimemgr.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb_ci/dvbci_datetimemgr.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_datetimemgr.cpp
+--- enigma2-nightly.org/lib/dvb_ci/dvbci_datetimemgr.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb_ci/dvbci_datetimemgr.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -5,6 +5,9 @@
  
  int eDVBCIDateTimeSession::receivedAPDU(const unsigned char *tag,const void *data, int len)
@@ -2992,9 +2958,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_d
 +	eDebug("%s <", __func__);
 +#endif
  }
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci.h enigma2-nightly.patched/lib/dvb_ci/dvbci.h
---- enigma2-nightly.org/lib/dvb_ci/dvbci.h	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb_ci/dvbci.h	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb_ci/dvbci.h enigma2-nightly.patched/lib/dvb_ci/dvbci.h
+--- enigma2-nightly.org/lib/dvb_ci/dvbci.h	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb_ci/dvbci.h	2012-09-28 13:53:18.000000000 +0200
 @@ -5,6 +5,9 @@
  
  #include <lib/base/ebase.h>
@@ -3087,9 +3053,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci.h
  };
  
  struct CIPmtHandler
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_mmi.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_mmi.cpp
---- enigma2-nightly.org/lib/dvb_ci/dvbci_mmi.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb_ci/dvbci_mmi.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb_ci/dvbci_mmi.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_mmi.cpp
+--- enigma2-nightly.org/lib/dvb_ci/dvbci_mmi.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb_ci/dvbci_mmi.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -19,18 +19,34 @@
  
  eDVBCIMMISession::eDVBCIMMISession(eDVBCISlot *tslot)
@@ -3199,9 +3165,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_m
  	return 0;
  }
  
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_resmgr.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_resmgr.cpp
---- enigma2-nightly.org/lib/dvb_ci/dvbci_resmgr.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb_ci/dvbci_resmgr.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb_ci/dvbci_resmgr.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_resmgr.cpp
+--- enigma2-nightly.org/lib/dvb_ci/dvbci_resmgr.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb_ci/dvbci_resmgr.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -5,7 +5,12 @@
  
  int eDVBCIResourceManagerSession::receivedAPDU(const unsigned char *tag,const void *data, int len)
@@ -3282,9 +3248,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_r
 +#endif
  	return 0;
  }
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_session.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_session.cpp
---- enigma2-nightly.org/lib/dvb_ci/dvbci_session.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb_ci/dvbci_session.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb_ci/dvbci_session.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_session.cpp
+--- enigma2-nightly.org/lib/dvb_ci/dvbci_session.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb_ci/dvbci_session.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -14,6 +14,9 @@
  
  int eDVBCISession::buildLengthField(unsigned char *pkt, int len)
@@ -3579,9 +3545,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_s
  }
  
  eDVBCISession::~eDVBCISession()
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_ui.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_ui.cpp
---- enigma2-nightly.org/lib/dvb_ci/dvbci_ui.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/dvb_ci/dvbci_ui.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/dvb_ci/dvbci_ui.cpp enigma2-nightly.patched/lib/dvb_ci/dvbci_ui.cpp
+--- enigma2-nightly.org/lib/dvb_ci/dvbci_ui.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/dvb_ci/dvbci_ui.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -17,8 +17,14 @@
  eDVBCI_UI::eDVBCI_UI()
  	:eMMI_UI(MAX_SLOTS)
@@ -3694,9 +3660,22 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/dvb_ci/dvbci_u
  	return eDVBCIInterfaces::getInstance()->setCIClockRate(slot, rate);
  }
  
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/accel.cpp enigma2-nightly.patched/lib/gdi/accel.cpp
---- enigma2-nightly.org/lib/gdi/accel.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/gdi/accel.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/Makefile.am enigma2-nightly.patched/lib/gdi/Makefile.am
+--- enigma2-nightly.org/lib/gdi/Makefile.am	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/gdi/Makefile.am	2012-09-28 13:53:18.000000000 +0200
+@@ -26,7 +26,8 @@
+ 	lcd.cpp \
+ 	picexif.cpp \
+ 	picload.cpp \
+-	region.cpp
++	region.cpp \
++	stmfb.cpp
+ 
+ gdiincludedir = $(pkgincludedir)/lib/gdi
+ gdiinclude_HEADERS = \
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/accel.cpp enigma2-nightly.patched/lib/gdi/accel.cpp
+--- enigma2-nightly.org/lib/gdi/accel.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/gdi/accel.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -9,8 +9,25 @@
  #include <lib/gdi/gpixmap.h>
  
@@ -3821,9 +3800,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/accel.cpp 
  #ifdef ATI_ACCEL
  	ati_accel_blit(
  		src->data_phys, src->x, src->y, src->stride,
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/epng.cpp enigma2-nightly.patched/lib/gdi/epng.cpp
---- enigma2-nightly.org/lib/gdi/epng.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/gdi/epng.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/epng.cpp enigma2-nightly.patched/lib/gdi/epng.cpp
+--- enigma2-nightly.org/lib/gdi/epng.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/gdi/epng.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -4,6 +4,10 @@
  #include <lib/gdi/epng.h>
  #include <unistd.h>
@@ -3860,8 +3839,8 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/epng.cpp e
  		eDebug("error :/");
  		png_destroy_write_struct(&png_ptr, &info_ptr);
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp enigma2-nightly.patched/lib/gdi/fb.cpp
---- enigma2-nightly.org/lib/gdi/fb.cpp	2012-03-14 11:22:04.606094024 -0700
-+++ enigma2-nightly.patched/lib/gdi/fb.cpp	2012-03-16 02:35:52.000000000 -0700
+--- enigma2-nightly.org/lib/gdi/fb.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/gdi/fb.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -9,6 +9,10 @@
  
  #include <lib/gdi/fb.h>
@@ -4168,8 +4147,8 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.cpp
 +}
 +#endif
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.h enigma2-nightly.patched/lib/gdi/fb.h
---- enigma2-nightly.org/lib/gdi/fb.h	2012-03-14 11:22:04.606094024 -0700
-+++ enigma2-nightly.patched/lib/gdi/fb.h	2012-03-16 02:35:35.000000000 -0700
+--- enigma2-nightly.org/lib/gdi/fb.h	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/gdi/fb.h	2012-09-28 13:53:18.000000000 +0200
 @@ -4,10 +4,23 @@
  #include <lib/base/eerror.h>
  #include <linux/fb.h>
@@ -4218,9 +4197,9 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/fb.h e
  };
  
  #endif
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/gfbdc.cpp enigma2-nightly.patched/lib/gdi/gfbdc.cpp
---- enigma2-nightly.org/lib/gdi/gfbdc.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/gdi/gfbdc.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/gfbdc.cpp enigma2-nightly.patched/lib/gdi/gfbdc.cpp
+--- enigma2-nightly.org/lib/gdi/gfbdc.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/gdi/gfbdc.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -159,13 +159,37 @@
  
  void gFBDC::setResolution(int xres, int yres)
@@ -4288,9 +4267,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/gfbdc.cpp 
  	if (!surface.clut.data)
  	{
  		surface.clut.colors = 256;
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/gpixmap.cpp enigma2-nightly.patched/lib/gdi/gpixmap.cpp
---- enigma2-nightly.org/lib/gdi/gpixmap.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/gdi/gpixmap.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/gpixmap.cpp enigma2-nightly.patched/lib/gdi/gpixmap.cpp
+--- enigma2-nightly.org/lib/gdi/gpixmap.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/gdi/gpixmap.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -188,6 +188,9 @@
  			else
  				col=0x10101*color;
@@ -4331,9 +4310,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/gpixmap.cp
  				pal[i]^=0xFF000000;
  			}
  
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/grc.cpp enigma2-nightly.patched/lib/gdi/grc.cpp
---- enigma2-nightly.org/lib/gdi/grc.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/gdi/grc.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/grc.cpp enigma2-nightly.patched/lib/gdi/grc.cpp
+--- enigma2-nightly.org/lib/gdi/grc.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/gdi/grc.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -4,6 +4,11 @@
  #include <lib/base/init.h>
  #include <lib/base/init_num.h>
@@ -4379,22 +4358,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/grc.cpp en
  				} else
  					disableSpinner();
  			}
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/Makefile.am enigma2-nightly.patched/lib/gdi/Makefile.am
---- enigma2-nightly.org/lib/gdi/Makefile.am	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/gdi/Makefile.am	2012-03-06 19:40:12.000000000 +0100
-@@ -26,7 +26,8 @@
- 	lcd.cpp \
- 	picexif.cpp \
- 	picload.cpp \
--	region.cpp
-+	region.cpp \
-+	stmfb.cpp
- 
- gdiincludedir = $(pkgincludedir)/lib/gdi
- gdiinclude_HEADERS = \
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/picload.cpp enigma2-nightly.patched/lib/gdi/picload.cpp
---- enigma2-nightly.org/lib/gdi/picload.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/gdi/picload.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/picload.cpp enigma2-nightly.patched/lib/gdi/picload.cpp
+--- enigma2-nightly.org/lib/gdi/picload.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/gdi/picload.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -4,6 +4,7 @@
  
  #include <lib/gdi/picload.h>
@@ -4630,9 +4596,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/picload.cp
 +	return list ? (PyObject*)list : (PyObject*)PyList_New(0);
 +}
 +#endif
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/stmfb.cpp enigma2-nightly.patched/lib/gdi/stmfb.cpp
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/stmfb.cpp enigma2-nightly.patched/lib/gdi/stmfb.cpp
 --- enigma2-nightly.org/lib/gdi/stmfb.cpp	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/gdi/stmfb.cpp	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/gdi/stmfb.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,77 @@
 +/*
 +  Interface to the Dreambox dm800/dm8000 proprietary accel interface.
@@ -4711,24 +4677,23 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/gdi/stmfb.cpp 
 +//	printf("unimplemented bcm_accel_fill\n");
 +}
 +
-
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Components/DreamInfoHandler.py enigma2-nightly.patched/lib/python/Components/DreamInfoHandler.py
---- enigma2-nightly.org/lib/python/Components/DreamInfoHandler.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Components/DreamInfoHandler.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/DreamInfoHandler.py enigma2-nightly.patched/lib/python/Components/DreamInfoHandler.py
+--- enigma2-nightly.org/lib/python/Components/DreamInfoHandler.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Components/DreamInfoHandler.py	2012-09-28 13:53:18.000000000 +0200
 @@ -124,6 +124,10 @@
-			self.attributes["packagename"] = str(data)
-		if self.elements[-1] == "needsRestart":
-			self.attributes["needsRestart"] = str(data)
+ 			self.attributes["packagename"] = str(data)
+ 		if self.elements[-1] == "needsRestart":
+ 			self.attributes["needsRestart"] = str(data)
 +#+++>
 +		if self.elements[-1] == "details":
 +			self.attributes["details"] = str(data)
 +#+++<
-		if self.elements[-1] == "shortdescription":
-			self.attributes["shortdescription"] = str(data)
-		if self.elements[-1] == "description":
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Components/Harddisk.py enigma2-nightly.patched/lib/python/Components/Harddisk.py
---- enigma2-nightly.org/lib/python/Components/Harddisk.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Components/Harddisk.py	2012-03-06 19:40:12.000000000 +0100
+ 		if self.elements[-1] == "shortdescription":
+ 			self.attributes["shortdescription"] = str(data)
+ 		if self.elements[-1] == "description":
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/Harddisk.py enigma2-nightly.patched/lib/python/Components/Harddisk.py
+--- enigma2-nightly.org/lib/python/Components/Harddisk.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Components/Harddisk.py	2012-09-28 13:53:18.000000000 +0200
 @@ -1,9 +1,26 @@
 -from os import system, listdir, statvfs, popen, makedirs, stat, major, minor, path, access
 -from Tools.Directories import SCOPE_HDD, resolveFilename
@@ -4767,7 +4732,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  class Harddisk:
  	def __init__(self, device):
  		self.device = device
-@@ -41,20 +59,8 @@
+@@ -42,20 +59,8 @@
  			self.disk_path = self.dev_path
  
  		elif self.type == DEVTYPE_DEVFS:
@@ -4790,7 +4755,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  
  		print "new Harddisk", self.device, '->', self.dev_path, '->', self.disk_path
  		self.startIdle()
-@@ -181,7 +198,12 @@
+@@ -181,7 +186,12 @@
                                  continue                                                                    
                          try:                                                                                
                                  if MajorMinor(real_path) == MajorMinor(self.partitionPath(real_path[-1])):
@@ -4804,7 +4769,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  					break
  			except OSError:
  				pass
-@@ -190,7 +212,7 @@
+@@ -190,7 +200,7 @@
  		return (res >> 8)
  
  	def createPartition(self):
@@ -4813,7 +4778,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  		res = system(cmd)
  		return (res >> 8)
  
-@@ -199,7 +221,18 @@
+@@ -199,7 +209,18 @@
  		if self.diskSize() > 4 * 1024:
  			cmd += "-T largefile "
  		cmd += "-m0 -O dir_index " + self.partitionPath("1")
@@ -4833,7 +4798,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  		return (res >> 8)
  
  	def mount(self):
-@@ -238,7 +271,18 @@
+@@ -238,7 +259,18 @@
  		# We autocorrect any failures
  		# TODO: we could check if the fs is actually ext3
  		cmd = "fsck.ext3 -f -p " + self.partitionPath("1")
@@ -4853,7 +4818,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  		return (res >> 8)
  
  	def killPartition(self, n):
-@@ -429,14 +473,11 @@
+@@ -429,14 +461,11 @@
  	}
  
  DEVICEDB = \
@@ -4872,7 +4837,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  		},
  	"dm800":
  	{
-@@ -446,7 +487,13 @@
+@@ -446,7 +475,13 @@
  	"dm7025":
  	{
  		"/devices/pci0000:00/0000:00:14.1/ide1/1.0": "CF Card Slot", #hdc
@@ -4887,7 +4852,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  	}
  	}
  
-@@ -489,7 +536,12 @@
+@@ -489,7 +524,12 @@
  		try:
  			removable = bool(int(readFile(devpath + "/removable")))
  			dev = int(readFile(devpath + "/dev").split(':')[0])
@@ -4901,7 +4866,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  				blacklisted = True
  			if blockdev[0:2] == 'sr':
  				is_cdrom = True
-@@ -548,6 +600,13 @@
+@@ -548,6 +588,13 @@
  			except OSError:
  				physdev = dev
  				print "couldn't determine blockdev physdev for device", device
@@ -4915,7 +4880,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  
  		error, blacklisted, removable, is_cdrom, partitions, medium_found = self.getBlockDevInfo(device)
  		print "found block device '%s':" % device,
-@@ -594,6 +653,12 @@
+@@ -594,6 +641,12 @@
  					self.hdd.remove(hdd)
  					break
  			SystemInfo["Harddisk"] = len(self.hdd) > 0
@@ -4928,9 +4893,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  
  	def HDDCount(self):
  		return len(self.hdd)
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Components/NimManager.py enigma2-nightly.patched/lib/python/Components/NimManager.py
---- enigma2-nightly.org/lib/python/Components/NimManager.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Components/NimManager.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/NimManager.py enigma2-nightly.patched/lib/python/Components/NimManager.py
+--- enigma2-nightly.org/lib/python/Components/NimManager.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Components/NimManager.py	2012-09-28 13:53:18.000000000 +0200
 @@ -20,6 +20,10 @@
  import xml.etree.cElementTree
  
@@ -4942,9 +4907,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  	default_orbpos = None
  	for x in satlist:
  		if x[0] == orbpos:
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Components/Renderer/Progress.py enigma2-nightly.patched/lib/python/Components/Renderer/Progress.py
---- enigma2-nightly.org/lib/python/Components/Renderer/Progress.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Components/Renderer/Progress.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/Renderer/Progress.py enigma2-nightly.patched/lib/python/Components/Renderer/Progress.py
+--- enigma2-nightly.org/lib/python/Components/Renderer/Progress.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Components/Renderer/Progress.py	2012-09-28 13:53:18.000000000 +0200
 @@ -13,26 +13,60 @@
  	GUI_WIDGET = eSlider
  
@@ -5021,9 +4986,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  	def getRange(self):
  		return (self.__start, self.__end)
  
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Components/TunerInfo.py enigma2-nightly.patched/lib/python/Components/TunerInfo.py
---- enigma2-nightly.org/lib/python/Components/TunerInfo.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Components/TunerInfo.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/TunerInfo.py enigma2-nightly.patched/lib/python/Components/TunerInfo.py
+--- enigma2-nightly.org/lib/python/Components/TunerInfo.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Components/TunerInfo.py	2012-09-28 13:53:18.000000000 +0200
 @@ -60,8 +60,17 @@
  			value = self.getValue(self.LOCK)
  
@@ -5044,9 +5009,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
  			else:
  				self.setText("")
  		elif self.type == self.SNR_PERCENTAGE or self.type == self.AGC_PERCENTAGE:
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Components/VolumeControl.py enigma2-nightly.patched/lib/python/Components/VolumeControl.py
---- enigma2-nightly.org/lib/python/Components/VolumeControl.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Components/VolumeControl.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/VolumeControl.py enigma2-nightly.patched/lib/python/Components/VolumeControl.py
+--- enigma2-nightly.org/lib/python/Components/VolumeControl.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Components/VolumeControl.py	2012-09-28 13:53:18.000000000 +0200
 @@ -71,13 +71,27 @@
  		self.volumeDialog.hide()
  
@@ -5076,28 +5041,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Compone
 +#+++>
 +				self.volctrl.setVolume(vol, vol)
 +#+++<
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/enigma_python.i enigma2-nightly.patched/lib/python/enigma_python.i
---- enigma2-nightly.org/lib/python/enigma_python.i	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/enigma_python.i	2012-03-06 19:40:12.000000000 +0100
-@@ -99,6 +99,7 @@
- #include <lib/dvb_ci/dvbci_ui.h>
- #include <lib/python/python.h>
- #include <lib/gdi/picload.h>
-+#include <lib/driver/vfd.h> 
- %}
- 
- %feature("ref")   iObject "$this->AddRef(); /* eDebug(\"AddRef (%s:%d)!\", __FILE__, __LINE__); */ "
-@@ -216,6 +217,7 @@
- %include <lib/dvb/db.h>
- %include <lib/python/python.h>
- %include <lib/gdi/picload.h>
-+%include <lib/driver/vfd.h> 
- /**************  eptr  **************/
- 
- /**************  signals  **************/
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Makefile.am enigma2-nightly.patched/lib/python/Makefile.am
---- enigma2-nightly.org/lib/python/Makefile.am	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Makefile.am	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Makefile.am enigma2-nightly.patched/lib/python/Makefile.am
+--- enigma2-nightly.org/lib/python/Makefile.am	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Makefile.am	2012-09-28 13:53:18.000000000 +0200
 @@ -30,7 +30,7 @@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/enigma_python.Pcpp@am__quote@
  
@@ -5107,15 +5053,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Makefil
  	$(AM_V_at)mv -f $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Pcpp
  	$(AM_V_at)$(PYTHON) $(srcdir)/enigma_py_patcher.py
  
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/Extensions/CuberevoVFD/__init__.py enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/__init__.py
---- enigma2-nightly.org/lib/python/Plugins/Extensions/CuberevoVFD/__init__.py	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/__init__.py	2012-03-06 19:40:12.000000000 +0100
-@@ -0,0 +1,2 @@
-+
-+
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/Extensions/CuberevoVFD/Makefile.am enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/Makefile.am
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/CuberevoVFD/Makefile.am enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/Makefile.am
 --- enigma2-nightly.org/lib/python/Plugins/Extensions/CuberevoVFD/Makefile.am	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/Makefile.am	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/Makefile.am	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,7 @@
 +installdir = $(pkglibdir)/python/Plugins/Extensions/CuberevoVFD
 +
@@ -5124,9 +5064,15 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
 +	plugin.py
 +
 + 
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/Extensions/CuberevoVFD/plugin.py enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/plugin.py
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/CuberevoVFD/__init__.py enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/__init__.py
+--- enigma2-nightly.org/lib/python/Plugins/Extensions/CuberevoVFD/__init__.py	1970-01-01 01:00:00.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/__init__.py	2012-09-28 13:53:18.000000000 +0200
+@@ -0,0 +1,2 @@
++
++
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/CuberevoVFD/plugin.py enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/plugin.py
 --- enigma2-nightly.org/lib/python/Plugins/Extensions/CuberevoVFD/plugin.py	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/plugin.py	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/Extensions/CuberevoVFD/plugin.py	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,355 @@
 +from Screens.Screen import Screen
 +from Screens.MessageBox import MessageBox
@@ -5483,9 +5429,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
 +def Plugins(**kwargs):
 +	return [ PluginDescriptor(name="CuberevoVFD", description="Change VFD display settings", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main),
 +		PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART, PluginDescriptor.WHERE_AUTOSTART], fnc = autostart) ]
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/Extensions/Makefile.am enigma2-nightly.patched/lib/python/Plugins/Extensions/Makefile.am
---- enigma2-nightly.org/lib/python/Plugins/Extensions/Makefile.am	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/Extensions/Makefile.am	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/Makefile.am enigma2-nightly.patched/lib/python/Plugins/Extensions/Makefile.am
+--- enigma2-nightly.org/lib/python/Plugins/Extensions/Makefile.am	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/Extensions/Makefile.am	2012-09-28 13:53:18.000000000 +0200
 @@ -1,6 +1,14 @@
  installdir = $(pkglibdir)/python/Plugins/Extensions
  
@@ -5502,15 +5448,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
  
  if HAVE_LIBDDVD
  SUBDIRS += DVDPlayer
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py
---- enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py	2012-03-06 19:40:12.000000000 +0100
-@@ -0,0 +1,2 @@
-+
-+
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/Makefile.am enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/Makefile.am
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/Makefile.am enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/Makefile.am
 --- enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/Makefile.am	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/Makefile.am	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/Makefile.am	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,7 @@
 +installdir = $(pkglibdir)/python/Plugins/Extensions/TopfieldVFD
 +
@@ -5519,9 +5459,15 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
 +	plugin.py
 +
 + 
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/plugin.py enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/plugin.py
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py
+--- enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py	1970-01-01 01:00:00.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/__init__.py	2012-09-28 13:53:18.000000000 +0200
+@@ -0,0 +1,2 @@
++
++
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/plugin.py enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/plugin.py
 --- enigma2-nightly.org/lib/python/Plugins/Extensions/TopfieldVFD/plugin.py	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/plugin.py	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/Extensions/TopfieldVFD/plugin.py	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,464 @@
 +from Screens.Screen import Screen
 +from Screens.MessageBox import MessageBox
@@ -5987,9 +5933,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
 +def Plugins(**kwargs):
 +        return [ PluginDescriptor(name="TopfieldVFD", description="Change VFD display settings", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main),
 +                PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART, PluginDescriptor.WHERE_AUTOSTART], fnc = autostart) ]
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/Makefile.am enigma2-nightly.patched/lib/python/Plugins/Makefile.am
---- enigma2-nightly.org/lib/python/Plugins/Makefile.am	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/Makefile.am	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/Makefile.am enigma2-nightly.patched/lib/python/Plugins/Makefile.am
+--- enigma2-nightly.org/lib/python/Plugins/Makefile.am	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/Makefile.am	2012-09-28 13:53:18.000000000 +0200
 @@ -1,6 +1,6 @@
  installdir = $(pkglibdir)/python/Plugins
  
@@ -5998,9 +5944,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
  
  install_PYTHON =	\
  	__init__.py Plugin.py 
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/plugin.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/plugin.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/plugin.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/plugin.py
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/plugin.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/CrashlogAutoSubmit/plugin.py	2012-09-28 13:53:18.000000000 +0200
 @@ -8,13 +8,20 @@
  from Screens.VirtualKeyBoard import VirtualKeyBoard
  from Screens.ChoiceBox import ChoiceBox
@@ -6087,11 +6033,10 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
  		if "session" in kwargs:
  			try:
  				startMailer(kwargs["session"])
-
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Makefile.am enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Makefile.am
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Makefile.am	2011-09-03 18:23:26.930022982 +0200
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Makefile.am	2011-09-03 18:23:47.380033063 +0200
-@@ -1,10 +1,9 @@
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Makefile.am	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Makefile.am	2012-09-28 13:53:18.000000000 +0200
+@@ -1,10 +1,10 @@
  installdir = $(pkglibdir)/python/Plugins/SystemPlugins
  
 -SUBDIRS = SoftwareManager FrontprocessorUpgrade PositionerSetup Satfinder \
@@ -6100,2160 +6045,15 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
 -	DefaultServicesScanner NFIFlash DiseqcTester CommonInterfaceAssignment \
 -	CrashlogAutoSubmit CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
 -	TempFanControl
-+	CleanupWizard VideoEnhancement WirelessLan NetworkWizard \
++	DefaultServicesScanner DiseqcTester CommonInterfaceAssignment \
++	CrashlogAutoSubmit CleanupWizard VideoEnhancement NetworkWizard \
 +	TempFanControl VFD-Icons Tuxtxt
  
  install_PYTHON =	\
  	__init__.py
-
-diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py	2011-12-05 00:46:00.505062996 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/plugin.py	2011-12-05 00:46:00.505062996 +0100
-@@ -8,40 +8,37 @@
- from Components.MenuList import MenuList
- from Components.config import config, getConfigListEntry, ConfigYesNo, NoSave, ConfigSubsection, ConfigText, ConfigSelection, ConfigPassword
- from Components.ConfigList import ConfigListScreen
--from Components.Network import iNetwork
-+from Components.Network import Network, iNetwork
- from Components.Console import Console
- from Plugins.Plugin import PluginDescriptor
- from os import system, path as os_path, listdir
- from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE
- from Tools.LoadPixmap import LoadPixmap
- from Tools.HardwareInfo import HardwareInfo
--from Wlan import iWlan, wpaSupplicant, iStatus, getWlanConfigName
--import hashlib
--from time import time
--from os import urandom, system
--from re import escape as re_escape
-+from Wlan import Wlan, wpaSupplicant, iStatus
-+import sha
- 
- plugin_path = eEnv.resolve("${libdir}/enigma2/python/Plugins/SystemPlugins/WirelessLan")
- 
--
- list = []
--list.append("Unencrypted")
- list.append("WEP")
- list.append("WPA")
--list.append("WPA/WPA2")
- list.append("WPA2")
-+list.append("WPA/WPA2")
- 
- weplist = []
- weplist.append("ASCII")
- weplist.append("HEX")
- 
- config.plugins.wlan = ConfigSubsection()
--config.plugins.wlan.essid = NoSave(ConfigText(default = "", fixed_size = False))
--config.plugins.wlan.hiddenessid = NoSave(ConfigYesNo(default = False))
--config.plugins.wlan.encryption = NoSave(ConfigSelection(list, default = "WPA2"))
--config.plugins.wlan.wepkeytype = NoSave(ConfigSelection(weplist, default = "ASCII"))
--config.plugins.wlan.psk = NoSave(ConfigPassword(default = "", fixed_size = False))
-+config.plugins.wlan.essid = NoSave(ConfigText(default = "home", fixed_size = False))
-+config.plugins.wlan.hiddenessid = NoSave(ConfigText(default = "home", fixed_size = False))
- 
-+config.plugins.wlan.encryption = ConfigSubsection()
-+config.plugins.wlan.encryption.enabled = NoSave(ConfigYesNo(default = False))
-+config.plugins.wlan.encryption.type = NoSave(ConfigSelection(list, default = "WPA/WPA2" ))
-+config.plugins.wlan.encryption.wepkeytype = NoSave(ConfigSelection(weplist, default = "ASCII"))
-+config.plugins.wlan.encryption.psk = NoSave(ConfigPassword(default = "mysecurewlan", fixed_size = False))
- 
- 
- class WlanStatus(Screen):
-@@ -49,19 +46,20 @@
- 		<screen name="WlanStatus" position="center,center" size="560,400" title="Wireless Network State" >
- 			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
- 			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
--
--			<widget source="LabelBSSID" render="Label" position="10,60" size="200,25" valign="left" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="LabelESSID" render="Label" position="10,100" size="200,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="LabelQuality" render="Label" position="10,140" size="200,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="LabelSignal" render="Label" position="10,180" size="200,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="LabelBitrate" render="Label" position="10,220" size="200,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="LabelEnc" render="Label" position="10,260" size="200,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="BSSID" render="Label" position="220,60" size="330,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="ESSID" render="Label" position="220,100" size="330,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="quality" render="Label" position="220,140" size="330,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="signal" render="Label" position="220,180" size="330,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="bitrate" render="Label" position="220,220" size="330,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
--			<widget source="enc" render="Label" position="220,260" size="330,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+	
-+			<widget source="LabelBSSID" render="Label" position="10,60" size="250,25" valign="left" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			<widget source="LabelESSID" render="Label" position="10,100" size="250,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			<widget source="LabelQuality" render="Label" position="10,140" size="250,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			<widget source="LabelSignal" render="Label" position="10,180" size="250,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			<widget source="LabelBitrate" render="Label" position="10,220" size="250,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			<widget source="LabelEnc" render="Label" position="10,260" size="250,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			
-+			<widget source="BSSID" render="Label" position="320,60" size="180,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			<widget source="ESSID" render="Label" position="320,100" size="180,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			<widget source="quality" render="Label" position="320,140" size="180,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			<widget source="signal" render="Label" position="320,180" size="180,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			<widget source="bitrate" render="Label" position="320,220" size="180,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
-+			<widget source="enc" render="Label" position="320,260" size="180,25" valign="center" font="Regular;20" transparent="1" foregroundColor="#FFFFFF" />
- 	
- 			<ePixmap pixmap="skin_default/div-h.png" position="0,350" zPosition="1" size="560,2" />		
- 			<widget source="IFtext" render="Label" position="10,355" size="120,21" zPosition="10" font="Regular;20" halign="left" backgroundColor="#25062748" transparent="1" />
-@@ -107,7 +105,7 @@
- 		}, -1)
- 		self.timer = eTimer()
- 		self.timer.timeout.get().append(self.resetList) 
--		self.onShown.append(lambda: self.timer.start(8000))
-+		self.onShown.append(lambda: self.timer.start(5000))
- 		self.onLayoutFinish.append(self.layoutFinished)
- 		self.onClose.append(self.cleanup)
- 
-@@ -115,7 +113,7 @@
- 		iStatus.stopWlanConsole()
- 		
- 	def layoutFinished(self):
--		self.setTitle(_("Wireless network state"))
-+		self.setTitle(_("Wireless Network State"))
- 		
- 	def resetList(self):
- 		iStatus.getDataForInterface(self.iface,self.getInfoCB)
-@@ -124,65 +122,32 @@
- 		if data is not None:
- 			if data is True:
- 				if status is not None:
--					if status[self.iface]["essid"] == "off":
--						essid = _("No Connection")
--					else:
--						essid = status[self.iface]["essid"]
--					if status[self.iface]["accesspoint"] == "Not-Associated":
--						accesspoint = _("Not-Associated")
--						essid = _("No Connection")
--					else:
--						accesspoint = status[self.iface]["accesspoint"]
--					if self.has_key("BSSID"):
--						self["BSSID"].setText(accesspoint)
--					if self.has_key("ESSID"):
--						self["ESSID"].setText(essid)
--
--					quality = status[self.iface]["quality"]
--					if self.has_key("quality"):
--						self["quality"].setText(quality)
--						
--					if status[self.iface]["bitrate"] == '0':
--						bitrate = _("Unsupported")
--					else:
--						bitrate = str(status[self.iface]["bitrate"]) + " Mb/s"
--					if self.has_key("bitrate"):
--						self["bitrate"].setText(bitrate)					
--					
--					signal = status[self.iface]["signal"]
--					if self.has_key("signal"):
--						self["signal"].setText(signal)
--
--					if status[self.iface]["encryption"] == "off":
--						if accesspoint == "Not-Associated":
--							encryption = _("Disabled")
--						else:
--							encryption = _("Unsupported")
--					else:
--						encryption = _("Enabled")
--					if self.has_key("enc"):
--						self["enc"].setText(encryption)
-+					self["BSSID"].setText(status[self.iface]["acesspoint"])
-+					self["ESSID"].setText(status[self.iface]["essid"])
-+					self["quality"].setText(status[self.iface]["quality"])
-+					self["signal"].setText(status[self.iface]["signal"])
-+					self["bitrate"].setText(status[self.iface]["bitrate"])
-+					self["enc"].setText(status[self.iface]["encryption"])
- 					self.updateStatusLink(status)
- 
- 	def exit(self):
- 		self.timer.stop()
--		self.close(True)
-+		self.close(True)	
- 
- 	def updateStatusbar(self):
--		wait_txt = _("Please wait...")
--		self["BSSID"].setText(wait_txt)
--		self["ESSID"].setText(wait_txt)
--		self["quality"].setText(wait_txt)
--		self["signal"].setText(wait_txt)
--		self["bitrate"].setText(wait_txt)
--		self["enc"].setText(wait_txt)
-+		self["BSSID"].setText(_("Please wait..."))
-+		self["ESSID"].setText(_("Please wait..."))
-+		self["quality"].setText(_("Please wait..."))
-+		self["signal"].setText(_("Please wait..."))
-+		self["bitrate"].setText(_("Please wait..."))
-+		self["enc"].setText(_("Please wait..."))
- 		self["IFtext"].setText(_("Network:"))
- 		self["IF"].setText(iNetwork.getFriendlyAdapterName(self.iface))
- 		self["Statustext"].setText(_("Link:"))
- 
- 	def updateStatusLink(self,status):
- 		if status is not None:
--			if status[self.iface]["essid"] == "off" or status[self.iface]["accesspoint"] == "Not-Associated" or status[self.iface]["accesspoint"] == False:
-+			if status[self.iface]["acesspoint"] == "No Connection" or status[self.iface]["acesspoint"] == "Not-Associated" or status[self.iface]["acesspoint"] == False:
- 				self["statuspic"].setPixmapNum(1)
- 			else:
- 				self["statuspic"].setPixmapNum(0)
-@@ -252,8 +217,6 @@
- 			"red": self.cancel,
- 			"green": self.select,
- 		})
--		iWlan.setInterface(self.iface)
--		self.w = iWlan.getInterface()
- 		self.onLayoutFinish.append(self.layoutFinished)
- 		self.getAccessPoints(refresh = False)
- 		
-@@ -263,24 +226,42 @@
- 	def select(self):
- 		cur = self["list"].getCurrent()
- 		if cur is not None:
--			iWlan.stopGetNetworkList()
- 			self.rescanTimer.stop()
- 			del self.rescanTimer
--			if cur[0] is not None:
--				self.close(cur[0])
-+			if cur[1] is not None:
-+				if cur[1] == 'hidden...':
-+					essid = cur[1]
-+				else:
-+					essid = cur[0]
-+				self.close(essid,self.getWlanList())
- 			else:
--				self.close(None)
-+				self.close(None,None)
- 		else:
--			iWlan.stopGetNetworkList()
-+			self.rescanTimer.stop()
-+			del self.rescanTimer
-+			self.close(None,None)
-+	
-+	def WlanSetupClosed(self, *ret):
-+		if ret[0] == 2:
- 			self.rescanTimer.stop()
- 			del self.rescanTimer
- 			self.close(None)
- 	
- 	def cancel(self):
--		iWlan.stopGetNetworkList()
--		self.rescanTimer.stop()
--		del self.rescanTimer
--		self.close(None)
-+		if self.oldInterfaceState is False:
-+			iNetwork.setAdapterAttribute(self.iface, "up", False)
-+			iNetwork.deactivateInterface(self.iface,self.deactivateInterfaceCB)
-+		else:
-+			self.rescanTimer.stop()
-+			del self.rescanTimer
-+			self.close(None)
-+
-+	def deactivateInterfaceCB(self,data):
-+		if data is not None:
-+			if data is True:
-+				self.rescanTimer.stop()
-+				del self.rescanTimer
-+				self.close(None)
- 
- 	def rescanTimerFired(self):
- 		self.rescanTimer.stop()
-@@ -289,7 +270,10 @@
- 	def buildEntryComponent(self, essid, bssid, encrypted, iface, maxrate, signal):
- 		divpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/div-h.png"))
- 		encryption = encrypted and _("Yes") or _("No")
--		return((essid, bssid, _("Signal: ") + str(signal), _("Max. Bitrate: ") + str(maxrate), _("Encrypted: ") + encryption, _("Interface: ") + str(iface), divpng))
-+		if bssid == 'hidden...':
-+			return((essid, bssid, None, None, None, None, divpng))
-+		else:					
-+			return((essid, bssid, _("Signal: ") + str(signal), _("Max. Bitrate: ") + str(maxrate), _("Encrypted: ") + encryption, _("Interface: ") + str(iface), divpng))
- 
- 	def updateAPList(self):
- 		newList = []
-@@ -306,19 +290,20 @@
- 				tmpList.append(data)
- 
- 		if len(tmpList):
-+			if "hidden..." not in tmpList:
-+				tmpList.append( ( _("enter hidden network SSID"), "hidden...", True, self.iface, _("unavailable"), "" ) )
-+	
- 			for entry in tmpList:
- 				self.newAPList.append(self.buildEntryComponent( entry[0], entry[1], entry[2], entry[3], entry[4], entry[5] ))
- 	
- 			currentListEntry = self["list"].getCurrent()
--			if currentListEntry is not None:
--				idx = 0
--				for entry in self.newAPList:
--					if entry[0] == currentListEntry[0]:
--						newListIndex = idx
--					idx +=1
-+			idx = 0
-+			for entry in self.newAPList:
-+				if entry[0] == currentListEntry[0]:
-+					newListIndex = idx
-+				idx +=1
- 			self['list'].setList(self.newAPList)
--			if newListIndex is not None:
--				self["list"].setIndex(newListIndex)
-+			self["list"].setIndex(newListIndex)
- 			self["list"].updateList(self.newAPList)
- 			self.listLength = len(self.newAPList)
- 			self.buildWlanList()
-@@ -327,7 +312,8 @@
- 	def getAccessPoints(self, refresh = False):
- 		self.APList = []
- 		self.cleanList = []
--		aps = iWlan.getNetworkList()
-+		self.w = Wlan(self.iface)
-+		aps = self.w.getNetworkList()
- 		if aps is not None:
- 			print "[WirelessLan.py] got Accespoints!"
- 			tmpList = []
-@@ -350,6 +336,9 @@
- 				else:
- 					self.oldlist[entry[0]]['data'] = entry
- 		
-+		if "hidden..." not in self.cleanList:
-+			self.cleanList.append( ( _("enter hidden network SSID"), "hidden...", True, self.iface, _("unavailable"), "" ) )
-+
- 		for entry in self.cleanList:
- 			self.APList.append(self.buildEntryComponent( entry[0], entry[1], entry[2], entry[3], entry[4], entry[5] ))
- 		
-@@ -362,17 +351,20 @@
- 
- 	def setInfo(self):
- 		length = self.getLength()
--		if length == 0:
--			self["info"].setText(_("No wireless networks found! Searching..."))
--		elif length == 1:
-+		if length <= 1:
-+			self["info"].setText(_("No wireless networks found! Please refresh."))
-+		elif length == 2:
- 			self["info"].setText(_("1 wireless network found!"))
- 		else:
--			self["info"].setText(str(length)+_(" wireless networks found!"))
-+			self["info"].setText(str(length-1)+_(" wireless networks found!"))
- 
- 	def buildWlanList(self):
- 		self.WlanList = []
- 		for entry in self['list'].list:
--			self.WlanList.append( (entry[0], entry[0]) )
-+			if entry[1] == "hidden...":
-+				self.WlanList.append(( "hidden...",_("enter hidden network SSID") ))#continue
-+			else:
-+				self.WlanList.append( (entry[0], entry[0]) )
- 
- 	def getLength(self):
- 		return self.listLength		
-@@ -382,96 +374,27 @@
- 			self.buildWlanList()
- 		return self.WlanList
- 
--
--def bin2long(s):
--	return reduce( lambda x,y:(x<<8L)+y, map(ord, s))
--
--def long2bin(l):
--	res = ""
--	for byte in range(128):
--		res += chr((l >> (1024 - (byte + 1) * 8)) & 0xff)
--	return res
--
--def rsa_pub1024(src, mod):
--	return long2bin(pow(bin2long(src), 65537, bin2long(mod)))
--	
--def decrypt_block(src, mod):
--	if len(src) != 128 and len(src) != 202:
--		return None
--	dest = rsa_pub1024(src[:128], mod)
--	hash = hashlib.sha1(dest[1:107])
--	if len(src) == 202:
--		hash.update(src[131:192])	
--	result = hash.digest()
--	if result == dest[107:127]:
--		return dest
--	return None
--
--def validate_certificate(cert, key):
--	buf = decrypt_block(cert[8:], key) 
--	if buf is None:
--		return None
--	return buf[36:107] + cert[139:196]
--
--def get_random():
--	try:
--		xor = lambda a,b: ''.join(chr(ord(c)^ord(d)) for c,d in zip(a,b*100))
--		random = urandom(8)
--		x = str(time())[-8:]
--		result = xor(random, x)
--				
--		return result
--	except:
--		return None
--
- def WlanStatusScreenMain(session, iface):
- 	session.open(WlanStatus, iface)
- 
-+
- def callFunction(iface):
--	iWlan.setInterface(iface)
--	i = iWlan.getWirelessInterfaces()
-+	w = Wlan(iface)
-+	i = w.getWirelessInterfaces()
- 	if i:
--		if iface in i or iNetwork.isWirelessInterface(iface):
-+		if iface in i:
- 			return WlanStatusScreenMain
--		return None
- 	return None
- 
-+
- def configStrings(iface):
--	try:
--		device = open("/proc/stb/info/model", "r").readline().strip()
--	except:
--		device = ""	
--	if device != "dm7025":
--		rootkey = ['\x9f', '|', '\xe4', 'G', '\xc9', '\xb4', '\xf4', '#', '&', '\xce', '\xb3', '\xfe', '\xda', '\xc9', 'U', '`', '\xd8', '\x8c', 's', 'o', '\x90', '\x9b', '\\', 'b', '\xc0', '\x89', '\xd1', '\x8c', '\x9e', 'J', 'T', '\xc5', 'X', '\xa1', '\xb8', '\x13', '5', 'E', '\x02', '\xc9', '\xb2', '\xe6', 't', '\x89', '\xde', '\xcd', '\x9d', '\x11', '\xdd', '\xc7', '\xf4', '\xe4', '\xe4', '\xbc', '\xdb', '\x9c', '\xea', '}', '\xad', '\xda', 't', 'r', '\x9b', '\xdc', '\xbc', '\x18', '3', '\xe7', '\xaf', '|', '\xae', '\x0c', '\xe3', '\xb5', '\x84', '\x8d', '\r', '\x8d', '\x9d', '2', '\xd0', '\xce', '\xd5', 'q', '\t', '\x84', 'c', '\xa8', ')', '\x99', '\xdc', '<', '"', 'x', '\xe8', '\x87', '\x8f', '\x02', ';', 'S', 'm', '\xd5', '\xf0', '\xa3', '_', '\xb7', 'T', '\t', '\xde', '\xa7', '\xf1', '\xc9', '\xae', '\x8a', '\xd7', '\xd2', '\xcf', '\xb2', '.', '\x13', '\xfb', '\xac', 'j', '\xdf', '\xb1', '\x1d', ':', '?']
--		etpm = eTPM()
--		l2cert = etpm.getCert(eTPM.TPMD_DT_LEVEL2_CERT)
--		if l2cert is None:
--			return
--		l2key = validate_certificate(l2cert, rootkey)
--		if l2key is None:
--			return
--		l3cert = etpm.getCert(eTPM.TPMD_DT_LEVEL3_CERT)
--		if l3cert is None:
--			return
--		l3key = validate_certificate(l3cert, l2key)
--		if l3key is None:
--			return
--		rnd = get_random()
--		if rnd is None:
--			return
--		val = etpm.challenge(rnd)
--		result = decrypt_block(val, l3key)
--	if device == "dm7025" or result[80:88] == rnd:
--		driver = iNetwork.detectWlanModule(iface)
--	else:
--		driver = 'dreambox'
--	print 'Using "%s" as wpa-supplicant driver' % (driver)
-+	driver = iNetwork.detectWlanModule(iface)
- 	ret = ""
--	if driver == 'madwifi' and config.plugins.wlan.hiddenessid.value:
--		ret += "\tpre-up iwconfig " + iface + " essid \"" + re_escape(config.plugins.wlan.essid.value) + "\" || true\n"
--	ret += "\tpre-up wpa_supplicant -i" + iface + " -c" + getWlanConfigName(iface) + " -B -dd -D" + driver + " || true\n"
-+	if driver == 'wext' and config.plugins.wlan.essid.value == "hidden...":
-+		ret += "\tpre-up iwconfig " + iface + " essid \"" + config.plugins.wlan.hiddenessid.value + "\" || true\n"
-+	ret += "\tpre-up wpa_supplicant -i" + iface + " -c/etc/wpa_supplicant.conf -B -dd -D" + driver + " || true\n"
- 	ret += "\tpre-down wpa_cli -i" + iface + " terminate || true\n"
- 	return ret
--
-+	
- def Plugins(**kwargs):
- 	return PluginDescriptor(name=_("Wireless LAN"), description=_("Connect to a Wireless Network"), where = PluginDescriptor.WHERE_NETWORKSETUP, needsRestart = False, fnc={"ifaceSupported": callFunction, "configStrings": configStrings, "WlanPluginEntry": lambda x: "Wireless Network Configuartion..."})
-diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/Wlan.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/Wlan.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/WirelessLan/Wlan.py	2011-12-05 00:46:00.505062996 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/WirelessLan/Wlan.py	2011-12-05 00:46:00.505062996 +0100
-@@ -1,42 +1,36 @@
- from Components.config import config, ConfigYesNo, NoSave, ConfigSubsection, ConfigText, ConfigSelection, ConfigPassword
- from Components.Console import Console
--from Components.Network import iNetwork
- 
--from os import system, path as os_path
-+from os import system
- from string import maketrans, strip
- import sys
- import types
--from re import compile as re_compile, search as re_search, escape as re_escape
-+from re import compile as re_compile, search as re_search
- from pythonwifi.iwlibs import getNICnames, Wireless, Iwfreq, getWNICnames
- from pythonwifi import flags as wififlags
- 
- list = []
--list.append("Unencrypted")
- list.append("WEP")
- list.append("WPA")
--list.append("WPA/WPA2")
- list.append("WPA2")
-+list.append("WPA/WPA2")
- 
- weplist = []
- weplist.append("ASCII")
- weplist.append("HEX")
- 
- config.plugins.wlan = ConfigSubsection()
--config.plugins.wlan.essid = NoSave(ConfigText(default = "", fixed_size = False))
--config.plugins.wlan.hiddenessid = NoSave(ConfigYesNo(default = False))
--config.plugins.wlan.encryption = NoSave(ConfigSelection(list, default = "WPA2"))
--config.plugins.wlan.wepkeytype = NoSave(ConfigSelection(weplist, default = "ASCII"))
--config.plugins.wlan.psk = NoSave(ConfigPassword(default = "", fixed_size = False))
--
-+config.plugins.wlan.essid = NoSave(ConfigText(default = "home", fixed_size = False))
-+config.plugins.wlan.hiddenessid = NoSave(ConfigText(default = "home", fixed_size = False))
- 
--def getWlanConfigName(iface):
--	return '/etc/wpa_supplicant.' + iface + '.conf'
-+config.plugins.wlan.encryption = ConfigSubsection()
-+config.plugins.wlan.encryption.enabled = NoSave(ConfigYesNo(default = True))
-+config.plugins.wlan.encryption.type = NoSave(ConfigSelection(list, default = "WPA/WPA2"))
-+config.plugins.wlan.encryption.wepkeytype = NoSave(ConfigSelection(weplist, default = "ASCII"))
-+config.plugins.wlan.encryption.psk = NoSave(ConfigPassword(default = "mysecurewlan", fixed_size = False))
- 
- class Wlan:
--	def __init__(self, iface = None):
--		self.iface = iface
--		self.oldInterfaceState = None
--		
-+	def __init__(self, iface):
- 		a = ''; b = ''
- 		for i in range(0, 255):
- 			a = a + chr(i)
-@@ -45,37 +39,135 @@
- 			else:
- 				b = b + chr(i)
- 		
-+		self.iface = iface
-+		self.wlaniface = {}
-+		self.WlanConsole = Console()
- 		self.asciitrans = maketrans(a, b)
- 
-+	def stopWlanConsole(self):
-+		if self.WlanConsole is not None:
-+			print "killing self.WlanConsole"
-+			self.WlanConsole = None
-+			del self.WlanConsole
-+			
-+	def getDataForInterface(self, callback = None):
-+		#get ip out of ip addr, as avahi sometimes overrides it in ifconfig.
-+		print "self.iface im getDataForInterface",self.iface
-+		if len(self.WlanConsole.appContainers) == 0:
-+			self.WlanConsole = Console()
-+			cmd = "iwconfig " + self.iface
-+			self.WlanConsole.ePopen(cmd, self.iwconfigFinished, callback)
-+
-+	def iwconfigFinished(self, result, retval, extra_args):
-+		print "self.iface im iwconfigFinished",self.iface
-+		callback = extra_args
-+		data = { 'essid': False, 'frequency': False, 'acesspoint': False, 'bitrate': False, 'encryption': False, 'quality': False, 'signal': False }
-+		
-+		for line in result.splitlines():
-+			line = line.strip()
-+			if "ESSID" in line:
-+				if "off/any" in line:
-+					ssid = _("No Connection")
-+				else:
-+					if "Nickname" in line:
-+						tmpssid=(line[line.index('ESSID')+7:line.index('"  Nickname')])
-+						if tmpssid == '':
-+							ssid = _("Hidden networkname")
-+						elif tmpssid ==' ':
-+							ssid = _("Hidden networkname")
-+						else:
-+							ssid = tmpssid
-+					else:
-+						tmpssid=(line[line.index('ESSID')+7:len(line)-1])
-+						if tmpssid == '':
-+							ssid = _("Hidden networkname")
-+						elif tmpssid ==' ':
-+							ssid = _("Hidden networkname")
-+						else:
-+							ssid = tmpssid						
-+
-+				if ssid is not None:
-+					data['essid'] = ssid
-+			if 'Frequency' in line:
-+				frequency = line[line.index('Frequency')+10 :line.index(' GHz')]
-+				if frequency is not None:
-+					data['frequency'] = frequency
-+			if "Access Point" in line:
-+				ap=line[line.index('Access Point')+14:len(line)-1]
-+				if ap is not None:
-+					data['acesspoint'] = ap
-+			if "Bit Rate" in line:
-+				br = line[line.index('Bit Rate')+9 :line.index(' Mb/s')]
-+				if br is not None:
-+					data['bitrate'] = br
-+			if 'Encryption key' in line:
-+				if ":off" in line:
-+				    enc = _("Disabled")
-+				else:
-+				    enc = line[line.index('Encryption key')+15 :line.index('   Security')]
-+				if enc is not None:
-+					data['encryption'] = _("Enabled")
-+			if 'Quality' in line:
-+				if "/100" in line:
-+					qual = line[line.index('Quality')+8:line.index('/100')]
-+				else:
-+					qual = line[line.index('Quality')+8:line.index('Sig')]
-+				if qual is not None:
-+					data['quality'] = qual
-+			if 'Signal level' in line:
-+				signal = line[line.index('Signal level')+13 :line.index(' dBm')]
-+				if signal is not None:
-+					data['signal'] = signal
-+
-+		self.wlaniface[self.iface] = data
-+		
-+		if len(self.WlanConsole.appContainers) == 0:
-+			print "self.wlaniface after loading:", self.wlaniface
-+			self.WlanConsole = None
-+			if callback is not None:
-+				callback(True,self.wlaniface)
-+
-+	def getAdapterAttribute(self, attribute):
-+		if self.wlaniface.has_key(self.iface):
-+			print "self.wlaniface.has_key",self.iface
-+			if self.wlaniface[self.iface].has_key(attribute):
-+				return self.wlaniface[self.iface][attribute]
-+		return None
-+		
- 	def asciify(self, str):
- 		return str.translate(self.asciitrans)
-+
- 	
- 	def getWirelessInterfaces(self):
--		return getWNICnames()
--
--	def setInterface(self, iface = None):
--		self.iface = iface
-+		device = re_compile('[a-z]{2,}[0-9]*:')
-+		ifnames = []
- 
--	def getInterface(self):
--		return self.iface
-+		fp = open('/proc/net/wireless', 'r')
-+		for line in fp:
-+			try:
-+				# append matching pattern, without the trailing colon
-+				ifnames.append(device.search(line).group()[:-1])
-+			except AttributeError:
-+				pass
-+		return ifnames
- 
-+	
- 	def getNetworkList(self):
--		if self.oldInterfaceState is None:
--			self.oldInterfaceState = iNetwork.getAdapterAttribute(self.iface, "up")
--		if self.oldInterfaceState is False:
--			if iNetwork.getAdapterAttribute(self.iface, "up") is False:
--				iNetwork.setAdapterAttribute(self.iface, "up", True)
--				system("ifconfig "+self.iface+" up")
--
-+		system("ifconfig "+self.iface+" up")
- 		ifobj = Wireless(self.iface) # a Wireless NIC Object
-+		
-+		#Association mappings
-+		#stats, quality, discard, missed_beacon = ifobj.getStatistics()
-+		#snr = quality.signallevel - quality.noiselevel
- 
- 		try:
- 			scanresults = ifobj.scan()
- 		except:
- 			scanresults = None
--			print "[Wlan.py] No wireless networks could be found"
--		aps = {}
-+			print "[Wlan.py] No Wireless Networks could be found"
-+		
- 		if scanresults is not None:
-+			aps = {}
- 			(num_channels, frequencies) = ifobj.getChannelInfo()
- 			index = 1
- 			for result in scanresults:
-@@ -96,6 +188,7 @@
- 					element = element.encode()
- 					extra.append( strip(self.asciify(element)) )
- 				for element in extra:
-+					print element
- 					if 'SignalStrength' in element:
- 						signal = element[element.index('SignalStrength')+15:element.index(',L')]					
- 					if 'LinkQuality' in element:
-@@ -114,151 +207,183 @@
- 					'signal' : str(signal),
- 					'custom' : extra,
- 				}
--
-+				#print "GOT APS ENTRY:",aps[bssid]
- 				index = index + 1
--		return aps
-+			return aps
-+
- 		
--	def stopGetNetworkList(self):
--		if self.oldInterfaceState is not None:
--			if self.oldInterfaceState is False:
--				iNetwork.setAdapterAttribute(self.iface, "up", False)
--				system("ifconfig "+self.iface+" down")
--				self.oldInterfaceState = None
--				self.iface = None
-+	def getStatus(self):
-+		ifobj = Wireless(self.iface)
-+		fq = Iwfreq()
-+		try:
-+			self.channel = str(fq.getChannel(str(ifobj.getFrequency()[0:-3])))
-+		except:
-+			self.channel = 0
-+		status = {
-+				  'BSSID': str(ifobj.getAPaddr()), #ifobj.getStatistics()
-+				  'ESSID': str(ifobj.getEssid()),
-+				  'quality': "%s/%s" % (ifobj.getStatistics()[1].quality,ifobj.getQualityMax().quality),
-+				  'signal': str(ifobj.getStatistics()[1].siglevel-0x100) + " dBm",
-+				  'bitrate': str(ifobj.getBitrate()),
-+				  'channel': str(self.channel),
-+				  #'channel': str(fq.getChannel(str(ifobj.getFrequency()[0:-3]))),
-+		}
-+		
-+		for (key, item) in status.items():
-+			if item is "None" or item is "":
-+					status[key] = _("N/A")
-+				
-+		return status
- 
--iWlan = Wlan()
- 
- class wpaSupplicant:
- 	def __init__(self):
- 		pass
-+	
- 		
--	def writeConfig(self, iface):
--		essid = config.plugins.wlan.essid.value
--		hiddenessid = config.plugins.wlan.hiddenessid.value
--		encryption = config.plugins.wlan.encryption.value
--		wepkeytype = config.plugins.wlan.wepkeytype.value
--		psk = config.plugins.wlan.psk.value
--		fp = file(getWlanConfigName(iface), 'w')
--		fp.write('#WPA Supplicant Configuration by enigma2\n')
--		fp.write('ctrl_interface=/var/run/wpa_supplicant\n')
--		fp.write('eapol_version=1\n')
--		fp.write('fast_reauth=1\n')	
--
--		if hiddenessid:
--			fp.write('ap_scan=2\n')
--		else:
--			fp.write('ap_scan=1\n')
--		fp.write('network={\n')
--		fp.write('\tssid="'+essid+'"\n')
--		fp.write('\tscan_ssid=0\n')			
--		if encryption in ('WPA', 'WPA2', 'WPA/WPA2'):
--			fp.write('\tkey_mgmt=WPA-PSK\n')
--			if encryption == 'WPA':
--				fp.write('\tproto=WPA\n')
--				fp.write('\tpairwise=TKIP\n')
--				fp.write('\tgroup=TKIP\n')
--			elif encryption == 'WPA2':
--				fp.write('\tproto=RSN\n')
--				fp.write('\tpairwise=CCMP\n')
--				fp.write('\tgroup=CCMP\n')
-+	def writeConfig(self):	
-+			
-+			essid = config.plugins.wlan.essid.value
-+			hiddenessid = config.plugins.wlan.hiddenessid.value
-+			encrypted = config.plugins.wlan.encryption.enabled.value
-+			encryption = config.plugins.wlan.encryption.type.value
-+			wepkeytype = config.plugins.wlan.encryption.wepkeytype.value
-+			psk = config.plugins.wlan.encryption.psk.value
-+			fp = file('/etc/wpa_supplicant.conf', 'w')
-+			fp.write('#WPA Supplicant Configuration by enigma2\n')
-+			fp.write('ctrl_interface=/var/run/wpa_supplicant\n')
-+			fp.write('eapol_version=1\n')
-+			fp.write('fast_reauth=1\n')	
-+			if essid == 'hidden...':
-+				fp.write('ap_scan=2\n')
- 			else:
--				fp.write('\tproto=WPA RSN\n')
--				fp.write('\tpairwise=CCMP TKIP\n')
--				fp.write('\tgroup=CCMP TKIP\n')
--			fp.write('\tpsk="'+psk+'"\n')
--		elif encryption == 'WEP':
--			fp.write('\tkey_mgmt=NONE\n')
--			if wepkeytype == 'ASCII':
--				fp.write('\twep_key0="'+psk+'"\n')
-+				fp.write('ap_scan=1\n')
-+			fp.write('network={\n')
-+			if essid == 'hidden...':
-+				fp.write('\tssid="'+hiddenessid+'"\n')
- 			else:
--				fp.write('\twep_key0='+psk+'\n')
--		else:
--			fp.write('\tkey_mgmt=NONE\n')
--		fp.write('}')
--		fp.write('\n')
--		fp.close()
--		#system('cat ' + getWlanConfigName(iface))
-+				fp.write('\tssid="'+essid+'"\n')
-+			fp.write('\tscan_ssid=0\n')			
-+			if encrypted:
-+				if encryption in ('WPA', 'WPA2', 'WPA/WPA2'):
-+					fp.write('\tkey_mgmt=WPA-PSK\n')
- 		
--	def loadConfig(self,iface):
--		configfile = getWlanConfigName(iface)
--		if not os_path.exists(configfile):
--			configfile = '/etc/wpa_supplicant.conf'
-+					if encryption == 'WPA':
-+						fp.write('\tproto=WPA\n')
-+						fp.write('\tpairwise=TKIP\n')
-+						fp.write('\tgroup=TKIP\n')
-+					elif encryption == 'WPA2':
-+						fp.write('\tproto=RSN\n')
-+						fp.write('\tpairwise=CCMP\n')
-+						fp.write('\tgroup=CCMP\n')
-+					else:
-+						fp.write('\tproto=WPA RSN\n')
-+						fp.write('\tpairwise=CCMP TKIP\n')
-+						fp.write('\tgroup=CCMP TKIP\n')
-+					fp.write('\tpsk="'+psk+'"\n')
-+				elif encryption == 'WEP':
-+					fp.write('\tkey_mgmt=NONE\n')
-+					if wepkeytype == 'ASCII':
-+						fp.write('\twep_key0="'+psk+'"\n')
-+					else:
-+						fp.write('\twep_key0='+psk+'\n')
-+			else:
-+				fp.write('\tkey_mgmt=NONE\n')			
-+			fp.write('}')
-+			fp.write('\n')
-+			fp.close()
-+			system("cat /etc/wpa_supplicant.conf")
-+		
-+	def loadConfig(self):
- 		try:
- 			#parse the wpasupplicant configfile
--			print "[Wlan.py] parsing configfile: ",configfile
--			fp = file(configfile, 'r')
-+			fp = file('/etc/wpa_supplicant.conf', 'r')
- 			supplicant = fp.readlines()
- 			fp.close()
-+			ap_scan = False
- 			essid = None
--			encryption = "Unencrypted"
- 
- 			for s in supplicant:
- 				split = s.strip().split('=',1)
- 				if split[0] == 'ap_scan':
-+					print "[Wlan.py] Got Hidden SSID Scan  Value "+split[1]
- 					if split[1] == '2':
--						config.plugins.wlan.hiddenessid.value = True
-+						ap_scan = True
- 					else:
--						config.plugins.wlan.hiddenessid.value = False
--
-+						ap_scan = False
-+						
- 				elif split[0] == 'ssid':
-+					print "[Wlan.py] Got SSID "+split[1][1:-1]
- 					essid = split[1][1:-1]
--					config.plugins.wlan.essid.value = essid
--
-+					
- 				elif split[0] == 'proto':
-+					config.plugins.wlan.encryption.enabled.value = True
- 					if split[1] == 'WPA' :
- 						mode = 'WPA'
- 					if split[1] == 'RSN':
- 						mode = 'WPA2'
- 					if split[1] in ('WPA RSN', 'WPA WPA2'):
- 						mode = 'WPA/WPA2'
--					encryption = mode
-+
-+					config.plugins.wlan.encryption.type.value = mode
-+					print "[Wlan.py] Got Encryption: "+mode
- 					
- 				elif split[0] == 'wep_key0':
--					encryption = 'WEP'
-+					config.plugins.wlan.encryption.enabled.value = True
-+					config.plugins.wlan.encryption.type.value = 'WEP'
- 					if split[1].startswith('"') and split[1].endswith('"'):
--						config.plugins.wlan.wepkeytype.value = 'ASCII'
--						config.plugins.wlan.psk.value = split[1][1:-1]
-+						config.plugins.wlan.encryption.wepkeytype.value = 'ASCII'
-+						config.plugins.wlan.encryption.psk.value = split[1][1:-1]
- 					else:
--						config.plugins.wlan.wepkeytype.value = 'HEX'
--						config.plugins.wlan.psk.value = split[1]						
-+						config.plugins.wlan.encryption.wepkeytype.value = 'HEX'
-+						config.plugins.wlan.encryption.psk.value = split[1]						
- 					
- 				elif split[0] == 'psk':
--					config.plugins.wlan.psk.value = split[1][1:-1]
-+					config.plugins.wlan.encryption.psk.value = split[1][1:-1]
- 				else:
- 					pass
--
--			config.plugins.wlan.encryption.value = encryption
- 				
-+			if ap_scan is True:
-+				config.plugins.wlan.hiddenessid.value = essid
-+				config.plugins.wlan.essid.value = 'hidden...'
-+			else:
-+				config.plugins.wlan.hiddenessid.value = essid
-+				config.plugins.wlan.essid.value = essid
- 			wsconfig = {
- 					'hiddenessid': config.plugins.wlan.hiddenessid.value,
- 					'ssid': config.plugins.wlan.essid.value,
--					'encryption': config.plugins.wlan.encryption.value,
--					'wepkeytype': config.plugins.wlan.wepkeytype.value,
--					'key': config.plugins.wlan.psk.value,
-+					'encryption': config.plugins.wlan.encryption.enabled.value,
-+					'encryption_type': config.plugins.wlan.encryption.type.value,
-+					'encryption_wepkeytype': config.plugins.wlan.encryption.wepkeytype.value,
-+					'key': config.plugins.wlan.encryption.psk.value,
- 				}
- 		
- 			for (key, item) in wsconfig.items():
- 				if item is "None" or item is "":
- 					if key == 'hiddenessid':
--						wsconfig['hiddenessid'] = False
-+						wsconfig['hiddenessid'] = "home"
- 					if key == 'ssid':
--						wsconfig['ssid'] = ""
-+						wsconfig['ssid'] = "home"
- 					if key == 'encryption':
--						wsconfig['encryption'] = "WPA2"			
--					if key == 'wepkeytype':
--						wsconfig['wepkeytype'] = "ASCII"
--					if key == 'key':
--						wsconfig['key'] = ""
-+						wsconfig['encryption'] = True				
-+					if key == 'encryption':
-+						wsconfig['encryption_type'] = "WPA/WPA2"
-+					if key == 'encryption':
-+						wsconfig['encryption_wepkeytype'] = "ASCII"
-+					if key == 'encryption':
-+						wsconfig['key'] = "mysecurewlan"
-+
- 		except:
--			print "[Wlan.py] Error parsing ",configfile
-+			print "[Wlan.py] Error parsing /etc/wpa_supplicant.conf"
- 			wsconfig = {
--					'hiddenessid': False,
--					'ssid': "",
--					'encryption': "WPA2",
--					'wepkeytype': "ASCII",
--					'key': "",
-+					'hiddenessid': "home",
-+					'ssid': "home",
-+					'encryption': True,
-+					'encryption_type': "WPA/WPA2",
-+					'encryption_wepkeytype': "ASCII",
-+					'key': "mysecurewlan",
- 				}
--		#print "[Wlan.py] WS-CONFIG-->",wsconfig
-+		print "[Wlan.py] WS-CONFIG-->",wsconfig
- 		return wsconfig
- 
- 
-@@ -266,70 +391,82 @@
- 	def __init__(self):
- 		self.wlaniface = {}
- 		self.backupwlaniface = {}
--		self.statusCallback = None
- 		self.WlanConsole = Console()
- 
- 	def stopWlanConsole(self):
- 		if self.WlanConsole is not None:
--			print "[iStatus] killing self.WlanConsole"
-+			print "killing self.WlanConsole"
- 			self.WlanConsole.killAll()
- 			self.WlanConsole = None
- 			
- 	def getDataForInterface(self, iface, callback = None):
- 		self.WlanConsole = Console()
- 		cmd = "iwconfig " + iface
--		if callback is not None:
--			self.statusCallback = callback
--		self.WlanConsole.ePopen(cmd, self.iwconfigFinished, iface)
-+		self.WlanConsole.ePopen(cmd, self.iwconfigFinished, [iface, callback])
- 
- 	def iwconfigFinished(self, result, retval, extra_args):
--		iface = extra_args
--		data = { 'essid': False, 'frequency': False, 'accesspoint': False, 'bitrate': False, 'encryption': False, 'quality': False, 'signal': False }
-+		(iface, callback) = extra_args
-+		data = { 'essid': False, 'frequency': False, 'acesspoint': False, 'bitrate': False, 'encryption': False, 'quality': False, 'signal': False }
- 		for line in result.splitlines():
- 			line = line.strip()
- 			if "ESSID" in line:
- 				if "off/any" in line:
--					ssid = "off"
-+					ssid = _("No Connection")
- 				else:
- 					if "Nickname" in line:
--						ssid=(line[line.index('ESSID')+7:line.index('"  Nickname')])
-+						tmpssid=(line[line.index('ESSID')+7:line.index('"  Nickname')])
-+						if tmpssid == '':
-+							ssid = _("Hidden networkname")
-+						elif tmpssid ==' ':
-+							ssid = _("Hidden networkname")
-+						else:
-+							ssid = tmpssid
- 					else:
--						ssid=(line[line.index('ESSID')+7:len(line)-1])
-+						tmpssid=(line[line.index('ESSID')+7:len(line)-1])
-+						if tmpssid == '':
-+							ssid = _("Hidden networkname")
-+						elif tmpssid ==' ':
-+							ssid = _("Hidden networkname")
-+						else:
-+							ssid = tmpssid						
- 				if ssid is not None:
- 					data['essid'] = ssid
--			if "Frequency" in line:
-+			if 'Frequency' in line:
- 				frequency = line[line.index('Frequency')+10 :line.index(' GHz')]
- 				if frequency is not None:
- 					data['frequency'] = frequency
- 			if "Access Point" in line:
--				if "Sensitivity" in line:
--					ap=line[line.index('Access Point')+14:line.index('   Sensitivity')]
--				else:
--					ap=line[line.index('Access Point')+14:len(line)]
-+				ap=line[line.index('Access Point')+14:len(line)]
- 				if ap is not None:
--					data['accesspoint'] = ap
-+					data['acesspoint'] = ap
-+					if ap == "Not-Associated":
-+						data['essid'] = _("No Connection")
- 			if "Bit Rate" in line:
- 				if "kb" in line:
- 					br = line[line.index('Bit Rate')+9 :line.index(' kb/s')]
-+					if br == '0':
-+						br = _("Unsupported")
-+					else:
-+						br += " Mb/s"
- 				else:
--					br = line[line.index('Bit Rate')+9 :line.index(' Mb/s')]
-+					br = line[line.index('Bit Rate')+9 :line.index(' Mb/s')] + " Mb/s"
- 				if br is not None:
- 					data['bitrate'] = br
--			if "Encryption key" in line:
-+			if 'Encryption key' in line:
- 				if ":off" in line:
--					enc = "off"
--				elif "Security" in line:
--					enc = line[line.index('Encryption key')+15 :line.index('   Security')]
--					if enc is not None:
--						enc = "on"
-+					if data['acesspoint'] is not "Not-Associated":
-+						enc = _("Unsupported")
-+					else:
-+						enc = _("Disabled")
- 				else:
--					enc = line[line.index('Encryption key')+15 :len(line)]
--					if enc is not None:
--						enc = "on"
-+					#enc = line[line.index('Encryption key')+15 :line.index('   Security')]
-+					#if enc is not None:
-+					enc = _("Enabled")
- 				if enc is not None:
- 					data['encryption'] = enc
- 			if 'Quality' in line:
- 				if "/100" in line:
-+					#qual = line[line.index('Quality')+8:line.index('/100')]
- 					qual = line[line.index('Quality')+8:line.index('  Signal')]
- 				else:
- 					qual = line[line.index('Quality')+8:line.index('Sig')]
-@@ -337,7 +474,8 @@
- 					data['quality'] = qual
- 			if 'Signal level' in line:
- 				if "dBm" in line:
--					signal = line[line.index('Signal level')+13 :line.index(' dBm')] + " dBm"
-+					signal = line[line.index('Signal level')+13 :line.index(' dBm')]
-+					signal += " dBm"
- 				elif "/100" in line:
- 					if "Noise" in line:
- 						signal = line[line.index('Signal level')+13:line.index('  Noise')]
-@@ -356,10 +494,9 @@
- 		
- 		if self.WlanConsole is not None:
- 			if len(self.WlanConsole.appContainers) == 0:
--				print "[Wlan.py] self.wlaniface after loading:", self.wlaniface
--				if self.statusCallback is not None:
--						self.statusCallback(True,self.wlaniface)
--						self.statusCallback = None
-+				print "self.wlaniface after loading:", self.wlaniface
-+				if callback is not None:
-+					callback(True,self.wlaniface)
- 
- 	def getAdapterAttribute(self, iface, attribute):
- 		self.iface = iface
-diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/Network.py enigma2-nightly.patched/lib/python/Components/Network.py
---- enigma2-nightly.org/lib/python/Components/Network.py	2011-09-03 18:23:27.250023288 +0200
-+++ enigma2-nightly.patched/lib/python/Components/Network.py	2011-09-03 18:23:47.380033063 +0200
-@@ -20,8 +20,9 @@
- 		self.Console = Console()
- 		self.LinkConsole = Console()
- 		self.restartConsole = Console()
-+		self.deactivateConsole = Console()
- 		self.deactivateInterfaceConsole = Console()
--		self.activateInterfaceConsole = Console()
-+		self.activateConsole = Console()
- 		self.resetNetworkConsole = Console()
- 		self.DnsConsole = Console()
- 		self.PingConsole = Console()
-@@ -29,29 +30,37 @@
- 		self.friendlyNames = {}
- 		self.lan_interfaces = []
- 		self.wlan_interfaces = []
--		self.remoteRootFS = None
- 		self.getInterfaces()
- 
- 	def onRemoteRootFS(self):
--		if self.remoteRootFS == None:
--			fp = file('/proc/mounts', 'r')
--			mounts = fp.readlines()
--			fp.close()
--			self.remoteRootFS = False
--			for line in mounts:
--				parts = line.strip().split()
--				if parts[1] == '/' and parts[2] == 'nfs':
--					self.remoteRootFS = True
--					break
--		return self.remoteRootFS
--
--	def isBlacklisted(self, iface):
--		return iface in ('lo', 'wifi0', 'wmaster0')
-+		fp = file('/proc/mounts', 'r')
-+		mounts = fp.readlines()
-+		fp.close()
-+		for line in mounts:
-+			parts = line.strip().split(' ')
-+			if parts[1] == '/' and (parts[2] == 'nfs' or parts[2] == 'smbfs'):
-+				return True
-+		return False
- 
- 	def getInterfaces(self, callback = None):
-+		devicesPattern = re_compile('[a-z]+[0-9]+')
- 		self.configuredInterfaces = []
--		for device in self.getInstalledAdapters():
--			self.getAddrInet(device, callback)
-+		fp = file('/proc/net/dev', 'r')
-+		result = fp.readlines()
-+		fp.close()
-+		for line in result:
-+			try:
-+				device = devicesPattern.search(line).group()
-+				if device in ('wifi0', 'wmaster0'):
-+					continue
-+				self.getDataForInterface(device, callback)
-+			except AttributeError:
-+				pass
-+		#print "self.ifaces:", self.ifaces
-+		#self.writeNetworkConfig()
-+		#print ord(' ')
-+		#for line in result:
-+		#	print ord(line[0])
- 
- 	# helper function
- 	def regExpMatch(self, pattern, string):
-@@ -60,16 +69,21 @@
- 		try:
- 			return pattern.search(string).group()
- 		except AttributeError:
--			return None
-+			None
- 
- 	# helper function to convert ips from a sring to a list of ints
- 	def convertIP(self, ip):
--		return [ int(n) for n in ip.split('.') ]
-+		strIP = ip.split('.')
-+		ip = []
-+		for x in strIP:
-+			ip.append(int(x))
-+		return ip
- 
--	def getAddrInet(self, iface, callback):
-+	def getDataForInterface(self, iface,callback):
-+		#get ip out of ip addr, as avahi sometimes overrides it in ifconfig.
- 		if not self.Console:
- 			self.Console = Console()
--		cmd = "ip -o addr show dev " + iface
-+		cmd = "ip -o addr"
- 		self.Console.ePopen(cmd, self.IPaddrFinished, [iface,callback])
- 
- 	def IPaddrFinished(self, result, retval, extra_args):
-@@ -78,14 +92,14 @@
- 		globalIPpattern = re_compile("scope global")
- 		ipRegexp = '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
- 		netRegexp = '[0-9]{1,2}'
--		macRegexp = '[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}'
-+		macRegexp = '[0-9]{2}\:[0-9]{2}\:[0-9]{2}\:[a-z0-9]{2}\:[a-z0-9]{2}\:[a-z0-9]{2}'
- 		ipLinePattern = re_compile('inet ' + ipRegexp + '/')
- 		ipPattern = re_compile(ipRegexp)
- 		netmaskLinePattern = re_compile('/' + netRegexp)
- 		netmaskPattern = re_compile(netRegexp)
- 		bcastLinePattern = re_compile(' brd ' + ipRegexp)
- 		upPattern = re_compile('UP')
--		macPattern = re_compile(macRegexp)
-+		macPattern = re_compile('[0-9]{2}\:[0-9]{2}\:[0-9]{2}\:[a-z0-9]{2}\:[a-z0-9]{2}\:[a-z0-9]{2}')
- 		macLinePattern = re_compile('link/ether ' + macRegexp)
- 		
- 		for line in result.splitlines():
-@@ -130,7 +144,7 @@
- 			print line[0:7]
- 			if line[0:7] == "0.0.0.0":
- 				gateway = self.regExpMatch(ipPattern, line[16:31])
--				if gateway:
-+				if gateway is not None:
- 					data['gateway'] = self.convertIP(gateway)
- 					
- 		self.ifaces[iface] = data
-@@ -162,9 +176,8 @@
- 				fp.write(iface["preup"])
- 			if iface["predown"] is not False and not iface.has_key("configStrings"):
- 				fp.write(iface["predown"])
--			fp.write("\n")				
-+			fp.write("\n")
- 		fp.close()
--		self.configuredNetworkAdapters = self.configuredInterfaces
- 		self.writeNameserverConfig()
- 
- 	def writeNameserverConfig(self):
-@@ -250,13 +263,49 @@
- 		for line in resolv:
- 			if self.regExpMatch(nameserverPattern, line) is not None:
- 				ip = self.regExpMatch(ipPattern, line)
--				if ip:
-+				if ip is not None:
- 					self.nameservers.append(self.convertIP(ip))
- 
- 		print "nameservers:", self.nameservers
- 
--	def getInstalledAdapters(self):
--		return [x for x in listdir('/sys/class/net') if not self.isBlacklisted(x)]
-+	def deactivateNetworkConfig(self, callback = None):
-+		if self.onRemoteRootFS():
-+			if callback is not None:
-+				callback(True)
-+			return
-+		self.deactivateConsole = Console()
-+		self.commands = []
-+		self.commands.append("/etc/init.d/avahi-daemon stop")
-+		for iface in self.ifaces.keys():
-+			cmd = "ip addr flush " + iface
-+			self.commands.append(cmd)		
-+		self.commands.append("/etc/init.d/networking stop")
-+		self.commands.append("killall -9 udhcpc")
-+		self.commands.append("rm /var/run/udhcpc*")
-+		self.deactivateConsole.eBatch(self.commands, self.deactivateNetworkFinished, callback, debug=True)
-+		
-+	def deactivateNetworkFinished(self,extra_args):
-+		callback = extra_args
-+		if len(self.deactivateConsole.appContainers) == 0:
-+			if callback is not None:
-+				callback(True)
-+
-+	def activateNetworkConfig(self, callback = None):
-+		if self.onRemoteRootFS():
-+			if callback is not None:
-+				callback(True)
-+			return
-+		self.activateConsole = Console()
-+		self.commands = []
-+		self.commands.append("/etc/init.d/networking start")
-+		self.commands.append("/etc/init.d/avahi-daemon start")
-+		self.activateConsole.eBatch(self.commands, self.activateNetworkFinished, callback, debug=True)
-+		
-+	def activateNetworkFinished(self,extra_args):
-+		callback = extra_args
-+		if len(self.activateConsole.appContainers) == 0:
-+			if callback is not None:
-+				callback(True)
- 
- 	def getConfiguredAdapters(self):
- 		return self.configuredNetworkAdapters
-@@ -267,44 +316,47 @@
- 	def getFriendlyAdapterName(self, x):
- 		if x in self.friendlyNames.keys():
- 			return self.friendlyNames.get(x, x)
--		self.friendlyNames[x] = self.getFriendlyAdapterNaming(x)
--		return self.friendlyNames.get(x, x) # when we have no friendly name, use adapter name
-+		else:
-+			self.friendlyNames[x] = self.getFriendlyAdapterNaming(x)
-+			return self.friendlyNames.get(x, x) # when we have no friendly name, use adapter name
- 
- 	def getFriendlyAdapterNaming(self, iface):
--		name = None
--		if self.isWirelessInterface(iface):
--			if iface not in self.wlan_interfaces:
--				name = _("WLAN connection")
--				if len(self.wlan_interfaces):
--					name += " " + str(len(self.wlan_interfaces)+1)
--				self.wlan_interfaces.append(iface)								
--		else:
--			if iface not in self.lan_interfaces:
--				name = _("LAN connection")
--				if len(self.lan_interfaces):
--					name += " " + str(len(self.lan_interfaces)+1)
-+		if iface.startswith('eth'):
-+			if iface not in self.lan_interfaces and len(self.lan_interfaces) == 0:
- 				self.lan_interfaces.append(iface)
--		return name
--	
--	def getFriendlyAdapterDescription(self, iface):
--		if not self.isWirelessInterface(iface):
--			return _('Ethernet network interface')
--
--		moduledir = self.getWlanModuleDir(iface)
--		if moduledir:
--			name = os_path.basename(os_path.realpath(moduledir))
--			if name in ('ath_pci','ath5k'):
--				name = 'Atheros'
--			elif name in ('rt73','rt73usb','rt3070sta'):
--				name = 'Ralink'
--			elif name == 'zd1211b':
--				name = 'Zydas'
--			elif name == 'r871x_usb_drv':
--				name = 'Realtek'
-+				return _("LAN connection")
-+			elif iface not in self.lan_interfaces and len(self.lan_interfaces) >= 1:
-+				self.lan_interfaces.append(iface)
-+				return _("LAN connection") + " " + str(len(self.lan_interfaces))
- 		else:
--			name = _('Unknown')
-+			if iface not in self.wlan_interfaces and len(self.wlan_interfaces) == 0:
-+				self.wlan_interfaces.append(iface)
-+				return _("WLAN connection")
-+			elif iface not in self.wlan_interfaces and len(self.wlan_interfaces) >= 1:
-+				self.wlan_interfaces.append(iface)
-+				return _("WLAN connection") + " " + str(len(self.wlan_interfaces))
- 
--		return name + ' ' + _('wireless network interface')
-+	def getFriendlyAdapterDescription(self, iface):
-+		if iface == 'eth0':
-+			return _("Internal LAN adapter.")
-+		else:
-+			classdir = "/sys/class/net/" + iface + "/device/"
-+			driverdir = "/sys/class/net/" + iface + "/device/driver/"
-+			if os_path.exists(classdir):
-+				files = listdir(classdir)
-+				if 'driver' in files:
-+					if os_path.realpath(driverdir).endswith('ath_pci'):
-+						return _("Atheros")+ " " + str(os_path.basename(os_path.realpath(driverdir))) + " " + _("WLAN adapter.") 
-+					elif os_path.realpath(driverdir).endswith('zd1211b'):
-+						return _("Zydas")+ " " + str(os_path.basename(os_path.realpath(driverdir))) + " " + _("WLAN adapter.") 
-+					elif os_path.realpath(driverdir).endswith('rt73'):
-+						return _("Ralink")+ " " + str(os_path.basename(os_path.realpath(driverdir))) + " " + _("WLAN adapter.") 
-+					elif os_path.realpath(driverdir).endswith('rt73usb'):
-+						return _("Ralink")+ " " + str(os_path.basename(os_path.realpath(driverdir))) + " " + _("WLAN adapter.") 
-+					else:
-+						return str(os_path.basename(os_path.realpath(driverdir))) + " " + _("WLAN adapter.") 
-+				else:
-+					return _("Unknown network adapter.")
- 
- 	def getAdapterName(self, iface):
- 		return iface
-@@ -352,12 +404,16 @@
- 					self.nameservers[i] = newnameserver
- 
- 	def resetNetworkConfig(self, mode='lan', callback = None):
-+		if self.onRemoteRootFS():
-+			if callback is not None:
-+				callback(True)
-+			return
- 		self.resetNetworkConsole = Console()
- 		self.commands = []
- 		self.commands.append("/etc/init.d/avahi-daemon stop")
- 		for iface in self.ifaces.keys():
--			if iface != 'eth0' or not self.onRemoteRootFS():
--				self.commands.append("ip addr flush dev " + iface)	
-+			cmd = "ip addr flush " + iface
-+			self.commands.append(cmd)		
- 		self.commands.append("/etc/init.d/networking stop")
- 		self.commands.append("killall -9 udhcpc")
- 		self.commands.append("rm /var/run/udhcpc*")
-@@ -431,15 +487,18 @@
- 					statecallback(self.NetworkState)
- 		
- 	def restartNetwork(self,callback = None):
-+		if self.onRemoteRootFS():
-+			if callback is not None:
-+				callback(True)
-+			return
- 		self.restartConsole = Console()
- 		self.config_ready = False
- 		self.msgPlugins()
- 		self.commands = []
- 		self.commands.append("/etc/init.d/avahi-daemon stop")
- 		for iface in self.ifaces.keys():
--			if iface != 'eth0' or not self.onRemoteRootFS():
--				self.commands.append("ifdown " + iface)
--				self.commands.append("ip addr flush dev " + iface)
-+			cmd = "ip addr flush " + iface
-+			self.commands.append(cmd)		
- 		self.commands.append("/etc/init.d/networking stop")
- 		self.commands.append("killall -9 udhcpc")
- 		self.commands.append("rm /var/run/udhcpc*")
-@@ -496,13 +555,9 @@
- 					
- 	def stopDeactivateInterfaceConsole(self):
- 		if self.deactivateInterfaceConsole is not None:
--			self.deactivateInterfaceConsole.killAll()
--			self.deactivateInterfaceConsole = None
--
--	def stopActivateInterfaceConsole(self):
--		if self.activateInterfaceConsole is not None:
--			self.activateInterfaceConsole.killAll()
--			self.activateInterfaceConsole = None
-+			if len(self.deactivateInterfaceConsole.appContainers):
-+				for name in self.deactivateInterfaceConsole.appContainers.keys():
-+					self.deactivateInterfaceConsole.kill(name)
- 					
- 	def checkforInterface(self,iface):
- 		if self.getAdapterAttribute(iface, 'up') is True:
-@@ -535,138 +590,59 @@
- 				if len(self.DnsConsole.appContainers) == 0:
- 					statecallback(self.DnsState)
- 
--	def deactivateInterface(self,ifaces,callback = None):
--		self.config_ready = False
--		self.msgPlugins()
--		commands = []
--		def buildCommands(iface):
--			commands.append("ifdown " + iface)
--			commands.append("ip addr flush dev " + iface)
--			#wpa_supplicant sometimes doesn't quit properly on SIGTERM
--			if os_path.exists('/var/run/wpa_supplicant/'+ iface):
--				commands.append("wpa_cli -i" + iface + " terminate")
--			
--		if not self.deactivateInterfaceConsole:
--			self.deactivateInterfaceConsole = Console()
--
--		if isinstance(ifaces, (list, tuple)):
--			for iface in ifaces:
--				if iface != 'eth0' or not self.onRemoteRootFS():
--					buildCommands(iface)
--		else:
--			if ifaces == 'eth0' and self.onRemoteRootFS():
--				if callback is not None:
--					callback(True)
--				return
--			buildCommands(ifaces)
--		self.deactivateInterfaceConsole.eBatch(commands, self.deactivateInterfaceFinished, [ifaces,callback], debug=True)
--
--	def deactivateInterfaceFinished(self,extra_args):
--		(ifaces, callback) = extra_args
--		def checkCommandResult(iface):
--			if self.deactivateInterfaceConsole and self.deactivateInterfaceConsole.appResults.has_key("ifdown " + iface):
--				result = str(self.deactivateInterfaceConsole.appResults.get("ifdown " + iface)).strip("\n")
--				if result == "ifdown: interface " + iface + " not configured":
--					return False
--				else:
--					return True
--		#ifdown sometimes can't get the interface down.
--		if isinstance(ifaces, (list, tuple)):
--			for iface in ifaces:
--				if checkCommandResult(iface) is False:
--					Console().ePopen(("ifconfig " + iface + " down" ))
--		else:
--			if checkCommandResult(ifaces) is False:
--				Console().ePopen(("ifconfig " + ifaces + " down" ))
--
--		if self.deactivateInterfaceConsole:
--			if len(self.deactivateInterfaceConsole.appContainers) == 0:
--				if callback is not None:
--					callback(True)
--
--	def activateInterface(self,iface,callback = None):
--		if self.config_ready:
--			self.config_ready = False
--			self.msgPlugins()
--		if iface == 'eth0' and self.onRemoteRootFS():
-+	def deactivateInterface(self,iface,callback = None):
-+		if self.onRemoteRootFS():
- 			if callback is not None:
- 				callback(True)
- 			return
--		if not self.activateInterfaceConsole:
--			self.activateInterfaceConsole = Console()
--		commands = []
--		commands.append("ifup " + iface)
--		self.activateInterfaceConsole.eBatch(commands, self.activateInterfaceFinished, callback, debug=True)
-+		self.deactivateInterfaceConsole = Console()
-+		self.commands = []
-+		cmd1 = "ip addr flush " + iface
-+		cmd2 = "ifconfig " + iface + " down"
-+		self.commands.append(cmd1)
-+		self.commands.append(cmd2)
-+		self.deactivateInterfaceConsole.eBatch(self.commands, self.deactivateInterfaceFinished, callback, debug=True)
- 
--	def activateInterfaceFinished(self,extra_args):
-+	def deactivateInterfaceFinished(self,extra_args):
- 		callback = extra_args
--		if self.activateInterfaceConsole:
--			if len(self.activateInterfaceConsole.appContainers) == 0:
-+		if self.deactivateInterfaceConsole:
-+			if len(self.deactivateInterfaceConsole.appContainers) == 0:
- 				if callback is not None:
- 					callback(True)
- 
--	def sysfsPath(self, iface):
--		return '/sys/class/net/' + iface
--
--	def isWirelessInterface(self, iface):
--		if iface in self.wlan_interfaces:
--			return True
--
--		if os_path.isdir(self.sysfsPath(iface) + '/wireless'):
--			return True
--
--		# r871x_usb_drv on kernel 2.6.12 is not identifiable over /sys/class/net/'ifacename'/wireless so look also inside /proc/net/wireless
--		device = re_compile('[a-z]{2,}[0-9]*:')
--		ifnames = []
--		fp = open('/proc/net/wireless', 'r')
--		for line in fp:
--			try:
--				ifnames.append(device.search(line).group()[:-1])
--			except AttributeError:
--				pass
--		if iface in ifnames:
--			return True
--
--		return False
--
--	def getWlanModuleDir(self, iface = None):
--		devicedir = self.sysfsPath(iface) + '/device'
--		moduledir = devicedir + '/driver/module'
--		if os_path.isdir(moduledir):
--			return moduledir
--
--		# identification is not possible over default moduledir
--		for x in listdir(devicedir):
--			# rt3070 on kernel 2.6.18 registers wireless devices as usb_device (e.g. 1-1.3:1.0) and identification is only possible over /sys/class/net/'ifacename'/device/1-xxx
--			if x.startswith("1-"):
--				moduledir = devicedir + '/' + x + '/driver/module'
--				if os_path.isdir(moduledir):
--					return moduledir
--		# rt73, zd1211b, r871x_usb_drv on kernel 2.6.12 can be identified over /sys/class/net/'ifacename'/device/driver, so look also here
--		moduledir = devicedir + '/driver'
--		if os_path.isdir(moduledir):
--			return moduledir
--
--		return None
--
- 	def detectWlanModule(self, iface = None):
--		if not self.isWirelessInterface(iface):
--			return None
--
--		devicedir = self.sysfsPath(iface) + '/device'
--		if os_path.isdir(devicedir + '/ieee80211'):
--			return 'nl80211'
-+		self.wlanmodule = None
-+		classdir = "/sys/class/net/" + iface + "/device/"
-+		driverdir = "/sys/class/net/" + iface + "/device/driver/"
-+		if os_path.exists(classdir):
-+			classfiles = listdir(classdir)
-+			driver_found = False
-+			nl80211_found = False
-+			for x in classfiles:
-+				if x == 'driver':
-+					driver_found = True
-+				if x.startswith('ieee80211:'):
-+					nl80211_found = True
- 
--		moduledir = self.getWlanModuleDir(iface)
--		if moduledir:
--			module = os_path.basename(os_path.realpath(moduledir))
--			if module in ('ath_pci','ath5k'):
--				return 'madwifi'
--			if module in ('rt73','rt73'):
--				return 'ralink'
--			if module == 'zd1211b':
--				return 'zydas'
--		return 'wext'
-+			if driver_found and nl80211_found:
-+				#print about.getKernelVersionString()
-+				self.wlanmodule = "nl80211"
-+			else:
-+				if driver_found and not nl80211_found:
-+					driverfiles = listdir(driverdir)
-+					if os_path.realpath(driverdir).endswith('ath_pci'):
-+						if len(driverfiles) >= 1:
-+							self.wlanmodule = 'wext'
-+					if os_path.realpath(driverdir).endswith('rt73'):
-+						if len(driverfiles) == 2 or len(driverfiles) == 5:
-+							self.wlanmodule = 'wext'					
-+					if os_path.realpath(driverdir).endswith('zd1211b'):
-+						if len(driverfiles) == 1 or len(driverfiles) == 5:
-+							self.wlanmodule = 'wext'
-+			if self.wlanmodule is None:
-+				self.wlanmodule = "wext"
-+			print 'Using "%s" as wpa-supplicant driver' % (self.wlanmodule)
-+			return self.wlanmodule
- 	
- 	def calc_netmask(self,nmask):
- 		from struct import pack, unpack
-diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Screens/NetworkSetup.py enigma2-nightly.patched/lib/python/Screens/NetworkSetup.py
---- enigma2-nightly.org/lib/python/Screens/NetworkSetup.py	2011-09-03 18:23:27.250023288 +0200
-+++ enigma2-nightly.patched/lib/python/Screens/NetworkSetup.py	2011-09-03 18:23:47.380033063 +0200
-@@ -11,7 +11,7 @@
- from Components.Label import Label,MultiColorLabel
- from Components.Pixmap import Pixmap,MultiPixmap
- from Components.MenuList import MenuList
--from Components.config import config, ConfigYesNo, ConfigIP, NoSave, ConfigText, ConfigPassword, ConfigSelection, getConfigListEntry, ConfigNothing, ConfigBoolean
-+from Components.config import config, ConfigYesNo, ConfigIP, NoSave, ConfigText, ConfigPassword, ConfigSelection, getConfigListEntry, ConfigNothing
- from Components.ConfigList import ConfigListScreen
- from Components.PluginComponent import plugins
- from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
-@@ -42,6 +42,11 @@
- 		self["key_blue"] = StaticText("")
- 		self["introduction"] = StaticText(self.edittext)
- 		
-+		self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getAdapterList()]
-+		
-+		if not self.adapters:
-+			self.onFirstExecBegin.append(self.NetworkFallback)
-+			
- 		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions",
- 			{
- 			"cancel": (self.close, _("exit network interface list")),
-@@ -60,14 +65,6 @@
- 			"yellow": (self.setDefaultInterface, [_("Set interface as default Interface"),_("* Only available if more than one interface is active.")] ),
- 			})
- 
--		self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getAdapterList()]
--
--		if not self.adapters:
--			self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getConfiguredAdapters()]
--
--		if len(self.adapters) == 0:
--			self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getInstalledAdapters()]
--
- 		self.list = []
- 		self["list"] = List(self.list)
- 		self.updateList()
-@@ -83,14 +80,14 @@
- 		description = None
- 		interfacepng = None
- 
--		if not iNetwork.isWirelessInterface(iface):
-+		if iface in iNetwork.lan_interfaces:
- 			if active is True:
- 				interfacepng = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/icons/network_wired-active.png"))
- 			elif active is False:
- 				interfacepng = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/icons/network_wired-inactive.png"))
- 			else:
- 				interfacepng = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/icons/network_wired.png"))
--		elif iNetwork.isWirelessInterface(iface):
-+		elif iface in iNetwork.wlan_interfaces:
- 			if active is True:
- 				interfacepng = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/icons/network_wireless-active.png"))
- 			elif active is False:
-@@ -135,16 +132,19 @@
- 			fp.close()
- 			default_gw = result
- 					
--		for x in self.adapters:
--			if x[1] == default_gw:
--				default_int = True
--			else:
--				default_int = False
--			if iNetwork.getAdapterAttribute(x[1], 'up') is True:
--				active_int = True
--			else:
--				active_int = False
--			self.list.append(self.buildInterfaceList(x[1],_(x[0]),default_int,active_int ))
-+		if len(self.adapters) == 0: # no interface available => display only eth0
-+			self.list.append(self.buildInterfaceList("eth0",iNetwork.getFriendlyAdapterName('eth0'),True,True ))
-+		else:
-+			for x in self.adapters:
-+				if x[1] == default_gw:
-+					default_int = True
-+				else:
-+					default_int = False
-+				if iNetwork.getAdapterAttribute(x[1], 'up') is True:
-+					active_int = True
-+				else:
-+					active_int = False
-+				self.list.append(self.buildInterfaceList(x[1],_(x[0]),default_int,active_int ))
- 		
- 		if os_path.exists(resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkWizard/networkwizard.xml")):
- 			self["key_blue"].setText(_("NetworkWizard"))
-@@ -179,6 +179,22 @@
- 		else:
- 			self.updateList()
- 
-+	def NetworkFallback(self):
-+		if iNetwork.configuredNetworkAdapters.has_key('wlan0') is True:
-+			self.session.openWithCallback(self.ErrorMessageClosed, MessageBox, self.wlan_errortext, type = MessageBox.TYPE_INFO,timeout = 10)
-+		if iNetwork.configuredNetworkAdapters.has_key('ath0') is True:
-+			self.session.openWithCallback(self.ErrorMessageClosed, MessageBox, self.wlan_errortext, type = MessageBox.TYPE_INFO,timeout = 10)
-+		else:
-+			self.session.openWithCallback(self.ErrorMessageClosed, MessageBox, self.lan_errortext, type = MessageBox.TYPE_INFO,timeout = 10)
-+
-+	def ErrorMessageClosed(self, *ret):
-+		if iNetwork.configuredNetworkAdapters.has_key('wlan0') is True:
-+			self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetupConfiguration, 'wlan0')
-+		elif iNetwork.configuredNetworkAdapters.has_key('ath0') is True:
-+			self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetupConfiguration, 'ath0')
-+		else:
-+			self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetupConfiguration, 'eth0')
-+
- 	def cleanup(self):
- 		iNetwork.stopLinkStateConsole()
- 		iNetwork.stopRestartConsole()
-@@ -296,17 +312,18 @@
- 
- 
- class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
--	def __init__(self, session, networkinfo, essid=None):
-+	def __init__(self, session, networkinfo, essid=None, aplist=None):
- 		Screen.__init__(self, session)
- 		HelpableScreen.__init__(self)
- 		self.session = session
- 		if isinstance(networkinfo, (list, tuple)):
- 			self.iface = networkinfo[0]
- 			self.essid = networkinfo[1]
-+			self.aplist = networkinfo[2]
- 		else:
- 			self.iface = networkinfo
- 			self.essid = essid
--			
-+			self.aplist = aplist
- 		self.extended = None
- 		self.applyConfigRef = None
- 		self.finished_cb = None
-@@ -397,36 +414,62 @@
- 		self.gatewayEntry = None
- 		self.hiddenSSID = None
- 		self.wlanSSID = None
--		self.encryption = None
--		self.encryptionType = None
-+		self.encryptionEnabled = None
- 		self.encryptionKey = None
-+		self.encryptionType = None
-+		self.nwlist = None
- 		self.encryptionlist = None
- 		self.weplist = None
- 		self.wsconfig = None
- 		self.default = None
- 
--		if iNetwork.isWirelessInterface(self.iface):
--			from Plugins.SystemPlugins.WirelessLan.Wlan import wpaSupplicant
-+		if self.iface in iNetwork.wlan_interfaces:
-+			from Plugins.SystemPlugins.WirelessLan.Wlan import wpaSupplicant,Wlan
-+			self.w = Wlan(self.iface)
- 			self.ws = wpaSupplicant()
- 			self.encryptionlist = []
--			self.encryptionlist.append(("Unencrypted", _("Unencrypted")))
- 			self.encryptionlist.append(("WEP", _("WEP")))
- 			self.encryptionlist.append(("WPA", _("WPA")))
--			self.encryptionlist.append(("WPA/WPA2", _("WPA or WPA2")))
- 			self.encryptionlist.append(("WPA2", _("WPA2")))
-+			self.encryptionlist.append(("WPA/WPA2", _("WPA or WPA2")))
- 			self.weplist = []
- 			self.weplist.append("ASCII")
- 			self.weplist.append("HEX")
-+			if self.aplist is not None:
-+				self.nwlist = self.aplist
-+				self.nwlist.sort(key = lambda x: x[0])
-+			else:
-+				self.nwlist = []
-+				self.aps = None
-+				try:
-+					self.aps = self.w.getNetworkList()
-+					if self.aps is not None:
-+						for ap in self.aps:
-+							a = self.aps[ap]
-+							if a['active']:
-+								if a['essid'] != '':
-+									self.nwlist.append((a['essid'],a['essid']))
-+					self.nwlist.sort(key = lambda x: x[0])
-+				except:
-+					self.nwlist.append(("No Networks found",_("No Networks found")))
- 
--			self.wsconfig = self.ws.loadConfig(self.iface)
--			if self.essid is None:
--				self.essid = self.wsconfig['ssid']
-+			self.wsconfig = self.ws.loadConfig()
-+			if self.essid is not None: # ssid from wlan scan
-+				self.default = self.essid
-+			else:
-+				self.default = self.wsconfig['ssid']
- 
--			config.plugins.wlan.hiddenessid = NoSave(ConfigYesNo(default = self.wsconfig['hiddenessid']))
--			config.plugins.wlan.essid = NoSave(ConfigText(default = self.essid, visible_width = 50, fixed_size = False))
--			config.plugins.wlan.encryption = NoSave(ConfigSelection(self.encryptionlist, default = self.wsconfig['encryption'] ))
--			config.plugins.wlan.wepkeytype = NoSave(ConfigSelection(self.weplist, default = self.wsconfig['wepkeytype'] ))
--			config.plugins.wlan.psk = NoSave(ConfigPassword(default = self.wsconfig['key'], visible_width = 50, fixed_size = False))
-+			if "hidden..." not in self.nwlist:
-+				self.nwlist.append(("hidden...",_("enter hidden network SSID")))
-+			if self.default not in self.nwlist:
-+				self.nwlist.append((self.default,self.default))
-+			config.plugins.wlan.essid = NoSave(ConfigSelection(self.nwlist, default = self.default ))
-+			config.plugins.wlan.hiddenessid = NoSave(ConfigText(default = self.wsconfig['hiddenessid'], visible_width = 50, fixed_size = False))
-+
-+			config.plugins.wlan.encryption.enabled = NoSave(ConfigYesNo(default = self.wsconfig['encryption'] ))
-+			config.plugins.wlan.encryption.type = NoSave(ConfigSelection(self.encryptionlist, default = self.wsconfig['encryption_type'] ))
-+			config.plugins.wlan.encryption.wepkeytype = NoSave(ConfigSelection(self.weplist, default = self.wsconfig['encryption_wepkeytype'] ))
-+			config.plugins.wlan.encryption.psk = NoSave(ConfigPassword(default = self.wsconfig['key'], visible_width = 50, fixed_size = False))
- 
- 		self.activateInterfaceEntry = NoSave(ConfigYesNo(default=iNetwork.getAdapterAttribute(self.iface, "up") or False))
- 		self.dhcpConfigEntry = NoSave(ConfigYesNo(default=iNetwork.getAdapterAttribute(self.iface, "dhcp") or False))
-@@ -459,7 +502,6 @@
- 					self.list.append(getConfigListEntry(_('Gateway'), self.gatewayConfigEntry))
- 
- 			self.extended = None
--			self.configStrings = None
- 			for p in plugins.getPlugins(PluginDescriptor.WHERE_NETWORKSETUP):
- 				callFnc = p.__call__["ifaceSupported"](self.iface)
- 				if callFnc is not None:
-@@ -467,21 +509,30 @@
- 						self.extended = callFnc
- 						if p.__call__.has_key("configStrings"):
- 							self.configStrings = p.__call__["configStrings"]
--
--						self.hiddenSSID = getConfigListEntry(_("Hidden network"), config.plugins.wlan.hiddenessid)
--						self.list.append(self.hiddenSSID)
--						self.wlanSSID = getConfigListEntry(_("Networkname (SSID)"), config.plugins.wlan.essid)
--						self.list.append(self.wlanSSID)
--						self.encryption = getConfigListEntry(_("Encryption"), config.plugins.wlan.encryption)
--						self.list.append(self.encryption)						
--
--						self.encryptionType = getConfigListEntry(_("Encryption Keytype"), config.plugins.wlan.wepkeytype)
--						self.encryptionKey = getConfigListEntry(_("Encryption Key"), config.plugins.wlan.psk)
-+						else:
-+							self.configStrings = None
-+						if config.plugins.wlan.essid.value == 'hidden...':
-+							self.wlanSSID = getConfigListEntry(_("Network SSID"), config.plugins.wlan.essid)
-+							self.list.append(self.wlanSSID)
-+							self.hiddenSSID = getConfigListEntry(_("Hidden network SSID"), config.plugins.wlan.hiddenessid)
-+							self.list.append(self.hiddenSSID)
-+						else:
-+							self.wlanSSID = getConfigListEntry(_("Network SSID"), config.plugins.wlan.essid)
-+							self.list.append(self.wlanSSID)
-+						self.encryptionEnabled = getConfigListEntry(_("Encryption"), config.plugins.wlan.encryption.enabled)
-+						self.list.append(self.encryptionEnabled)
- 						
--						if config.plugins.wlan.encryption.value != "Unencrypted":
--							if config.plugins.wlan.encryption.value == 'WEP':
--								self.list.append(self.encryptionType)
--							self.list.append(self.encryptionKey)
-+						if config.plugins.wlan.encryption.enabled.value:
-+							self.encryptionType = getConfigListEntry(_("Encryption Type"), config.plugins.wlan.encryption.type)
-+							self.list.append(self.encryptionType)
-+							if config.plugins.wlan.encryption.type.value == 'WEP':
-+								self.list.append(getConfigListEntry(_("Encryption Keytype"), config.plugins.wlan.encryption.wepkeytype))
-+								self.encryptionKey = getConfigListEntry(_("Encryption Key"), config.plugins.wlan.encryption.psk)
-+								self.list.append(self.encryptionKey)
-+							else:
-+								self.encryptionKey = getConfigListEntry(_("Encryption Key"), config.plugins.wlan.encryption.psk)
-+								self.list.append(self.encryptionKey)
-+
- 		self["config"].list = self.list
- 		self["config"].l.setList(self.list)
- 
-@@ -495,8 +546,12 @@
- 			self.createSetup()
- 		if self["config"].getCurrent() == self.gatewayEntry:
- 			self.createSetup()
--		if iNetwork.isWirelessInterface(self.iface):
--			if self["config"].getCurrent() == self.encryption:
-+		if self.iface in iNetwork.wlan_interfaces:
-+			if self["config"].getCurrent() == self.wlanSSID:
-+				self.createSetup()
-+			if self["config"].getCurrent() == self.encryptionEnabled:
-+				self.createSetup()
-+			if self["config"].getCurrent() == self.encryptionType:
- 				self.createSetup()
- 
- 	def keyLeft(self):
-@@ -521,7 +576,7 @@
- 		if (ret == True):		
- 			num_configured_if = len(iNetwork.getConfiguredAdapters())
- 			if num_configured_if >= 1:
--				if self.iface in iNetwork.getConfiguredAdapters():	
-+				if num_configured_if == 1 and self.iface in iNetwork.getConfiguredAdapters():
- 					self.applyConfig(True)
- 				else:
- 					self.session.openWithCallback(self.secondIfaceFoundCB, MessageBox, _("A second configured interface has been found.\n\nDo you want to disable the second network interface?"), default = True)
-@@ -539,15 +594,11 @@
- 				if interface == self.iface:
- 					continue
- 				iNetwork.setAdapterAttribute(interface, "up", False)
--			iNetwork.deactivateInterface(configuredInterfaces,self.deactivateSecondInterfaceCB)
--
--	def deactivateSecondInterfaceCB(self, data):
--		if data is True:
--			self.applyConfig(True)
-+				iNetwork.deactivateInterface(interface)
-+				self.applyConfig(True)
- 
- 	def applyConfig(self, ret = False):
- 		if (ret == True):
--			self.applyConfigRef = None
- 			iNetwork.setAdapterAttribute(self.iface, "up", self.activateInterfaceEntry.value)
- 			iNetwork.setAdapterAttribute(self.iface, "dhcp", self.dhcpConfigEntry.value)
- 			iNetwork.setAdapterAttribute(self.iface, "ip", self.ipConfigEntry.value)
-@@ -556,33 +607,17 @@
- 				iNetwork.setAdapterAttribute(self.iface, "gateway", self.gatewayConfigEntry.value)
- 			else:
- 				iNetwork.removeAdapterAttribute(self.iface, "gateway")
--
--			if (self.extended is not None and self.configStrings is not None):
-+			if self.extended is not None and self.configStrings is not None:
- 				iNetwork.setAdapterAttribute(self.iface, "configStrings", self.configStrings(self.iface))
--				self.ws.writeConfig(self.iface)
--				
-+				self.ws.writeConfig()
- 			if self.activateInterfaceEntry.value is False:
--				iNetwork.deactivateInterface(self.iface,self.deactivateInterfaceCB)
--				iNetwork.writeNetworkConfig()
--				self.applyConfigRef = self.session.openWithCallback(self.applyConfigfinishedCB, MessageBox, _("Please wait for activation of your network configuration..."), type = MessageBox.TYPE_INFO, enable_input = False)
--			else:
--				if self.oldInterfaceState is False:
--					iNetwork.activateInterface(self.iface,self.deactivateInterfaceCB)
--				else:
--					iNetwork.deactivateInterface(self.iface,self.activateInterfaceCB)
--				iNetwork.writeNetworkConfig()
--				self.applyConfigRef = self.session.openWithCallback(self.applyConfigfinishedCB, MessageBox, _("Please wait for activation of your network configuration..."), type = MessageBox.TYPE_INFO, enable_input = False)
-+				iNetwork.deactivateInterface(self.iface)
-+			iNetwork.writeNetworkConfig()
-+			iNetwork.restartNetwork(self.applyConfigDataAvail)
-+			self.applyConfigRef = self.session.openWithCallback(self.applyConfigfinishedCB, MessageBox, _("Please wait for activation of your network configuration..."), type = MessageBox.TYPE_INFO, enable_input = False)
- 		else:
- 			self.keyCancel()
- 
--	def deactivateInterfaceCB(self, data):
--		if data is True:
--			self.applyConfigDataAvail(True)
--
--	def activateInterfaceCB(self, data):
--		if data is True:
--			iNetwork.activateInterface(self.iface,self.applyConfigDataAvail)
--
- 	def applyConfigDataAvail(self, data):
- 		if data is True:
- 			iNetwork.getInterfaces(self.getInterfacesDataAvail)
-@@ -640,10 +675,10 @@
- 		
- 	def hideInputHelp(self):
- 		current = self["config"].getCurrent()
--		if current == self.wlanSSID:
-+		if current == self.hiddenSSID and config.plugins.wlan.essid.value == 'hidden...':
- 			if current[1].help_window.instance is not None:
- 				current[1].help_window.instance.hide()
--		elif current == self.encryptionKey and config.plugins.wlan.encryption.value is not "Unencrypted":
-+		elif current == self.encryptionKey and config.plugins.wlan.encryption.enabled.value:
- 			if current[1].help_window.instance is not None:
- 				current[1].help_window.instance.hide()
- 
-@@ -665,11 +700,15 @@
- 		self["Statustext"] = StaticText()
- 		self["statuspic"] = MultiPixmap()
- 		self["statuspic"].hide()
--		
-+###############		
-+		from pythonwifi.iwlibs import getWNICnames
-+		temp_iface=getWNICnames()
-+		if temp_iface == []:
-+			os_system("ifconfig " + self.iface + " up")
-+################		
- 		self.oktext = _("Press OK on your remote control to continue.")
- 		self.reboottext = _("Your Dreambox will restart after pressing OK on your remote control.")
--		self.errortext = _("No working wireless network interface found.\n Please verify that you have attached a compatible WLAN device or enable your local network interface.")
--		self.missingwlanplugintxt = _("The wireless LAN plugin is not installed!\nPlease install it.")
-+		self.errortext = _("No working wireless network interface found.\n Please verify that you have attached a compatible WLAN device or enable your local network interface.")	
- 		
- 		self["WizardActions"] = HelpableActionMap(self, "WizardActions",
- 			{
-@@ -705,39 +744,30 @@
- 		self.onLayoutFinish.append(self.layoutFinished)
- 		self.onClose.append(self.cleanup)
- 
--
--	def queryWirelessDevice(self,iface):
--		try:
--			from pythonwifi.iwlibs import Wireless
--			import errno
--		except ImportError:
--			return False
--		else:
--			try:
--				ifobj = Wireless(iface) # a Wireless NIC Object
--				wlanresponse = ifobj.getAPaddr()
--			except IOError, (error_no, error_str):
--				if error_no in (errno.EOPNOTSUPP, errno.ENODEV, errno.EPERM):
--					return False
--				else:
--					print "error: ",error_no,error_str
--					return True
--			else:
--				return True
--
- 	def ok(self):
- 		self.cleanup()
- 		if self["menulist"].getCurrent()[1] == 'edit':
--			if iNetwork.isWirelessInterface(self.iface):
-+			if self.iface in iNetwork.wlan_interfaces:
- 				try:
- 					from Plugins.SystemPlugins.WirelessLan.plugin import WlanScan
-+					from pythonwifi.iwlibs import Wireless
- 				except ImportError:
--					self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO,timeout = 10 )
-+					self.session.open(MessageBox, _("The wireless LAN plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
- 				else:
--					if self.queryWirelessDevice(self.iface):
--						self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup,self.iface)
-+					ifobj = Wireless(self.iface) # a Wireless NIC Object
-+					try:
-+						self.wlanresponse = ifobj.getAPaddr()
-+					except IOError:
-+						self.wlanresponse = ifobj.getStatistics()
-+					if self.wlanresponse:
-+						if self.wlanresponse[0] not in (19,95): # 19 = 'No such device', 95 = 'Operation not supported'
-+							self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup,self.iface)
-+						else:
-+							# Display Wlan not available Message
-+							self.showErrorMessage()
- 					else:
--						self.showErrorMessage()	# Display Wlan not available Message
-+						# Display Wlan not available Message
-+						self.showErrorMessage()
- 			else:
- 				self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup,self.iface)
- 		if self["menulist"].getCurrent()[1] == 'test':
-@@ -747,23 +777,45 @@
- 		if self["menulist"].getCurrent()[1] == 'scanwlan':
- 			try:
- 				from Plugins.SystemPlugins.WirelessLan.plugin import WlanScan
-+				from pythonwifi.iwlibs import Wireless
- 			except ImportError:
--				self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO,timeout = 10 )
-+				self.session.open(MessageBox, _("The wireless LAN plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
- 			else:
--				if self.queryWirelessDevice(self.iface):
--					self.session.openWithCallback(self.WlanScanClosed, WlanScan, self.iface)
-+				ifobj = Wireless(self.iface) # a Wireless NIC Object
-+				try:
-+					self.wlanresponse = ifobj.getAPaddr()
-+				except IOError:
-+					self.wlanresponse = ifobj.getStatistics()
-+				if self.wlanresponse:
-+					if self.wlanresponse[0] not in (19,95): # 19 = 'No such device', 95 = 'Operation not supported'
-+						self.session.openWithCallback(self.WlanScanClosed, WlanScan, self.iface)
-+					else:
-+						# Display Wlan not available Message
-+						self.showErrorMessage()
- 				else:
--					self.showErrorMessage()	# Display Wlan not available Message
-+					# Display Wlan not available Message
-+					self.showErrorMessage()
- 		if self["menulist"].getCurrent()[1] == 'wlanstatus':
- 			try:
- 				from Plugins.SystemPlugins.WirelessLan.plugin import WlanStatus
-+				from pythonwifi.iwlibs import Wireless
- 			except ImportError:
--				self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO,timeout = 10 )
--			else:
--				if self.queryWirelessDevice(self.iface):
--					self.session.openWithCallback(self.WlanStatusClosed, WlanStatus,self.iface)
-+				self.session.open(MessageBox, _("The wireless LAN plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
-+			else:	
-+				ifobj = Wireless(self.iface) # a Wireless NIC Object
-+				try:
-+					self.wlanresponse = ifobj.getAPaddr()
-+				except IOError:
-+					self.wlanresponse = ifobj.getStatistics()
-+				if self.wlanresponse:
-+					if self.wlanresponse[0] not in (19,95): # 19 = 'No such device', 95 = 'Operation not supported'
-+						self.session.openWithCallback(self.WlanStatusClosed, WlanStatus,self.iface)
-+					else:
-+						# Display Wlan not available Message
-+						self.showErrorMessage()
- 				else:
--					self.showErrorMessage()	# Display Wlan not available Message
-+					# Display Wlan not available Message
-+					self.showErrorMessage()
- 		if self["menulist"].getCurrent()[1] == 'lanrestart':
- 			self.session.openWithCallback(self.restartLan, MessageBox, (_("Are you sure you want to restart your network interfaces?\n\n") + self.oktext ) )
- 		if self["menulist"].getCurrent()[1] == 'openwizard':
-@@ -819,7 +871,7 @@
- 		self["IF"].setText(iNetwork.getFriendlyAdapterName(self.iface))
- 		self["Statustext"].setText(_("Link:"))
- 		
--		if iNetwork.isWirelessInterface(self.iface):
-+		if self.iface in iNetwork.wlan_interfaces:
- 			try:
- 				from Plugins.SystemPlugins.WirelessLan.Wlan import iStatus
- 			except:
-@@ -869,16 +921,27 @@
- 
- 	def AdapterSetupClosed(self, *ret):
- 		if ret is not None and len(ret):
--			if ret[0] == 'ok' and (iNetwork.isWirelessInterface(self.iface) and iNetwork.getAdapterAttribute(self.iface, "up") is True):
-+			if ret[0] == 'ok' and (self.iface in iNetwork.wlan_interfaces) and iNetwork.getAdapterAttribute(self.iface, "up") is True:
- 				try:
- 					from Plugins.SystemPlugins.WirelessLan.plugin import WlanStatus
-+					from pythonwifi.iwlibs import Wireless
- 				except ImportError:
--					self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO,timeout = 10 )
-+					self.session.open(MessageBox, _("The wireless LAN plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
- 				else:	
--					if self.queryWirelessDevice(self.iface):
--						self.session.openWithCallback(self.WlanStatusClosed, WlanStatus,self.iface)
-+					ifobj = Wireless(self.iface) # a Wireless NIC Object
-+					try:
-+						self.wlanresponse = ifobj.getAPaddr()
-+					except IOError:
-+						self.wlanresponse = ifobj.getStatistics()
-+					if self.wlanresponse:
-+						if self.wlanresponse[0] not in (19,95): # 19 = 'No such device', 95 = 'Operation not supported'
-+							self.session.openWithCallback(self.WlanStatusClosed, WlanStatus,self.iface)
-+						else:
-+							# Display Wlan not available Message
-+							self.showErrorMessage()
- 					else:
--						self.showErrorMessage()	# Display Wlan not available Message
-+						# Display Wlan not available Message
-+						self.showErrorMessage()
- 			else:
- 				self.updateStatusbar()
- 		else:
-@@ -892,7 +955,7 @@
- 
- 	def WlanScanClosed(self,*ret):
- 		if ret[0] is not None:
--			self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup, self.iface,ret[0])
-+			self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup, self.iface,ret[0],ret[1])
- 		else:
- 			from Plugins.SystemPlugins.WirelessLan.Wlan import iStatus
- 			iStatus.stopWlanConsole()
-@@ -937,7 +1000,6 @@
- 	def cleanup(self):
- 		iNetwork.stopLinkStateConsole()
- 		iNetwork.stopDeactivateInterfaceConsole()
--		iNetwork.stopActivateInterfaceConsole()
- 		iNetwork.stopPingConsole()
- 		try:
- 			from Plugins.SystemPlugins.WirelessLan.Wlan import iStatus
-@@ -951,7 +1013,7 @@
- 		if data is not None:
- 			if data is True:
- 				if status is not None:
--					if status[self.iface]["essid"] == "off" or status[self.iface]["accesspoint"] == "Not-Associated" or status[self.iface]["accesspoint"] == False:
-+					if status[self.iface]["acesspoint"] == "No Connection" or status[self.iface]["acesspoint"] == "Not-Associated" or status[self.iface]["acesspoint"] == False:
- 						self.LinkState = False
- 						self["statuspic"].setPixmapNum(1)
- 						self["statuspic"].show()
-@@ -1319,7 +1381,7 @@
- 
- 	def LinkStatedataAvail(self,data):
- 		self.output = data.strip()
--		result = self.output.splitlines()
-+		result = self.output.split('\n')
- 		pattern = re_compile("Link detected: yes")
- 		for item in result:
- 			if re_search(pattern, item):
-@@ -1373,7 +1435,7 @@
- 		if data is not None:
- 			if data is True:
- 				if status is not None:
--					if status[self.iface]["essid"] == "off" or status[self.iface]["accesspoint"] == "Not-Associated" or status[self.iface]["accesspoint"] == False:
-+					if status[self.iface]["acesspoint"] == "No Connection" or status[self.iface]["acesspoint"] == "Not-Associated" or status[self.iface]["acesspoint"] == False:
- 						self["Network"].setForegroundColorNum(1)
- 						self["Network"].setText(_("disconnected"))
- 						self["NetworkInfo_Check"].setPixmapNum(1)
-
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2011-09-03 18:23:27.250023288 +0200
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2011-09-03 18:23:47.380033063 +0200
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2012-09-28 13:53:18.000000000 +0200
 @@ -10,7 +10,7 @@
  from Components.MenuList import MenuList
  from Plugins.Plugin import PluginDescriptor
@@ -8272,9 +6072,9 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
  					self.skinlist.append(subdir)
  				else:
  					subdir = "Default Skin"
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SoftwareManager/SoftwareTools.py	2012-09-28 13:53:18.000000000 +0200
 @@ -1,5 +1,11 @@
  # -*- coding: iso-8859-1 -*-
 -from enigma import eConsoleAppContainer,eTPM
@@ -8483,16 +6283,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
  						self.NotifierCallback = callback
  						self.startIpkgListAvailable()
  				else:	
-
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	2012-03-06 19:40:12.000000000 +0100
-@@ -0,0 +1,2 @@
-+
-+
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/Makefile.am enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/Makefile.am
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/Makefile.am enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/Makefile.am
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/Makefile.am	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/Makefile.am	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/Makefile.am	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,8 @@
 +SUBDIRS = tuxtxt
 +
@@ -8502,9 +6295,15 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
 +	__init__.py \
 +	plugin.py
 +
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/plugin.py
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	1970-01-01 01:00:00.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	2012-09-28 13:53:18.000000000 +0200
+@@ -0,0 +1,2 @@
++
++
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/plugin.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/plugin.py	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/plugin.py	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/plugin.py	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,82 @@
 +from enigma import *
 +from Screens.Screen import Screen
@@ -8588,15 +6387,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
 +def Plugins(**kwargs):
 +	print "Plugins"
 +	return PluginDescriptor(name="TuxTXT", description="Videotext", where = PluginDescriptor.WHERE_TELETEXT, fnc=main)
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/__init__.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/__init__.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/__init__.py	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/__init__.py	2012-03-06 19:40:12.000000000 +0100
-@@ -0,0 +1,2 @@
-+
-+
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/LICENSE enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/LICENSE
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/LICENSE enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/LICENSE
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/LICENSE	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/LICENSE	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/LICENSE	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,9 @@
 +This plugin is licensed under the Creative Commons 
 +Attribution-NonCommercial-ShareAlike 3.0 Unported 
@@ -8607,9 +6400,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
 +This plugin is NOT free software. It is open source, you are allowed to
 +modify it (if you keep the license), but it may not be commercially 
 +distributed other than under the conditions noted above.
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/Makefile.am enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/Makefile.am
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/Makefile.am enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/Makefile.am
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/Makefile.am	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/Makefile.am	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/Makefile.am	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,9 @@
 +installdir = $(pkglibdir)/python/Plugins/SystemPlugins/VFD-Icons
 +
@@ -8620,16 +6413,22 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
 +	plugin.py
 +
 +dist_install_DATA = LICENSE
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/Makefile.am enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/Makefile.am
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/__init__.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/__init__.py
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/__init__.py	1970-01-01 01:00:00.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/__init__.py	2012-09-28 13:53:18.000000000 +0200
+@@ -0,0 +1,2 @@
++
++
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/Makefile.am enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/Makefile.am
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/Makefile.am	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/Makefile.am	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/Makefile.am	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,3 @@
 +installdir = $(datadir)/meta
 +
 +dist_install_DATA = plugin_vfd-icons.xml
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/plugin_vfd-icons.xml enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/plugin_vfd-icons.xml
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/plugin_vfd-icons.xml enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/plugin_vfd-icons.xml
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/plugin_vfd-icons.xml	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/plugin_vfd-icons.xml	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/meta/plugin_vfd-icons.xml	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,20 @@
 +<default>
 +	  <prerequisites>
@@ -8651,9 +6450,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
 +	</files>
 +
 +</default>
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/plugin.py
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/plugin.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/VFD-Icons/plugin.py	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/plugin.py	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/VFD-Icons/plugin.py	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,154 @@
 +# -*- coding: utf-8 -*-
 +from Plugins.Plugin import PluginDescriptor
@@ -8809,9 +6608,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
 +
 +def Plugins(**kwargs):
 + 	return [ PluginDescriptor(name="VFDIcons", description="Icons in VFD", where = PluginDescriptor.WHERE_SESSIONSTART, fnc=main ) ]
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Videomode/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Videomode/plugin.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Videomode/plugin.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Videomode/plugin.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Videomode/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Videomode/plugin.py
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Videomode/plugin.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Videomode/plugin.py	2012-09-28 13:53:18.000000000 +0200
 @@ -64,6 +64,7 @@
  				self.list.append(getConfigListEntry(_("Resolution"), config.av.videorate[config.av.videomode[config.av.videoport.value].value]))
  			else:
@@ -8838,9 +6637,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
  #			self.list.append(getConfigListEntry(_("Allow Unsupported Modes"), config.av.edid_override))
  		if config.av.videoport.value == "Scart":
  			self.list.append(getConfigListEntry(_("Color Format"), config.av.colorformat))
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Videomode/VideoHardware.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Videomode/VideoHardware.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Videomode/VideoHardware.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Videomode/VideoHardware.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Videomode/VideoHardware.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Videomode/VideoHardware.py
+--- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Videomode/VideoHardware.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Videomode/VideoHardware.py	2012-09-28 13:53:18.000000000 +0200
 @@ -13,52 +13,42 @@
  
  	modes = { }  # a list of (high-level) modes for a certain port.
@@ -9025,9 +6824,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Plugins
  config.av.edid_override = ConfigYesNo(default = False)
  video_hw = VideoHardware()
  video_hw.setConfiguredMode()
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Screens/AudioSelectionExtended.py enigma2-nightly.patched/lib/python/Screens/AudioSelectionExtended.py
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Screens/AudioSelectionExtended.py enigma2-nightly.patched/lib/python/Screens/AudioSelectionExtended.py
 --- enigma2-nightly.org/lib/python/Screens/AudioSelectionExtended.py	1970-01-01 01:00:00.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Screens/AudioSelectionExtended.py	2012-03-06 19:40:12.000000000 +0100
++++ enigma2-nightly.patched/lib/python/Screens/AudioSelectionExtended.py	2012-09-28 13:53:18.000000000 +0200
 @@ -0,0 +1,314 @@
 +from Screen import Screen
 +from Components.ServiceEventTracker import ServiceEventTracker
@@ -9343,9 +7142,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Screens
 +	def __init__(self, session, infobar=None):
 +		AudioSelection.__init__(self, session, infobar, page=PAGE_SUBTITLES)
 +		self.skinName = ["AudioSelection"]
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Screens/DefaultWizard.py enigma2-nightly.patched/lib/python/Screens/DefaultWizard.py
---- enigma2-nightly.org/lib/python/Screens/DefaultWizard.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Screens/DefaultWizard.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Screens/DefaultWizard.py enigma2-nightly.patched/lib/python/Screens/DefaultWizard.py
+--- enigma2-nightly.org/lib/python/Screens/DefaultWizard.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Screens/DefaultWizard.py	2012-09-28 13:53:18.000000000 +0200
 @@ -25,10 +25,10 @@
  		self["arrowup2"] = MovingPixmap()
  	
@@ -9360,9 +7159,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Screens
          
  	def markDone(self):
  		config.misc.defaultchosen.value = 0
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Screens/InfoBarGenerics.py enigma2-nightly.patched/lib/python/Screens/InfoBarGenerics.py
---- enigma2-nightly.org/lib/python/Screens/InfoBarGenerics.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Screens/InfoBarGenerics.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Screens/InfoBarGenerics.py enigma2-nightly.patched/lib/python/Screens/InfoBarGenerics.py
+--- enigma2-nightly.org/lib/python/Screens/InfoBarGenerics.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Screens/InfoBarGenerics.py	2012-09-28 13:53:18.000000000 +0200
 @@ -44,6 +44,10 @@
  # hack alert!
  from Menu import MainMenu, mdom
@@ -9513,9 +7312,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Screens
  
  class InfoBarSubtitleSupport(object):
  	def __init__(self):
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Screens/InfoBar.py enigma2-nightly.patched/lib/python/Screens/InfoBar.py
---- enigma2-nightly.org/lib/python/Screens/InfoBar.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Screens/InfoBar.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Screens/InfoBar.py enigma2-nightly.patched/lib/python/Screens/InfoBar.py
+--- enigma2-nightly.org/lib/python/Screens/InfoBar.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Screens/InfoBar.py	2012-09-28 13:53:18.000000000 +0200
 @@ -6,7 +6,12 @@
  from Screen import Screen
  
@@ -9652,9 +7451,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Screens
  			self.session.nav.stopService()
  		elif answer == "restart":
  			self.doSeek(0)
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Screens/Wizard.py enigma2-nightly.patched/lib/python/Screens/Wizard.py
---- enigma2-nightly.org/lib/python/Screens/Wizard.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Screens/Wizard.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Screens/Wizard.py enigma2-nightly.patched/lib/python/Screens/Wizard.py
+--- enigma2-nightly.org/lib/python/Screens/Wizard.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Screens/Wizard.py	2012-09-28 13:53:18.000000000 +0200
 @@ -14,6 +14,9 @@
  
  from xml.sax import make_parser
@@ -9685,9 +7484,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Screens
  				exec("self." + self.wizard[self.currStep]["onselect"] + "()")
  		
  	def resetCounter(self):
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Tools/KeyBindings.py enigma2-nightly.patched/lib/python/Tools/KeyBindings.py
---- enigma2-nightly.org/lib/python/Tools/KeyBindings.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/python/Tools/KeyBindings.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Tools/KeyBindings.py enigma2-nightly.patched/lib/python/Tools/KeyBindings.py
+--- enigma2-nightly.org/lib/python/Tools/KeyBindings.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/Tools/KeyBindings.py	2012-09-28 13:53:18.000000000 +0200
 @@ -44,7 +44,15 @@
  		KEYIDS["KEY_9"]: ("9",),
  		KEYIDS["KEY_EXIT"]: ("EXIT",),
@@ -9722,9 +7521,28 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/python/Tools/K
  	}
  ]
  
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/service/servicedvb.cpp enigma2-nightly.patched/lib/service/servicedvb.cpp
---- enigma2-nightly.org/lib/service/servicedvb.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/service/servicedvb.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/enigma_python.i enigma2-nightly.patched/lib/python/enigma_python.i
+--- enigma2-nightly.org/lib/python/enigma_python.i	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/python/enigma_python.i	2012-09-28 13:53:18.000000000 +0200
+@@ -99,6 +99,7 @@
+ #include <lib/dvb_ci/dvbci_ui.h>
+ #include <lib/python/python.h>
+ #include <lib/gdi/picload.h>
++#include <lib/driver/vfd.h> 
+ %}
+ 
+ %feature("ref")   iObject "$this->AddRef(); /* eDebug(\"AddRef (%s:%d)!\", __FILE__, __LINE__); */ "
+@@ -216,6 +217,7 @@
+ %include <lib/dvb/db.h>
+ %include <lib/python/python.h>
+ %include <lib/gdi/picload.h>
++%include <lib/driver/vfd.h> 
+ /**************  eptr  **************/
+ 
+ /**************  signals  **************/
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/service/servicedvb.cpp enigma2-nightly.patched/lib/service/servicedvb.cpp
+--- enigma2-nightly.org/lib/service/servicedvb.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/service/servicedvb.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -537,6 +537,9 @@
  	if (sc)
  	{
@@ -9754,9 +7572,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/service/servic
  }
  
  RESULT eDVBServicePlay::frontendInfo(ePtr<iFrontendInformation> &ptr)
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/service/servicedvbrecord.cpp enigma2-nightly.patched/lib/service/servicedvbrecord.cpp
---- enigma2-nightly.org/lib/service/servicedvbrecord.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/lib/service/servicedvbrecord.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/service/servicedvbrecord.cpp enigma2-nightly.patched/lib/service/servicedvbrecord.cpp
+--- enigma2-nightly.org/lib/service/servicedvbrecord.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/lib/service/servicedvbrecord.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -12,6 +12,26 @@
  #error no byte order defined!
  #endif
@@ -9828,9 +7646,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/lib/service/servic
  		if (fd == -1)
  		{
  			eDebug("eDVBServiceRecord - can't open recording file!");
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/m4/ax_python_devel.m4 enigma2-nightly.patched/m4/ax_python_devel.m4
---- enigma2-nightly.org/m4/ax_python_devel.m4	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/m4/ax_python_devel.m4	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/m4/ax_python_devel.m4 enigma2-nightly.patched/m4/ax_python_devel.m4
+--- enigma2-nightly.org/m4/ax_python_devel.m4	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/m4/ax_python_devel.m4	2012-09-28 13:53:18.000000000 +0200
 @@ -154,7 +154,7 @@
  		python_path=`$PYTHON -c "import distutils.sysconfig; \
  			print (distutils.sysconfig.get_python_inc ());"`
@@ -9862,9 +7680,31 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/m4/ax_python_devel
  	fi
  	AC_MSG_RESULT([$PYTHON_SITE_PKG])
  	AC_SUBST([PYTHON_SITE_PKG])
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/main/bsod.cpp enigma2-nightly.patched/main/bsod.cpp
---- enigma2-nightly.org/main/bsod.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/main/bsod.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/main/Makefile.am enigma2-nightly.patched/main/Makefile.am
+--- enigma2-nightly.org/main/Makefile.am	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/main/Makefile.am	2012-09-28 13:53:18.000000000 +0200
+@@ -9,6 +9,8 @@
+ 
+ bin_PROGRAMS = enigma2
+ 
++installdir = $(targetprefix)/usr/local/bin
++
+ enigma2_SOURCES = \
+ 	bsod.cpp \
+ 	bsod.h \
+@@ -48,7 +50,8 @@
+ 	@LIBXINE_LIBS@ \
+ 	@LIBXMLCCWRAP_LIBS@ \
+ 	@PTHREAD_LIBS@ \
+-	@PYTHON_LDFLAGS@
++	@PYTHON_LDFLAGS@ \
++	-ldl -lpthread -lcrypt -lresolv -lrt -lmmeimage
+ 
+ enigma2_LDFLAGS = -Wl,--export-dynamic
+ 
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/main/bsod.cpp enigma2-nightly.patched/main/bsod.cpp
+--- enigma2-nightly.org/main/bsod.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/main/bsod.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -17,8 +17,11 @@
  #include "version_info.h"
  
@@ -9878,9 +7718,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/main/bsod.cpp enig
  #define INFOFILE "/maintainer.info"
  
  #define RINGBUFFER_SIZE 16384
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/main/enigma.cpp enigma2-nightly.patched/main/enigma.cpp
---- enigma2-nightly.org/main/enigma.cpp	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/main/enigma.cpp	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/main/enigma.cpp enigma2-nightly.patched/main/enigma.cpp
+--- enigma2-nightly.org/main/enigma.cpp	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/main/enigma.cpp	2012-09-28 13:53:18.000000000 +0200
 @@ -27,6 +27,14 @@
  #include <lib/python/connections.h>
  #include <lib/python/python.h>
@@ -9921,31 +7761,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/main/enigma.cpp en
  	
  	printf("executing main\n");
  	
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/main/Makefile.am enigma2-nightly.patched/main/Makefile.am
---- enigma2-nightly.org/main/Makefile.am	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/main/Makefile.am	2012-03-06 19:40:12.000000000 +0100
-@@ -9,6 +9,8 @@
- 
- bin_PROGRAMS = enigma2
- 
-+installdir = $(targetprefix)/usr/local/bin
-+
- enigma2_SOURCES = \
- 	bsod.cpp \
- 	bsod.h \
-@@ -48,7 +50,8 @@
- 	@LIBXINE_LIBS@ \
- 	@LIBXMLCCWRAP_LIBS@ \
- 	@PTHREAD_LIBS@ \
--	@PYTHON_LDFLAGS@
-+	@PYTHON_LDFLAGS@ \
-+	-ldl -lpthread -lcrypt -lresolv -lrt -lmmeimage
- 
- enigma2_LDFLAGS = -Wl,--export-dynamic
- 
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/mytest.py enigma2-nightly.patched/mytest.py
---- enigma2-nightly.org/mytest.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/mytest.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/mytest.py enigma2-nightly.patched/mytest.py
+--- enigma2-nightly.org/mytest.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/mytest.py	2012-09-28 13:53:18.000000000 +0200
 @@ -310,6 +310,10 @@
  
  		self.pushCurrent()
@@ -9979,9 +7797,9 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/mytest.py enigma2-
  		if not config.misc.useTransponderTime.value:
  			print "dvb time sync disabled... so set RTC now to current linux time!", strftime("%Y/%m/%d %H:%M", localtime(nowTime))
  			setRTCtime(nowTime)
-diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/RecordTimer.py enigma2-nightly.patched/RecordTimer.py
---- enigma2-nightly.org/RecordTimer.py	2012-02-27 21:55:24.000000000 +0100
-+++ enigma2-nightly.patched/RecordTimer.py	2012-03-06 19:40:12.000000000 +0100
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/RecordTimer.py enigma2-nightly.patched/RecordTimer.py
+--- enigma2-nightly.org/RecordTimer.py	2012-09-28 13:53:18.000000000 +0200
++++ enigma2-nightly.patched/RecordTimer.py	2012-09-28 13:53:18.000000000 +0200
 @@ -304,6 +304,13 @@
  						RecordTimerEntry.TryQuitMainloop() # start shutdown handling without screen
  					else:
