@@ -96,7 +96,8 @@ PKGR_openpli_plugins = r1
 openpli_plugin_list = \
 AddStreamUrl \
 NewsReader \
-Satscan
+Satscan \
+SimpleUmount
 
 # openpli plugins that go to flash
 openpli_plugin_distlist = \
