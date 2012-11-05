@@ -361,13 +361,13 @@ esac
 		    echo -e "\nChoose enigma2 revisions:"
 			echo "	0) Newest (Can fail due to outdated patch)"
 			echo "	1) Sat, 29 Mar 2011 13:49 - E2 V3.0 e013d09af0e010f15e225a12dcc217abc052ee19"
-			echo "	2) Current E2 gitgui arp-team no gstreamer"
-			echo "	3) Current E2 gitgui arp-team"
+			echo "	2) inactive"
+			echo "	3) inactive"
 			echo "	4) inactive"
 			echo "	5) Fri,  5 Nov 2010 00:16 - E2 V2.4 libplayer3 7fd4241a1d7b8d7c36385860b24882636517473b"
 			echo "	6) Wed,  6 Jul 2011 11:17 - E2 V3.1 gstreamer  388dcd814d4e99720cb9a6c769611be4951e4ad4"
-			echo "	7) current inactive... comming soon, here is the next stable (case 7 == DIFF=7)"
-			echo "	8) current inactive... comming soon, here is the next stable (case 8 == DIFF=8)"
+			echo "	7) Current E2 gitgui arp-team"
+			echo "	8) Current E2 gitgui arp-team no gstreamer"
 		    read -p "Select enigma2 revision (0-8):"
 			case "$REPLY" in
 			0) IMAGE="--enable-e2d0";;
