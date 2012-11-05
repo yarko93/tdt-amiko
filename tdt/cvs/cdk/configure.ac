@@ -961,6 +961,7 @@ TUXBOX_RULES_MAKE(gst_plugin_subsink)
 #
 # enigma2
 #
+TUXBOX_RULES_MAKE(enigma2)
 TUXBOX_RULES_MAKE(enigma2_pli)
 TUXBOX_RULES_MAKE(tuxtxtlib)
 TUXBOX_RULES_MAKE(tuxtxt32bpp)
