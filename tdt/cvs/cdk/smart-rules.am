@@ -1325,8 +1325,9 @@ grab
 ;
 tinyxml
   2.6.2
-  {PN}
+  {PN}-{PV}
   extract:http://ignum.dl.sourceforge.net/project/tinyxml/tinyxml/{PV}/tinyxml_2_6_2.tar.gz
+  pmove:{PN}:{PN}-{PV}
   patch:file://{PN}{PV}.patch
   make:install:PREFIX=PKDIR/usr:LD=sh4-linux-ld
 ;
@@ -1397,33 +1398,34 @@ enigma2
   git
   \$(appsdir)/{PN}-nightly
 if ENABLE_E2D0
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=945aeb939308b3652b56bc6c577853369d54a537
   patch:file://enigma2-nightly.0.diff
+  patch:file://enigma2-nightly.0.eplayer3.diff
   patch:file://enigma2-nightly.0.gstreamer.diff
   patch:file://enigma2-nightly.0.graphlcd.diff
 endif
 
 if ENABLE_E2D1
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=945aeb939308b3652b56bc6c577853369d54a537
   patch:file://enigma2-nightly.1.diff
-  patch:file://enigma2-nightly.1.gstreamer.diff
-  patch:file://enigma2-nightly.1.graphlcd.diff
 endif
 
 if ENABLE_E2D2
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=839e96b79600aba73f743fd39628f32bc1628f4c
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=839e96b79600aba73f743fd39628f32bc1628f4c
   patch:file://enigma2-nightly.2.diff
   patch:file://enigma2-nightly.2.gstreamer.diff
   patch:file://enigma2-nightly.2.graphlcd.diff
 endif
 
 if ENABLE_E2D3
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=51a7b9349070830b5c75feddc52e97a1109e381e
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=51a7b9349070830b5c75feddc52e97a1109e381e
   patch:file://enigma2-nightly.3.diff
+  patch:file://enigma2-nightly.3.gstreamer.diff
+  patch:file://enigma2-nightly.3.graphlcd.diff
 endif
 
 if ENABLE_E2D4
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880
   patch:file://enigma2-pli-nightly.4.diff
 endif
 
@@ -1433,7 +1435,8 @@ if ENABLE_E2D5
 endif
 
 if ENABLE_E2D6
-  git://gitorious.org/~schpuntik/open-duckbox-project-sh4/amiko-guigit.git:b=arp-no_gst
+  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=388dcd814d4e99720cb9a6c769611be4951e4ad4
+  patch:file://enigma2-pli-nightly.6.diff
 endif
 
 if ENABLE_E2D7
@@ -1441,6 +1444,7 @@ if ENABLE_E2D7
 endif
 
 if ENABLE_E2D8
+  git://gitorious.org/~schpuntik/open-duckbox-project-sh4/amiko-guigit.git:b=arp-no_gst
 endif
 ;
 xbmc_nightly
@@ -1462,6 +1466,8 @@ if ENABLE_XBD2
 endif
 
 if ENABLE_XBD3
+  git://github.com/xbmc/xbmc.git:r=12840c28d8fbfd71c26be798ff6b13828b05b168
+  patch:file://xbmc-nightly.3.diff
 endif
 ;
 ]]END
