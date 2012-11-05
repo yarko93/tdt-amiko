@@ -69,9 +69,13 @@ modprobe e2_proc
    modprobe stmalloc
    modprobe platform
    modprobe silencegen
-   modprobe smartcard
    modprobe bpamem
-   modprobe cec
+   
+      echo "init oc"
+   modprobe cpu_frequ
+   #650mhz
+   echo 16643 > /proc/cpu_frequ/pll0_ndiv_mdiv
+   
 #   mknod /dev/bpamem c 153 0 
 
    major=$(awk "\$2==\"sparkid\" {print \$1}" /proc/devices)
