@@ -4,11 +4,8 @@ $(DEPDIR)/xbmc-nightly.do_prepare: @DEPENDS_xbmc_nightly@
 	@PREPARE_xbmc_nightly@
 	touch $@
 
-#			PYTHON_LDFLAGS='-L$(targetprefix)/usr/include/python2.6 -lpython2.6' \
-#			PYTHON_VERSION='2.6' \
-#endable webserver else httpapihandler will fail
-$(appsdir)/xbmc-nightly/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd tinyxml python gstreamer gst_plugins_dvbmediasink expat sdparm lirc
-	cd $(appsdir)/xbmc-nightly && \
+$(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd tinyxml python gstreamer gst_plugins_dvbmediasink expat sdparm lirc
+	cd $(DIR_xbmc_nightly) && \
 		$(BUILDENV) \
 		./bootstrap && \
 		./configure \
@@ -52,19 +49,20 @@ $(appsdir)/xbmc-nightly/config.status: bootstrap libboost directfb libstgles lib
 			--disable-pulse \
 			--disable-alsa
 
-$(DEPDIR)/xbmc-nightly.do_compile: $(appsdir)/xbmc-nightly/config.status
-	cd $(appsdir)/xbmc-nightly && \
+$(DEPDIR)/xbmc-nightly.do_compile: $(DIR_xbmc_nightly)/config.status
+	cd $(DIR_xbmc_nightly) && \
 		$(MAKE) all
 	touch $@
 DESCRIPTION_xbmc_nightly = xbmc
 PKGR_xbmc_nightly =r1
-SRC_URI_xbmc_nigtly = git://github.com/xbmc/xbmc.git
-FILES_xbmc_nigtly = /usr/lib/xbmc/xbmc.bin
+SRC_URI_xbmc = git://github.com/xbmc/xbmc.git
+FILES_xbmc_nightly = /usr/lib/xbmc/xbmc.bin
 
 $(DEPDIR)/xbmc-nightly: xbmc-nightly.do_prepare xbmc-nightly.do_compile
+	$(call parent_pk,xbmc_nightly)
 	$(start_build)
 	$(get_git_version)
-	$(MAKE) -C $(appsdir)/xbmc-nightly install DESTDIR=$(PKDIR)
+	$(MAKE) -C $(DIR_xbmc_nightly) install DESTDIR=$(PKDIR)
 	if [ -e $(PKDIR)/usr/lib/xbmc/xbmc.bin ]; then \
 		$(target)-strip $(PKDIR)/usr/lib/xbmc/xbmc.bin; \
 	fi
@@ -74,9 +72,11 @@ $(DEPDIR)/xbmc-nightly: xbmc-nightly.do_prepare xbmc-nightly.do_compile
 
 xbmc-nightly-clean:
 	rm -f $(DEPDIR)/xbmc-nightly.do_compile
+	cd $(DIR_xbmc) && $(MAKE) clean
+	
 xbmc-nightly-distclean:
 	rm -f $(DEPDIR)/xbmc-nightly
 	rm -f $(DEPDIR)/xbmc-nightly.do_compile
 	rm -f $(DEPDIR)/xbmc-nightly.do_prepare
-	rm -rf $(appsdir)/xbmc-nightly
+	rm -rf $(DIR_xbmc_nightly)
 
