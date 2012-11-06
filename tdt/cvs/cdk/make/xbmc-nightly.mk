@@ -4,26 +4,24 @@ $(DEPDIR)/xbmc-nightly.do_prepare: @DEPENDS_xbmc_nightly@
 	@PREPARE_xbmc_nightly@
 	touch $@
 
-$(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd tinyxml python gstreamer gst_plugins_dvbmediasink expat sdparm lirc
+$(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd tinyxml python gstreamer gst_plugins_dvbmediasink expat sdparm lirc libnfs
 	cd $(DIR_xbmc_nightly) && \
 		$(BUILDENV) \
 		./bootstrap && \
 		./configure \
 			--host=$(target) \
 			--prefix=/usr \
-			PKG_CONFIG_SYSROOT_DIR=$(targetprefix) \
 			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
 			PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
 			PYTHON_SITE_PKG=$(targetprefix)/usr/lib/python2.6/site-packages \
 			PYTHON_CPPFLAGS=-I$(targetprefix)/usr/include/python2.6 \
 			PY_PATH=$(targetprefix)/usr \
-			--includedir=$(targetprefix)/usr/include \
-			--libdir=$(PKDIR)/usr/lib \
 			--disable-gl \
 			--enable-glesv1 \
 			--disable-gles \
 			--disable-sdl \
 			--enable-webserver \
+			--enable-nfs \
 			--disable-x11 \
 			--disable-samba \
 			--disable-mysql \
@@ -31,7 +29,6 @@ $(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass 
 			--disable-rsxs \
 			--disable-projectm \
 			--disable-goom \
-			--disable-nfs \
 			--disable-afpclient \
 			--disable-airplay \
 			--disable-airtunes \
@@ -41,6 +38,8 @@ $(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass 
 			--disable-optical-drive \
 			--disable-libbluray \
 			--disable-texturepacker \
+			--disable-udev \
+			--disable-libusb \
 			--disable-libcec \
 			--enable-gstreamer \
 			--disable-paplayer \
@@ -56,7 +55,17 @@ $(DEPDIR)/xbmc-nightly.do_compile: $(DIR_xbmc_nightly)/config.status
 DESCRIPTION_xbmc_nightly = xbmc
 PKGR_xbmc_nightly =r1
 SRC_URI_xbmc = git://github.com/xbmc/xbmc.git
-FILES_xbmc_nightly = /usr/lib/xbmc/xbmc.bin
+FILES_xbmc_nightly = /usr/bin/lib/xbmc/* \
+		     /usr/share/applications/* \
+		     /usr/share/icons/* \
+		     /usr/share/xbmc/language/Russian \
+		     /usr/share/xbmc/language/German \
+		     /usr/share/xbmc/media/* \
+		     /usr/share/xbmc/sounds/* \
+		     /usr/share/xbmc/system/* \
+		     /usr/share/xbmc/userdata/* \
+		     /usr/share/xbmc/FEH.py
+
 
 $(DEPDIR)/xbmc-nightly: xbmc-nightly.do_prepare xbmc-nightly.do_compile
 	$(call parent_pk,xbmc_nightly)
