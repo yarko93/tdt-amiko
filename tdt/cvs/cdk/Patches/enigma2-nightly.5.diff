@@ -6,7 +6,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/acinclude.m4 enigm
  		# FIXME: yes, this is wrong. sorry about that. (tmbinc)
  		cross_PYTHON_VERSION=$PYTHON_VERSION
 -		python_path=
-+		python_path=$PY_PATH/include/python2.6 
++		python_path=$PY_PATH/include/python$PYTHON_VERSION 
  		for i in $CPPFLAGS ; do
  			p=`echo $i | sed "s,^-I,,"`
  			p=`echo $p | sed "s,^-isystem,,"`
@@ -15,7 +15,7 @@ diff -Nur --exclude=.git --exclude=tuxtxt enigma2-nightly.org/acinclude.m4 enigm
  		# Check for Python library path
  		AC_MSG_CHECKING([for Python library path])
 -		python_path=
-+		python_path=$PY_PATH/include/python2.6 
++		python_path=$PY_PATH/include/python$PYTHON_VERSION 
  		for i in $LDFLAGS; do
  			l=`echo $i | sed "s,^-L,,"`
  			python_path=`find $l -type f -name libpython$cross_PYTHON_VERSION.* -print | sed "1q"`
