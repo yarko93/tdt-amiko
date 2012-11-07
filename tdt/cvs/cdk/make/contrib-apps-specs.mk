@@ -425,7 +425,7 @@ FILE_VERSION := 4.17-7
 FILE_SPEC := stm-target-$(FILE).spec
 FILE_SPEC_PATCH :=
 FILE_PATCHES :=
-FILE_RPM := RPMS/sh4/stlinux20-sh4-file-4.17-3.sh4.rpm
+FILE_RPM := RPMS/sh4/$(STLINUX)-sh4-$(FILE)-$(FILE_VERSION).sh4.rpm
 
 $(FILE_RPM): \
 		$(if $(FILE_SPEC_PATCH),Patches/$(FILE_SPEC_PATCH)) \
