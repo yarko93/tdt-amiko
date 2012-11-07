@@ -4,13 +4,14 @@ $(DEPDIR)/xbmc-nightly.do_prepare: @DEPENDS_xbmc_nightly@
 	@PREPARE_xbmc_nightly@
 	touch $@
 
-$(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd tinyxml python gstreamer gst_plugins_dvbmediasink expat sdparm lirc libnfs
+$(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd tinyxml python gstreamer gst_plugins_dvbmediasink expat sdparm lirc libnfs driver-ptinp
 	cd $(DIR_xbmc_nightly) && \
 		$(BUILDENV) \
 		./bootstrap && \
 		./configure \
 			--host=$(target) \
 			--prefix=/usr \
+			PKG_CONFIG_SYSROOT_DIR=$(targetprefix) \
 			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
 			PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
 			PYTHON_SITE_PKG=$(targetprefix)/usr/lib/python2.6/site-packages \
@@ -55,7 +56,7 @@ $(DEPDIR)/xbmc-nightly.do_compile: $(DIR_xbmc_nightly)/config.status
 DESCRIPTION_xbmc_nightly = xbmc
 PKGR_xbmc_nightly =r1
 SRC_URI_xbmc = git://github.com/xbmc/xbmc.git
-FILES_xbmc_nightly = /usr/bin/lib/xbmc/* \
+FILES_xbmc_nightly = /usr/lib/xbmc/* \
 		     /usr/share/applications/* \
 		     /usr/share/icons/* \
 		     /usr/share/xbmc/language/Russian \
