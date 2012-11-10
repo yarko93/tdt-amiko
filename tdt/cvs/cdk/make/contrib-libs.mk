@@ -4150,3 +4150,39 @@ $(DEPDIR)/%tinyxml: $(DEPDIR)/tinyxml.do_compile
 #	@DISTCLEANUP_tinyxml@
 	[ "x$*" = "x" ] && touch $@ || true
 
+#
+# libnfs
+#
+DESCRIPTION_libnfs = nfs
+FILES_libnfs = \
+/usr/lib/*
+
+$(DEPDIR)/libnfs.do_prepare: bootstrap @DEPENDS_libnfs@
+	@PREPARE_libnfs@
+	touch $@
+
+$(DEPDIR)/libnfs.do_compile: $(DEPDIR)/libnfs.do_prepare
+	cd @DIR_libnfs@ && \
+	aclocal -I $(hostprefix)/share/aclocal && \
+	autoheader && \
+	autoconf && \
+	automake --foreign && \
+	libtoolize --force && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libnfs $(DEPDIR)/std-libnfs $(DEPDIR)/max-libnfs \
+$(DEPDIR)/libnfs: \
+$(DEPDIR)/%libnfs: $(DEPDIR)/libnfs.do_compile
+	$(start_build)
+	cd @DIR_libnfs@ && \
+		@INSTALL_libnfs@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_libnfs@
+	[ "x$*" = "x" ] && touch $@ || true

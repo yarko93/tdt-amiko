@@ -103,65 +103,6 @@ opkg_host
   {PN}
   dirextract:http://opkg.googlecode.com/files/opkg-{PV}.tar.gz
 ;
-
-linux
-  2.6.17.14_stm22_0037
-  {PN}-2.6.17
-  premove:{PN}
-  extract:ftp://ftp.st{PN}.com/pub/st{PN}/2.2/updates/SRPMS/{PN}-2.6.17.14_stm22_0037.tar.gz
-  pmove:{PN}-2.6.17.14_stm22_0037:{PN}-2.6.17
-  patch:file://nosquashfs3.1.patch
-  patch:file://squashfs3.0.patch
-  patch:file://squashfs3.0_lzma.patch
-  patch:file://{PN}-sh4-2.6.17.14_stm22_0037.mini_fo.diff
-  patch:file://vfd.diff
-  plink:{PN}-2.6.17:{PN}
-;
-linuxp0040
-  2.6.17.14_stm22_0040
-  linux-2.6.17.14_stm22_0040
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.2/updates/SRPMS/stlinux22-host-kernel-source-2.6.17.14_stm22_0040-40.src.rpm
-;
-linuxp0041
-  2.6.17.14_stm22_0041
-  linux-2.6.17.14_stm22_0041
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.2/updates/SRPMS/stlinux22-host-kernel-source-2.6.17.14_stm22_0041-41.src.rpm
-;
-linux23
-  2.6.23.17_stm23_0119
-  linux-sh4-2.6.23.17_stm23_0119
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.3/updates/SRPMS/st{PN}-host-kernel-source-sh4-2.6.23.17_stm23_0119-119.src.rpm
-;
-linuxp0119
-  2.6.23.17_stm23_0119
-  linux-sh4-2.6.23.17_stm23_0119
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.3/updates/SRPMS/stlinux23-host-kernel-source-sh4-2.6.23.17_stm23_0119-119.src.rpm
-;
-linuxp0123
-  2.6.23.17_stm23_0123
-  linux-sh4-2.6.23.17_stm23_0123
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.3/updates/SRPMS/stlinux23-host-kernel-source-sh4-2.6.23.17_stm23_0123-123.src.rpm
-;
-linux24
-  2.6.32.10_stm24_0201
-  linux-sh4-2.6.32.10_stm24_0201
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/SRPMS/st{PN}-host-kernel-source-sh4-2.6.32.10_stm24_0201-201.src.rpm
-;
-linuxp0201
-  2.6.32.10_stm24_0201
-  linux-sh4-2.6.32.10_stm24_0201
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.10_stm24_0201-201.src.rpm
-;
-linuxp0205
-  2.6.32.16_stm24_0205
-  linux-sh4-2.6.32.16_stm24_0205
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.16_stm24_0205-205.src.rpm
-;
-linuxp0206
-  2.6.32.28_stm24_0206
-  linux-sh4-2.6.32.28_stm24_0206
-  nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.28_stm24_0206-206.src.rpm
-;
 linuxp0207
   2.6.32.28_stm24_0207
   linux-sh4-2.6.32.28_stm24_0207
@@ -539,6 +480,7 @@ libpng
   {PN}-{PV}
   extract:http://www.fhloston-paradise.de/{PN}-{PV}.tar.gz
   nothing:file://{PN}.diff
+  patch:file://{PN}-{PV}-workaround_for_stmfb_alpha_error.patch
   make:install:prefix=PKDIR/usr
 ;
 libpng12
@@ -1325,8 +1267,9 @@ grab
 ;
 tinyxml
   2.6.2
-  {PN}
+  {PN}-{PV}
   extract:http://ignum.dl.sourceforge.net/project/tinyxml/tinyxml/{PV}/tinyxml_2_6_2.tar.gz
+  pmove:{PN}:{PN}-{PV}
   patch:file://{PN}{PV}.patch
   make:install:PREFIX=PKDIR/usr:LD=sh4-linux-ld
 ;
@@ -1337,7 +1280,12 @@ oscam
   # patch-0:file://{PN}.diff
   make:install:DESTDIR=PKDIR:OSCAM_BIN = OSCAM_BIN
 ;
-
+libnfs
+  git
+  {PN}
+  git://github.com/sahlberg/libnfs.git:r=c0ebf57b212ffefe83e2a50358499f68e7289e93
+  make:install:DESTDIR=PKDIR
+;
 udev_rules
   0.1
   {PN}-{PV}
@@ -1397,33 +1345,34 @@ enigma2
   git
   \$(appsdir)/{PN}-nightly
 if ENABLE_E2D0
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=945aeb939308b3652b56bc6c577853369d54a537
   patch:file://enigma2-nightly.0.diff
+  patch:file://enigma2-nightly.0.eplayer3.diff
   patch:file://enigma2-nightly.0.gstreamer.diff
   patch:file://enigma2-nightly.0.graphlcd.diff
 endif
 
 if ENABLE_E2D1
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=945aeb939308b3652b56bc6c577853369d54a537
   patch:file://enigma2-nightly.1.diff
-  patch:file://enigma2-nightly.1.gstreamer.diff
-  patch:file://enigma2-nightly.1.graphlcd.diff
 endif
 
 if ENABLE_E2D2
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=839e96b79600aba73f743fd39628f32bc1628f4c
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=839e96b79600aba73f743fd39628f32bc1628f4c
   patch:file://enigma2-nightly.2.diff
   patch:file://enigma2-nightly.2.gstreamer.diff
   patch:file://enigma2-nightly.2.graphlcd.diff
 endif
 
 if ENABLE_E2D3
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=51a7b9349070830b5c75feddc52e97a1109e381e
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=51a7b9349070830b5c75feddc52e97a1109e381e
   patch:file://enigma2-nightly.3.diff
+  patch:file://enigma2-nightly.3.gstreamer.diff
+  patch:file://enigma2-nightly.3.graphlcd.diff
 endif
 
 if ENABLE_E2D4
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880
   patch:file://enigma2-pli-nightly.4.diff
 endif
 
@@ -1433,7 +1382,8 @@ if ENABLE_E2D5
 endif
 
 if ENABLE_E2D6
-  git://gitorious.org/~schpuntik/open-duckbox-project-sh4/amiko-guigit.git:b=arp-no_gst
+  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=388dcd814d4e99720cb9a6c769611be4951e4ad4
+  patch:file://enigma2-pli-nightly.6.diff
 endif
 
 if ENABLE_E2D7
@@ -1441,6 +1391,7 @@ if ENABLE_E2D7
 endif
 
 if ENABLE_E2D8
+  git://gitorious.org/~schpuntik/open-duckbox-project-sh4/amiko-guigit.git:b=arp-no_gst
 endif
 ;
 xbmc_nightly
@@ -1462,6 +1413,8 @@ if ENABLE_XBD2
 endif
 
 if ENABLE_XBD3
+  git://github.com/xbmc/xbmc.git:r=12840c28d8fbfd71c26be798ff6b13828b05b168
+  patch:file://xbmc-nightly.3.diff
 endif
 ;
 ]]END

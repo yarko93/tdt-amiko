@@ -71,7 +71,3 @@ enigma2-pli-nightly-distclean:
 	rm -f $(DEPDIR)/enigma2-pli-nightly.do_compile
 	rm -f $(DEPDIR)/enigma2-pli-nightly.do_prepare
 	rm -rf $(DIR_enigma2_pli)
-	rm -rf $(DIR_enigma2_pli).newest
-	rm -rf $(DIR_enigma2_pli).org
-	rm -rf $(DIR_enigma2_pli).patched
-

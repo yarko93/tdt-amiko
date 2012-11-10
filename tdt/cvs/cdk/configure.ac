@@ -926,6 +926,7 @@ TUXBOX_RULES_MAKE(sshfs)
 TUXBOX_RULES_MAKE(gmediarender)
 TUXBOX_RULES_MAKE(mediatomb)
 TUXBOX_RULES_MAKE(tinyxml)
+TUXBOX_RULES_MAKE(libnfs)
 
 #
 # python
@@ -961,6 +962,7 @@ TUXBOX_RULES_MAKE(gst_plugin_subsink)
 #
 # enigma2
 #
+TUXBOX_RULES_MAKE(enigma2)
 TUXBOX_RULES_MAKE(enigma2_pli)
 TUXBOX_RULES_MAKE(tuxtxtlib)
 TUXBOX_RULES_MAKE(tuxtxt32bpp)
