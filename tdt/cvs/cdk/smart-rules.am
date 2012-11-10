@@ -937,7 +937,7 @@ lxml
   extract:http://launchpad.net/{PN}/2.2/{PV}/+download/{PN}-{PV}.tgz
 ;
 setuptools
-  0.6c8
+  0.6c11
   {PN}-{PV}
   extract:http://pypi.python.org/packages/source/s/{PN}/{PN}-{PV}.tar.gz
 ;
