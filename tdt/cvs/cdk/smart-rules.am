@@ -975,6 +975,7 @@ python
   pmove:Python-{PV}:{PN}-{PV}
   patch:file://{PN}_{PV}.diff
   patch:file://{PN}_{PV}-ctypes-libffi-fix-configure.diff
+  patch:file://pgettext_{PV}.patch
 ;
 pythonwifi
   0.5.0
