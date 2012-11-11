@@ -409,7 +409,7 @@ autofs
   make:install:INSTALLROOT=PKDIR
 ;
 imagemagick
-  6.7.7-0
+  6.8.0-4
   ImageMagick-{PV}
   extract:ftp://ftp.fifi.org/pub/ImageMagick/ImageMagick-{PV}.tar.bz2
   make:install:prefix=/usr:DESTDIR=PKDIR
