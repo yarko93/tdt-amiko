@@ -172,6 +172,8 @@ host_python
   extract:http://www.python.org/ftp/python/{PV}/Python-{PV}.tar.bz2
   pmove:Python-{PV}:{PN}-{PV}
   patch:file://python_{PV}.diff
+  patch:file://python_{PV}-ctypes-libffi-fix-configure.diff
+  patch:file://pgettext_{PV}.patch
 ;
 libtool
   2.4.2
