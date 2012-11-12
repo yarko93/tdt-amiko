@@ -586,7 +586,7 @@ fi
 
 dircheck="ok"
 AC_MSG_CHECKING([for apps directory])
-if test ! -f "$appsdir/enigma2/configure.ac" ; then
+if test ! -f "$appsdir/acinclude.m4" ; then
 	AC_MSG_WARN([appsdir $appsdir not found])
 	appsdir="missing_appsdir"
 	dircheck="fail"
