@@ -1,7 +1,15 @@
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.6/configure.in
+diff -Nur python-2.6.6.org/configure.in python-2.6.6/configure.in
 --- python-2.6.6.org/configure.in	2010-05-25 04:27:03.000000000 +0200
-+++ python-2.6.6/configure.in	2012-04-09 18:43:41.000000000 +0200
-@@ -1500,7 +1500,7 @@
++++ python-2.6.6/configure.in	2012-09-17 21:55:58.800875345 +0200
+@@ -260,6 +260,7 @@
+ 	MACHDEP="$ac_md_system$ac_md_release"
+ 
+ 	case $MACHDEP in
++	linux3) MACHDEP="linux2";;
+ 	cygwin*) MACHDEP="cygwin";;
+ 	darwin*) MACHDEP="darwin";;
+ 	atheos*) MACHDEP="atheos";;
+@@ -1500,7 +1501,7 @@
  }],
  ac_cv_sizeof_off_t=`cat conftestval`,
  ac_cv_sizeof_off_t=0,
@@ -10,7 +18,7 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.
  ])
  AC_MSG_RESULT($ac_cv_sizeof_off_t)
  AC_DEFINE_UNQUOTED(SIZEOF_OFF_T, $ac_cv_sizeof_off_t,
-@@ -2713,50 +2713,6 @@
+@@ -2713,50 +2714,6 @@
    AC_CHECK_LIB(resolv, inet_aton)
  )
  
@@ -61,7 +69,7 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.
  dnl Check if system zlib has *Copy() functions
  dnl
  dnl On MacOSX the linker will search for dylibs on the entire linker path
-@@ -3011,7 +2967,7 @@
+@@ -3011,7 +2968,7 @@
  buggygetaddrinfo=yes
  ])
  
@@ -70,7 +78,7 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.
  	if test "$ipv6" = "yes"; then
  		echo 'Fatal: You must get working getaddrinfo() function.'
  		echo '       or you can specify "--disable-ipv6"'.
-@@ -3860,48 +3816,9 @@
+@@ -3860,48 +3817,9 @@
    AC_MSG_RESULT(no)
  fi
  
@@ -120,9 +128,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.
  #ifdef HAVE_SYS_TYPES_H
  #include <sys/types.h>
  #endif
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Include/pyport.h python-2.6.6/Include/pyport.h
+diff -Nur python-2.6.6.org/Include/pyport.h python-2.6.6/Include/pyport.h
 --- python-2.6.6.org/Include/pyport.h	2010-05-09 17:15:40.000000000 +0200
-+++ python-2.6.6/Include/pyport.h	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Include/pyport.h	2012-09-17 21:55:58.764875344 +0200
 @@ -691,7 +691,7 @@
   * rather than waiting for integer multiplication to trigger bogus
   * overflows.
@@ -132,9 +140,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Include/pyport.h python-
  #endif
  
  #ifdef __cplusplus
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/distutils/command/build_ext.py python-2.6.6/Lib/distutils/command/build_ext.py
+diff -Nur python-2.6.6.org/Lib/distutils/command/build_ext.py python-2.6.6/Lib/distutils/command/build_ext.py
 --- python-2.6.6.org/Lib/distutils/command/build_ext.py	2010-08-02 22:26:41.000000000 +0200
-+++ python-2.6.6/Lib/distutils/command/build_ext.py	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Lib/distutils/command/build_ext.py	2012-09-17 21:55:58.764875344 +0200
 @@ -438,7 +438,9 @@
          # "build" tree.
          outputs = []
@@ -182,9 +190,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/distutils/command/bu
              libraries=self.get_libraries(ext),
              library_dirs=ext.library_dirs,
              runtime_library_dirs=ext.runtime_library_dirs,
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/plat-linux3/regen python-2.6.6/Lib/plat-linux3/regen
+diff -Nur python-2.6.6.org/Lib/plat-linux3/regen python-2.6.6/Lib/plat-linux3/regen
 --- python-2.6.6.org/Lib/plat-linux3/regen	1970-01-01 01:00:00.000000000 +0100
-+++ python-2.6.6/Lib/plat-linux3/regen	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Lib/plat-linux3/regen	2012-09-17 21:55:58.764875344 +0200
 @@ -0,0 +1,8 @@
 +#! /bin/sh
 +case `uname` in
@@ -194,9 +202,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/plat-linux3/regen py
 +esac
 +set -v
 +h2py -i '(u_long)' /usr/include/sys/types.h /usr/include/netinet/in.h /usr/include/dlfcn.h
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/sitecustomize.py python-2.6.6/Lib/sitecustomize.py
---- python-2.6.6.org/Lib/sitecustomize.py	1970-01-01 01:00:00.000000000 +0100
-+++ python-2.6.6/Lib/sitecustomize.py	2012-04-08 23:23:39.000000000 +0200
+diff -Nur python-2.6.6.org/Lib/site-packages/sitecustomize.py python-2.6.6/Lib/sitecustomize.py
+--- python-2.6.6.org/Lib/site-packages/sitecustomize.py	1970-01-01 01:00:00.000000000 +0100
++++ python-2.6.6/Lib/site-packages/sitecustomize.py	2012-09-17 21:55:58.768875345 +0200
 @@ -0,0 +1,45 @@
 +# OpenEmbedded sitecustomize.py (C) 2002-2008 Michael 'Mickey' Lauer <mlauer@vanille-media.de>
 +# GPLv2 or later
@@ -243,9 +251,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/sitecustomize.py pyt
 +    __enableDefaultEncoding()
 +    __registerExitHandler()
 +    __enableReadlineSupport()
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Makefile.pre.in python-2.6.6/Makefile.pre.in
+diff -Nur python-2.6.6.org/Makefile.pre.in python-2.6.6/Makefile.pre.in
 --- python-2.6.6.org/Makefile.pre.in	2010-08-02 00:05:31.000000000 +0200
-+++ python-2.6.6/Makefile.pre.in	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Makefile.pre.in	2012-09-17 21:55:58.768875345 +0200
 @@ -175,6 +175,7 @@
  
  PYTHON=		python$(EXE)
@@ -348,18 +356,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Makefile.pre.in python-2
  	   	--prefix=$(prefix) \
  		--install-scripts=$(BINDIR) \
  		--install-platlib=$(DESTSHARED) \
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/_ctypes/libffi/fficonfig.py.in python-2.6.6/Modules/_ctypes/libffi/fficonfig.py.in
---- python-2.6.6.org/Modules/_ctypes/libffi/fficonfig.py.in	2010-01-16 19:05:15.000000000 +0100
-+++ python-2.6.6/Modules/_ctypes/libffi/fficonfig.py.in	2012-04-09 19:38:57.000000000 +0200
-@@ -30,4 +30,4 @@
- 
- ffi_sources += ffi_platforms['@TARGET@']
- 
--ffi_cflags = '@CFLAGS@'
-+ffi_cflags = '@CFLAGS@ -DPIC'
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/gcmodule.c python-2.6.6/Modules/gcmodule.c
+diff -Nur python-2.6.6.org/Modules/gcmodule.c python-2.6.6/Modules/gcmodule.c
 --- python-2.6.6.org/Modules/gcmodule.c	2010-05-09 17:15:40.000000000 +0200
-+++ python-2.6.6/Modules/gcmodule.c	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Modules/gcmodule.c	2012-09-17 21:55:58.768875345 +0200
 @@ -274,7 +274,7 @@
           * generation being collected, which can be recognized
           * because only they have positive gc_refs.
@@ -378,9 +377,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/gcmodule.c pytho
              gc->gc.gc_refs = GC_REACHABLE;
              (void) traverse(op,
                              (visitproc)visit_reachable,
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/termios.c python-2.6.6/Modules/termios.c
+diff -Nur python-2.6.6.org/Modules/termios.c python-2.6.6/Modules/termios.c
 --- python-2.6.6.org/Modules/termios.c	2010-05-09 17:15:40.000000000 +0200
-+++ python-2.6.6/Modules/termios.c	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Modules/termios.c	2012-09-17 21:55:58.768875345 +0200
 @@ -17,6 +17,12 @@
  #include <termio.h>
  #endif
@@ -394,9 +393,21 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/termios.c python
  
  /* HP-UX requires that this be included to pick up MDCD, MCTS, MDSR,
   * MDTR, MRI, and MRTS (appearantly used internally by some things
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Python/import.c python-2.6.6/Python/import.c
+diff -Nur python-2.6.6.org/Python/compile.c python-2.6.6/Python/compile.c
+--- python-2.6.6.org/Python/compile.c	2010-06-22 23:47:04.000000000 +0200
++++ python-2.6.6/Python/compile.c	2012-09-17 21:55:58.776875344 +0200
+@@ -32,7 +32,7 @@
+ #include "symtable.h"
+ #include "opcode.h"
+ 
+-int Py_OptimizeFlag = 0;
++int Py_OptimizeFlag = 1;
+ 
+ #define DEFAULT_BLOCK_SIZE 16
+ #define DEFAULT_BLOCKS 8
+diff -Nur python-2.6.6.org/Python/import.c python-2.6.6/Python/import.c
 --- python-2.6.6.org/Python/import.c	2010-05-20 20:41:08.000000000 +0200
-+++ python-2.6.6/Python/import.c	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Python/import.c	2012-09-17 21:55:58.772875345 +0200
 @@ -882,6 +882,12 @@
      mode_t mode = srcstat->st_mode & ~S_IXUSR & ~S_IXGRP & ~S_IXOTH;
  #endif
@@ -410,9 +421,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Python/import.c python-2
      fp = open_exclusive(cpathname, mode);
      if (fp == NULL) {
          if (Py_VerboseFlag)
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/setup.py python-2.6.6/setup.py
+diff -Nur python-2.6.6.org/setup.py python-2.6.6/setup.py
 --- python-2.6.6.org/setup.py	2010-07-17 14:31:09.000000000 +0200
-+++ python-2.6.6/setup.py	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/setup.py	2012-09-17 21:55:58.776875344 +0200
 @@ -18,7 +18,14 @@
  from distutils.spawn import find_executable
  
@@ -543,387 +554,4 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/setup.py python-2.6.6/se
                      return False
  
              fficonfig = {}
---- Python-2.6.6.orig/Python/compile.c
-+++ Python-2.6.6/Python/compile.c
-@@ -32,7 +32,7 @@
- #include "symtable.h"
- #include "opcode.h"
- 
--int Py_OptimizeFlag = 0;
-+int Py_OptimizeFlag = 1;
- 
- #define DEFAULT_BLOCK_SIZE 16
- #define DEFAULT_BLOCKS 8
-diff --git a/Lib/gettext.py b/Lib/gettext.py
-index 3f47580..ca3b8cb 100644
---- a/Lib/gettext.py
-+++ b/Lib/gettext.py
-@@ -53,6 +53,7 @@ from errno import ENOENT
- __all__ = ['NullTranslations', 'GNUTranslations', 'Catalog',
-            'find', 'translation', 'install', 'textdomain', 'bindtextdomain',
-            'dgettext', 'dngettext', 'gettext', 'ngettext',
-+           'pgettext', 'lpgettext', 'npgettext', 'lnpgettext', 'ldnpgettext',
-            ]
- 
- _default_localedir = os.path.join(sys.prefix, 'share', 'locale')
-@@ -193,11 +194,21 @@ class NullTranslations:
-             return self._fallback.gettext(message)
-         return message
- 
-+    def pgettext(self, context, message):
-+        if self._fallback:
-+            return self._fallback.pgettext(context, message)
-+        return message
-+
-     def lgettext(self, message):
-         if self._fallback:
-             return self._fallback.lgettext(message)
-         return message
- 
-+    def lpgettext(self, context, message):
-+        if self._fallback:
-+            return self._fallback.lpgettext(context, message)
-+        return message
-+
-     def ngettext(self, msgid1, msgid2, n):
-         if self._fallback:
-             return self._fallback.ngettext(msgid1, msgid2, n)
-@@ -206,6 +217,14 @@ class NullTranslations:
-         else:
-             return msgid2
- 
-+    def npgettext(self, context, msgid1, msgid2, n):
-+        if self._fallback:
-+            return self._fallback.npgettext(context, msgid1, msgid2, n)
-+        if n == 1:
-+            return msgid1
-+        else:
-+            return msgid2
-+
-     def lngettext(self, msgid1, msgid2, n):
-         if self._fallback:
-             return self._fallback.lngettext(msgid1, msgid2, n)
-@@ -227,6 +246,14 @@ class NullTranslations:
-         else:
-             return unicode(msgid2)
- 
-+    def lnpgettext(self, context, msgid1, msgid2, n):
-+        if self._fallback:
-+            return self._fallback.lnpgettext(context, msgid1, msgid2, n)
-+        if n == 1:
-+            return msgid1
-+        else:
-+            return msgid2
-+
-     def info(self):
-         return self._info
- 
-@@ -252,13 +279,22 @@ class NullTranslations:
-                 __builtin__.__dict__['lgettext'] = self.lgettext
-             if "lngettext" in names:
-                 __builtin__.__dict__['lngettext'] = self.lngettext
--
-+            if "pgettext" in names:
-+                __builtin__.__dict__['pgettext'] = self.pgettext
-+            if "npgettext" in names:
-+                __builtin__.__dict__['npgettext'] = self.npgettext
-+            if "lnpgettext" in names:
-+                __builtin__.__dict__['lnpgettext'] = self.lnpgettext
- 
- class GNUTranslations(NullTranslations):
-     # Magic number of .mo files
-     LE_MAGIC = 0x950412deL
-     BE_MAGIC = 0xde120495L
- 
-+    # The encoding of a msgctxt and a msgid in a .mo file is
-+    # msgctxt + "\x04" + msgid (gettext version >= 0.15)
-+    CONTEXT = "%s\x04%s"
-+
-     def _parse(self, fp):
-         """Override this method to support alternative .mo formats."""
-         unpack = struct.unpack
-@@ -354,6 +390,21 @@ class GNUTranslations(NullTranslations):
-             return tmsg.encode(self._charset)
-         return tmsg
- 
-+    def pgettext(self, context, message):
-+        ctxt_msg_id = self.CONTEXT % (context, message)
-+        missing = object()
-+        tmsg = self._catalog.get(ctxt_msg_id, missing)
-+        if tmsg is missing:
-+            if self._fallback:
-+                return self._fallback.pgettext(context, message)
-+            return message
-+        # Encode the Unicode tmsg back to an 8-bit string, if possible
-+        if self._output_charset:
-+            return tmsg.encode(self._output_charset)
-+        elif self._charset:
-+            return tmsg.encode(self._charset)
-+        return tmsg
-+
-     def lgettext(self, message):
-         missing = object()
-         tmsg = self._catalog.get(message, missing)
-@@ -365,6 +416,18 @@ class GNUTranslations(NullTranslations):
-             return tmsg.encode(self._output_charset)
-         return tmsg.encode(locale.getpreferredencoding())
- 
-+    def lpgettext(self, context, message):
-+        ctxt_msg_id = self.CONTEXT % (context, message)
-+        missing = object()
-+        tmsg = self._catalog.get(ctxt_msg_id, missing)
-+        if tmsg is missing:
-+            if self._fallback:
-+                return self._fallback.lpgettext(context, message)
-+            return message
-+        if self._output_charset:
-+            return tmsg.encode(self._output_charset)
-+        return tmsg.encode(locale.getpreferredencoding())
-+
-     def ngettext(self, msgid1, msgid2, n):
-         try:
-             tmsg = self._catalog[(msgid1, self.plural(n))]
-@@ -381,6 +444,23 @@ class GNUTranslations(NullTranslations):
-             else:
-                 return msgid2
- 
-+    def npgettext(self, context, msgid1, msgid2, n):
-+        ctxt_msg_id = self.CONTEXT % (context, msgid1)
-+        try:
-+            tmsg = self._catalog[(ctxt_msg_id, self.plural(n))]
-+            if self._output_charset:
-+                return tmsg.encode(self._output_charset)
-+            elif self._charset:
-+                return tmsg.encode(self._charset)
-+            return tmsg
-+        except KeyError:
-+            if self._fallback:
-+                return self._fallback.npgettext(context, msgid1, msgid2, n)
-+            if n == 1:
-+                return msgid1
-+            else:
-+                return msgid2
-+
-     def lngettext(self, msgid1, msgid2, n):
-         try:
-             tmsg = self._catalog[(msgid1, self.plural(n))]
-@@ -416,6 +496,21 @@ class GNUTranslations(NullTranslations):
-                 tmsg = unicode(msgid2)
-         return tmsg
- 
-+    def lnpgettext(self, context, msgid1, msgid2, n):
-+        ctxt_msg_id = self.CONTEXT % (context, msgid1)
-+        try:
-+            tmsg = self._catalog[(ctxt_msg_id, self.plural(n))]
-+            if self._output_charset:
-+                return tmsg.encode(self._output_charset)
-+            return tmsg.encode(locale.getpreferredencoding())
-+        except KeyError:
-+            if self._fallback:
-+                return self._fallback.lnpgettext(context, msgid1, msgid2, n)
-+            if n == 1:
-+                return msgid1
-+            else:
-+                return msgid2
-+
- 
- # Locate a .mo file using the gettext strategy
- def find(domain, localedir=None, languages=None, all=0):
-@@ -532,6 +627,14 @@ def dgettext(domain, message):
-         return message
-     return t.gettext(message)
- 
-+def dpgettext(domain, context, message):
-+    try:
-+        t = translation(domain, _localedirs.get(domain, None),
-+                        codeset=_localecodesets.get(domain))
-+    except IOError:
-+        return message
-+    return t.pgettext(context, message)
-+
- def ldgettext(domain, message):
-     try:
-         t = translation(domain, _localedirs.get(domain, None),
-@@ -540,6 +643,14 @@ def ldgettext(domain, message):
-         return message
-     return t.lgettext(message)
- 
-+def ldpgettext(domain, context, message):
-+    try:
-+        t = translation(domain, _localedirs.get(domain, None),
-+                        codeset=_localecodesets.get(domain))
-+    except IOError:
-+        return message
-+    return t.lpgettext(context, message)
-+
- def dngettext(domain, msgid1, msgid2, n):
-     try:
-         t = translation(domain, _localedirs.get(domain, None),
-@@ -551,6 +662,17 @@ def dngettext(domain, msgid1, msgid2, n):
-             return msgid2
-     return t.ngettext(msgid1, msgid2, n)
- 
-+def dnpgettext(domain, context, msgid1, msgid2, n):
-+    try:
-+        t = translation(domain, _localedirs.get(domain, None),
-+                        codeset=_localecodesets.get(domain))
-+    except IOError:
-+        if n == 1:
-+            return msgid1
-+        else:
-+            return msgid2
-+    return t.npgettext(context, msgid1, msgid2, n)
-+
- def ldngettext(domain, msgid1, msgid2, n):
-     try:
-         t = translation(domain, _localedirs.get(domain, None),
-@@ -562,18 +684,41 @@ def ldngettext(domain, msgid1, msgid2, n):
-             return msgid2
-     return t.lngettext(msgid1, msgid2, n)
- 
-+def ldnpgettext(domain, context, msgid1, msgid2, n):
-+    try:
-+        t = translation(domain, _localedirs.get(domain, None),
-+                        codeset=_localecodesets.get(domain))
-+    except IOError:
-+        if n == 1:
-+            return msgid1
-+        else:
-+            return msgid2
-+    return t.lnpgettext(context, msgid1, msgid2, n)
-+
- def gettext(message):
-     return dgettext(_current_domain, message)
- 
-+def pgettext(context, message):
-+    return dpgettext(_current_domain, context, message)
-+
- def lgettext(message):
-     return ldgettext(_current_domain, message)
- 
-+def lpgettext(context, message):
-+    return ldpgettext(_current_domain, context, message)
-+
- def ngettext(msgid1, msgid2, n):
-     return dngettext(_current_domain, msgid1, msgid2, n)
- 
-+def npgettext(context, msgid1, msgid2, n):
-+    return dnpgettext(_current_domain, context, msgid1, msgid2, n)
-+
- def lngettext(msgid1, msgid2, n):
-     return ldngettext(_current_domain, msgid1, msgid2, n)
- 
-+def lnpgettext(context, msgid1, msgid2, n):
-+    return ldnpgettext(_current_domain, context, msgid1, msgid2, n)
-+
- # dcgettext() has been deemed unnecessary and is not implemented.
- 
- # James Henstridge's Catalog constructor from GNOME gettext.  Documented usage
-diff --git a/Tools/i18n/msgfmt.py b/Tools/i18n/msgfmt.py
-index 5dd5430..510ecda 100755
---- a/Tools/i18n/msgfmt.py
-+++ b/Tools/i18n/msgfmt.py
-@@ -6,7 +6,8 @@
- 
- This program converts a textual Uniforum-style message catalog (.po file) into
- a binary GNU catalog (.mo file).  This is essentially the same function as the
--GNU msgfmt program, however, it is a simpler implementation.
-+GNU msgfmt program, however, it is a simpler implementation.  Currently it
-+does not handle plural forms but it does handle message contexts.
- 
- Usage: msgfmt.py [OPTIONS] filename.po
- 
-@@ -31,7 +32,7 @@
- import struct
- import array
- 
--__version__ = "1.1"
-+__version__ = "1.2"
- 
- MESSAGES = {}
- 
-@@ -45,11 +46,14 @@
- 
- 
- 
--def add(id, str, fuzzy):
-+def add(ctxt, id, str, fuzzy):
-     "Add a non-fuzzy translation to the dictionary."
-     global MESSAGES
-     if not fuzzy and str:
--        MESSAGES[id] = str
-+        if ctxt is None:
-+            MESSAGES[id] = str
-+        else:
-+            MESSAGES["%s\x04%s" % (ctxt, id)] = str
- 
- 
- 
-@@ -99,6 +103,7 @@
- def make(filename, outfile):
-     ID = 1
-     STR = 2
-+    CTXT = 3
- 
-     # Compute .mo name from .po name and arguments
-     if filename.endswith('.po'):
-@@ -114,7 +119,7 @@
-         print >> sys.stderr, msg
-         sys.exit(1)
- 
--    section = None
-+    section = msgctxt = None
-     fuzzy = 0
- 
-     # Parse the catalog
-@@ -123,8 +128,8 @@
-         lno += 1
-         # If we get a comment line after a msgstr, this is a new entry
-         if l[0] == '#' and section == STR:
--            add(msgid, msgstr, fuzzy)
--            section = None
-+            add(msgctxt, msgid, msgstr, fuzzy)
-+            section = msgctxt = None
-             fuzzy = 0
-         # Record a fuzzy mark
-         if l[:2] == '#,' and 'fuzzy' in l:
-@@ -132,10 +137,16 @@
-         # Skip comments
-         if l[0] == '#':
-             continue
--        # Now we are in a msgid section, output previous section
--        if l.startswith('msgid'):
-+        # Now we are in a msgid or msgctxt section, output previous section
-+        if l.startswith("msgctxt"):
-+            if section == STR:
-+                add(msgctxt, msgid, msgstr, fuzzy)
-+            section = CTXT
-+            l = l[7:]
-+            msgctxt = ''
-+        elif l.startswith('msgid') and not l.startswith('msgid_plural'):
-             if section == STR:
--                add(msgid, msgstr, fuzzy)
-+                add(msgctxt, msgid, msgstr, fuzzy)
-             section = ID
-             l = l[5:]
-             msgid = msgstr = ''
-@@ -149,7 +160,9 @@
-             continue
-         # XXX: Does this always follow Python escape semantics?
-         l = eval(l)
--        if section == ID:
-+        if section == CTXT:
-+            msgctxt += l
-+        elif section == ID:
-             msgid += l
-         elif section == STR:
-             msgstr += l
-@@ -160,7 +173,7 @@
-             sys.exit(1)
-     # Add last entry
-     if section == STR:
--        add(msgid, msgstr, fuzzy)
-+        add(msgctxt, msgid, msgstr, fuzzy)
- 
-     # Compute output
-     output = generate()
+
