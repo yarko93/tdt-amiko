@@ -1058,7 +1058,7 @@ gst_ffmpeg
   patch:file://{PN}-0.10.12_lower_rank.patch
   make:install:DESTDIR=PKDIR
 ;
-gst_fluendo_mpegdemux
+gst_plugins_fluendo_mpegdemux
   0.10.71
   gst-fluendo-mpegdemux-{PV}
   extract:http://core.fluendo.com/gstreamer/src/gst-fluendo-mpegdemux/gst-fluendo-mpegdemux-{PV}.tar.gz

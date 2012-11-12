@@ -2626,18 +2626,18 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 #
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
 
-DESCRIPTION_gst_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
-FILES_gst_fluendo_mpegdemux = \
+DESCRIPTION_gst_plugins_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
+FILES_gst_plugins_fluendo_mpegdemux = \
 /usr/lib/gstreamer-0.10/*.so
 
 
-$(DEPDIR)/gst_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_fluendo_mpegdemux@
-	@PREPARE_gst_fluendo_mpegdemux@
+$(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_fluendo_mpegdemux@
+	@PREPARE_gst_plugins_fluendo_mpegdemux@
 	touch $@
 
-$(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_fluendo_mpegdemux.do_prepare
+$(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
-	cd @DIR_gst_fluendo_mpegdemux@ && \
+	cd @DIR_gst_plugins_fluendo_mpegdemux@ && \
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
@@ -2646,15 +2646,15 @@ $(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_fluendo_mpegdemux.do_p
 	$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-gst_fluendo_mpegdemux $(DEPDIR)/std-gst_fluendo_mpegdemux $(DEPDIR)/max-gst_fluendo_mpegdemux \
-$(DEPDIR)/gst_fluendo_mpegdemux: \
-$(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_fluendo_mpegdemux.do_compile
+$(DEPDIR)/min-gst_plugins_fluendo_mpegdemux $(DEPDIR)/std-gst_plugins_fluendo_mpegdemux $(DEPDIR)/max-gst_plugins_fluendo_mpegdemux \
+$(DEPDIR)/gst_plugins_fluendo_mpegdemux: \
+$(DEPDIR)/%gst_plugins_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile
 	$(start_build)
-	cd @DIR_gst_fluendo_mpegdemux@ && \
-		@INSTALL_gst_fluendo_mpegdemux@
+	cd @DIR_gst_plugins_fluendo_mpegdemux@ && \
+		@INSTALL_gst_plugins_fluendo_mpegdemux@
 	$(tocdk_build)
 	$(toflash_build)
-#	@DISTCLEANUP_gst_fluendo_mpegdemux@
+#	@DISTCLEANUP_gst_plugins_fluendo_mpegdemux@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -2665,7 +2665,7 @@ DESCRIPTION_gst_plugin_subsink = GStreamer Multimedia Framework gstsubsink
 FILES_gst_plugin_subsink = \
 /usr/lib/gstreamer-0.10/*.so
 
-$(DEPDIR)/gst_plugin_subsink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly gst_ffmpeg gst_fluendo_mpegdemux @DEPENDS_gst_plugin_subsink@
+$(DEPDIR)/gst_plugin_subsink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly gst_ffmpeg gst_plugins_fluendo_mpegdemux @DEPENDS_gst_plugin_subsink@
 	@PREPARE_gst_plugin_subsink@
 	touch $@
 
