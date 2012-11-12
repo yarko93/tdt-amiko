@@ -39,8 +39,6 @@ $(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass 
 			--disable-optical-drive \
 			--disable-libbluray \
 			--disable-texturepacker \
-			--disable-udev \
-			--disable-libusb \
 			--disable-libcec \
 			--enable-gstreamer \
 			--disable-paplayer \
