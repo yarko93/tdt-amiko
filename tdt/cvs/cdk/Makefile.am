@@ -42,9 +42,6 @@ include make/contrib-apps.mk
 # Include net apps
 include make/net-apps.mk
 
-# Include divers tools targets
-#include make/diverse-tools.mk
-
 # More misc libs, mostly nonessential
 include make/misc_libs.mk
 
@@ -53,12 +50,6 @@ include make/misc_tools.mk
 
 # Plugins
 include make/plugins.mk
-
-# Include enigma gui targets
-#include make/enigma.mk
-
-# Include enigma2 gui targets
-#include make/enigma2.mk
 
 # Include enigma2 plugins targets
 include make/enigma2-plugins.mk
@@ -81,12 +72,6 @@ include make/enigma2-pli-nightly.mk
 # Include neutrino gui targets
 include make/neutrino.mk
 include make/neutrino_hd2.mk
-
-# Include enigma1-hd gui targets
-#include make/enigma1-hd.mk
-
-# Essential, and some less essential, libraries
-#include make/tuxbox_libs.mk
 
 # A small, but absolutely essential library
 include make/libtuxbox.mk
@@ -116,8 +101,9 @@ include make/release_neutrino.mk
 
 include make/release_neutrino_nightly.mk
 
-include make/release_vdr.mk
+include make/smart_release_vdr.mk
 
+include make/vdr.mk
 # New static folder
 include make/release_neutrino_static.mk
 
