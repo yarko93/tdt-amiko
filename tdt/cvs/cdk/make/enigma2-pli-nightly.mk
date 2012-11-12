@@ -17,7 +17,7 @@ $(DEPDIR)/enigma2-pli-nightly.do_prepare: @DEPENDS_enigma2_pli@
 
 $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline font-valis-enigma \
 		enigma2-pli-nightly.do_prepare \
-		libdvbsipp python libxml2 libxslt elementtree zope_interface twisted pyopenssl pythonwifi lxml libxmlccwrap ncurses-dev libdreamdvd2 tuxtxt32bpp sdparm hotplug_e2 $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
+		libdvbsipp python libxml2 libxslt elementtree zope_interface twisted pycrypto pyopenssl pythonwifi lxml libxmlccwrap ncurses-dev libdreamdvd2 tuxtxt32bpp sdparm hotplug_e2 $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
 	cd $(DIR_enigma2_pli) && \
 		./autogen.sh && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \
