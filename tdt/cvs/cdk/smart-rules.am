@@ -411,7 +411,7 @@ autofs
   make:install:INSTALLROOT=PKDIR
 ;
 imagemagick
-  6.7.7-0
+  6.8.0-4
   ImageMagick-{PV}
   extract:ftp://ftp.fifi.org/pub/ImageMagick/ImageMagick-{PV}.tar.bz2
   make:install:prefix=/usr:DESTDIR=PKDIR
@@ -858,7 +858,7 @@ libexif
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 minidlna
-  1.0.24
+  1.0.25
   {PN}-{PV}
   extract:http://netcologne.dl.sourceforge.net/project/{PN}/{PN}/{PV}/{PN}_{PV}_src.tar.gz
   patch:file://{PN}-{PV}.patch
@@ -963,6 +963,12 @@ pilimaging
   Imaging-{PV}
   extract:http://effbot.org/downloads/Imaging-{PV}.tar.gz
 ;
+pycrypto
+  2.5
+  {PN}-{PV}
+  extract:http://ftp.dlitz.net/pub/dlitz/crypto/{PN}/{PN}-{PV}.tar.gz
+  patch:python-{PN}-no-usr-include.patch
+;
 pyopenssl
   0.9
   pyOpenSSL-{PV}
@@ -1061,7 +1067,7 @@ gst_ffmpeg
   patch:file://{PN}-0.10.12_lower_rank.patch
   make:install:DESTDIR=PKDIR
 ;
-gst_fluendo_mpegdemux
+gst_plugins_fluendo_mpegdemux
   0.10.71
   gst-fluendo-mpegdemux-{PV}
   extract:http://core.fluendo.com/gstreamer/src/gst-fluendo-mpegdemux/gst-fluendo-mpegdemux-{PV}.tar.gz

@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if pidof clock > /dev/null; then
-	touch /tmp/.clock_kill
-else
-	clock &
-fi
-
-exit 0
