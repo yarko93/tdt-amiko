@@ -856,7 +856,7 @@ libexif
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 minidlna
-  1.0.24
+  1.0.25
   {PN}-{PV}
   extract:http://netcologne.dl.sourceforge.net/project/{PN}/{PN}/{PV}/{PN}_{PV}_src.tar.gz
   patch:file://{PN}-{PV}.patch
