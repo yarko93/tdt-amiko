@@ -290,10 +290,9 @@ $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 	rm $(PKDIR)/lib/modules/$(KERNELVERSION)/source || true
 #else
 #endif
-	@[ "x$*" = "x" ] && touch $@ || true
 	$(tocdk_build)
 	$(toflash_build)
-	@TUXBOX_YAUD_CUSTOMIZE@
+	@[ "x$*" = "x" ] && touch $@ || true
 
 linux-kernel-distclean: $(KERNELHEADERS)-distclean
 
@@ -345,7 +344,6 @@ $(DEPDIR)/driver: $(driverdir)/Makefile linux-kernel.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 	touch $@
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 driver-clean:
 	rm -f $(DEPDIR)/driver

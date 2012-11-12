@@ -136,7 +136,7 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_pppd@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 #
 # USB MODESWITCH
 #
@@ -165,7 +165,7 @@ $(DEPDIR)/%usb_modeswitch: $(DEPDIR)/usb_modeswitch.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # USB MODESWITCH DATA
@@ -195,7 +195,7 @@ $(DEPDIR)/%usb_modeswitch_data: $(DEPDIR)/usb_modeswitch_data.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch_data@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 #
 # NTFS-3G
 #
@@ -235,7 +235,7 @@ $(DEPDIR)/%ntfs_3g: $(DEPDIR)/ntfs_3g.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_ntfs_3g@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # LSB

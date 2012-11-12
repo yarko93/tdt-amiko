@@ -211,7 +211,6 @@ $(DEPDIR)/%samba: $(DEPDIR)/samba.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_samba@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
 # NETIO

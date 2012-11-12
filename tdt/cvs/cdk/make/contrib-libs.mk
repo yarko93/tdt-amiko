@@ -2094,8 +2094,7 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 	$(toflash_build)
 		@DISTCLEANUP_pilimaging@
 	@DISTCLEANUP_pilimaging@
-	@touch $@
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # pycrypto
@@ -2423,7 +2422,7 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 	sh4-linux-strip --strip-unneeded $(PKDIR)/usr/bin/gst-launch*
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # GST-PLUGINS-BASE

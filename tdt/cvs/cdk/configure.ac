@@ -586,7 +586,7 @@ fi
 
 dircheck="ok"
 AC_MSG_CHECKING([for apps directory])
-if test ! -f "$appsdir/enigma2/configure.ac" ; then
+if test ! -f "$appsdir/acinclude.m4" ; then
 	AC_MSG_WARN([appsdir $appsdir not found])
 	appsdir="missing_appsdir"
 	dircheck="fail"
@@ -1138,8 +1138,6 @@ fi
 
 TUXBOX_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNELVERSION=$(KERNELVERSION) && $(customizationsdir)/$(notdir $@)-local.sh $(buildprefix) || true]'
 AC_SUBST(TUXBOX_CUSTOMIZE)
-TUXBOX_YAUD_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNELVERSION=$(KERNELVERSION) && $(customizationsdir)/$(notdir $@)-local.sh $(prefix)/$*cdkroot $(buildprefix) || true]'
-AC_SUBST(TUXBOX_YAUD_CUSTOMIZE)
 TUXBOX_TOUCH='[@[ "x$*" = "x" ] && touch $@ || true]'
 AC_SUBST(TUXBOX_TOUCH)
 
