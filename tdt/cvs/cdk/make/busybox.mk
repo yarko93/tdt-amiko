@@ -31,8 +31,7 @@ $(DEPDIR)/%busybox: $(DEPDIR)/busybox.do_compile
 	export HHL_CROSS_TARGET_DIR=$(PKDIR) && $(hostprefix)/bin/target-shellconfig --add /bin/ash 5
 	$(tocdk_build)
 	$(toflash_build)
-	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	[ "x$*" = "x" ] && touch $@ || true
 
 
 $(eval $(call guiconfig,busybox))

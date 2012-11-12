@@ -325,7 +325,7 @@ $(DEPDIR)/%$(LIBTERMCAP): bootstrap $(LIBTERMCAP_RPM)
 	$(start_build)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 $(DEPDIR)/min-$(LIBTERMCAP_DEV) $(DEPDIR)/std-$(LIBTERMCAP_DEV) $(DEPDIR)/max-$(LIBTERMCAP_DEV) \
 $(DEPDIR)/$(LIBTERMCAP_DEV): \
@@ -335,7 +335,7 @@ $(DEPDIR)/%$(LIBTERMCAP_DEV): $(DEPDIR)/%$(LIBTERMCAP) $(LIBTERMCAP_DEV_RPM)
 	$(start_build)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 $(DEPDIR)/min-$(LIBTERMCAP_DOC) $(DEPDIR)/std-$(LIBTERMCAP_DOC) $(DEPDIR)/max-$(LIBTERMCAP_DOC) \
 $(DEPDIR)/$(LIBTERMCAP_DOC): \
@@ -343,7 +343,7 @@ $(DEPDIR)/%$(LIBTERMCAP_DOC): $(LIBTERMCAP_DOC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # NCURSES
@@ -378,7 +378,7 @@ $(DEPDIR)/%$(NCURSES_BASE): $(NCURSES_BASE_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $<)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 $(DEPDIR)/min-$(NCURSES) $(DEPDIR)/std-$(NCURSES) $(DEPDIR)/max-$(NCURSES) \
 $(DEPDIR)/$(NCURSES): \
@@ -388,7 +388,7 @@ $(DEPDIR)/%$(NCURSES): $(DEPDIR)/%$(NCURSES_BASE) $(NCURSES_RPM)
 	$(start_build)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 $(DEPDIR)/min-$(NCURSES_DEV) $(DEPDIR)/std-$(NCURSES_DEV) $(DEPDIR)/max-$(NCURSES_DEV) \
 $(DEPDIR)/$(NCURSES_DEV): \
@@ -398,7 +398,7 @@ $(DEPDIR)/%$(NCURSES_DEV): $(DEPDIR)/%$(NCURSES_BASE) $(NCURSES_DEV_RPM)
 	$(start_build)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # BASE-PASSWD
@@ -433,7 +433,7 @@ $(DEPDIR)/%$(BASE_PASSWD): $(BASE_FILES_ADAPTED_ETC_FILES:%=root/etc/%) \
 	( cd $(prefix)/$*cdkroot/etc && sed -e "s|/bin/bash|/bin/sh|g" -i passwd ) && \
 	rm -f $(prefix)/$*cdkroot/etc/shadow
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # MAKEDEV
@@ -462,7 +462,7 @@ $(DEPDIR)/%$(MAKEDEV): root/sbin/MAKEDEV $(MAKEDEV_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(INSTALL) -m 755 root/sbin/MAKEDEV $(prefix)/$*cdkroot/sbin
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # BASE-FILES
@@ -495,7 +495,7 @@ $(DEPDIR)/%$(BASE_FILES): $(BASE_FILES_ADAPTED_ETC_FILES:%=root/etc/%) \
 	echo "proc          /proc               proc    defaults                        0 0" >> $(prefix)/$*cdkroot/etc/fstab && \
 	echo "tmpfs         /tmp                tmpfs   defaults                        0 0" >> $(prefix)/$*cdkroot/etc/fstab && \
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # LIBATTR
@@ -527,7 +527,7 @@ $(DEPDIR)/%$(LIBATTR): $(LIBATTR_RPM)
 	$(start_build)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 $(DEPDIR)/min-$(LIBATTR_DEV) $(DEPDIR)/std-$(LIBATTR_DEV) $(DEPDIR)/max-$(LIBATTR_DEV) $(DEPDIR)/$(LIBATTR_DEV): \
 $(DEPDIR)/%$(LIBATTR_DEV): $(LIBATTR_DEV_RPM)
@@ -537,7 +537,7 @@ $(DEPDIR)/%$(LIBATTR_DEV): $(LIBATTR_DEV_RPM)
 #	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libattr.la
 	$(REWRITE_LIBDIR)/libattr.la
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 
 #
@@ -571,7 +571,7 @@ $(DEPDIR)/%$(LIBACL): $(LIBACL_RPM)
 	[ "x$*" = "x" ] && touch $@ || true
 	$(start_build)
 	$(fromrpm_build)
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 $(DEPDIR)/min-$(LIBACL_DEV) $(DEPDIR)/std-$(LIBACL_DEV) $(DEPDIR)/max-$(LIBACL_DEV) $(DEPDIR)/$(LIBACL_DEV): \
 $(DEPDIR)/%$(LIBACL_DEV): $(LIBACL_DEV_RPM)
@@ -580,7 +580,7 @@ $(DEPDIR)/%$(LIBACL_DEV): $(LIBACL_DEV_RPM)
 	$(REWRITE_LIBDIR)/libacl.la
 	$(REWRITE_LIBDEP)/libacl.la
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 
 #
@@ -609,7 +609,7 @@ $(DEPDIR)/%$(USBUTILS): $(USBUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # UDEV
@@ -643,7 +643,7 @@ $(DEPDIR)/%$(UDEV_DEV): $(UDEV_DEV_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	[ "x$*" = "x" ] && touch $@ || true
 	$(REWRITE_LIBDEP)/libgudev-1.0.la
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 $(DEPDIR)/min-$(UDEV) $(DEPDIR)/std-$(UDEV) $(DEPDIR)/max-$(UDEV) $(DEPDIR)/$(UDEV): \
 $(DEPDIR)/%$(UDEV): @DEPENDS_udev@ $(UDEV_RPM)
@@ -660,4 +660,4 @@ $(DEPDIR)/%$(UDEV): @DEPENDS_udev@ $(UDEV_RPM)
 	@INSTALL_udev@
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	

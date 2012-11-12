@@ -20,4 +20,3 @@ $(DEPDIR)/%diverse-tools: $(DIVERSE_TOOLS_ADAPTED_ETC_FILES:%=root/etc/%)
 	$(INSTALL_BIN) root/usr/sbin/mountrw $(prefix)/$*cdkroot/usr/sbin/
 #	$(INSTALL_BIN) root/bin/devinit $(prefix)/$*cdkroot/bin
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@

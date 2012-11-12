@@ -1138,8 +1138,6 @@ fi
 
 TUXBOX_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNELVERSION=$(KERNELVERSION) && $(customizationsdir)/$(notdir $@)-local.sh $(buildprefix) || true]'
 AC_SUBST(TUXBOX_CUSTOMIZE)
-TUXBOX_YAUD_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNELVERSION=$(KERNELVERSION) && $(customizationsdir)/$(notdir $@)-local.sh $(prefix)/$*cdkroot $(buildprefix) || true]'
-AC_SUBST(TUXBOX_YAUD_CUSTOMIZE)
 TUXBOX_TOUCH='[@[ "x$*" = "x" ] && touch $@ || true]'
 AC_SUBST(TUXBOX_TOUCH)
 

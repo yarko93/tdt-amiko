@@ -1,4 +1,3 @@
-
 min-prepare-yaud std-prepare-yaud max-prepare-yaud: \
 %prepare-yaud:
 	-rm -rf $(prefix)/$*cdkroot
@@ -78,7 +77,6 @@ max-:
 # YAUD
 #
 yaud-stock: yaud-none stock
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 yaud-vdr: yaud-none \
 		stslave \
@@ -89,7 +87,6 @@ yaud-vdr: yaud-none \
 		misc-cp \
 		vdr \
 		release_vdr
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 yaud-neutrino-hd2: yaud-none \
 		lirc \
@@ -98,7 +95,6 @@ yaud-neutrino-hd2: yaud-none \
 		firstboot \
 		neutrino-hd2 \
 		release_neutrino
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 yaud-enigma2-nightly: yaud-none \
 		host_python \
@@ -108,7 +104,6 @@ yaud-enigma2-nightly: yaud-none \
 		init-scripts \
 		enigma2-nightly \
 		release
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 yaud-enigma2-pli-nightly-base: yaud-none \
 		host_python \
@@ -136,7 +131,6 @@ yaud-none: \
 		udev \
 		udev-rules \
 		misc-tools 
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
 # MIN-YAUD
@@ -145,7 +139,6 @@ test-kati: min-yaud-stock
 
 min-yaud-stock: \
 %yaud-stock: %prepare-yaud %yaud-none
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 min-yaud-none: \
 %yaud-none:	%bare-os \
@@ -153,11 +146,10 @@ min-yaud-none: \
 		%linux-kernel \
 		%net-utils \
 		%disk-utils
-	@TUXBOX_YAUD_CUSTOMIZE@
 #
 #min-yaud-stock: \
 #%yaud-stock: min-prepare-yaud min-yaud-none
-#	@TUXBOX_YAUD_CUSTOMIZE@
+#	
 #
 #min-yaud-none: \
 #%yaud-none: %bare-os \
@@ -166,7 +158,7 @@ min-yaud-none: \
 #		%busybox \
 #		%libz \
 #		%$(GREP)
-#	@TUXBOX_YAUD_CUSTOMIZE@
+#	
 
 #
 # STD-YAUD
@@ -175,7 +167,6 @@ yaud-kati: std-yaud-stock
 
 std-yaud-stock: \
 %yaud-stock: %prepare-yaud %yaud-none %stock
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 std-yaud-none: \
 %yaud-none: \
@@ -184,7 +175,6 @@ std-yaud-none: \
 		%linux-kernel \
 		%net-utils \
 		%disk-utils
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 #
 # MAX-YAUD
@@ -193,7 +183,6 @@ usb-kati: max-yaud-stock
 
 max-yaud-stock: \
 %yaud-stock: %prepare-yaud %yaud-none %stock
-	@TUXBOX_YAUD_CUSTOMIZE@
 
 max-yaud-none: \
 %yaud-none: \
@@ -204,7 +193,6 @@ max-yaud-none: \
 		%linux-kernel \
 		%net-utils \
 		%disk-utils
-	@TUXBOX_YAUD_CUSTOMIZE@
 #
 # EXTRAS
 #
