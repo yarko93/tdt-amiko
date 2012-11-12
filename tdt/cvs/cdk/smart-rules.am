@@ -967,7 +967,7 @@ pycrypto
   2.5
   {PN}-{PV}
   extract:http://ftp.dlitz.net/pub/dlitz/crypto/{PN}/{PN}-{PV}.tar.gz
-  patch:python-{PN}-no-usr-include.patch
+  patch:file://python-{PN}-no-usr-include.patch
 ;
 pyusb
   1.0.0a3
