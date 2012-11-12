@@ -967,6 +967,11 @@ pycrypto
   extract:http://ftp.dlitz.net/pub/dlitz/crypto/{PN}/{PN}-{PV}.tar.gz
   patch:python-{PN}-no-usr-include.patch
 ;
+pyusb
+  1.0.0a3
+  {PN}-{PV}
+  extract:http://pypi.python.org/packages/source/p/{PN}/{PN}-{PV}.tar.gz
+;
 pyopenssl
   0.9
   pyOpenSSL-{PV}
