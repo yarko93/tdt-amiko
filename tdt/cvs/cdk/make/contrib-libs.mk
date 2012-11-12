@@ -2101,7 +2101,7 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 #
 DESCRIPTION_pycrypto = pycrypto
 FILES_pycrypto = \
-/usr/lib/python2.6/*
+/usr/lib/python2.6/site-packages/Crypto/*
 
 
 $(DEPDIR)/pycrypto.do_prepare: bootstrap setuptools @DEPENDS_pycrypto@
@@ -2124,7 +2124,7 @@ $(DEPDIR)/%pycrypto: $(DEPDIR)/pycrypto.do_compile
 	cd @DIR_pycrypto@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 	$(toflash_build)
 	@DISTCLEANUP_pycrypto@
@@ -2135,7 +2135,7 @@ $(DEPDIR)/%pycrypto: $(DEPDIR)/pycrypto.do_compile
 #
 DESCRIPTION_pyusb = pyusb
 FILES_pyusb = \
-/usr/lib/python2.6/site-packages/*
+/usr/lib/python2.6/site-packages/usb/*
 
 $(DEPDIR)/pyusb.do_prepare: bootstrap setuptools @DEPENDS_pyusb@
 	@PREPARE_pyusb@
@@ -2154,7 +2154,7 @@ $(DEPDIR)/%pyusb: $(DEPDIR)/pyusb.do_compile
 	$(start_build)
 	cd @DIR_pyusb@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 	$(toflash_build)
 	@DISTCLEANUP_pyusb@
