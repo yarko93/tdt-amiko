@@ -273,3 +273,23 @@ eglTerminate (EGLDisplay dpy)
   
   return EGL_TRUE;
 }
+
+EGLint
+eglGetError(void)
+{
+#ifdef DEBUG
+  printf("%s:%s[%d]\n", __FILE__, __func__, __LINE__);
+#endif
+  return EGL_SUCCESS;
+}
+
+EGLBoolean
+eglGetConfigAttrib(EGLDisplay dpy, EGLConfig config, EGLint attribute, EGLint *value)
+{
+#ifdef DEBUG
+  printf("%s:%s[%d]\n", __FILE__, __func__, __LINE__);
+#endif
+  return EGL_FALSE;
+}
+
+
