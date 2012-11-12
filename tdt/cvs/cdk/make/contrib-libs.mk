@@ -2132,6 +2132,36 @@ $(DEPDIR)/%pycrypto: $(DEPDIR)/pycrypto.do_compile
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
+# pyusb
+#
+DESCRIPTION_pyusb = pyusb
+FILES_pyusb = \
+/usr/lib/python2.6/site-packages/*
+
+$(DEPDIR)/pyusb.do_prepare: bootstrap setuptools @DEPENDS_pyusb@
+	@PREPARE_pyusb@
+	touch $@
+
+$(DEPDIR)/pyusb.do_compile: $(DEPDIR)/pyusb.do_prepare
+	cd @DIR_pyusb@ && \
+		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
+		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		$(crossprefix)/bin/python ./setup.py build
+	touch $@
+
+$(DEPDIR)/min-pyusb $(DEPDIR)/std-pyusb $(DEPDIR)/max-pyusb \
+$(DEPDIR)/pyusb: \
+$(DEPDIR)/%pyusb: $(DEPDIR)/pyusb.do_compile
+	$(start_build)
+	cd @DIR_pyusb@ && \
+		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
+	@DISTCLEANUP_pyusb@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
 # pyopenssl
 #
 
