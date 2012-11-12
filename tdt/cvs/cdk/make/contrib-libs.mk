@@ -2083,17 +2083,16 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 	@PREPARE_pilimaging@
 	$(start_build)
 	cd @DIR_pilimaging@ && \
-		echo 'JPEG_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' > setup_site.py && \
-		echo 'ZLIB_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
-		echo 'FREETYPE_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
+		echo 'JPEG_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' > setup_site.py && \
+		echo 'ZLIB_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
+		echo 'FREETYPE_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
 		$(crossprefix)/bin/python ./setup.py build && \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr && \
 	$(tocdk_build)
 	$(toflash_build)
-		@DISTCLEANUP_pilimaging@
-	@DISTCLEANUP_pilimaging@
+#	@DISTCLEANUP_pilimaging@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -2127,7 +2126,7 @@ $(DEPDIR)/%pycrypto: $(DEPDIR)/pycrypto.do_compile
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 	$(toflash_build)
-	@DISTCLEANUP_pycrypto@
+#	@DISTCLEANUP_pycrypto@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -2157,7 +2156,7 @@ $(DEPDIR)/%pyusb: $(DEPDIR)/pyusb.do_compile
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 	$(toflash_build)
-	@DISTCLEANUP_pyusb@
+#	@DISTCLEANUP_pyusb@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
