@@ -87,8 +87,6 @@ yaud-vdr: yaud-none \
 		openssl-dev \
 		boot-elf \
 		misc-cp \
-		remote \
-		firstboot \
 		vdr \
 		release_vdr
 	@TUXBOX_YAUD_CUSTOMIZE@

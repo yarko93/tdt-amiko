@@ -1,7 +1,7 @@
 # vdr
 DIR_vdr := ../apps/vdr
 
-$(DEPDIR)/vdr.do_prepare: bootstrap freetype libxml2 jpeg libz libpng fontconfig libpcre bzip2 libcap expat imagemagick
+$(DEPDIR)/vdr.do_prepare: bootstrap freetype libxml2 jpeg libz libpng fontconfig libpcre bzip2 libcap expat imagemagick driver-ptinp
 
 $(DEPDIR)/vdr.do_compile: 
 
@@ -13,6 +13,7 @@ $(DEPDIR)/vdr.do_compile:
 		PLUGINLIBDIR=/usr/lib/vdr
 	touch $@
 $(DEPDIR)/vdr: vdr.do_prepare vdr.do_compile
+	$(start_build)
 	cd $(DIR_vdr)/vdr && \
 		$(BUILDENV) $(MAKE) all plugins install-bin install-conf install-plugins install-i18n \
 		DESTDIR=$(targetprefix) \
@@ -22,6 +23,8 @@ $(DEPDIR)/vdr: vdr.do_prepare vdr.do_compile
 	if [ -e $(targetprefix)/usr/local/bin/vdr ]; then \
 		$(target)-strip $(targetprefix)/usr/local/bin/vdr; \
 	fi
+	$(tocdk_build)
+	$(toflash_build)
 	touch $@
 vdr-clean:
 	-rm .deps/vdr
