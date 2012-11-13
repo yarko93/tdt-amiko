@@ -731,8 +731,10 @@ fi
 AC_SUBST(EXTERNALLCD_DEP)
 
 if test "$enable_externallcd" == "yes"; then
+	EXTERNALLCD="yes"
 	EXTERNALLCD_DEP="graphlcd"
 else
+	EXTERNALLCD="no"
 	EXTERNALLCD_DEP=""
 fi
 
@@ -965,7 +967,6 @@ TUXBOX_RULES_MAKE(gst_plugin_subsink)
 #
 # enigma2
 #
-TUXBOX_RULES_MAKE(enigma2)
 TUXBOX_RULES_MAKE(enigma2_pli)
 TUXBOX_RULES_MAKE(tuxtxtlib)
 TUXBOX_RULES_MAKE(tuxtxt32bpp)
