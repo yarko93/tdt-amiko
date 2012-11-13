@@ -2083,17 +2083,16 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 	@PREPARE_pilimaging@
 	$(start_build)
 	cd @DIR_pilimaging@ && \
-		echo 'JPEG_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' > setup_site.py && \
-		echo 'ZLIB_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
-		echo 'FREETYPE_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
+		echo 'JPEG_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' > setup_site.py && \
+		echo 'ZLIB_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
+		echo 'FREETYPE_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
 		$(crossprefix)/bin/python ./setup.py build && \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr && \
 	$(tocdk_build)
 	$(toflash_build)
-		@DISTCLEANUP_pilimaging@
-	@DISTCLEANUP_pilimaging@
+#	@DISTCLEANUP_pilimaging@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -2101,7 +2100,7 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 #
 DESCRIPTION_pycrypto = pycrypto
 FILES_pycrypto = \
-/usr/lib/python2.6/*
+/usr/lib/python2.6/site-packages/Crypto/*
 
 
 $(DEPDIR)/pycrypto.do_prepare: bootstrap setuptools @DEPENDS_pycrypto@
@@ -2124,10 +2123,10 @@ $(DEPDIR)/%pycrypto: $(DEPDIR)/pycrypto.do_compile
 	cd @DIR_pycrypto@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 	$(toflash_build)
-	@DISTCLEANUP_pycrypto@
+#	@DISTCLEANUP_pycrypto@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -2135,7 +2134,7 @@ $(DEPDIR)/%pycrypto: $(DEPDIR)/pycrypto.do_compile
 #
 DESCRIPTION_pyusb = pyusb
 FILES_pyusb = \
-/usr/lib/python2.6/site-packages/*
+/usr/lib/python2.6/site-packages/usb/*
 
 $(DEPDIR)/pyusb.do_prepare: bootstrap setuptools @DEPENDS_pyusb@
 	@PREPARE_pyusb@
@@ -2154,10 +2153,10 @@ $(DEPDIR)/%pyusb: $(DEPDIR)/pyusb.do_compile
 	$(start_build)
 	cd @DIR_pyusb@ && \
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
-		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 	$(toflash_build)
-	@DISTCLEANUP_pyusb@
+#	@DISTCLEANUP_pyusb@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -4245,3 +4244,33 @@ $(DEPDIR)/%libnfs: $(DEPDIR)/libnfs.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_libnfs@
 	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# taglib
+#
+DESCRIPTION_taglib = taglib
+FILES_taglib = \
+/usr/*
+
+$(DEPDIR)/taglib.do_prepare: bootstrap @DEPENDS_taglib@
+	@PREPARE_taglib@
+	touch $@
+
+$(DEPDIR)/taglib.do_compile: $(DEPDIR)/taglib.do_prepare
+	cd @DIR_taglib@ && \
+	$(BUILDENV) \
+	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_RELEASE_TYPE=Release . && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-taglib $(DEPDIR)/std-taglib $(DEPDIR)/max-taglib \
+$(DEPDIR)/taglib: \
+$(DEPDIR)/%taglib: $(DEPDIR)/taglib.do_compile
+	$(start_build)
+	cd @DIR_taglib@ && \
+		@INSTALL_taglib@
+	$(tocdk_build)
+	$(toflash_build)
+	@DISTCLEANUP_taglib@
+	[ "x$*" = "x" ] && touch $@ || true
+

@@ -965,7 +965,7 @@ pycrypto
   2.5
   {PN}-{PV}
   extract:http://ftp.dlitz.net/pub/dlitz/crypto/{PN}/{PN}-{PV}.tar.gz
-  patch:python-{PN}-no-usr-include.patch
+  patch:file://python-{PN}-no-usr-include.patch
 ;
 pyusb
   1.0.0a3
@@ -1296,6 +1296,12 @@ libnfs
   git
   {PN}
   git://github.com/sahlberg/libnfs.git:r=c0ebf57b212ffefe83e2a50358499f68e7289e93
+  make:install:DESTDIR=PKDIR
+;
+taglib
+  1.8
+  {PN}-{PV}
+  extract:https://github.com/downloads/{PN}/{PN}/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
 ;
 udev_rules
