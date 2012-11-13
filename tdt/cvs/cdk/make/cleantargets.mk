@@ -24,7 +24,6 @@ cdk-clean:
 		BIN_DEST=$(targetprefix)/bin \
 		INSTALL_MOD_PATH=$(targetprefix) clean
 	-$(MAKE) -C $(appsdir)/misc/tools distclean
-	-$(MAKE) -C $(appsdir)/dvb/dvbsnoop clean
 	-$(MAKE) -C $(hostappsdir) clean
 #	-$(MAKE) -C root clean
 	-rm -rf build
@@ -33,7 +32,6 @@ cdk-clean:
 # uninstall facilities of the components allow.
 clean-local: mostlyclean-local depsclean rpmdepsclean
 	-$(MAKE) -C $(appsdir)/misc/tools uninstall
-	-$(MAKE) -C $(appsdir)/dvb/dvbsnoop uninstall
 	-$(MAKE) -C $(hostappsdir) uninstall
 	-rm -rf $(hostprefix)
 	-rm -rf $(crossprefix)/
@@ -56,7 +54,6 @@ clean-local: mostlyclean-local depsclean rpmdepsclean
 distclean-local:
 #	-$(MAKE) -C root distclean
 	-$(MAKE) -C $(appsdir) distclean
-#	-$(MAKE) -C $(appsdir)/dvb/dvbsnoop distclean
 	-$(MAKE) -C $(appsdir)/misc/tools distclean
 	-$(MAKE) -C $(hostappsdir) distclean
 	-$(MAKE) driver-clean
