@@ -4248,3 +4248,33 @@ $(DEPDIR)/%libnfs: $(DEPDIR)/libnfs.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_libnfs@
 	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# taglib
+#
+DESCRIPTION_taglib = taglib
+FILES_taglib = \
+/usr/*
+
+$(DEPDIR)/taglib.do_prepare: bootstrap @DEPENDS_taglib@
+	@PREPARE_taglib@
+	touch $@
+
+$(DEPDIR)/taglib.do_compile: $(DEPDIR)/taglib.do_prepare
+	cd @DIR_taglib@ && \
+	$(BUILDENV) \
+	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_RELEASE_TYPE=Release . && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-taglib $(DEPDIR)/std-taglib $(DEPDIR)/max-taglib \
+$(DEPDIR)/taglib: \
+$(DEPDIR)/%taglib: $(DEPDIR)/taglib.do_compile
+	$(start_build)
+	cd @DIR_taglib@ && \
+		@INSTALL_taglib@
+	$(tocdk_build)
+	$(toflash_build)
+	@DISTCLEANUP_taglib@
+	[ "x$*" = "x" ] && touch $@ || true
+

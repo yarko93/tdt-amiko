@@ -10,7 +10,7 @@ my $filename = shift;
 my $allout = "";
 my $package = ""; # current processing package
 
-my $supported_protocols = "http|ftp|file|git|svn";
+my $supported_protocols = "https|http|ftp|file|git|svn";
 my $make_commands = "nothing|extract|dirextract|patch(time)?(-(\\d+))?|pmove|premove|plink|pdircreate";
 my $install_commands = "install -.+|install_file|install_bin";
 
@@ -645,6 +645,10 @@ sub process_download ($$)
       $output .= " || \\\n\twget -c --passive-ftp -P \$(archivedir) " . $_;
     }
     elsif ( $_ =~ m#^http://# )
+    {
+      $output .= " || \\\n\twget -c -P \$(archivedir) " . $_;
+    }
+    elsif ( $_ =~ m#^https://# )
     {
       $output .= " || \\\n\twget -c -P \$(archivedir) " . $_;
     }
