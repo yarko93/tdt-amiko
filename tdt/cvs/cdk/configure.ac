@@ -1100,9 +1100,6 @@ driver directory            : $driverdir
 host apps directory         : $hostappsdir
 customization directory     : $customizationsdir
 archive directory           : $archivedir
-GNU server                  : $gnuserver
-default server              : $defaultserver
-update http prefix          : $updatehttpprefix
 spider-box hl101 stuff      : $enable_hl101
 spark box stuff             : $enable_spark
 spark7162 box stuff         : $enable_spark7162
