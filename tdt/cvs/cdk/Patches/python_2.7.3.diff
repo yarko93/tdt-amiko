@@ -1,6 +1,6 @@
-diff -urN Python-2.7.2/configure ltib/rpm/BUILD/Python-2.7.2/configure
---- Python-2.7.2/configure	2011-06-11 11:46:28.000000000 -0400
-+++ ltib/rpm/BUILD/Python-2.7.2/configure	2011-11-14 12:10:41.011373524 -0500
+diff -urN Python-2.7.3/configure ltib/rpm/BUILD/Python-2.7.3/configure
+--- Python-2.7.3/configure	2011-06-11 11:46:28.000000000 -0400
++++ ltib/rpm/BUILD/Python-2.7.3/configure	2011-11-14 12:10:41.011373524 -0500
 @@ -13673,7 +13673,7 @@
    $as_echo_n "(cached) " >&6
  else
@@ -19,9 +19,9 @@ diff -urN Python-2.7.2/configure ltib/rpm/BUILD/Python-2.7.2/configure
  then
  
  $as_echo "#define PY_FORMAT_LONG_LONG \"ll\"" >>confdefs.h
-diff -urN Python-2.7.2/configure.in ltib/rpm/BUILD/Python-2.7.2/configure.in
---- python-2.7.2/configure.in	2012-10-12 19:51:30.343932546 +0200
-+++ python-2.7.2/configure.in.org	2012-10-12 19:52:44.351934373 +0200
+diff -urN Python-2.7.3/configure.in ltib/rpm/BUILD/Python-2.7.3/configure.in
+--- python-2.7.3/configure.in	2012-10-12 19:51:30.343932546 +0200
++++ python-2.7.3/configure.in.org	2012-10-12 19:52:44.351934373 +0200
 @@ -3139,7 +3096,7 @@
  
  AC_MSG_RESULT($ac_cv_buggy_getaddrinfo)
@@ -49,8 +49,8 @@ diff -urN Python-2.7.2/configure.in ltib/rpm/BUILD/Python-2.7.2/configure.in
  #ifdef HAVE_SYS_TYPES_H
  #include <sys/types.h>
 
---- Python-2.7.2.orig/Lib/distutils/command/build_ext.py	2010-09-10 16:03:17.000000000 -0400
-+++ Python-2.7.2/Lib/distutils/command/build_ext.py	2010-12-26 10:07:28.492632349 -0500
+--- Python-2.7.3.orig/Lib/distutils/command/build_ext.py	2010-09-10 16:03:17.000000000 -0400
++++ Python-2.7.3/Lib/distutils/command/build_ext.py	2010-12-26 10:07:28.492632349 -0500
 @@ -438,7 +438,9 @@
          # "build" tree.
          outputs = []
@@ -107,8 +107,8 @@ diff -urN Python-2.7.2/configure.in ltib/rpm/BUILD/Python-2.7.2/configure.in
  
          """Walk the list of source files in 'sources', looking for SWIG
          interface (.i) files.  Run SWIG on all that are found, and
---- Python-2.7.2.orig//Lib/plat-linux3/regen 1970-01-01 01:00:00.000000000 +0100
-+++ Python-2.7.2/Lib/plat-linux3/regen 2001-08-09 14:48:17.000000000 +0200
+--- Python-2.7.3.orig//Lib/plat-linux3/regen 1970-01-01 01:00:00.000000000 +0100
++++ Python-2.7.3/Lib/plat-linux3/regen 2001-08-09 14:48:17.000000000 +0200
 @@ -0,0 +1,8 @@
 +#! /bin/sh
 +case `uname` in
@@ -118,9 +118,9 @@ diff -urN Python-2.7.2/configure.in ltib/rpm/BUILD/Python-2.7.2/configure.in
 +esac
 +set -v
 +h2py -i '(u_long)' /usr/include/sys/types.h /usr/include/netinet/in.h /usr/include/dlfcn.h
-diff -Nur '--exclude-from=diff-ignore' python-2.7.2.org/Lib/sitecustomize.py python-2.7.2/Lib/sitecustomize.py
---- python-2.7.2.org/Lib/sitecustomize.py	1970-01-01 01:00:00.000000000 +0100
-+++ python-2.7.2/Lib/sitecustomize.py	2012-04-08 23:23:39.000000000 +0200
+diff -Nur '--exclude-from=diff-ignore' python-2.7.3.org/Lib/sitecustomize.py python-2.7.3/Lib/sitecustomize.py
+--- python-2.7.3.org/Lib/sitecustomize.py	1970-01-01 01:00:00.000000000 +0100
++++ python-2.7.3/Lib/sitecustomize.py	2012-04-08 23:23:39.000000000 +0200
 @@ -0,0 +1,45 @@
 +# OpenEmbedded sitecustomize.py (C) 2002-2008 Michael 'Mickey' Lauer <mlauer@vanille-media.de>
 +# GPLv2 or later
@@ -167,9 +167,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.7.2.org/Lib/sitecustomize.py pyt
 +    __enableDefaultEncoding()
 +    __registerExitHandler()
 +    __enableReadlineSupport()
-diff -urN Python-2.7.2/Makefile.pre.in ltib/rpm/BUILD/Python-2.7.2/Makefile.pre.in
---- Python-2.7.2/Makefile.pre.in	2011-06-11 11:46:26.000000000 -0400
-+++ ltib/rpm/BUILD/Python-2.7.2/Makefile.pre.in	2011-11-14 12:10:41.013373444 -0500
+diff -urN Python-2.7.3/Makefile.pre.in ltib/rpm/BUILD/Python-2.7.3/Makefile.pre.in
+--- Python-2.7.3/Makefile.pre.in	2011-06-11 11:46:26.000000000 -0400
++++ ltib/rpm/BUILD/Python-2.7.3/Makefile.pre.in	2011-11-14 12:10:41.013373444 -0500
 @@ -182,6 +182,7 @@
  
  PYTHON=		python$(EXE)
@@ -252,18 +252,30 @@ diff -urN Python-2.7.2/Makefile.pre.in ltib/rpm/BUILD/Python-2.7.2/Makefile.pre.
  	   	--prefix=$(prefix) \
  		--install-scripts=$(BINDIR) \
  		--install-platlib=$(DESTSHARED) \
-diff -Nur '--exclude-from=diff-ignore' python-2.7.2.org/Modules/_ctypes/libffi/fficonfig.py.in python-2.7.2/Modules/_ctypes/libffi/fficonfig.py.in
---- python-2.7.2.org/Modules/_ctypes/libffi/fficonfig.py.in	2010-01-16 19:05:15.000000000 +0100
-+++ python-2.7.2/Modules/_ctypes/libffi/fficonfig.py.in	2012-04-09 19:38:57.000000000 +0200
+diff -Nur '--exclude-from=diff-ignore' python-2.7.3.org/Modules/_ctypes/libffi/fficonfig.py.in python-2.7.3/Modules/_ctypes/libffi/fficonfig.py.in
+--- python-2.7.3.org/Modules/_ctypes/libffi/fficonfig.py.in	2010-01-16 19:05:15.000000000 +0100
++++ python-2.7.3/Modules/_ctypes/libffi/fficonfig.py.in	2012-04-09 19:38:57.000000000 +0200
 @@ -30,4 +30,4 @@
  
  ffi_sources += ffi_platforms['@TARGET@']
  
 -ffi_cflags = '@CFLAGS@'
 +ffi_cflags = '@CFLAGS@ -DPIC'
-diff -Nur '--exclude-from=diff-ignore' python-2.7.2.org/Modules/termios.c python-2.7.2/Modules/termios.c
---- python-2.7.2.org/Modules/termios.c	2010-05-09 17:15:40.000000000 +0200
-+++ python-2.7.2/Modules/termios.c	2012-04-09 18:43:41.000000000 +0200
+diff -Nur python-2.7.3.org/Python/compile.c python-2.7.3/Python/compile.c
+--- python-2.7.3.org/Python/compile.c	2010-06-22 23:47:04.000000000 +0200
++++ python-2.7.3/Python/compile.c	2012-09-17 21:55:58.776875344 +0200
+@@ -32,7 +32,7 @@
+ #include "symtable.h"
+ #include "opcode.h"
+ 
+-int Py_OptimizeFlag = 0;
++int Py_OptimizeFlag = 1;
+ 
+ #define DEFAULT_BLOCK_SIZE 16
+ #define DEFAULT_BLOCKS 8
+diff -Nur '--exclude-from=diff-ignore' python-2.7.3.org/Modules/termios.c python-2.7.3/Modules/termios.c
+--- python-2.7.3.org/Modules/termios.c	2010-05-09 17:15:40.000000000 +0200
++++ python-2.7.3/Modules/termios.c	2012-04-09 18:43:41.000000000 +0200
 @@ -17,6 +17,12 @@
  #include <termio.h>
  #endif
@@ -277,9 +289,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.7.2.org/Modules/termios.c python
  
  /* HP-UX requires that this be included to pick up MDCD, MCTS, MDSR,
   * MDTR, MRI, and MRTS (appearantly used internally by some things
-diff -urN Python-2.7.2/setup.py ltib/rpm/BUILD/Python-2.7.2/setup.py
---- Python-2.7.2/setup.py	2011-06-11 11:46:28.000000000 -0400
-+++ ltib/rpm/BUILD/Python-2.7.2/setup.py	2011-11-14 12:13:02.175758583 -0500
+diff -urN Python-2.7.3/setup.py ltib/rpm/BUILD/Python-2.7.3/setup.py
+--- Python-2.7.3/setup.py	2011-06-11 11:46:28.000000000 -0400
++++ ltib/rpm/BUILD/Python-2.7.3/setup.py	2011-11-14 12:13:02.175758583 -0500
 @@ -145,6 +145,7 @@
      def __init__(self, dist):
          build_ext.__init__(self, dist)
