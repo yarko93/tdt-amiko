@@ -305,29 +305,42 @@ release_cube_common:
 	cp $(buildprefix)/root/bin/eeprom $(prefix)/release/bin
 	
 release_spark:
-	echo "spark" > $(prefix)/release/etc/hostname && \
+	echo "spark" > $(prefix)/release/etc/hostname
+      if [ PYTHON_VERSION == 2.7 ]; then \
+	echo "src/gz AR-P http://alien.sat-universum.de/2.7" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
+	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
+	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf \
+      else \
 	echo "src/gz AR-P http://alien.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
-	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf && \
+	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.config \
+      fi; \
 	cp $(buildprefix)/root/etc/lircd_spark.conf.09_00_0B $(prefix)/release/etc/lircd.conf.09_00_0B && \
 	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw && \
-	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt
-	$(if $(P0210), cp $(buildprefix)/root/release/encrypt_spark_stm24_0210.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
-	$(if $(P0211), cp $(buildprefix)/root/release/encrypt_spark_stm24_0211.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
+	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt \
+	$(if $(P0210), cp $(buildprefix)/root/release/encrypt_spark_stm24_0210.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
+	$(if $(P0211), cp $(buildprefix)/root/release/encrypt_spark_stm24_0211.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	true
 
 release_spark7162:
-	echo "spark7162" > $(prefix)/release/etc/hostname && \
-	echo "src/gz AR-P http://alien2.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
+	echo "spark7162" > $(prefix)/release/etc/hostname
+      if [ PYTHON_VERSION == 2.7 ]; then \
+	echo "src/gz AR-P http://alien2.sat-universum.de/2.7" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
-	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf && \
+	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf \
+      else \
+		echo "src/gz AR-P http://alien2.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
+	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
+	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf \
+      fi; \
 	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw && \
-	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt
-	$(if $(P0207), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0207.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
-	$(if $(P0209), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0209.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
-	$(if $(P0210), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0210.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
-	$(if $(P0211), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0211.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
+	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt \
+	$(if $(P0207), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0207.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
+	$(if $(P0209), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0209.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
+	$(if $(P0210), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0210.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
+	$(if $(P0211), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0211.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	true
+
 
 release_hl101:
 	echo "hl101" > $(prefix)/release/etc/hostname && \
