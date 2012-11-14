@@ -146,6 +146,9 @@ CONFIGURE = \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	./configure $(CONFIGURE_OPTS)
 
+PYTHON_VERSION = $(word 1,$(subst ., ,$(VERSION_python))).$(word 2,$(subst ., ,$(VERSION_python)))
+PYTHON_DIR = /usr/lib/python$(PYTHON_VERSION)
+
 ACLOCAL_AMFLAGS = -I .
 
 CONFIG_STATUS_DEPENDENCIES = \

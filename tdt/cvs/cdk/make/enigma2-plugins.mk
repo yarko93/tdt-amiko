@@ -46,7 +46,7 @@ $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 	cd @DIR_enigma2_networkbrowser@/src/lib && \
 		$(BUILDENV) \
 		sh4-linux-gcc -shared -o netscan.so \
-			-I $(targetprefix)/usr/include/python2.7 \
+			-I $(targetprefix)/usr/include/python$(PYTHON_VERSION) \
 			-include Python.h \
 			errors.h \
 			list.c \

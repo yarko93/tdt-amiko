@@ -14,8 +14,8 @@ $(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass 
 			PKG_CONFIG_SYSROOT_DIR=$(targetprefix) \
 			PKG_CONFIG=$(hostprefix)/bin/pkg-config \
 			PKG_CONFIG_PATH=$(targetprefix)/usr/lib/pkgconfig \
-			PYTHON_SITE_PKG=$(targetprefix)/usr/lib/python2.6/site-packages \
-			PYTHON_CPPFLAGS=-I$(targetprefix)/usr/include/python2.6 \
+			PYTHON_SITE_PKG=$(targetprefix)/usr/lib/python$PYTHON_VERSION/site-packages \
+			PYTHON_CPPFLAGS=-I$(targetprefix)/usr/include/python$PYTHON_VERSION \
 			PY_PATH=$(targetprefix)/usr \
 			--disable-gl \
 			--enable-glesv1 \
