@@ -42,14 +42,8 @@ include make/contrib-apps.mk
 # Include net apps
 include make/net-apps.mk
 
-# More misc libs, mostly nonessential
-include make/misc_libs.mk
-
 # Misc tools, not essential
 include make/misc_tools.mk
-
-# Plugins
-include make/plugins.mk
 
 # Include enigma2 plugins targets
 include make/enigma2-plugins.mk
@@ -72,9 +66,6 @@ include make/enigma2-pli-nightly.mk
 # Include neutrino gui targets
 include make/neutrino.mk
 include make/neutrino_hd2.mk
-
-# A small, but absolutely essential library
-include make/libtuxbox.mk
 
 # Include yaud targets
 include make/yaud.mk
@@ -104,8 +95,6 @@ include make/release_neutrino_nightly.mk
 include make/smart_release_vdr.mk
 
 include make/vdr.mk
-# New static folder
-include make/release_neutrino_static.mk
 
 # Give the user rope to hang himself :-).  (Note: read from the
 # generated Makefile during make run, automake or configure does not
