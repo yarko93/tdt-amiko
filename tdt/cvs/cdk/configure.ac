@@ -57,6 +57,14 @@ AC_ARG_ENABLE(stm24,
 	,[enable_stm24=no])
 AM_CONDITIONAL(STM24,test "$enable_stm24" = "yes")
 
+AC_ARG_ENABLE(py27,
+	AS_HELP_STRING(--enable-py27,      enable Python 2.7 ),
+	[case "${enableval}" in
+		yes) PY27=py27 ;;
+	esac],[enable_py27=no])
+AM_CONDITIONAL(ENABLE_NFSSERVER,test "$enable_py27" = "yes")
+AC_SUBST(PY27)
+
 AC_ARG_ENABLE(p0207,
 	AS_HELP_STRING(--enable-p0207,  set up the CDK to use the STLinux 2.4 with patchlevel 0207),
 	[case "${enableval}" in

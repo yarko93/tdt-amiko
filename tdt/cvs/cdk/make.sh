@@ -298,6 +298,23 @@ esac
 
 ##############################################
 
+echo -e "\nSelect Python:"
+echo "   1) Python 2.6"
+echo "   2) Python 2.7"
+case $5 in
+        [1-2]) REPLY=$5
+        echo -e "\nSelected Python: $REPLY\n"
+        ;;
+        *)
+        read -p "Select Python (1-2)? ";;
+esac
+
+case "$REPLY" in
+	1) PYTHON="";;
+	2) PYTHON="--enable-py27";;
+	*) PYTHON="";;
+esac
+
 ##############################################
 
 echo -e "\nExternal LCD support:"
