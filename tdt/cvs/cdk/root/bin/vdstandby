@@ -1,5 +1,5 @@
 #!/bin/sh
-DISPL7162=`grep -c 'spark7162' /proc/stb/info/model`
+DISPL7162=`grep -c '8 digit' /proc/aotom/display_type`
 if [ $# -eq 1 ]; then
    if [ "$1" = "-a" ]; then
 	echo "enter standby..."
