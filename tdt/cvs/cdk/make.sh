@@ -218,7 +218,7 @@ case "$REPLY" in
           rm stmfb
        fi
        if [ "$STMFB" == "stm24" ]; then
-           ln -s stmfb-3.1_stm24_0102 stmfb
+           ln -s stmfb-3.1_stm24_0104 stmfb
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
@@ -271,7 +271,7 @@ case "$REPLY" in
           rm stmfb
        fi
        if [ "$STMFB" == "stm24" ]; then
-           ln -s stmfb-3.1_stm24_0102 stmfb
+           ln -s stmfb-3.1_stm24_0104 stmfb
        else
            ln -s stmfb-3.1_stm23_0032 stmfb
        fi
@@ -474,7 +474,7 @@ if [[ "$IMAGE" == --enable-e2* ]]; then
 fi
 ##############################################
 
-CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $EXTERNAL_LCD $IMAGE $GFW"
+CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $PYTHON $EXTERNAL_LCD $IMAGE $GFW"
 
 ##############################################
 

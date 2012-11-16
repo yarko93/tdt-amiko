@@ -166,7 +166,7 @@ ipkg_host
   dirextract:ftp://ftp.gwdg.de/linux/handhelds/packages/ipkg/ipkg-{PV}.tar.gz
   patch:file://{PN}.diff
 ;
-if PY27
+if ENABLE_PY27
 host_python
   2.7.3
   {PN}-{PV}
@@ -990,7 +990,7 @@ pyopenssl
   pyOpenSSL-{PV}
   extract:http://sourceforge.net/projects/pyopenssl/files/{PN}/{PV}/pyOpenSSL-{PV}.tar.gz
 ;
-if PY27
+if ENABLE_PY27
 python
   2.7.3
   {PN}-{PV}

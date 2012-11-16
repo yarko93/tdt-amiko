@@ -62,7 +62,7 @@ AC_ARG_ENABLE(py27,
 	[case "${enableval}" in
 		yes) PY27=py27 ;;
 	esac],[enable_py27=no])
-AM_CONDITIONAL(ENABLE_NFSSERVER,test "$enable_py27" = "yes")
+AM_CONDITIONAL(ENABLE_PY27,test "$enable_py27" = "yes")
 AC_SUBST(PY27)
 
 AC_ARG_ENABLE(p0207,
