@@ -1,7 +1,15 @@
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.6/configure.in
+diff -Nur python-2.6.6.org/configure.in python-2.6.6/configure.in
 --- python-2.6.6.org/configure.in	2010-05-25 04:27:03.000000000 +0200
-+++ python-2.6.6/configure.in	2012-04-09 18:43:41.000000000 +0200
-@@ -1500,7 +1500,7 @@
++++ python-2.6.6/configure.in	2012-09-17 21:55:58.800875345 +0200
+@@ -260,6 +260,7 @@
+ 	MACHDEP="$ac_md_system$ac_md_release"
+ 
+ 	case $MACHDEP in
++	linux3) MACHDEP="linux2";;
+ 	cygwin*) MACHDEP="cygwin";;
+ 	darwin*) MACHDEP="darwin";;
+ 	atheos*) MACHDEP="atheos";;
+@@ -1500,7 +1501,7 @@
  }],
  ac_cv_sizeof_off_t=`cat conftestval`,
  ac_cv_sizeof_off_t=0,
@@ -10,7 +18,7 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.
  ])
  AC_MSG_RESULT($ac_cv_sizeof_off_t)
  AC_DEFINE_UNQUOTED(SIZEOF_OFF_T, $ac_cv_sizeof_off_t,
-@@ -2713,50 +2713,6 @@
+@@ -2713,50 +2714,6 @@
    AC_CHECK_LIB(resolv, inet_aton)
  )
  
@@ -61,7 +69,7 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.
  dnl Check if system zlib has *Copy() functions
  dnl
  dnl On MacOSX the linker will search for dylibs on the entire linker path
-@@ -3011,7 +2967,7 @@
+@@ -3011,7 +2968,7 @@
  buggygetaddrinfo=yes
  ])
  
@@ -70,7 +78,7 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.
  	if test "$ipv6" = "yes"; then
  		echo 'Fatal: You must get working getaddrinfo() function.'
  		echo '       or you can specify "--disable-ipv6"'.
-@@ -3860,48 +3816,9 @@
+@@ -3860,48 +3817,9 @@
    AC_MSG_RESULT(no)
  fi
  
@@ -120,9 +128,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/configure.in python-2.6.
  #ifdef HAVE_SYS_TYPES_H
  #include <sys/types.h>
  #endif
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Include/pyport.h python-2.6.6/Include/pyport.h
+diff -Nur python-2.6.6.org/Include/pyport.h python-2.6.6/Include/pyport.h
 --- python-2.6.6.org/Include/pyport.h	2010-05-09 17:15:40.000000000 +0200
-+++ python-2.6.6/Include/pyport.h	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Include/pyport.h	2012-09-17 21:55:58.764875344 +0200
 @@ -691,7 +691,7 @@
   * rather than waiting for integer multiplication to trigger bogus
   * overflows.
@@ -132,9 +140,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Include/pyport.h python-
  #endif
  
  #ifdef __cplusplus
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/distutils/command/build_ext.py python-2.6.6/Lib/distutils/command/build_ext.py
+diff -Nur python-2.6.6.org/Lib/distutils/command/build_ext.py python-2.6.6/Lib/distutils/command/build_ext.py
 --- python-2.6.6.org/Lib/distutils/command/build_ext.py	2010-08-02 22:26:41.000000000 +0200
-+++ python-2.6.6/Lib/distutils/command/build_ext.py	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Lib/distutils/command/build_ext.py	2012-09-17 21:55:58.764875344 +0200
 @@ -438,7 +438,9 @@
          # "build" tree.
          outputs = []
@@ -182,9 +190,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/distutils/command/bu
              libraries=self.get_libraries(ext),
              library_dirs=ext.library_dirs,
              runtime_library_dirs=ext.runtime_library_dirs,
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/plat-linux3/regen python-2.6.6/Lib/plat-linux3/regen
+diff -Nur python-2.6.6.org/Lib/plat-linux3/regen python-2.6.6/Lib/plat-linux3/regen
 --- python-2.6.6.org/Lib/plat-linux3/regen	1970-01-01 01:00:00.000000000 +0100
-+++ python-2.6.6/Lib/plat-linux3/regen	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Lib/plat-linux3/regen	2012-09-17 21:55:58.764875344 +0200
 @@ -0,0 +1,8 @@
 +#! /bin/sh
 +case `uname` in
@@ -194,9 +202,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/plat-linux3/regen py
 +esac
 +set -v
 +h2py -i '(u_long)' /usr/include/sys/types.h /usr/include/netinet/in.h /usr/include/dlfcn.h
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/sitecustomize.py python-2.6.6/Lib/sitecustomize.py
---- python-2.6.6.org/Lib/sitecustomize.py	1970-01-01 01:00:00.000000000 +0100
-+++ python-2.6.6/Lib/sitecustomize.py	2012-04-08 23:23:39.000000000 +0200
+diff -Nur python-2.6.6.org/Lib/site-packages/sitecustomize.py python-2.6.6/Lib/sitecustomize.py
+--- python-2.6.6.org/Lib/site-packages/sitecustomize.py	1970-01-01 01:00:00.000000000 +0100
++++ python-2.6.6/Lib/site-packages/sitecustomize.py	2012-09-17 21:55:58.768875345 +0200
 @@ -0,0 +1,45 @@
 +# OpenEmbedded sitecustomize.py (C) 2002-2008 Michael 'Mickey' Lauer <mlauer@vanille-media.de>
 +# GPLv2 or later
@@ -243,9 +251,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Lib/sitecustomize.py pyt
 +    __enableDefaultEncoding()
 +    __registerExitHandler()
 +    __enableReadlineSupport()
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Makefile.pre.in python-2.6.6/Makefile.pre.in
+diff -Nur python-2.6.6.org/Makefile.pre.in python-2.6.6/Makefile.pre.in
 --- python-2.6.6.org/Makefile.pre.in	2010-08-02 00:05:31.000000000 +0200
-+++ python-2.6.6/Makefile.pre.in	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Makefile.pre.in	2012-09-17 21:55:58.768875345 +0200
 @@ -175,6 +175,7 @@
  
  PYTHON=		python$(EXE)
@@ -348,18 +356,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Makefile.pre.in python-2
  	   	--prefix=$(prefix) \
  		--install-scripts=$(BINDIR) \
  		--install-platlib=$(DESTSHARED) \
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/_ctypes/libffi/fficonfig.py.in python-2.6.6/Modules/_ctypes/libffi/fficonfig.py.in
---- python-2.6.6.org/Modules/_ctypes/libffi/fficonfig.py.in	2010-01-16 19:05:15.000000000 +0100
-+++ python-2.6.6/Modules/_ctypes/libffi/fficonfig.py.in	2012-04-09 19:38:57.000000000 +0200
-@@ -30,4 +30,4 @@
- 
- ffi_sources += ffi_platforms['@TARGET@']
- 
--ffi_cflags = '@CFLAGS@'
-+ffi_cflags = '@CFLAGS@ -DPIC'
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/gcmodule.c python-2.6.6/Modules/gcmodule.c
+diff -Nur python-2.6.6.org/Modules/gcmodule.c python-2.6.6/Modules/gcmodule.c
 --- python-2.6.6.org/Modules/gcmodule.c	2010-05-09 17:15:40.000000000 +0200
-+++ python-2.6.6/Modules/gcmodule.c	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Modules/gcmodule.c	2012-09-17 21:55:58.768875345 +0200
 @@ -274,7 +274,7 @@
           * generation being collected, which can be recognized
           * because only they have positive gc_refs.
@@ -378,9 +377,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/gcmodule.c pytho
              gc->gc.gc_refs = GC_REACHABLE;
              (void) traverse(op,
                              (visitproc)visit_reachable,
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/termios.c python-2.6.6/Modules/termios.c
+diff -Nur python-2.6.6.org/Modules/termios.c python-2.6.6/Modules/termios.c
 --- python-2.6.6.org/Modules/termios.c	2010-05-09 17:15:40.000000000 +0200
-+++ python-2.6.6/Modules/termios.c	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Modules/termios.c	2012-09-17 21:55:58.768875345 +0200
 @@ -17,6 +17,12 @@
  #include <termio.h>
  #endif
@@ -394,9 +393,21 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Modules/termios.c python
  
  /* HP-UX requires that this be included to pick up MDCD, MCTS, MDSR,
   * MDTR, MRI, and MRTS (appearantly used internally by some things
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Python/import.c python-2.6.6/Python/import.c
+diff -Nur python-2.6.6.org/Python/compile.c python-2.6.6/Python/compile.c
+--- python-2.6.6.org/Python/compile.c	2010-06-22 23:47:04.000000000 +0200
++++ python-2.6.6/Python/compile.c	2012-09-17 21:55:58.776875344 +0200
+@@ -32,7 +32,7 @@
+ #include "symtable.h"
+ #include "opcode.h"
+ 
+-int Py_OptimizeFlag = 0;
++int Py_OptimizeFlag = 1;
+ 
+ #define DEFAULT_BLOCK_SIZE 16
+ #define DEFAULT_BLOCKS 8
+diff -Nur python-2.6.6.org/Python/import.c python-2.6.6/Python/import.c
 --- python-2.6.6.org/Python/import.c	2010-05-20 20:41:08.000000000 +0200
-+++ python-2.6.6/Python/import.c	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/Python/import.c	2012-09-17 21:55:58.772875345 +0200
 @@ -882,6 +882,12 @@
      mode_t mode = srcstat->st_mode & ~S_IXUSR & ~S_IXGRP & ~S_IXOTH;
  #endif
@@ -410,9 +421,9 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/Python/import.c python-2
      fp = open_exclusive(cpathname, mode);
      if (fp == NULL) {
          if (Py_VerboseFlag)
-diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/setup.py python-2.6.6/setup.py
+diff -Nur python-2.6.6.org/setup.py python-2.6.6/setup.py
 --- python-2.6.6.org/setup.py	2010-07-17 14:31:09.000000000 +0200
-+++ python-2.6.6/setup.py	2012-04-09 18:43:41.000000000 +0200
++++ python-2.6.6/setup.py	2012-09-17 21:55:58.776875344 +0200
 @@ -18,7 +18,14 @@
  from distutils.spawn import find_executable
  
@@ -543,14 +554,4 @@ diff -Nur '--exclude-from=diff-ignore' python-2.6.6.org/setup.py python-2.6.6/se
                      return False
  
              fficonfig = {}
---- Python-2.6.6.orig/Python/compile.c
-+++ Python-2.6.6/Python/compile.c
-@@ -32,7 +32,7 @@
- #include "symtable.h"
- #include "opcode.h"
- 
--int Py_OptimizeFlag = 0;
-+int Py_OptimizeFlag = 1;
- 
- #define DEFAULT_BLOCK_SIZE 16
- #define DEFAULT_BLOCKS 8
+

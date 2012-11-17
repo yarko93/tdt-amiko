@@ -8,7 +8,7 @@ $(DEPDIR)/enigma2-plugins: enigma2_openwebif enigma2_networkbrowser openpli-plug
 #
 
 DESCRIPTION_enigma2_openwebif = "open webinteface plugin for enigma2 by openpli team"
-PKGR_enigma2_openwebif = r0
+PKGR_enigma2_openwebif = r1
 RDEPENDS_enigma2_openwebif = python pythoncheetah grab
 
 $(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap $(RDEPENDS_enigma2_openwebif) @DEPENDS_enigma2_openwebif@
@@ -46,7 +46,7 @@ $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 	cd @DIR_enigma2_networkbrowser@/src/lib && \
 		$(BUILDENV) \
 		sh4-linux-gcc -shared -o netscan.so \
-			-I $(targetprefix)/usr/include/python2.6 \
+			-I $(targetprefix)/usr/include/python$(PYTHON_VERSION) \
 			-include Python.h \
 			errors.h \
 			list.c \
@@ -83,7 +83,7 @@ $(DEPDIR)/%-openpli:
 	$(get_git_version)
 	cd $(DIR_$*_openpli) && \
 		$(python) setup.py install --root=$(PKDIR) --install-lib=/usr/lib/enigma2/python/Plugins
-	$(remove_pyo)
+	$(remove_pyc)
 	$(e2extra_build)
 	touch $@
 
@@ -92,10 +92,19 @@ DESCRIPTION_AddStreamUrl_openpli = Add a stream url to your channellist
 DESCRIPTION_Satscan_openpli = Alternative blind scan plugin for DVB-S
 DESCRIPTION_SimpleUmount_openpli = list of mounted mass storage devices and umount one of them
 PKGR_openpli_plugins = r1
+
 openpli_plugin_list = \
 AddStreamUrl \
 NewsReader \
-SimpleUmount \
-Satscan
+Satscan \
+SimpleUmount
+
+# openpli plugins that go to flash
+openpli_plugin_distlist = \
+SimpleUmount
+
+openpli_plugin_list += $(openpli_plugin_distlist)
+
+$(foreach p,$(openpli_plugin_distlist),$(eval DIST_$p_openpli = $p_openpli))
 
 openpli-plugins: $(addprefix $(DEPDIR)/,$(addsuffix -openpli,$(openpli_plugin_list)))

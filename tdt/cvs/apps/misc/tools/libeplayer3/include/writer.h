@@ -53,6 +53,7 @@ typedef struct Writer_s {
 } Writer_t;
 
 extern Writer_t WriterAudioIPCM;
+extern Writer_t WriterAudioPCM;
 extern Writer_t WriterAudioMP3;
 extern Writer_t WriterAudioMPEGL3;
 extern Writer_t WriterAudioAC3;
@@ -73,9 +74,12 @@ extern Writer_t WriterVideoH263;
 extern Writer_t WriterVideoFLV;
 extern Writer_t WriterVideoVC1;
 extern Writer_t WriterFramebuffer;
+extern Writer_t WriterPipe;
+extern Writer_t WriterDVBSubtitle;
 
 static Writer_t * AvailableWriter[] = {
     &WriterAudioIPCM,
+    &WriterAudioPCM,
     &WriterAudioMP3,
     &WriterAudioMPEGL3,
     &WriterAudioAC3,

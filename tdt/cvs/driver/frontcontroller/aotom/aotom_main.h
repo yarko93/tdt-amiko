@@ -3,6 +3,10 @@
 
 #define VFD_MAJOR				147
 
+#define DIGITNO 0
+#define DIGIT4 4
+#define DIGIT8 8
+
 #define VFDBRIGHTNESS         0xc0425a03
 #define VFDDRIVERINIT         0xc0425a08
 #define VFDICONDISPLAYONOFF   0xc0425a0a
@@ -36,6 +40,8 @@ typedef unsigned int	YWOS_ClockMsec;
 #define LOG_OFF     0
 #define LOG_ON      1
 #define YWPANEL_KEYBOARD
+
+#define VFD_DATA_LEN 64
 
 struct set_brightness_s {
 	int level;
@@ -85,9 +91,11 @@ struct aotom_ioctl_data {
 	} u;
 };
 
+
+
 struct vfd_ioctl_data {
-	unsigned char start_address;
-	unsigned char data[64];
+	unsigned char start;
+	unsigned char data[VFD_DATA_LEN];
 	unsigned char length;
 };
 
@@ -161,53 +169,53 @@ enum
 typedef enum LogNum_e
 {
 /*----------------------------------11G-------------------------------------*/
-	PLAY_FASTBACKWARD = 11*16+1,
-	PLAY_HEAD,
-	PLAY_LOG,
-	PLAY_TAIL,
-	PLAY_FASTFORWARD,
-	PLAY_PAUSE,
-    REC1,
-    MUTE,
-    CYCLE,
-    DUBI,
-    CA,
-    CI,
-    USB,
-    DOUBLESCREEN,
-    REC2,
+    PLAY_FASTBACKWARD = 11*16+1,//  1
+    PLAY_HEAD,			// 2
+    PLAY_LOG,			// 3
+    PLAY_TAIL,			// 4
+    PLAY_FASTFORWARD,		// 5
+    PLAY_PAUSE,			// 6
+    REC1,			// 7
+    MUTE,			// 8
+    CYCLE,			// 9
+    DUBI,			// 10
+    CA,				// 11
+    CI,				// 12
+    USB,			// 13
+    DOUBLESCREEN,		// 14
+    REC2,			// 15
 /*----------------------------------12G-------------------------------------*/
-    HDD_A8 = 12*16+1,
-    HDD_A7,
-    HDD_A6,
-    HDD_A5,
-    HDD_A4,
-    HDD_A3,
-    HDD_FULL,
-    HDD_A2,
-    HDD_A1,
-    MP3,
-    AC3,
-    TVMODE_LOG,
-    AUDIO,
-    ALERT,
-    HDD_A9,
+    HDD_A8 = 12*16+1,		// 16
+    HDD_A7,			// 17
+    HDD_A6,			// 18
+    HDD_A5,			// 19
+    HDD_A4,			// 20
+    HDD_A3,			// 21
+    HDD_FULL,			// 22
+    HDD_A2,			// 23
+    HDD_A1,			// 24
+    MP3,			// 25
+    AC3,			// 26
+    TVMODE_LOG,			// 27
+    AUDIO,			// 28
+    ALERT,			// 29
+    HDD_A9,			// 30
 /*----------------------------------13G-------------------------------------*/
-    CLOCK_PM = 13*16+1,
-    CLOCK_AM,
-    CLOCK,
-    TIME_SECOND,
-    DOT2,
-    STANDBY,
-    TER,
-    DISK_S3,
-    DISK_S2,
-    DISK_S1,
-    DISK_S0,
-    SAT,
-    TIMESHIFT,
-    DOT1,
-    CAB,
+    CLOCK_PM = 13*16+1,		// 31
+    CLOCK_AM,			// 32
+    CLOCK,			// 33
+    TIME_SECOND,		// 34
+    DOT2,			// 35
+    STANDBY,			// 36
+    TER,			// 37
+    DISK_S3,			// 38
+    DISK_S2,			// 39
+    DISK_S1,			// 40
+    DISK_S0,			// 41
+    SAT,			// 42
+    TIMESHIFT,			// 43
+    DOT1,			// 44
+    CAB,			// 45
   /*----------------------------------end-------------------------------------*/
     LogNum_Max
 } LogNum_T;
@@ -278,7 +286,7 @@ typedef enum YWPANEL_DataType_e
 	YWPANEL_DATATYPE_GETVERSION,
 	YWPANEL_DATATYPE_GETVFDSTATE,
 	YWPANEL_DATATYPE_SETVFDSTATE,
-	YWPANEL_DATATYPE_GETCPUSTATE,
+	YWPANEL_DATATYPE_GETCPUSTATE, //10
 	YWPANEL_DATATYPE_SETCPUSTATE,
 
 	YWPANEL_DATATYPE_GETSTBYKEY1,
@@ -289,7 +297,7 @@ typedef enum YWPANEL_DataType_e
 	YWPANEL_DATATYPE_SETSTBYKEY1,
 	YWPANEL_DATATYPE_SETSTBYKEY2,
 	YWPANEL_DATATYPE_SETSTBYKEY3,
-	YWPANEL_DATATYPE_SETSTBYKEY4,
+	YWPANEL_DATATYPE_SETSTBYKEY4, //20
 	YWPANEL_DATATYPE_SETSTBYKEY5,
 
 	YWPANEL_DATATYPE_GETIRCODE,
@@ -303,7 +311,7 @@ typedef enum YWPANEL_DataType_e
 	YWPANEL_DATATYPE_GETVERIFYSTATE,
 	YWPANEL_DATATYPE_SETVERIFYSTATE,
 
-	YWPANEL_DATATYPE_GETTIME,
+	YWPANEL_DATATYPE_GETTIME, //30
 	YWPANEL_DATATYPE_SETTIME,
 	YWPANEL_DATATYPE_CONTROLTIMER,
 
@@ -316,7 +324,7 @@ typedef enum YWPANEL_DataType_e
 	YWPANEL_DATATYPE_GETBLUEKEY1,
 	YWPANEL_DATATYPE_GETBLUEKEY2,
 	YWPANEL_DATATYPE_GETBLUEKEY3,
-	YWPANEL_DATATYPE_GETBLUEKEY4,
+	YWPANEL_DATATYPE_GETBLUEKEY4, //40
 	YWPANEL_DATATYPE_GETBLUEKEY5,
 	YWPANEL_DATATYPE_SETBLUEKEY1,
 	YWPANEL_DATATYPE_SETBLUEKEY2,
@@ -639,7 +647,7 @@ typedef struct YWPANEL_FPData_s
 #define VFD_ControlLBD          _IOWR('s',(BASE_VFD_PRIVATE+22),YWPANEL_LBDStatus_T)
 
 int YWPANEL_VFD_DETECT(void);
-int	YWPANEL_VFD_Init(void);
+int	YWPANEL_VFD_Init(ushort *mode_digit);
 int	YWPANEL_VFD_Term(void);
 
 int utf8_count(unsigned char *utfstr, int strlength, int length);

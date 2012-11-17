@@ -16,9 +16,7 @@ DESCRIPTION_libz = "Compression library implementing the deflate compression met
 FILES_libz = \
 /usr/lib
 
-if !STM22
 LIBZ_ORDER = binutils-dev
-endif !STM22
 
 $(DEPDIR)/libz.do_prepare: bootstrap @DEPENDS_libz@ $(if $(LIBZ_ORDER),| $(LIBZ_ORDER))
 	@PREPARE_libz@
@@ -153,10 +151,11 @@ $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 # lirc
 #
 DESCRIPTION_lirc ="lirc"
-
+PKGR_lirc = r2
 FILES_lirc = \
 /usr/bin/lircd \
-/usr/lib/*.so*
+/usr/lib/*.so* \
+/etc/lircd*
 
 $(DEPDIR)/lirc.do_prepare: bootstrap @DEPENDS_lirc@
 	@PREPARE_lirc@
@@ -192,6 +191,14 @@ $(DEPDIR)/%lirc: $(DEPDIR)/lirc.do_compile
 	cd @DIR_lirc@ && \
 		@INSTALL_lirc@
 	$(tocdk_build)
+	$(INSTALL_DIR) $(PKDIR)/etc
+	$(INSTALL_DIR) $(PKDIR)/var/run/lirc/
+	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162)).conf $(PKDIR)/etc/lircd.conf
+if ENABLE_SPARK
+	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_0B $(PKDIR)/etc/lircd.conf.09_00_0B
+	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_07 $(PKDIR)/etc/lircd.conf.09_00_07
+	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_08 $(PKDIR)/etc/lircd.conf.09_00_08
+endif
 	$(toflash_build)
 #	@DISTCLEANUP_lirc@
 	[ "x$*" = "x" ] && touch $@ || true
@@ -1216,12 +1223,19 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--disable-altivec \
 		--disable-debug \
 		--disable-asm \
+		--disable-altivec \
 		--disable-amd3dnow \
 		--disable-amd3dnowext \
 		--disable-mmx \
-		--disable-mmx2 \
+		--disable-mmxext \
 		--disable-sse \
+		--disable-sse2 \
+		--disable-sse3 \
 		--disable-ssse3 \
+		--disable-sse4 \
+		--disable-sse42 \
+		--disable-avx \
+		--disable-fma4 \
 		--disable-armv5te \
 		--disable-armv6 \
 		--disable-armv6t2 \
@@ -1229,7 +1243,12 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--disable-mmi \
 		--disable-neon \
 		--disable-vis \
+		--disable-inline-asm \
 		--disable-yasm \
+		--disable-mips32r2 \
+		--disable-mipsdspr1 \
+		--disable-mipsdspr2 \
+		--disable-mipsfpu \
 		--disable-indevs \
 		--disable-outdevs \
 		--disable-muxers \
@@ -1381,7 +1400,7 @@ $(DEPDIR)/%webkitdfb: $(DEPDIR)/webkitdfb.do_compile
 	cd @DIR_webkitdfb@ && \
 		@INSTALL_webkitdfb@
 	$(tocdk_build)
-	$(toflash_build)
+	$(e2extra_build)
 #	@DISTCLEANUP_webkitdfb@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -1430,7 +1449,7 @@ $(DEPDIR)/%icu4c: $(DEPDIR)/icu4c.do_compile
 		unset TARGET && \
 		@INSTALL_icu4c@
 	$(tocdk_build)
-	$(toflash_build)
+	$(e2extra_build)
 #	@DISTCLEANUP_icu4c@
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -1744,7 +1763,7 @@ $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
 
 DESCRIPTION_elementtree = "Provides light-weight components for working with XML"
 FILES_elementtree = \
-/usr/lib/python2.6
+$(PYTHON_DIR)
 
 $(DEPDIR)/elementtree.do_prepare: bootstrap @DEPENDS_elementtree@
 	@PREPARE_elementtree@
@@ -1773,7 +1792,7 @@ $(DEPDIR)/%elementtree: $(DEPDIR)/elementtree.do_compile
 DESCRIPTION_libxml2 = "XML parsing library, version 2"
 FILES_libxml2 = \
 /usr/lib/libxml2* \
-/usr/lib/python2.6/site-packages/*libxml2.py
+$(PYTHON_DIR)/site-packages/*libxml2.py
 
 $(DEPDIR)/libxml2.do_prepare: bootstrap @DEPENDS_libxml2@
 	@PREPARE_libxml2@
@@ -1818,7 +1837,7 @@ DESCRIPTION_libxslt = "XML stylesheet transformation library"
 FILES_libxslt = \
 /usr/lib/libxslt* \
 /usr/lib/libexslt* \
-/usr/lib/python2.6/site-packages/libxslt.py
+$(PYTHON_DIR)/site-packages/libxslt.py
 
 $(DEPDIR)/libxslt.do_prepare: bootstrap libxml2 @DEPENDS_libxslt@
 	@PREPARE_libxslt@
@@ -1865,7 +1884,7 @@ $(DEPDIR)/%libxslt: %libxml2 libxslt.do_compile
 
 DESCRIPTION_lxml = "Python binding for the libxml2 and libxslt libraries"
 FILES_lxml = \
-/usr/lib/python2.6
+$(PYTHON_DIR)
 
 $(DEPDIR)/lxml.do_prepare: bootstrap python @DEPENDS_lxml@
 	@PREPARE_lxml@
@@ -1874,7 +1893,7 @@ $(DEPDIR)/lxml.do_prepare: bootstrap python @DEPENDS_lxml@
 $(DEPDIR)/lxml.do_compile: $(DEPDIR)/lxml.do_prepare
 	cd @DIR_lxml@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py build \
 			--with-xml2-config=$(crossprefix)/bin/xml2-config \
 			--with-xslt-config=$(crossprefix)/bin/xslt-config
@@ -1886,7 +1905,7 @@ $(DEPDIR)/%lxml: $(DEPDIR)/lxml.do_compile
 	$(start_build)
 	cd @DIR_lxml@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_lxml@
 	$(tocdk_build)
@@ -1900,12 +1919,12 @@ $(DEPDIR)/%lxml: $(DEPDIR)/lxml.do_compile
 DESCRIPTION_setuptools = "setuptools"
 
 FILES_setuptools = \
-/usr/lib/python2.6/site-packages/*.py \
-/usr/lib/python2.6/site-packages/*.pyo \
-/usr/lib/python2.6/site-packages/setuptools/*.py \
-/usr/lib/python2.6/site-packages/setuptools/*.pyo \
-/usr/lib/python2.6/site-packages/setuptools/command/*.py \
-/usr/lib/python2.6/site-packages/setuptools/command/*.pyo
+$(PYTHON_DIR)/site-packages/*.py \
+$(PYTHON_DIR)/site-packages/*.pyo \
+$(PYTHON_DIR)/site-packages/setuptools/*.py \
+$(PYTHON_DIR)/site-packages/setuptools/*.pyo \
+$(PYTHON_DIR)/site-packages/setuptools/command/*.py \
+$(PYTHON_DIR)/site-packages/setuptools/command/*.pyo
 
 $(DEPDIR)/setuptools.do_prepare: bootstrap @DEPENDS_setuptools@
 	@PREPARE_setuptools@
@@ -1931,21 +1950,21 @@ $(DEPDIR)/%setuptools: $(DEPDIR)/setuptools.do_compile
 #
 DESCRIPTION_gdata = "The Google Data APIs (Google Data) provide a simple protocol for reading and writing data on the web. Though it is possible to use these services with a simple HTTP client, this library provides helpful tools to streamline your code and keep up with server-side changes. "
 FILES_gdata = \
-/usr/lib/python2.6/site-packages/atom/*.py \
-/usr/lib/python2.6/site-packages/atom/*.pyo \
-/usr/lib/python2.6/site-packages/gdata/*.py \
-/usr/lib/python2.6/site-packages/gdata/*.pyo \
-/usr/lib/python2.6/site-packages/gdata/*.pyo \
-/usr/lib/python2.6/site-packages/gdata/youtube/*.py \
-/usr/lib/python2.6/site-packages/gdata/youtube/*.pyo \
-/usr/lib/python2.6/site-packages/gdata/geo/*.py \
-/usr/lib/python2.6/site-packages/gdata/geo/*.pyo \
-/usr/lib/python2.6/site-packages/gdata/media/*.py \
-/usr/lib/python2.6/site-packages/gdata/media/*.pyo \
-/usr/lib/python2.6/site-packages/gdata/oauth/*.py \
-/usr/lib/python2.6/site-packages/gdata/oauth/*.pyo \
-/usr/lib/python2.6/site-packages/gdata/tlslite/*.py \
-/usr/lib/python2.6/site-packages/gdata/tlslite/*.pyo
+$(PYTHON_DIR)/site-packages/atom/*.py \
+$(PYTHON_DIR)/site-packages/atom/*.pyo \
+$(PYTHON_DIR)/site-packages/gdata/*.py \
+$(PYTHON_DIR)/site-packages/gdata/*.pyo \
+$(PYTHON_DIR)/site-packages/gdata/*.pyo \
+$(PYTHON_DIR)/site-packages/gdata/youtube/*.py \
+$(PYTHON_DIR)/site-packages/gdata/youtube/*.pyo \
+$(PYTHON_DIR)/site-packages/gdata/geo/*.py \
+$(PYTHON_DIR)/site-packages/gdata/geo/*.pyo \
+$(PYTHON_DIR)/site-packages/gdata/media/*.py \
+$(PYTHON_DIR)/site-packages/gdata/media/*.pyo \
+$(PYTHON_DIR)/site-packages/gdata/oauth/*.py \
+$(PYTHON_DIR)/site-packages/gdata/oauth/*.pyo \
+$(PYTHON_DIR)/site-packages/gdata/tlslite/*.py \
+$(PYTHON_DIR)/site-packages/gdata/tlslite/*.pyo
 
 $(DEPDIR)/gdata.do_prepare: bootstrap setuptools @DEPENDS_gdata@
 	@PREPARE_gdata@
@@ -1954,7 +1973,7 @@ $(DEPDIR)/gdata.do_prepare: bootstrap setuptools @DEPENDS_gdata@
 $(DEPDIR)/gdata.do_compile: $(DEPDIR)/gdata.do_prepare
 	cd @DIR_gdata@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python -c "import setuptools; execfile('setup.py')" build
 	touch $@
 
@@ -1964,7 +1983,7 @@ $(DEPDIR)/%gdata: $(DEPDIR)/gdata.do_compile
 	$(start_build)
 	cd @DIR_gdata@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_gdata@
 	$(tocdk_build)
@@ -1977,20 +1996,20 @@ $(DEPDIR)/%gdata: $(DEPDIR)/gdata.do_compile
 
 DESCRIPTION_twisted = "Asynchronous networking framework written in Python"
 FILES_twisted = \
-/usr/lib/python2.6/site-packages/twisted/copyright.* \
-/usr/lib/python2.6/site-packages/twisted/cred \
-/usr/lib/python2.6/site-packages/twisted/im.* \
-/usr/lib/python2.6/site-packages/twisted/__init__.* \
-/usr/lib/python2.6/site-packages/twisted/internet \
-/usr/lib/python2.6/site-packages/twisted/persisted \
-/usr/lib/python2.6/site-packages/twisted/plugin.* \
-/usr/lib/python2.6/site-packages/twisted/plugins \
-/usr/lib/python2.6/site-packages/twisted/protocols \
-/usr/lib/python2.6/site-packages/twisted/python \
-/usr/lib/python2.6/site-packages/twisted/spread \
-/usr/lib/python2.6/site-packages/twisted/_version.py \
-/usr/lib/python2.6/site-packages/twisted/_version.pyo \
-/usr/lib/python2.6/site-packages/twisted/web
+$(PYTHON_DIR)/site-packages/twisted/copyright.* \
+$(PYTHON_DIR)/site-packages/twisted/cred \
+$(PYTHON_DIR)/site-packages/twisted/im.* \
+$(PYTHON_DIR)/site-packages/twisted/__init__.* \
+$(PYTHON_DIR)/site-packages/twisted/internet \
+$(PYTHON_DIR)/site-packages/twisted/persisted \
+$(PYTHON_DIR)/site-packages/twisted/plugin.* \
+$(PYTHON_DIR)/site-packages/twisted/plugins \
+$(PYTHON_DIR)/site-packages/twisted/protocols \
+$(PYTHON_DIR)/site-packages/twisted/python \
+$(PYTHON_DIR)/site-packages/twisted/spread \
+$(PYTHON_DIR)/site-packages/twisted/_version.py \
+$(PYTHON_DIR)/site-packages/twisted/_version.pyo \
+$(PYTHON_DIR)/site-packages/twisted/web
 
 $(DEPDIR)/twisted.do_prepare: bootstrap setuptools @DEPENDS_twisted@
 	@PREPARE_twisted@
@@ -1999,7 +2018,7 @@ $(DEPDIR)/twisted.do_prepare: bootstrap setuptools @DEPENDS_twisted@
 $(DEPDIR)/twisted.do_compile: $(DEPDIR)/twisted.do_prepare
 	cd @DIR_twisted@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python -c "import setuptools; execfile('setup.py')" build
 	touch $@
 
@@ -2009,7 +2028,7 @@ $(DEPDIR)/%twisted: $(DEPDIR)/twisted.do_compile
 	$(start_build)
 	cd @DIR_twisted@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_twisted@
 	$(tocdk_build)
@@ -2023,10 +2042,10 @@ $(DEPDIR)/%twisted: $(DEPDIR)/twisted.do_compile
 DESCRIPTION_twistedweb2 = "twistedweb2"
 
 FILES_twistedweb2 = \
-/usr/lib/python2.6/site-packages/twisted/*.py \
-/usr/lib/python2.6/site-packages/twisted/*.pyo \
-/usr/lib/python2.6/site-packages/twisted/web2 \
-/usr/lib/python2.6/site-packages/twisted/plugins  
+$(PYTHON_DIR)/site-packages/twisted/*.py \
+$(PYTHON_DIR)/site-packages/twisted/*.pyo \
+$(PYTHON_DIR)/site-packages/twisted/web2 \
+$(PYTHON_DIR)/site-packages/twisted/plugins  
 
 $(DEPDIR)/twistedweb2.do_prepare: bootstrap setuptools @DEPENDS_twistedweb2@
 	@PREPARE_twistedweb2@
@@ -2035,7 +2054,7 @@ $(DEPDIR)/twistedweb2.do_prepare: bootstrap setuptools @DEPENDS_twistedweb2@
 $(DEPDIR)/twistedweb2.do_compile: $(DEPDIR)/twistedweb2.do_prepare
 	cd @DIR_twistedweb2@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python -c "import setuptools; execfile('setup.py')" build
 	touch $@
 
@@ -2045,7 +2064,7 @@ $(DEPDIR)/%twistedweb2: $(DEPDIR)/twistedweb2.do_compile
 	$(start_build)
 	cd @DIR_twistedweb2@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 	$(toflash_build)
@@ -2057,26 +2076,88 @@ $(DEPDIR)/%twistedweb2: $(DEPDIR)/twistedweb2.do_compile
 #
 DESCRIPTION_pilimaging = "pilimaging"
 FILES_pilimaging = \
-/usr/lib/python2.6/site-packages \
+$(PYTHON_DIR)/site-packages \
 /usr/bin/*
 
 $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 	@PREPARE_pilimaging@
 	$(start_build)
 	cd @DIR_pilimaging@ && \
-		echo 'JPEG_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' > setup_site.py && \
-		echo 'ZLIB_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
-		echo 'FREETYPE_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
+		echo 'JPEG_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' > setup_site.py && \
+		echo 'ZLIB_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
+		echo 'FREETYPE_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py build && \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr && \
 	$(tocdk_build)
 	$(toflash_build)
-		@DISTCLEANUP_pilimaging@
-	@DISTCLEANUP_pilimaging@
-	@touch $@
-	@TUXBOX_YAUD_CUSTOMIZE@
+#	@DISTCLEANUP_pilimaging@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# pycrypto
+#
+DESCRIPTION_pycrypto = pycrypto
+FILES_pycrypto = \
+$(PYTHON_DIR)/site-packages/Crypto/*
+
+
+$(DEPDIR)/pycrypto.do_prepare: bootstrap setuptools @DEPENDS_pycrypto@
+	@PREPARE_pycrypto@
+	touch $@
+
+$(DEPDIR)/pycrypto.do_compile: $(DEPDIR)/pycrypto.do_prepare
+	cd @DIR_pycrypto@ && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr
+	touch $@
+
+$(DEPDIR)/min-pycrypto $(DEPDIR)/std-pycrypto $(DEPDIR)/max-pycrypto \
+$(DEPDIR)/pycrypto: \
+$(DEPDIR)/%pycrypto: $(DEPDIR)/pycrypto.do_compile
+	$(start_build)
+	cd @DIR_pycrypto@ && \
+		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_pycrypto@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# pyusb
+#
+DESCRIPTION_pyusb = pyusb
+FILES_pyusb = \
+$(PYTHON_DIR)/site-packages/usb/*
+
+$(DEPDIR)/pyusb.do_prepare: bootstrap setuptools @DEPENDS_pyusb@
+	@PREPARE_pyusb@
+	touch $@
+
+$(DEPDIR)/pyusb.do_compile: $(DEPDIR)/pyusb.do_prepare
+	cd @DIR_pyusb@ && \
+		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
+		$(crossprefix)/bin/python ./setup.py build
+	touch $@
+
+$(DEPDIR)/min-pyusb $(DEPDIR)/std-pyusb $(DEPDIR)/max-pyusb \
+$(DEPDIR)/pyusb: \
+$(DEPDIR)/%pyusb: $(DEPDIR)/pyusb.do_compile
+	$(start_build)
+	cd @DIR_pyusb@ && \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
+		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_pyusb@
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # pyopenssl
@@ -2084,8 +2165,8 @@ $(DEPDIR)/pilimaging: bootstrap python @DEPENDS_pilimaging@
 
 DESCRIPTION_pyopenssl = "Python wrapper module around the OpenSSL library"
 FILES_pyopenssl = \
-/usr/lib/python2.6/site-packages/OpenSSL/*py \
-/usr/lib/python2.6/site-packages/OpenSSL/*so
+$(PYTHON_DIR)/site-packages/OpenSSL/*py \
+$(PYTHON_DIR)/site-packages/OpenSSL/*so
 
 $(DEPDIR)/pyopenssl.do_prepare: bootstrap setuptools @DEPENDS_pyopenssl@
 	@PREPARE_pyopenssl@
@@ -2093,8 +2174,9 @@ $(DEPDIR)/pyopenssl.do_prepare: bootstrap setuptools @DEPENDS_pyopenssl@
 
 $(DEPDIR)/pyopenssl.do_compile: $(DEPDIR)/pyopenssl.do_prepare
 	cd @DIR_pyopenssl@ && \
+		CPPFLAGS="$(CPPFLAGS) -I$(targetprefix)/usr/include/python$(PYTHON_VERSION)" \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py build
 	touch $@
 
@@ -2103,7 +2185,7 @@ $(DEPDIR)/pyopenssl: \
 $(DEPDIR)/%pyopenssl: $(DEPDIR)/pyopenssl.do_compile
 	$(start_build)
 	cd @DIR_pyopenssl@ && \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_pyopenssl@
 	$(tocdk_build)
@@ -2120,25 +2202,27 @@ PACKAGES_python = python python_ctypes
 DESCRIPTION_python = "A high-level scripting language"
 FILES_python = \
 /usr/bin/python \
-/usr/lib/libpython2.6.* \
-/usr/lib/python2.6/*.py \
-/usr/lib/python2.6/encodings \
-/usr/lib/python2.6/hotshot \
-/usr/lib/python2.6/idlelib \
-/usr/lib/python2.6/json \
-/usr/lib/python2.6/lib-dynload \
-/usr/lib/python2.6/lib-tk \
-/usr/lib/python2.6/lib2to3 \
-/usr/lib/python2.6/logging \
-/usr/lib/python2.6/multiprocessing \
-/usr/lib/python2.6/plat-linux3 \
-/usr/lib/python2.6/sqlite3 \
-/usr/lib/python2.6/wsgiref \
-/usr/lib/python2.6/xml
+/usr/lib/libpython$(PYTHON_VERSION).* \
+$(PYTHON_DIR)/*.py \
+$(PYTHON_DIR)/encodings \
+$(PYTHON_DIR)/hotshot \
+$(PYTHON_DIR)/idlelib \
+$(PYTHON_DIR)/json \
+$(PYTHON_DIR)/config \
+$(PYTHON_DIR)/lib-dynload \
+$(PYTHON_DIR)/lib-tk \
+$(PYTHON_DIR)/lib2to3 \
+$(PYTHON_DIR)/logging \
+$(PYTHON_DIR)/multiprocessing \
+$(PYTHON_DIR)/plat-linux3 \
+$(PYTHON_DIR)/sqlite3 \
+$(PYTHON_DIR)/wsgiref \
+/usr/include/python$(PYTHON_VERSION)/pyconfig.h \
+$(PYTHON_DIR)/xml
 
 DESCRIPTION_python_ctypes = python ctypes module
 FILES_python_ctypes = \
-/usr/lib/python2.6/ctypes
+$(PYTHON_DIR)/ctypes
 
 $(DEPDIR)/python.do_prepare: bootstrap host_python openssl openssl-dev sqlite @DEPENDS_python@
 	@PREPARE_python@
@@ -2169,7 +2253,9 @@ $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
 			PYTHON_DISABLE_MODULES="_tkinter" \
 			PYTHON_MODULES_INCLUDE="$(prefix)/$*cdkroot/usr/include" \
 			PYTHON_MODULES_LIB="$(prefix)/$*cdkroot/usr/lib" \
-			CROSS_COMPILE=yes \
+			CROSS_COMPILE_TARGET=yes \
+			CROSS_COMPILE=$(target) \
+			HOSTARCH=sh4-linux \
 			CFLAGS="$(TARGET_CFLAGS) -fno-inline" \
 			LDFLAGS="$(TARGET_LDFLAGS)" \
 			LD="$(target)-gcc" \
@@ -2188,10 +2274,10 @@ $(DEPDIR)/%python: $(DEPDIR)/python.do_compile
 			HOSTPYTHON=$(crossprefix)/bin/python \
 			HOSTPGEN=$(crossprefix)/bin/pgen \
 			install DESTDIR=$(PKDIR) ) && \
-	$(LN_SF) ../../libpython2.6.so.1.0 $(PKDIR)/usr/lib/python2.6/config/libpython2.6.so
+	$(LN_SF) ../../libpython$(PYTHON_VERSION).so.1.0 $(PKDIR)$(PYTHON_DIR)/config/libpython$(PYTHON_VERSION).so
 #	@DISTCLEANUP_python@
 	$(tocdk_build)
-	$(remove_pyo)
+	$(remove_pyc)
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -2200,7 +2286,7 @@ $(DEPDIR)/%python: $(DEPDIR)/python.do_compile
 #
 DESCRIPTION_pythonwifi = "pythonwifi"
 FILES_pythonwifi =\
-/usr/lib/python2.6/site-packages/pythonwifi
+$(PYTHON_DIR)/site-packages/pythonwifi
 
 $(DEPDIR)/pythonwifi.do_prepare: bootstrap setuptools @DEPENDS_pythonwifi@
 	@PREPARE_pythonwifi@
@@ -2209,7 +2295,7 @@ $(DEPDIR)/pythonwifi.do_prepare: bootstrap setuptools @DEPENDS_pythonwifi@
 $(DEPDIR)/pythonwifi.do_compile: $(DEPDIR)/pythonwifi.do_prepare
 	cd @DIR_pythonwifi@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py build
 	touch $@
 
@@ -2218,7 +2304,7 @@ $(DEPDIR)/pythonwifi: \
 $(DEPDIR)/%pythonwifi: $(DEPDIR)/pythonwifi.do_compile
 	$(start_build)
 	cd @DIR_pythonwifi@ && \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 	$(toflash_build)
@@ -2230,7 +2316,7 @@ $(DEPDIR)/%pythonwifi: $(DEPDIR)/pythonwifi.do_compile
 #
 DESCRIPTION_pythoncheetah = "pythoncheetah"
 FILES_pythoncheetah = \
-/usr/lib/python2.6/site-packages/Cheetah
+$(PYTHON_DIR)/site-packages/Cheetah
 
 $(DEPDIR)/pythoncheetah.do_prepare: bootstrap setuptools @DEPENDS_pythoncheetah@
 	@PREPARE_pythoncheetah@
@@ -2239,7 +2325,7 @@ $(DEPDIR)/pythoncheetah.do_prepare: bootstrap setuptools @DEPENDS_pythoncheetah@
 $(DEPDIR)/pythoncheetah.do_compile: $(DEPDIR)/pythoncheetah.do_prepare
 	cd @DIR_pythoncheetah@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py build
 	touch $@
 
@@ -2248,7 +2334,7 @@ $(DEPDIR)/pythoncheetah: \
 $(DEPDIR)/%pythoncheetah: $(DEPDIR)/pythoncheetah.do_compile
 	$(start_build)
 	cd @DIR_pythoncheetah@ && \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 	$(toflash_build)
@@ -2261,7 +2347,7 @@ $(DEPDIR)/%pythoncheetah: $(DEPDIR)/pythoncheetah.do_compile
 
 DESCRIPTION_zope_interface = "Zope Interfaces for Python2"
 FILES_zope_interface = \
-/usr/lib/python2.6
+$(PYTHON_DIR)
 
 $(DEPDIR)/zope_interface.do_prepare: bootstrap python setuptools @DEPENDS_zope_interface@
 	@PREPARE_zope_interface@
@@ -2270,7 +2356,7 @@ $(DEPDIR)/zope_interface.do_prepare: bootstrap python setuptools @DEPENDS_zope_i
 $(DEPDIR)/zope_interface.do_compile: $(DEPDIR)/zope_interface.do_prepare
 	cd @DIR_zope_interface@ && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py build
 	touch $@
 
@@ -2279,11 +2365,11 @@ $(DEPDIR)/zope_interface: \
 $(DEPDIR)/%zope_interface: $(DEPDIR)/zope_interface.do_compile
 	$(start_build)
 	cd @DIR_zope_interface@ && \
-		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 #	@DISTCLEANUP_zope_interface@
 	$(tocdk_build)
-	$(remove_pyo)
+#	$(remove_pyo)
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -2335,7 +2421,7 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 	sh4-linux-strip --strip-unneeded $(PKDIR)/usr/bin/gst-launch*
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # GST-PLUGINS-BASE
@@ -2606,18 +2692,18 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 #
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
 
-DESCRIPTION_gst_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
-FILES_gst_fluendo_mpegdemux = \
+DESCRIPTION_gst_plugins_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
+FILES_gst_plugins_fluendo_mpegdemux = \
 /usr/lib/gstreamer-0.10/*.so
 
 
-$(DEPDIR)/gst_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_fluendo_mpegdemux@
-	@PREPARE_gst_fluendo_mpegdemux@
+$(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_prepare: bootstrap gstreamer gst_plugins_base @DEPENDS_gst_plugins_fluendo_mpegdemux@
+	@PREPARE_gst_plugins_fluendo_mpegdemux@
 	touch $@
 
-$(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_fluendo_mpegdemux.do_prepare
+$(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
-	cd @DIR_gst_fluendo_mpegdemux@ && \
+	cd @DIR_gst_plugins_fluendo_mpegdemux@ && \
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
@@ -2626,15 +2712,15 @@ $(DEPDIR)/gst_fluendo_mpegdemux.do_compile: $(DEPDIR)/gst_fluendo_mpegdemux.do_p
 	$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-gst_fluendo_mpegdemux $(DEPDIR)/std-gst_fluendo_mpegdemux $(DEPDIR)/max-gst_fluendo_mpegdemux \
-$(DEPDIR)/gst_fluendo_mpegdemux: \
-$(DEPDIR)/%gst_fluendo_mpegdemux: $(DEPDIR)/gst_fluendo_mpegdemux.do_compile
+$(DEPDIR)/min-gst_plugins_fluendo_mpegdemux $(DEPDIR)/std-gst_plugins_fluendo_mpegdemux $(DEPDIR)/max-gst_plugins_fluendo_mpegdemux \
+$(DEPDIR)/gst_plugins_fluendo_mpegdemux: \
+$(DEPDIR)/%gst_plugins_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemux.do_compile
 	$(start_build)
-	cd @DIR_gst_fluendo_mpegdemux@ && \
-		@INSTALL_gst_fluendo_mpegdemux@
+	cd @DIR_gst_plugins_fluendo_mpegdemux@ && \
+		@INSTALL_gst_plugins_fluendo_mpegdemux@
 	$(tocdk_build)
 	$(toflash_build)
-#	@DISTCLEANUP_gst_fluendo_mpegdemux@
+#	@DISTCLEANUP_gst_plugins_fluendo_mpegdemux@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -2645,7 +2731,7 @@ DESCRIPTION_gst_plugin_subsink = GStreamer Multimedia Framework gstsubsink
 FILES_gst_plugin_subsink = \
 /usr/lib/gstreamer-0.10/*.so
 
-$(DEPDIR)/gst_plugin_subsink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly @DEPENDS_gst_plugin_subsink@
+$(DEPDIR)/gst_plugin_subsink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly gst_ffmpeg gst_plugins_fluendo_mpegdemux @DEPENDS_gst_plugin_subsink@
 	@PREPARE_gst_plugin_subsink@
 	touch $@
 
@@ -2899,13 +2985,13 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 # eve-browser
 #
 DESCRIPTION_evebrowser = evebrowser for HbbTv
-RDEPENDS_evebrowser = webkitdfb
+#RDEPENDS_evebrowser = webkitdfb
 FILES_evebrowser = \
 /usr/lib/*.so* \
 /usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/bin/hbbtvscan-sh4 \
 /usr/lib/enigma2/python/Plugins/SystemPlugins/HbbTv/*.py
 
-$(DEPDIR)/evebrowser.do_prepare: bootstrap webkitdfb @DEPENDS_evebrowser@
+$(DEPDIR)/evebrowser.do_prepare: bootstrap @DEPENDS_evebrowser@
 	@PREPARE_evebrowser@
 	touch $@
 
@@ -4124,5 +4210,71 @@ $(DEPDIR)/%tinyxml: $(DEPDIR)/tinyxml.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_tinyxml@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libnfs
+#
+DESCRIPTION_libnfs = nfs
+FILES_libnfs = \
+/usr/lib/*
+
+$(DEPDIR)/libnfs.do_prepare: bootstrap @DEPENDS_libnfs@
+	@PREPARE_libnfs@
+	touch $@
+
+$(DEPDIR)/libnfs.do_compile: $(DEPDIR)/libnfs.do_prepare
+	cd @DIR_libnfs@ && \
+	aclocal -I $(hostprefix)/share/aclocal && \
+	autoheader && \
+	autoconf && \
+	automake --foreign && \
+	libtoolize --force && \
+	$(BUILDENV) \
+	CFLAGS="$(TARGET_CFLAGS) -Os" \
+	./configure \
+		--host=$(target) \
+		--prefix=/usr && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-libnfs $(DEPDIR)/std-libnfs $(DEPDIR)/max-libnfs \
+$(DEPDIR)/libnfs: \
+$(DEPDIR)/%libnfs: $(DEPDIR)/libnfs.do_compile
+	$(start_build)
+	cd @DIR_libnfs@ && \
+		@INSTALL_libnfs@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_libnfs@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# taglib
+#
+DESCRIPTION_taglib = taglib
+FILES_taglib = \
+/usr/*
+
+$(DEPDIR)/taglib.do_prepare: bootstrap @DEPENDS_taglib@
+	@PREPARE_taglib@
+	touch $@
+
+$(DEPDIR)/taglib.do_compile: $(DEPDIR)/taglib.do_prepare
+	cd @DIR_taglib@ && \
+	$(BUILDENV) \
+	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_RELEASE_TYPE=Release . && \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-taglib $(DEPDIR)/std-taglib $(DEPDIR)/max-taglib \
+$(DEPDIR)/taglib: \
+$(DEPDIR)/%taglib: $(DEPDIR)/taglib.do_compile
+	$(start_build)
+	cd @DIR_taglib@ && \
+		@INSTALL_taglib@
+	$(tocdk_build)
+	$(toflash_build)
+	@DISTCLEANUP_taglib@
 	[ "x$*" = "x" ] && touch $@ || true
 

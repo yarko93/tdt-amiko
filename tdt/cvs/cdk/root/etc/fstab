@@ -1,5 +1,8 @@
 # /etc/fstab: static file system information.
 #
-# <file system> <mount point>   <type>  <options>               <dump>  <pass>
-#/dev/root       /               auto    defaults,errors=remount-ro,noatime,nodiratime      0 0
-none            /tmp            tmpfs   defaults		0 0
+# <file system>	<mount point>	<type>	<options>               <dump>  <pass>
+#/dev/root	/		auto	defaults,errors=remount-ro,noatime,nodiratime      0 0
+none		/tmp            tmpfs   defaults		0 0
+none		/var/lock	tmpfs	defaults		0 0
+none		/var/run	tmpfs	defaults		0 0
+none		/var/lib/urandom	tmpfs	defaults	0 0

@@ -997,7 +997,9 @@ bool YWPANEL_FP_ParseI2cData(YWPANEL_FPData_t  *data,YWPANEL_I2CData_t	 *I2CData
 	//ywtrace_print(TRACE_INFO,"%s::date->dateType=[0x%x]\n",__FUNCTION__,data->dataType);
 	dataType = I2CData->readBuff[0];
 	datalength = I2CData->readBuff[1];
-
+//	if (dataType != 80 && dataType != 17) {
+//	printk("VFD-> commanda %x read %x, len %d\n", data->dataType, dataType, datalength);
+//	}
 	//zy 2008-10-07
 	switch(data->dataType)
 	{
@@ -2416,56 +2418,34 @@ int YWPANEL_VFD_GetKeyValue(void)
 	switch(byte)
 	{
 		case 0x01:
-		{
 			key_val = EXIT_KEY;
 			break;
-		}
 		case 0x02:
-		{
 			key_val = LEFT_KEY;
 			break;
-		}
 		case 0x04:
-		{
 			key_val = UP_KEY;
 			break;
-		}
 		case 0x08:
-		{
 			key_val = SELECT_KEY;
 			break;
-		}
 		case 0x10:
-		{
 			key_val = RIGHT_KEY;
 			break;
-		}
 		case 0x20:
-		{
 			key_val = DOWN_KEY;
 			break;
-		}
 		case 0x40:
-		{
 			key_val = POWER_KEY;
 			break;
-		}
 		case 0x80:
-		{
 			key_val = MENU_KEY;
 			break;
-		}
+		default:
+			PANEL_PRINT((TRACE_ERROR,"Key 0x%s is INVALID\n",byte));
 		case 0x00:
-		{
 			key_val = INVALID_KEY;
 			break;
-		}
-		default :
-		{
-			PANEL_PRINT((TRACE_ERROR,"The key is INVALID or somekeys [0x%x]\n",byte));
-			key_val = INVALID_KEY;
-			break;
-		}
 	}
 	up(&vfd_sem);
 	return key_val;
@@ -3015,7 +2995,7 @@ int YWPANEL_VFD_Init_Common(void)
 	return ErrorCode;
  }
 
-int YWPANEL_VFD_Init(void)
+int YWPANEL_VFD_Init(ushort *mode_digit)
 {
 	int ErrorCode = 0 ;
 	YWPANEL_Version_t panel_version;
@@ -3054,6 +3034,11 @@ int YWPANEL_VFD_Init(void)
 		{
 			panel_disp_type = YWPANEL_FP_DISPTYPE_VFD;
 		}
+		if (*mode_digit == DIGITNO)
+		{
+		    if (panel_disp_type == YWPANEL_FP_DISPTYPE_VFD) *mode_digit = DIGIT8;
+		    if (panel_disp_type == YWPANEL_FP_DISPTYPE_LED) *mode_digit = DIGIT4;
+		}
 	}
 	else
 	{
@@ -3065,7 +3050,12 @@ int YWPANEL_VFD_Init(void)
 	printk("scankeyNum = %d\n", panel_version.scankeyNum);
 	printk("swMajorVersion = %d\n", panel_version.swMajorVersion);
 	printk("swSubVersion = %d\n", panel_version.swSubVersion);
-
+	if (*mode_digit == DIGITNO )
+	{
+	    printk("Auto = (none)\n");
+	}
+	else 
+	    printk("Auto = %d digit\n", *mode_digit);
 	return ErrorCode;
 }
 

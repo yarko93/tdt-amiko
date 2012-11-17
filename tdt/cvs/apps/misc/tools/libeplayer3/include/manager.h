@@ -55,6 +55,7 @@ typedef struct Track_s {
     /* If player2 or the elf do not support decoding of audio codec set this.
      * AVCodec is than used for softdecoding and stream will be injected as PCM */
     int                   inject_as_pcm;
+    int                   inject_raw_pcm;
 } Track_t;
 
 typedef struct Manager_s {
@@ -69,6 +70,8 @@ typedef struct ManagerHandler_s {
     Manager_t * audio;
     Manager_t * video;
     Manager_t * subtitle;
+    Manager_t * dvbsubtitle;
+    Manager_t * teletext;
 } ManagerHandler_t;
 
 void freeTrack(Track_t* track);

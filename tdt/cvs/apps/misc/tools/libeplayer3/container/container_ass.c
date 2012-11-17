@@ -149,23 +149,23 @@ void ass_msg_callback(int level, const char *format, va_list va, void *ctx)
     n = vsnprintf(NULL, 0, format, va);
     if (n > 0 && (str = malloc(n + 1))) {
         vsnprintf(str, n + 1, format, dst);
-        //ass_printf(100, "%s\n", str);
+        ass_printf(100, "%s\n", str);
         free(str);
     }
 }
 
 static void getMutex(int line) {
-    //ass_printf(150, "%d requesting mutex\n", line);
+    ass_printf(150, "%d requesting mutex\n", line);
 
     pthread_mutex_lock(&mutex);
 
-    //ass_printf(150, "%d received mutex\n", line);
+    ass_printf(150, "%d received mutex\n", line);
 }
 
 static void releaseMutex(int line) {
     pthread_mutex_unlock(&mutex);
 
-    //ass_printf(150, "%d released mutex\n", line);
+    ass_printf(150, "%d released mutex\n", line);
 }
 
 /* ********************************* */
@@ -196,8 +196,8 @@ void releaseRegions()
         {
              WriterFBCallData_t out;
                     
-             //ass_printf(100, "release: w %d h %d x %d y %d\n", 
-              //                   next->w, next->h, next->x, next->y);
+             ass_printf(100, "release: w %d h %d x %d y %d\n", 
+                                 next->w, next->h, next->x, next->y);
 
              out.fd            = framebufferFD;
              out.data          = NULL;
@@ -255,14 +255,14 @@ void checkRegions()
     {
         if (now > next->undisplay + cDeltaTime)
         {
-           //ass_printf(100, "undisplay: %ld > %ld\n", now, next->undisplay + cDeltaTime);
+           ass_printf(100, "undisplay: %ld > %ld\n", now, next->undisplay + cDeltaTime);
 
            if (writer)
            {
                 WriterFBCallData_t out;
 
-                //ass_printf(100, "release: w %d h %d x %d y %d\n", 
-                //                    next->w, next->h, next->x, next->y);
+                ass_printf(100, "release: w %d h %d x %d y %d\n", 
+                                    next->w, next->h, next->x, next->y);
 
                 out.fd            = framebufferFD;
                 out.data          = NULL;
@@ -305,7 +305,7 @@ void storeRegion(unsigned int x, unsigned int y, unsigned int w, unsigned int h,
 {
     region_t* new;
     
-    //ass_printf(100, "%d %d %d %d %ld\n", x, y, w, h, undisplay);
+    ass_printf(100, "%d %d %d %d %ld\n", x, y, w, h, undisplay);
     
     if (firstRegion == NULL)
     {
@@ -336,7 +336,7 @@ void storeRegion(unsigned int x, unsigned int y, unsigned int w, unsigned int h,
 static void ASSThread(Context_t *context) {
     Writer_t* writer;
     
-    //ass_printf(10, "\n");
+    ass_printf(10, "\n");
 
     while ( context->playback->isCreationPhase )
     {
@@ -344,7 +344,7 @@ static void ASSThread(Context_t *context) {
         usleep(1000);
     }
     
-    //ass_printf(10, "Running!\n");
+    ass_printf(10, "Running!\n");
 
     writer = getDefaultFramebufferWriter();
 
@@ -357,14 +357,14 @@ static void ASSThread(Context_t *context) {
 
         //IF MOVIE IS PAUSED, WAIT
         if (context->playback->isPaused) {
-            //ass_printf(20, "paused\n");
+            ass_printf(20, "paused\n");
 
             usleep(100000);
             continue;
         }
 
         if (context->playback->isSeeking) {
-            //ass_printf(10, "seeking\n");
+            ass_printf(10, "seeking\n");
 
             usleep(100000);
             continue;
@@ -394,7 +394,7 @@ static void ASSThread(Context_t *context) {
             if(ass_renderer && ass_track)
                  img = ass_render_frame(ass_renderer, ass_track, playPts / 90.0, &change);
 
-            //ass_printf(150, "img %p pts %lu %f\n", img, playPts, playPts / 90.0);
+            ass_printf(150, "img %p pts %lu %f\n", img, playPts, playPts / 90.0);
 
             if(img != NULL && ass_renderer && ass_track)
             {
@@ -417,10 +417,10 @@ static void ASSThread(Context_t *context) {
                         undisplay = now + ass_track->events->Duration / 1000 + 0.5;
                     }
 
-                    /*ass_printf(100, "w %d h %d s %d x %d y %d c %d chg %d now %ld und %ld\n", 
+                    ass_printf(100, "w %d h %d s %d x %d y %d c %d chg %d now %ld und %ld\n", 
                                  img->w, img->h, img->stride, 
                                  img->dst_x, img->dst_y, img->color, 
-                                 change, now, undisplay);*/
+                                 change, now, undisplay);
 
                     /* api docu said w and h can be zero which
                      * means image should not be rendered
@@ -510,7 +510,7 @@ static void ASSThread(Context_t *context) {
 
     hasPlayThreadStarted = 0;
 
-    //ass_printf(10, "terminating\n");
+    ass_printf(10, "terminating\n");
 }
 
 /* **************************** */
@@ -570,8 +570,8 @@ int container_ass_init(Context_t *context)
     destination      = output.destination;
     destStride       = output.destStride;
     
-    /*ass_printf(10, "width %d, height %d, share %d, fd %d, 3D %d\n", 
-              screen_width, screen_height, shareFramebuffer, framebufferFD, threeDMode);*/
+    ass_printf(10, "width %d, height %d, share %d, fd %d, 3D %d\n", 
+              screen_width, screen_height, shareFramebuffer, framebufferFD, threeDMode);
 
     if(threeDMode == 0){
         ass_set_frame_size(ass_renderer, screen_width, screen_height);
@@ -612,7 +612,7 @@ int container_ass_process_data(Context_t *context, SubtitleData_t* data)
 {
     int first_kiss;
     
-    //ass_printf(20, ">\n");
+    ass_printf(20, ">\n");
 
     if (!isContainerRunning)
     {  
@@ -634,17 +634,16 @@ int container_ass_process_data(Context_t *context, SubtitleData_t* data)
 
     if ((data->extradata) && (first_kiss))
     {
-        //ass_printf(30,"processing private %d bytes\n",data->extralen);
+        ass_printf(30,"processing private %d bytes\n",data->extralen);
         ass_process_codec_private(ass_track, (char*) data->extradata, data->extralen);
-
         ass_printf(30,"processing private done\n");
     }
 
     if (data->data)
     {
-        //ass_printf(30,"processing data %d bytes\n",data->len);
+        ass_printf(30,"processing data %d bytes\n",data->len);
         ass_process_data(ass_track, (char*) data->data, data->len);
-        //ass_printf(30,"processing data done\n");
+        ass_printf(30,"processing data done\n");
     }
 
     return cERR_CONTAINER_ASS_NO_ERROR;
@@ -655,7 +654,7 @@ static int container_ass_stop(Context_t *context) {
     int wait_time = 20;
     Writer_t* writer;
 
-    //ass_printf(10, "\n");
+    ass_printf(10, "\n");
 
     if (!isContainerRunning)
     {  
@@ -664,7 +663,7 @@ static int container_ass_stop(Context_t *context) {
     }
 
     while ( (hasPlayThreadStarted != 0) && (--wait_time) > 0 ) {
-        //ass_printf(10, "Waiting for ass thread to terminate itself, will try another %d times\n", wait_time);
+        ass_printf(10, "Waiting for ass thread to terminate itself, will try another %d times\n", wait_time);
 
         usleep(100000);
     }
@@ -705,7 +704,7 @@ static int container_ass_stop(Context_t *context) {
 
     releaseMutex(__LINE__);
 
-    //ass_printf(10, "ret %d\n", ret);
+    ass_printf(10, "ret %d\n", ret);
     return ret;
 }
 
@@ -715,7 +714,7 @@ static int container_ass_switch_subtitle(Context_t* context, int* arg)
     int ret = cERR_CONTAINER_ASS_NO_ERROR;
     pthread_attr_t attr;
 
-    //ass_printf(10, "\n");
+    ass_printf(10, "\n");
 
     if (!isContainerRunning)
     {  
@@ -724,10 +723,10 @@ static int container_ass_switch_subtitle(Context_t* context, int* arg)
     }
 
     if ( context && context->playback && context->playback->isPlaying ) {
-        //ass_printf(10, "is Playing\n");
+        ass_printf(10, "is Playing\n");
     }
     else {
-        //ass_printf(10, "is NOT Playing\n");
+        ass_printf(10, "is NOT Playing\n");
     }
 
     if (hasPlayThreadStarted == 0) {
@@ -735,19 +734,19 @@ static int container_ass_switch_subtitle(Context_t* context, int* arg)
         pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 
         if((error = pthread_create(&PlayThread, &attr, (void *)&ASSThread, context)) != 0) {
-            //ass_printf(10, "Error creating thread, error:%d:%s\n", error,strerror(error));
+            ass_printf(10, "Error creating thread, error:%d:%s\n", error,strerror(error));
 
             hasPlayThreadStarted = 0;
             ret = cERR_CONTAINER_ASS_ERROR;
         }
         else {
-            //ass_printf(10, "Created thread\n");
+            ass_printf(10, "Created thread\n");
 
             hasPlayThreadStarted = 1;
         }
     }
     else {
-        //ass_printf(10, "A thread already exists!\n");
+        ass_printf(10, "A thread already exists!\n");
 
         ret = cERR_CONTAINER_ASS_ERROR;
     }
@@ -766,7 +765,7 @@ static int container_ass_switch_subtitle(Context_t* context, int* arg)
 
     releaseMutex(__LINE__);
 
-    //ass_printf(10, "exiting with value %d\n", ret);
+    ass_printf(10, "exiting with value %d\n", ret);
       
     return ret;
 }
@@ -777,7 +776,7 @@ static int Command(void  *_context, ContainerCmd_t command, void * argument)
     Context_t  *context = (Context_t*) _context;
     int ret = cERR_CONTAINER_ASS_NO_ERROR;
 
-    //ass_printf(50, "Command %d\n", command);
+    ass_printf(50, "Command %d\n", command);
 
     switch(command)
     {
@@ -804,7 +803,7 @@ static int Command(void  *_context, ContainerCmd_t command, void * argument)
         break;
     }
 
-    //ass_printf(50, "exiting with value %d\n", ret);
+    ass_printf(50, "exiting with value %d\n", ret);
 
     return ret;
 }

@@ -136,7 +136,7 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_pppd@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 #
 # USB MODESWITCH
 #
@@ -165,7 +165,7 @@ $(DEPDIR)/%usb_modeswitch: $(DEPDIR)/usb_modeswitch.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # USB MODESWITCH DATA
@@ -195,7 +195,7 @@ $(DEPDIR)/%usb_modeswitch_data: $(DEPDIR)/usb_modeswitch_data.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch_data@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 #
 # NTFS-3G
 #
@@ -235,7 +235,7 @@ $(DEPDIR)/%ntfs_3g: $(DEPDIR)/ntfs_3g.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_ntfs_3g@
 	@[ "x$*" = "x" ] && touch $@ || true
-	@TUXBOX_YAUD_CUSTOMIZE@
+	
 
 #
 # LSB
@@ -354,7 +354,6 @@ $(DEPDIR)/e2fsprogs.do_prepare: bootstrap @DEPENDS_e2fsprogs@
 	@PREPARE_e2fsprogs@
 	touch $@
 
-if STM24
 $(DEPDIR)/e2fsprogs.do_compile: $(DEPDIR)/e2fsprogs.do_prepare | $(UTIL_LINUX)
 	cd @DIR_e2fsprogs@ && \
 	$(BUILDENV) \
@@ -383,37 +382,7 @@ $(DEPDIR)/e2fsprogs.do_compile: $(DEPDIR)/e2fsprogs.do_prepare | $(UTIL_LINUX)
 	$(MAKE) all && \
 	$(MAKE) -C e2fsck e2fsck.static
 	touch $@
-else !STM24
-$(DEPDIR)/e2fsprogs.do_compile: $(DEPDIR)/e2fsprogs.do_prepare
-	cd @DIR_e2fsprogs@ && \
-	$(BUILDENV) \
-	cc=$(target)-gcc \
-	./configure \
-		--build=$(build) \
-		--host=$(target) \
-		--target=$(target) \
-		--with-linker=$(target)-ld \
-		--enable-htree \
-		--disable-profile \
-		--disable-e2initrd-helper \
-		--disable-swapfs \
-		--disable-debugfs \
-		--disable-imager \
-		--enable-resizer \
-		--enable-dynamic-e2fsck \
-		--enable-fsck \
-		--with-gnu-ld \
-		--disable-nls \
-		--prefix=/usr \
-		--enable-elf-shlibs \
-		--enable-dynamic-e2fsck \
-		--disable-evms \
-		--with-root-prefix= && \
-		$(MAKE) libs progs
-	touch $@
-endif !STM24
 
-if STM24
 $(DEPDIR)/e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
 	$(start_build)
 	cd @DIR_e2fsprogs@ && \
@@ -426,21 +395,6 @@ $(DEPDIR)/e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_e2fsprogs@
 	touch $@
-else !STM24
-$(DEPDIR)/min-e2fsprogs $(DEPDIR)/std-e2fsprogs $(DEPDIR)/max-e2fsprogs \
-$(DEPDIR)/e2fsprogs: \
-$(DEPDIR)/%e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
-	$(start_build)
-	cd @DIR_e2fsprogs@ && \
-		@INSTALL_e2fsprogs@
-	[ "x$*" = "x" ] && ( cd @DIR_e2fsprogs@ && \
-		$(MAKE) install -C lib/uuid DESTDIR=$(PKDIR) && \
-		$(MAKE) install -C lib/blkid DESTDIR=$(PKDIR) ) || true
-	$(tocdk_build)
-	$(toflash_build)
-#	@DISTCLEANUP_e2fsprogs@
-	[ "x$*" = "x" ] && touch $@ || true
-endif !STM24
 
 #
 # XFSPROGS
@@ -982,59 +936,6 @@ $(DEPDIR)/%mencoder: $(DEPDIR)/mencoder.do_compile
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
-# UTIL-LINUX
-#
-if STM24
-# for stm24, look in contrib-apps-specs.mk
-else !STM24
-DESCRIPTION_util_linux = "util-linux"
-FILES_util_linux = \
-/sbin/*
-
-$(DEPDIR)/util-linux.do_prepare: bootstrap @DEPENDS_util_linux@
-	@PREPARE_util_linux@
-	cd @DIR_util_linux@ && \
-		for p in `grep -v "^#" debian/patches/00list` ; do \
-			patch -p1 < debian/patches/$$p.dpatch; \
-		done; \
-		patch -p1 < $(buildprefix)/Patches/util-linux-stm.diff
-	touch $@
-
-$(DEPDIR)/util-linux.do_compile: $(DEPDIR)/util-linux.do_prepare
-	cd @DIR_util_linux@ && \
-		sed -e 's/\ && .\/conftest//g' < configure > configure.new && \
-		chmod +x configure.new && mv configure.new configure && \
-		$(BUILDENV) \
-		CFLAGS="$(TARGET_CFLAGS) -Os" \
-		./configure && \
-		sed 's/CURSESFLAGS=.*/CURSESFLAGS=-DNCH=1/' make_include > make_include.new && \
-		mv make_include make_include.bak && \
-		mv make_include.new make_include && \
-		$(MAKE) ARCH=sh4 HAVE_SLANG=no HAVE_SHADOW=yes HAVE_PAM=no
-	touch $@
-
-$(DEPDIR)/min-util-linux $(DEPDIR)/std-util-linux $(DEPDIR)/max-util-linux \
-$(DEPDIR)/util-linux: \
-$(DEPDIR)/%util-linux: util-linux.do_compile
-	$(start_build)
-	cd @DIR_util_linux@ && \
-		install -d $(PKDIR)/sbin && \
-		install -m 755 fdisk/sfdisk $(PKDIR)/sbin/
-	$(tocdk_build)
-	$(toflash_build)
-#		$(MAKE) ARCH=sh4 HAVE_SLANG=no HAVE_SHADOW=yes HAVE_PAM=no \
-#		USE_TTY_GROUP=no INSTALLSUID='$(INSTALL) -m $(SUIDMODE)' \
-#		DESTDIR=$(PKDIR) install && \
-#		ln -s agetty $(PKDIR)/sbin/getty && \
-#		ln -s agetty.8.gz $(PKDIR)/usr/man/man8/getty.8.gz && \
-#		install -m 755 debian/hwclock.sh $(PKDIR)/etc/init.d/hwclock.sh && \
-#		( cd po && make install DESTDIR=$(PKDIR) )
-#		@INSTALL_util_linux@
-#	@DISTCLEANUP_util_linux@
-	[ "x$*" = "x" ] && touch $@ || true
-endif !STM24
-
-#
 # jfsutils
 #
 DESCRIPTION_jfsutils = "jfsutils"
@@ -1165,8 +1066,6 @@ $(DEPDIR)/ntpclient: $(DEPDIR)/ntpclient.do_compile
 # udpxy
 #
 
-# The main variable to deal with packaging is PARENT_PK.
-
 # You can use it as example of building and making package for new utility.
 # First of all take a look at smart-rules file. Read the documentation at the beginning.
 #
@@ -1188,6 +1087,7 @@ PKGR_udpxy = r0
 # But not
 #  $(DEPDIR)/udpxy_proxy.do_prepare:
 # *exceptions of this rule discussed later.
+
 # Also target should contain only A-z characters and underscore "_".
 
 # Firstly, downloading and patching. Use @DEPENDS_udpxy@ from smart rules as target-depends.
@@ -1249,6 +1149,8 @@ $(DEPDIR)/udpxy: $(DEPDIR)/udpxy.do_compile
 #  Taken from smart rules version. Set if you don't use smart-rules
 # SRC_URI_foo
 #  Sources from which package is built, taken from smart-rules file://, http://, git://, svn:// rules.
+# NAME_foo
+#  If real package name is too long put it in this variable. By default it is like in varible names.
 # Next variables has default values and influence CONTROL file fields only:
 # MAINTAINER_foo := Ar-P team
 # PACKAGE_ARCH_foo := sh4
@@ -1269,11 +1171,24 @@ define postinst_foo
 initdconfig --add foo
 endef
 
-# This is all
+# This is all about scripts
 # Note: init.d script starting and stopping is handled by initdconfig
 
 # Multi-Packaging
-# .........
+# When you whant to split files from one target to different packages you should set PACKAGES_parentfoo value.
+# By default parentfoo is equals make target name. Place subpackages names to PACKAGES_parentfoo variable,
+# parentfoo could be also in the list. Example:
+## PACKAGES_megaprog = megaprog_extra megaprog
+# Then set FILES for each subpackage
+## FILES_megaprog = /bin/prog /lib/*.so*
+## FILES_megaprog_extra = /lib/megaprog-addon.so
+# NOTE: files are moving to pacakges in same order they are listed in PACKAGES variable.
+
+# Optional install to flash
+# When you call $(tocdk_build)/$(toflash_build) all packages are installed to image.
+# If you want to select some non-installing packages from the same target (multi-packaging case)
+# just list them in EXTRA_parentfoo variable
+# DIST_parentfoo variable works vice-versa
 
 # sysstat
 #
@@ -1437,5 +1352,31 @@ $(DEPDIR)/grab: grab.do_compile
 	$(start_build)
 	cd @DIR_grab@ && \
 		@INSTALL_grab@
+	$(toflash_build)
+	touch $@
+
+
+#
+# oscam
+#
+
+DESCRIPTION_oscam = Open Source Conditional Access Module software
+
+$(DEPDIR)/oscam.do_prepare: bootstrap @DEPENDS_oscam@
+	@PREPARE_oscam@
+	touch $@
+
+$(DEPDIR)/oscam.do_compile: oscam.do_prepare
+	cd @DIR_oscam@ && \
+	$(BUILDENV) && \
+	$(MAKE) CROSS=$(prefix)/devkit/sh4/bin/$(target)-  CONF_DIR=/var/keys
+	touch $@
+
+$(DEPDIR)/oscam: oscam.do_compile
+	$(start_build)
+	cd @DIR_oscam@  && \
+		$(INSTALL_DIR) $(PKDIR)/usr/bin/cam; \
+		$(INSTALL_BIN) Distribution/oscam*-sh4-linux $(PKDIR)/usr/bin/cam/oscam
+	$(tocdk_build)
 	$(toflash_build)
 	touch $@

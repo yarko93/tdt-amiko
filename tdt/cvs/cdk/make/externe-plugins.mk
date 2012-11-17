@@ -23,7 +23,6 @@ $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
 		$(BUILDENV) \
 		./configure \
 			--host=$(target) \
-			--with-libsdl=no \
 			--datadir=/usr/share \
 			--libdir=/usr/lib \
 			--prefix=/usr \
@@ -31,7 +30,7 @@ $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
 			PY_PATH=$(targetprefix)/usr \
-			$(PLATFORM_CPPFLAGS)
+			$(PLATFORM_CPPFLAGS) $(ENIGMA2_FLAGS)
 
 enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 
@@ -54,9 +53,14 @@ $(DEPDIR)/enigma2-plugins-sh4%: $(DIR_e2plugin)/config.status
 	for package in bb_get('PACKAGES').split(): \n\
 		pk = bb_get('NAME_' + package).split('-')[-1] \n\
 		try: \n\
-			read_control_file('$(DIR_e2plugin)' + pk + '/CONTROL/control') \n\
+			read_control_file('$(DIR_e2plugin)/' + pk + '/CONTROL/control') \n\
 		except IOError: \n\
 			print 'skipping', pk \n\
+		for s in ['preinst', 'postinst', 'prerm', 'postrm']: \n\
+			try: \n\
+				bb_set(s + '_' + package, open('$(DIR_e2plugin)/' + pk + '/CONTROL/' + s).read()) \n\
+			except IOError: \n\
+				pass \n\
 	do_finish() \n\
 	" | $(crossprefix)/bin/python
 
@@ -69,3 +73,4 @@ enigma2-plugins-sh4-clean:
 
 enigma2-plugins-sh4-distclean: enigma2-plugins-sh4-clean
 	rm -f $(DEPDIR)/enigma2-plugins-sh4.do_prepare
+	rm -rf $(DIR_e2plugin)

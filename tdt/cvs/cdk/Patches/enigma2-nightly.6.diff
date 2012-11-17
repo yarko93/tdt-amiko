@@ -1017,7 +1017,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/driver/vfd
 +	//ioctl(fpc, FRONTPANELSCROLLMODE, &scrollMode);
 +	
 +	// display string
-+	char str[] = "        AR-P TEAM ENIGMA2";
++	char str[] = "        AAF DEV-TEAM ENIGMA2";
 +	int length = strlen(str);
 +	char dispData[MAX_CHARS + 1];
 +	int offset = 0;
@@ -1081,7 +1081,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/driver/vfd
 +	evfd vfd;
 +	blocked = true;
 +	//vfd.vfd_clear_icons();
-+	vfd.vfd_write_string("AR-P TEAM", true);
++	vfd.vfd_write_string("AAF DEV-TEAM", true);
 +	//run 2 times through all icons 
 +	for  (int vloop = 0; vloop < 128; vloop++) {
 +		/*if (vloop%14 == 0 )
@@ -4441,7 +4441,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/gdi/stmfb.
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/Harddisk.py enigma2-nightly.patched/lib/python/Components/Harddisk.py
 --- enigma2-nightly.org/lib/python/Components/Harddisk.py	2011-07-17 14:54:41.384660589 +0200
 +++ enigma2-nightly.patched/lib/python/Components/Harddisk.py	2011-07-17 14:55:04.564671902 +0200
-@@ -1,13 +1,26 @@
+@@ -1,9 +1,26 @@
 -from os import system, listdir, statvfs, popen, makedirs, stat, major, minor, path, access
 -from Tools.Directories import SCOPE_HDD, resolveFilename
 +#--->
@@ -4459,10 +4459,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 +#+++>
 +from enigma import eConsoleAppContainer, evfd
 +import os
- 
--def MajorMinor(path):
--	rdev = stat(path).st_rdev
--	return (major(rdev),minor(rdev))
++
 +def tryOpen(filename):
 +	try:
 +		procFile = open(filename)
@@ -4471,157 +4468,41 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 +	return procFile
 +#+++<
  
- def readFile(filename):
- 	file = open(filename)
-@@ -15,20 +28,23 @@
- 	file.close()
- 	return data
+ def MajorMinor(path):
+ 	rdev = stat(path).st_rdev
+@@ -17,7 +34,7 @@
  
--DEVTYPE_UDEV = 0
--DEVTYPE_DEVFS = 1
+ DEVTYPE_UDEV = 0
+ DEVTYPE_DEVFS = 1
 -
++	
  class Harddisk:
-+	DEVTYPE_UDEV = 0
-+	DEVTYPE_DEVFS = 1
-+
  	def __init__(self, device):
  		self.device = device
- 
--		if access("/dev/.udev", 0):
--			self.type = DEVTYPE_UDEV
--		elif access("/dev/.devfsd", 0):
--			self.type = DEVTYPE_DEVFS
--		else:
--			print "Unable to determine structure of /dev"
--
-+#--->
-+#-		if access("/dev/.udev", 0):
-+#-			self.type = self.DEVTYPE_UDEV
-+#-		elif access("/dev/.devfsd", 0):
-+#-			self.type = self.DEVTYPE_DEVFS
-+#-		else:
-+#-			print "Unable to determine structure of /dev"
-+#+++>
-+		self.type = self.DEVTYPE_UDEV
-+#+++<
- 		self.max_idle_time = 0
- 		self.idle_running = False
- 		self.timer = None
-@@ -37,11 +53,11 @@
- 		self.disk_path = ''
- 		self.phys_path = path.realpath(self.sysfsPath('device'))
- 
--		if self.type == DEVTYPE_UDEV:
-+		if self.type == self.DEVTYPE_UDEV:
- 			self.dev_path = '/dev/' + self.device
- 			self.disk_path = self.dev_path
- 
--		elif self.type == DEVTYPE_DEVFS:
-+		elif self.type == self.DEVTYPE_DEVFS:
- 			tmp = readFile(self.sysfsPath('dev')).split(':')
- 			s_major = int(tmp[0])
- 			s_minor = int(tmp[1])
-@@ -64,9 +80,9 @@
- 		return self.device < ob.device
- 
- 	def partitionPath(self, n):
--		if self.type == DEVTYPE_UDEV:
-+		if self.type == self.DEVTYPE_UDEV:
- 			return self.dev_path + n
--		elif self.type == DEVTYPE_DEVFS:
-+		elif self.type == self.DEVTYPE_DEVFS:
- 			return self.dev_path + '/part' + n
- 
- 	def sysfsPath(self, filename):
-@@ -79,9 +95,9 @@
- 
- 	def bus(self):
- 		# CF (7025 specific)
--		if self.type == DEVTYPE_UDEV:
-+		if self.type == self.DEVTYPE_UDEV:
- 			ide_cf = False	# FIXME
--		elif self.type == DEVTYPE_DEVFS:
-+		elif self.type == self.DEVTYPE_DEVFS:
- 			ide_cf = self.device[:2] == "hd" and "host0" not in self.dev_path
- 
- 		internal = "pci" in self.phys_path
-@@ -129,20 +145,18 @@
- 
- 		for line in lines:
- 			parts = line.strip().split(" ")
--			real_path = path.realpath(parts[0])
--			if not real_path[-1].isdigit():
--				continue
--			try:
--				if MajorMinor(real_path) == MajorMinor(self.partitionPath(real_path[-1])):
-+			if path.realpath(parts[0]).startswith(self.dev_path):
-+				try:
- 					stat = statvfs(parts[1])
--					return stat.f_bfree/1000 * stat.f_bsize/1000
--			except OSError:
--				pass
-+				except OSError:
-+					continue
-+				return stat.f_bfree/1000 * stat.f_bsize/1000
-+
- 		return -1
- 
- 	def numPartitions(self):
- 		numPart = -1
--		if self.type == DEVTYPE_UDEV:
-+		if self.type == self.DEVTYPE_UDEV:
- 			try:
- 				devdir = listdir('/dev')
- 			except OSError:
-@@ -151,7 +165,7 @@
- 				if filename.startswith(self.device):
- 					numPart += 1
- 
--		elif self.type == DEVTYPE_DEVFS:
-+		elif self.type == self.DEVTYPE_DEVFS:
- 			try:
- 				idedir = listdir(self.dev_path)
- 			except OSError:
-@@ -174,23 +188,25 @@
- 
- 		cmd = "umount"
- 
--                for line in lines:                                                                          
--                        parts = line.strip().split(" ")                                                     
--                        real_path = path.realpath(parts[0])                                                 
--                        if not real_path[-1].isdigit():                                                     
--                                continue                                                                    
--                        try:                                                                                
--                                if MajorMinor(real_path) == MajorMinor(self.partitionPath(real_path[-1])):
+@@ -181,7 +198,12 @@
+                                 continue                                                                    
+                         try:                                                                                
+                                 if MajorMinor(real_path) == MajorMinor(self.partitionPath(real_path[-1])):
 -					cmd = ' ' . join([cmd, parts[1]])
--					break
--			except OSError:
--				pass
--
-+		for line in lines:
-+			parts = line.strip().split(" ")
-+			if path.realpath(parts[0]).startswith(self.dev_path):
 +#--->			
-+#-				cmd = ' ' . join([cmd, parts[1]])
++#-					cmd = ' ' . join([cmd, parts[1]])
 +#---<
 +#+++>
-+				cmd = ' -fl ' . join([cmd, parts[1]])
++					cmd = ' -fl ' . join([cmd, parts[1]])
 +#+++<
- 		res = system(cmd)
+ 					break
+ 			except OSError:
+ 				pass
+@@ -190,7 +212,7 @@
  		return (res >> 8)
  
  	def createPartition(self):
 -		cmd = 'printf "8,\n;0,0\n;0,0\n;0,0\ny\n" | sfdisk -f -uS ' + self.disk_path
-+#--->
-+#-		cmd = 'printf "0,\n;\n;\n;\ny\n" | sfdisk -f ' + self.disk_path
-+#---<
-+#+++>
 +		cmd = 'echo "0,\n;\n;\n;\ny\n" | sfdisk -f ' + self.disk_path
-+#+++<
  		res = system(cmd)
  		return (res >> 8)
  
-@@ -199,7 +215,18 @@
+@@ -199,7 +221,18 @@
  		if self.diskSize() > 4 * 1024:
  			cmd += "-T largefile "
  		cmd += "-m0 -O dir_index " + self.partitionPath("1")
@@ -4641,28 +4522,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
  		return (res >> 8)
  
  	def mount(self):
-@@ -214,16 +241,10 @@
- 		res = -1
- 		for line in lines:
- 			parts = line.strip().split(" ")
--                        real_path = path.realpath(parts[0])                                                 
--                        if not real_path[-1].isdigit():                                                     
--                                continue                                                                    
--                        try:                                                                                
--                                if MajorMinor(real_path) == MajorMinor(self.partitionPath(real_path[-1])):
--					cmd = "mount -t ext3 " + parts[0]
--					res = system(cmd)
--					break
--			except OSError:
--				pass
-+			if path.realpath(parts[0]) == self.partitionPath("1"):
-+				cmd = "mount -t ext3 " + parts[0]
-+				res = system(cmd)
-+				break
- 
- 		return (res >> 8)
- 
-@@ -238,7 +259,18 @@
+@@ -238,7 +271,18 @@
  		# We autocorrect any failures
  		# TODO: we could check if the fs is actually ext3
  		cmd = "fsck.ext3 -f -p " + self.partitionPath("1")
@@ -4682,54 +4542,12 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
  		return (res >> 8)
  
  	def killPartition(self, n):
-@@ -413,49 +445,46 @@
- 				return True
- 		return False
+@@ -429,14 +473,11 @@
+ 	}
  
--DEVICEDB_SR = \
+ DEVICEDB = \
 -	{"dm8000":
--		{
--			"/devices/pci0000:01/0000:01:00.0/host0/target0:0:0/0:0:0:0": _("DVD Drive"),
--			"/devices/pci0000:01/0000:01:00.0/host1/target1:0:0/1:0:0:0": _("DVD Drive"),
--			"/devices/platform/brcm-ehci-1.1/usb2/2-1/2-1:1.0/host3/target3:0:0/3:0:0:0": _("DVD Drive"),
--		},
--	"dm800":
--	{
--	},
--	"dm7025":
--	{
--	}
--	}
--
--DEVICEDB = \
--	{"dm8000":
-+#--->
-+#-DEVICEDB =  \
-+#-	{"dm8000":
-+#-		{
-+#-			# dm8000:
-+#-			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.1/1-1.1:1.0": "Front USB Slot",
-+#-			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.2/1-1.2:1.0": "Back, upper USB Slot",
-+#-			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.3/1-1.3:1.0": "Back, lower USB Slot",
-+#-			"/devices/platform/brcm-ehci-1.1/usb2/2-1/2-1:1.0/host1/target1:0:0/1:0:0:0": "DVD Drive",
-+#-		},
-+#-	"dm800":
-+#-	{
-+#-		# dm800:
-+#-		"/devices/platform/brcm-ehci.0/usb1/1-2/1-2:1.0": "Upper USB Slot",
-+#-		"/devices/platform/brcm-ehci.0/usb1/1-1/1-1:1.0": "Lower USB Slot",
-+#-	},
-+#-	"dm7025":
-+#-	{
-+#-		# dm7025:
-+#-		"/devices/pci0000:00/0000:00:14.1/ide1/1.0": "CF Card Slot", #hdc
-+#-		"/devices/pci0000:00/0000:00:14.1/ide0/0.0": "Internal Harddisk"
-+#-	}
-+#-	}
-+#---<
-+#+++>
-+DEVICEDB =  \
-+	{"spark":
++	{"ufs910":
  		{
 -			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.1/1-1.1:1.0": _("Front USB Slot"),
 -			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.2/1-1.2:1.0": _("Back, upper USB Slot"),
@@ -4737,34 +4555,28 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
 -			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.1/1-1.1:1.0": _("Front USB Slot"),
 -			"/devices/platform/brcm-ehci-1.1/usb2/2-1/2-1:1.0/": _("Internal USB Slot"),
 -			"/devices/platform/brcm-ohci-1.1/usb4/4-1/4-1:1.0/": _("Internal USB Slot"),
--		},
--	"dm800":
--	{
--		"/devices/platform/brcm-ehci.0/usb1/1-2/1-2:1.0": "Upper USB Slot",
--		"/devices/platform/brcm-ehci.0/usb1/1-1/1-1:1.0": "Lower USB Slot",
--	},
--	"dm7025":
--	{
--		"/devices/pci0000:00/0000:00:14.1/ide1/1.0": "CF Card Slot", #hdc
++			"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.4/1-1.4:1.0": "Front USB Slot",
++			"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.3/1-1.3:1.0": "Back, upper USB Slot",
++			"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.2/1-1.2:1.0": "Back, lower USB Slot",
+ 		},
+ 	"dm800":
+ 	{
+@@ -446,7 +487,13 @@
+ 	"dm7025":
+ 	{
+ 		"/devices/pci0000:00/0000:00:14.1/ide1/1.0": "CF Card Slot", #hdc
 -		"/devices/pci0000:00/0000:00:14.1/ide0/0.0": "Internal Harddisk"
--	}
-+			"/devices/platform/st-usb.0/stm-ehci.0/usb1/1-1/1-1:1.0": "USB Slot"
-+#			"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.3/1-1.3:1.0": "Back, upper USB Slot",
-+#			"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.2/1-1.2:1.0": "Back, lower USB Slot",
-+		}
++		"/devices/pci0000:00/0000:00:14.1/ide0/0.0": "Internal Harddisk",
++	},
++	"UFS922":
++	{
++		"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.1/1-1.1:1.0/": "Back, upper USB Slot",
++		"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.2/1-1.2:1.0/": "Back, lower USB Slot",
++		"/devices/platform/ST40-ehci.2/usb1/1-1/1-1.3/1-1.3:1.0/": "Front USB Slot",
  	}
-+#+++<
+ 	}
  
- class HarddiskManager:
- 	def __init__(self):
- 		self.hdd = [ ]
- 		self.cd = ""
- 		self.partitions = [ ]
--		self.devices_scanned_on_init = [ ]
- 
- 		self.on_partition_list_change = CList()
- 
-@@ -489,7 +518,12 @@
+@@ -489,7 +536,12 @@
  		try:
  			removable = bool(int(readFile(devpath + "/removable")))
  			dev = int(readFile(devpath + "/dev").split(':')[0])
@@ -4778,103 +4590,21 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
  				blacklisted = True
  			if blockdev[0:2] == 'sr':
  				is_cdrom = True
-@@ -523,23 +557,24 @@
- 	def enumerateBlockDevices(self):
- 		print "enumerating block devices..."
- 		for blockdev in listdir("/sys/block"):
--			error, blacklisted, removable, is_cdrom, partitions, medium_found = self.addHotplugPartition(blockdev)
--			if not error and not blacklisted:
--				if medium_found:
--					for part in partitions:
--						self.addHotplugPartition(part)
--				self.devices_scanned_on_init.append((blockdev, removable, is_cdrom, medium_found))
-+			error, blacklisted, removable, is_cdrom, partitions, medium_found = self.getBlockDevInfo(blockdev)
-+			print "found block device '%s':" % blockdev, 
-+			if error:
-+				print "error querying properties"
-+			elif blacklisted:
-+				print "blacklisted"
-+			elif not medium_found:
-+				print "no medium"
-+			else:
-+				print "ok, removable=%s, cdrom=%s, partitions=%s, device=%s" % (removable, is_cdrom, partitions, blockdev)
-+
-+				self.addHotplugPartition(blockdev)
-+				for part in partitions:
-+					self.addHotplugPartition(part)
- 
- 	def getAutofsMountpoint(self, device):
- 		return "/autofs/%s/" % (device)
- 
--	def is_hard_mounted(self, device):
--		mounts = file('/proc/mounts').read().split('\n')
--		for x in mounts:
--			if x.find('/autofs') == -1 and x.find(device) != -1:
--				return True
--		return False
--
- 	def addHotplugPartition(self, device, physdev = None):
- 		if not physdev:
- 			dev, part = self.splitDeviceName(device)
-@@ -548,37 +583,30 @@
+@@ -548,6 +600,13 @@
  			except OSError:
  				physdev = dev
  				print "couldn't determine blockdev physdev for device", device
--
--		error, blacklisted, removable, is_cdrom, partitions, medium_found = self.getBlockDevInfo(device)
--		print "found block device '%s':" % device,
--
--		if blacklisted:
--			print "blacklisted"
 +#+++>		
- 		else:
--			if error:
--				print "error querying properties"
--			elif not medium_found:
--				print "no medium"
--			else:
--				print "ok, removable=%s, cdrom=%s, partitions=%s" % (removable, is_cdrom, partitions)
++		else:
 +			dev, part = self.splitDeviceName(device)
 +		if part is not 0:
 +			print "[Harddisk] start automount"
 +			#Automount(device,"mount")
 +#+++<		
  
--			l = len(device)
--			if l:
--				# see if this is a harddrive
--				if not device[l-1].isdigit() and not removable and not is_cdrom:
--					self.hdd.append(Harddisk(device))
--					self.hdd.sort()
--					SystemInfo["Harddisk"] = len(self.hdd) > 0
-+		# device is the device name, without /dev
-+		# physdev is the physical device path, which we (might) use to determine the userfriendly name
-+		description = self.getUserfriendlyDeviceName(device, physdev)
- 
--				if (not removable or medium_found) and not self.is_hard_mounted(device):
--					# device is the device name, without /dev
--					# physdev is the physical device path, which we (might) use to determine the userfriendly name
--					description = self.getUserfriendlyDeviceName(device, physdev)
--					p = Partition(mountpoint = self.getAutofsMountpoint(device), description = description, force_mounted = True, device = device)
--					self.partitions.append(p)
--					self.on_partition_list_change("add", p)
-+		p = Partition(mountpoint = self.getAutofsMountpoint(device), description = description, force_mounted = True, device = device)
-+		self.partitions.append(p)
-+		self.on_partition_list_change("add", p)
- 
--		return error, blacklisted, removable, is_cdrom, partitions, medium_found
-+		# see if this is a harddrive
-+		l = len(device)
-+		if l and not device[l-1].isdigit():
-+			error, blacklisted, removable, is_cdrom, partitions, medium_found = self.getBlockDevInfo(device)
-+			if not blacklisted and not is_cdrom and medium_found:
-+				self.hdd.append(Harddisk(device))
-+				self.hdd.sort()
-+				SystemInfo["Harddisk"] = len(self.hdd) > 0
- 
- 	def removeHotplugPartition(self, device):
- 		mountpoint = self.getAutofsMountpoint(device)
-@@ -594,6 +622,12 @@
+ 		error, blacklisted, removable, is_cdrom, partitions, medium_found = self.getBlockDevInfo(device)
+ 		print "found block device '%s':" % device,
+@@ -594,6 +653,12 @@
  					self.hdd.remove(hdd)
  					break
  			SystemInfo["Harddisk"] = len(self.hdd) > 0
@@ -4887,34 +4617,6 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Com
  
  	def HDDCount(self):
  		return len(self.hdd)
-@@ -636,23 +670,15 @@
- 	def getUserfriendlyDeviceName(self, dev, phys):
- 		dev, part = self.splitDeviceName(dev)
- 		description = "External Storage %s" % dev
--		have_model_descr = False
- 		try:
- 			description = readFile("/sys" + phys + "/model")
--			have_model_descr = True
- 		except IOError, s:
- 			print "couldn't read model: ", s
- 		from Tools.HardwareInfo import HardwareInfo
--		if dev.find('sr') == 0 and dev[2].isdigit():
--			devicedb = DEVICEDB_SR
--		else:
--			devicedb = DEVICEDB
--		for physdevprefix, pdescription in devicedb.get(HardwareInfo().device_name,{}).items():
-+		for physdevprefix, pdescription in DEVICEDB.get(HardwareInfo().device_name,{}).items():
- 			if phys.startswith(physdevprefix):
--				if have_model_descr:
--					description = pdescription + ' - ' + description
--				else:
--					description = pdescription
-+				description = pdescription
-+
- 		# not wholedisk and not partition 1
- 		if part and part != 1:
- 			description += " (Partition %d)" % part
-
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Components/NimManager.py enigma2-nightly.patched/lib/python/Components/NimManager.py
 --- enigma2-nightly.org/lib/python/Components/NimManager.py	2011-07-17 14:54:41.444661524 +0200
 +++ enigma2-nightly.patched/lib/python/Components/NimManager.py	2011-07-17 14:55:04.574671617 +0200
@@ -6298,18 +6000,6 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plu
  						self.NotifierCallback = callback
  						self.startIpkgListAvailable()
  				else:	
-diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py
---- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py		2011-05-16 06:52:32.585842342 +0200
-+++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/SkinSelector/plugin.py	2011-05-16 06:52:32.585842342 +0200
-@@ -85,7 +85,7 @@
- 		for x in names:
- 			if x == "skin.xml":
- 				if dirname <> self.root:
--					subdir = dirname[19:]
-+					subdir = dirname[25:]
- 					self.skinlist.append(subdir)
- 				else:
- 					subdir = "Default Skin" 
 diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py
 --- enigma2-nightly.org/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	1970-01-01 01:00:00.000000000 +0100
 +++ enigma2-nightly.patched/lib/python/Plugins/SystemPlugins/Tuxtxt/__init__.py	2011-07-17 14:55:04.794671623 +0200
@@ -7671,7 +7361,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/m4/ax_python_d
  			print (distutils.sysconfig.get_python_inc ());"`
  		if test -n "${python_path}"; then
 -			python_path="-I$python_path"
-+			python_path="-I$PY_PATH/include/python2.6"
++			python_path="-I$PY_PATH/include/python$PYTHON_VERSION"
  		fi
  		PYTHON_CPPFLAGS=$python_path
  	fi
@@ -7680,7 +7370,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/m4/ax_python_d
  			  import os; \
  			  print (os.path.join(f(plat_specific=1, standard_lib=1), 'config'));"`
 -			PYTHON_LDFLAGS="-L$ac_python_libdir -lpython$ac_python_version"
-+			PYTHON_LDFLAGS="-L$PY_PATH/include/python2.6 -lpython$ac_python_version"
++			PYTHON_LDFLAGS="-L$PY_PATH/include/python$PYTHON_VERSION -lpython$ac_python_version"
 +#			PYTHON_LDFLAGS="-L$ac_python_libdir -lpython$ac_python_version"
  		fi
  
@@ -7691,7 +7381,7 @@ diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/m4/ax_python_d
  	if test -z "$PYTHON_SITE_PKG"; then
 -		PYTHON_SITE_PKG=`$PYTHON -c "import distutils.sysconfig; \
 -			print (distutils.sysconfig.get_python_lib(0,0));"`
-+		PYTHON_SITE_PKG="$PY_PATH//lib/python2.6/site-packages"
++		PYTHON_SITE_PKG="$PY_PATH//lib/python$PYTHON_VERSION/site-packages"
 +#		PYTHON_SITE_PKG=`$PYTHON -c "import distutils.sysconfig; \
 +#			print (distutils.sysconfig.get_python_lib(0,0));"`
  	fi

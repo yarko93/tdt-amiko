@@ -1,18 +1,18 @@
-/**********************************ÎÄ¼þÍ·²¿×¢ÊÍ************************************/
+/**********************************ï¿½Ä¼ï¿½Í·ï¿½ï¿½×¢ï¿½ï¿½************************************/
 //
 //
 //  					Copyright (C), 2005-2010, AV Frontier Tech. Co., Ltd.
 //
 //
-// ÎÄ¼þÃû£º		stv0367qam_drv.c
+// ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½		stv0367qam_drv.c
 //
-// ´´½¨Õß£º		lwj
+// ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½		lwj
 //
-// ´´½¨Ê±¼ä£º	2010-12-28
+// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º	2010-12-28
 //
-// ÎÄ¼þÃèÊö£º
+// ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //
-// ÐÞ¸Ä¼ÇÂ¼£º   ÈÕ       ÆÚ      ×÷      Õß       °æ±¾      ÐÞ¶¨
+// ï¿½Þ¸Ä¼ï¿½Â¼ï¿½ï¿½   ï¿½ï¿½       ï¿½ï¿½      ï¿½ï¿½      ï¿½ï¿½       ï¿½æ±¾      ï¿½Þ¶ï¿½
 //				       ---------         ---------        -----        -----
 //
 /**********************************************************************************/
@@ -1163,7 +1163,7 @@ static unsigned long long intlog2(U32 value)
 }
 #endif  /* 0 */
 
-#if 0  //intlog2 ÀïµÄfls£¬ÕÒ²»µ½¶¨Òå¡¡¡¡lwj modify begin
+#if 0  //intlog2 ï¿½ï¿½ï¿½ï¿½flsï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å¡¡ï¿½ï¿½lwj modify begin
 static unsigned int Log10Int(U32 value)
 {
  /**
@@ -1929,7 +1929,7 @@ FE_CAB_Modulation_t D367qam_SetQamSize(TUNER_TunerType_T TunerType,
 					/* AGC thresholds and accumulation as defined in the init table are good */
 				break;
                 case TUNER_TUNER_SHARP5469C:
-                    //YWDRIVER_MODI lwj change 0x5a to 0x32, ¿ÉÒÔµ÷½ÚL,QÖµµÄ´óÐ¡
+                    //YWDRIVER_MODI lwj change 0x5a to 0x32, ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½L,QÖµï¿½Ä´ï¿½Ð¡
 					ChipSetOneRegister_0367qam(DemodDeviceMap,DemodIOHandle,R367qam_AGC_PWR_REF_L,0x32);	/* Set analog AGC reference */
 					/* AGC thresholds and accumulation as defined in the init table are good */
 				break;
@@ -2009,7 +2009,7 @@ FE_CAB_Modulation_t D367qam_SetQamSize(TUNER_TunerType_T TunerType,
 
 				case TUNER_TUNER_SHARP5469C:
                 {
-                    //YWDRIVER_MODI lwj change 0x5a to 0x31, ¿ÉÒÔµ÷½ÚL,QÖµµÄ´óÐ¡
+                    //YWDRIVER_MODI lwj change 0x5a to 0x31, ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½L,QÖµï¿½Ä´ï¿½Ð¡
 					ChipSetOneRegister_0367qam(DemodDeviceMap,DemodIOHandle,R367qam_AGC_PWR_REF_L,0x32);	/* Set analog AGC reference */
 					/* AGC thresholds and accumulation as defined in the init table are good */
 				}
@@ -2023,7 +2023,7 @@ FE_CAB_Modulation_t D367qam_SetQamSize(TUNER_TunerType_T TunerType,
 			ChipSetOneRegister_0367qam(DemodDeviceMap,DemodIOHandle,R367qam_FSM_STATE,0xa0);
 			if(SymbolRate>4500000)
 			{
-				ChipSetOneRegister_0367qam(DemodDeviceMap,DemodIOHandle,R367qam_EQU_CTR_LPF_GAIN,0xc1);
+				ChipSetOneRegister_0367qam(DemodDeviceMap,DemodIOHandle,R367qam_EQU_CTR_LPF_GAIN,0xd1);
 			}
 			else if(SymbolRate>2500000)
 			{
@@ -2484,7 +2484,7 @@ S32 FE_STV0367qam_GetSnr(TUNER_IOREG_DeviceMap_t *DemodDeviceMap,
 	FE_CAB_Modulation_t QAMSize;
 	QAMSize = ChipGetField_0367qam(DemodDeviceMap, DemodIOHandle,
 									F367qam_QAM_MODE);
-	return FE_367qam_GetCarrierToNoiseRatio_u32(DemodDeviceMap,
+	return 255 * 255 / 100 * FE_367qam_GetCarrierToNoiseRatio_u32(DemodDeviceMap,
 												DemodIOHandle,
 												QAMSize);
 }
@@ -2492,7 +2492,7 @@ S32 FE_STV0367qam_GetSnr(TUNER_IOREG_DeviceMap_t *DemodDeviceMap,
 S32 FE_STV0367qam_GetPower(TUNER_IOREG_DeviceMap_t *DemodDeviceMap,
                                             IOARCH_Handle_t DemodIOHandle)
 {
-	return FE_367qam_GetRFLevel(DemodDeviceMap, DemodIOHandle);
+	return 255 * 255 / 100 * FE_367qam_GetRFLevel(DemodDeviceMap, DemodIOHandle);
 }
 
 S32 FE_STV0367qam_GetErrors(TUNER_IOREG_DeviceMap_t *DemodDeviceMap,
@@ -2534,7 +2534,7 @@ S32 FE_STV0367qam_GetErrors(TUNER_IOREG_DeviceMap_t *DemodDeviceMap,
         *FirstTimeBER = 0;
     }
     FE_367qam_GetErrorCount(DeviceMap, IOHandle, Modulation,SymbolRate,&(Monitor_results));
-    Ber = Monitor_results.FE_367qam_BER_U32;
+    Ber = Monitor_results.FE_367qam_BER_U32 * 255 * 255 / 100 ;
 #endif
     return Ber;
 }

@@ -1,6 +1,0 @@
-#define IHaveSubdirs
-#define PassCDebugFlags
-
-SUBDIRS =  lib pac mines snake tetris yahtzee vierg lemm tank master
-
-MakeSubdirs($(SUBDIRS))

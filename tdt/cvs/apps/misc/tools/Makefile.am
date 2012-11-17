@@ -9,10 +9,7 @@ SUBDIRS = \
 	streamproxy \
 	stfbcontrol \
 	ustslave \
-	tffpctl \
-	tfd2mtd \
 	gitVCInfo \
 	vfdctl \
 	libmme_host \
-	libmmeimage \
-	ipbox_eeprom
+	libmmeimage

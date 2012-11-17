@@ -102,3 +102,6 @@ libdvdcss*
 module-init-tools*
 zlib*
 e2plugin
+smart-rules
+smart-rules.in
+udev-rules*
