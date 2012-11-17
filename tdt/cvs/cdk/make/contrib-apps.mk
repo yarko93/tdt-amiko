@@ -303,6 +303,11 @@ $(DEPDIR)/%portmap: $(DEPDIR)/%lsb $(PORTMAP_ADAPTED_ETC_FILES:%=root/etc/%) $(D
 #
 # OPENRDATE
 #
+DESCRIPTION_openrdate = openrdate
+FILES_openrdate = \
+/usr/bin/* \
+etc/init.d/*
+
 $(DEPDIR)/openrdate.do_prepare: bootstrap @DEPENDS_openrdate@
 	@PREPARE_openrdate@
 	cd @DIR_openrdate@
@@ -323,15 +328,19 @@ $(DEPDIR)/min-openrdate $(DEPDIR)/std-openrdate $(DEPDIR)/max-openrdate \
 $(DEPDIR)/openrdate: \
 $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 		$(DEPDIR)/openrdate.do_compile
+	$(start_build)
 	cd @DIR_openrdate@ && \
 		@INSTALL_openrdate@
+	$(INSTALL_DIR) $(PKDIR)/etc/init.d/ && \
 	( cd root/etc && for i in $(OPENRDATE_ADAPTED_ETC_FILES); do \
-		[ -f $$i ] && $(INSTALL) -m644 $$i $(prefix)/$*cdkroot/etc/$$i || true; \
-		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done ) && \
-	( export HHL_CROSS_TARGET_DIR=$(prefix)/$*cdkroot && cd $(prefix)/$*cdkroot/etc/init.d && \
+		[ -f $$i ] && $(INSTALL) -m644 $$i $(PKDIR)/etc/$$i || true; \
+		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(PKDIR)/etc/$$i || true; done ) && \
+	( export HHL_CROSS_TARGET_DIR=$(prefix)/release && cd $(prefix)/release/etc/init.d && \
 		for s in rdate.sh ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
+	$(tocdk_build)
+	$(toflash_build)
 #	@DISTCLEANUP_openrdate@
 	[ "x$*" = "x" ] && touch $@ || true
 
