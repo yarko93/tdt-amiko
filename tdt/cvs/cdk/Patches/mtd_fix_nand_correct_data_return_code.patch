@@ -1,0 +1,13 @@
+diff --git a/drivers/mtd/nand/nand_ecc.c b/drivers/mtd/nand/nand_ecc.c
+index c0cb87d..77e13c8 100644
+--- a/drivers/mtd/nand/nand_ecc.c
++++ b/drivers/mtd/nand/nand_ecc.c
+@@ -497,8 +497,7 @@
+ 		return 1;	/* error in ecc data; no action needed */
+ 	}
+ 
+-	printk(KERN_ERR "%s: uncorrectable error: [", __func__);
+-	return -1;
++	return -EBADMSG;
+ }
+ EXPORT_SYMBOL(__nand_correct_data);
