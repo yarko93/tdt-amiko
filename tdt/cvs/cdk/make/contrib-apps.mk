@@ -306,7 +306,7 @@ $(DEPDIR)/%portmap: $(DEPDIR)/%lsb $(PORTMAP_ADAPTED_ETC_FILES:%=root/etc/%) $(D
 DESCRIPTION_openrdate = openrdate
 FILES_openrdate = \
 /usr/bin/* \
-etc/init.d/*
+/etc/init.d/*
 
 $(DEPDIR)/openrdate.do_prepare: bootstrap @DEPENDS_openrdate@
 	@PREPARE_openrdate@
