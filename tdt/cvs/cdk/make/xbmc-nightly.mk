@@ -17,6 +17,8 @@ $(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass 
 			PYTHON_SITE_PKG=$(targetprefix)/usr/lib/python$PYTHON_VERSION/site-packages \
 			PYTHON_CPPFLAGS=-I$(targetprefix)/usr/include/python$PYTHON_VERSION \
 			PY_PATH=$(targetprefix)/usr \
+			SWIG_EXE=none \
+			JRE_EXE=none \
 			--disable-gl \
 			--enable-glesv1 \
 			--disable-gles \
@@ -45,7 +47,8 @@ $(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass 
 			--enable-gstplayer \
 			--enable-dvdplayer \
 			--disable-pulse \
-			--disable-alsa
+			--disable-alsa \
+			--disable-ssh
 
 $(DEPDIR)/xbmc-nightly.do_compile: $(DIR_xbmc_nightly)/config.status
 	cd $(DIR_xbmc_nightly) && \
