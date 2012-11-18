@@ -1389,3 +1389,37 @@ $(DEPDIR)/oscam: oscam.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 	touch $@
+	
+#
+# parted
+#
+DESCRIPTION_parted = "parted"
+FILES_parted = \
+/usr/*
+
+$(DEPDIR)/parted.do_prepare: bootstrap @DEPENDS_parted@
+	@PREPARE_parted@
+	touch $@
+
+$(DEPDIR)/parted.do_compile: $(DEPDIR)/parted.do_prepare
+	cd @DIR_parted@ && \
+		cp aclocal.m4 acinclude.m4 && \
+		autoconf && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr && \
+		$(MAKE) all CC=$(target)-gcc STRIP=$(target)-strip
+	touch $@
+
+$(DEPDIR)/min-parted $(DEPDIR)/std-parted $(DEPDIR)/max-parted \
+$(DEPDIR)/parted: \
+$(DEPDIR)/%parted: $(DEPDIR)/parted.do_compile
+	$(start_build)
+	cd @DIR_parted@ && \
+		@INSTALL_parted@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_parted@
+	[ "x$*" = "x" ] && touch $@ || true

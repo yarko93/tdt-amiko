@@ -1316,6 +1316,12 @@ oscam
   # patch-0:file://{PN}.diff
   make:install:DESTDIR=PKDIR:OSCAM_BIN = OSCAM_BIN
 ;
+parted
+  3.1
+  {PN}-{PV}
+  extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.xz
+  make:install:DESTDIR=PKDIR
+;
 libnfs
   git
   {PN}

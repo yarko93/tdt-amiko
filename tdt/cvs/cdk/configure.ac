@@ -850,6 +850,7 @@ TUXBOX_RULES_MAKE(autofs)
 TUXBOX_RULES_MAKE(imagemagick)
 TUXBOX_RULES_MAKE(grab)
 TUXBOX_RULES_MAKE(oscam)
+TUXBOX_RULES_MAKE(parted)
 
 #
 # contrib apps with smart rules
