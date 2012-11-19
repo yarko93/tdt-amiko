@@ -200,9 +200,9 @@ busybox
   make:install:CONFIG_PREFIX=PKDIR
 ;
 lsb
-  3.2-20
+  3.2-28
   {PN}-3.2
-  extract:http://www.meyersound.com/opensource/code/D-Mitri-Engine/5.0/debian-sources/{PN}_{PV}.tar.gz
+  extract:http://www.emdebian.org/locale/pool/main/l/lsb/{PN}_{PV}.tar.gz
   install:-d:PKDIR/lib/{PN}
   install:-m644:init-functions:PKDIR/lib/{PN}
 ;
@@ -580,7 +580,7 @@ lcms
   make:install:DESTDIR=PKDIR
 ;
 openssl
-  0.9.6m
+  1.0.1c
   {PN}-{PV}
   extract:ftp://ftp.{PN}.org/source/{PN}-{PV}.tar.gz
 ;
