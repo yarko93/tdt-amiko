@@ -348,6 +348,7 @@ $(DEPDIR)/driver: $(driverdir)/Makefile linux-kernel.do_compile
 
 driver-clean:
 	rm -f $(DEPDIR)/driver
+	rm -f $(buildprefix)/autoconf_rtl8192c_usb_linux.h
 	$(MAKE) -C $(driverdir) ARCH=sh \
 		KERNEL_LOCATION=$(buildprefix)/$(KERNEL_DIR) \
 		distclean
