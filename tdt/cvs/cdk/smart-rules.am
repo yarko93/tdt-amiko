@@ -1465,5 +1465,10 @@ if ENABLE_XBD3
   git://github.com/xbmc/xbmc.git:r=12840c28d8fbfd71c26be798ff6b13828b05b168
   patch:file://xbmc-nightly.3.diff
 endif
+
+if ENABLE_XBD4
+  git://github.com/xbmc/xbmc.git:r=e292b1147bd89a7e53742e3e5039b9a906a3b1d0
+  patch:file://xbmc-nightly.4.diff
+endif
 ;
 ]]END

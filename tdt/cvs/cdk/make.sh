@@ -416,7 +416,7 @@ esac
 			echo "	1) Sat, 14 Apr 2012 12:36 - 460e79416c5cb13010456794f36f89d49d25da75"
 			echo "	2) Sun, 10 Jun 2012 13:53 - 327710767d2257dad27e3885effba1d49d4557f0"
 			echo "	3) Fr,  31 Aug 2012 22:34 - Frodo_alpha5 - 12840c28d8fbfd71c26be798ff6b13828b05b168"
-			echo "	4) current inactive... comming soon"
+			echo "	4) Fr,  31 Oct 2012 22:34 - Frodo_alpha7 - e292b1147bd89a7e53742e3e5039b9a906a3b1d0"
 		    read -p "Select XBMC revision (0-2):"
 			case "$REPLY" in
 			0) IMAGE="--enable-xbd0" GFW="--enable-graphicfwdirectfb" MEDIAFW="--enable-mediafwgstreamer";;
