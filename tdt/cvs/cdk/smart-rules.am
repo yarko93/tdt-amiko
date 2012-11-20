@@ -1320,6 +1320,7 @@ parted
   3.1
   {PN}-{PV}
   extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.xz
+  patch:file://{PN}_{PV}.patch
   make:install:DESTDIR=PKDIR
 ;
 libnfs

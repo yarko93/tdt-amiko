@@ -1395,7 +1395,9 @@ $(DEPDIR)/oscam: oscam.do_compile
 #
 DESCRIPTION_parted = "parted"
 FILES_parted = \
-/usr/*
+/usr/lib/libparted-fs-resize.s* \
+/usr/lib/libparted.s* \
+/usr/sbin/parted
 
 $(DEPDIR)/parted.do_prepare: bootstrap @DEPENDS_parted@
 	@PREPARE_parted@
@@ -1409,7 +1411,9 @@ $(DEPDIR)/parted.do_compile: $(DEPDIR)/parted.do_prepare
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
-			--prefix=/usr && \
+			--prefix=/usr \
+			--disable-Werror \
+			--disable-device-mapper && \
 		$(MAKE) all CC=$(target)-gcc STRIP=$(target)-strip
 	touch $@
 
