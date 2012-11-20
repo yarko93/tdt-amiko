@@ -242,6 +242,10 @@ sub process_make_prepare (@)
       {
         $output .= "gunzip -cd " . $f . " | TAPE=- tar -x";
       }
+      elsif ( $_[1] =~ m#\.tar\.xz$# )
+      {
+      $output .= "tar -xJf " . $f;
+      }
       elsif ( $_[1] =~ m#\.exe$# )
       {
         $output .= "cabextract " . $f;
