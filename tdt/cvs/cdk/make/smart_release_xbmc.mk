@@ -124,6 +124,10 @@ release_xbmc_base:
 # rc.d directories
 	mkdir -p $(prefix)/release/etc/rc.d/rc{0,1,2,3,4,5,6,S}.d
 	ln -sf ../init.d $(prefix)/release/etc/rc.d
+# add version
+	echo "version=OpenAR-P_`date +%d-%m-%y-%T`_git-`git describe --always`" > $(buildprefix)/root/etc/image-version
+	echo ---------------------------------------------------------- >> $(buildprefix)/root/etc/image-version
+	echo ---------------------------------------------------------- >> $(buildprefix)/root/etc/image-version
 # zoneinfo
 	$(INSTALL_DIR) $(prefix)/release/usr/share/zoneinfo && \
 	cp -aR $(buildprefix)/root/usr/share/zoneinfo/* $(prefix)/release/usr/share/zoneinfo/
@@ -171,7 +175,6 @@ release_xbmc_base:
 	cp -f $(buildprefix)/root/etc/network/interfaces $(prefix)/release/etc/network/ && \
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin/ && \
-	cp -f $(buildprefix)/root/etc/image-version $(prefix)/release/etc/ && \
 	cp -dp $(buildprefix)/root/etc/fstab $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/group $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/host.conf $(prefix)/release/etc/ && \
