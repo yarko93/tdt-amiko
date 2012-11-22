@@ -132,6 +132,26 @@ endif
 	$(toflash_build)
 	touch $@
 
+DESCRIPTION_driver_encrypt = driver encrypt
+PKGV_driver_encrypt = 0.1
+$(eval export PKGV_driver_encrypt = $(PKGV_driver_encrypt)$(KERNELSTMLABEL))
+SRC_URI_driver_encrypt = unknown
+
+$(DEPDIR)/driver-encrypt:
+	$(start_build)
+	mkdir -p $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt
+if ENABLE_SPARK
+	$(if $(P0210), cp -dp $(buildprefix)/root/release/encrypt_spark_stm24_0210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
+	$(if $(P0211), cp -dp $(buildprefix)/root/release/encrypt_spark_stm24_0211.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
+endif
+if ENABLE_SPARK7162	
+	$(if $(P0207), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0207.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
+	$(if $(P0209), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0209.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
+	$(if $(P0210), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
+	$(if $(P0211), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0211.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
+endif
+	$(toflash_build)
+	touch $@
 #
 # UDEV RULES
 #
@@ -170,7 +190,7 @@ release_common_utils:
 # Copy audio_7111
 	$(if $(SPARK),cp -f $(archivedir)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf )
 	
-release_base: driver-ptinp
+release_base: driver-ptinp driver-encrypt
 	rm -rf $(prefix)/release || true
 	$(INSTALL_DIR) $(prefix)/release && \
 	cp -rp $(prefix)/pkgroot/* $(prefix)/release
@@ -299,11 +319,6 @@ release_base: driver-ptinp
 	$(INSTALL_FILE) root/etc/tuxbox/timezone.xml $(prefix)/release/etc/ && \
 	echo "576i50" > $(prefix)/release/etc/videomode
 
-release_cube_common:
-	cp $(buildprefix)/root/release/reboot_cuberevo $(prefix)/release/etc/init.d/reboot && \
-	chmod 777 $(prefix)/release/etc/init.d/reboot && \
-	cp $(buildprefix)/root/bin/eeprom $(prefix)/release/bin
-	
 release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname
 if ENABLE_PY27
@@ -316,10 +331,7 @@ else
 	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.config
 endif
 	cp $(buildprefix)/root/etc/lircd_spark.conf.09_00_0B $(prefix)/release/etc/lircd.conf.09_00_0B && \
-	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw && \
-	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt && \
-	$(if $(P0210), cp $(buildprefix)/root/release/encrypt_spark_stm24_0210.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
-	$(if $(P0211), cp $(buildprefix)/root/release/encrypt_spark_stm24_0211.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) && \
+	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
 	true
 
 release_spark7162:
@@ -333,12 +345,7 @@ else
 	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf
 endif
-	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw && \
-	mkdir $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt \
-	$(if $(P0207), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0207.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
-	$(if $(P0209), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0209.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
-	$(if $(P0210), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0210.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
-	$(if $(P0211), cp $(buildprefix)/root/release/encrypt_spark7162_stm24_0211.ko $(prefix)/release/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
+	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw
 	true
 
 
