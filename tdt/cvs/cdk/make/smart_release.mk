@@ -305,6 +305,7 @@ release_base: driver-ptinp driver-encrypt
 	cp -dp $(buildprefix)/root/etc/inetd.conf $(prefix)/release/etc/ && \
 	ln -s /usr/share/zoneinfo/Europe/Berlin $(prefix)/release/etc/localtime && \
 	cp -dp $(targetprefix)/etc/mtab $(prefix)/release/etc/ && \
+	cp -dp $(buildprefix)/root/etc/motd $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/passwd $(prefix)/release/etc/ && \
 	cp -dp $(buildprefix)/root/etc/profile $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/protocols $(prefix)/release/etc/ && \
