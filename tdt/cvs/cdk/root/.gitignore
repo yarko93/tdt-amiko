@@ -2,3 +2,4 @@ boot/
 bootscreen/
 .directory
 var/etc/.version
+etc/image-version
