@@ -1,14 +1,22 @@
 # tuxbox/enigma2
-if ENABLE_MEDIAFWGSTREAMER
-ENIGMA2_FLAGS =
-else
-ENIGMA2_FLAGS = --enable-libeplayer3
-endif
+E_CONFIG_OPTS =
 
 if ENABLE_EXTERNALLCD
-ENIGMA2_FLAGS_2 = --with-graphlcd
+E_CONFIG_OPTS += --with-graphlcd
+endif
+
+if ENABLE_MEDIAFWGSTREAMER
+E_CONFIG_OPTS =
 else
-ENIGMA2_FLAGS_2 =
+E_CONFIG_OPTS += --enable-libeplayer3
+endif
+
+if ENABLE_SPARK
+E_CONFIG_OPTS += --enable-spark
+endif
+
+if ENABLE_SPARK7162
+E_CONFIG_OPTS += --enable-spark7162
 endif
 
 $(DEPDIR)/enigma2-pli-nightly.do_prepare: @DEPENDS_enigma2_pli@
@@ -35,7 +43,7 @@ $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpe
 			STAGING_INCDIR=$(hostprefix)/usr/include \
 			STAGING_LIBDIR=$(hostprefix)/usr/lib \
 			PY_PATH=$(targetprefix)/usr \
-			$(PLATFORM_CPPFLAGS) $(ENIGMA2_FLAGS) $(ENIGMA2_FLAGS_2)
+			$(PLATFORM_CPPFLAGS) $(E_CONFIG_OPTS)
 
 
 $(DEPDIR)/enigma2-pli-nightly.do_compile: $(DIR_enigma2_pli)/config.status
