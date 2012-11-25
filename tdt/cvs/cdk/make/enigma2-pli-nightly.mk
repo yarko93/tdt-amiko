@@ -6,7 +6,7 @@ E_CONFIG_OPTS += --with-graphlcd
 endif
 
 if ENABLE_MEDIAFWGSTREAMER
-E_CONFIG_OPTS =
+E_CONFIG_OPTS += --enable-mediafwgstreamer
 else
 E_CONFIG_OPTS += --enable-libeplayer3
 endif
