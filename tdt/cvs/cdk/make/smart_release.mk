@@ -89,7 +89,7 @@ $(DEPDIR)/fonts-extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fon
 # 3G MODEMS
 #
 DESCRIPTION_modem_scripts = utils to setup 3G modems
-RDEPENDS_modem_scripts = pppd usb_modeswitch
+RDEPENDS_modem_scripts = pppd usb_modeswitch iptables iptables-dev
 
 $(DEPDIR)/modem-scripts: @DEPENDS_modem_scripts@ $(RDEPENDS_modem_scripts)
 	@PREPARE_modem_scripts@
