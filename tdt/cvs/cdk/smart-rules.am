@@ -1284,7 +1284,7 @@ e2skin
   git://github.com/schpuntik/enigma2-skins-sh4.git:b=master
 ;
 modem_scripts
-  0.1
+  0.2
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/ppp/ip-*
