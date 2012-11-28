@@ -45,8 +45,9 @@
 #  http:// - http wget download
 #  ftp:// - ftp wget download
 #  file:// - look for file in Patches directory
-#  git://www.gitserver.com/gitrepo:r=revision:b=branch:sub=subdir_in_git_tree
+#  git://www.gitserver.com/gitrepo:r=revision:b=branch:sub=subdir_in_git_tree:protocol=http
 #   revision, branch and subdirectory to use (arguments are optional).
+#   and protocol which git should use. (replaces 'git://' while fetch)
 #  svn://www.gitserver.com/gitrepo:r=revision
 #   only revision option
 #
@@ -1284,7 +1285,7 @@ e2skin
   git://github.com/schpuntik/enigma2-skins-sh4.git:b=master
 ;
 modem_scripts
-  0.1
+  0.2
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/ppp/ip-*
