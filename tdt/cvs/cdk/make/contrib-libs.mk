@@ -2202,7 +2202,7 @@ PACKAGES_python = python python_ctypes
 
 DESCRIPTION_python = "A high-level scripting language"
 FILES_python = \
-/usr/bin/python \
+/usr/bin/python* \
 /usr/lib/libpython$(PYTHON_VERSION).* \
 $(PYTHON_DIR)/*.py \
 $(PYTHON_DIR)/encodings \
