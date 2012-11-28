@@ -216,7 +216,7 @@ ipkg
 module_init_tools
   3.16
   {PN}-{PV}
-  extract:http://ftp.tlk-l.net/pub/mirrors/kernel.org/linux/utils/kernel/{PN}/{PN}-{PV}.tar.bz2
+  extract:http://ftp.be.debian.org/pub/linux/utils/kernel/{PN}/{PN}-{PV}.tar.bz2
   patch:file://module-init-tools-no-man.patch
   make:INSTALL=install:install:sbin_PROGRAMS="depmod modinfo":bin_PROGRAMS=:mandir=/usr/share/man:DESTDIR=TARGETS
 ;
@@ -1285,7 +1285,7 @@ e2skin
   git://github.com/schpuntik/enigma2-skins-sh4.git:b=master
 ;
 modem_scripts
-  0.1
+  0.2
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/ppp/ip-*

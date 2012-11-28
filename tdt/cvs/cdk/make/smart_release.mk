@@ -89,7 +89,7 @@ $(DEPDIR)/fonts-extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fon
 # 3G MODEMS
 #
 DESCRIPTION_modem_scripts = utils to setup 3G modems
-RDEPENDS_modem_scripts = pppd usb_modeswitch
+RDEPENDS_modem_scripts = pppd usb_modeswitch iptables iptables-dev
 
 $(DEPDIR)/modem-scripts: @DEPENDS_modem_scripts@ $(RDEPENDS_modem_scripts)
 	@PREPARE_modem_scripts@
@@ -305,6 +305,7 @@ release_base: driver-ptinp driver-encrypt
 	cp -dp $(buildprefix)/root/etc/inetd.conf $(prefix)/release/etc/ && \
 	ln -s /usr/share/zoneinfo/Europe/Berlin $(prefix)/release/etc/localtime && \
 	cp -dp $(targetprefix)/etc/mtab $(prefix)/release/etc/ && \
+	cp -dp $(buildprefix)/root/etc/motd $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/passwd $(prefix)/release/etc/ && \
 	cp -dp $(buildprefix)/root/etc/profile $(prefix)/release/etc/ && \
 	cp -dp $(targetprefix)/etc/protocols $(prefix)/release/etc/ && \

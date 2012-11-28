@@ -1,8 +1,6 @@
 #!/bin/sh
 
-DEBUG=0
 
-[ $DEBUG -eq 1 ] && echo "ACTION $1 MODEMPORT $2" >> /tmp/modem.log || rm -rf /tmp/modem.log
 
 . /etc/modem.conf
 
@@ -17,6 +15,9 @@ DEBUG=0
 [ -z "$MODEMPPPDOPTS" ] && MODEMPPPDOPTS=""
 [ -z "$DIALNUMBER" ] && DIALNUMBER="*99#"
 [ -z "$DISABLEAUTOSTART" ] && DISABLEAUTOSTART=0
+[ -z "$DEBUG" ] && $DEBUG=0
+
+[ $DEBUG -eq 1 ] && echo "ACTION $1 MODEMPORT $2" >> /tmp/modem.log || rm -rf /tmp/modem.log
 
 killall pppd
 rm -rf /etc/ppp/peers/0.chat

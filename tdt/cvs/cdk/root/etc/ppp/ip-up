@@ -1,10 +1,31 @@
 #!/bin/sh
 
+./etc/modem.conf
+
 # save DNS
 if [ -e /etc/ppp/resolv.conf ]
  then
   cat /etc/resolv.conf > /var/run/resolv.old 
   cat /etc/ppp/resolv.conf > /etc/resolv.conf
 fi
+
+
+# close ftp & telnet from outside
+iptables -F
+iptables -A INPUT -i ppp0 -p tcp --dport 21 -j DROP 
+iptables -A INPUT -i ppp0 -p tcp --dport 23 -j DROP
+
+
+#share connection
+
+if [ $SHARE -eq 1 ]
+ then
+  echo 1 > /proc/sys/net/ipv4/ip_forward
+  modprobe ip_conntrack_ftp
+  iptables -t nat -F
+  iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE
+  iptables -A FORWARD -i ppp0 -o ppp0 -j DROP
+fi
+  
 
 
