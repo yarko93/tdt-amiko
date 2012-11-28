@@ -672,7 +672,9 @@ sub process_download ($$)
     }
     elsif ( $url =~ m#^git://# )
     {
-      $output .= " || \\\n\tgit clone $url" . " " . $f;
+      my $tmpurl = $url;
+      $tmpurl =~ s#git://#$opts{"protocol"}://#  if $opts{"protocol"} ;
+      $output .= " || \\\n\tgit clone $tmpurl " . $f;
       $output .= " -b " . $opts{"b"} if $opts{"b"};
     }
 
