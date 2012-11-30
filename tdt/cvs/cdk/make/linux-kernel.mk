@@ -259,6 +259,7 @@ PKGR_linux_kernel = r3
 SRC_URI_linux_kernel = stlinux.com
 FILES_linux_kernel = \
 /lib/modules/$(KERNELVERSION)/kernel \
+/lib/modules/$(KERNELVERSION)/modules.* \
 /boot/uImage
 
 define postinst_linux_kernel
