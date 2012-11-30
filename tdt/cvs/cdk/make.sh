@@ -383,7 +383,7 @@ esac
 			echo "	4) inactive"
 			echo "	5) Fri,  5 Nov 2010 00:16 - E2 V2.4 libplayer3 7fd4241a1d7b8d7c36385860b24882636517473b"
 			echo "	6) Wed,  6 Jul 2011 11:17 - E2 V3.1 gstreamer  388dcd814d4e99720cb9a6c769611be4951e4ad4"
-			echo "	7) Current E2 gitgui arp-team"
+			echo "	7) Current E2 gitgui arp-team eplayer3/gstreamer "
 			echo "	8) Current E2 gitgui arp-team no gstreamer"
 		    read -p "Select enigma2 revision (0-8):"
 			case "$REPLY" in
