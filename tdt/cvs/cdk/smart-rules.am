@@ -1437,7 +1437,7 @@ if ENABLE_E2D6
 endif
 
 if ENABLE_E2D7
-  git://gitorious.org/~schpuntik/open-duckbox-project-sh4/amiko-guigit.git:b=arp-team
+  git://code.google.com/p/enigma2-dmm:protocol=https
 endif
 
 if ENABLE_E2D8

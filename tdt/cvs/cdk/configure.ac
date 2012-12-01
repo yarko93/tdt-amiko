@@ -983,6 +983,7 @@ TUXBOX_RULES_MAKE(enigma2_networkbrowser)
 TUXBOX_RULES_MAKE(enigma2_openwebif)
 TUXBOX_RULES_MAKE(e2plugin)
 TUXBOX_RULES_MAKE(e2skin)
+TUXBOX_RULES_MAKE(enigma2)
 
 #
 # xbmc
