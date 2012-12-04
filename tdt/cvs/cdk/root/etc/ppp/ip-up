@@ -1,6 +1,6 @@
 #!/bin/sh
 
-./etc/modem.conf
+. /etc/modem.conf
 
 # save DNS
 if [ -e /etc/ppp/resolv.conf ]
@@ -18,9 +18,9 @@ iptables -A INPUT -i ppp0 -p tcp --dport 23 -j DROP
 
 #share connection
 
-if [ $SHARE -eq 1 ]
+if [ "$SHARE" -eq "1" ]
  then
-  echo 1 > /proc/sys/net/ipv4/ip_forward
+  echo "1" > /proc/sys/net/ipv4/ip_forward
   modprobe ip_conntrack_ftp
   iptables -t nat -F
   iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE
