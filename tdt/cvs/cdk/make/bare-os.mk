@@ -312,6 +312,30 @@ $(DEPDIR)/%$(LIBGCC): $(LIBGCC_RPM)
 # END OF BOOTSTRAP
 
 #
+# LIBFFI
+#
+LIBFFI := libffi
+LIBFFI_VERSION := 3.0.10-1
+LIBFFI_SPEC := stm-target-$(LIBFFI).spec
+LIBFFI_SPEC_PATCH :=
+LIBFFI_PATCHES :=
+
+LIBFFI_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBFFI)-dev-$(LIBFFI_VERSION).sh4.rpm
+
+$(LIBFFI_RPM): \
+		$(addprefix Patches/,$(LIBFFI_SPEC_PATCH) $(LIBFFI_PATCHES)) \
+		$(archivedir)/$(STLINUX)-target-$(LIBFFI)-$(LIBFFI_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(LIBFFI_SPEC_PATCH),( cd SPECS && patch -p1 $(LIBFFI_SPEC) < $(buildprefix)/Patches/$(LIBFFI_SPEC_PATCH) ) &&) \
+	$(if $(LIBFFI_PATCHES),cp $(addprefix Patches/,$(LIBFFI_PATCHES)) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(LIBFFI_SPEC)
+
+$(DEPDIR)/$(LIBFFI): $(LIBFFI_RPM)
+	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^) && \
+	touch $@
+
+#
 # LIBTERMCAP
 #
 LIBTERMCAP := libtermcap
