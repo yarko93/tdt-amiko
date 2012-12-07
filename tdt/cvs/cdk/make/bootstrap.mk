@@ -37,7 +37,7 @@ HOST_M4_RPM = RPMS/sh4/$(STLINUX)-$(HOST_M4)-$(HOST_M4_VERSION).sh4.rpm
 
 $(HOST_M4_RPM): \
 		$(addprefix Patches/,$(HOST_M4_SPEC_PATCH) $(HOST_M4_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_M4)-$(HOST_M4_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_M4)-$(HOST_M4_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_M4_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_M4_SPEC) < $(buildprefix)/Patches/$(HOST_M4_SPEC_PATCH) ) &&) \
 	$(if $(HOST_M4_PATCHES),cp $(addprefix Patches/,$(HOST_M4_PATCHES)) SOURCES/ &&) \
@@ -133,7 +133,7 @@ HOST_AUTOTOOLS_RPM = RPMS/sh4/$(STLINUX)-$(HOST_AUTOTOOLS)-$(HOST_AUTOTOOLS_VERS
 
 $(HOST_AUTOTOOLS_RPM): \
 		$(addprefix Patches/,$(HOST_AUTOTOOLS_SPEC_PATCH) $(HOST_AUTOTOOLS_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_AUTOTOOLS)-$(HOST_AUTOTOOLS_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_AUTOTOOLS)-$(HOST_AUTOTOOLS_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_AUTOTOOLS_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_AUTOTOOLS_SPEC) < $(buildprefix)/Patches/$(HOST_AUTOTOOLS_SPEC_PATCH) ) &&) \
 	$(if $(HOST_AUTOTOOLS_PATCHES),cp $(addprefix Patches/,$(HOST_AUTOTOOLS_PATCHES)) SOURCES/ &&) \
@@ -156,7 +156,7 @@ HOST_AUTOMAKE_RPM = RPMS/sh4/$(STLINUX)-$(HOST_AUTOMAKE)-$(HOST_AUTOMAKE_VERSION
 
 $(HOST_AUTOMAKE_RPM): \
 		$(addprefix Patches/,$(HOST_AUTOMAKE_SPEC_PATCH) $(HOST_AUTOMAKE_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_AUTOMAKE)-$(HOST_AUTOMAKE_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_AUTOMAKE)-$(HOST_AUTOMAKE_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_AUTOMAKE_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_AUTOMAKE_SPEC) < $(buildprefix)/Patches/$(HOST_AUTOMAKE_SPEC_PATCH) ) &&) \
 	$(if $(HOST_AUTOMAKE_PATCHES),cp $(addprefix Patches/,$(HOST_AUTOMAKE_PATCHES)) SOURCES/ &&) \
@@ -178,7 +178,7 @@ HOST_AUTOCONF_RPM = RPMS/sh4/$(STLINUX)-$(HOST_AUTOCONF)-$(HOST_AUTOCONF_VERSION
 
 $(HOST_AUTOCONF_RPM): \
 		$(addprefix Patches/,$(HOST_AUTOCONF_SPEC_PATCH) $(HOST_AUTOCONF_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_AUTOCONF)-$(HOST_AUTOCONF_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_AUTOCONF)-$(HOST_AUTOCONF_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_AUTOCONF_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_AUTOCONF_SPEC) < $(buildprefix)/Patches/$(HOST_AUTOCONF_SPEC_PATCH) ) &&) \
 	$(if $(HOST_AUTOCONF_PATCHES),cp $(addprefix Patches/,$(HOST_AUTOCONF_PATCHES)) SOURCES/ &&) \
@@ -203,7 +203,7 @@ HOST_MODINIT_RPM = RPMS/sh4/$(STLINUX)-$(HOST_MODINIT)-$(HOST_MODINIT_VERSION).s
 
 $(HOST_MODINIT_RPM): \
 		$(addprefix Patches/,$(HOST_MODINIT_SPEC_PATCH) $(HOST_MODINIT_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_MODINIT)-$(HOST_MODINIT_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_MODINIT)-$(HOST_MODINIT_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_MODINIT_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_MODINIT_SPEC) < $(buildprefix)/Patches/$(HOST_MODINIT_SPEC_PATCH) ) &&) \
 	$(if $(HOST_MODINIT_PATCHES),cp $(addprefix Patches/,$(HOST_MODINIT_PATCHES)) SOURCES/ &&) \
@@ -226,7 +226,7 @@ HOST_PKGCONFIG_RPM = RPMS/sh4/$(STLINUX)-$(HOST_PKGCONFIG)-$(HOST_PKGCONFIG_VERS
 
 $(HOST_PKGCONFIG_RPM): \
 		$(addprefix Patches/,$(HOST_PKGCONFIG_SPEC_PATCH) $(HOST_PKGCONFIG_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_PKGCONFIG)-$(HOST_PKGCONFIG_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_PKGCONFIG)-$(HOST_PKGCONFIG_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_PKGCONFIG_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_PKGCONFIG_SPEC) < $(buildprefix)/Patches/$(HOST_PKGCONFIG_SPEC_PATCH) ) &&) \
 	$(if $(HOST_PKGCONFIG_PATCHES),cp $(addprefix Patches/,$(HOST_PKGCONFIG_PATCHES)) SOURCES/ &&) \
@@ -328,7 +328,7 @@ CROSS_GMP_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_GMP)-$(CROSS_GMP_VERSION).$
 
 $(CROSS_GMP_RPM): \
 		$(addprefix Patches/,$(CROSS_GMP_SPEC_PATCH) $(CROSS_GMP_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_GMP))-$(CROSS_GMP_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_GMP))-$(CROSS_GMP_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(CROSS_GMP_SPEC_PATCH),( cd SPECS && patch -p1 $(CROSS_GMP_SPEC) < $(buildprefix)/Patches/$(CROSS_GMP_SPEC_PATCH) ) &&) \
 	$(if $(CROSS_GMP_PATCHES),cp $(addprefix Patches/,$(CROSS_GMP_PATCHES)) SOURCES/ &&) \
@@ -351,7 +351,7 @@ CROSS_MPFR_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_MPFR)-$(CROSS_MPFR_VERSION
 $(CROSS_MPFR_RPM): \
 		$(CROSS_GMP_RPM) \
 		$(addprefix Patches/,$(CROSS_MPFR_SPEC_PATCH) $(CROSS_MPFR_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_MPFR))-$(CROSS_MPFR_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_MPFR))-$(CROSS_MPFR_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(CROSS_MPFR_SPEC_PATCH),( cd SPECS && patch -p1 $(CROSS_MPFR_SPEC) < $(buildprefix)/Patches/$(CROSS_MPFR_SPEC_PATCH) ) &&) \
 	$(if $(CROSS_MPFR_PATCHES),cp $(addprefix Patches/,$(CROSS_MPFR_PATCHES)) SOURCES/ &&) \
@@ -374,7 +374,7 @@ CROSS_MPC_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_MPC)-$(CROSS_MPC_VERSION).$
 
 $(CROSS_MPC_RPM): \
 		$(addprefix Patches/,$(CROSS_MPC_SPEC_PATCH) $(CROSS_MPC_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_MPC))-$(CROSS_MPC_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_MPC))-$(CROSS_MPC_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(CROSS_MPC_SPEC_PATCH),( cd SPECS && patch -p1 $(CROSS_MPC_SPEC) < $(buildprefix)/Patches/$(CROSS_MPC_SPEC_PATCH) ) &&) \
 	$(if $(CROSS_MPC_PATCHES),cp $(addprefix Patches/,$(CROSS_MPC_PATCHES)) SOURCES/ &&) \
@@ -397,7 +397,7 @@ CROSS_LIBELF_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_LIBELF)-$(CROSS_LIBELF_V
 
 $(CROSS_LIBELF_RPM): \
 		$(addprefix Patches/,$(CROSS_LIBELF_SPEC_PATCH) $(CROSS_LIBELF_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_LIBELF))-$(CROSS_LIBELF_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_LIBELF))-$(CROSS_LIBELF_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(CROSS_LIBELF_SPEC_PATCH),( cd SPECS && patch -p1 $(CROSS_LIBELF_SPEC) < $(buildprefix)/Patches/$(CROSS_LIBELF_SPEC_PATCH) ) &&) \
 	$(if $(CROSS_LIBELF_PATCHES),cp $(addprefix Patches/,$(CROSS_LIBELF_PATCHES)) SOURCES/ &&) \
@@ -432,7 +432,7 @@ CROSS_LIBGCC_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_LIBGCC)-$(CROSS_GCC_VERS
 $(CROSS_GCC_RPM) $(CROSS_CPP_RPM) $(CROSS_G++_RPM) $(CROSS_PROTOIZE_RPM) $(CROSS_LIBGCC_RPM): \
 		$(if $(CROSS_GCC_SPEC_PATCH),Patches/$(CROSS_GCC_SPEC_PATCH)) \
 		$(if $(CROSS_GCC_PATCHES),$(CROSS_GCC_PATCHES:%=Patches/%)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_GCC))-$(CROSS_GCC_VERSION).src.rpm \
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_GCC))-$(CROSS_GCC_VERSION).src.rpm \
 		| $(archivedir)/$(STLINUX)-sh4-$(GLIBC)-$(GLIBC_VERSION).sh4.rpm \
 		$(archivedir)/$(STLINUX)-sh4-$(GLIBC_DEV)-$(GLIBC_VERSION).sh4.rpm \
 		$(if $(KERNELHEADERS),$(KERNELHEADERS)) \
