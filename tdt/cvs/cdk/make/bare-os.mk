@@ -336,6 +336,46 @@ $(DEPDIR)/$(LIBFFI): $(LIBFFI_RPM)
 	touch $@
 
 #
+# GLIB2
+#
+GLIB2 := #glib2
+GLIB2_DEV := glib2-dev
+GLIB2_VERSION := 2.28.3-30
+GLIB2_SPEC := stm-target-$(GLIB2).spec
+GLIB2_SPEC_PATCH :=
+GLIB2_PATCHES :=
+
+GLIB2_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GLIB2)-$(GLIB2_VERSION).sh4.rpm
+GLIB2_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GLIB2_DEV)-$(GLIB2_VERSION).sh4.rpm
+
+$(GLIB2_RPM) $(GLIB2_DEV_RPM): \
+		$(if $(GLIB2_SPEC_PATCH),Patches/$(GLIB2_SPEC_PATCH)) \
+		$(if $(GLIB2_PATCHES),$(GLIB2_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-target-$(GLIB2)-$(GLIB2_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -ihv $(lastword $^) && \
+	$(if $(GLIB2_SPEC_PATCH),( cd SPECS && patch -p1 $(GLIB2_SPEC) < $(buildprefix)/Patches/$(GLIB2_SPEC_PATCH) ) &&) \
+	$(if $(GLIB2_PATCHES),cp $(GLIB2_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --nodeps --target=sh4-linux SPECS/$(GLIB2_SPEC)
+
+$(DEPDIR)/min-$(GLIB2) $(DEPDIR)/std-$(GLIB2) $(DEPDIR)/max-$(GLIB2) \
+$(DEPDIR)/$(GLIB2): \
+$(DEPDIR)/%$(GLIB2): bootstrap $(HOST_GLIB2) $(GLIB2_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
+	[ "x$*" = "x" ] && touch $@ || true
+
+$(DEPDIR)/min-$(GLIB2_DEV) $(DEPDIR)/std-$(GLIB2_DEV) $(DEPDIR)/max-$(GLIB2_DEV) \
+$(DEPDIR)/$(GLIB2_DEV): \
+$(DEPDIR)/%$(GLIB2_DEV): $(DEPDIR)/%$(GLIB2) $(GLIB2_DEV_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
+	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/{libgio,libglib,libgmodule,libgobject,libgthread}-2.0.la
+	sed -i '/^dependency_libs=/{ s# /usr/lib# $(targetprefix)/usr/lib#g }' $(targetprefix)/usr/lib/{libgio,libglib,libgmodule,libgobject,libgthread}-2.0.la
+	sed -i '/^prefix=/{ s#/usr#$(targetprefix)/usr#g }' $(targetprefix)/usr/lib//pkgconfig/{gio,gio-unix,glib,gmodule,gmodule-export,gmodule-no-export,gobject}-2.0.pc
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
 # LIBTERMCAP
 #
 LIBTERMCAP := libtermcap
