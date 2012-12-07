@@ -416,7 +416,7 @@ CROSS_CPP = cross-sh4-cpp
 CROSS_G++ = cross-sh4-g++
 CROSS_PROTOIZE = cross-sh4-protoize
 CROSS_LIBGCC = cross-sh4-libgcc
-CROSS_GCC_VERSION = 4.5.2-78
+CROSS_GCC_VERSION := $(if $(GCC_472),4.7.2-112,4.6.3-111)
 CROSS_GCC_RAWVERSION = $(firstword $(subst -, ,$(CROSS_GCC_VERSION)))
 CROSS_GCC_SPEC = stm-$(subst cross-sh4-,cross-,$(CROSS_GCC)).spec
 CROSS_GCC_SPEC_PATCH = $(CROSS_GCC_SPEC).$(CROSS_GCC_VERSION).diff
@@ -435,9 +435,6 @@ $(CROSS_GCC_RPM) $(CROSS_CPP_RPM) $(CROSS_G++_RPM) $(CROSS_PROTOIZE_RPM) $(CROSS
 		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_GCC))-$(CROSS_GCC_VERSION).src.rpm \
 		| $(archivedir)/$(STLINUX)-sh4-$(GLIBC)-$(GLIBC_VERSION).sh4.rpm \
 		$(archivedir)/$(STLINUX)-sh4-$(GLIBC_DEV)-$(GLIBC_VERSION).sh4.rpm \
-		$(if $(CROSS_MPFR),$(CROSS_MPFR)) \
-		$(if $(CROSS_MPC),$(CROSS_MPC)) \
-		$(if $(CROSS_LIBELF),$(CROSS_LIBELF)) \
 		$(if $(KERNELHEADERS),$(KERNELHEADERS)) \
 		kernel-headers
 	rpm $(DRPM) --nosignature --ignorearch --nodeps --force -Uhv \
