@@ -439,7 +439,7 @@ FILE_RPM := RPMS/sh4/$(STLINUX)-sh4-$(FILE)-$(FILE_VERSION).sh4.rpm
 $(FILE_RPM): \
 		$(if $(FILE_SPEC_PATCH),Patches/$(FILE_SPEC_PATCH)) \
 		$(if $(FILE_PATCHES),$(FILE_PATCHES:%=Patches/%)) \
-		$(archivedir)/stlinux22-target-$(FILE)-$(FILE_VERSION).src.rpm
+		$(archivedir)$(STLINUX)-target-$(FILE)-$(FILE_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(FILE_SPEC_PATCH),( cd SPECS && patch -p1 $(FILE_SPEC) < $(buildprefix)/Patches/$(FILE_PATCH) ) &&) \
 	$(if $(FILE_PATCHES),cp $(FILE_PATCHES:%=Patches/%) SOURCES/ &&) \
@@ -528,7 +528,7 @@ $(UTIL_LINUX_RPM): \
 		$(if $(UTIL_LINUX_SPEC_PATCH),Patches/$(UTIL_LINUX_SPEC_PATCH)) \
 		$(if $(UTIL_LINUX_PATCHES),$(UTIL_LINUX_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX)-target-$(UTIL_LINUX)-$(UTIL_LINUX_VERSION).src.rpm \
-		| $(NCURSES_DEV)
+		| $(NCURSES) $(NCURSES_DEV)
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(UTIL_LINUX_SPEC_PATCH),( cd SPECS && patch -p1 $(UTIL_LINUX_SPEC) < $(buildprefix)/Patches/$(UTIL_LINUX_SPEC_PATCH) ) &&) \
 	$(if $(UTIL_LINUX_PATCHES),cp $(UTIL_LINUX_PATCHES:%=Patches/%) SOURCES/ &&) \
