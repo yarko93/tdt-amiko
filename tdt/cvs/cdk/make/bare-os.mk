@@ -204,6 +204,45 @@ $(LIBELF_RPM): \
 $(DEPDIR)/$(LIBELF): $(LIBELF_RPM)
 	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^) && \
 	touch $@
+#
+# ZLIB
+#
+ZLIB := zlib
+ZLIB_DEV := zlib-dev
+ZLIB_BIN := zlib-bin
+ZLIB_VERSION := 1.2.5-20
+ZLIB_SPEC := stm-target-$(ZLIB).spec
+ZLIB_SPEC_PATCH :=
+ZLIB_PATCHES :=
+
+ZLIB_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ZLIB)-$(ZLIB_VERSION).sh4.rpm
+ZLIB_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ZLIB_DEV)-$(ZLIB_VERSION).sh4.rpm
+ZLIB_BIN_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ZLIB_BIN)-$(ZLIB_VERSION).sh4.rpm
+
+$(ZLIB_RPM) $(ZLIB_DEV_RPM) $(ZLIB_BIN_RPM): \
+		$(addprefix Patches/,$(ZLIB_SPEC_PATCH) $(ZLIB_PATCHES)) \
+		$(archivedir)/$(STLINUX)-target-$(ZLIB)-$(ZLIB_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(ZLIB_SPEC_PATCH),( cd SPECS && patch -p1 $(ZLIB_SPEC) < $(buildprefix)/Patches/$(ZLIB_SPEC_PATCH) ) &&) \
+	$(if $(ZLIB_PATCHES),cp $(addprefix Patches/,$(ZLIB_PATCHES)) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb --clean --target=sh4-linux SPECS/$(ZLIB_SPEC)
+
+$(DEPDIR)/min-$(ZLIB) $(DEPDIR)/std-$(ZLIB) $(DEPDIR)/max-$(ZLIB) $(DEPDIR)/$(ZLIB): \
+$(DEPDIR)/%$(ZLIB): $(ZLIB_RPM)
+	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^) && \
+	touch $@
+
+$(DEPDIR)/min-$(ZLIB_DEV) $(DEPDIR)/std-$(ZLIB_DEV) $(DEPDIR)/max-$(ZLIB_DEV) $(DEPDIR)/$(ZLIB_DEV): \
+$(DEPDIR)/%$(ZLIB_DEV): $(ZLIB_DEV_RPM)
+	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^) && \
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/zlib.pc
+	touch $@
+
+$(DEPDIR)/min-$(ZLIB_BIN) $(DEPDIR)/std-$(ZLIB_BIN) $(DEPDIR)/max-$(ZLIB_BIN) $(DEPDIR)/$(ZLIB_BIN): \
+$(DEPDIR)/%$(ZLIB_BIN): $(ZLIB_BIN_RPM)
+	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^) && \
+	touch $@
 
 #
 # GCC LIBSTDC++
