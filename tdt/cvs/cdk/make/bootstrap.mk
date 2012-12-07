@@ -528,15 +528,20 @@ $(DEPDIR)/bootstrap-cross: | \
 		bootstrap-host \
 		cross-sh4-distributionutils \
 		cross-sh4-filesystem \
+		cross-sh4-pkg-config \
 		cross-sh4-binutils \
 		cross-sh4-binutils-dev \
+		cross-sh4-gmp \
+		cross-sh4-mpfr \
+		cross-sh4-mpc \
+		cross-sh4-libelf \
 		cross-sh4-cpp \
 		cross-sh4-gcc \
 		cross-sh4-g++ \
 		ipkg-utils \
 		opkg-host \
 		cross-sh4-libgcc
-	[ "x$*" = "x" ] && touch -r $(CROSS_G++_RPM) $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 $(DEPDIR)/setup-cross-doc: \
 	cross-binutils-doc \
