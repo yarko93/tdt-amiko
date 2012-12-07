@@ -48,6 +48,32 @@ $(DEPDIR)/$(HOST_M4): $(HOST_M4_RPM)
 	touch $@
 
 #
+# HOST-LIBTOOL
+#
+HOST_LIBTOOL = host-libtool
+HOST_LIBTOOL_VERSION = 2.2.8-4
+HOST_LIBTOOL_SPEC = stm-$(HOST_LIBTOOL).spec
+HOST_LIBTOOL_SPEC_PATCH =
+HOST_LIBTOOL_PATCHES =
+
+HOST_LIBTOOL_RPM = RPMS/sh4/$(STLINUX)-$(HOST_LIBTOOL)-$(HOST_LIBTOOL_VERSION).sh4.rpm
+
+$(HOST_LIBTOOL_RPM): \
+		$(if $(HOST_LIBTOOL_SPEC_PATCH),Patches/$(HOST_LIBTOOL_SPEC_PATCH)) \
+		$(if $(HOST_LIBTOOL_PATCHES),$(HOST_LIBTOOL_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-$(HOST_LIBTOOL)-$(HOST_LIBTOOL_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(HOST_LIBTOOL_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_LIBTOOL_SPEC) < $(buildprefix)/Patches/$(HOST_LIBTOOL_SPEC_PATCH) ) &&) \
+	$(if $(HOST_LIBTOOL_PATCHES),cp $(HOST_LIBTOOL_PATCHES:%=Patches/%) SOURCES/ &&) \
+	unset LD_LIBRARY_PATH && \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(HOST_LIBTOOL_SPEC)
+
+$(DEPDIR)/$(HOST_LIBTOOL): $(HOST_LIBTOOL_RPM)
+	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
+	touch .deps/$(notdir $@)
+
+#
 # HOST-BASE-PASSWD
 #
 HOST_BASE_PASSWD = host-base-passwd
