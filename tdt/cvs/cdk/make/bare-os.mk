@@ -15,23 +15,13 @@ $(DEPDIR)/%filesystem: bootstrap-cross
 	$(INSTALL) -d $(targetprefix)/var/{backups,cache,lib,local,lock,log,mail,opt,run,spool}
 	ln -sf $(targetprefix)/lib $(targetprefix)/lib64
 	ln -sf $(targetprefix)/usr/lib $(targetprefix)/usr/lib64
-	ln -s /tmp $(targetprefix)/var/tmp
 	$(INSTALL) -d $(targetprefix)/var/lib/misc
 	$(INSTALL) -d $(targetprefix)/var/lock/subsys
-#	$(LN_S) ../mail $(targetprefix)/var/spool/mail
-	ln -sf ../mail $(targetprefix)/var/spool/mail
 	$(INSTALL) -d $(targetprefix)/etc/{init.d,rc.d,samba}
 	$(INSTALL) -d $(targetprefix)/etc/rc.d/{rc3.d,rcS.d}
 	ln -s ../init.d $(targetprefix)/etc/rc.d/init.d
 	$(INSTALL) -d $(targetprefix)/etc/samba/private
-	$(INSTALL) -d $(targetprefix)/jffs
 	$(INSTALL) -d $(targetprefix)/media
-#	$(INSTALL) -d $(targetprefix)/include
-	$(INSTALL) -d $(targetprefix)/ram
-	$(INSTALL) -d $(targetprefix)/rom
-#	$(INSTALL) -d $(targetprefix)/share/{doc,info,locale,man,misc,nls}
-	$(INSTALL) -d $(targetprefix)/srv
-	$(INSTALL) -d $(targetprefix)/srv/www
 	$(INSTALL) -d $(targetprefix)/var/bin
 	[ "x$*" = "x" ] && touch $@ || true
 
@@ -94,7 +84,7 @@ BINUTILS_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BINUTILS_DEV)-$(BINUTILS_VERSION).
 $(BINUTILS_RPM) $(BINUTILS_DEV_RPM): \
 		$(if $(BINUTILS_SPEC_PATCH),Patches/$(BINUTILS_SPEC_PATCH)) \
 		$(if $(BINUTILS_PATCHES),$(BINUTILS_PATCHES:%=Patches/%)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(BINUTILS)-$(BINUTILS_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(BINUTILS)-$(BINUTILS_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(BINUTILS_SPEC_PATCH),( cd SPECS && patch -p1 $(BINUTILS_SPEC) < $(buildprefix)/Patches/$(BINUTILS_SPEC_PATCH) ) &&) \
 	$(if $(BINUTILS_PATCHES),cp $(BINUTILS_PATCHES:%=Patches/%) SOURCES/ &&) \
@@ -121,7 +111,7 @@ GMP_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GMP)-$(GMP_VERSION).sh4.rpm
 
 $(GMP_RPM): \
 		$(addprefix Patches/,$(GMP_SPEC_PATCH) $(GMP_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(GMP)-$(GMP_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(GMP)-$(GMP_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(GMP_SPEC_PATCH),( cd SPECS && patch -p1 $(GMP_SPEC) < $(buildprefix)/Patches/$(GMP_SPEC_PATCH) ) &&) \
 	$(if $(GMP_PATCHES),cp $(addprefix Patches/,$(GMP_PATCHES)) SOURCES/ &&) \
@@ -149,7 +139,7 @@ MPFR_RPM := RPMS/sh4/$(STLINUX)-sh4-$(MPFR)-$(MPFR_VERSION).sh4.rpm
 $(MPFR_RPM): \
 		$(GMP) \
 		$(addprefix Patches/,$(MPFR_SPEC_PATCH) $(MPFR_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(MPFR)-$(MPFR_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(MPFR)-$(MPFR_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(MPFR_SPEC_PATCH),( cd SPECS && patch -p1 $(MPFR_SPEC) < $(buildprefix)/Patches/$(MPFR_SPEC_PATCH) ) &&) \
 	$(if $(MPFR_PATCHES),cp $(addprefix Patches/,$(MPFR_PATCHES)) SOURCES/ &&) \
@@ -177,7 +167,7 @@ MPC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(MPC)-$(MPC_VERSION).sh4.rpm
 $(MPC_RPM): \
 		$(MPFR) \
 		$(addprefix Patches/,$(MPC_SPEC_PATCH) $(MPC_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(MPC)-$(MPC_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(MPC)-$(MPC_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(MPC_SPEC_PATCH),( cd SPECS && patch -p1 $(MPC_SPEC) < $(buildprefix)/Patches/$(MPC_SPEC_PATCH) ) &&) \
 	$(if $(MPC_PATCHES),cp $(addprefix Patches/,$(MPC_PATCHES)) SOURCES/ &&) \
@@ -204,7 +194,7 @@ LIBELF_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBELF)-$(LIBELF_VERSION).sh4.rpm
 
 $(LIBELF_RPM): \
 		$(addprefix Patches/,$(LIBELF_SPEC_PATCH) $(LIBELF_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(LIBELF)-$(LIBELF_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(LIBELF)-$(LIBELF_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(LIBELF_SPEC_PATCH),( cd SPECS && patch -p1 $(LIBELF_SPEC) < $(buildprefix)/Patches/$(LIBELF_SPEC_PATCH) ) &&) \
 	$(if $(LIBELF_PATCHES),cp $(addprefix Patches/,$(LIBELF_PATCHES)) SOURCES/ &&) \
@@ -240,7 +230,7 @@ LIBGCC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBGCC)-$(GCC_VERSION).sh4.rpm
 
 $(GCC_RPM) $(LIBSTDC_RPM) $(LIBSTDC_DEV_RPM) $(LIBGCC_RPM): \
 		$(addprefix Patches/,$(GCC_SPEC_PATCH) $(GCC_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(GCC)-$(GCC_VERSION).src.rpm \
+		$(archivedir)/$(STLINUX)-target-$(GCC)-$(GCC_VERSION).src.rpm \
 		| $(DEPDIR)/$(GLIBC_DEV) $(MPFR) $(MPC) $(LIBELF)
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(GCC_SPEC_PATCH),( cd SPECS && patch -p1 $(GCC_SPEC) < $(buildprefix)/Patches/$(GCC_SPEC_PATCH) ) &&) \
