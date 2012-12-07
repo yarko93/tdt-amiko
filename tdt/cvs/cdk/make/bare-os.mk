@@ -158,7 +158,7 @@ $(DEPDIR)/$(MPFR): $(MPFR_RPM)
 # MPC
 #
 MPC := mpc
-MPC_VERSION := 0.8.2-2
+MPC_VERSION := 0.9-3
 MPC_SPEC := stm-target-$(MPC).spec
 MPC_SPEC_PATCH := $(MPC_SPEC).$(MPC_VERSION).diff
 MPC_PATCHES := stm-target-$(MPC).$(MPC_VERSION).diff
