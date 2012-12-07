@@ -29,13 +29,15 @@ FILES_sysvinit = \
 /sbin/reboot
 
 SYSVINIT_VERSION := 2.86-15
+SYSVINITTOOLS := sysvinit-tools
 SYSVINIT_SPEC := stm-target-$(SYSVINIT).spec
 SYSVINIT_SPEC_PATCH :=
 SYSVINIT_PATCHES :=
 SYSVINIT_RPM := RPMS/sh4/$(STLINUX)-sh4-$(SYSVINIT)-$(SYSVINIT_VERSION).sh4.rpm
 INITSCRIPTS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(INITSCRIPTS)-$(SYSVINIT_VERSION).sh4.rpm
+SYSVINITTOOLS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(SYSVINITTOOLS)-$(SYSVINIT_VERSION).sh4.rpm
 
-$(SYSVINIT_RPM) $(INITSCRIPTS_RPM): \
+$(SYSVINIT_RPM) $(SYSVINITTOOLS_RPM) $(INITSCRIPTS_RPM): \
 		$(if $(SYSVINIT_SPEC_PATCH),Patches/$(SYSVINIT_SPEC_PATCH)) \
 		$(if $(SYSVINIT_PATCHES),$(SYSVINIT_PATCHES:%=Patches/%)) \
 		$(archivedir)/$(STLINUX)-target-$(SYSVINIT)-$(SYSVINIT_VERSION).src.rpm
@@ -54,6 +56,15 @@ $(DEPDIR)/%$(SYSVINIT): $(SYSVINIT_ADAPTED_ETC_FILES:%=root/etc/%) \
 	( cd root/etc && for i in $(SYSVINIT_ADAPTED_ETC_FILES); do \
 		[ -f $$i ] && $(INSTALL) -m644 $$i $(prefix)/$*cdkroot/etc/$$i || true; \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done )
+	$(start_build)
+	$(fromrpm_build)
+	[ "x$*" = "x" ] && touch $@ || true
+
+$(DEPDIR)/min-$(SYSVINITTOOLS) $(DEPDIR)/std-$(SYSVINITTOOLS) $(DEPDIR)/max-$(SYSVINITTOOLS) \
+$(DEPDIR)/$(SYSVINITTOOLS): \
+$(DEPDIR)/%$(SYSVINITTOOLS): $(SYSVINITTOOLS_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $<
 	$(start_build)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
