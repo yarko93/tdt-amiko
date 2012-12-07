@@ -62,9 +62,9 @@ ETC_RW_FILES =
 # rpm helper-"functions":
 TARGETLIB = $(targetprefix)/usr/lib
 PKG_CONFIG_PATH = $(targetprefix)/usr/lib/pkgconfig
-REWRITE_LIBDIR = sed -i "s,^libdir=.*,libdir='$(targetprefix)/usr/lib'," $(targetprefix)/usr/lib
-REWRITE_LIBDEP = sed -i -e "s,\(^dependency_libs='\| \|-L\|^dependency_libs='\)/usr/lib,\$(targetprefix)/usr/lib," $(targetprefix)/usr/lib
-REWRITE_PKGCONF = sed -i "s,^prefix=.*,prefix='$(targetprefix)/usr',"
+REWRITE_LIBDIR = sed -i "s,^libdir=.*,libdir='$(TARGETLIB)'," $(TARGETLIB)
+REWRITE_LIBDEP = sed -i -e "s,\(^dependency_libs='\| \|-L\|^dependency_libs='\)/usr/lib,\$(TARGETLIB)," $(TARGETLIB)
+REWRITE_PKGCONF = sed -i "s,^prefix=.*,prefix=$(targetprefix)/usr,"
 
 BUILDENV := \
 	CC=$(target)-gcc \
