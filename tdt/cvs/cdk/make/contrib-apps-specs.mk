@@ -309,7 +309,7 @@ min-$(BASH).do_clean std-$(BASH).do_clean max-$(BASH).do_clean $(BASH).do_clean:
 # COREUTILS
 #
 COREUTILS := coreutils
-COREUTILS_VERSION := 5.2.1-14
+COREUTILS_VERSION := 8.9-19
 COREUTILS_SPEC := stm-target-$(COREUTILS).spec 
 COREUTILS_SPEC_PATCH :=
 COREUTILS_PATCHES := 
@@ -328,7 +328,7 @@ $(COREUTILS_RPM): \
 
 $(DEPDIR)/min-$(COREUTILS) $(DEPDIR)/std-$(COREUTILS) $(DEPDIR)/max-$(COREUTILS) $(DEPDIR)/$(COREUTILS): \
 $(DEPDIR)/%$(COREUTILS): $(DEPDIR)/%$(GLIBC) $(COREUTILS_RPM)
-	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --force -Uhv \
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
 	
