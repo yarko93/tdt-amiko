@@ -263,30 +263,6 @@ $(HOST_MTD_UTILS): $(HOST_MTD_UTILS_RPM)
 	touch .deps/$(notdir $@)
 
 #
-# BOOTSTRAP-HOST
-#
-$(DEPDIR)/bootstrap-host: | \
-		$(CCACHE_BIN) host-rpmconfig host-base-passwd host-distributionutils \
-		host-filesystem host-autotools $(HOST_AUTOMAKE) $(HOST_AUTOCONF) $(HOST_PKGCONFIG) \
-		$(HOST_MTD_UTILS) $(HOST_MODINIT)
-	$(if $(HOST_MTD_UTILS_RPM),[ "x$*" = "x" ] && touch -r $(HOST_MTD_UTILS_RPM) $@ || true)
-
-########################################   BOOTSTRAP-CROSS   ########################################
-#
-# CROSS_FILESYSTEM
-#
-CROSS_FILESYSTEM = cross-sh4-filesystem
-
-cross-sh4-filesystem:
-	$(INSTALL) -d $(targetprefix)
-	$(INSTALL) -d $(crossprefix)
-	$(INSTALL) -d $(crossprefix)/{bin,doc,etc,include,lib,man,sh4-linux,share,var}
-	ln -s /$(crossprefix)/lib $(crossprefix)/lib64
-	$(INSTALL) -d $(crossprefix)/man/man{1,2,3,4,5,6,7,8,9}
-	$(INSTALL) -d $(crossprefix)/sh4-linux/{bin,include,lib}
-	touch .deps/$@
-
-#
 # CROSS_DISTRIBUTIONUTILS
 #
 CROSS_DISTRIBUTIONUTILS = cross-sh4-distributionutils
