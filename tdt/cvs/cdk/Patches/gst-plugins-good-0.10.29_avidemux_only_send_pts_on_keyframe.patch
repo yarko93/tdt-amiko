@@ -20,3 +20,96 @@
      GST_BUFFER_DURATION (buf) = duration;
      GST_BUFFER_OFFSET (buf) = out_offset;
      GST_BUFFER_OFFSET_END (buf) = out_offset_end;
+
+diff --git a/gst/matroska/matroska-demux.c b/gst/matroska/matroska-demux.c
+index 6e49baa..402dbf9 100644
+--- a/gst/matroska/matroska-demux.c
++++ b/gst/matroska/matroska-demux.c
+@@ -2686,6 +2686,35 @@ gst_matroska_demux_push_dvd_clut_change_event (GstMatroskaDemux * demux,
+ }
+ 
+ static GstFlowReturn
++gst_matroska_demux_adjust_ms_mpeg4p2_buffer_time (GstElement * element,
++    GstMatroskaTrackContext * stream, GstBuffer ** buf)
++{
++  guint32 header;
++  gint64 time;
++
++  if (GST_BUFFER_SIZE (*buf) < 5)
++   return GST_FLOW_OK;
++
++  time = GST_BUFFER_TIMESTAMP (*buf);
++  GST_BUFFER_TIMESTAMP (*buf) = GST_CLOCK_TIME_NONE;
++
++  header = GST_READ_UINT32_BE (GST_BUFFER_DATA (*buf));
++  if (header == 0x000001B6) {
++    guint8 *data = GST_BUFFER_DATA (*buf);
++    guint8 frame_type;
++
++    frame_type = data[4];
++    frame_type = (frame_type >> 6) & 0x03;
++    /* B frames detected and give DTS as PTS */
++    if (frame_type == 0x02) {
++      GST_BUFFER_TIMESTAMP (*buf) = time;
++    }
++  }
++
++  return GST_FLOW_OK;
++}
++
++static GstFlowReturn
+ gst_matroska_demux_add_mpeg_seq_header (GstElement * element,
+     GstMatroskaTrackContext * stream, GstBuffer ** buf)
+ {
+@@ -4812,6 +4841,9 @@ gst_matroska_demux_video_caps (GstMatroskaTrackVideoContext *
+       if (vids != (gst_riff_strf_vids *) data)
+         g_free (vids);
+     }
++  context->postprocess_frame =
++        gst_matroska_demux_adjust_ms_mpeg4p2_buffer_time;
++
+   } else if (!strcmp (codec_id, GST_MATROSKA_CODEC_ID_VIDEO_UNCOMPRESSED)) {
+     guint32 fourcc = 0;
+ 
+-- 
+1.6.2.5
+
+diff -Naur gst-plugins-good-0.10.31.orig/gst/matroska/matroska-demux.c gst-plugins-good-0.10.31/gst/matroska/matroska-demux.c
+--- gst-plugins-good-0.10.31.orig/gst/matroska/matroska-demux.c	2012-11-29 11:59:23.382301505 +0000
++++ gst-plugins-good-0.10.31/gst/matroska/matroska-demux.c	2012-11-29 11:52:42.952328886 +0000
+@@ -1910,6 +1910,7 @@
+   GstMatroskaTrackContext *track = NULL;
+   GstSegment seeksegment = { 0, };
+   gboolean update = TRUE;
++  gboolean pad_locked = FALSE;
+ 
+   if (pad)
+     track = gst_pad_get_element_private (pad);
+@@ -2011,6 +2012,7 @@
+    * forever. */
+   GST_DEBUG_OBJECT (demux, "Waiting for streaming to stop");
+   GST_PAD_STREAM_LOCK (demux->common.sinkpad);
++  pad_locked = TRUE;
+ 
+   /* pull mode without index can do some scanning */
+   if (!demux->streaming && !entry) {
+@@ -2093,13 +2095,17 @@
+       (GstTaskFunction) gst_matroska_demux_loop, demux->common.sinkpad);
+ 
+   /* streaming can continue now */
+-  GST_PAD_STREAM_UNLOCK (demux->common.sinkpad);
++  if (pad_locked) {
++    GST_PAD_STREAM_UNLOCK (demux->common.sinkpad);
++  }
+ 
+   return TRUE;
+ 
+ seek_error:
+   {
+-    GST_PAD_STREAM_UNLOCK (demux->common.sinkpad);
++    if (pad_locked) {
++      GST_PAD_STREAM_UNLOCK (demux->common.sinkpad);
++    }
+     GST_ELEMENT_ERROR (demux, STREAM, DEMUX, (NULL), ("Got a seek error"));
+     return FALSE;
+   }
