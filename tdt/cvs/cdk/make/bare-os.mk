@@ -7,7 +7,6 @@ $(DEPDIR)/%filesystem: bootstrap-cross
 	$(INSTALL) -d $(targetprefix)/{bin,boot,dev,dev.static,etc,home,lib,mnt,opt,proc,root,sbin,sys,tmp,usr,var}
 	$(INSTALL) -d $(targetprefix)/etc/{default,opt}
 	$(INSTALL) -d $(targetprefix)/usr/{bin,include,lib,local,sbin,share,src}
-	$(INSTALL) -d $(targetprefix)/usr/lib/X11
 	$(INSTALL) -d $(targetprefix)/usr/local/{bin,include,lib,man,sbin,share,src}
 	$(INSTALL) -d $(targetprefix)/usr/local/man/{man1,man2,man3,man4,man5,man6,man7,man8}
 	$(INSTALL) -d $(targetprefix)/usr/share/{aclocal,doc,info,locale,man,misc,nls}
@@ -160,12 +159,11 @@ $(DEPDIR)/$(MPFR): $(MPFR_RPM)
 MPC := mpc
 MPC_VERSION := 0.9-3
 MPC_SPEC := stm-target-$(MPC).spec
-MPC_SPEC_PATCH := $(MPC_SPEC).$(MPC_VERSION).diff
-MPC_PATCHES := stm-target-$(MPC).$(MPC_VERSION).diff
+MPC_SPEC_PATCH :=
+MPC_PATCHES :=
 MPC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(MPC)-$(MPC_VERSION).sh4.rpm
 
 $(MPC_RPM): \
-		$(MPFR) \
 		$(addprefix Patches/,$(MPC_SPEC_PATCH) $(MPC_PATCHES)) \
 		$(archivedir)/$(STLINUX)-target-$(MPC)-$(MPC_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
@@ -428,15 +426,58 @@ $(DEPDIR)/%$(LIBTERMCAP_DEV): $(DEPDIR)/%$(LIBTERMCAP) $(LIBTERMCAP_DEV_RPM)
 	$(start_build)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
-	
 
-$(DEPDIR)/min-$(LIBTERMCAP_DOC) $(DEPDIR)/std-$(LIBTERMCAP_DOC) $(DEPDIR)/max-$(LIBTERMCAP_DOC) \
-$(DEPDIR)/$(LIBTERMCAP_DOC): \
-$(DEPDIR)/%$(LIBTERMCAP_DOC): $(LIBTERMCAP_DOC_RPM)
+#
+# ELFUTILS
+#
+ELFUTILS := elfutils
+ELFUTILS_DEV := elfutils-dev
+FILES_elfutils = \
+/usr/lib/*.so \
+/usr/lib/*.so*
+FILES_elfutils_dev = \
+/usr/lib/*.so \
+/usr/lib/*.so*
+
+ELFUTILS_VERSION := 0.152-17
+ELFUTILS_RAWVERSION := $(firstword $(subst -, ,$(ELFUTILS_VERSION)))
+ELFUTILS_SPEC := stm-target-$(ELFUTILS).spec
+ELFUTILS_SPEC_PATCH :=
+ELFUTILS_PATCHES :=
+ELFUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ELFUTILS)-$(ELFUTILS_VERSION).sh4.rpm
+ELFUTILS_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ELFUTILS_DEV)-$(ELFUTILS_VERSION).sh4.rpm
+
+$(ELFUTILS_RPM) $(ELFUTILS_DEV_RPM) $(ELFUTILS_DOC_RPM): \
+		$(if $(ELFUTILS_SPEC_PATCH),Patches/$(ELFUTILS_SPEC_PATCH)) \
+		$(if $(ELFUTILS_PATCHES),$(ELFUTILS_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STM_SRC)-target-$(ELFUTILS)-$(ELFUTILS_VERSION).src.rpm \
+		| $(DEPDIR)/$(GLIBC_DEV)
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(ELFUTILS_SPEC_PATCH),( cd SPECS && patch -p1 $(ELFUTILS_SPEC) < $(buildprefix)/Patches/$(ELFUTILS_SPEC_PATCH) ) &&) \
+	$(if $(ELFUTILS_PATCHES),cp $(ELFUTILS_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(ELFUTILS_SPEC)
+
+$(DEPDIR)/min-$(ELFUTILS) $(DEPDIR)/std-$(ELFUTILS) $(DEPDIR)/max-$(ELFUTILS) \
+$(DEPDIR)/$(ELFUTILS): \
+$(DEPDIR)/%$(ELFUTILS): bootstrap $(ELFUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
-		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
+	ln -sf elfutils.so.2 $(prefix)/$*cdkroot/usr/lib/elfutils.so && \
+	$(INSTALL) -m 644 $(buildprefix)/root/etc/termcap $(prefix)/$*cdkroot/etc
+	$(start_build)
+	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	
+
+$(DEPDIR)/min-$(ELFUTILS_DEV) $(DEPDIR)/std-$(ELFUTILS_DEV) $(DEPDIR)/max-$(ELFUTILS_DEV) \
+$(DEPDIR)/$(ELFUTILS_DEV): \
+$(DEPDIR)/%$(ELFUTILS_DEV): $(DEPDIR)/%$(ELFUTILS) $(ELFUTILS_DEV_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # NCURSES
