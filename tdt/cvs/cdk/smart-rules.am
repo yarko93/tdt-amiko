@@ -555,6 +555,13 @@ libvorbisidec
   patch:file://tremor.diff
   make:install:DESTDIR=PKDIR
 ;
+glib2
+  2.28.3
+  glib-{PV}
+  extract:http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.28/glib-{PV}.tar.gz
+  patch:file://glib-{PV}.patch
+  make:install:DESTDIR=PKDIR
+;
 libiconv
   1.14
   {PN}-{PV}

@@ -645,6 +645,54 @@ $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
 	@[ "x$*" = "x" ] && touch $@ || true
 
 #
+# libglib2
+# You need libglib2.0-dev on host system
+#
+DESCRIPTION_glib2 = "libglib2"
+
+FILES_glib2 = \
+/usr/lib/*.so*
+
+$(DEPDIR)/glib2.do_prepare: bootstrap libz @DEPENDS_glib2@
+	@PREPARE_glib2@
+	touch $@
+
+$(DEPDIR)/glib2.do_compile: $(DEPDIR)/glib2.do_prepare
+	echo "glib_cv_va_copy=no" > @DIR_glib2@/config.cache
+	echo "glib_cv___va_copy=yes" >> @DIR_glib2@/config.cache
+	echo "glib_cv_va_val_copy=yes" >> @DIR_glib2@/config.cache
+	echo "ac_cv_func_posix_getpwuid_r=yes" >> @DIR_glib2@/config.cache
+	echo "ac_cv_func_posix_getgrgid_r=yes" >> @DIR_glib2@/config.cache
+	echo "glib_cv_stack_grows=no" >> @DIR_glib2@/config.cache
+	echo "glib_cv_uscore=no" >> @DIR_glib2@/config.cache
+	cd @DIR_glib2@ && \
+		$(BUILDENV) \
+		CFLAGS="$(TARGET_CFLAGS) -Os" \
+		PKG_CONFIG=$(hostprefix)/bin/pkg-config \
+		./configure \
+			--cache-file=config.cache \
+			--disable-gtk-doc \
+			--with-threads="posix" \
+			--enable-static \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr \
+			--mandir=/usr/share/man && \
+		$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-glib2 $(DEPDIR)/std-glib2 $(DEPDIR)/max-glib2 \
+$(DEPDIR)/glib2: \
+$(DEPDIR)/%glib2: $(DEPDIR)/glib2.do_compile
+	$(start_build)
+	cd @DIR_glib2@ && \
+		@INSTALL_glib2@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_glib2@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
 # libiconv
 #
 DESCRIPTION_libiconv = "libiconv"
