@@ -1,0 +1,2 @@
+ACTION=="add", DEVPATH=="/module/aotom", SUBSYSTEM=="module", RUN+="/bin/mknod -m 644 /dev/vfd c 147 0"
+ACTION=="add", DEVPATH=="/module/cec", SUBSYSTEM=="module", RUN+="/bin/mknod -m 644 /dev/hdmi_cec c 149 0"
