@@ -20,6 +20,11 @@ AM_MAINTAINER_MODE
 
 AC_PROG_CC
 
+AC_ARG_ENABLE(gcc472,
+	AS_HELP_STRING(--enable-gcc472, compile image stm24 using gcc 4.7.2),
+	,[enable_gcc472=no])
+AM_CONDITIONAL(GCC_472,test "$enable_gcc472" = "yes")
+
 AC_ARG_ENABLE(player179,
 	AS_HELP_STRING(--enable-player179,	set up the CDK to use player179),
 	[case "${enableval}" in
@@ -107,11 +112,6 @@ AC_ARG_WITH(cpu,
 	[CPU_MODEL="$withval"],[CPU_MODEL="sh4"])
 AC_SUBST(CPU_MODEL)
 
-AC_ARG_WITH(assume-kernelsources-old,
-	[  --with-assume-kernelsources-old	Do not recompile due to new kernel sources],
-	[assume_kernelsources_old="yes"],[assume_kernelsources_old="no"])
-AM_CONDITIONAL(ASSUME_KERNELSOURCES_OLD,test "$assume_kernelsources_old" = "yes")
-
 AC_ARG_ENABLE(mediafwgstreamer,
 	AS_HELP_STRING(--enable-mediafwgstreamer,	set up the CDK to use mediafw gstreamer),
 	,[enable_mediafwgstreamer=no])
@@ -133,6 +133,12 @@ AC_SUBST(EXTERNALLCD)
 if test "$enable_externallcd" != "yes"  ; then
     AC_DEFINE(NO_LCD,1,[disable all lcd])
 fi
+
+AC_ARG_ENABLE(eplayer3,
+	AS_HELP_STRING(--enable-eplayer3,    enable eplayer3 support),
+	,[enable_eplayer3=no])
+AM_CONDITIONAL(ENABLE_EPLAYER3,test "$enable_eplayer3" = "yes")
+AC_SUBST(EPLAYER3)
 
 if test -z "$CFLAGS" ; then
 	CFLAGS="-g -O2"
@@ -667,13 +673,64 @@ if test "$YACC" != "bison -y"; then
 	AC_MSG_ERROR(No bison found)
 fi
 
+################################################################
+# ccache
+#
+AC_ARG_ENABLE(ccache,
+	AS_HELP_STRING(--enable-ccache,   enable ccache supported compiling ),
+	[case "${enableval}" in
+		yes) CCACHE=ccache ;;
+	esac],[enable_ccache=no])
+AM_CONDITIONAL(ENABLE_CCACHE,test "$enable_ccache" = "yes")
+AC_SUBST(CCACHE)
+
+hostccachedir=$(dirname `which ccache` 2>/dev/null)
+if [[ -e $hostccachedir/ccache ]]; then
+	ccachedir=$hostccachedir
+	AM_CONDITIONAL(USE_CCACHEHOST, true)
+else
+	ccachedir=$hostprefix/bin
+	AM_CONDITIONAL(USE_CCACHEHOST, false)
+fi
+AC_SUBST(ccachedir)
+
+# optional ccache settings
+AC_ARG_WITH(maxcachesize,
+	[  --with-maxcachesize=SIZE 
+						maximal ccachesize for ccache ],
+	[maxcachesize="$with_maxcachesize"],[maxcachesize="-1"])
+AC_SUBST(maxcachesize)
+
+AC_ARG_WITH(maxcachefiles,
+	[  --with-maxcachefiles=COUNT 
+						maximal count of cachefiles for ccache ],
+	[maxcachefiles="$with_maxcachefiles"],[maxcachefiles="-1"])
+AC_SUBST(maxcachefiles)
+
 if test "$enable_ccache" = "yes"; then
-	AC_PATH_PROG(CCACHE,ccache,no)
-	if test "$CCACHE" = "no"; then
-		AC_MSG_WARN(No ccache found)
-		CCACHE=$hostprefix/bin/ccache
+	if  [[ -e $ccachedir/ccache ]]; then
+		if test $maxcachesize != -1; then
+			$ccachedir/ccache -M $maxcachesize
+		fi
+		if test $maxcachefiles != -1; then
+			$ccachedir/ccache -F $maxcachefiles
+		fi
+		ccacheinfo="
+----------------------------------------
+ccache installdir           : $ccachedir
+$($ccachedir/ccache -s)
+----------------------------------------"
+	else
+		ccacheinfo="
+----------------------------------------
+ccache installdir           : $ccachedir
+ccache is not yet installed, but installation starts on first build of cdk environment or you can run make ccache
+----------------------------------------"
 	fi
 fi
+
+################################################################
+
 
 FONTDIR="/share/fonts"
 AC_SUBST(FONTDIR)
@@ -767,13 +824,6 @@ else
 	GRAPHICFW="framebuffer"
 	GRAPHICFW_DEP=""
 fi
-
-
-#TUXBOX_RULES_MAKE_EXDIR(binutils)
-#TUXBOX_RULES_MAKE_EXDIR(bootstrap_gcc)
-#TUXBOX_RULES_MAKE_EXDIR(glibc)
-#TUXBOX_RULES_MAKE_EXDIR(gcc)
-#TUXBOX_RULES_MAKE(uclibc)
 
 #
 # core
@@ -1088,6 +1138,7 @@ linux kernel                : ${KERNELVERSION%.*}
 kernelversion               : $KERNELVERSION
 localversion                : $KERNELSTMLABEL
 STLinux 2.4                 : $enable_stm24
+GCC 4.7.2                   : $enable_gcc472
 Patchlevel P0207            : $enable_p0207
 Patchlevel P0209            : $enable_p0209
 Patchlevel P0210            : $enable_p0210
@@ -1131,6 +1182,8 @@ GraphicFw                   : $GRAPHICFW
 GraphicFw Dep               : $GRAPHICFW_DEP
 EXTERNALLCD                 : $enable_externallcd
 EXTERNALLCD_DEP             : $EXTERNALLCD_DEP
+ccache support              : $enable_ccache
+                              $ccacheinfo
 ])
 
 if test "$dircheck" = "fail"; then
