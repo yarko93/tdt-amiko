@@ -293,6 +293,30 @@ $(DEPDIR)/$(HOST_ELFUTILS_DEV): $(HOST_ELFUTILS_DEV_RPM)
 	touch .deps/$(notdir $@)
 
 #
+# HOST FLEX
+#
+HOST_FLEX = host-flex
+HOST_FLEX_VERSION = 2.5.35-2
+HOST_FLEX_SPEC = stm-$(HOST_FLEX).spec
+HOST_FLEX_SPEC_PATCH =
+HOST_FLEX_PATCHES =
+
+HOST_FLEX_RPM = RPMS/sh4/$(STLINUX)-$(HOST_FLEX)-$(HOST_FLEX_VERSION).sh4.rpm
+
+$(HOST_FLEX_RPM): \
+		$(addprefix Patches/,$(HOST_FLEX_SPEC_PATCH) $(HOST_FLEX_PATCHES)) \
+		$(archivedir)/$(STLINUX)-$(HOST_FLEX)-$(HOST_FLEX_VERSION).src.rpm
+	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(HOST_FLEX_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_FLEX_SPEC) < $(buildprefix)/Patches/$(HOST_FLEX_SPEC_PATCH) ) &&) \
+	$(if $(HOST_FLEX_PATCHES),cp $(addprefix Patches/,$(HOST_FLEX_PATCHES)) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild  $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(HOST_FLEX_SPEC)
+
+$(DEPDIR)/$(HOST_FLEX): $(HOST_FLEX_RPM)
+	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
+	touch $@
+
+#
 # CROSS_DISTRIBUTIONUTILS
 #
 CROSS_DISTRIBUTIONUTILS = cross-sh4-distributionutils
