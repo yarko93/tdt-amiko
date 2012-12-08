@@ -40,13 +40,12 @@ GLIBC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GLIBC)-$(GLIBC_VERSION).sh4.rpm
 GLIBC_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GLIBC_DEV)-$(GLIBC_VERSION).sh4.rpm
 
 $(GLIBC_RPM) $(GLIBC_DEV_RPM): \
-		$(if $(GLIBC_SPEC_PATCH),Patches/$(GLIBC_SPEC_PATCH)) \
-		$(if $(GLIBC_PATCHES),$(GLIBC_PATCHES:%=Patches/%)) \
+		$(addprefix Patches/,$(GLIBC_SPEC_PATCH) $(GLIBC_PATCHES)) \
 		$(archivedir)/$(STLINUX)-target-$(GLIBC)-$(GLIBC_VERSION).src.rpm \
 		| filesystem
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(GLIBC_SPEC_PATCH),( cd SPECS && patch -p1 $(GLIBC_SPEC) < $(buildprefix)/Patches/$(GLIBC_SPEC_PATCH) ) &&) \
-	$(if $(GLIBC_PATCHES),cp $(GLIBC_PATCHES:%=Patches/%) SOURCES/ &&) \
+	$(if $(GLIBC_PATCHES),cp $(addprefix Patches/,$(GLIBC_PATCHES)) SOURCES/ &&) \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --nodeps --target=sh4-linux SPECS/$(GLIBC_SPEC)
 
@@ -81,12 +80,11 @@ BINUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BINUTILS)-$(BINUTILS_VERSION).sh4.rpm
 BINUTILS_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BINUTILS_DEV)-$(BINUTILS_VERSION).sh4.rpm
 
 $(BINUTILS_RPM) $(BINUTILS_DEV_RPM): \
-		$(if $(BINUTILS_SPEC_PATCH),Patches/$(BINUTILS_SPEC_PATCH)) \
-		$(if $(BINUTILS_PATCHES),$(BINUTILS_PATCHES:%=Patches/%)) \
+		$(addprefix Patches/,$(BINUTILS_SPEC_PATCH) $(BINUTILS_PATCHES)) \
 		$(archivedir)/$(STLINUX)-target-$(BINUTILS)-$(BINUTILS_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(BINUTILS_SPEC_PATCH),( cd SPECS && patch -p1 $(BINUTILS_SPEC) < $(buildprefix)/Patches/$(BINUTILS_SPEC_PATCH) ) &&) \
-	$(if $(BINUTILS_PATCHES),cp $(BINUTILS_PATCHES:%=Patches/%) SOURCES/ &&) \
+	$(if $(BINUTILS_PATCHES),cp $(addprefix Patches/,$(BINUTILS_PATCHES)) SOURCES/ &&) \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(BINUTILS_SPEC)
 
@@ -245,7 +243,6 @@ $(DEPDIR)/%$(ZLIB_BIN): $(ZLIB_BIN_RPM)
 #
 # GCC LIBSTDC++
 #
-GCC := gcc
 LIBSTDC := libstdc++
 LIBSTDC_DEV := libstdc++-dev
 FILES_libstdc++ = \
@@ -336,7 +333,7 @@ $(DEPDIR)/$(LIBFFI): $(LIBFFI_RPM)
 #
 # GLIB2
 #
-GLIB2 := #glib2
+GLIB2 := glib2
 GLIB2_DEV := glib2-dev
 GLIB2_VERSION := 2.28.3-30
 GLIB2_SPEC := stm-target-$(GLIB2).spec
@@ -398,8 +395,7 @@ LIBTERMCAP_DOC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBTERMCAP_DOC)-$(LIBTERMCAP_VER
 $(LIBTERMCAP_RPM) $(LIBTERMCAP_DEV_RPM) $(LIBTERMCAP_DOC_RPM): \
 		$(if $(LIBTERMCAP_SPEC_PATCH),Patches/$(LIBTERMCAP_SPEC_PATCH)) \
 		$(if $(LIBTERMCAP_PATCHES),$(LIBTERMCAP_PATCHES:%=Patches/%)) \
-		$(archivedir)/$(STM_SRC)-target-$(LIBTERMCAP)-$(LIBTERMCAP_VERSION).src.rpm \
-		| $(DEPDIR)/$(GLIBC_DEV)
+		$(archivedir)/$(STM_SRC)-target-$(LIBTERMCAP)-$(LIBTERMCAP_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(LIBTERMCAP_SPEC_PATCH),( cd SPECS && patch -p1 $(LIBTERMCAP_SPEC) < $(buildprefix)/Patches/$(LIBTERMCAP_SPEC_PATCH) ) &&) \
 	$(if $(LIBTERMCAP_PATCHES),cp $(LIBTERMCAP_PATCHES:%=Patches/%) SOURCES/ &&) \
@@ -440,31 +436,26 @@ FILES_elfutils_dev = \
 /usr/lib/*.so*
 
 ELFUTILS_VERSION := 0.152-17
-ELFUTILS_RAWVERSION := $(firstword $(subst -, ,$(ELFUTILS_VERSION)))
 ELFUTILS_SPEC := stm-target-$(ELFUTILS).spec
 ELFUTILS_SPEC_PATCH :=
 ELFUTILS_PATCHES :=
 ELFUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ELFUTILS)-$(ELFUTILS_VERSION).sh4.rpm
 ELFUTILS_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ELFUTILS_DEV)-$(ELFUTILS_VERSION).sh4.rpm
 
-$(ELFUTILS_RPM) $(ELFUTILS_DEV_RPM) $(ELFUTILS_DOC_RPM): \
-		$(if $(ELFUTILS_SPEC_PATCH),Patches/$(ELFUTILS_SPEC_PATCH)) \
-		$(if $(ELFUTILS_PATCHES),$(ELFUTILS_PATCHES:%=Patches/%)) \
-		$(archivedir)/$(STM_SRC)-target-$(ELFUTILS)-$(ELFUTILS_VERSION).src.rpm \
-		| $(DEPDIR)/$(GLIBC_DEV)
+$(ELFUTILS_RPM) $(ELFUTILS_DEV_RPM): \
+		$(addprefix Patches/,$(ELFUTILS_SPEC_PATCH) $(ELFUTILS_PATCHES)) \
+		$(archivedir)/$(STM_SRC)-target-$(ELFUTILS)-$(ELFUTILS_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(ELFUTILS_SPEC_PATCH),( cd SPECS && patch -p1 $(ELFUTILS_SPEC) < $(buildprefix)/Patches/$(ELFUTILS_SPEC_PATCH) ) &&) \
-	$(if $(ELFUTILS_PATCHES),cp $(ELFUTILS_PATCHES:%=Patches/%) SOURCES/ &&) \
+	$(if $(ELFUTILS_PATCHES),cp $(addprefix Patches/,$(ELFUTILS_PATCHES)) SOURCES/ &&) \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(ELFUTILS_SPEC)
 
 $(DEPDIR)/min-$(ELFUTILS) $(DEPDIR)/std-$(ELFUTILS) $(DEPDIR)/max-$(ELFUTILS) \
 $(DEPDIR)/$(ELFUTILS): \
-$(DEPDIR)/%$(ELFUTILS): bootstrap $(ELFUTILS_RPM)
-	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
-		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	ln -sf elfutils.so.2 $(prefix)/$*cdkroot/usr/lib/elfutils.so && \
-	$(INSTALL) -m 644 $(buildprefix)/root/etc/termcap $(prefix)/$*cdkroot/etc
+$(DEPDIR)/%$(ELFUTILS):$(ELFUTILS_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --nodeps --noscripts -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
@@ -473,7 +464,7 @@ $(DEPDIR)/%$(ELFUTILS): bootstrap $(ELFUTILS_RPM)
 $(DEPDIR)/min-$(ELFUTILS_DEV) $(DEPDIR)/std-$(ELFUTILS_DEV) $(DEPDIR)/max-$(ELFUTILS_DEV) \
 $(DEPDIR)/$(ELFUTILS_DEV): \
 $(DEPDIR)/%$(ELFUTILS_DEV): $(DEPDIR)/%$(ELFUTILS) $(ELFUTILS_DEV_RPM)
-	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --nodeps --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
@@ -667,8 +658,6 @@ $(DEPDIR)/min-$(LIBATTR_DEV) $(DEPDIR)/std-$(LIBATTR_DEV) $(DEPDIR)/max-$(LIBATT
 $(DEPDIR)/%$(LIBATTR_DEV): $(LIBATTR_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-#	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/libattr.la
-#	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libattr.la
 	$(REWRITE_LIBDIR)/libattr.la
 	[ "x$*" = "x" ] && touch $@ || true
 	
@@ -769,7 +758,7 @@ $(UDEV_RPM) $(UDEV_DEV_RPM): \
 	$(if $(UDEV_SPEC_PATCH),( cd SPECS && patch -p1 $(UDEV_SPEC) < $(buildprefix)/Patches/$(UDEV_SPEC_PATCH) ) &&) \
 	$(if $(UDEV_PATCHES),cp $(UDEV_PATCHES:%=Patches/%) SOURCES/ &&) \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
-	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(UDEV_SPEC)
+	rpmbuild $(DRPMBUILD) -bb -v --clean --nodeps --target=sh4-linux SPECS/$(UDEV_SPEC)
 
 $(DEPDIR)/min-$(UDEV_DEV) $(DEPDIR)/std-$(UDEV_DEV) $(DEPDIR)/max-$(UDEV_DEV) $(DEPDIR)/$(UDEV_DEV): \
 $(DEPDIR)/%$(UDEV_DEV): $(UDEV_DEV_RPM)
