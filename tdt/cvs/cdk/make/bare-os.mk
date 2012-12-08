@@ -340,6 +340,13 @@ GLIB2_SPEC := stm-target-$(GLIB2).spec
 GLIB2_SPEC_PATCH :=
 GLIB2_PATCHES :=
 
+FILES_glib2 = \
+/usr/lib/*.so \
+/usr/lib/*.so*
+FILES_glib2_dev = \
+/usr/lib/*.so \
+/usr/lib/*.so*
+
 GLIB2_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GLIB2)-$(GLIB2_VERSION).sh4.rpm
 GLIB2_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GLIB2_DEV)-$(GLIB2_VERSION).sh4.rpm
 
@@ -357,7 +364,10 @@ $(DEPDIR)/min-$(GLIB2) $(DEPDIR)/std-$(GLIB2) $(DEPDIR)/max-$(GLIB2) \
 $(DEPDIR)/$(GLIB2): \
 $(DEPDIR)/%$(GLIB2): bootstrap $(HOST_GLIB2) $(GLIB2_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
-		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 $(DEPDIR)/min-$(GLIB2_DEV) $(DEPDIR)/std-$(GLIB2_DEV) $(DEPDIR)/max-$(GLIB2_DEV) \
@@ -368,6 +378,9 @@ $(DEPDIR)/%$(GLIB2_DEV): $(DEPDIR)/%$(GLIB2) $(GLIB2_DEV_RPM)
 	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/{libgio,libglib,libgmodule,libgobject,libgthread}-2.0.la
 	sed -i '/^dependency_libs=/{ s# /usr/lib# $(targetprefix)/usr/lib#g }' $(targetprefix)/usr/lib/{libgio,libglib,libgmodule,libgobject,libgthread}-2.0.la
 	sed -i '/^prefix=/{ s#/usr#$(targetprefix)/usr#g }' $(targetprefix)/usr/lib//pkgconfig/{gio,gio-unix,glib,gmodule,gmodule-export,gmodule-no-export,gobject}-2.0.pc
+	$(start_build)
+	$(fromrpm_build)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -458,6 +471,7 @@ $(DEPDIR)/%$(ELFUTILS):$(ELFUTILS_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	
 
