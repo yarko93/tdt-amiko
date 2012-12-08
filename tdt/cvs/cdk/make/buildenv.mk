@@ -117,6 +117,12 @@ PLATFORM_CPPFLAGS := \
 	$(if $(SPARK),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_SPARK -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
 	$(if $(SPARK7162),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_SPARK7162 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
 
+DRIVER_PLATFORM := \
+		$(if $(HL101),HL101=$(HL101)) \
+		$(if $(SPARK),SPARK=$(SPARK)) \
+		$(if $(SPARK7162),SPARK7162=$(SPARK7162)) \
+		$(if $(PLAYER191),PLAYER191=$(PLAYER191))
+
 DEPDIR = .deps
 
 VPATH = $(DEPDIR)
@@ -127,6 +133,7 @@ CONFIGURE_OPTS = \
 	--prefix=$(targetprefix)/usr \
 	--with-driver=$(driverdir) \
 	--with-dvbincludes=$(driverdir)/include \
+	--with-boxtype=$(BOXTYPE) \
 	--with-target=cdk
 
 if ENABLE_CCACHE
