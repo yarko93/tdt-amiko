@@ -2,7 +2,6 @@
 # U-BOOT
 #
 HOST_U_BOOT := host-u-boot
-# if STM24
 HOST_U_BOOT_VERSION := sh4-1.3.1_stm24_0048-48
 HOST_U_BOOT_RAWVERSION := $(HOST_U_BOOT_VERSION)
 HOST_U_BOOT_DIR := u-boot/u-boot-sh4-$(word 2, $(subst -, ,$(HOST_U_BOOT_VERSION)))
@@ -46,26 +45,14 @@ $(DEPDIR)/%u-boot-utils: $(DEPDIR)/u-boot-utils.do_compile
 
 $(DEPDIR)/u-boot-utils: $(DEPDIR)/u-boot-utils.do_compile
 
-
-#stlinux20-host-u-boot ftp://ftp.stlinux.com/pub/stlinux/2.0/ST_Linux_2.0/SRPM_Distribution/sh4-SRPMS-updates/stlinux20-host-u-boot-sh4_stb7100ref_27-2.0-14.src.rpm
-HOST_U_BOOT_SH4_STB7100REF_27 := host-u-boot-sh4_stb7100ref_27
-RPMS/sh4/stlinux20-$(HOST_U_BOOT_SH4_STB7100REF_27)-2.0-14.sh4.rpm: $(archivedir)/stlinux20-$(HOST_U_BOOT_SH4_STB7100REF_27)-2.0-14.src.rpm
-	rpm $(DRPM) --nosignature -Uhv $< && \
-	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/stm-$(HOST_U_BOOT_SH4_STB7100REF_27).spec
-$(HOST_U_BOOT_SH4_STB7100REF_27): RPMS/sh4/stlinux20-$(HOST_U_BOOT_SH4_STB7100REF_27)-2.0-14.sh4.rpm
-	@rpm $(DRPM) --ignorearch --nodeps -Uhv $< && \
-	touch .deps/$(notdir $@)
-
 #
 # HOST-U-BOOT-TOOLS
 #
 HOST_U_BOOT_TOOLS := host-u-boot-tools
-# if STM24
 HOST_U_BOOT_TOOLS_VERSION := 1.3.1_stm24-8
 HOST_U_BOOT_TOOLS_SPEC := stm-$(HOST_U_BOOT_TOOLS).spec
 HOST_U_BOOT_TOOLS_SPEC_PATCH :=
 HOST_U_BOOT_TOOLS_PATCHES :=
-# endif STM24
 
 HOST_U_BOOT_TOOLS_RPM := RPMS/sh4/$(STLINUX)-$(HOST_U_BOOT_TOOLS)-$(HOST_U_BOOT_TOOLS_VERSION).sh4.rpm
 
