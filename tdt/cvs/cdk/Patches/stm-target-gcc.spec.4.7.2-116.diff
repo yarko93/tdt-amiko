@@ -1,0 +1,43 @@
+--- stm-target-gcc.spec.orig	2012-11-07 16:45:16.000000000 +0100
++++ stm-target-gcc.spec	2012-11-11 04:07:34.000000000 +0100
+@@ -15,6 +15,7 @@
+ Source0: ftp://gcc.gnu.org/pub/gcc/releases/gcc-%{version}/gcc-%{version}.tar.bz2
+ Source1: gcc-protoize.1
+ 
++Patch0: stm-target-gcc.%{version}-%{release}.diff
+ Patch1: gcc-4.2.4-multilibpath.patch
+ Patch3: gcc-4.5.0-autoconf.patch
+ 
+@@ -164,6 +165,7 @@
+ 
+ %prep
+ %setup -n gcc-%{version} -q
++%patch0 -p1
+ 
+ # Common patches
+ %if "%{_stm_target_cpu}" != "arm"
+@@ -244,8 +246,6 @@
+ export CFLAGS="-Os"
+ export CXXFLAGS="-Os"
+ 
+-export CC_FOR_BUILD="gcc -m32"
+-export CXX_FOR_BUILD="g++ -m32"
+ 
+ # When cross compiling this fails because it needs to run code
+ export ac_cv_header_stdc=yes
+@@ -260,7 +260,6 @@
+ 	--enable-nls \
+ 	--enable-c99 \
+ 	--enable-long-long \
+-	--with-system-zlib \
+ 	--enable-shared \
+ %if "%{_stm_target_arch}" != "armv7" && "%{_stm_target_arch}" != "armv7_uclibc"
+ 	--disable-libgomp \
+@@ -383,6 +382,7 @@
+ rm -r %{buildroot}%{_gccdir}/install-tools
+ rm -r %{buildroot}%{_stm_cross_target_dir}%{_stm_target_libexec_dir}/gcc/%{_stm_target_config}/%{version}/install-tools
+ rm -rf %{buildroot}%{_stm_cross_target_dir}%{_stm_target_libexec_dir}/gcc/%{_stm_target_config}/%{version}/plugin/gengtype
++rm -rf %{buildroot}%{_gccdir}/include/ssl
+ %unfixincludes %{buildroot}%{_gccdir}
+ 
+ %find_lang gcc
