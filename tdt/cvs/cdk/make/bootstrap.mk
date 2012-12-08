@@ -477,7 +477,6 @@ CROSS_MPFR_PATCHES =
 CROSS_MPFR_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_MPFR)-$(CROSS_MPFR_VERSION).$(host_arch).rpm
 
 $(CROSS_MPFR_RPM): \
-		$(CROSS_GMP_RPM) \
 		$(addprefix Patches/,$(CROSS_MPFR_SPEC_PATCH) $(CROSS_MPFR_PATCHES)) \
 		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_MPFR))-$(CROSS_MPFR_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
@@ -486,7 +485,7 @@ $(CROSS_MPFR_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(CROSS_MPFR_SPEC)
 
-$(DEPDIR)/$(CROSS_MPFR): $(CROSS_GMP) $(CROSS_MPFR_RPM)
+$(DEPDIR)/$(CROSS_MPFR): $(CROSS_MPFR_RPM)
 	@rpm $(DRPM) --nodeps -Uhv $(lastword $^) && \
 	touch $@
 
@@ -519,7 +518,7 @@ $(DEPDIR)/$(CROSS_MPC): $(CROSS_MPC_RPM)
 CROSS_LIBELF = cross-sh4-libelf
 CROSS_LIBELF_VERSION = 0.8.13-1
 CROSS_LIBELF_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_LIBELF)).spec
-CROSS_LIBELF_SPEC_PATCH = $(CROSS_LIBELF_SPEC).$(CROSS_LIBELF_VERSION).diff
+CROSS_LIBELF_SPEC_PATCH =
 CROSS_LIBELF_PATCHES =
 CROSS_LIBELF_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_LIBELF)-$(CROSS_LIBELF_VERSION).$(host_arch).rpm
 
@@ -704,5 +703,9 @@ $(DEPDIR)/libtool: \
 $(DEPDIR)/%libtool: $(DEPDIR)/libtool.do_compile
 	cd @DIR_libtool@ && \
 	@INSTALL_libtool@
-#		sed -i -r -e 's,\(hardcode_into_libs)=yes,\1=no,g' $(hostprefix)/bin/libtool
-	touch $@
+		rm -f $(hostprefix)/share/libtool/config/config.* && \
+		ln -sf $(hostprefix)/share/misc/config.guess $(hostprefix)/share/libtool/config/config.guess && \
+		ln -sf $(hostprefix)/share/misc/config.sub $(hostprefix)/share/libtool/config/config.sub && \
+		sed -i -r -e 's,(hardcode_into_libs)=yes,\1=no,g' $(hostprefix)/bin/libtool
+	@DISTCLEANUP_libtool@
+	[ "x$*" = "x" ] && touch $@ || true
