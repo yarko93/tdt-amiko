@@ -317,6 +317,30 @@ $(DEPDIR)/$(HOST_FLEX): $(HOST_FLEX_RPM)
 	touch $@
 
 #
+# HOST LIBFFI
+#
+HOST_LIBFFI = host-libffi-dev
+HOST_LIBFFI_VERSION = 3.0.10-2
+HOST_LIBFFI_SPEC = stm-$(HOST_LIBFFI).spec
+HOST_LIBFFI_SPEC_PATCH = #$(HOST_LIBFFI_SPEC).$(HOST_LIBFFI_VERSION).diff
+HOST_LIBFFI_PATCHES =
+
+HOST_LIBFFI_RPM = RPMS/sh4/$(STLINUX)-$(HOST_LIBFFI)-$(HOST_LIBFFI_VERSION).sh4.rpm
+
+$(HOST_LIBFFI_RPM): \
+		$(addprefix Patches/,$(HOST_LIBFFI_SPEC_PATCH) $(HOST_LIBFFI_PATCHES)) \
+		$(archivedir)/$(STLINUX)-$(HOST_LIBFFI)-$(HOST_LIBFFI_VERSION).src.rpm
+	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(HOST_LIBFFI_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_LIBFFI_SPEC) < $(buildprefix)/Patches/$(HOST_LIBFFI_SPEC_PATCH) ) &&) \
+	$(if $(HOST_LIBFFI_PATCHES),cp $(addprefix Patches/,$(HOST_LIBFFI_PATCHES)) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild  $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(HOST_LIBFFI_SPEC)
+
+$(DEPDIR)/$(HOST_LIBFFI): $(HOST_LIBFFI_RPM)
+	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
+	touch $@
+
+#
 # CROSS_DISTRIBUTIONUTILS
 #
 CROSS_DISTRIBUTIONUTILS = cross-sh4-distributionutils
