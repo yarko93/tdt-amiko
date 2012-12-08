@@ -341,6 +341,30 @@ $(DEPDIR)/$(HOST_LIBFFI): $(HOST_LIBFFI_RPM)
 	touch $@
 
 #
+# HOST GLIB2
+#
+HOST_GLIB2 = host-glib2
+HOST_GLIB2_VERSION = 2.28.3-24
+HOST_GLIB2_SPEC = stm-$(HOST_GLIB2).spec
+HOST_GLIB2_SPEC_PATCH = $(HOST_GLIB2_SPEC).$(HOST_GLIB2_VERSION).diff
+HOST_GLIB2_PATCHES =
+
+HOST_GLIB2_RPM = RPMS/sh4/$(STLINUX)-$(HOST_GLIB2)-$(HOST_GLIB2_VERSION).sh4.rpm
+
+$(HOST_GLIB2_RPM): \
+		$(addprefix Patches/,$(HOST_GLIB2_SPEC_PATCH) $(HOST_GLIB2_PATCHES)) \
+		$(archivedir)/$(STLINUX)-$(HOST_GLIB2)-$(HOST_GLIB2_VERSION).src.rpm
+	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(HOST_GLIB2_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_GLIB2_SPEC) < $(buildprefix)/Patches/$(HOST_GLIB2_SPEC_PATCH) ) &&) \
+	$(if $(HOST_GLIB2_PATCHES),cp $(addprefix Patches/,$(HOST_GLIB2_PATCHES)) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild  $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(HOST_GLIB2_SPEC)
+
+$(DEPDIR)/$(HOST_GLIB2): $(HOST_GLIB2_RPM)
+	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
+	touch $@
+
+#
 # CROSS_DISTRIBUTIONUTILS
 #
 CROSS_DISTRIBUTIONUTILS = cross-sh4-distributionutils
