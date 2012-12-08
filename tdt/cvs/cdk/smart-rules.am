@@ -1338,10 +1338,11 @@ taglib
   make:install:DESTDIR=PKDIR
 ;
 udev_rules
-  0.1
+  0.2
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/60-dvb-ca.rules
+  nothing:file://../root/etc/90-cec_aotom.rules
 ;
 enigma2_pli
   git
