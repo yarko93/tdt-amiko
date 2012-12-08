@@ -8,8 +8,8 @@
 echo "init frontpanel"
 modprobe aotom
 modprobe simu_button
-mknod -m 644 /dev/vfd c 147 0
-mknod -m 644 /dev/hdmi_cec c 149 0
+#mknod -m 644 /dev/vfd c 147 0
+#mknod -m 644 /dev/hdmi_cec c 149 0
 modprobe e2_proc
 
    echo "init stmfb"
