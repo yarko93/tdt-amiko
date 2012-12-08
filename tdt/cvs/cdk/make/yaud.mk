@@ -12,9 +12,20 @@ $(DEPDIR)/%bootstrap: \
 		%$(FILESYSTEM) \
 		%$(GLIBC) \
 		%$(CROSS_LIBGCC) \
-		%$(LIBSTDC)
+		%$(GLIBC) \
+		%$(GLIBC_DEV) \
+		%$(BINUTILS) \
+		%$(BINUTILS_DEV) \
+		%$(GMP) \
+		%$(MPFR) \
+		%$(MPC) \
+		%$(ZLIB) \
+		%$(ZLIB_DEV) \
+		%$(ZLIB_BIN) \
+		%$(LIBSTDC) \
+		%$(LIBSTDC_DEV)
 
-	@[ "x$*" = "x" ] && touch -r RPMS/sh4/$(STLINUX)-sh4-$(LIBSTDC)-$(GCC_VERSION).sh4.rpm $@ || true
+	@[ "x$*" = "x" ] && touch $@ || true
 
 #
 # BARE-OS
@@ -37,14 +48,11 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%$(NETBASE) \
 		%$(BC) \
 		%$(SYSVINIT) \
+		%$(SYSVINITTOOLS) \
 		%$(DISTRIBUTIONUTILS) \
 		\
 		%e2fsprogs \
 		%u-boot-utils
-#		%diverse-tools
-#		%$(RELEASE) \
-#		%$(FINDUTILS) \
-#
 
 min-net-utils std-net-utils max-net-utils net-utils: \
 %net-utils: \
@@ -223,6 +231,13 @@ all-extras: \
 #
 
 flash-enigma2-pli-nightly: yaud-enigma2-pli-nightly
+	echo "Create image"
+	$(if $(SPARK)$(SPARK7162), \
+	cd $(prefix)/../flash/spark && \
+		echo -e "1\n1" | ./spark.sh \
+	)
+	
+flash-enigma2-nightly: yaud-enigma2-nightly
 	echo "Create image"
 	$(if $(SPARK)$(SPARK7162), \
 	cd $(prefix)/../flash/spark && \
