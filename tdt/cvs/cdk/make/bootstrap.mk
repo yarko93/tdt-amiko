@@ -364,6 +364,32 @@ $(DEPDIR)/$(HOST_GLIB2): $(HOST_GLIB2_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
 	touch $@
 
+##############################   BOOTSTRAP-CROSS   #############################
+#
+# CROSS PKGCONFIG
+#
+CROSS_PKGCONFIG = cross-sh4-pkg-config
+CROSS_PKGCONFIG_VERSION = 0.23-3
+CROSS_PKGCONFIG_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_PKGCONFIG)).spec
+CROSS_PKGCONFIG_SPEC_PATCH =
+CROSS_PKGCONFIG_PATCHES =
+
+CROSS_PKGCONFIG_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_PKGCONFIG)-$(CROSS_PKGCONFIG_VERSION).$(host_arch).rpm
+
+$(CROSS_PKGCONFIG_RPM): \
+		$(addprefix Patches/,$(CROSS_PKGCONFIG_SPEC_PATCH) $(CROSS_PKGCONFIG_PATCHES)) \
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_PKGCONFIG))-$(CROSS_PKGCONFIG_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(CROSS_PKGCONFIG_SPEC_PATCH),( cd SPECS && patch -p1 $(CROSS_PKGCONFIG_SPEC) < $(buildprefix)/Patches/$(CROSS_PKGCONFIG_SPEC_PATCH) ) &&) \
+	$(if $(CROSS_PKGCONFIG_PATCHES),cp $(addprefix Patches/,$(CROSS_PKGCONFIG_PATCHES)) SOURCES/ &&) \
+	export PATH=$(MAKE_PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(CROSS_PKGCONFIG_SPEC)
+
+$(DEPDIR)/$(CROSS_PKGCONFIG): $(CROSS_PKGCONFIG_RPM)
+	@rpm $(DRPM) --nodeps -Uhv $(lastword $^) && \
+	touch $@
+
+
 #
 # CROSS_DISTRIBUTIONUTILS
 #
