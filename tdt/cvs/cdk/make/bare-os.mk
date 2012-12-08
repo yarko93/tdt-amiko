@@ -331,59 +331,6 @@ $(DEPDIR)/$(LIBFFI): $(LIBFFI_RPM)
 	touch $@
 
 #
-# GLIB2
-#
-GLIB2 := glib2
-GLIB2_DEV := glib2-dev
-GLIB2_VERSION := 2.28.3-30
-GLIB2_SPEC := stm-target-$(GLIB2).spec
-GLIB2_SPEC_PATCH :=
-GLIB2_PATCHES :=
-
-FILES_glib2 = \
-/usr/lib/*.so \
-/usr/lib/*.so*
-FILES_glib2_dev = \
-/usr/lib/*.so \
-/usr/lib/*.so*
-
-GLIB2_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GLIB2)-$(GLIB2_VERSION).sh4.rpm
-GLIB2_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GLIB2_DEV)-$(GLIB2_VERSION).sh4.rpm
-
-$(GLIB2_RPM) $(GLIB2_DEV_RPM): \
-		$(if $(GLIB2_SPEC_PATCH),Patches/$(GLIB2_SPEC_PATCH)) \
-		$(if $(GLIB2_PATCHES),$(GLIB2_PATCHES:%=Patches/%)) \
-		$(archivedir)/$(STLINUX)-target-$(GLIB2)-$(GLIB2_VERSION).src.rpm
-	rpm $(DRPM) --nosignature -ihv $(lastword $^) && \
-	$(if $(GLIB2_SPEC_PATCH),( cd SPECS && patch -p1 $(GLIB2_SPEC) < $(buildprefix)/Patches/$(GLIB2_SPEC_PATCH) ) &&) \
-	$(if $(GLIB2_PATCHES),cp $(GLIB2_PATCHES:%=Patches/%) SOURCES/ &&) \
-	export PATH=$(hostprefix)/bin:$(PATH) && \
-	rpmbuild $(DRPMBUILD) -bb -v --clean --nodeps --target=sh4-linux SPECS/$(GLIB2_SPEC)
-
-$(DEPDIR)/min-$(GLIB2) $(DEPDIR)/std-$(GLIB2) $(DEPDIR)/max-$(GLIB2) \
-$(DEPDIR)/$(GLIB2): \
-$(DEPDIR)/%$(GLIB2): bootstrap $(HOST_GLIB2) $(GLIB2_RPM)
-	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
-		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	$(start_build)
-	$(fromrpm_build)
-	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
-
-$(DEPDIR)/min-$(GLIB2_DEV) $(DEPDIR)/std-$(GLIB2_DEV) $(DEPDIR)/max-$(GLIB2_DEV) \
-$(DEPDIR)/$(GLIB2_DEV): \
-$(DEPDIR)/%$(GLIB2_DEV): $(DEPDIR)/%$(GLIB2) $(GLIB2_DEV_RPM)
-	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
-		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/{libgio,libglib,libgmodule,libgobject,libgthread}-2.0.la
-	sed -i '/^dependency_libs=/{ s# /usr/lib# $(targetprefix)/usr/lib#g }' $(targetprefix)/usr/lib/{libgio,libglib,libgmodule,libgobject,libgthread}-2.0.la
-	sed -i '/^prefix=/{ s#/usr#$(targetprefix)/usr#g }' $(targetprefix)/usr/lib//pkgconfig/{gio,gio-unix,glib,gmodule,gmodule-export,gmodule-no-export,gobject}-2.0.pc
-	$(start_build)
-	$(fromrpm_build)
-	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
-
-#
 # LIBTERMCAP
 #
 LIBTERMCAP := libtermcap
@@ -467,7 +414,7 @@ $(ELFUTILS_RPM) $(ELFUTILS_DEV_RPM): \
 $(DEPDIR)/min-$(ELFUTILS) $(DEPDIR)/std-$(ELFUTILS) $(DEPDIR)/max-$(ELFUTILS) \
 $(DEPDIR)/$(ELFUTILS): \
 $(DEPDIR)/%$(ELFUTILS):$(ELFUTILS_RPM)
-	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --nodeps --noscripts -Uhv \
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
@@ -478,10 +425,8 @@ $(DEPDIR)/%$(ELFUTILS):$(ELFUTILS_RPM)
 $(DEPDIR)/min-$(ELFUTILS_DEV) $(DEPDIR)/std-$(ELFUTILS_DEV) $(DEPDIR)/max-$(ELFUTILS_DEV) \
 $(DEPDIR)/$(ELFUTILS_DEV): \
 $(DEPDIR)/%$(ELFUTILS_DEV): $(DEPDIR)/%$(ELFUTILS) $(ELFUTILS_DEV_RPM)
-	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --nodeps --noscripts -Uhv \
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	$(start_build)
-	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -753,8 +698,8 @@ $(DEPDIR)/%$(USBUTILS): $(USBUTILS_RPM)
 #
 UDEV := udev
 UDEV_DEV := udev-dev
-UDEV_VERSION := 162-32
-PKGR_udev := r0
+UDEV_VERSION := 162-33
+PKGR_udev := r1
 UDEV_SPEC := stm-target-$(UDEV).spec
 UDEV_SPEC_PATCH := stm-target-udev.spec.diff
 UDEV_PATCHES := usbhd-automount.rules
