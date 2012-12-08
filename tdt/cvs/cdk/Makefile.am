@@ -18,6 +18,9 @@ include make/bootstrap.mk
 # Include u-boot targets
 include make/u-boot.mk
 
+# Target for building and install own independ ccache for tuxbox-cdk
+include make/ccache.mk
+
 # Include adapted etc files and etc read-write files
 include make/root-etc.mk
 
