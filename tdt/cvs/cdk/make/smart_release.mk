@@ -164,6 +164,7 @@ $(DEPDIR)/udev-rules: @DEPENDS_udev_rules@ $(RDEPENDS_udev_rules)
 	cd $(DIR_udev_rules) && \
 	$(INSTALL_DIR) $(PKDIR)/etc/udev/rules.d/ && \
 	$(INSTALL_FILE) 60-dvb-ca.rules $(PKDIR)/etc/udev/rules.d/
+	$(INSTALL_FILE) 90-cec_aotom.rules $(PKDIR)/etc/udev/rules.d/
 	$(toflash_build)
 	touch $@
 

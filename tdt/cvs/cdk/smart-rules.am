@@ -91,9 +91,9 @@ ntpclient
 ;
 
 udpxy
-  1.0.21-2
+  1.0.23-0
   {PN}-{PV}
-  http://sourceforge.net/projects/udpxy/files/udpxy/Chipmunk-1.0/udpxy.{PV}-prod.tgz
+  http://sourceforge.net/projects/udpxy/files/udpxy/Chipmunk-1.0/udpxy.{PV}-prod.tar.gz
   #for patch -p0 use the following
   patch-0:file://udpxy-makefile.patch
 ;
@@ -379,16 +379,17 @@ pppd
   make:install:DESTDIR=PKDIR
 ;
 usb_modeswitch
-  1.2.4
+  1.2.5
   {PN}-{PV}
   extract:http://www.draisberghof.de/usb_modeswitch/{PN}-{PV}.tar.bz2
   patch:file://{PN}.patch
   make:install:DESTDIR=PKDIR
 ;
 usb_modeswitch_data
-  20120815
+  20121109
   {PN}-{PV}
   extract:http://www.draisberghof.de/usb_modeswitch/{PN}-{PV}.tar.bz2
+  patch:file://{PN}.patch
   make:install:DESTDIR=PKDIR
 ;
 sysstat
@@ -1180,7 +1181,7 @@ netkit_ftp
   make:install:MANDIR=/usr/share/man:INSTALLROOT=TARGETS
 ;
 samba
-  3.6.7
+  3.6.9
   {PN}-{PV}
   extract:http://www.{PN}.org/{PN}/ftp/stable/{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}.diff
