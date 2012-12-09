@@ -517,7 +517,7 @@ libgif
   make:install:DESTDIR=PKDIR
 ;
 curl
-  7.28.0
+  7.28.1
   {PN}-{PV}
   extract:http://{PN}.haxx.se/download/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
@@ -559,7 +559,7 @@ glib2
   2.34.1
   glib-{PV}
   extract:http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.34/glib-{PV}.tar.xz
-  #patch:file://glib-{PV}.patch
+ #patch:file://glib-{PV}.patch
   make:install:DESTDIR=PKDIR
 ;
 libiconv
