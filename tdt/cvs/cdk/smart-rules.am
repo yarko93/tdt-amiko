@@ -753,10 +753,10 @@ brofs
   make:install:prefix=/usr/bin:DESTDIR=PKDIR
 ;
 libalsa
-  1.0.21a
+  1.0.26
   alsa-lib-{PV}
-  extract:ftp://ftp.alsa-project.org/pub/lib/alsa-lib-{PV}.tar.bz2
-  patch:file://alsa-lib-{PV}-soft_float.patch
+  extract:http://alsa.cybermirror.org/lib/alsa-lib-{PV}.tar.bz2
+  #patch:file://alsa-lib-{PV}-soft_float.patch
   make:install:DESTDIR=PKDIR
 ;
 rtmpdump
