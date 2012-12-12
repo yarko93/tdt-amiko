@@ -12,6 +12,13 @@ DESCRIPTION_e2plugin_meta := Enigma2 plugins metadata
 PACKAGES_e2plugin = e2plugin_meta
 DIST_e2plugin = enigma2_plugin_systemplugins_networkbrowser
 
+# This is list of plugins that have files with non-typical path,
+# that doesn't start with /usr/lib/enigma2/python/Plugins
+enigma2_plugins_nontyp := \
+$(DEPDIR)/enigma2-plugins-sh4-networkbrowser \
+$(DEPDIR)/enigma2-plugins-sh4-libgisclubskin
+
+
 $(DEPDIR)/enigma2-plugins-sh4.do_prepare: @DEPENDS_e2plugin@
 	@PREPARE_e2plugin@
 	touch $@
@@ -34,14 +41,11 @@ $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
 
 enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 
-$(DEPDIR)/enigma2-plugins-sh4-networkbrowser \
-$(DEPDIR)/enigma2-plugins-sh4: \
-$(DEPDIR)/enigma2-plugins-sh4%: $(DIR_e2plugin)/config.status
+$(DEPDIR)/enigma2-plugins-sh4: $(DIR_e2plugin)/config.status $(enigma2_plugins_nontyp)
 	$(call parent_pk,e2plugin)
 #	Don't build meta
-	$(if $*,$(eval PACKAGES_e2plugin = ))
 	$(start_build)
-	cd $(DIR_e2plugin)/`echo $* |sed s/^-//` && \
+	cd $(DIR_e2plugin) && \
 		$(MAKE) install DESTDIR=$(PKDIR)
 	rm -rf $(ipkgbuilddir)/*
 	$(flash_prebuild)
@@ -64,6 +68,36 @@ $(DEPDIR)/enigma2-plugins-sh4%: $(DIR_e2plugin)/config.status
 	do_finish() \n\
 	" | $(crossprefix)/bin/python
 
+	$(call do_build_pkg,none,extra)
+	touch $@
+
+$(enigma2_plugins_nontyp):
+$(DEPDIR)/enigma2-plugins-sh4-%: $(DIR_e2plugin)/config.status
+	$(call parent_pk,e2plugin)
+	$(start_build)
+	echo $@
+	cd $(DIR_e2plugin)/$* && \
+		$(MAKE) install DESTDIR=$(PKDIR)
+	rm -rf $(ipkgbuilddir)/*
+
+	echo -e " \n\
+	from split_packages import * \n\
+	pk = '$*' \n\
+	try: \n\
+		package = read_control_file('$(DIR_e2plugin)/' + pk + '/CONTROL/control') \n\
+		bb_set('PACKAGES', bb_get('PACKAGES') + ' ' + package) \n\
+		bb_set('FILES_' + package, '/') \n\
+	except IOError: \n\
+		print 'skipping', pk \n\
+	for s in ['preinst', 'postinst', 'prerm', 'postrm']: \n\
+		try: \n\
+			bb_set(s + '_' + package, open('$(DIR_e2plugin)/' + pk + '/CONTROL/' + s).read()) \n\
+		except IOError: \n\
+			pass \n\
+	do_finish() \n\
+	" | $(crossprefix)/bin/python
+
+	rm -r $(ipkgbuilddir)/e2plugin_meta
 	$(call do_build_pkg,none,extra)
 	touch $@
 

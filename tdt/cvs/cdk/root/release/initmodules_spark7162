@@ -41,29 +41,11 @@ modprobe e2_proc
    modprobe ksound
    modprobe p2div64
    modprobe stm_v4l2
-   if [ $player -gt 131 ]; then
-      modprobe stmvout
-      modprobe stmvbi
-   fi
    modprobe pseudocard
-
    modprobe spark7162
-#  modprobe lnb
-   if [ $player -gt 131 ]; then
-      # Full feature pti
-      modprobe pti waitMS=20 videoMem=4096
-      if [ $?=='2' ]; then
-         # Simple pti
-         modprobe pti
-      fi
-      modprobe stm_monitor
-      modprobe stmsysfs
-      modprobe stmdvb
-   else
-      modprobe pti
-      modprobe stmdvb
-      modprobe stm_monitor
-   fi
+   modprobe pti waitMS=20 videoMem=4096
+   modprobe stmdvb
+   modprobe stm_monitor
    modprobe player2 discardlateframe=0
    modprobe sth264pp
    modprobe stmalloc
@@ -74,7 +56,6 @@ modprobe e2_proc
    if [ ! `grep 'hdmicec.enabled=false' /etc/enigma2/settings` ]; then
     modprobe cec
    fi
-#   mknod /dev/bpamem c 153 0 
 
    showiframe -p /boot/bootlogo.mvi &
    stfbcontrol a 0
