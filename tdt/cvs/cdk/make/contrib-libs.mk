@@ -3136,6 +3136,7 @@ $(DEPDIR)/libalsa.do_compile: $(DEPDIR)/libalsa.do_prepare
 		--host=$(target) \
 		--prefix=/usr \
 		--with-debug=no \
+		--enable-shared=no \
 		--enable-static \
 		--disable-python && \
 	$(MAKE) all

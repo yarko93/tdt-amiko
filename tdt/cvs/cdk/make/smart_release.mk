@@ -204,6 +204,7 @@ release_base: driver-ptinp driver-encrypt
 	$(INSTALL_DIR) $(prefix)/release/etc && \
 	$(INSTALL_DIR) $(prefix)/release/etc/fonts && \
 	$(INSTALL_DIR) $(prefix)/release/etc/init.d && \
+	$(INSTALL_DIR) $(prefix)/release/etc/modprobe.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-down.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-up.d && \
