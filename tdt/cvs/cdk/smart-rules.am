@@ -782,7 +782,7 @@ libdreamdvd
 libdreamdvd2
   1.0
   libdreamdvd
-  nothing:git://github.com/mirakels/libdreamdvd.git
+  nothing:git://github.com/mirakels/libdreamdvd.git:r=1bdc2c33f912b9e87cb7e204485a57c6a08a0e8c
   patch:file://libdreamdvd-{PV}-support_sh4.patch
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
