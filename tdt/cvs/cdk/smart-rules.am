@@ -261,7 +261,7 @@ xfsprogs
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 mc
-  4.8.0
+  4.8.1.6
   {PN}-{PV}
   extract:http://www.midnight-commander.org/downloads/{PN}-{PV}.tar.bz2
 #nothing:file://{PN}.diff
