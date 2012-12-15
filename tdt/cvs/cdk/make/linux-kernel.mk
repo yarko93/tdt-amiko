@@ -34,7 +34,6 @@ COMMONPATCHES_24 = \
 		linux-ftdi_sio.c_stm24$(PATCH_STR).patch \
 		linux-sh4-lzma-fix_stm24$(PATCH_STR).patch \
 		linux-tune_stm24.patch \
-		linux-sh4-pcm_noise_fix_stm24$(PATCH_STR).patch \
 		$(if $(P0209)$(P0210)$(P0211),linux-sh4-mmap_stm24.patch) \
 		$(if $(P0209)$(P0210)$(P0211),linux-sh4-remove_pcm_reader_stm24.patch) \
 		$(if $(P0209),linux-sh4-dwmac_stm24_0209.patch) \
