@@ -210,12 +210,14 @@ all-extras: \
 	usb_modeswitch \
 	pppd \
 	modem-scripts \
-	evebrowser \
+	oscam \
 	enigma2-plugins \
 	xupnpd \
 	ntfs_3g \
 	wireless_tools \
 	enigma2-skins-sh4 \
+	ntpclient \
+	udpxy \
 	package-index
 
 #

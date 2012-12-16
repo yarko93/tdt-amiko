@@ -1427,3 +1427,40 @@ $(DEPDIR)/%parted: $(DEPDIR)/parted.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_parted@
 	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# gettext
+#
+DESCRIPTION_gettext = "gettext"
+FILES_gettext = \
+*
+
+$(DEPDIR)/gettext.do_prepare: bootstrap @DEPENDS_gettext@
+	@PREPARE_gettext@
+	touch $@
+
+$(DEPDIR)/gettext.do_compile: $(DEPDIR)/gettext.do_prepare
+	cd @DIR_gettext@ && \
+		cp aclocal.m4 acinclude.m4 && \
+		autoconf && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr \
+			--without-emacs \
+			--without-cvs \
+			--disable-java && \
+		$(MAKE) all 
+	touch $@
+
+$(DEPDIR)/min-gettext $(DEPDIR)/std-gettext $(DEPDIR)/max-gettext \
+$(DEPDIR)/gettext: \
+$(DEPDIR)/%gettext: $(DEPDIR)/gettext.do_compile
+	$(start_build)
+	cd @DIR_gettext@ && \
+		@INSTALL_gettext@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_gettext@
+	[ "x$*" = "x" ] && touch $@ || true

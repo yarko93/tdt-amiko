@@ -261,7 +261,7 @@ xfsprogs
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 mc
-  4.8.0
+  4.8.1.6
   {PN}-{PV}
   extract:http://www.midnight-commander.org/downloads/{PN}-{PV}.tar.bz2
 #nothing:file://{PN}.diff
@@ -782,6 +782,7 @@ libdreamdvd
 libdreamdvd2
   1.0
   libdreamdvd
+  nothing:git://github.com/mirakels/libdreamdvd.git:r=1bdc2c33f912b9e87cb7e204485a57c6a08a0e8c
   patch:file://libdreamdvd-{PV}-support_sh4.patch
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
@@ -1233,7 +1234,7 @@ ethtool
   make:install:DESTDIR=PKDIR
 ;
 init_scripts
-  0.5
+  0.6
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
@@ -1323,6 +1324,12 @@ parted
   {PN}-{PV}
   extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.xz
   patch:file://{PN}_{PV}.patch
+  make:install:DESTDIR=PKDIR
+;
+gettext
+  0.18
+  {PN}-{PV}
+  extract:ftp://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
 ;
 libnfs
