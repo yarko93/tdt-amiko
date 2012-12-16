@@ -22,7 +22,7 @@ if [ -z "$DIALNUMBER" ] || [ "$DIALNUMBER" = "auto" ]; then
 	DIALNUMBER="#777"
     fi
 fi
-[ -z "$DISABLEAUTOSTART" ] && DISABLEAUTOSTART=0
+[ -z "$MODEMAUTOSTART" ] && MODEMAUTOSTART=1
 [ -z "$DEBUG" ] && DEBUG=0
 
 start(){
@@ -122,7 +122,7 @@ case $1 in
     ;;
 
     add)
-	if [ "$DISABLEAUTOSTART" = "0" ] && [ "$MODEMPORT" = "$2" ]; then
+	if [ "$MODEMAUTOSTART" = "1" ] && [ "$MODEMPORT" = "$2" ]; then
 	    stop
 	    sleep 2
 	    start
