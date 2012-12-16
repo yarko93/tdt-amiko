@@ -1326,6 +1326,12 @@ parted
   patch:file://{PN}_{PV}.patch
   make:install:DESTDIR=PKDIR
 ;
+gettext
+  0.18
+  {PN}-{PV}
+  extract:ftp://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
 libnfs
   git
   {PN}
