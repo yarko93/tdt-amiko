@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # . /etc/modem.conf
-set -x
+
 [ -z "$MODEMTYPE" ] && MODEMTYPE=0
 [ -z "$MODEMPORT" ] && MODEMPORT=ttyUSB0
 [ -z "$MODEMSPEED" ] && MODEMSPEED=""
