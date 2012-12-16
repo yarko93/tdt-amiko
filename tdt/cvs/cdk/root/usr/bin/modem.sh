@@ -1,43 +1,34 @@
 #!/bin/sh
 
-
-
-. /etc/modem.conf
-
+# . /etc/modem.conf
+set -x
 [ -z "$MODEMTYPE" ] && MODEMTYPE=0
 [ -z "$MODEMPORT" ] && MODEMPORT=ttyUSB0
 [ -z "$MODEMSPEED" ] && MODEMSPEED=""
 [ -z "$APN" ] && APN="internet"
 [ -z "$MODEMUSERNAME" ] && MODEMUSERNAME=""
 [ -z "$MODEMPASSWORD" ] && MODEMPASSWORD=""
-[ -z "$MODEMMTU" ] || [ "$MODEMMTU" = "auto" ] && MODEMMTU=1492
-[ -z "$MODEMMRU" ] || [ "$MODEMMRU" = "auto" ] && MODEMMRU=1492
-[ -z "$MODEMPPPDOPTS" ] && MODEMPPPDOPTS=""
-[ -z "$DIALNUMBER" ] && DIALNUMBER="*99#"
-[ -z "$DISABLEAUTOSTART" ] && DISABLEAUTOSTART=0
-[ -z "$DEBUG" ] && $DEBUG=0
-
-[ $DEBUG -eq 1 ] && echo "ACTION $1 MODEMPORT $2" >> /tmp/modem.log || rm -rf /tmp/modem.log
-
-killall pppd
-rm -rf /etc/ppp/peers/0.chat
-rm -rf /etc/ppp/peers/1.chat
-rm -rf /etc/ppp/peers/dialup
-rm -rf /etc/ppp/resolv.conf
-[ $1 = "remove" ] &&  exit 0
-
-if [ $MODEMPORT = "auto" ]; then
- LIST=`lsusb | awk '{print $6}'`
- for vidpid in $LIST; do
-  PORT=`cat /etc/modem.list | grep "$vidpid"|cut -f 3 -d : -s`
-  [ -z $PORT ] || break
- done
- MODEMPORT="tty$PORT"
- [ $DEBUG -eq 1 ] && echo "Detected modem port is $MODEMPORT"  >> /tmp/modem.log
+if [ -z "$MODEMMTU" ] || [ "$MODEMMTU" = "auto" ]; then
+    MODEMMTU=1492
 fi
-[ "$2" = "$MODEMPORT" ] ||  exit 0
-[ $DISABLEAUTOSTART = 1 ] && [ $1 = "add" ] &&  exit 0
-[ -d /etc/ppp/peers ] || mkdir -p /etc/ppp/peers
+if [ -z "$MODEMMRU" ] || [ "$MODEMMRU" = "auto" ]; then
+    MODEMMRU=1492
+fi
+[ -z "$MODEMPPPDOPTS" ] && MODEMPPPDOPTS=""
+if [ -z "$DIALNUMBER" ] || [ "$DIALNUMBER" = "auto" ]; then
+    if [ "$MODEMTYPE" = "0" ]; then
+	DIALNUMBER="*99#"
+    else
+	DIALNUMBER="#777"
+    fi
+fi
+[ -z "$DISABLEAUTOSTART" ] && DISABLEAUTOSTART=0
+[ -z "$DEBUG" ] && DEBUG=0
+
+start(){
+if [ ! -d /etc/ppp/peers ]; then
+    mkdir -p /etc/ppp/peers
+fi
 echo "ABORT '~'
 ABORT 'BUSY'
 ABORT 'NO CARRIER'
@@ -86,5 +77,65 @@ user $MODEMUSERNAME
 password $MODEMPASSWORD
 connect \"/sbin/chat -s -S -V -t 60 -f /etc/ppp/peers/$MODEMTYPE.chat 2>/tmp/chat.log\"" > /etc/ppp/peers/dialup
 
-[ -c /dev/ppp ] ||  mknod /dev/ppp c 108 0
+if [ ! -c /dev/ppp ]; then
+    mknod /dev/ppp c 108 0
+fi
 pppd call dialup & >> /tmp/chat.log
+}
+
+stop(){
+killall pppd
+rm -rf /etc/ppp/peers/0.chat
+rm -rf /etc/ppp/peers/1.chat
+rm -rf /etc/ppp/peers/dialup
+rm -rf /etc/ppp/resolv.conf
+}
+
+if [ "$DEBUG" = "1" ]; then
+    echo "ACTION $1 MODEMPORT $2" >> /tmp/modem.log
+else
+    rm -rf /tmp/modem.log
+fi
+if [ "$MODEMPORT" = "auto" ]; then
+    LIST=`lsusb | awk '{print $6}'`
+    for vidpid in $LIST; do
+	PORT=`cat /etc/modem.list | grep "$vidpid"|cut -f 3 -d : -s`
+	if [ ! -z $PORT ]; then
+	    break
+	fi
+    done
+    MODEMPORT="tty$PORT"
+    if [ "$DEBUG" = "1" ]; then
+	echo "Detected modem port is $MODEMPORT"  >> /tmp/modem.log
+    fi
+fi
+
+
+case $1 in
+
+    start)
+	start
+    ;;
+
+    stop)
+	stop
+    ;;
+
+    add)
+	if [ "$DISABLEAUTOSTART" = "0" ] && [ "$MODEMPORT" = "$2" ]; then
+	    stop
+	    sleep 2
+	    start
+	fi
+    ;;
+
+    remove)
+	stop
+    ;;
+
+    *)
+    ;;
+
+esac
+
+exit 0
