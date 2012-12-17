@@ -475,6 +475,10 @@ $(DEPDIR)/mc.do_compile: $(DEPDIR)/mc.do_prepare | $(NCURSES_DEV)
 			--host=$(target) \
 			--prefix=/usr \
 			--without-gpm-mouse \
+			--without-edit \
+			--enable-utf8 \
+			--disable-vfs \
+			--without-subshell \
 			--with-screen=ncurses \
 			--without-x && \
 		$(MAKE) all
