@@ -1,9 +1,10 @@
 #!/bin/sh
-DISPL7162=`grep -c '8 digit' /proc/aotom/display_type`
+DISPL7162=`grep -c '8' /proc/aotom/display_type`
 if [ $# -eq 1 ]; then
    if [ "$1" = "-a" ]; then
 	echo "enter standby..."
-	/bin/stfbcontrol hd 
+	/bin/stfbcontrol hd
+	echo on > /proc/stb/avs/0/standby
 	echo off > /dev/vfd 
 	sleep 2 
    if [ "$DISPL7162" -eq "1" ]; then
@@ -20,8 +21,10 @@ if [ $# -eq 1 ]; then
    if [ "$DISPL7162" -eq "1" ]; then
        /bin/fp_control -i 36 0
        stfbcontrol he
+       echo off > /proc/stb/avs/0/standby
     else
        stfbcontrol he
+       echo off > /proc/stb/avs/0/standby
        fi
    fi
 fi
