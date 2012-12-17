@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# . /etc/modem.conf
+. /etc/modem.conf
 
 [ -z "$MODEMTYPE" ] && MODEMTYPE=0
 [ -z "$MODEMPORT" ] && MODEMPORT=ttyUSB0
@@ -110,7 +110,6 @@ if [ "$MODEMPORT" = "auto" ]; then
     fi
 fi
 
-
 case $1 in
 
     start)
@@ -130,7 +129,9 @@ case $1 in
     ;;
 
     remove)
+    if [ "$MODEMPORT" = "$2" ]; then
 	stop
+    fi
     ;;
 
     *)
