@@ -1,15 +1,14 @@
 #!/bin/sh
 
 . /etc/modem.conf
-DEV=$1
 
 if [ "$DEBUG" = "1" ]; then
-    echo "DEVICE: $DEV" > /tmp/modemctrl.log
+    echo "DEVICE: $1" > /tmp/modemctrl.log
 else
     rm -rf /tmp/modemctrl.log
 fi
 
-LIST=`find /sys/devices -name "$DEV" | sort -r 2>/dev/null`
+LIST=`find /sys/devices -name "$1" | sort -r 2>/dev/null`
 if [ "$DEBUG" = "1" ]; then
     echo "LIST: $LIST" >> /tmp/modemctrl.log
 fi

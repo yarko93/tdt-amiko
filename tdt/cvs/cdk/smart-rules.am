@@ -780,10 +780,10 @@ libdreamdvd
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libdreamdvd2
-  1.0
+  git
   libdreamdvd
   nothing:git://github.com/mirakels/libdreamdvd.git:r=1bdc2c33f912b9e87cb7e204485a57c6a08a0e8c
-  patch:file://libdreamdvd-{PV}-support_sh4.patch
+  patch:file://libdreamdvd-1.0-support_sh4.patch
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libmpeg2
@@ -1287,7 +1287,7 @@ e2skin
   git://github.com/schpuntik/enigma2-skins-sh4.git:b=master
 ;
 modem_scripts
-  0.2
+  0.3
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/ppp/ip-*
