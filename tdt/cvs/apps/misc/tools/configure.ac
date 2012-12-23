@@ -27,7 +27,11 @@ AC_ARG_ENABLE([multicom324],
 AM_CONDITIONAL([ENABLE_MULTICOM324], [test x$enable_multicom324 = xtrue])
 AC_SUBST(MULTICOM324)
 
-
+AC_ARG_ENABLE(mediafwgstreamer,
+	AS_HELP_STRING(--enable-mediafwgstreamer,	set up the CDK to use mediafw gstreamer),
+	,[enable_mediafwgstreamer=no])
+AM_CONDITIONAL(ENABLE_MEDIAFWGSTREAMER,test "$enable_mediafwgstreamer" = "yes")
+AC_SUBST(MEDIAFWGSTREAMER)
 
 AC_OUTPUT([
 Makefile
