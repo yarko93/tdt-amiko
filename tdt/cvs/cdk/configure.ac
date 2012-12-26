@@ -65,6 +65,14 @@ AC_ARG_ENABLE(py27,
 AM_CONDITIONAL(ENABLE_PY27,test "$enable_py27" = "yes")
 AC_SUBST(PY27)
 
+AC_ARG_ENABLE(py26,
+	AS_HELP_STRING(--enable-py26,      enable Python 2.6 ),
+	[case "${enableval}" in
+		yes) PY26=py26 ;;
+	esac],[enable_py26=no])
+AM_CONDITIONAL(ENABLE_PY26,test "$enable_py26" = "yes")
+AC_SUBST(PY26)
+
 AC_ARG_ENABLE(p0207,
 	AS_HELP_STRING(--enable-p0207,  set up the CDK to use the STLinux 2.4 with patchlevel 0207),
 	[case "${enableval}" in
@@ -117,6 +125,12 @@ AC_ARG_ENABLE(mediafwgstreamer,
 	,[enable_mediafwgstreamer=no])
 AM_CONDITIONAL(ENABLE_MEDIAFWGSTREAMER,test "$enable_mediafwgstreamer" = "yes")
 AC_SUBST(MEDIAFWGSTREAMER)
+
+AC_ARG_ENABLE(eplayer3,
+	AS_HELP_STRING(--enable-eplayer3,    enable eplayer3 support),
+	,[enable_eplayer3=no])
+AM_CONDITIONAL(ENABLE_EPLAYER3,test "$enable_eplayer3" = "yes")
+AC_SUBST(EPLAYER3)
 
 AC_ARG_ENABLE(graphicfwdirectfb,
 	AS_HELP_STRING(--enable-graphicfwdirectfb,	set up the CDK to use graphicfw directfb),
