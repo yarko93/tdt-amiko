@@ -474,7 +474,7 @@ if [[ "$IMAGE" == --enable-e2* ]]; then
 fi
 ##############################################
 
-CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $PYTHON $EXTERNAL_LCD $IMAGE $GFW"
+CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $PYTHON $MEDIAFW  $EXTERNAL_LCD $IMAGE $GFW"
 
 ##############################################
 
