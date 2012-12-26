@@ -946,7 +946,17 @@ diff -crp linux-sh4-2.6.32.57_stm24_0210/drivers/stm/stx7105_comms.c linux-sh4-2
 + 		break;
   	case 2:
   		pad_config = stm_pad_config_alloc(3, 2);
-  		
+
+--- linux-sh4/include/linux/dvb/frontend.h.org	2012-12-26 21:01:29.588293732 +0100
++++ linux-sh4/include/linux/dvb/frontend.h	2012-12-26 20:37:11.032257712 +0100
+@@ -336,6 +336,7 @@
+ 	SYS_DMBTH,
+ 	SYS_CMMB,
+ 	SYS_DAB,
++	SYS_DVBT2,
+ } fe_delivery_system_t;
+ 
+ struct dtv_cmds_h { 		
 diff -crp linux-sh4-2.6.32.57_stm24_0210/include/linux/stm/stx7105.h linux-sh4-2.6.32.57_stm24_0210.i2s/include/linux/stm/stx7105.h
 *** linux-sh4-2.6.32.57_stm24_0210/include/linux/stm/stx7105.h	2011-08-09 09:35:36.000000000 +0800
 --- linux-sh4-2.6.32.57_stm24_0210.i2s/include/linux/stm/stx7105.h	2011-12-07 11:02:08.856831910 +0800

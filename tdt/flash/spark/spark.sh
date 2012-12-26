@@ -2,51 +2,62 @@
 CURDIR=`pwd`
 BASEDIR=$CURDIR/../..
 TUFSBOXDIR=$BASEDIR/tufsbox
-#RELASEDIR=$BASEDIR/relase
-#SCRIPTDIR=$CURDIR/scripts
-#TMPDIR=$CURDIR/tmp
-#TMPFWDIR=$TMPDIR/ROOT
-#TMPBOOTDIR=$TMPFWDIR/boot
-#NFSDIR=/nfs
-#TARGET=$NFSDIR/target
-#OUTDIR=$CURDIR/out
+CDKDIR=$BASEDIR/cvs/cdk
+SCRIPTDIR=$CURDIR/scripts
+TMPDIR=$CURDIR/tmp
+TMPROOTDIR=$TMPDIR/ROOT
+TMPKERNELDIR=$TMPDIR/KERNEL
+LAST=$CDKDIR/lastChoice
+OUTDIR=$CURDIR/out
 
-#if [  -e $TMPDIR ]; then
-#  rm -rf $TMPDIR/*
-#else
-#  mkdir $TMPDIR
-#fi
+if [ -e $TMPDIR ]; then
+  rm -rf $TMPDIR/*
+fi
+PLAY=`cat $LAST | awk -F '--enable-' '{print $10}' | cut -d ' ' -f 1`
+if [ "$PLAY" == "mediafwgstreamer" ]; then
+play='_gst'
+else
+play='_epl3'
+fi
+OE=`cat $LAST | awk -F '--enable-' '{print $9}' | cut -d ' ' -f 1`
+if [ "$OE" == "py27" ]; then
+oe='OE2.0'
+else
+oe='OE1.6'
+fi
+BOX=`cat $LAST | awk -F '--enable-' '{print $4}' | cut -d ' ' -f 1`
+if [ "$BOX" == "spark" ]; then
+box='_alien'
+elif [ "$BOX" == "spark7162" ]; then
+box='_alien2'
+fi
+KERN=`cat $LAST | awk -F '--enable-' '{print $6}' | cut -d ' ' -f 1`
+if [ "$KERN" == "p0211" ]; then
+kern='_211'
+elif [ "$KERN" == "p0210" ]; then
+kern='_210'
+elif [ "$KERN" == "p0209" ]; then
+kern='_209'
+fi
+echo "BOX          = $box "
+echo "KERN         = $kern"
+VERSION="OpenAR-P_$oe$kern$box$play-git-`date +%d-%m-%y`_`git describe --always`"
 
-mkdir $TMPFWDIR
 echo "CURDIR       = $CURDIR"
 echo "TUFSBOXDIR   = $TUFSBOXDIR"
 echo "OUTDIR       = $OUTDIR"
 echo "TMPKERNELDIR = $TMPKERNELDIR"
 echo "BASEDIR      = $BASEDIR"
 echo "TMPDIR       = $TMPDIR"
-echo "TMPFWDIR     = $TMPFWDIR"
-echo "TMPBOOTDIR   = $TMPBOOTDIR"
-echo "RELASEDIR    = $RELASEDIR"
-echo "NFSDIR       = $NFSDIR"
-echo "TARGET       = $TARGET"
+echo "TMPROOTDIR   = $TMPROOTDIR"
+echo "VERSION      = $VERSION"
 echo "This script creates flashable images Spark"
 echo "Author: Schischu modified by schpuntik"
 echo "Date: 01-31-2011"
 echo "-----------------------------------------------------------------------"
 echo "It's expected that a images was already build prior to this execution!"
 echo "-----------------------------------------------------------------------"
-CDKDIR=$BASEDIR/cvs/cdk
 
-SCRIPTDIR=$CURDIR/scripts
-TMPDIR=$CURDIR/tmp
-TMPROOTDIR=$TMPDIR/ROOT
-TMPKERNELDIR=$TMPDIR/KERNEL
-
-OUTDIR=$CURDIR/out
-
-if [ -e $TMPDIR ]; then
-  rm -rf $TMPDIR/*
-fi
 
 mkdir $TMPDIR
 mkdir $TMPROOTDIR
@@ -95,7 +106,7 @@ echo "   1) KERNEL with ROOT and FW"
 read -p "Select flashtarget (1)? "
 case "$REPLY" in
 	1)  echo "Creating KERNEL with ROOT and FW..."
-		$SCRIPTDIR/flash_part_w_fw.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPKERNELDIR $TMPROOTDIR;;
+		$SCRIPTDIR/flash_part_w_fw.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPKERNELDIR $TMPROOTDIR $VERSION ;;
 	*)  "Invalid Input! Exiting..."
 		exit 3;;
 esac
