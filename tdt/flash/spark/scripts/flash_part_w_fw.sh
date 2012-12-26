@@ -5,6 +5,7 @@ TUFSBOXDIR=$2
 OUTDIR=$3
 TMPKERNELDIR=$4
 TMPROOTDIR=$5
+VERSION=$6
 
 echo "CURDIR       = $CURDIR"
 echo "TUFSBOXDIR   = $TUFSBOXDIR"
@@ -67,5 +68,6 @@ mv $CURDIR/mtd_root.sum.pad.bin $OUTDIR/e2jffs2.img
 
 #rm -f $CURDIR/mtd_kernel.pad.bin
 rm -f $CURDIR/mtd_root.sum.pad.bin
+rm -f $OUTDIR/*.zip
 
-cd $OUTDIR;zip $OUTFILE.zip e2jffs2.img uImage
+cd $OUTDIR;zip $VERSION.zip e2jffs2.img uImage
