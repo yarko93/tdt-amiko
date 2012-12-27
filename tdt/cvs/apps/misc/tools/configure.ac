@@ -27,11 +27,12 @@ AC_ARG_ENABLE([multicom324],
 AM_CONDITIONAL([ENABLE_MULTICOM324], [test x$enable_multicom324 = xtrue])
 AC_SUBST(MULTICOM324)
 
-AC_ARG_ENABLE(mediafwgstreamer,
-	AS_HELP_STRING(--enable-mediafwgstreamer,	set up the CDK to use mediafw gstreamer),
-	,[enable_mediafwgstreamer=no])
-AM_CONDITIONAL(ENABLE_MEDIAFWGSTREAMER,test "$enable_mediafwgstreamer" = "yes")
-AC_SUBST(MEDIAFWGSTREAMER)
+AC_ARG_ENABLE(libeplayer3,
+	[  --enable-libeplayer3          enable TDT libeplayer3 as player engine supportt],
+	[AC_DEFINE(ENABLE_LIBEPLAYER3,1,[enable TDT libeplayer3 as player engine support])])
+
+AM_CONDITIONAL(ENABLE_LIBEPLAYER3,test "$enable_libeplayer3" = "yes")
+AC_SUBST(LIBEPLAYER3)
 
 AC_OUTPUT([
 Makefile

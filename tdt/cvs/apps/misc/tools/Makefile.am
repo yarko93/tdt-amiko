@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = gnu
 
-if ENABLE_MEDIAFWGSTREAMER
+if ENABLE_LIBEPLAYER3
 SUBDIRS = \
 	devinit \
 	evremote2 \
@@ -14,7 +14,8 @@ SUBDIRS = \
 	vfdctl \
 	libmme_host \
 	libmmeimage
-else
+endif
+if !ENABLE_LIBEPLAYER3
 SUBDIRS = \
 	devinit \
 	evremote2 \
