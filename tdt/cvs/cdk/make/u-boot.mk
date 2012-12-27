@@ -45,7 +45,7 @@ $(DEPDIR)/%u-boot-utils: $(DEPDIR)/u-boot-utils.do_compile
 	cd $(HOST_U_BOOT_DIR) && \
 		$(INSTALL) -m 755 tools/env/fw_printenv $(prefix)/$*cdkroot/usr/sbin && \
 		$(LN_SF) fw_printenv $(prefix)/$*cdkroot/usr/sbin/fw_setenv
-	$(INSTALL) -m 644 $(buildprefix)/root/etc/fw_env.config $(prefix)/$*cdkroot/etc/
+	$(INSTALL) -m 644 $(buildprefix)/root/etc/fw_env.config_spark $(prefix)/$*cdkroot/etc/
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
