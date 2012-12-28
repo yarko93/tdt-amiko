@@ -1,5 +1,4 @@
 #!/bin/sh
-DISPL7162=`grep -c '8' /proc/aotom/display_type`
 if [ $# -eq 1 ]; then
    if [ "$1" = "-a" ]; then
 	echo "enter standby..."
@@ -7,24 +6,12 @@ if [ $# -eq 1 ]; then
 	echo on > /proc/stb/avs/0/standby
 	echo off > /dev/vfd 
 	sleep 2 
-   if [ "$DISPL7162" -eq "1" ]; then
-	/bin/fp_control -c
-	/bin/fp_control -i 36 1
 	/bin/fp_control -s `date +"%H:%M:%S %d-%m-%Y"`
-   else
-	/bin/fp_control -s `date +"%H:%M:%S %d-%m-%Y"`
-   fi
 	echo "done"
    elif [ "$1" = "-d" ]; then
 	echo "end standby..."
        #enable hdmi
-   if [ "$DISPL7162" -eq "1" ]; then
-       /bin/fp_control -i 36 0
        stfbcontrol he
        echo off > /proc/stb/avs/0/standby
-    else
-       stfbcontrol he
-       echo off > /proc/stb/avs/0/standby
-       fi
-   fi
+    fi
 fi
