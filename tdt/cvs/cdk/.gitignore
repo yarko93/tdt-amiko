@@ -105,3 +105,12 @@ e2plugin
 smart-rules
 smart-rules.in
 udev-rules*
+config
+depcomp
+install-sh
+lastChoice
+localmacros
+autoconf_rtl8192c_usb_linux.h
+pycrypto-*
+Imaging-*
+pyusb-
