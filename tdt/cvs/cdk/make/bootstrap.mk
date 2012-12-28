@@ -475,7 +475,6 @@ $(CROSS_G++): $(CROSS_G++_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
 	touch .deps/$(notdir $@)
 
-$(DEPDIR)/min-$(CROSS_LIBGCC) $(DEPDIR)/std-$(CROSS_LIBGCC) $(DEPDIR)/max-$(CROSS_LIBGCC) \
 $(DEPDIR)/$(CROSS_LIBGCC): \
 $(DEPDIR)/%$(CROSS_LIBGCC): $(CROSS_LIBGCC_RPM) | $(DEPDIR)/%$(GLIBC)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb  $(DRPM) --ignorearch --nodeps -Uhv \
@@ -533,7 +532,6 @@ $(DEPDIR)/libtool.do_compile: $(DEPDIR)/libtool.do_prepare
 	$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-libtool $(DEPDIR)/std-libtool $(DEPDIR)/max-libtool \
 $(DEPDIR)/libtool: \
 $(DEPDIR)/%libtool: $(DEPDIR)/libtool.do_compile
 	cd @DIR_libtool@ && \
