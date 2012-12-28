@@ -56,16 +56,8 @@ cvs/apps/misc/tools/stfbcontrol/rset
 cvs/apps/misc/tools/stfbcontrol/stfbcontrol
 cvs/apps/misc/tools/streamproxy/Makefile
 cvs/apps/misc/tools/streamproxy/streamproxy
-cvs/apps/misc/tools/tfd2mtd/Makefile
-cvs/apps/misc/tools/tfd2mtd/tfd2mtd
-cvs/apps/misc/tools/tffpctl/Makefile
-cvs/apps/misc/tools/tffpctl/tffpctl
 cvs/apps/misc/tools/ustslave/Makefile
 cvs/apps/misc/tools/ustslave/ustslave
-cvs/apps/misc/tools/ustslave_stm23/Makefile
-cvs/apps/misc/tools/ustslave_stm23/ustslave_stm23
-cvs/apps/misc/tools/ipbox_eeprom/Makefile
-cvs/apps/misc/tools/ipbox_eeprom/eeprom
 cvs/apps/neutrino/Makefile
 cvs/apps/neutrino/data/Makefile
 cvs/apps/neutrino/data/fonts/Makefile
