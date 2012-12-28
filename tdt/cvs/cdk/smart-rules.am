@@ -430,9 +430,9 @@ imagemagick
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libboost
-  boost-1.49.0
-  boost_1_49_0
-  extract:http://prdownloads.sourceforge.net/sourceforge/boost/boost_1_49_0.tar.bz2
+  boost-1.52.0
+  boost_1_52_0
+  extract:http://prdownloads.sourceforge.net/sourceforge/boost/boost_1_52_0.tar.bz2
   patch:file://{PN}.diff
   remove:TARGETS/include/boost
   move:boost:TARGETS/usr/include/boost
