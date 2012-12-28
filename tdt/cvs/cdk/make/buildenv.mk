@@ -155,7 +155,6 @@ CONFIG_STATUS_DEPENDENCIES = \
 	$(top_srcdir)/smart-rules.pl \
 	$(top_srcdir)/smart-rules.am
 
-min-query std-query max-query query: \
 %query:
 	rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) -qa
 
