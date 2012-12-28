@@ -362,7 +362,6 @@ release_hl101:
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
-$(DEPDIR)/min-release $(DEPDIR)/std-release $(DEPDIR)/max-release $(DEPDIR)/release: \
 $(DEPDIR)/%release:release_base release_common_utils release_$(HL101)$(SPARK)$(SPARK7162)
 # Post tweaks
 	$(DEPMOD) -b $(prefix)/release $(KERNELVERSION)

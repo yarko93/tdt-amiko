@@ -4180,7 +4180,7 @@ $(DEPDIR)/%taglib: $(DEPDIR)/taglib.do_compile
 #
 DESCRIPTION_e2_rtmpgw = A toolkit for RTMP streams
 FILES_e2_rtmpgw = \
-/usr/sbin/*
+/usr/sbin/rtmpgw2
 
 $(DEPDIR)/e2_rtmpgw.do_prepare: bootstrap openssl openssl-dev libz @DEPENDS_e2_rtmpgw@
 	@PREPARE_e2_rtmpgw@

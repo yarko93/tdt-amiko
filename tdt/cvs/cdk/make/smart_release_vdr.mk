@@ -218,7 +218,6 @@ release_vdr_hl101:
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
-$(DEPDIR)/min-release_vdr $(DEPDIR)/std-release_vdr $(DEPDIR)/max-release_vdr $(DEPDIR)/release_vdr: \
 $(DEPDIR)/%release_vdr:release_vdr_base release_vdr_common_utils release_$(HL101)$(SPARK)$(SPARK7162)
 # Post tweaks
 	depmod -b $(prefix)/release $(KERNELVERSION)
