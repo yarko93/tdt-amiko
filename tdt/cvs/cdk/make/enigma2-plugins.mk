@@ -15,7 +15,6 @@ $(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap $(RDEPENDS_enigma2_openwebif) 
 	@PREPARE_enigma2_openwebif@
 	touch $@
 
-$(DEPDIR)/min-enigma2_openwebif $(DEPDIR)/std-enigma2_openwebif $(DEPDIR)/max-enigma2_openwebif \
 $(DEPDIR)/enigma2_openwebif: \
 $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 	$(start_build)
@@ -39,7 +38,6 @@ $(DEPDIR)/enigma2_networkbrowser.do_prepare: @DEPENDS_enigma2_networkbrowser@
 	@PREPARE_enigma2_networkbrowser@
 	touch $@
 
-$(DEPDIR)/min-enigma2_networkbrowser $(DEPDIR)/std-enigma2_networkbrowser $(DEPDIR)/max-enigma2_networkbrowser \
 $(DEPDIR)/enigma2_networkbrowser: \
 $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 	$(start_build)

@@ -293,7 +293,6 @@ $(DEPDIR)/libpng.do_compile: $(DEPDIR)/libpng.do_prepare
 		$(MAKE) all
 	touch $@
 
-$(DEPDIR)/min-libpng $(DEPDIR)/std-libpng $(DEPDIR)/max-libpng \
 $(DEPDIR)/libpng: \
 $(DEPDIR)/%libpng: $(DEPDIR)/libpng.do_compile
 	$(start_build)
