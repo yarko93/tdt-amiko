@@ -36,10 +36,6 @@ bare-os: \
 		\
 		%e2fsprogs \
 		%u-boot-utils
-#		%diverse-tools
-#		%$(RELEASE) \
-#		%$(FINDUTILS) \
-#
 
 net-utils: \
 %net-utils: \
