@@ -115,6 +115,7 @@ pycrypto-*
 Imaging-*
 pyusb-*
 RPMS
+Makefile
 SRPMS
 curl-*
 ethtool-*
