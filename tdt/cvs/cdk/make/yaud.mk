@@ -1,12 +1,7 @@
-min-prepare-yaud std-prepare-yaud max-prepare-yaud: \
-%prepare-yaud:
-	-rm -rf $(prefix)/$*cdkroot
-	-rm -rf $(prefix)/$*cdkroot-rpmdb
-
 #
 # BOOTSTRAP
 #
-$(DEPDIR)/min-bootstrap $(DEPDIR)/std-bootstrap $(DEPDIR)/max-bootstrap $(DEPDIR)/bootstrap: \
+$(DEPDIR)/bootstrap: \
 $(DEPDIR)/%bootstrap: \
 		%libtool \
 		%$(FILESYSTEM) \
@@ -30,7 +25,7 @@ $(DEPDIR)/%bootstrap: \
 #
 # BARE-OS
 #
-min-bare-os std-bare-os max-bare-os bare-os: \
+bare-os: \
 %bare-os: \
 		%bootstrap \
 		%$(LIBTERMCAP) \
@@ -54,7 +49,7 @@ min-bare-os std-bare-os max-bare-os bare-os: \
 		%e2fsprogs \
 		%u-boot-utils
 
-min-net-utils std-net-utils max-net-utils net-utils: \
+net-utils: \
 %net-utils: \
 		%$(NETKIT_FTP) \
 		%portmap \
@@ -65,22 +60,12 @@ min-net-utils std-net-utils max-net-utils net-utils: \
 		%grep \
 		%$(CIFS)
 
-min-disk-utils std-disk-utils max-disk-utils disk-utils: \
+disk-utils: \
 %disk-utils: \
 		%$(XFSPROGS) \
 		%util-linux \
 		%jfsutils \
 		%$(SG3)
-
-#dummy targets
-#really ugly
-min-:
-
-std-:
-
-max-:
-
-
 #
 # YAUD
 #
@@ -140,67 +125,6 @@ yaud-none: \
 		udev-rules \
 		misc-tools 
 
-#
-# MIN-YAUD
-#
-test-kati: min-yaud-stock
-
-min-yaud-stock: \
-%yaud-stock: %prepare-yaud %yaud-none
-
-min-yaud-none: \
-%yaud-none:	%bare-os \
-		%misc-tools \
-		%linux-kernel \
-		%net-utils \
-		%disk-utils
-#
-#min-yaud-stock: \
-#%yaud-stock: min-prepare-yaud min-yaud-none
-#	
-#
-#min-yaud-none: \
-#%yaud-none: %bare-os \
-#		%$(RELEASE) \
-#		%linux-kernel \
-#		%busybox \
-#		%libz \
-#		%$(GREP)
-#	
-
-#
-# STD-YAUD
-#
-yaud-kati: std-yaud-stock
-
-std-yaud-stock: \
-%yaud-stock: %prepare-yaud %yaud-none %stock
-
-std-yaud-none: \
-%yaud-none: \
-		%bare-os \
-		%misc-tools \
-		%linux-kernel \
-		%net-utils \
-		%disk-utils
-
-#
-# MAX-YAUD
-#
-usb-kati: max-yaud-stock
-
-max-yaud-stock: \
-%yaud-stock: %prepare-yaud %yaud-none %stock
-
-max-yaud-none: \
-%yaud-none: \
-		%bare-os \
-		%misc-tools \
-		%$(UDEV) \
-		%$(HOTPLUG) \
-		%linux-kernel \
-		%net-utils \
-		%disk-utils
 #
 # EXTRAS
 #

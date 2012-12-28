@@ -19,7 +19,6 @@ $(DEPDIR)/busybox.do_compile: bootstrap $(DEPDIR)/busybox.do_prepare Patches/bus
 
 DESCRIPTION_busybox = "Utilities for embedded systems"
 
-$(DEPDIR)/min-busybox $(DEPDIR)/std-busybox $(DEPDIR)/max-busybox \
 $(DEPDIR)/busybox: \
 $(DEPDIR)/%busybox: $(DEPDIR)/busybox.do_compile
 	$(start_build)

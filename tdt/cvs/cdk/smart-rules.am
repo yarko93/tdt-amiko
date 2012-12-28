@@ -430,9 +430,9 @@ imagemagick
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 libboost
-  boost-1.49.0
-  boost_1_49_0
-  extract:http://prdownloads.sourceforge.net/sourceforge/boost/boost_1_49_0.tar.bz2
+  boost-1.52.0
+  boost_1_52_0
+  extract:http://prdownloads.sourceforge.net/sourceforge/boost/boost_1_52_0.tar.bz2
   patch:file://{PN}.diff
   remove:TARGETS/include/boost
   move:boost:TARGETS/usr/include/boost
@@ -1336,6 +1336,12 @@ libnfs
   git
   {PN}
   git://github.com/sahlberg/libnfs.git:r=c0ebf57b212ffefe83e2a50358499f68e7289e93
+  make:install:DESTDIR=PKDIR
+;
+e2_rtmpgw
+  git
+  {PN}
+  git://github.com/zakalibit/e2-rtmpgw.git:b=gw-e2
   make:install:DESTDIR=PKDIR
 ;
 taglib

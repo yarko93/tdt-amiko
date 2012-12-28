@@ -1,8 +1,7 @@
 kernelpath=linux-sh4
 
 #Trick ALPHA-Version ;)
-$(DEPDIR)/min-release_neutrino $(DEPDIR)/std-release_neutrino $(DEPDIR)/max-release_neutrino $(DEPDIR)/release_neutrino: \
-$(DEPDIR)/%release_neutrino:
+$(DEPDIR)/release_neutrino: $(DEPDIR)/%release_neutrino:
 	rm -rf $(prefix)/release_neutrino || true
 	$(INSTALL_DIR) $(prefix)/release_neutrino && \
 	$(INSTALL_DIR) $(prefix)/release_neutrino/bin && \

@@ -17,7 +17,6 @@ $(DEPDIR)/bzip2.do_compile: $(DEPDIR)/bzip2.do_prepare
 		$(MAKE) all CC=$(target)-gcc
 	touch $@
 
-$(DEPDIR)/min-bzip2 $(DEPDIR)/std-bzip2 $(DEPDIR)/max-bzip2 \
 $(DEPDIR)/bzip2: \
 $(DEPDIR)/%bzip2: $(DEPDIR)/bzip2.do_compile
 	$(start_build)
@@ -45,7 +44,6 @@ $(DEPDIR)/module_init_tools.do_compile: $(DEPDIR)/module_init_tools.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-module_init_tools $(DEPDIR)/std-module_init_tools $(DEPDIR)/max-module_init_tools \
 $(DEPDIR)/module_init_tools: \
 $(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS:%=root/etc/%) $(DEPDIR)/module_init_tools.do_compile
 	cd @DIR_module_init_tools@ && \
@@ -84,7 +82,6 @@ $(DEPDIR)/grep.do_compile: $(DEPDIR)/grep.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-grep $(DEPDIR)/std-grep $(DEPDIR)/max-grep \
 $(DEPDIR)/grep: \
 $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
 	$(start_build)
@@ -124,7 +121,6 @@ $(DEPDIR)/pppd.do_compile: pppd.do_prepare
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-pppd $(DEPDIR)/std-pppd $(DEPDIR)/max-pppd \
 $(DEPDIR)/pppd: \
 $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	$(start_build)
@@ -225,7 +221,6 @@ $(DEPDIR)/ntfs_3g.do_compile: bootstrap fuse $(DEPDIR)/ntfs_3g.do_prepare
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-ntfs_3g $(DEPDIR)/std-ntfs_3g $(DEPDIR)/max-ntfs_3g \
 $(DEPDIR)/ntfs_3g: \
 $(DEPDIR)/%ntfs_3g: $(DEPDIR)/ntfs_3g.do_compile
 	$(start_build)
@@ -251,7 +246,6 @@ $(DEPDIR)/lsb.do_prepare: bootstrap @DEPENDS_lsb@
 $(DEPDIR)/lsb.do_compile: $(DEPDIR)/lsb.do_prepare
 	touch $@
 
-$(DEPDIR)/min-lsb $(DEPDIR)/std-lsb $(DEPDIR)/max-lsb \
 $(DEPDIR)/lsb: \
 $(DEPDIR)/%lsb: $(DEPDIR)/lsb.do_compile
 	$(start_build)
@@ -284,7 +278,6 @@ $(DEPDIR)/portmap.do_compile: $(DEPDIR)/portmap.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-portmap $(DEPDIR)/std-portmap $(DEPDIR)/max-portmap \
 $(DEPDIR)/portmap: \
 $(DEPDIR)/%portmap: $(DEPDIR)/%lsb $(PORTMAP_ADAPTED_ETC_FILES:%=root/etc/%) $(DEPDIR)/portmap.do_compile
 	$(start_build)
@@ -324,7 +317,6 @@ $(DEPDIR)/openrdate.do_compile: $(DEPDIR)/openrdate.do_prepare
 		$(MAKE) 
 	touch $@
 
-$(DEPDIR)/min-openrdate $(DEPDIR)/std-openrdate $(DEPDIR)/max-openrdate \
 $(DEPDIR)/openrdate: \
 $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 		$(DEPDIR)/openrdate.do_compile
@@ -440,7 +432,6 @@ $(DEPDIR)/xfsprogs.do_compile: $(DEPDIR)/xfsprogs.do_prepare
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-xfsprogs $(DEPDIR)/std-xfsprogs $(DEPDIR)/max-xfsprogs \
 $(DEPDIR)/xfsprogs: \
 $(DEPDIR)/%xfsprogs: $(DEPDIR)/xfsprogs.do_compile
 	$(start_build)
@@ -484,7 +475,6 @@ $(DEPDIR)/mc.do_compile: $(DEPDIR)/mc.do_prepare | $(NCURSES_DEV)
 		$(MAKE) all
 	touch $@
 
-$(DEPDIR)/min-mc $(DEPDIR)/std-mc $(DEPDIR)/max-mc \
 $(DEPDIR)/mc: \
 $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
 	$(start_build)
@@ -523,7 +513,6 @@ $(DEPDIR)/sdparm.do_compile: $(DEPDIR)/sdparm.do_prepare
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-sdparm $(DEPDIR)/std-sdparm $(DEPDIR)/max-sdparm \
 $(DEPDIR)/sdparm: \
 $(DEPDIR)/%sdparm: $(DEPDIR)/sdparm.do_compile
 	$(start_build)
@@ -560,7 +549,6 @@ $(DEPDIR)/sg3_utils.do_compile: $(DEPDIR)/sg3_utils.do_prepare
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-sg3_utils $(DEPDIR)/std-sg3_utils $(DEPDIR)/max-sg3_utils \
 $(DEPDIR)/sg3_utils: \
 $(DEPDIR)/%sg3_utils: $(DEPDIR)/sg3_utils.do_compile
 	cd @DIR_sg3_utils@ && \
@@ -593,7 +581,6 @@ $(DEPDIR)/ipkg.do_compile: $(DEPDIR)/ipkg.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-ipkg $(DEPDIR)/std-ipkg $(DEPDIR)/max-ipkg \
 $(DEPDIR)/ipkg: \
 $(DEPDIR)/%ipkg: $(DEPDIR)/ipkg.do_compile
 	cd @DIR_ipkg@ && \
@@ -621,8 +608,6 @@ $(DEPDIR)/zd1211.do_compile: $(DEPDIR)/zd1211.do_prepare
 			CROSS_COMPILE=$(target)- ARCH=sh
 	touch $@
 
-#$(DEPDIR)/min-zd1211 $(DEPDIR)/std-zd1211 $(DEPDIR)/max-zd1211 \
-#
 $(DEPDIR)/zd1211: \
 $(DEPDIR)/%zd1211: $(DEPDIR)/zd1211.do_compile
 	cd @DIR_zd1211@ && \
@@ -654,7 +639,6 @@ $(DEPDIR)/nano.do_compile: $(DEPDIR)/nano.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-nano $(DEPDIR)/std-nano $(DEPDIR)/max-nano \
 $(DEPDIR)/nano: \
 $(DEPDIR)/%nano: $(DEPDIR)/nano.do_compile
 	cd @DIR_nano@ && \
@@ -681,7 +665,6 @@ $(DEPDIR)/rsync.do_compile: $(DEPDIR)/rsync.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-rsync $(DEPDIR)/std-rsync $(DEPDIR)/max-rsync \
 $(DEPDIR)/rsync: \
 $(DEPDIR)/%rsync: $(DEPDIR)/rsync.do_compile
 	cd @DIR_rsync@ && \
@@ -705,7 +688,6 @@ $(DEPDIR)/rfkill.do_compile: $(DEPDIR)/rfkill.do_prepare
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-rfkill $(DEPDIR)/std-rfkill $(DEPDIR)/max-rfkill \
 $(DEPDIR)/rfkill: \
 $(DEPDIR)/%rfkill: $(DEPDIR)/rfkill.do_compile
 	$(start_build)
@@ -736,7 +718,6 @@ $(DEPDIR)/lm_sensors.do_compile: $(DEPDIR)/lm_sensors.do_prepare
 		$(MAKE) $(MAKE_OPTS) MACHINE=sh PREFIX=/usr user
 	touch $@
 
-$(DEPDIR)/min-lm_sensors $(DEPDIR)/std-lm_sensors $(DEPDIR)/max-lm_sensors \
 $(DEPDIR)/lm_sensors: \
 $(DEPDIR)/%lm_sensors: $(DEPDIR)/lm_sensors.do_compile
 	$(start_build)
@@ -782,7 +763,6 @@ $(DEPDIR)/fuse.do_compile: $(DEPDIR)/fuse.do_prepare
 		$(MAKE) all
 	touch $@
 
-$(DEPDIR)/min-fuse $(DEPDIR)/std-fuse $(DEPDIR)/max-fuse \
 $(DEPDIR)/fuse: \
 $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
 	  $(start_build)
@@ -821,7 +801,6 @@ $(DEPDIR)/curlftpfs.do_compile: $(DEPDIR)/curlftpfs.do_prepare
 		$(MAKE) 
 	touch $@
 
-$(DEPDIR)/min-curlftpfs $(DEPDIR)/std-curlftpfs $(DEPDIR)/max-curlftpfs \
 $(DEPDIR)/curlftpfs: \
 $(DEPDIR)/%curlftpfs: %fuse $(DEPDIR)/curlftpfs.do_compile
 	cd @DIR_curlftpfs@ && \
@@ -841,7 +820,6 @@ $(DEPDIR)/fbset.do_compile: $(DEPDIR)/fbset.do_prepare
 		make CC="$(target)-gcc -Wall -O2 -I."
 	touch $@
 
-$(DEPDIR)/min-fbset $(DEPDIR)/std-fbset $(DEPDIR)/max-fbset \
 $(DEPDIR)/fbset: \
 $(DEPDIR)/%fbset: fbset.do_compile
 	cd @DIR_fbset@ && \
@@ -861,7 +839,6 @@ $(DEPDIR)/pngquant.do_compile: $(DEPDIR)/pngquant.do_prepare
 		$(target)-gcc -O3 -Wall -I. -funroll-loops -fomit-frame-pointer -o pngquant pngquant.c rwpng.c -lpng -lz -lm
 	touch $@
 
-$(DEPDIR)/min-pngquant $(DEPDIR)/std-pngquant $(DEPDIR)/max-pngquant \
 $(DEPDIR)/pngquant: \
 $(DEPDIR)/%pngquant: $(DEPDIR)/pngquant.do_compile
 	cd @DIR_pngquant@ && \
@@ -888,7 +865,6 @@ $(DEPDIR)/mplayer.do_compile: $(DEPDIR)/mplayer.do_prepare
 		$(MAKE) CC="$(target)-gcc"
 	touch $@
 
-$(DEPDIR)/min-mplayer $(DEPDIR)/std-mplayer $(DEPDIR)/max-mplayer \
 $(DEPDIR)/mplayer: \
 $(DEPDIR)/%mplayer: $(DEPDIR)/mplayer.do_compile
 	cd @DIR_mplayer@ && \
@@ -940,7 +916,6 @@ $(DEPDIR)/mencoder.do_compile: $(DEPDIR)/mplayer.do_prepare
 		$(MAKE) CC="$(target)-gcc"
 	touch $@
 
-$(DEPDIR)/min-mencoder $(DEPDIR)/std-mencoder $(DEPDIR)/max-mencoder \
 $(DEPDIR)/mencoder: \
 $(DEPDIR)/%mencoder: $(DEPDIR)/mencoder.do_compile
 	cd @DIR_mencoder@ && \
@@ -970,7 +945,6 @@ $(DEPDIR)/jfsutils.do_compile: $(DEPDIR)/jfsutils.do_prepare
 		$(MAKE) CC="$(target)-gcc"
 	touch $@
 
-$(DEPDIR)/min-jfsutils $(DEPDIR)/std-jfsutils $(DEPDIR)/max-jfsutils \
 $(DEPDIR)/jfsutils: \
 $(DEPDIR)/%jfsutils: $(DEPDIR)/jfsutils.do_compile
 	$(start_build)
@@ -1007,7 +981,6 @@ $(DEPDIR)/opkg.do_compile: $(DEPDIR)/opkg.do_prepare
 		$(MAKE) all
 	touch $@
 
-$(DEPDIR)/min-opkg $(DEPDIR)/std-opkg $(DEPDIR)/max-opkg \
 $(DEPDIR)/opkg: \
 $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
 	$(start_build)
@@ -1246,7 +1219,6 @@ $(DEPDIR)/hotplug_e2.do_compile: $(DEPDIR)/hotplug_e2.do_prepare
 		$(MAKE) all
 	touch $@
 
-$(DEPDIR)/min-hotplug_e2 $(DEPDIR)/std-hotplug_e2 $(DEPDIR)/max-hotplug_e2 \
 $(DEPDIR)/hotplug_e2: \
 $(DEPDIR)/%hotplug_e2: $(DEPDIR)/hotplug_e2.do_compile
 	$(start_build)
@@ -1282,7 +1254,6 @@ $(DEPDIR)/autofs.do_compile: $(DEPDIR)/autofs.do_prepare
 		$(MAKE) all CC=$(target)-gcc STRIP=$(target)-strip
 	touch $@
 
-$(DEPDIR)/min-autofs $(DEPDIR)/std-autofs $(DEPDIR)/max-autofs \
 $(DEPDIR)/autofs: \
 $(DEPDIR)/%autofs: $(DEPDIR)/autofs.do_compile
 	$(start_build)
@@ -1329,7 +1300,6 @@ $(DEPDIR)/imagemagick.do_compile: $(DEPDIR)/imagemagick.do_prepare
 	$(MAKE) all
 	touch $@
 
-$(DEPDIR)/min-imagemagick $(DEPDIR)/std-imagemagick $(DEPDIR)/max-imagemagick \
 $(DEPDIR)/imagemagick: \
 $(DEPDIR)/%imagemagick: $(DEPDIR)/imagemagick.do_compile
 	$(start_build)
@@ -1421,7 +1391,6 @@ $(DEPDIR)/parted.do_compile: $(DEPDIR)/parted.do_prepare
 		$(MAKE) all CC=$(target)-gcc STRIP=$(target)-strip
 	touch $@
 
-$(DEPDIR)/min-parted $(DEPDIR)/std-parted $(DEPDIR)/max-parted \
 $(DEPDIR)/parted: \
 $(DEPDIR)/%parted: $(DEPDIR)/parted.do_compile
 	$(start_build)
@@ -1458,7 +1427,6 @@ $(DEPDIR)/gettext.do_compile: $(DEPDIR)/gettext.do_prepare
 		$(MAKE) all 
 	touch $@
 
-$(DEPDIR)/min-gettext $(DEPDIR)/std-gettext $(DEPDIR)/max-gettext \
 $(DEPDIR)/gettext: \
 $(DEPDIR)/%gettext: $(DEPDIR)/gettext.do_compile
 	$(start_build)
