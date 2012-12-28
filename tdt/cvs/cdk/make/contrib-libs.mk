@@ -4275,6 +4275,34 @@ $(DEPDIR)/%taglib: $(DEPDIR)/taglib.do_compile
 		@INSTALL_taglib@
 	$(tocdk_build)
 	$(toflash_build)
-	@DISTCLEANUP_taglib@
+#	@DISTCLEANUP_taglib@
 	[ "x$*" = "x" ] && touch $@ || true
 
+#
+# e2-rtmpgw
+#
+DESCRIPTION_e2_rtmpgw = A toolkit for RTMP streams
+FILES_e2_rtmpgw = \
+/usr/local/bin/* \
+/usr/local/sbin/* \
+/usr/local/lib/librtmp.s*
+
+$(DEPDIR)/e2_rtmpgw.do_prepare: bootstrap openssl openssl-dev libz @DEPENDS_e2_rtmpgw@
+	@PREPARE_e2_rtmpgw@
+	touch $@
+
+$(DEPDIR)/e2_rtmpgw.do_compile: $(DEPDIR)/e2_rtmpgw.do_prepare
+	cd @DIR_e2_rtmpgw@ && \
+	$(BUILDENV) \
+	$(MAKE) all
+	touch $@
+
+$(DEPDIR)/e2_rtmpgw: \
+$(DEPDIR)/%e2_rtmpgw: $(DEPDIR)/e2_rtmpgw.do_compile
+	$(start_build)
+	cd @DIR_e2_rtmpgw@ && \
+		@INSTALL_e2_rtmpgw@
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_e2_rtmpgw@
+	[ "x$*" = "x" ] && touch $@ || true

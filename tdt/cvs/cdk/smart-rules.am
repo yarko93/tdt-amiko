@@ -1338,6 +1338,12 @@ libnfs
   git://github.com/sahlberg/libnfs.git:r=c0ebf57b212ffefe83e2a50358499f68e7289e93
   make:install:DESTDIR=PKDIR
 ;
+e2_rtmpgw
+  git
+  {PN}
+  git://github.com/zakalibit/e2-rtmpgw.git:b=gw-e2
+  make:install:DESTDIR=PKDIR
+;
 taglib
   1.8
   {PN}-{PV}
