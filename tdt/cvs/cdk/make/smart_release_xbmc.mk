@@ -222,7 +222,7 @@ release_xbmc_hl101:
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
-$(DEPDIR)/%release_xbmc:release_xbmc_base release_xbmc_common_utils release_$(HL101)$(SPARK)$(SPARK7162)
+$(DEPDIR)/release_xbmc: $(DEPDIR)/%release_xbmc:release_xbmc_base release_xbmc_common_utils release_$(HL101)$(SPARK)$(SPARK7162)
 # Post tweaks
 	depmod -b $(prefix)/release $(KERNELVERSION)
 	touch $@

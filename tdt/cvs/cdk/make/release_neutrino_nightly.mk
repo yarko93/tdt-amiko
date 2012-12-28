@@ -6,7 +6,7 @@ release_dir="release_neutrino_nightly"
 #
 # max ALPHA-Version ;)
 #
-$(DEPDIR)/%release_neutrino_nightly:
+$(DEPDIR)/release_neutrino_nightly: $(DEPDIR)/%release_neutrino_nightly:
 
 # the following target creates the common file base
 	rm -rf $(prefix)/$(release_dir) || true

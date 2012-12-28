@@ -13,7 +13,7 @@ $(appsdir)/misc/tools/config.status: bootstrap
 	$(CONFIGURE) --prefix= \
 	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324)
 
-$(DEPDIR)/%misc-tools: driver libstdc++-dev libdvdnav libdvdcss libpng jpeg ffmpeg expat fontconfig bzip2 $(appsdir)/misc/tools/config.status
+$(DEPDIR)/misc-tools: $(DEPDIR)/%misc-tools: driver libstdc++-dev libdvdnav libdvdcss libpng jpeg ffmpeg expat fontconfig bzip2 $(appsdir)/misc/tools/config.status
 	$(start_build)
 	$(get_git_version)
 	$(MAKE) -C $(appsdir)/misc/tools all install DESTDIR=$(PKDIR) \
