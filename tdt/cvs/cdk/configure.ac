@@ -768,7 +768,7 @@ if test "$enable_mediafwgstreamer" == "yes"; then
 	MEDIAFW_DEP="gst_plugins_dvbmediasink"
 else
 	MEDIAFW="eplayer3"
-	MEDIAFW_DEP="ffmpeg"
+	MEDIAFW_DEP="libeplayer3"
 fi
 
 AC_SUBST(GRAPHICFW)

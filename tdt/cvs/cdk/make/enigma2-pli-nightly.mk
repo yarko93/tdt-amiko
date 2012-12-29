@@ -23,7 +23,7 @@ $(DEPDIR)/enigma2-pli-nightly.do_prepare: @DEPENDS_enigma2_pli@
 	@PREPARE_enigma2_pli@
 	touch $@
 
-$(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline font-valis-enigma \
+$(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libmme_host libmmeimage libfribidi libid3tag libmad libsigc libreadline font-valis-enigma \
 		enigma2-pli-nightly.do_prepare \
 		libdvbsipp python libxml2 libxslt elementtree zope_interface twisted pycrypto pyusb pilimaging pyopenssl pythonwifi lxml libxmlccwrap \
 		ncurses-dev libdreamdvd2 tuxtxt32bpp sdparm openrdate hotplug_e2 $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
