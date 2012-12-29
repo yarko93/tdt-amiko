@@ -813,6 +813,22 @@ TUXBOX_RULES_MAKE_RPM(udev)
 TUXBOX_RULES_MAKE_RPM(udev_rules)
 
 #
+# misc-tools
+#
+TUXBOX_RULES_MAKE(devinit)
+TUXBOX_RULES_MAKE(evremote2)
+TUXBOX_RULES_MAKE(fp_control)
+TUXBOX_RULES_MAKE(gitVCInfo)
+TUXBOX_RULES_MAKE(hotplug)
+TUXBOX_RULES_MAKE(libeplayer3)
+TUXBOX_RULES_MAKE(libmme_host)
+TUXBOX_RULES_MAKE(libmmeimage)
+TUXBOX_RULES_MAKE(showiframe)
+TUXBOX_RULES_MAKE(stfbcontrol)
+TUXBOX_RULES_MAKE(streamproxy)
+TUXBOX_RULES_MAKE(ustslave)
+
+#
 # net apps
 #
 TUXBOX_RULES_MAKE(portmap)

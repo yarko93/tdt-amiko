@@ -1135,6 +1135,78 @@ libusb2
   extract:http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-{PV}/libusb-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
 ;
+devinit
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+evremote2
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+fp_control
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/fp_control:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+gitVCInfo
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+hotplug
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+libeplayer3
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+libmme_host
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/libmme_host:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+libmmeimage
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+showiframe
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+stfbcontrol
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+streamproxy
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+ustslave
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
 libusbcompat
   0.1.3
   libusb-compat-{PV}

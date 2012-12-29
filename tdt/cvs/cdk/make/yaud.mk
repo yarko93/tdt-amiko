@@ -110,8 +110,8 @@ yaud-none: \
 		disk-utils \
 		driver \
 		udev \
-		udev-rules \
-		misc-tools 
+		udev-rules
+#		misc-tools 
 
 #
 # EXTRAS
