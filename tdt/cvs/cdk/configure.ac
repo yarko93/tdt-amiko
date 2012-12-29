@@ -827,7 +827,7 @@ TUXBOX_RULES_MAKE(showiframe)
 TUXBOX_RULES_MAKE(stfbcontrol)
 TUXBOX_RULES_MAKE(streamproxy)
 TUXBOX_RULES_MAKE(ustslave)
-
+TUXBOX_RULES_MAKE(eplayer4)
 #
 # net apps
 #

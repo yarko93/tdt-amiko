@@ -482,3 +482,42 @@ $(DEPDIR)/%ustslave: $(DEPDIR)/ustslave.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# EPLAYER4
+#
+DESCRIPTION_eplayer4 = "eplayer4"
+SRC_URI_eplayer4 = "https://code.google.com/p/tdt-amiko/"
+
+FILES_eplayer4 = \
+/bin/eplayer4
+
+$(DEPDIR)/eplayer4.do_prepare: bootstrap @DEPENDS_eplayer4@
+	@PREPARE_eplayer4@
+	touch $@
+
+$(DEPDIR)/eplayer4.do_compile: $(DEPDIR)/eplayer4.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd @DIR_eplayer4@ && \
+	libtoolize -f -c && \
+	$(CONFIGURE) --prefix= \
+	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(MAKE)
+	touch $@
+
+$(DEPDIR)/eplayer4: \
+$(DEPDIR)/%eplayer4: $(DEPDIR)/eplayer4.do_compile
+	$(start_build)
+	$(get_git_version)
+	cd @DIR_eplayer4@ && \
+		@INSTALL_eplayer4@
+#	@DISTCLEANUP_eplayer4@
+	CPPFLAGS="\
+	$(if $(SPARK), -DPLATFORM_SPARK) \
+	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
+	$(if $(HL101), -DPLATFORM_HL101) \
+	$(if $(PLAYER179), -DPLAYER179) \
+	$(if $(PLAYER191), -DPLAYER191)"
+	$(tocdk_build)
+	$(toflash_build)
+	[ "x$*" = "x" ] && touch $@ || true

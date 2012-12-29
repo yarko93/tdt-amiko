@@ -1171,6 +1171,13 @@ libeplayer3
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
+;
+eplayer4
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
 libmme_host
   0.1
   {PN}-{PV}
