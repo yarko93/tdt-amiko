@@ -54,6 +54,7 @@ $(DEPDIR)/devinit.do_compile: $(DEPDIR)/devinit.do_prepare
 	$(CONFIGURE) --prefix= \
 	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
+	touch $@
 
 $(DEPDIR)/devinit: \
 $(DEPDIR)/%devinit: $(DEPDIR)/devinit.do_compile
@@ -87,6 +88,7 @@ $(DEPDIR)/evremote2.do_compile: $(DEPDIR)/evremote2.do_prepare
 	$(CONFIGURE) --prefix= \
 	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
+	touch $@
 
 $(DEPDIR)/evremote2: \
 $(DEPDIR)/%evremote2: $(DEPDIR)/evremote2.do_compile
@@ -125,6 +127,7 @@ $(DEPDIR)/fp_control.do_compile: $(DEPDIR)/fp_control.do_prepare
 	$(CONFIGURE) --prefix= \
 	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
+	touch $@
 
 $(DEPDIR)/fp_control: \
 $(DEPDIR)/%fp_control: $(DEPDIR)/fp_control.do_compile
@@ -163,6 +166,7 @@ $(DEPDIR)/gitVCInfo.do_compile: $(DEPDIR)/gitVCInfo.do_prepare
 	$(CONFIGURE) --prefix= \
 	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
+	touch $@
 
 $(DEPDIR)/gitVCInfo: \
 $(DEPDIR)/%gitVCInfo: $(DEPDIR)/gitVCInfo.do_compile
