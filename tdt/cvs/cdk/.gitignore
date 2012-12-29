@@ -132,3 +132,15 @@ openrdate-*
 opkg-*
 portmap*
 u-boot
+devinit-*
+e2-rtmpgw
+evremote2-*
+fp-control-*
+gitVCInfo-*
+libeplayer3-*
+libmme-host-*
+libmmeimage-*
+showiframe-*
+stfbcontrol-*
+streamproxy-*
+ustslave-*
