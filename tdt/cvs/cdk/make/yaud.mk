@@ -123,8 +123,8 @@ yaud-none: \
 		driver \
 		udev \
 		udev-rules \
-		misc-tools 
-
+		fp_control \
+		evremote2
 #
 # EXTRAS
 #

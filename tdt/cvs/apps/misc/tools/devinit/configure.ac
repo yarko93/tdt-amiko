@@ -32,16 +32,4 @@ AC_SUBST(LIBEPLAYER3)
 
 AC_OUTPUT([
 Makefile
-devinit/Makefile
-evremote2/Makefile
-libeplayer3/Makefile
-fp_control/Makefile
-showiframe/Makefile
-stfbcontrol/Makefile
-streamproxy/Makefile
-ustslave/Makefile
-gitVCInfo/Makefile
-vfdctl/Makefile
-libmme_host/Makefile
-libmmeimage/Makefile
 ])

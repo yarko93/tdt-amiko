@@ -11,7 +11,6 @@
 *~
 Makefile.in
 aclocal.m4
-Archive
 COPYING
 INSTALL
 .deps/
@@ -51,6 +50,11 @@ cvs/apps/misc/tools/libeplayer2/Makefile
 cvs/apps/misc/tools/showiframe/Makefile
 cvs/apps/misc/tools/showiframe/showiframe
 cvs/apps/misc/tools/stamp-h1
+cvs/apps/misc/tools/*/stamp-h1
+cvs/apps/misc/tools/*/depcomp
+cvs/apps/misc/tools/*/install-sh
+cvs/apps/misc/tools/eplayer4/eplayer4
+cvs/apps/misc/tools/eplayer4/Makefile
 cvs/apps/misc/tools/stfbcontrol/Makefile
 cvs/apps/misc/tools/stfbcontrol/rset
 cvs/apps/misc/tools/stfbcontrol/stfbcontrol

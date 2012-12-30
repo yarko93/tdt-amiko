@@ -825,7 +825,7 @@ if test "$enable_mediafwgstreamer" == "yes"; then
 	MEDIAFW_DEP="gst_plugins_dvbmediasink"
 else
 	MEDIAFW="eplayer3"
-	MEDIAFW_DEP="ffmpeg"
+	MEDIAFW_DEP="libeplayer3"
 fi
 
 AC_SUBST(GRAPHICFW)
@@ -862,6 +862,22 @@ TUXBOX_RULES_MAKE(init_scripts_xbmc)
 TUXBOX_RULES_MAKE_RPM(udev)
 TUXBOX_RULES_MAKE_RPM(udev_rules)
 
+#
+# misc-tools
+#
+TUXBOX_RULES_MAKE(devinit)
+TUXBOX_RULES_MAKE(evremote2)
+TUXBOX_RULES_MAKE(fp_control)
+TUXBOX_RULES_MAKE(gitVCInfo)
+TUXBOX_RULES_MAKE(hotplug)
+TUXBOX_RULES_MAKE(libeplayer3)
+TUXBOX_RULES_MAKE(libmme_host)
+TUXBOX_RULES_MAKE(libmmeimage)
+TUXBOX_RULES_MAKE(showiframe)
+TUXBOX_RULES_MAKE(stfbcontrol)
+TUXBOX_RULES_MAKE(streamproxy)
+TUXBOX_RULES_MAKE(ustslave)
+TUXBOX_RULES_MAKE(eplayer4)
 #
 # net apps
 #
