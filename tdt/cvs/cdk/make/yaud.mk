@@ -130,7 +130,7 @@ all-extras: \
 	usb_modeswitch \
 	pppd \
 	modem-scripts \
-	oscam \
+	enigma2_plugin_cams_oscam \
 	enigma2-plugins \
 	xupnpd \
 	ntfs_3g \
