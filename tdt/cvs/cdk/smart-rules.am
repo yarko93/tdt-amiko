@@ -1391,11 +1391,10 @@ tinyxml
   patch:file://{PN}{PV}.patch
   make:install:PREFIX=PKDIR/usr:LD=sh4-linux-ld
 ;
-oscam
+enigma2_plugin_cams_oscam
   svn
   {PN}-{PV}
   svn://www.streamboard.tv/svn/oscam/trunk/
-  # patch-0:file://{PN}.diff
   make:install:DESTDIR=PKDIR:OSCAM_BIN = OSCAM_BIN
 ;
 parted

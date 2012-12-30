@@ -879,7 +879,7 @@ TUXBOX_RULES_MAKE(hotplug_e2)
 TUXBOX_RULES_MAKE(autofs)
 TUXBOX_RULES_MAKE(imagemagick)
 TUXBOX_RULES_MAKE(grab)
-TUXBOX_RULES_MAKE(oscam)
+TUXBOX_RULES_MAKE(enigma2_plugin_cams_oscam)
 TUXBOX_RULES_MAKE(parted)
 TUXBOX_RULES_MAKE(gettext)
 

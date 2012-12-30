@@ -1336,28 +1336,28 @@ $(DEPDIR)/grab: grab.do_compile
 
 
 #
-# oscam
+# enigma2-plugin-cams-oscam
 #
 
-DESCRIPTION_oscam = Open Source Conditional Access Module software
-SRC_URI_oscam = http://www.streamboard.tv/oscam/
-FILES_oscam = \
+DESCRIPTION_enigma2_plugin_cams_oscam = Open Source Conditional Access Module software
+SRC_URI_enigma2_plugin_cams_oscam = http://www.streamboard.tv/oscam/
+FILES_enigma2_plugin_cams_oscam = \
 /usr/bin/cam/oscam \
 /var/keys/oscam.*
 
-$(DEPDIR)/oscam.do_prepare: bootstrap @DEPENDS_oscam@
-	@PREPARE_oscam@
+$(DEPDIR)/enigma2_plugin_cams_oscam.do_prepare: bootstrap @DEPENDS_enigma2_plugin_cams_oscam@
+	@PREPARE_enigma2_plugin_cams_oscam@
 	touch $@
 
-$(DEPDIR)/oscam.do_compile: oscam.do_prepare
-	cd @DIR_oscam@ && \
+$(DEPDIR)/enigma2_plugin_cams_oscam.do_compile: enigma2_plugin_cams_oscam.do_prepare
+	cd @DIR_enigma2_plugin_cams_oscam@ && \
 	$(BUILDENV) && \
 	$(MAKE) CROSS=$(prefix)/devkit/sh4/bin/$(target)-  CONF_DIR=/var/keys
 	touch $@
 
-$(DEPDIR)/oscam: oscam.do_compile
+$(DEPDIR)/enigma2_plugin_cams_oscam: enigma2_plugin_cams_oscam.do_compile
 	$(start_build)
-	cd @DIR_oscam@  && \
+	cd @DIR_enigma2_plugin_cams_oscam@  && \
 		$(INSTALL_DIR) $(PKDIR)/usr/bin/cam; \
 		$(INSTALL_BIN) Distribution/oscam*-sh4-linux $(PKDIR)/usr/bin/cam/oscam
 	$(tocdk_build)
