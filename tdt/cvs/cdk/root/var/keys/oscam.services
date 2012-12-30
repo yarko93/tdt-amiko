@@ -1,0 +1,181 @@
+#OSCAM.SRVID created by Hk2k2, last change 1612121230:
+#for SAT Channels only
+[sky_09C4_all]
+caid                          = 09C4
+provid                        =
+srvid                         = 
+
+[sky_098C_all]
+caid                          = 098C
+provid                        =
+srvid                         = 
+
+[sky_1702_all]
+caid                          = 1702
+provid                        =
+srvid                         = 
+
+[sky_1833_all]
+caid                          = 1833
+provid                        =
+srvid                         = 
+
+
+[sky_1722_all]
+caid                          = 1722
+provid                        =
+srvid                         = 
+
+[sky_1834_all]
+caid                          = 1834
+provid                        =
+srvid                         = 
+
+[sky_starter]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 000C,000D,000E,0010,0011,0013,0015,0016,0017,0018,001A,001B,001C,001D,0022,0024,002A,0032,0034,00A8,00F1,0206
+
+[sky_welt]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 000C,000D,000E,0010,0011,0013,0015,0016,0017,0018,001A,001B,001C,001D,0021,0022,0023,0024,0025,0026,0027,002A,0032,0034,0037,0038,0039,003A,006C,0070,0071,0074,0076,007B,007C,007D,07FF,0082,0084,00A8,00F1,00F2,0201,0206,2EFE,3331,3335,4461,4462,6FB8,6FB9,7001,700A
+																
+
+[sky_film]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 0008,0009,000A,000B,0014,0019,0029,002B,0203,0204
+
+[sky_film_hd]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 006A,006B,006E,006F,0083
+
+[sky_bundesliga]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 00DF,00FC,0106,0110,011A,0124,012E,0138,0142,014C,0156,0160
+
+[sky_sport]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 001E,00DD,00DE,00FD,0107,0111,011B,0125,012F,0139,0143,014D,0175
+
+[sky_bundesliga_or_sport_hd]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 0072,0077,007A,0081
+
+[sky_bundesliga_and_sport_hd]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 0069
+
+[sky_ppv_select_bluemovie]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 00FB,00FE,0105,0108,010F,0119,0123,012D,0137,0141,014B,0159,0163,016D
+
+[sky_ppv_select_bluemovie_hd]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 0078,0079
+
+[sky_3d]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 0075
+
+
+[sky_sportdigital]
+caid                          = 098C,09C4,1702,1833
+provid                        = 
+srvid                         = 003B
+
+[sky_hdplus_098C_09C4]
+caid                          = 098C,09C4
+provid                        = 
+srvid                         = 126E,126F,1519,151A,157F,2E9B,5273,5274,527D,EF10,EF11,EF14,EF15,EF74,EF75,EF76,EF77
+
+[sky_hdaustria_098C_09C4]
+caid                          = 098C,09C4
+provid                        = 
+srvid                         = 126E,126F,14B4,14B5,14B6,14B7,152D,2E87,2EA5,2E91,527D,527E
+
+
+
+[sky_orf]
+caid                          = 1702,09C4,098C,1833
+provid                        = 
+srvid                         = 132F,1330,32C9,32CA,32CB,32CC,32CD,32CE,32CF,32D0,32D1,32D2,32D3,32D4,332D,33A5,33A7,4E27
+
+[orf_0D05]
+caid                          = 0D05
+provid                        = 000004
+srvid                         = 132F,1330,32C9,32CA,32CB,32CC,32CD,32CE,32CF,32D0,32D1,32D2,32D3,32D4,332D,33A5,33A7,4E27
+
+[austriasat_0D05]
+caid                          = 0D05
+provid                        = 000010
+srvid                         = 0025,003B,07FA,07FC,07FD,07FF,2EFE,4461,4462,6FEE,6FEF,6FF0,6FF3,6FFF
+
+[orf_0D95]
+caid                          = 0D95
+provid                        = 000004
+srvid                         = 132F,1330,32C9,32CA,32CB,32CC,32CD,32CE,32CF,32D0,32D1,32D2,32D3,32D4,332D,33A5,33A7,4E27
+
+[austriasat_0D95]
+caid                          = 0D95
+provid                        = 000010
+srvid                         = 0025,003B,07FA,07FC,07FD,07FF,2EFE,4461,4462,6FEE,6FEF,6FF0,6FF3,6FFF
+
+[orf_0648]
+caid                          = 0648
+provid                        = 
+srvid                         = 132F,1330,32C9,32CA,32CB,32CC,32CD,32CE,32CF,32D0,32D1,32D2,32D3,32D4,332D,33A5,33A7,4E27
+
+[austriasat_0648]
+caid                          = 0648
+provid                        = 
+srvid                         = 0025,003B,07FA,07FC,07FD,07FF,2B01,2EFE,4461,4462,6FEE,6FEF,6FF0,6FF3,6FFF
+
+[hdaustria_0648]
+caid                          = 0648
+provid                        = 
+srvid                         = 126E,126F,14B4,14B5,14B6,14B7,1519,152D,2E87,2E91,2EA5,5274,527E,527D,EF10,EF11,EF15
+
+[mtvunlimited_0B00]
+caid                          = 0B00
+provid                        = 000000
+srvid                         = 6FEE,6FEF,6FF0,6FF1,6FF3,6FFF
+
+[hdplus_1830]
+caid                          = 1830
+provid                        = 
+srvid                         = 126E,126F,1519,151A,157F,2E9B,5273,5274,EF10,EF11,EF14,EF15,EF74,EF75,EF76,EF77
+
+[hdplus_1843]
+caid                          = 1843
+provid                        = 
+srvid                         = 126E,126F,1519,151A,157F,2E9B,5273,5274,EF10,EF11,EF14,EF15,EF74,EF75,EF76,EF77
+
+[hdplus_1860]
+caid                          = 1860
+provid                        = 
+srvid                         = 126E,126F,1519,151A,157F,2E9B,5273,5274,EF10,EF11,EF14,EF15,EF74,EF75,EF76,EF77
+
+[ssr/srg_0500_via2.6]
+caid                          = 0500
+provid                        = 
+srvid                         = 0385,038F,038B,03DE,36B2,36B8,36B3,36B9,4331,4332,4333,4334
+
+[ssr/srg_0500_via4_5]
+caid                          = 0500
+provid                        = 
+srvid                         = 0385,038F,038B,03DE,1260,36B2,36B8,36B3,36B9,4331,4332,4333,4334
+
+[CSAT Music_0500]
+caid                          = 0500
+provid                        = 
+srvid                         = 1904,1906,1967,197B,20A0,20A2,20AD,2584,2585,6FB8,7002,7003
