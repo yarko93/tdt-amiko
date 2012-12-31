@@ -112,7 +112,8 @@ yaud-none: \
 		udev \
 		udev-rules \
 		fp_control \
-		evremote2
+		evremote2 \
+		devinit
 #
 # EXTRAS
 #
