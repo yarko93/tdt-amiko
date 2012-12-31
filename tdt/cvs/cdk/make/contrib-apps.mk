@@ -1340,27 +1340,43 @@ $(DEPDIR)/grab: grab.do_compile
 
 
 #
-# oscam
+# enigma2-plugin-cams-oscam
 #
 
-DESCRIPTION_oscam = Open Source Conditional Access Module software
+DESCRIPTION_enigma2_plugin_cams_oscam = Open Source Conditional Access Module software
+SRC_URI_enigma2_plugin_cams_oscam = http://www.streamboard.tv/oscam/
+FILES_enigma2_plugin_cams_oscam = \
+/usr/bin/cam/oscam \
+/var/keys/oscam.*
 
-$(DEPDIR)/oscam.do_prepare: bootstrap @DEPENDS_oscam@
-	@PREPARE_oscam@
+$(DEPDIR)/enigma2_plugin_cams_oscam.do_prepare: bootstrap @DEPENDS_enigma2_plugin_cams_oscam@
+	@PREPARE_enigma2_plugin_cams_oscam@
 	touch $@
 
-$(DEPDIR)/oscam.do_compile: oscam.do_prepare
-	cd @DIR_oscam@ && \
+$(DEPDIR)/enigma2_plugin_cams_oscam.do_compile: enigma2_plugin_cams_oscam.do_prepare
+	cd @DIR_enigma2_plugin_cams_oscam@ && \
 	$(BUILDENV) && \
 	$(MAKE) CROSS=$(prefix)/devkit/sh4/bin/$(target)-  CONF_DIR=/var/keys
 	touch $@
 
-$(DEPDIR)/oscam: oscam.do_compile
+$(DEPDIR)/enigma2_plugin_cams_oscam: enigma2_plugin_cams_oscam.do_compile
 	$(start_build)
-	cd @DIR_oscam@  && \
+	cd @DIR_enigma2_plugin_cams_oscam@  && \
 		$(INSTALL_DIR) $(PKDIR)/usr/bin/cam; \
 		$(INSTALL_BIN) Distribution/oscam*-sh4-linux $(PKDIR)/usr/bin/cam/oscam
 	$(tocdk_build)
+		$(INSTALL_DIR) $(PKDIR)/var/keys
+		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.conf     $(PKDIR)/var/keys/oscam.conf
+		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.dvbapi   $(PKDIR)/var/keys/oscam.dvbapi
+		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.services $(PKDIR)/var/keys/oscam.services
+		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.srvid    $(PKDIR)/var/keys/oscam.srvid
+		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.user     $(PKDIR)/var/keys/oscam.user
+if ENABLE_SPARK7162
+		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.server2  $(PKDIR)/var/keys/oscam.server
+else
+		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.server   $(PKDIR)/var/keys/oscam.server
+endif
+		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.guess    $(PKDIR)/var/keys/oscam.guess
 	$(toflash_build)
 	touch $@
 	

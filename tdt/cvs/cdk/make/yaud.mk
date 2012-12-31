@@ -124,7 +124,8 @@ yaud-none: \
 		udev \
 		udev-rules \
 		fp_control \
-		evremote2
+		evremote2 \
+		devinit
 #
 # EXTRAS
 #
@@ -142,7 +143,7 @@ all-extras: \
 	usb_modeswitch \
 	pppd \
 	modem-scripts \
-	oscam \
+	enigma2_plugin_cams_oscam \
 	enigma2-plugins \
 	xupnpd \
 	ntfs_3g \
