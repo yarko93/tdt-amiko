@@ -114,7 +114,9 @@ yaud-none: \
 		fp_control \
 		evremote2 \
 		devinit \
-		ustslave
+		ustslave \
+		stfbcontrol \
+		showiframe
 #
 # EXTRAS
 #
