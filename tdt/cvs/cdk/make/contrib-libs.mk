@@ -2672,7 +2672,7 @@ DESCRIPTION_gst_plugin_subsink = GStreamer Multimedia Framework gstsubsink
 FILES_gst_plugin_subsink = \
 /usr/lib/gstreamer-0.10/*.so
 
-$(DEPDIR)/gst_plugin_subsink.do_prepare: bootstrap gstreamer gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly gst_plugins_fluendo_mpegdemux @DEPENDS_gst_plugin_subsink@
+$(DEPDIR)/gst_plugin_subsink.do_prepare: bootstrap gstreamer gst_ffmpeg gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly gst_plugins_fluendo_mpegdemux @DEPENDS_gst_plugin_subsink@
 	@PREPARE_gst_plugin_subsink@
 	touch $@
 
