@@ -2442,6 +2442,7 @@ FILES_gst_plugins_good = \
 /usr/lib/gstreamer-0.10/libgstudp.so \
 /usr/lib/gstreamer-0.10/libgstapetag.so \
 /usr/lib/gstreamer-0.10/libgstsouphttpsrc.so \
+/usr/lib/gstreamer-0.10/libgstisomp4.so \
 /usr/lib/gstreamer-0.10/libgstwavparse.so
 
 $(DEPDIR)/gst_plugins_good.do_prepare: bootstrap gstreamer gst_plugins_base libsoup libflac @DEPENDS_gst_plugins_good@
