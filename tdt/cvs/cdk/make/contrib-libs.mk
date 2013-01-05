@@ -148,7 +148,7 @@ $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 # lirc
 #
 DESCRIPTION_lirc ="lirc"
-PKGR_lirc = r2
+PKGR_lirc = r3
 FILES_lirc = \
 /usr/bin/lircd \
 /usr/lib/*.so* \
@@ -194,6 +194,7 @@ if ENABLE_SPARK
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_0B $(PKDIR)/etc/lircd.conf.09_00_0B
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_07 $(PKDIR)/etc/lircd.conf.09_00_07
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_08 $(PKDIR)/etc/lircd.conf.09_00_08
+	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_1D $(PKDIR)/etc/lircd.conf.09_00_1D
 endif
 	$(toflash_build)
 #	@DISTCLEANUP_lirc@
@@ -2442,6 +2443,7 @@ FILES_gst_plugins_good = \
 /usr/lib/gstreamer-0.10/libgstudp.so \
 /usr/lib/gstreamer-0.10/libgstapetag.so \
 /usr/lib/gstreamer-0.10/libgstsouphttpsrc.so \
+/usr/lib/gstreamer-0.10/libgstisomp4.so \
 /usr/lib/gstreamer-0.10/libgstwavparse.so
 
 $(DEPDIR)/gst_plugins_good.do_prepare: bootstrap gstreamer gst_plugins_base libsoup libflac @DEPENDS_gst_plugins_good@

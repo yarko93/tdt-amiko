@@ -128,7 +128,8 @@ yaud-none: \
 		devinit \
 		ustslave \
 		stfbcontrol \
-		showiframe
+		showiframe \
+		streamproxy
 #
 # EXTRAS
 #
