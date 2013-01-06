@@ -48,7 +48,7 @@
 #  git://www.gitserver.com/gitrepo:r=revision:b=branch:sub=subdir_in_git_tree:protocol=http
 #   revision, branch and subdirectory to use (arguments are optional).
 #   and protocol which git should use. (replaces 'git://' while fetch)
-#  svn://www.gitserver.com/gitrepo:r=revision
+#  svn://www.svnserver.com/svnrepo:r=revision
 #   only revision option
 #
 # if rule command doesn't match ones listed above, this is treated as install/uninstall rule.
