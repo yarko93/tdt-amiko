@@ -1445,7 +1445,7 @@ udev_rules
 ;
 enigma2_pli
   git
-  \$(appsdir)/{PN}-nightly
+  $(appsdir)/{PN}-nightly
 
 if ENABLE_E2PD0
   git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
@@ -1494,7 +1494,7 @@ endif
 ;
 enigma2
   git
-  \$(appsdir)/{PN}-nightly
+  $(appsdir)/{PN}-nightly
 if ENABLE_E2D0
   git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=945aeb939308b3652b56bc6c577853369d54a537
   patch:file://enigma2-nightly.0.diff
@@ -1547,7 +1547,7 @@ endif
 ;
 xbmc_nightly
   git
-  \$(appsdir)/{PN}
+  $(appsdir)/{PN}
 if ENABLE_XBD0
   git://github.com/xbmc/xbmc.git
   patch:file://xbmc-nightly.0.diff
