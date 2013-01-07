@@ -30,7 +30,7 @@ release_vdr:
 	$(INSTALL_DIR) $(prefix)/release_vdr/var/etc && \
 	$(INSTALL_DIR) $(prefix)/release_vdr/var/run/lirc && \
 	export CROSS_COMPILE=$(target)- && \
-	$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/release_vdr && \
+	$(MAKE) install -C $(DIR_busybox) CONFIG_PREFIX=$(prefix)/release_vdr && \
 	touch $(prefix)/release_vdr/var/etc/.firstboot && \
 	cp -a $(targetprefix)/bin/* $(prefix)/release_vdr/bin/ && \
 	ln -s /bin/showiframe $(prefix)/release_vdr/usr/bin/showiframe && \
