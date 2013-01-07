@@ -131,5 +131,5 @@ $(DEPDIR)/host_python: $(DEPENDS_host_python)
 			HOSTPGEN=./hostpgen \
 			all install && \
 		cp ./hostpgen $(crossprefix)/bin/pgen ) && \
-	@DISTCLEANUP_host_python@
+	$(DISTCLEANUP_host_python)
 	touch $@
