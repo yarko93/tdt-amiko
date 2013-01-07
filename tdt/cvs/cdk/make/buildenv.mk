@@ -152,8 +152,7 @@ PYTHON_DIR = /usr/lib/python$(PYTHON_VERSION)
 ACLOCAL_AMFLAGS = -I .
 
 CONFIG_STATUS_DEPENDENCIES = \
-	$(top_srcdir)/smart-rules.pl \
-	$(top_srcdir)/smart-rules.am
+	$(top_srcdir)/smart-rules.pl
 
 query: %query:
 	rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) -qa
