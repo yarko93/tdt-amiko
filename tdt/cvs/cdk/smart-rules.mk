@@ -104,26 +104,34 @@ opkg_host
   {PN}
   dirextract:http://opkg.googlecode.com/files/opkg-{PV}.tar.gz
 ;
-linuxp0207
+if ENABLE_P0207
+linux
   2.6.32.28_stm24_0207
   linux-sh4-2.6.32.28_stm24_0207
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.28_stm24_0207-207.src.rpm
 ;
-linuxp0209
+endif
+if ENABLE_P0209
+linux
   2.6.32.46_stm24_0209
   linux-sh4-2.6.32.46_stm24_0209
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.46_stm24_0209-209.src.rpm
 ;
-linuxp0210
+endif
+if ENABLE_P0210
+linux
   2.6.32.57_stm24_0210
   linux-sh4-2.6.32.57_stm24_0210
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.57_stm24_0210-210.src.rpm
 ;
-linuxp0211
+endif
+if ENABLE_P0211
+linux
   2.6.32.59_stm24_0211
   linux-sh4-2.6.32.59_stm24_0211
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.59_stm24_0211-211.src.rpm
 ;
+endif
 
 squashfs
   3.0

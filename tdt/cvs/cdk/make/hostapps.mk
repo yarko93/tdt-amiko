@@ -77,7 +77,7 @@ opkg-host: $(OPKG_BIN) $(ipkcdk) $(ipkprefix) $(ipkextras)
 
 $(crossprefix)/bin/opkg: $(DEPENDS_opkg_host)
 	$(PREPARE_opkg_host)
-	cd $(DIR_opkg_host@/opkg-@VERSION_opkg_host) && \
+	cd $(DIR_opkg_host)/opkg-$(VERSION_opkg_host) && \
 		./configure \
 			--prefix=$(crossprefix) && \
 		$(MAKE) && \
