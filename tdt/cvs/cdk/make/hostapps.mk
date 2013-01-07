@@ -9,15 +9,15 @@ hostapps: $(hostappsdir)/config.status
 #	touch $@
 
 if ENABLE_CCACHE
-$(hostprefix)/bin/ccache: @DEPENDS_ccache@
-	@PREPARE_ccache@
-	cd @DIR_ccache@ && \
+$(hostprefix)/bin/ccache: $(DEPENDS_ccache)
+	$(PREPARE_ccache)
+	cd $(DIR_ccache) && \
 		./configure \
 			--build=$(build) \
 			--host=$(build) \
 			--prefix= && \
 			$(MAKE) all && \
-			@INSTALL_ccache@
+			$(INSTALL_ccache)
 #	@CLEANUP_ccache@
 endif
 
@@ -26,11 +26,11 @@ endif
 #
 mkcramfs: @MKCRAMFS@
 
-$(hostprefix)/bin/mkcramfs: @DEPENDS_cramfs@
-	@PREPARE_cramfs@
-	cd @DIR_cramfs@ && \
+$(hostprefix)/bin/mkcramfs: $(DEPENDS_cramfs)
+	$(PREPARE_cramfs)
+	cd $(DIR_cramfs) && \
 		$(MAKE) mkcramfs && \
-		@INSTALL_cramfs@
+		$(INSTALL_cramfs)
 #	@DISTCLEANUP_cramfs@
 
 #
@@ -39,18 +39,18 @@ $(hostprefix)/bin/mkcramfs: @DEPENDS_cramfs@
 MKSQUASHFS = $(hostprefix)/bin/mksquashfs
 mksquashfs: $(MKSQUASHFS)
 
-$(hostprefix)/bin/mksquashfs: @DEPENDS_squashfs@
-	rm -rf @DIR_squashfs@
-	mkdir -p @DIR_squashfs@
-	cd @DIR_squashfs@ && \
+$(hostprefix)/bin/mksquashfs: $(DEPENDS_squashfs)
+	rm -rf $(DIR_squashfs)
+	mkdir -p $(DIR_squashfs)
+	cd $(DIR_squashfs) && \
 	bunzip2 -cd $(archivedir)/lzma465.tar.bz2 | TAPE=- tar -x && \
 	gunzip -cd $(archivedir)/squashfs4.0.tar.gz | TAPE=- tar -x && \
 	cd squashfs4.0/squashfs-tools && patch -p1 < $(buildprefix)/Patches/squashfs-tools-4.0-lzma.patch
-	$(MAKE) -C @DIR_squashfs@/squashfs4.0/squashfs-tools
+	$(MAKE) -C $(DIR_squashfs)/squashfs4.0/squashfs-tools
 	$(INSTALL) -d $(@D)
-	$(INSTALL) -m755 @DIR_squashfs@/squashfs4.0/squashfs-tools/mksquashfs $@
-	$(INSTALL) -m755 @DIR_squashfs@/squashfs4.0/squashfs-tools/unsquashfs $(@D)
-#	rm -rf @DIR_squashfs@
+	$(INSTALL) -m755 $(DIR_squashfs@/squashfs4.0/squashfs-tools/mksquashfs $)
+	$(INSTALL) -m755 $(DIR_squashfs@/squashfs4.0/squashfs-tools/unsquashfs $()D)
+#	rm -rf $(DIR_squashfs)
 
 #
 # IPKG-UTILS
@@ -59,9 +59,9 @@ IPKG_BUILD_BIN = $(crossprefix)/bin/ipkg-build
 
 ipkg-utils: $(IPKG_BUILD_BIN)
 
-$(crossprefix)/bin/ipkg-build: filesystem @DEPENDS_ipkg_utils@ | $(ipkprefix)
-	@PREPARE_ipkg_utils@
-	cd @DIR_ipkg_utils@ && \
+$(crossprefix)/bin/ipkg-build: filesystem $(DEPENDS_ipkg_utils) | $(ipkprefix)
+	$(PREPARE_ipkg_utils)
+	cd $(DIR_ipkg_utils) && \
 		$(MAKE) all PREFIX=$(crossprefix) && \
 		$(MAKE) install PREFIX=$(crossprefix)
 #       @DISTCLEANUP_ipkg-utils@
@@ -75,9 +75,9 @@ OPKG_CONFCDK = $(crossprefix)/etc/opkg-cdk.conf
 
 opkg-host: $(OPKG_BIN) $(ipkcdk) $(ipkprefix) $(ipkextras)
 
-$(crossprefix)/bin/opkg: @DEPENDS_opkg_host@
-	@PREPARE_opkg_host@
-	cd @DIR_opkg_host@/opkg-@VERSION_opkg_host@ && \
+$(crossprefix)/bin/opkg: $(DEPENDS_opkg_host)
+	$(PREPARE_opkg_host)
+	cd $(DIR_opkg_host@/opkg-@VERSION_opkg_host) && \
 		./configure \
 			--prefix=$(crossprefix) && \
 		$(MAKE) && \
@@ -103,9 +103,9 @@ $(crossprefix)/bin/opkg: @DEPENDS_opkg_host@
 
 python := $(crossprefix)/bin/python
 
-$(DEPDIR)/host_python: @DEPENDS_host_python@
-	@PREPARE_host_python@ && \
-	( cd @DIR_host_python@ && \
+$(DEPDIR)/host_python: $(DEPENDS_host_python)
+	$(PREPARE_host_python) && \
+	( cd $(DIR_host_python) && \
 		rm -rf config.cache; \
 		autoconf && \
 		CONFIG_SITE= \

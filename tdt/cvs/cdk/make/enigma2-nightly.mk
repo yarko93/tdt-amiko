@@ -1,7 +1,7 @@
 # tuxbox/enigma2
 
-$(DEPDIR)/enigma2-nightly.do_prepare:@DEPENDS_enigma2@
-	@PREPARE_enigma2@
+$(DEPDIR)/enigma2-nightly.do_prepare:$(DEPENDS_enigma2)
+	$(PREPARE_enigma2)
 	touch $@
 
 

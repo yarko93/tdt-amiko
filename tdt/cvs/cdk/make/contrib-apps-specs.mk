@@ -1,16 +1,16 @@
 #
 # CONSOLE_DATA
 #
-$(DEPDIR)/console_data: bootstrap @DEPENDS_console_data@
-	@PREPARE_console_data@
-	cd @DIR_console_data@ && \
+$(DEPDIR)/console_data: bootstrap $(DEPENDS_console_data)
+	$(PREPARE_console_data)
+	cd $(DIR_console_data) && \
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=$(targetprefix) \
 			--with-main_compressor=gzip && \
-		@INSTALL_console_data@
+		$(INSTALL_console_data)
 #	@CLEANUP_console_data@
 	touch $@
 

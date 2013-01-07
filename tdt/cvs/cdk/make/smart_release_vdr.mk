@@ -30,8 +30,8 @@ $(foreach f,$(init_scripts_initd_vdr_files), initdconfig --del $f
 )
 endef
 
-$(DEPDIR)/init-scripts-vdr: @DEPENDS_init_scripts_vdr@
-	@PREPARE_init_scripts_vdr@
+$(DEPDIR)/init-scripts-vdr: $(DEPENDS_init_scripts_vdr)
+	$(PREPARE_init_scripts_vdr)
 	$(start_build)
 	$(INSTALL_DIR) $(PKDIR)/etc/init.d
 
