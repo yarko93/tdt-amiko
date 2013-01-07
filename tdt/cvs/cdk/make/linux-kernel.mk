@@ -270,7 +270,6 @@ rm /boot/uImage
 depmod
 endef
 
-$(DEPDIR)/min-linux-kernel $(DEPDIR)/std-linux-kernel $(DEPDIR)/max-linux-kernel \
 $(DEPDIR)/linux-kernel: \
 $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 	$(start_build)

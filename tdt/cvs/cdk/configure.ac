@@ -65,6 +65,14 @@ AC_ARG_ENABLE(py27,
 AM_CONDITIONAL(ENABLE_PY27,test "$enable_py27" = "yes")
 AC_SUBST(PY27)
 
+AC_ARG_ENABLE(py26,
+	AS_HELP_STRING(--enable-py26,      enable Python 2.6 ),
+	[case "${enableval}" in
+		yes) PY26=py26 ;;
+	esac],[enable_py26=no])
+AM_CONDITIONAL(ENABLE_PY26,test "$enable_py26" = "yes")
+AC_SUBST(PY26)
+
 AC_ARG_ENABLE(p0207,
 	AS_HELP_STRING(--enable-p0207,  set up the CDK to use the STLinux 2.4 with patchlevel 0207),
 	[case "${enableval}" in
@@ -117,6 +125,12 @@ AC_ARG_ENABLE(mediafwgstreamer,
 	,[enable_mediafwgstreamer=no])
 AM_CONDITIONAL(ENABLE_MEDIAFWGSTREAMER,test "$enable_mediafwgstreamer" = "yes")
 AC_SUBST(MEDIAFWGSTREAMER)
+
+AC_ARG_ENABLE(eplayer3,
+	AS_HELP_STRING(--enable-eplayer3,    enable eplayer3 support),
+	,[enable_eplayer3=no])
+AM_CONDITIONAL(ENABLE_EPLAYER3,test "$enable_eplayer3" = "yes")
+AC_SUBST(EPLAYER3)
 
 AC_ARG_ENABLE(graphicfwdirectfb,
 	AS_HELP_STRING(--enable-graphicfwdirectfb,	set up the CDK to use graphicfw directfb),
@@ -754,7 +768,7 @@ if test "$enable_mediafwgstreamer" == "yes"; then
 	MEDIAFW_DEP="gst_plugins_dvbmediasink"
 else
 	MEDIAFW="eplayer3"
-	MEDIAFW_DEP="ffmpeg"
+	MEDIAFW_DEP="libeplayer3"
 fi
 
 AC_SUBST(GRAPHICFW)
@@ -798,6 +812,22 @@ TUXBOX_RULES_MAKE(init_scripts_xbmc)
 TUXBOX_RULES_MAKE_RPM(udev)
 TUXBOX_RULES_MAKE_RPM(udev_rules)
 
+#
+# misc-tools
+#
+TUXBOX_RULES_MAKE(devinit)
+TUXBOX_RULES_MAKE(evremote2)
+TUXBOX_RULES_MAKE(fp_control)
+TUXBOX_RULES_MAKE(gitVCInfo)
+TUXBOX_RULES_MAKE(hotplug)
+TUXBOX_RULES_MAKE(libeplayer3)
+TUXBOX_RULES_MAKE(libmme_host)
+TUXBOX_RULES_MAKE(libmmeimage)
+TUXBOX_RULES_MAKE(showiframe)
+TUXBOX_RULES_MAKE(stfbcontrol)
+TUXBOX_RULES_MAKE(streamproxy)
+TUXBOX_RULES_MAKE(ustslave)
+TUXBOX_RULES_MAKE(eplayer4)
 #
 # net apps
 #
@@ -849,7 +879,7 @@ TUXBOX_RULES_MAKE(hotplug_e2)
 TUXBOX_RULES_MAKE(autofs)
 TUXBOX_RULES_MAKE(imagemagick)
 TUXBOX_RULES_MAKE(grab)
-TUXBOX_RULES_MAKE(oscam)
+TUXBOX_RULES_MAKE(enigma2_plugin_cams_oscam)
 TUXBOX_RULES_MAKE(parted)
 TUXBOX_RULES_MAKE(gettext)
 
@@ -940,6 +970,7 @@ TUXBOX_RULES_MAKE(mediatomb)
 TUXBOX_RULES_MAKE(tinyxml)
 TUXBOX_RULES_MAKE(libnfs)
 TUXBOX_RULES_MAKE(taglib)
+TUXBOX_RULES_MAKE(e2_rtmpgw)
 
 #
 # python

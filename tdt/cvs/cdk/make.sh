@@ -310,7 +310,7 @@ case $5 in
 esac
 
 case "$REPLY" in
-	1) PYTHON="";;
+	1) PYTHON="--enable-py26";;
 	2) PYTHON="--enable-py27";;
 	*) PYTHON="";;
 esac
@@ -467,14 +467,14 @@ if [[ "$IMAGE" == --enable-e2* ]]; then
   esac
 
   case "$REPLY" in
-	1) MEDIAFW="";;
+	1) MEDIAFW="--enable-eplayer3";;
 	2) MEDIAFW="--enable-mediafwgstreamer";;
 	*) MEDIAFW="";;
   esac
 fi
 ##############################################
 
-CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $MEDIAFW $PYTHON $EXTERNAL_LCD $IMAGE $GFW"
+CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $PYTHON $MEDIAFW  $EXTERNAL_LCD $IMAGE $GFW"
 
 ##############################################
 

@@ -31,7 +31,6 @@ $(DEPDIR)/nfs_utils.do_compile: bootstrap e2fsprogs $(DEPDIR)/nfs_utils.do_prepa
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-nfs_utils $(DEPDIR)/std-nfs_utils $(DEPDIR)/max-nfs_utils \
 $(DEPDIR)/nfs_utils: \
 $(DEPDIR)/%nfs_utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
 		$(DEPDIR)/nfs_utils.do_compile
@@ -75,7 +74,6 @@ $(DEPDIR)/vsftpd.do_compile: bootstrap $(DEPDIR)/vsftpd.do_prepare
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-vsftpd $(DEPDIR)/std-vsftpd $(DEPDIR)/max-vsftpd \
 $(DEPDIR)/vsftpd: \
 $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
 	$(start_build)
@@ -112,7 +110,6 @@ $(DEPDIR)/ethtool.do_compile: bootstrap $(DEPDIR)/ethtool.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-ethtool $(DEPDIR)/std-ethtool $(DEPDIR)/max-ethtool \
 $(DEPDIR)/ethtool: \
 $(DEPDIR)/%ethtool: $(DEPDIR)/ethtool.do_compile
 	$(start_build)
@@ -196,7 +193,6 @@ $(DEPDIR)/samba.do_compile: $(DEPDIR)/samba.do_prepare
 		$(target)-strip -s bin/smbd && $(target)-strip -s bin/nmbd
 	touch $@
 
-$(DEPDIR)/min-samba $(DEPDIR)/std-samba $(DEPDIR)/max-samba \
 $(DEPDIR)/samba: \
 $(DEPDIR)/%samba: $(DEPDIR)/samba.do_compile
 	$(start_build)
@@ -229,7 +225,6 @@ $(DEPDIR)/netio.do_compile: bootstrap $(DEPDIR)/netio.do_prepare
 		$(MAKE) all O=.o X= CFLAGS="-DUNIX" LIBS="$(LDFLAGS) -lpthread" OUT=-o
 	touch $@
 
-$(DEPDIR)/min-netio $(DEPDIR)/std-netio $(DEPDIR)/max-netio \
 $(DEPDIR)/netio: \
 $(DEPDIR)/%netio: $(DEPDIR)/netio.do_compile
 	$(start_build)
@@ -268,7 +263,6 @@ $(DEPDIR)/lighttpd.do_compile: bootstrap $(DEPDIR)/lighttpd.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-lighttpd $(DEPDIR)/std-lighttpd $(DEPDIR)/max-lighttpd \
 $(DEPDIR)/lighttpd: \
 $(DEPDIR)/%lighttpd: $(DEPDIR)/lighttpd.do_compile
 	$(start_build)
@@ -307,7 +301,6 @@ $(DEPDIR)/netkit_ftp.do_compile: bootstrap ncurses libreadline $(DEPDIR)/netkit_
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-netkit_ftp $(DEPDIR)/std-netkit_ftp $(DEPDIR)/max-netkit_ftp \
 $(DEPDIR)/netkit_ftp: \
 $(DEPDIR)/%netkit_ftp: $(DEPDIR)/netkit_ftp.do_compile
 	$(start_build)
@@ -336,7 +329,6 @@ $(DEPDIR)/wireless_tools.do_compile: bootstrap $(DEPDIR)/wireless_tools.do_prepa
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-wireless_tools $(DEPDIR)/std-wireless_tools $(DEPDIR)/max-wireless_tools \
 $(DEPDIR)/wireless_tools: \
 $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 	$(start_build)
@@ -365,7 +357,6 @@ $(DEPDIR)/wpa_supplicant.do_compile: bootstrap $(DEPDIR)/wpa_supplicant.do_prepa
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-wpa_supplicant $(DEPDIR)/std-wpa_supplicant $(DEPDIR)/max-wpa_supplicant \
 $(DEPDIR)/wpa_supplicant: \
 $(DEPDIR)/%wpa_supplicant: $(DEPDIR)/wpa_supplicant.do_compile
 	$(start_build)
