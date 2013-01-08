@@ -1468,8 +1468,7 @@ if ENABLE_E2PD4
 endif
 
 if ENABLE_E2PD5
-  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=a869076762f6e24305d6a58f95c3918e02a1442a
-  patch:file://enigma2-pli-nightly.5.diff
+  git@github.com:schpuntik/enigma2-pli.git:b=master
 endif
 
 if ENABLE_E2PD6

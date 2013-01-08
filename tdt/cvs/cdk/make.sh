@@ -356,7 +356,7 @@ esac
 			echo "   2) Sat, 18 May 2012 15:26 - E2 OpenPli 839e96b79600aba73f743fd39628f32bc1628f4c"
 			echo "   3) Mon, 20 Aug 2012 16:00 - E2 OpenPli 51a7b9349070830b5c75feddc52e97a1109e381e"
 			echo "   4) Fri, 24 Aug 2012 23:42 - E2 OpenPli 002b85aa8350e9d8e88f75af48c3eb8a6cdfb880"
-			echo "   5) Sun, 16 Sep 2012 14:53 - E2 OpenPli a869076762f6e24305d6a58f95c3918e02a1442a"
+			echo "   5) AR-P - E2 OpenPli non-public branch master"
 			echo "   6) AR-P - E2 OpenPli branch testing"
 			echo "   7) AR-P - E2 OpenPli branch last"
 			echo "   8) AR-P - E2 OpenPli branch master"
