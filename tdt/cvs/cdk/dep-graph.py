@@ -11,7 +11,7 @@ makefile_name = "Makefile.p"
 if len(sys.argv) > 2:
 	makefile_name = sys.argv[2]
 else:
-	os.system("make -p > %s" % makefile_name)
+	os.system("export LANG=en_US; make -p > %s" % makefile_name)
 
 rootname = ""
 if len(sys.argv) > 1:
