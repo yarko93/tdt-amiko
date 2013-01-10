@@ -516,14 +516,14 @@ $(DEPDIR)/setup-cross-optional: \
 #
 # LIBTOOL
 #
-$(DEPDIR)/libtool.do_prepare: @DEPENDS_libtool@
-	@PREPARE_libtool@
+$(DEPDIR)/libtool.do_prepare: $(DEPENDS_libtool)
+	$(PREPARE_libtool)
 	touch $@
 
 $(DEPDIR)/libtool.do_compile: $(DEPDIR)/libtool.do_prepare
-	echo "sys_lib_search_path_spec='$(targetprefix)/lib $(targetprefix)/usr/lib'" > @DIR_libtool@/config.cache
-	echo "lt_cv_sys_lib_dlsearch_path_spec='$(targetprefix)/lib $(targetprefix)/usr/lib'" >> @DIR_libtool@/config.cache
-	cd @DIR_libtool@ && \
+	echo "sys_lib_search_path_spec='$(targetprefix)/lib $(targetprefix)/usr/lib'" > $(DIR_libtool)/config.cache
+	echo "lt_cv_sys_lib_dlsearch_path_spec='$(targetprefix)/lib $(targetprefix)/usr/lib'" >> $(DIR_libtool)/config.cache
+	cd $(DIR_libtool) && \
 		./configure \
 		lt_cv_sys_lib_search_path_spec="" \
 		lt_cv_sys_dlsearch_path="" \
@@ -534,7 +534,7 @@ $(DEPDIR)/libtool.do_compile: $(DEPDIR)/libtool.do_prepare
 
 $(DEPDIR)/libtool: \
 $(DEPDIR)/%libtool: $(DEPDIR)/libtool.do_compile
-	cd @DIR_libtool@ && \
-	@INSTALL_libtool@
+	cd $(DIR_libtool) && \
+	$(INSTALL_libtool)
 #		sed -i -r -e 's,\(hardcode_into_libs)=yes,\1=no,g' $(hostprefix)/bin/libtool
 	touch $@

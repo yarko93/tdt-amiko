@@ -2,14 +2,15 @@
 use strict;
 use warnings;
 use IO::File;
+use constant DEBUG => 1;
 
 my $version;
 my @allurls;
 
 my $filename = shift;
-my $allout = "";
 my $package = ""; # current processing package
 
+# command sytax definitions
 my $supported_protocols = "https|http|ftp|file|git|svn";
 my $make_commands = "nothing|extract|dirextract|patch(time)?(-(\\d+))?|pmove|premove|plink|pdircreate";
 my $install_commands = "install -.+|install_file|install_bin";
@@ -21,10 +22,11 @@ my %ruletypes =
   install => \&process_install,
 );
 
-my $patchesdir .= "\\\$(buildprefix)/Patches";
+my $patchesdir .= "\$(buildprefix)/Patches";
 
 sub load ($$);
 
+# File preprocessor begins.
 sub load ($$)
 {
   my ( $filename, $ignore ) = @_;
@@ -36,27 +38,43 @@ sub load ($$)
     return undef if $ignore;
     die "can't open $filename\n";
   }
+
+  my $foutname;
+  ($foutname = $filename) =~ s#(.*).pre#$1#;
+  warn "output to $foutname";
+  open FILE, "+>", "$foutname";
   
   my $lines;
   my $start = 0;
   while ( <$fh> )
   {
-   if ( $_ =~ m#^\]\]END# )
+    if ( $_ =~ m#^\]\]END# )
     {
-      last;
+      process_block($lines);
+      $start = 0;
+      next;
     }
     if ( $_ =~ m#^BEGIN\[\[# )
     {
       $start = 1;
+      $lines = "";
       next;
     }
     if ( not $start)
     {
+      print FILE $_;
       next;
     }
     $_ =~ s/#.*$//;
     $lines .= $_ if not $_ =~ m#^\s+$#;
   }
+  close FILE;
+}
+
+sub process_block ($)
+{
+  my $lines = "@_";
+    
   my @lines = split( /;;|\n\n|\n;|;\n/ , $lines);
 
   foreach ( @lines )
@@ -71,7 +89,7 @@ sub load ($$)
       push(@rule, $_) if ( $_ ne "" );
     }
     
-    #warn "BEGIN package\n" . join(";", @rule) . "\nEND\n";
+    warn "BEGIN package\n" . join(";", @rule) . "\nEND\n" if DEBUG;
 
     if( ($rule[0] eq ">>>" or $rule[0] eq ">>?") and defined $rule[1])
     {
@@ -80,13 +98,12 @@ sub load ($$)
     }
     elsif (defined $rule[0]) {
       $package = shift @rule;
+      my $allout = "";
       foreach ( sort keys %ruletypes )
       {
-        open FILE, "+>", "ruledir/$_" . "_" . $package;
         $allout = &{$ruletypes{$_}} ($package, \@rule);
         #print "$allout\n";
         print FILE subs_vars($allout);
-        close FILE;
       }
     }
   }
@@ -160,10 +177,10 @@ sub process_rule($) {
   }
   elsif ( $url =~ m#^($supported_protocols)# )
   {
-      $f = "\\\$(archivedir)/$f";
+      $f = "\$(archivedir)/$f";
   }
 
-  warn "protocol: $p file: $f command: $cmd url: $url\n";
+  warn "protocol: $p file: $f command: $cmd url: $url\n" if DEBUG;
 
   return ($p, $f, $cmd, $url, \%args, \@argv);
 }
@@ -191,12 +208,12 @@ sub process_make_depends (@)
     }
   }
 
-  return "\"$output\"";
+  return $output;
 }
 
 sub process_make_dir (@)
 {
-  return "\"$_[1]\"";
+  return $_[1];
 }
 
 
@@ -281,7 +298,7 @@ sub process_make_prepare (@)
       }
       $output .= "(cd " . $f . "; svn up -r " . $opts{"r"} . "; cd -) && " if $opts{"r"};
       $output .= "cp -a " . $f . $subdir . " " . $dir;
-      $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(svn_version)))";
+      $autoversion = "\$(eval export PKGV_$package = \$(shell cd $f && \$(svn_version)))";
     }
     elsif ( $p eq "git" )
     {
@@ -290,7 +307,7 @@ sub process_make_prepare (@)
       $output .= "(cd $f && git fetch && git checkout $branch && git pull origin $branch ; cd -) && ";
       $output .= "(cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) && " if $opts{"r"};
       $output .= "cp -a " . $f . $subdir . " " . $dir;
-      $autoversion = "\\\$(eval export PKGV_$package = \\\$(shell cd $f && \\\$(git_version)))";
+      $autoversion = "\$(eval export PKGV_$package = \$(shell cd $f && \$(git_version)))";
     }
     elsif ( $cmd eq "nothing" )
     {
@@ -374,8 +391,7 @@ sub process_make_prepare (@)
     }
   }
 
-  $output = "\"$output\"";
-  $output .= "\nAUTOPKGV_$package=\"$autoversion\"" if $autoversion;
+  $output .= "\nAUTOPKGV_$package = $autoversion" if $autoversion;
   return $output
 }
 
@@ -398,14 +414,24 @@ sub process_make ($$)
     dir => \&process_make_dir,
     prepare => \&process_make_prepare,
     version => \&process_make_version,
-    sources => \&process_make_sources,
+    src_uri => \&process_make_sources,
   );
 
   foreach ( sort keys %args )
   {
     ( my $tmp = $_ ) =~ y/a-z/A-Z/;
-    $output .= $tmp . "_" . $package . "=" . &{$args{$_}} (@rules) . "\n";
+    $output .= $tmp . "_" . $package . " = " . &{$args{$_}} (@rules) . "\n";
   }
+  $output .= "PKGV_$package = \$(VERSION_$package)" . "\n";
+
+  $output .= "DEPSCLEANUP_$package = rm .deps/$package" . "\n";
+  $output .= "DEPSCLEANUP += .deps/$package .deps/$package.do_compile .deps/$package.do_prepare" . "\n";
+  $output .= "LIST_CLEAN += $package-clean" . "\n";
+
+  $output .= "DISTCLEANUP_$package = rm -rf \$(DIR_$package)" . "\n";
+  $output .= "DISTCLEANUP += \$(DIR_$package)" . "\n";
+  $output .= "DEPSDISTCLEANUP_$package = rm .deps/$package .deps/$package.do_compile .deps/$package.do_prepare" . "\n";
+  $output .= "LIST_DISTCLEAN += $package-distclean" . "\n";
 
   return $output;
 }
@@ -571,7 +597,7 @@ sub process_install ($$)
     $output .= process_install_rule ($_);
   }
 
-  return $output;
+  return "INSTALL_$package = " . $output . "\n";
 }
 
 sub process_uninstall ($$)

@@ -1,14 +1,14 @@
 #
 # busybox
 #
-$(DEPDIR)/busybox.do_prepare: @DEPENDS_busybox@
-	@PREPARE_busybox@
-	cd @DIR_busybox@ && \
+$(DEPDIR)/busybox.do_prepare: $(DEPENDS_busybox)
+	$(PREPARE_busybox)
+	cd $(DIR_busybox) && \
 		patch -p1 < ../Patches/busybox-1.20.2-kernel_ver.patch
 	touch $@
 
 $(DEPDIR)/busybox.do_compile: bootstrap $(DEPDIR)/busybox.do_prepare Patches/busybox-1.20.2.config | $(DEPDIR)/$(GLIBC_DEV)
-	cd @DIR_busybox@ && \
+	cd $(DIR_busybox) && \
 		export CROSS_COMPILE=$(target)- && \
 		$(MAKE) mrproper && \
 		$(INSTALL) -m644 ../$(lastword $^) .config && \
@@ -22,9 +22,9 @@ DESCRIPTION_busybox = "Utilities for embedded systems"
 $(DEPDIR)/busybox: \
 $(DEPDIR)/%busybox: $(DEPDIR)/busybox.do_compile
 	$(start_build)
-	cd @DIR_busybox@ && \
+	cd $(DIR_busybox) && \
 		export CROSS_COMPILE=$(target)- && \
-		@INSTALL_busybox@
+		$(INSTALL_busybox)
 #		@CLEANUP_busybox@
 	install -m644 -D /dev/null $(PKDIR)/etc/shells
 	export HHL_CROSS_TARGET_DIR=$(PKDIR) && $(hostprefix)/bin/target-shellconfig --add /bin/ash 5

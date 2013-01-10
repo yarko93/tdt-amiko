@@ -11,14 +11,14 @@ DESCRIPTION_enigma2_openwebif = "open webinteface plugin for enigma2 by openpli 
 PKGR_enigma2_openwebif = r1
 RDEPENDS_enigma2_openwebif = python pythoncheetah grab
 
-$(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap $(RDEPENDS_enigma2_openwebif) @DEPENDS_enigma2_openwebif@
-	@PREPARE_enigma2_openwebif@
+$(DEPDIR)/enigma2_openwebif.do_prepare: bootstrap $(RDEPENDS_enigma2_openwebif) $(DEPENDS_enigma2_openwebif)
+	$(PREPARE_enigma2_openwebif)
 	touch $@
 
 $(DEPDIR)/enigma2_openwebif: \
 $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 	$(start_build)
-	cd @DIR_enigma2_openwebif@ && \
+	cd $(DIR_enigma2_openwebif) && \
 		$(BUILDENV) \
 		mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/Extensions && \
 		mkdir -p $(PKDIR)/usr/bin/ && \
@@ -34,14 +34,14 @@ $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 
 DESCRIPTION_enigma2_networkbrowser = "networkbrowser plugin for enigma2"
 
-$(DEPDIR)/enigma2_networkbrowser.do_prepare: @DEPENDS_enigma2_networkbrowser@
-	@PREPARE_enigma2_networkbrowser@
+$(DEPDIR)/enigma2_networkbrowser.do_prepare: $(DEPENDS_enigma2_networkbrowser)
+	$(PREPARE_enigma2_networkbrowser)
 	touch $@
 
 $(DEPDIR)/enigma2_networkbrowser: \
 $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 	$(start_build)
-	cd @DIR_enigma2_networkbrowser@/src/lib && \
+	cd $(DIR_enigma2_networkbrowser)/src/lib && \
 		$(BUILDENV) \
 		sh4-linux-gcc -shared -o netscan.so \
 			-I $(targetprefix)/usr/include/python$(PYTHON_VERSION) \
@@ -62,7 +62,7 @@ $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 			statusq.c \
 			statusq.h \
 			time_compat.h
-	cd @DIR_enigma2_networkbrowser@ && \
+	cd $(DIR_enigma2_networkbrowser) && \
 		mkdir -p $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser && \
 		cp -a po $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ && \
 		cp -a meta $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ && \

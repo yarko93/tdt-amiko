@@ -28,7 +28,7 @@ $(DEPDIR)/release_neutrino: $(DEPDIR)/%release_neutrino:
 	$(INSTALL_DIR) $(prefix)/release_neutrino/var && \
 	$(INSTALL_DIR) $(prefix)/release_neutrino/var/etc && \
 	export CROSS_COMPILE=$(target)- && \
-		$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/release_neutrino && \
+		$(MAKE) install -C $(DIR_busybox) CONFIG_PREFIX=$(prefix)/release_neutrino && \
 	touch $(prefix)/release_neutrino/var/etc/.firstboot && \
 	cp -a $(targetprefix)/bin/* $(prefix)/release_neutrino/bin/ && \
 	ln -s /bin/showiframe $(prefix)/release_neutrino/usr/bin/showiframe && \
