@@ -48,6 +48,7 @@
 #  git://www.gitserver.com/gitrepo:r=revision:b=branch:sub=subdir_in_git_tree:protocol=http
 #   revision, branch and subdirectory to use (arguments are optional).
 #   and protocol which git should use. (replaces 'git://' while fetch)
+#   use protocol=ssh to replace "git://" with "git@"
 #  svn://www.svnserver.com/svnrepo:r=revision
 #   only revision option
 #
@@ -1476,7 +1477,7 @@ if ENABLE_E2PD4
 endif
 
 if ENABLE_E2PD5
-  git@github.com:schpuntik/enigma2-pli.git:b=master
+  git://github.com:schpuntik/enigma2-pli.git:b=master:protocol=ssh
 endif
 
 if ENABLE_E2PD6
