@@ -1,13 +1,9 @@
 # These rules are smarter ;)
-# semicolon equals line break, rules are separated by one of them
-# all trailing white-spaces are ignored, use them for prettier indentation
-# so this:
-#   megaproject; v2.0; file://hello_world.c;
-# and this:
+# rules are separated by line break
+# all trailing white-spaces are ignored, use them for prettier indentation. Example:
 #   megaproject
 #     v2.0
 #     file://hello_world.c;
-# are the same
 # 
 # double semicolon or semicolon + linebreak or double linebreak or even linebreak + semicolon
 # can be used for separating packages
@@ -1477,7 +1473,7 @@ if ENABLE_E2PD4
 endif
 
 if ENABLE_E2PD5
-  git://github.com:schpuntik/enigma2-pli.git:b=master:protocol=ssh
+  git://github.com:schpuntik/enigma2-pli.git;b=master;protocol=ssh
 endif
 
 if ENABLE_E2PD6

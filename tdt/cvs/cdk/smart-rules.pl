@@ -79,7 +79,7 @@ sub process_block ($)
 
   foreach ( @lines )
   {
-    my @l = split ( /\n|;/ , $_ );
+    my @l = split ( /\n/ , $_ );
     chomp @l;
     my @rule;
     foreach (@l)
@@ -112,11 +112,22 @@ sub process_block ($)
 
 sub process_rule($) {
 
-  #warn "parse: " . $_ . "\n";
+  warn "parse: " . $_ . "\n" if DEBUG;
 
   my $f = "";
   my $l = $_;
-  my @l = split( /:/ , $l );
+  my @l = ();
+#  my @l = split( /:/ , $l );
+  if ($l =~ m#\;#)
+  {
+    my @semi = split( /;/ , $l );
+    foreach (@semi) {
+      my @part = split( m#:(?=/{2})#, $_);
+      @l = (@l,@part);
+    }
+  } else {
+    @l = split( /:/ , $l );
+  }
 
 #  s#^(\w+)?:($supported_protocols)://([^:]+):.*$#
   
@@ -700,7 +711,7 @@ sub process_download ($$)
     {
       my $tmpurl = $url;
       $tmpurl =~ s#git://#$opts{"protocol"}://#  if $opts{"protocol"} ;
-      $tmpurl =~ s#ssh://#git\@# if $opts{"protocol"} = "ssh";
+      $tmpurl =~ s#ssh://#git\@# if $opts{"protocol"} eq "ssh";
       $output .= " || \\\n\tgit clone $tmpurl " . $f;
       $output .= " -b " . $opts{"b"} if $opts{"b"};
     }
