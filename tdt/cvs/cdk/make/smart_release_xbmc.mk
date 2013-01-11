@@ -30,8 +30,8 @@ $(foreach f,$(init_scripts_initd_xbmc_files), initdconfig --del $f
 )
 endef
 
-$(DEPDIR)/init-scripts-xbmc: @DEPENDS_init_scripts_xbmc@
-	@PREPARE_init_scripts_xbmc@
+$(DEPDIR)/init-scripts-xbmc: $(DEPENDS_init_scripts_xbmc)
+	$(PREPARE_init_scripts_xbmc)
 	$(start_build)
 	$(INSTALL_DIR) $(PKDIR)/etc/init.d
 
