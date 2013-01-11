@@ -73,6 +73,7 @@ $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_compile
 		$(MAKE) install DESTDIR=$(PKDIR)
 	$(target)-strip $(PKDIR)/usr/bin/enigma2
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/$(enigma2_keymap_file) $(PKDIR)/usr/share/enigma2/keymap.xml
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_amiko.xml $(PKDIR)/usr/share/enigma2/
 	$(tocdk_build)
 	$(toflash_build)
 	touch $@
