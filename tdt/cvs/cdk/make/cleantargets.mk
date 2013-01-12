@@ -81,7 +81,7 @@ distclean-local:
 	-rm -rf $(prefix)/ccache
 	-rm -rf $(kernelprefix)/u-boot
 	-rm -rf $(STGFB_DIR)
-	-@DISTCLEANUP@
+	-$(DISTCLEANUP)
 
 #
 # RPM stuff

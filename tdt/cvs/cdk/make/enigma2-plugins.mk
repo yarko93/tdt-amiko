@@ -26,7 +26,7 @@ $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 		cp -a $(buildprefix)/root/usr/bin/grab.sh $(PKDIR)/usr/bin/
 	$(toflash_build)
 #	@DISTCLEANUP_enigma2_openwebif@
-	@[ "x$*" = "x" ] && touch $@ || true
+	[ "x$*" = "x" ] && touch $@ || true
 
 #
 # enigma2-networkbrowser
