@@ -5,10 +5,10 @@ DESCRIPTION_nfs_utils = "nfs_utils"
 FILES_nfs_utils = \
 /usr/bin/*
 
-$(DEPDIR)/nfs_utils.do_prepare: @DEPENDS_nfs_utils@
-	@PREPARE_nfs_utils@
-	chmod +x @DIR_nfs_utils@/autogen.sh
-	cd @DIR_nfs_utils@ && \
+$(DEPDIR)/nfs_utils.do_prepare: $(DEPENDS_nfs_utils)
+	$(PREPARE_nfs_utils)
+	chmod +x $(DIR_nfs_utils)/autogen.sh
+	cd $(DIR_nfs_utils) && \
 		gunzip -cd ../$(lastword $^) | cat > debian.patch && \
 		patch -p1 <debian.patch && \
 		sed -e 's/### BEGIN INIT INFO/# chkconfig: 2345 19 81\n### BEGIN INIT INFO/g' -i debian/nfs-common.init && \
@@ -18,7 +18,7 @@ $(DEPDIR)/nfs_utils.do_prepare: @DEPENDS_nfs_utils@
 	touch $@
 
 $(DEPDIR)/nfs_utils.do_compile: bootstrap e2fsprogs $(DEPDIR)/nfs_utils.do_prepare
-	cd @DIR_nfs_utils@ && \
+	cd $(DIR_nfs_utils) && \
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
@@ -31,13 +31,12 @@ $(DEPDIR)/nfs_utils.do_compile: bootstrap e2fsprogs $(DEPDIR)/nfs_utils.do_prepa
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-nfs_utils $(DEPDIR)/std-nfs_utils $(DEPDIR)/max-nfs_utils \
 $(DEPDIR)/nfs_utils: \
 $(DEPDIR)/%nfs_utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
 		$(DEPDIR)/nfs_utils.do_compile
 	$(start_build)
-	cd @DIR_nfs_utils@ && \
-		@INSTALL_nfs_utils@
+	cd $(DIR_nfs_utils) && \
+		$(INSTALL_nfs_utils)
 	( cd root/etc && for i in $(NFS_UTILS_ADAPTED_ETC_FILES); do \
 		[ -f $$i ] && $(INSTALL) -m644 $$i $(PKDIR)/etc/$$i || true; \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(PKDIR)/etc/$$i || true; done )
@@ -65,17 +64,16 @@ define prerm_vsftpd
 initdconfig --del vsftpd
 endef
 
-$(DEPDIR)/vsftpd.do_prepare: @DEPENDS_vsftpd@
-	@PREPARE_vsftpd@
+$(DEPDIR)/vsftpd.do_prepare: $(DEPENDS_vsftpd)
+	$(PREPARE_vsftpd)
 	touch $@
 
 $(DEPDIR)/vsftpd.do_compile: bootstrap $(DEPDIR)/vsftpd.do_prepare
-	cd @DIR_vsftpd@ && \
+	cd $(DIR_vsftpd) && \
 		$(MAKE) clean && \
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-vsftpd $(DEPDIR)/std-vsftpd $(DEPDIR)/max-vsftpd \
 $(DEPDIR)/vsftpd: \
 $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
 	$(start_build)
@@ -83,8 +81,8 @@ $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
 	mkdir -p $(PKDIR)/usr/bin/
 	mkdir -p $(PKDIR)/usr/share/man/man8/
 	mkdir -p $(PKDIR)/usr/share/man/man5/
-	cd @DIR_vsftpd@ && \
-		@INSTALL_vsftpd@
+	cd $(DIR_vsftpd) && \
+		$(INSTALL_vsftpd)
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_vsftpd@
@@ -97,12 +95,12 @@ DESCRIPTION_ethtool = "ethtool"
 FILES_ethtool = \
 /usr/sbin/*
 
-$(DEPDIR)/ethtool.do_prepare: @DEPENDS_ethtool@
-	@PREPARE_ethtool@
+$(DEPDIR)/ethtool.do_prepare: $(DEPENDS_ethtool)
+	$(PREPARE_ethtool)
 	touch $@
 
 $(DEPDIR)/ethtool.do_compile: bootstrap $(DEPDIR)/ethtool.do_prepare
-	cd @DIR_ethtool@  && \
+	cd $(DIR_ethtool)  && \
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
@@ -112,12 +110,11 @@ $(DEPDIR)/ethtool.do_compile: bootstrap $(DEPDIR)/ethtool.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-ethtool $(DEPDIR)/std-ethtool $(DEPDIR)/max-ethtool \
 $(DEPDIR)/ethtool: \
 $(DEPDIR)/%ethtool: $(DEPDIR)/ethtool.do_compile
 	$(start_build)
-	cd @DIR_ethtool@  && \
-		@INSTALL_ethtool@
+	cd $(DIR_ethtool)  && \
+		$(INSTALL_ethtool)
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_ethtool@
@@ -134,13 +131,13 @@ FILES_samba = \
 /etc/samba/smb.conf \
 /usr/lib/vfs/*.so
 
-$(DEPDIR)/samba.do_prepare: bootstrap @DEPENDS_samba@
-	@PREPARE_samba@
+$(DEPDIR)/samba.do_prepare: bootstrap $(DEPENDS_samba)
+	$(PREPARE_samba)
 	touch $@
 
 $(DEPDIR)/samba.do_compile: $(DEPDIR)/samba.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
-	cd @DIR_samba@ && \
+	cd $(DIR_samba) && \
 		cd source3 && \
 		./autogen.sh && \
 		$(BUILDENV) \
@@ -196,17 +193,16 @@ $(DEPDIR)/samba.do_compile: $(DEPDIR)/samba.do_prepare
 		$(target)-strip -s bin/smbd && $(target)-strip -s bin/nmbd
 	touch $@
 
-$(DEPDIR)/min-samba $(DEPDIR)/std-samba $(DEPDIR)/max-samba \
 $(DEPDIR)/samba: \
 $(DEPDIR)/%samba: $(DEPDIR)/samba.do_compile
 	$(start_build)
-	cd @DIR_samba@ && \
+	cd $(DIR_samba) && \
 		cd source3 && \
 		$(INSTALL) -d $(PKDIR)/etc/samba && \
 		$(INSTALL) -c -m644 ../examples/smb.conf.spark $(PKDIR)/etc/samba/smb.conf && \
 		$(INSTALL) -d $(PKDIR)/etc/init.d && \
 		$(INSTALL) -c -m755 ../examples/samba.spark $(PKDIR)/etc/init.d/samba && \
-		@INSTALL_samba@
+		$(INSTALL_samba)
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_samba@
@@ -219,23 +215,22 @@ DESCRIPTION_netio = "netio"
 FILES_netio = \
 /usr/bin/*
 
-$(DEPDIR)/netio.do_prepare: @DEPENDS_netio@
-	@PREPARE_netio@
+$(DEPDIR)/netio.do_prepare: $(DEPENDS_netio)
+	$(PREPARE_netio)
 	touch $@
 
 $(DEPDIR)/netio.do_compile: bootstrap $(DEPDIR)/netio.do_prepare
-	cd @DIR_netio@ && \
+	cd $(DIR_netio) && \
 		$(MAKE_OPTS) \
 		$(MAKE) all O=.o X= CFLAGS="-DUNIX" LIBS="$(LDFLAGS) -lpthread" OUT=-o
 	touch $@
 
-$(DEPDIR)/min-netio $(DEPDIR)/std-netio $(DEPDIR)/max-netio \
 $(DEPDIR)/netio: \
 $(DEPDIR)/%netio: $(DEPDIR)/netio.do_compile
 	$(start_build)
-	cd @DIR_netio@ && \
+	cd $(DIR_netio) && \
 		$(INSTALL) -d $(PKDIR)/usr/bin && \
-		@INSTALL_netio@
+		$(INSTALL_netio)
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_netio@
@@ -252,12 +247,12 @@ FILES_lighttpd = \
 /etc/init.d/* \
 /etc/lighttpd/*.conf 
 
-$(DEPDIR)/lighttpd.do_prepare: @DEPENDS_lighttpd@
-	@PREPARE_lighttpd@
+$(DEPDIR)/lighttpd.do_prepare: $(DEPENDS_lighttpd)
+	$(PREPARE_lighttpd)
 	touch $@
 
 $(DEPDIR)/lighttpd.do_compile: bootstrap $(DEPDIR)/lighttpd.do_prepare
-	cd @DIR_lighttpd@ && \
+	cd $(DIR_lighttpd) && \
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
@@ -268,13 +263,12 @@ $(DEPDIR)/lighttpd.do_compile: bootstrap $(DEPDIR)/lighttpd.do_prepare
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-lighttpd $(DEPDIR)/std-lighttpd $(DEPDIR)/max-lighttpd \
 $(DEPDIR)/lighttpd: \
 $(DEPDIR)/%lighttpd: $(DEPDIR)/lighttpd.do_compile
 	$(start_build)
-	cd @DIR_lighttpd@ && \
-		@INSTALL_lighttpd@
-	cd @DIR_lighttpd@ && \
+	cd $(DIR_lighttpd) && \
+		$(INSTALL_lighttpd)
+	cd $(DIR_lighttpd) && \
 		$(INSTALL) -d $(PKDIR)/etc/lighttpd && \
 		$(INSTALL) -c -m644 doc/lighttpd.conf $(PKDIR)/etc/lighttpd && \
 		$(INSTALL) -d $(PKDIR)/etc/init.d && \
@@ -293,12 +287,12 @@ DESCRIPTION_netkit_ftp = "netkit_ftp"
 FILES_netkit_ftp = \
 /usr/bin/*
 
-$(DEPDIR)/netkit_ftp.do_prepare: @DEPENDS_netkit_ftp@
-	@PREPARE_netkit_ftp@
+$(DEPDIR)/netkit_ftp.do_prepare: $(DEPENDS_netkit_ftp)
+	$(PREPARE_netkit_ftp)
 	touch $@
 
 $(DEPDIR)/netkit_ftp.do_compile: bootstrap ncurses libreadline $(DEPDIR)/netkit_ftp.do_prepare
-	cd @DIR_netkit_ftp@  && \
+	cd $(DIR_netkit_ftp)  && \
 		$(BUILDENV) \
 		./configure \
 			--with-c-compiler=$(target)-gcc \
@@ -307,12 +301,11 @@ $(DEPDIR)/netkit_ftp.do_compile: bootstrap ncurses libreadline $(DEPDIR)/netkit_
 		$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-netkit_ftp $(DEPDIR)/std-netkit_ftp $(DEPDIR)/max-netkit_ftp \
 $(DEPDIR)/netkit_ftp: \
 $(DEPDIR)/%netkit_ftp: $(DEPDIR)/netkit_ftp.do_compile
 	$(start_build)
-	cd @DIR_netkit_ftp@  && \
-		@INSTALL_netkit_ftp@
+	cd $(DIR_netkit_ftp)  && \
+		$(INSTALL_netkit_ftp)
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_netkit_ftp@
@@ -327,21 +320,20 @@ FILES_wireless_tools = \
 /usr/sbin/* \
 /usr/lib/*.so*
 
-$(DEPDIR)/wireless_tools.do_prepare: wpa_supplicant rfkill @DEPENDS_wireless_tools@
-	@PREPARE_wireless_tools@
+$(DEPDIR)/wireless_tools.do_prepare: wpa_supplicant rfkill $(DEPENDS_wireless_tools)
+	$(PREPARE_wireless_tools)
 	touch $@
 
 $(DEPDIR)/wireless_tools.do_compile: bootstrap $(DEPDIR)/wireless_tools.do_prepare
-	cd @DIR_wireless_tools@  && \
+	cd $(DIR_wireless_tools)  && \
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-wireless_tools $(DEPDIR)/std-wireless_tools $(DEPDIR)/max-wireless_tools \
 $(DEPDIR)/wireless_tools: \
 $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 	$(start_build)
-	cd @DIR_wireless_tools@  && \
-		@INSTALL_wireless_tools@
+	cd $(DIR_wireless_tools)  && \
+		$(INSTALL_wireless_tools)
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_wireless_tools@
@@ -355,22 +347,21 @@ PKGR_wpa_supplicant = r0
 FILES_wpa_supplicant = \
 /usr/sbin/*
 
-$(DEPDIR)/wpa_supplicant.do_prepare: @DEPENDS_wpa_supplicant@
-	@PREPARE_wpa_supplicant@
+$(DEPDIR)/wpa_supplicant.do_prepare: $(DEPENDS_wpa_supplicant)
+	$(PREPARE_wpa_supplicant)
 	touch $@
 
 $(DEPDIR)/wpa_supplicant.do_compile: bootstrap $(DEPDIR)/wpa_supplicant.do_prepare
-	cd @DIR_wpa_supplicant@/wpa_supplicant  && \
+	cd $(DIR_wpa_supplicant)/wpa_supplicant  && \
 		mv ../wpa_supplicant.config .config && \
 		$(MAKE) $(MAKE_OPTS)
 	touch $@
 
-$(DEPDIR)/min-wpa_supplicant $(DEPDIR)/std-wpa_supplicant $(DEPDIR)/max-wpa_supplicant \
 $(DEPDIR)/wpa_supplicant: \
 $(DEPDIR)/%wpa_supplicant: $(DEPDIR)/wpa_supplicant.do_compile
 	$(start_build)
-	cd @DIR_wpa_supplicant@/wpa_supplicant && \
-		@INSTALL_wpa_supplicant@
+	cd $(DIR_wpa_supplicant)/wpa_supplicant && \
+		$(INSTALL_wpa_supplicant)
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_wpa_supplicant@

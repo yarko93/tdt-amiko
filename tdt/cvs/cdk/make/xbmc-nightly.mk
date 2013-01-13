@@ -1,7 +1,7 @@
 # tuxbox/enigma2
 
-$(DEPDIR)/xbmc-nightly.do_prepare: @DEPENDS_xbmc_nightly@
-	@PREPARE_xbmc_nightly@
+$(DEPDIR)/xbmc-nightly.do_prepare: $(DEPENDS_xbmc_nightly)
+	$(PREPARE_xbmc_nightly)
 	touch $@
 
 $(DIR_xbmc_nightly)/config.status: bootstrap libboost directfb libstgles libass libmpeg2 libmad jpeg libsamplerate libogg libvorbis libmodplug curl libflac bzip2 tiff lzo libz fontconfig libfribidi freetype sqlite libpng libpcre libcdio jasper yajl libmicrohttpd tinyxml python gstreamer gst_plugins_dvbmediasink expat sdparm lirc libnfs driver-ptinp

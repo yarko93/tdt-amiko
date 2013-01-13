@@ -19,11 +19,11 @@ if ENABLE_SPARK7162
 E_CONFIG_OPTS += --enable-spark7162
 endif
 
-$(DEPDIR)/enigma2-pli-nightly.do_prepare: @DEPENDS_enigma2_pli@
-	@PREPARE_enigma2_pli@
+$(DEPDIR)/enigma2-pli-nightly.do_prepare: $(DEPENDS_enigma2_pli)
+	$(PREPARE_enigma2_pli)
 	touch $@
 
-$(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libfribidi libid3tag libmad libsigc libreadline font-valis-enigma \
+$(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libmme_host libmmeimage libfribidi libid3tag libmad libsigc libreadline font-valis-enigma \
 		enigma2-pli-nightly.do_prepare \
 		libdvbsipp python libxml2 libxslt elementtree zope_interface twisted pycrypto pyusb pilimaging pyopenssl pythonwifi lxml libxmlccwrap \
 		ncurses-dev libdreamdvd2 tuxtxt32bpp sdparm openrdate hotplug_e2 $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
@@ -55,9 +55,15 @@ $(DEPDIR)/enigma2-pli-nightly.do_compile: $(DIR_enigma2_pli)/config.status
 enigma2_keymap_file = keymap$(if $(HL101),_$(HL101))$(if $(SPARK)$(SPARK7162),_spark).xml
 
 DESCRIPTION_enigma2_pli := a framebuffer-based zapping application (GUI) for linux
-PKGR_enigma2_pli = r2
+PKGR_enigma2_pli = r3
 SRC_URI_enigma2_pli := git://openpli.git.sourceforge.net/gitroot/openpli/enigma2
 FILES_enigma2_pli := /usr/lib/ /etc/enigma2 /usr/share /usr/bin
+RDEPENDS_enigma2_pli = fp_control \
+evremote2 \
+devinit \
+ustslave \
+stfbcontrol \
+showiframe
 
 $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_compile
 	$(call parent_pk,enigma2_pli)
@@ -67,6 +73,7 @@ $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_compile
 		$(MAKE) install DESTDIR=$(PKDIR)
 	$(target)-strip $(PKDIR)/usr/bin/enigma2
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/$(enigma2_keymap_file) $(PKDIR)/usr/share/enigma2/keymap.xml
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_amiko.xml $(PKDIR)/usr/share/enigma2/
 	$(tocdk_build)
 	$(toflash_build)
 	touch $@

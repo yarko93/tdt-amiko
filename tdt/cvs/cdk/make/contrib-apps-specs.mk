@@ -1,16 +1,16 @@
 #
 # CONSOLE_DATA
 #
-$(DEPDIR)/console_data: bootstrap @DEPENDS_console_data@
-	@PREPARE_console_data@
-	cd @DIR_console_data@ && \
+$(DEPDIR)/console_data: bootstrap $(DEPENDS_console_data)
+	$(PREPARE_console_data)
+	cd $(DIR_console_data) && \
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=$(targetprefix) \
 			--with-main_compressor=gzip && \
-		@INSTALL_console_data@
+		$(INSTALL_console_data)
 #	@CLEANUP_console_data@
 	touch $@
 
@@ -47,7 +47,6 @@ $(SYSVINIT_RPM) $(SYSVINITTOOLS_RPM) $(INITSCRIPTS_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(SYSVINIT_SPEC)
 
-$(DEPDIR)/min-$(SYSVINIT) $(DEPDIR)/std-$(SYSVINIT) $(DEPDIR)/max-$(SYSVINIT) \
 $(DEPDIR)/$(SYSVINIT): \
 $(DEPDIR)/%$(SYSVINIT): $(SYSVINIT_ADAPTED_ETC_FILES:%=root/etc/%) \
 		$(SYSVINIT_RPM)
@@ -69,7 +68,6 @@ $(DEPDIR)/%$(SYSVINITTOOLS): $(SYSVINITTOOLS_RPM)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
-$(DEPDIR)/min-$(INITSCRIPTS) $(DEPDIR)/std-$(INITSCRIPTS) $(DEPDIR)/max-$(INITSCRIPTS) \
 $(DEPDIR)/$(INITSCRIPTS): \
 $(DEPDIR)/%$(INITSCRIPTS): $(INITSCRIPTS_ADAPTED_ETC_FILES:%=root/etc/%) \
 		$(INITSCRIPTS_RPM) \
@@ -122,7 +120,6 @@ $(NETBASE_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/stm-target-$(NETBASE).spec
 
-$(DEPDIR)/min-$(NETBASE) $(DEPDIR)/std-$(NETBASE) $(DEPDIR)/max-$(NETBASE) \
 $(DEPDIR)/$(NETBASE): \
 $(DEPDIR)/%$(NETBASE): \
 		$(NETBASE_RPM)
@@ -161,7 +158,6 @@ $(BC_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(BC_SPEC)
 
-$(DEPDIR)/min-$(BC) $(DEPDIR)/std-$(BC) $(DEPDIR)/max-$(BC) \
 $(DEPDIR)/$(BC): \
 $(DEPDIR)/%$(BC): $(BC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force --noscripts -Uhv \
@@ -190,8 +186,7 @@ $(FINDUTILS_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(FINDUTILS_SPEC)
 
-$(DEPDIR)/min-$(FINDUTILS) $(DEPDIR)/std-$(FINDUTILS) $(DEPDIR)/max-$(FINDUTILS) $(DEPDIR)/$(FINDUTILS): \
-$(DEPDIR)/%$(FINDUTILS): $(FINDUTILS_RPM)
+$(DEPDIR)/$(FINDUTILS): $(DEPDIR)/%$(FINDUTILS): $(FINDUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $<
 	[ "x$*" = "x" ] && touch $@ || true
@@ -223,7 +218,6 @@ $(DISTRIBUTIONUTILS_RPM) $(DISTRIBUTIONUTILS_DOC_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(DISTRIBUTIONUTILS_SPEC)
 
-$(DEPDIR)/min-$(DISTRIBUTIONUTILS) $(DEPDIR)/std-$(DISTRIBUTIONUTILS) $(DEPDIR)/max-$(DISTRIBUTIONUTILS) \
 $(DEPDIR)/$(DISTRIBUTIONUTILS): \
 $(DEPDIR)/%$(DISTRIBUTIONUTILS): $(DISTRIBUTIONUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
@@ -232,7 +226,6 @@ $(DEPDIR)/%$(DISTRIBUTIONUTILS): $(DISTRIBUTIONUTILS_RPM)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
-$(DEPDIR)/min-$(DISTRIBUTIONUTILS_DOC) $(DEPDIR)/std-$(DISTRIBUTIONUTILS_DOC) $(DEPDIR)/max-$(DISTRIBUTIONUTILS_DOC) \
 $(DEPDIR)/$(DISTRIBUTIONUTILS_DOC): \
 $(DEPDIR)/%$(DISTRIBUTIONUTILS_DOC): $(DISTRIBUTIONUTILS_DOC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force -Uhv \
@@ -259,7 +252,6 @@ $(MTD_UTILS_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --nodeps --target=sh4-linux SPECS/$(MTD_UTILS_SPEC)
 
-$(DEPDIR)/min-$(MTD_UTILS) $(DEPDIR)/std-$(MTD_UTILS) $(DEPDIR)/max-$(MTD_UTILS) \
 $(DEPDIR)/$(MTD_UTILS): \
 $(DEPDIR)/%$(MTD_UTILS): $(MTD_UTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
@@ -289,15 +281,13 @@ $(BASH_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(BASH_SPEC)
 
-$(DEPDIR)/min-$(BASH) $(DEPDIR)/std-$(BASH) $(DEPDIR)/max-$(BASH) $(DEPDIR)/$(BASH): \
-$(DEPDIR)/%$(BASH): $(DEPDIR)/%$(GLIBC) $(DEPDIR)/%$(LIBTERMCAP) $(BASH_RPM)
+$(DEPDIR)/$(BASH): $(DEPDIR)/%$(BASH): $(DEPDIR)/%$(GLIBC) $(DEPDIR)/%$(LIBTERMCAP) $(BASH_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts --force -Uhvv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
 	
 
-min-$(BASH).do_clean std-$(BASH).do_clean max-$(BASH).do_clean $(BASH).do_clean: \
-%$(BASH).do_clean:
+$(BASH).do_clean: %$(BASH).do_clean:
 	export HHL_CROSS_TARGET_DIR=$(prefix)/$*cdkroot && \
 	$(hostprefix)/bin/target-shellconfig --list || true && \
 	( $(hostprefix)/bin/target-shellconfig --del /bin/bash ) &> /dev/null || echo "Unable to unregister shell" && \
@@ -326,8 +316,7 @@ $(COREUTILS_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(COREUTILS_SPEC)
 
-$(DEPDIR)/min-$(COREUTILS) $(DEPDIR)/std-$(COREUTILS) $(DEPDIR)/max-$(COREUTILS) $(DEPDIR)/$(COREUTILS): \
-$(DEPDIR)/%$(COREUTILS): $(DEPDIR)/%$(GLIBC) $(COREUTILS_RPM)
+$(DEPDIR)/$(COREUTILS): $(DEPDIR)/%$(COREUTILS): $(DEPDIR)/%$(GLIBC) $(COREUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
@@ -354,8 +343,7 @@ $(NET_TOOLS_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(NET_TOOLS_SPEC)
 
-$(DEPDIR)/min-$(NET_TOOLS) $(DEPDIR)/std-$(NET_TOOLS) $(DEPDIR)/max-$(NET_TOOLS) $(DEPDIR)/$(NET_TOOLS): \
-$(DEPDIR)/%$(NET_TOOLS): $(DEPDIR)/%$(GLIBC) $(NET_TOOLS_RPM)
+$(DEPDIR)/$(NET_TOOLS): $(DEPDIR)/%$(NET_TOOLS): $(DEPDIR)/%$(GLIBC) $(NET_TOOLS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
@@ -382,8 +370,7 @@ $(SED_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(SED_SPEC)
 
-$(DEPDIR)/min-$(SEDX) $(DEPDIR)/std-$(SEDX) $(DEPDIR)/max-$(SEDX) $(DEPDIR)/$(SEDX): \
-$(DEPDIR)/%$(SEDX): $(DEPDIR)/%$(GLIBC) $(SED_RPM)
+$(DEPDIR)/$(SEDX): $(DEPDIR)/%$(SEDX): $(DEPDIR)/%$(GLIBC) $(SED_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
@@ -412,14 +399,11 @@ $(DIFF_RPM) $(DIFF_DOC_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(DIFF_SPEC)
 
-$(DEPDIR)/min-$(DIFF) $(DEPDIR)/std-$(DIFF) $(DEPDIR)/max-$(DIFF) $(DEPDIR)/$(DIFF): \
-$(DEPDIR)/%$(DIFF): $(DEPDIR)/%$(GLIBC) $(DIFF_RPM)
+$(DEPDIR)/$(DIFF): $(DEPDIR)/%$(DIFF): $(DEPDIR)/%$(GLIBC) $(DIFF_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch -r $(lastword $^) .deps/$(notdir $@) || true
-	
 
-$(DEPDIR)/min-$(DIFF_DOC) $(DEPDIR)/std-$(DIFF_DOC) $(DEPDIR)/max-$(DIFF_DOC) $(DEPDIR)/$(DIFF_DOC): \
 $(DEPDIR)/%$(DIFF_DOC): $(DIFF_DOC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
@@ -446,8 +430,7 @@ $(FILE_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(FILE_SPEC)
 
-$(DEPDIR)/min-$(FILE) $(DEPDIR)/std-$(FILE) $(DEPDIR)/max-$(FILE) $(DEPDIR)/$(FILE): \
-$(DEPDIR)/%$(FILE): $(FILE_RPM)
+$(DEPDIR)/$(FILE): $(DEPDIR)/%$(FILE): $(FILE_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
@@ -474,8 +457,7 @@ $(TAR_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(TAR_SPEC)
 
-$(DEPDIR)/min-$(TAR) $(DEPDIR)/std-$(TAR) $(DEPDIR)/max-$(TAR) $(DEPDIR)/$(TAR): \
-$(DEPDIR)/%$(TAR): $(DEPDIR)/%$(GLIBC) $(TAR_RPM)
+$(DEPDIR)/$(TAR): $(DEPDIR)/%$(TAR): $(DEPDIR)/%$(GLIBC) $(TAR_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
@@ -502,8 +484,7 @@ $(STRACE_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(STRACE_SPEC)
 
-$(DEPDIR)/min-$(STRACE) $(DEPDIR)/std-$(STRACE) $(DEPDIR)/max-$(STRACE) $(DEPDIR)/$(STRACE): \
-$(DEPDIR)/%$(STRACE): $(DEPDIR)/%$(GLIBC) $(STRACE_RPM)
+$(DEPDIR)/$(STRACE): $(DEPDIR)/%$(STRACE): $(DEPDIR)/%$(GLIBC) $(STRACE_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	[ "x$*" = "x" ] && touch $@ || true
@@ -571,16 +552,14 @@ $(IPTABLES_RPM) $(IPTABLES_DEV_RPM) : \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(IPTABLES_SPEC)
 
-$(DEPDIR)/min-$(IPTABLES_DEV) $(DEPDIR)/std-$(IPTABLES_DEV) $(DEPDIR)/max-$(IPTABLES_DEV) $(DEPDIR)/$(IPTABLES_DEV): \
-$(DEPDIR)/%$(IPTABLES_DEV): $(IPTABLES_DEV_RPM)
+$(DEPDIR)/$(IPTABLES_DEV): $(DEPDIR)/%$(IPTABLES_DEV): $(IPTABLES_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
-$(DEPDIR)/min-$(IPTABLES) $(DEPDIR)/std-$(IPTABLES) $(DEPDIR)/max-$(IPTABLES) $(DEPDIR)/$(IPTABLES): \
-$(DEPDIR)/%$(IPTABLES): $(IPTABLES_RPM)
+$(DEPDIR)/$(IPTABLES): $(DEPDIR)/%$(IPTABLES): $(IPTABLES_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)

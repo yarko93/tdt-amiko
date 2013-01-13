@@ -1,7 +1,7 @@
 # tuxbox/enigma2
 
-$(DEPDIR)/enigma2-nightly.do_prepare:@DEPENDS_enigma2@
-	@PREPARE_enigma2@
+$(DEPDIR)/enigma2-nightly.do_prepare:$(DEPENDS_enigma2)
+	$(PREPARE_enigma2)
 	touch $@
 
 
@@ -41,6 +41,7 @@ $(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
 	$(MAKE) -C $(DIR_enigma2) install DESTDIR=$(PKDIR)
 	$(target)-strip $(PKDIR)/usr/bin/enigma2
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/$(enigma2_keymap_file) $(PKDIR)/usr/share/enigma2/keymap.xml
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_amiko.xml $(PKDIR)/usr/share/enigma2/
 	$(tocdk_build)
 	$(toflash_build)
 	touch $@

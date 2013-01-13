@@ -70,6 +70,14 @@ AC_ARG_ENABLE(py27,
 AM_CONDITIONAL(ENABLE_PY27,test "$enable_py27" = "yes")
 AC_SUBST(PY27)
 
+AC_ARG_ENABLE(py26,
+	AS_HELP_STRING(--enable-py26,      enable Python 2.6 ),
+	[case "${enableval}" in
+		yes) PY26=py26 ;;
+	esac],[enable_py26=no])
+AM_CONDITIONAL(ENABLE_PY26,test "$enable_py26" = "yes")
+AC_SUBST(PY26)
+
 AC_ARG_ENABLE(p0207,
 	AS_HELP_STRING(--enable-p0207,  set up the CDK to use the STLinux 2.4 with patchlevel 0207),
 	[case "${enableval}" in
@@ -117,6 +125,12 @@ AC_ARG_ENABLE(mediafwgstreamer,
 	,[enable_mediafwgstreamer=no])
 AM_CONDITIONAL(ENABLE_MEDIAFWGSTREAMER,test "$enable_mediafwgstreamer" = "yes")
 AC_SUBST(MEDIAFWGSTREAMER)
+
+AC_ARG_ENABLE(eplayer3,
+	AS_HELP_STRING(--enable-eplayer3,    enable eplayer3 support),
+	,[enable_eplayer3=no])
+AM_CONDITIONAL(ENABLE_EPLAYER3,test "$enable_eplayer3" = "yes")
+AC_SUBST(EPLAYER3)
 
 AC_ARG_ENABLE(graphicfwdirectfb,
 	AS_HELP_STRING(--enable-graphicfwdirectfb,	set up the CDK to use graphicfw directfb),
@@ -750,24 +764,10 @@ AC_SUBST(DISTCLEANUP)
 #
 # core
 #
-AC_CONFIG_FILES([smart-rules])
-AC_OUTPUT
-
-mkdir ${srcdir}/ruledir
-rm -f  ${srcdir}/ruledir/* 
-${srcdir}/smart-rules.pl ${srcdir}/smart-rules
-if test "$?" != "0"; then
-	AC_MSG_ERROR(smart-rule pareser failed)
-fi
 
 AC_SUBST(KERNELVERSION)
 AC_SUBST(KERNELSTMLABEL)
 AC_SUBST(KERNELLABEL)
-TUXBOX_RULES_MAKE(linux24)
-TUXBOX_RULES_MAKE(linuxp0207)
-TUXBOX_RULES_MAKE(linuxp0209)
-TUXBOX_RULES_MAKE(linuxp0210)
-TUXBOX_RULES_MAKE(linuxp0211)
 
 if test "$enable_stm24" = "yes"; then
 	if test "$enable_p0209" == "yes"; then
@@ -811,7 +811,7 @@ if test "$enable_mediafwgstreamer" == "yes"; then
 	MEDIAFW_DEP="gst_plugins_dvbmediasink"
 else
 	MEDIAFW="eplayer3"
-	MEDIAFW_DEP="ffmpeg"
+	MEDIAFW_DEP="libeplayer3"
 fi
 
 AC_SUBST(GRAPHICFW)
@@ -824,230 +824,6 @@ else
 	GRAPHICFW="framebuffer"
 	GRAPHICFW_DEP=""
 fi
-
-#
-# core
-#
-TUXBOX_RULES_MAKE(squashfs)
-TUXBOX_RULES_MAKE(ccache)
-TUXBOX_RULES_MAKE(cramfs)
-TUXBOX_RULES_MAKE(ipkg_utils)
-TUXBOX_RULES_MAKE(host_python)
-TUXBOX_RULES_MAKE(libtool)
-
-#
-# root
-#
-TUXBOX_RULES_MAKE(busybox)
-TUXBOX_RULES_MAKE(lsb)
-#TUXBOX_RULES_MAKE(ipkg)
-TUXBOX_RULES_MAKE(module_init_tools)
-TUXBOX_RULES_MAKE(sysvinit)
-TUXBOX_RULES_MAKE(init_scripts)
-TUXBOX_RULES_MAKE(init_scripts_xbmc)
-TUXBOX_RULES_MAKE_RPM(udev)
-TUXBOX_RULES_MAKE_RPM(udev_rules)
-
-#
-# net apps
-#
-TUXBOX_RULES_MAKE(portmap)
-TUXBOX_RULES_MAKE(nfs_utils)
-TUXBOX_RULES_MAKE(vsftpd)
-TUXBOX_RULES_MAKE(netkit_ftp)
-TUXBOX_RULES_MAKE(samba)
-TUXBOX_RULES_MAKE(netio)
-TUXBOX_RULES_MAKE(lighttpd)
-TUXBOX_RULES_MAKE(wireless_tools)
-TUXBOX_RULES_MAKE(zd1211)
-TUXBOX_RULES_MAKE(wpa_supplicant)
-TUXBOX_RULES_MAKE(ethtool)
-TUXBOX_RULES_MAKE(modem_scripts)
-
-#
-# contrib apps
-#
-TUXBOX_RULES_MAKE(bzip2)
-TUXBOX_RULES_MAKE(grep)
-TUXBOX_RULES_MAKE(openrdate)
-TUXBOX_RULES_MAKE(e2fsprogs)
-TUXBOX_RULES_MAKE(xfsprogs)
-TUXBOX_RULES_MAKE(mc)
-TUXBOX_RULES_MAKE(sdparm)
-TUXBOX_RULES_MAKE(sg3_utils)
-TUXBOX_RULES_MAKE(console_data)
-TUXBOX_RULES_MAKE(nano)
-TUXBOX_RULES_MAKE(rsync)
-TUXBOX_RULES_MAKE(rfkill)
-TUXBOX_RULES_MAKE(lm_sensors)
-TUXBOX_RULES_MAKE(fuse)
-TUXBOX_RULES_MAKE(curlftpfs)
-TUXBOX_RULES_MAKE(fbset)
-TUXBOX_RULES_MAKE(pngquant)
-TUXBOX_RULES_MAKE(mplayer)
-TUXBOX_RULES_MAKE(mencoder)
-TUXBOX_RULES_MAKE(util_linux)
-TUXBOX_RULES_MAKE(jfsutils)
-TUXBOX_RULES_MAKE(opkg)
-TUXBOX_RULES_MAKE(opkg_host)
-TUXBOX_RULES_MAKE(pppd)
-TUXBOX_RULES_MAKE(usb_modeswitch)
-TUXBOX_RULES_MAKE(usb_modeswitch_data)
-TUXBOX_RULES_MAKE(ntfs_3g)
-TUXBOX_RULES_MAKE(sysstat)
-TUXBOX_RULES_MAKE(hotplug_e2)
-TUXBOX_RULES_MAKE(autofs)
-TUXBOX_RULES_MAKE(imagemagick)
-TUXBOX_RULES_MAKE(grab)
-TUXBOX_RULES_MAKE(oscam)
-TUXBOX_RULES_MAKE(parted)
-
-#
-# contrib apps with smart rules
-#
-TUXBOX_RULES_MAKE(ntpclient)
-TUXBOX_RULES_MAKE(udpxy)
-#
-# contrib libs
-#
-TUXBOX_RULES_MAKE(libboost)
-TUXBOX_RULES_MAKE(ncurses)
-TUXBOX_RULES_MAKE(libz)
-TUXBOX_RULES_MAKE(libreadline)
-TUXBOX_RULES_MAKE(freetype_old)
-TUXBOX_RULES_MAKE(freetype)
-TUXBOX_RULES_MAKE(lirc)
-TUXBOX_RULES_MAKE(jpeg)
-TUXBOX_RULES_MAKE(libjpeg6b)
-TUXBOX_RULES_MAKE(libpng)
-TUXBOX_RULES_MAKE(libpng12)
-TUXBOX_RULES_MAKE(libungif)
-TUXBOX_RULES_MAKE(libgif)
-TUXBOX_RULES_MAKE(curl)
-TUXBOX_RULES_MAKE(libfribidi)
-TUXBOX_RULES_MAKE(libsigc)
-TUXBOX_RULES_MAKE(libmad)
-TUXBOX_RULES_MAKE(libid3tag)
-TUXBOX_RULES_MAKE(libvorbisidec)
-TUXBOX_RULES_MAKE(glib2)
-TUXBOX_RULES_MAKE(libiconv)
-TUXBOX_RULES_MAKE(libmng)
-TUXBOX_RULES_MAKE(lcms)
-TUXBOX_RULES_MAKE(openssl)
-TUXBOX_RULES_MAKE(directfb)
-TUXBOX_RULES_MAKE(dfbpp)
-TUXBOX_RULES_MAKE(libstgles)
-TUXBOX_RULES_MAKE(expat)
-TUXBOX_RULES_MAKE(fontconfig)
-TUXBOX_RULES_MAKE(libxmlccwrap)
-TUXBOX_RULES_MAKE(a52dec)
-TUXBOX_RULES_MAKE(libdvdcss)
-TUXBOX_RULES_MAKE(libdvdnav)
-TUXBOX_RULES_MAKE(libdvdread)
-TUXBOX_RULES_MAKE(ffmpeg)
-TUXBOX_RULES_MAKE(libass)
-TUXBOX_RULES_MAKE(webkitdfb)
-TUXBOX_RULES_MAKE(icu4c)
-TUXBOX_RULES_MAKE(enchant)
-TUXBOX_RULES_MAKE(lite)
-TUXBOX_RULES_MAKE(sqlite)
-TUXBOX_RULES_MAKE(libsoup)
-TUXBOX_RULES_MAKE(pixman)
-TUXBOX_RULES_MAKE(cairo)
-TUXBOX_RULES_MAKE(libogg)
-TUXBOX_RULES_MAKE(libflac)
-TUXBOX_RULES_MAKE(libcap)
-TUXBOX_RULES_MAKE(evebrowser)
-TUXBOX_RULES_MAKE(brofs)
-TUXBOX_RULES_MAKE(libalsa)
-TUXBOX_RULES_MAKE(rtmpdump)
-TUXBOX_RULES_MAKE(libdvbsipp)
-TUXBOX_RULES_MAKE(libdreamdvd)
-TUXBOX_RULES_MAKE(libdreamdvd2)
-TUXBOX_RULES_MAKE(libmpeg2)
-TUXBOX_RULES_MAKE(libsamplerate)
-TUXBOX_RULES_MAKE(libvorbis)
-TUXBOX_RULES_MAKE(libmodplug)
-TUXBOX_RULES_MAKE(tiff)
-TUXBOX_RULES_MAKE(lzo)
-TUXBOX_RULES_MAKE(yajl)
-TUXBOX_RULES_MAKE(libpcre)
-TUXBOX_RULES_MAKE(libcdio)
-TUXBOX_RULES_MAKE(jasper)
-TUXBOX_RULES_MAKE(mysql)
-TUXBOX_RULES_MAKE(xupnpd)
-TUXBOX_RULES_MAKE(libmicrohttpd)
-TUXBOX_RULES_MAKE(libexif)
-TUXBOX_RULES_MAKE(minidlna)
-TUXBOX_RULES_MAKE(vlc)
-TUXBOX_RULES_MAKE(djmount)
-TUXBOX_RULES_MAKE(libupnp)
-TUXBOX_RULES_MAKE(rarfs)
-TUXBOX_RULES_MAKE(sshfs)
-TUXBOX_RULES_MAKE(gmediarender)
-TUXBOX_RULES_MAKE(mediatomb)
-TUXBOX_RULES_MAKE(tinyxml)
-TUXBOX_RULES_MAKE(libnfs)
-TUXBOX_RULES_MAKE(taglib)
-
-#
-# python
-#
-TUXBOX_RULES_MAKE(elementtree)
-TUXBOX_RULES_MAKE(libxml2)
-TUXBOX_RULES_MAKE(libxslt)
-TUXBOX_RULES_MAKE(lxml)
-TUXBOX_RULES_MAKE(setuptools)
-TUXBOX_RULES_MAKE(gdata)
-TUXBOX_RULES_MAKE(twisted)
-TUXBOX_RULES_MAKE(twistedweb2)
-TUXBOX_RULES_MAKE(pilimaging)
-TUXBOX_RULES_MAKE(python)
-TUXBOX_RULES_MAKE(pyopenssl)
-TUXBOX_RULES_MAKE(pycrypto)
-TUXBOX_RULES_MAKE(pyusb)
-TUXBOX_RULES_MAKE(pythonwifi)
-TUXBOX_RULES_MAKE(pythoncheetah)
-TUXBOX_RULES_MAKE(zope_interface)
-
-#
-# gstreamer
-#
-TUXBOX_RULES_MAKE(gstreamer)
-TUXBOX_RULES_MAKE(gst_plugins_base)
-TUXBOX_RULES_MAKE(gst_plugins_good)
-TUXBOX_RULES_MAKE(gst_plugins_bad)
-TUXBOX_RULES_MAKE(gst_plugins_ugly)
-TUXBOX_RULES_MAKE(gst_ffmpeg)
-TUXBOX_RULES_MAKE(gst_plugins_fluendo_mpegdemux)
-TUXBOX_RULES_MAKE(gst_plugins_dvbmediasink)
-TUXBOX_RULES_MAKE(gst_plugin_subsink)
-
-#
-# enigma2
-#
-TUXBOX_RULES_MAKE(enigma2_pli)
-TUXBOX_RULES_MAKE(tuxtxtlib)
-TUXBOX_RULES_MAKE(tuxtxt32bpp)
-TUXBOX_RULES_MAKE(enigma2_networkbrowser)
-TUXBOX_RULES_MAKE(enigma2_openwebif)
-TUXBOX_RULES_MAKE(e2plugin)
-TUXBOX_RULES_MAKE(e2skin)
-TUXBOX_RULES_MAKE(enigma2)
-
-#
-# xbmc
-#
-TUXBOX_RULES_MAKE(xbmc_nightly)
-
-#
-# external lcd
-#
-TUXBOX_RULES_MAKE(graphlcd)
-TUXBOX_RULES_MAKE(libusb)
-TUXBOX_RULES_MAKE(libusb2)
-TUXBOX_RULES_MAKE(libusbcompat)
-TUXBOX_RULES_MAKE(libgd2)
 
 #
 # RPM stuff
@@ -1205,7 +981,7 @@ AC_SUBST(TUXBOX_TOUCH)
 
 AC_CONFIG_FILES([
 Makefile
-])
+], [mv Makefile Makefile.pre; ./smart-rules.pl Makefile.pre])
 
 # AC_CONFIG_COMMANDS([rules-downcheck-chmod],[chmod +x rules-downcheck.pl])
 

@@ -6,8 +6,7 @@ release_dir="release_neutrino_nightly"
 #
 # max ALPHA-Version ;)
 #
-$(DEPDIR)/min-release_neutrino_nightly $(DEPDIR)/std-release_neutrino_nightly $(DEPDIR)/max-release_neutrino_nightly $(DEPDIR)/release_neutrino_nightly: \
-$(DEPDIR)/%release_neutrino_nightly:
+$(DEPDIR)/release_neutrino_nightly: $(DEPDIR)/%release_neutrino_nightly:
 
 # the following target creates the common file base
 	rm -rf $(prefix)/$(release_dir) || true
@@ -49,7 +48,7 @@ $(DEPDIR)/%release_neutrino_nightly:
 	$(INSTALL_DIR) $(prefix)/$(release_dir)/usr/bin && \
 	$(INSTALL_DIR) $(prefix)/$(release_dir)/usr/lib && \
 	export CROSS_COMPILE=$(target)- && \
-		$(MAKE) install -C @DIR_busybox@ CONFIG_PREFIX=$(prefix)/$(release_dir) && \
+		$(MAKE) install -C $(DIR_busybox) CONFIG_PREFIX=$(prefix)/$(release_dir) && \
 	touch $(prefix)/$(release_dir)/var/etc/.firstboot && \
 	cp -dp $(buildprefix)/root/var/etc/.version $(prefix)/$(release_dir)/var/etc/ && \
 	ln -sf /var/etc/.version $(prefix)/$(release_dir)/.version && \

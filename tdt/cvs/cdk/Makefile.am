@@ -1,5 +1,7 @@
 ## Makefile for Tuxbox
 
+include smart-rules.mk
+
 #Some staff for building and splitting ipk packages with python
 include packaging.mk
 
@@ -83,9 +85,6 @@ include make/cleantargets.mk
 # Create the TAGS file
 include make/tags.mk
 
-# Target for building source distributions (hardly used these days of CVS :-)
-include make/disttargets.mk
-
 #Trick
 include make/smart_release.mk
 
@@ -104,8 +103,6 @@ include make/vdr.mk
 # see it.)
 -include ./Makefile.local
 
-download-for-smart: @DOWNLOAD_FOR_SMART@
-@SMART_DOWNLOAD_RULES@
 # this makes sure we do not build top-level dependencies in parallel
 # (which would not be too helpful anyway, running many configure and
 # downloads in parallel...), but the sub-targets are still built in

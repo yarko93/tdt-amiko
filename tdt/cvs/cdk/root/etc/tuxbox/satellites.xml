@@ -2770,6 +2770,7 @@
 		<transponder frequency="12303000" symbol_rate="27500000" polarization="2" fec_inner="3" system="0" modulation="1"/>
 		<transponder frequency="12322000" symbol_rate="27500000" polarization="3" fec_inner="3" system="0" modulation="1"/>
 		<transponder frequency="12341000" symbol_rate="27500000" polarization="2" fec_inner="3" system="0" modulation="1"/>
+    <transponder frequency="12360000" symbol_rate="27500000" polarization="3" fec_inner="3" system="0" modulation="1"/>
 		<transponder frequency="12380000" symbol_rate="27500000" polarization="2" fec_inner="3" system="0" modulation="1"/>
 		<transponder frequency="12399000" symbol_rate="27500000" polarization="3" fec_inner="3" system="0" modulation="1"/>
 		<transponder frequency="12418000" symbol_rate="27500000" polarization="2" fec_inner="3" system="1" modulation="2"/>
@@ -2957,7 +2958,7 @@
 		<transponder frequency="12688000" symbol_rate="30000000" polarization="0" fec_inner="5" system="0" modulation="1"/>
 		<transponder frequency="12729000" symbol_rate="30000000" polarization="1" fec_inner="5" system="0" modulation="1"/>
 	</sat>
-	<sat name="Türksat 2A/3A (42.0E)" flags="0" position="420">
+	<sat name="TÃ¼rksat 2A/3A (42.0E)" flags="0" position="420">
 		<transponder frequency="10954000" symbol_rate="2960000" polarization="0" fec_inner="4" system="0" modulation="1"/>
 		<transponder frequency="10964000" symbol_rate="12800000" polarization="0" fec_inner="4" system="0" modulation="1"/>
 		<transponder frequency="10970000" symbol_rate="30000000" polarization="1" fec_inner="3" system="1" modulation="2"/>

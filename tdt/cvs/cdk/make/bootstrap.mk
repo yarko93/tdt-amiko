@@ -591,7 +591,6 @@ $(CROSS_G++): $(CROSS_G++_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
 	touch .deps/$(notdir $@)
 
-$(DEPDIR)/min-$(CROSS_LIBGCC) $(DEPDIR)/std-$(CROSS_LIBGCC) $(DEPDIR)/max-$(CROSS_LIBGCC) \
 $(DEPDIR)/$(CROSS_LIBGCC): \
 $(DEPDIR)/%$(CROSS_LIBGCC): $(CROSS_LIBGCC_RPM) | $(DEPDIR)/%$(GLIBC)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb  $(DRPM) --ignorearch --nodeps -Uhv \
@@ -684,14 +683,14 @@ $(DEPDIR)/setup-cross-optional: \
 #
 # LIBTOOL
 #
-$(DEPDIR)/libtool.do_prepare: @DEPENDS_libtool@
-	@PREPARE_libtool@
+$(DEPDIR)/libtool.do_prepare: $(DEPENDS_libtool)
+	$(PREPARE_libtool)
 	touch $@
 
 $(DEPDIR)/libtool.do_compile: $(DEPDIR)/libtool.do_prepare
-	echo "sys_lib_search_path_spec='$(targetprefix)/lib $(targetprefix)/usr/lib'" > @DIR_libtool@/config.cache
-	echo "lt_cv_sys_lib_dlsearch_path_spec='$(targetprefix)/lib $(targetprefix)/usr/lib'" >> @DIR_libtool@/config.cache
-	cd @DIR_libtool@ && \
+	echo "sys_lib_search_path_spec='$(targetprefix)/lib $(targetprefix)/usr/lib'" > $(DIR_libtool)/config.cache
+	echo "lt_cv_sys_lib_dlsearch_path_spec='$(targetprefix)/lib $(targetprefix)/usr/lib'" >> $(DIR_libtool)/config.cache
+	cd $(DIR_libtool) && \
 		./configure \
 		lt_cv_sys_lib_search_path_spec="" \
 		lt_cv_sys_dlsearch_path="" \
@@ -700,11 +699,10 @@ $(DEPDIR)/libtool.do_compile: $(DEPDIR)/libtool.do_prepare
 	$(MAKE)
 	touch $@
 
-$(DEPDIR)/min-libtool $(DEPDIR)/std-libtool $(DEPDIR)/max-libtool \
 $(DEPDIR)/libtool: \
 $(DEPDIR)/%libtool: $(DEPDIR)/libtool.do_compile
-	cd @DIR_libtool@ && \
-	@INSTALL_libtool@
+	cd $(DIR_libtool) && \
+	$(INSTALL_libtool)
 		rm -f $(hostprefix)/share/libtool/config/config.* && \
 		ln -sf $(hostprefix)/share/misc/config.guess $(hostprefix)/share/libtool/config/config.guess && \
 		ln -sf $(hostprefix)/share/misc/config.sub $(hostprefix)/share/libtool/config/config.sub && \

@@ -31,8 +31,8 @@ $(foreach f,$(init_scripts_initd_files), initdconfig --del $f
 )
 endef
 
-$(DEPDIR)/init-scripts: @DEPENDS_init_scripts@
-	@PREPARE_init_scripts@
+$(DEPDIR)/init-scripts: $(DEPENDS_init_scripts)
+	$(PREPARE_init_scripts)
 	$(start_build)
 	$(INSTALL_DIR) $(PKDIR)/etc/init.d
 
@@ -91,8 +91,8 @@ $(DEPDIR)/fonts-extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fon
 DESCRIPTION_modem_scripts = utils to setup 3G modems
 RDEPENDS_modem_scripts = pppd usb_modeswitch iptables iptables-dev
 
-$(DEPDIR)/modem-scripts: @DEPENDS_modem_scripts@ $(RDEPENDS_modem_scripts)
-	@PREPARE_modem_scripts@
+$(DEPDIR)/modem-scripts: $(DEPENDS_modem_scripts) $(RDEPENDS_modem_scripts)
+	$(PREPARE_modem_scripts)
 	$(start_build)
 	cd $(DIR_modem_scripts) && \
 	$(INSTALL_DIR) $(PKDIR)/etc/ppp/peers && \
@@ -158,8 +158,8 @@ endif
 DESCRIPTION_udev_rules = custom udev rules
 RDEPENDS_udev_rules = udev
 
-$(DEPDIR)/udev-rules: @DEPENDS_udev_rules@ $(RDEPENDS_udev_rules)
-	@PREPARE_udev_rules@
+$(DEPDIR)/udev-rules: $(DEPENDS_udev_rules) $(RDEPENDS_udev_rules)
+	$(PREPARE_udev_rules)
 	$(start_build)
 	cd $(DIR_udev_rules) && \
 	$(INSTALL_DIR) $(PKDIR)/etc/udev/rules.d/ && \
@@ -204,6 +204,7 @@ release_base: driver-ptinp driver-encrypt
 	$(INSTALL_DIR) $(prefix)/release/etc && \
 	$(INSTALL_DIR) $(prefix)/release/etc/fonts && \
 	$(INSTALL_DIR) $(prefix)/release/etc/init.d && \
+	$(INSTALL_DIR) $(prefix)/release/etc/modprobe.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-down.d && \
 	$(INSTALL_DIR) $(prefix)/release/etc/network/if-post-up.d && \
@@ -330,7 +331,7 @@ if ENABLE_PY27
 else
 	echo "src/gz AR-P http://alien.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
-	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.config
+	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf
 endif
 	cp $(buildprefix)/root/etc/lircd_spark.conf.09_00_0B $(prefix)/release/etc/lircd.conf.09_00_0B && \
 	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
@@ -361,8 +362,7 @@ release_hl101:
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
-$(DEPDIR)/min-release $(DEPDIR)/std-release $(DEPDIR)/max-release $(DEPDIR)/release: \
-$(DEPDIR)/%release:release_base release_common_utils release_$(HL101)$(SPARK)$(SPARK7162)
+$(DEPDIR)/release: $(DEPDIR)/%release:release_base release_common_utils release_$(HL101)$(SPARK)$(SPARK7162)
 # Post tweaks
 	$(DEPMOD) -b $(prefix)/release $(KERNELVERSION)
 	touch $@
