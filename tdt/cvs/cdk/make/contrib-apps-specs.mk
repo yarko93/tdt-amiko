@@ -59,7 +59,6 @@ $(DEPDIR)/%$(SYSVINIT): $(SYSVINIT_ADAPTED_ETC_FILES:%=root/etc/%) \
 	$(fromrpm_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
-$(DEPDIR)/min-$(SYSVINITTOOLS) $(DEPDIR)/std-$(SYSVINITTOOLS) $(DEPDIR)/max-$(SYSVINITTOOLS) \
 $(DEPDIR)/$(SYSVINITTOOLS): \
 $(DEPDIR)/%$(SYSVINITTOOLS): $(SYSVINITTOOLS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \

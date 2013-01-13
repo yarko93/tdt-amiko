@@ -320,7 +320,10 @@ $(LIBFFI_RPM): \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(LIBFFI_SPEC)
 
 $(DEPDIR)/$(LIBFFI): $(LIBFFI_RPM)
-	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^) && \
+	@rpm $(DRPM) --ignorearch --nodeps -Uhv $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
+	$(toflash_build)
 	touch $@
 
 #
@@ -402,7 +405,6 @@ $(ELFUTILS_RPM) $(ELFUTILS_DEV_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(ELFUTILS_SPEC)
 
-$(DEPDIR)/min-$(ELFUTILS) $(DEPDIR)/std-$(ELFUTILS) $(DEPDIR)/max-$(ELFUTILS) \
 $(DEPDIR)/$(ELFUTILS): \
 $(DEPDIR)/%$(ELFUTILS):$(ELFUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
@@ -412,12 +414,13 @@ $(DEPDIR)/%$(ELFUTILS):$(ELFUTILS_RPM)
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 	
-
-$(DEPDIR)/min-$(ELFUTILS_DEV) $(DEPDIR)/std-$(ELFUTILS_DEV) $(DEPDIR)/max-$(ELFUTILS_DEV) \
 $(DEPDIR)/$(ELFUTILS_DEV): \
 $(DEPDIR)/%$(ELFUTILS_DEV): $(DEPDIR)/%$(ELFUTILS) $(ELFUTILS_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
+	$(start_build)
+	$(fromrpm_build)
+	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
