@@ -21,8 +21,8 @@ $(DEPDIR)/enigma2-plugins-sh4-networkbrowser \
 $(DEPDIR)/enigma2-plugins-sh4-libgisclubskin
 
 
-$(DEPDIR)/enigma2-plugins-sh4.do_prepare: @DEPENDS_e2plugin@
-	@PREPARE_e2plugin@
+$(DEPDIR)/enigma2-plugins-sh4.do_prepare: $(DEPENDS_e2plugin)
+	$(PREPARE_e2plugin)
 	touch $@
 
 $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
@@ -81,6 +81,7 @@ $(DEPDIR)/enigma2-plugins-sh4-%: $(DIR_e2plugin)/config.status
 	cd $(DIR_e2plugin)/$* && \
 		$(MAKE) install DESTDIR=$(PKDIR)
 	rm -rf $(ipkgbuilddir)/*
+	$(flash_prebuild)
 
 	echo -e " \n\
 	from split_packages import * \n\

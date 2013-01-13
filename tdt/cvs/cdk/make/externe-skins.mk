@@ -12,8 +12,8 @@ FILES_e2skin_meta := /usr/share/meta
 DESCRIPTION_e2skin_meta := Enigma2 skins metadata
 PACKAGES_e2skin = e2skin_meta
 
-$(DEPDIR)/enigma2-skins-sh4.do_prepare: @DEPENDS_e2skin@
-	@PREPARE_e2skin@
+$(DEPDIR)/enigma2-skins-sh4.do_prepare: $(DEPENDS_e2skin)
+	$(PREPARE_e2skin)
 
 $(DIR_e2skin)/config.status: enigma2-skins-sh4.do_prepare
 	cd $(DIR_e2skin) && \

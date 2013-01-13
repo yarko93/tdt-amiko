@@ -101,26 +101,34 @@ opkg_host
   {PN}
   dirextract:http://opkg.googlecode.com/files/opkg-{PV}.tar.gz
 ;
-linuxp0207
+if ENABLE_P0207
+linux
   2.6.32.28_stm24_0207
   linux-sh4-2.6.32.28_stm24_0207
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.28_stm24_0207-207.src.rpm
 ;
-linuxp0209
+endif
+if ENABLE_P0209
+linux
   2.6.32.46_stm24_0209
   linux-sh4-2.6.32.46_stm24_0209
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.46_stm24_0209-209.src.rpm
 ;
-linuxp0210
+endif
+if ENABLE_P0210
+linux
   2.6.32.57_stm24_0210
   linux-sh4-2.6.32.57_stm24_0210
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.57_stm24_0210-210.src.rpm
 ;
-linuxp0211
+endif
+if ENABLE_P0211
+linux
   2.6.32.59_stm24_0211
   linux-sh4-2.6.32.59_stm24_0211
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.59_stm24_0211-211.src.rpm
 ;
+endif
 
 squashfs
   3.0
@@ -1434,7 +1442,7 @@ udev_rules
 ;
 enigma2_pli
   git
-  \$(appsdir)/{PN}-nightly
+  $(appsdir)/{PN}-nightly
 
 if ENABLE_E2PD0
   git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
@@ -1482,7 +1490,7 @@ endif
 ;
 enigma2
   git
-  \$(appsdir)/{PN}-nightly
+  $(appsdir)/{PN}-nightly
 if ENABLE_E2D0
   git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=945aeb939308b3652b56bc6c577853369d54a537
   patch:file://enigma2-nightly.0.diff
@@ -1535,7 +1543,7 @@ endif
 ;
 xbmc_nightly
   git
-  \$(appsdir)/{PN}
+  $(appsdir)/{PN}
 if ENABLE_XBD0
   git://github.com/xbmc/xbmc.git
   patch:file://xbmc-nightly.0.diff

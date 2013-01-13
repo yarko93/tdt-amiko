@@ -19,8 +19,8 @@ if ENABLE_SPARK7162
 E_CONFIG_OPTS += --enable-spark7162
 endif
 
-$(DEPDIR)/enigma2-pli-nightly.do_prepare: @DEPENDS_enigma2_pli@
-	@PREPARE_enigma2_pli@
+$(DEPDIR)/enigma2-pli-nightly.do_prepare: $(DEPENDS_enigma2_pli)
+	$(PREPARE_enigma2_pli)
 	touch $@
 
 $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libmme_host libmmeimage libfribidi libid3tag libmad libsigc libreadline font-valis-enigma \
@@ -73,6 +73,7 @@ $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_compile
 		$(MAKE) install DESTDIR=$(PKDIR)
 	$(target)-strip $(PKDIR)/usr/bin/enigma2
 	cp -f $(buildprefix)/root/usr/local/share/enigma2/$(enigma2_keymap_file) $(PKDIR)/usr/share/enigma2/keymap.xml
+	cp -f $(buildprefix)/root/usr/local/share/enigma2/keymap_amiko.xml $(PKDIR)/usr/share/enigma2/
 	$(tocdk_build)
 	$(toflash_build)
 	touch $@

@@ -10,21 +10,12 @@ AUTOMAKE_OPTIONS = -Wno-portability
 
 #######################################      #########################################
 
-KERNEL_DEPENDS = @DEPENDS_linux24@
-if ENABLE_P0207
-KERNEL_DIR = @DIR_linuxp0207@
-else
-if ENABLE_P0209
-KERNEL_DIR = @DIR_linuxp0209@
-else
-if ENABLE_P0210
-KERNEL_DIR = @DIR_linuxp0210@
-else
-KERNEL_DIR = @DIR_linuxp0211@
-endif
-endif
-endif
-KERNEL_PREPARE = @PREPARE_linux24@
+KERNEL_DIR = $(DIR_linux)
+KERNEL_DEPENDS = $(DEPENDS_linux24)
+KERNEL_PREPARE = $(PREPARE_linux24)
+KERNELVERSION = $(VERSION_linux)
+KERNELSTMLABEL = _$(word 2,$(subst _, ,$(KERNELVERSION)))_$(word 3,$(subst _, ,$(KERNELVERSION)))
+KERNELLABEL = $(shell x=$(KERNELVERSION); echo $${x: -3})
 
 #######################################      #########################################
 
@@ -152,8 +143,8 @@ PYTHON_DIR = /usr/lib/python$(PYTHON_VERSION)
 ACLOCAL_AMFLAGS = -I .
 
 CONFIG_STATUS_DEPENDENCIES = \
-	$(top_srcdir)/smart-rules.pl \
-	$(top_srcdir)/smart-rules.am
+	$(top_srcdir)/smart-rules.pl
+#	$(top_srcdir)/smart-rules.am
 
 query: %query:
 	rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) -qa
