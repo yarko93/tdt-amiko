@@ -56,7 +56,7 @@ modprobe e2_proc
    if [ ! `grep 'hdmicec.enabled=false' /etc/enigma2/settings` ]; then
     modprobe cec
    fi
-
+   cat /etc/videomode > /proc/stb/video/videomode
    showiframe -p /boot/bootlogo.mvi &
    stfbcontrol a 0
 
