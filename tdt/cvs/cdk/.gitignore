@@ -116,6 +116,7 @@ Imaging-*
 pyusb-*
 RPMS
 Makefile
+Makefile.pre
 SRPMS
 curl-*
 ethtool-*
