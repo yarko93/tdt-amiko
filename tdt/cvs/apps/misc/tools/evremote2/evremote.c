@@ -333,7 +333,7 @@ int getModel()
     int         vFd             = -1;
     const int   cSize           = 128;
     char        vName[129]      = "Unknown";
-    int         vLen            = -1;*/
+    int         vLen            = -1;
 #endif
     eBoxType    vBoxType        = Spark;
 #if 0
