@@ -314,7 +314,7 @@ void *detectKeyUpTask(void* dummy)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+#if 0
 int getKathreinUfs910BoxType() {
     char vType;
     int vFdBox = open("/proc/boxtype", O_RDONLY);
@@ -325,15 +325,18 @@ int getKathreinUfs910BoxType() {
 
     return vType=='0'?0:vType=='1'||vType=='3'?1:-1;
 }
+#endif
 
 int getModel()
 {
+#if 0
     int         vFd             = -1;
     const int   cSize           = 128;
     char        vName[129]      = "Unknown";
-    int         vLen            = -1;
-    eBoxType    vBoxType        = Unknown;
-
+    int         vLen            = -1;*/
+#endif
+    eBoxType    vBoxType        = Spark;
+#if 0
     vFd = open("/proc/stb/info/model", O_RDONLY);
     vLen = read (vFd, vName, cSize);
 
@@ -408,7 +411,7 @@ int getModel()
         else
             vBoxType = Unknown;
     }
-
+#endif
     printf("vBoxType: %d\n", vBoxType);
 
     return vBoxType;
@@ -430,7 +433,7 @@ int main (int argc, char* argv[])
     
     freopen("/dev/console", "a", stdout);
 
-    eBoxType vBoxType = Unknown;
+    eBoxType vBoxType = getModel();
     Context_t context;
 
     /* Dagobert: if tuxtxt closes the socket while
@@ -438,15 +441,16 @@ int main (int argc, char* argv[])
      * evremote. so lets ignore it ...
      */
     ignoreSIGPIPE();
-
+#if 0
     vBoxType = getModel();
 
     if(vBoxType != Unknown)
-        if(!getEventDevice())
-        {
-            printf("unable to open event device\n");
-            return 5;
-        }
+#endif
+    if(!getEventDevice())
+    {
+        printf("unable to open event device\n");
+        return 5;
+    }
     selectRemote(&context, vBoxType);
 
     printf("Selected Remote: %s\n", ((RemoteControl_t*)context.r)->Name);
@@ -461,7 +465,7 @@ int main (int argc, char* argv[])
         printKeyMap((tButton*)((RemoteControl_t*)context.r)->Frontpanel);
     }
 
-    const int cMaxButtonExtension = 128; // Up To 128 Extension Buttons
+    const int cMaxButtonExtension = 70; // Up To 70 Extension Buttons
     tButton vButtonExtension[cMaxButtonExtension];
     int vButtonExtensionCounter = 0;
 

@@ -562,12 +562,12 @@ static int pShutdown(Context_t* context ) {
 
 static int pRead(Context_t* context ) {
 	const int           cSize = 128;
-    char                vBuffer[cSize];
+	char                vBuffer[cSize];
 	char                keyname[cSize];
 	int                 updown;
-    char                vData[10];
-    int                 vCurrentCode  = -1;
-	int					rc;
+	char                vData[10];
+	int                 vCurrentCode  = -1;
+	int                 rc;
 
 	memset(vBuffer, 0, 128);
     //wait for new command
