@@ -34,12 +34,12 @@ extern RemoteControl_t Vip2_RC;
 extern RemoteControl_t UFS922_RC;
 extern RemoteControl_t HDBOX_RC;
 extern RemoteControl_t Hs5101_RC;
-extern RemoteControl_t UFS912_RC;*/
+extern RemoteControl_t UFS912_RC;
 #endif
 extern RemoteControl_t Spark_RC;
 #if 0
 extern RemoteControl_t Adb_Box_RC;
-extern RemoteControl_t Cuberevo_RC;*/
+extern RemoteControl_t Cuberevo_RC;
 #endif
 
 static RemoteControl_t * AvailableRemoteControls[] = {
