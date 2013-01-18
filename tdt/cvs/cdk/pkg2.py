@@ -18,7 +18,7 @@ prompt = ":~# "
 
 fname = pkg.split('/')[-1]
 import os
-cmd = 'wput -u %s ftp://%s:%s@%s/../tmp/%s' % (pkg, ftpuser, ftppass, HOST, fname)
+cmd = 'wput -u -nc %s ftp://%s:%s@%s/../tmp/%s' % (pkg, ftpuser, ftppass, HOST, fname)
 print "executing", cmd
 os.system(cmd)
 
@@ -44,7 +44,7 @@ def read():
 
 tn.read_until(prompt)
 print "start commands"
-tn.write("ipkg install /tmp/%s\n" % fname)
+tn.write("ipkg install --force-downgrade /tmp/%s\n" % fname)
 read()
 tn.write("exit\n")
 
