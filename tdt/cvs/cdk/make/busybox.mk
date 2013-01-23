@@ -3,8 +3,6 @@
 #
 $(DEPDIR)/busybox.do_prepare: $(DEPENDS_busybox)
 	$(PREPARE_busybox)
-	cd $(DIR_busybox) && \
-		patch -p1 < ../Patches/busybox-1.20.2-kernel_ver.patch
 	touch $@
 
 $(DEPDIR)/busybox.do_compile: bootstrap $(DEPDIR)/busybox.do_prepare Patches/busybox-1.20.2.config | $(DEPDIR)/$(GLIBC_DEV)
