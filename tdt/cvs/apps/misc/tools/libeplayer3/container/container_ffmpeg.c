@@ -1867,6 +1867,7 @@ static int container_ffmpeg_stop(Context_t *context)
 		//for buffered io (end)
 
 		wait_time = 100;
+	while ( (hasPlayThreadStarted != 0) && (--wait_time) > 0 ) {
         ffmpeg_printf(10, "Waiting for ffmpeg thread to terminate itself, will try another %d times\n", wait_time);
 
         usleep(100000);

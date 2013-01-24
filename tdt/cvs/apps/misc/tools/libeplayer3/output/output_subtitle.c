@@ -703,7 +703,7 @@ static int subtitle_Play(Context_t* context)
     return cERR_SUBTITLE_NO_ERROR;
 }
 
-static int subtitle_Stop(context)
+static int subtitle_Stop(context){
 		void* threadstatus;
     int wait_time = 20;
     int i;
