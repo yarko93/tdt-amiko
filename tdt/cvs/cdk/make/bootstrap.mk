@@ -707,5 +707,5 @@ $(DEPDIR)/%libtool: $(DEPDIR)/libtool.do_compile
 		ln -sf $(hostprefix)/share/misc/config.guess $(hostprefix)/share/libtool/config/config.guess && \
 		ln -sf $(hostprefix)/share/misc/config.sub $(hostprefix)/share/libtool/config/config.sub && \
 		sed -i -r -e 's,(hardcode_into_libs)=yes,\1=no,g' $(hostprefix)/bin/libtool
-	@DISTCLEANUP_libtool@
+	$(DISTCLEANUP_libtool)
 	[ "x$*" = "x" ] && touch $@ || true
