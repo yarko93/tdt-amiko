@@ -26,7 +26,7 @@ mount -av -t nonfs,nonfs4,nosmbfs,nocifs,noncp,noncpfs,nocoda 2>&1 |
 [ ! -d /var/lib ] && mkdir /var/lib
 [ ! -d /var/lib/urandom ] && mkdir /var/lib/urandom
 [ ! -d /var/run ] && mkdir /var/run
-ln -sf /tmp /var/tmp
+ln -sf ../tmp /var/
 #END
 
 case `uname -s` in
