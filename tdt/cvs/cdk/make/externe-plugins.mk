@@ -12,7 +12,8 @@ DESCRIPTION_e2plugin_meta := Enigma2 plugins metadata
 PACKAGES_e2plugin = e2plugin_meta
 DIST_e2plugin = enigma2_plugin_systemplugins_networkbrowser \
 enigma2_plugin_extensions_alternativesoftcammanager \
-enigma2_plugin_extensions_quickepg
+enigma2_plugin_extensions_quickepg \
+enigma2-plugins-sh4-libgisclubskin
 
 # This is list of plugins that have files with non-typical path,
 # that doesn't start with /usr/lib/enigma2/python/Plugins
