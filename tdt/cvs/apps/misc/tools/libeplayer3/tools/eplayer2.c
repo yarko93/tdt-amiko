@@ -29,10 +29,10 @@
 #include "common.h"
 #include "subtitle.h"
 
-extern OutputHandler_t       OutputHandler;
-extern PlaybackHandler_t     PlaybackHandler;
+extern OutputHandler_t        OutputHandler;
+extern PlaybackHandler_t    PlaybackHandler;
 extern ContainerHandler_t    ContainerHandler;
-extern ManagerHandler_t      ManagerHandler;
+extern ManagerHandler_t        ManagerHandler;
 
 Context_t * player = NULL;
 
@@ -50,70 +50,72 @@ static int               yRes   = 0;
 static int               bpp    = 0;
 
 int kbhit(void) {
-    struct timeval tv;
-    fd_set read_fd;
+        struct timeval tv;
+        fd_set read_fd;
 
-    tv.tv_sec=1;
-    tv.tv_usec=0;
+        tv.tv_sec=1;
+        tv.tv_usec=0;
 
-    FD_ZERO(&read_fd);
-    FD_SET(0,&read_fd);
+        FD_ZERO(&read_fd);
+        FD_SET(0,&read_fd);
 
-    if(select(1, &read_fd, NULL, NULL, &tv) == -1)
+        if(select(1, &read_fd, NULL, NULL, &tv) == -1)
+                return 0;
+
+        if(FD_ISSET(0,&read_fd))
+                return 1;
+
         return 0;
-
-    if(FD_ISSET(0,&read_fd))
-        return 1;
-
-    return 0;
 }
 
 void framebuffer_init()
 {
-    int available  = 0;
+	int available  = 0;
 
-    fd = open("/dev/fb0", O_RDWR);
+	fd = open("/dev/fb0", O_RDWR);
 
-    if (fd < 0)
-    {
-        perror("/dev/fb0");
-        return;
-    }
+	if (fd < 0)
+	{
+		perror("/dev/fb0");
+		return;
+	}
 
-    if (ioctl(fd, FBIOGET_VSCREENINFO, &screeninfo) < 0)
-    {
-        perror("FBIOGET_VSCREENINFO");
-        return;
-    }
+	if (ioctl(fd, FBIOGET_VSCREENINFO, &screeninfo) < 0)
+	{
+		perror("FBIOGET_VSCREENINFO");
+		return;
+	}
 
-    memcpy(&oldscreen, &screeninfo, sizeof(screeninfo));
-    ioctl(fd, FBIOGET_VSCREENINFO, &screeninfo);
-    printf("mode %d, %d, %d\n", screeninfo.xres, screeninfo.yres, screeninfo.bits_per_pixel);
+	memcpy(&oldscreen, &screeninfo, sizeof(screeninfo));
 
-    if (ioctl(fd, FBIOGET_FSCREENINFO, &fix)<0)
-    {
-        perror("FBIOGET_FSCREENINFO");
-        printf("fb failed\n");
-    }
+	ioctl(fd, FBIOGET_VSCREENINFO, &screeninfo);
+	
+	printf("mode %d, %d, %d\n", screeninfo.xres, screeninfo.yres, screeninfo.bits_per_pixel);
 
-    stride = fix.line_length;
-    xRes   = screeninfo.xres;
-    yRes   = screeninfo.yres;
-    bpp    = screeninfo.bits_per_pixel;
+	if (ioctl(fd, FBIOGET_FSCREENINFO, &fix)<0)
+	{
+		perror("FBIOGET_FSCREENINFO");
+		printf("fb failed\n");
+	}
 
-    printf("stride = %d, width %d\n", stride, xRes);
+	stride = fix.line_length;
+	xRes   = screeninfo.xres;
+	yRes   = screeninfo.yres;
+	bpp    = screeninfo.bits_per_pixel;
 
-    available = fix.smem_len;
+	printf("stride = %d, width %d\n", stride, xRes);
 
-    printf("%dk video mem\n", available/1024);
+	available = fix.smem_len;
 
-    lfb = (unsigned char*) mmap(0, available, PROT_WRITE|PROT_READ, MAP_SHARED, fd, 0);
+	printf("%dk video mem\n", available/1024);
 
-    if (lfb == NULL)
-    {
-        perror("mmap");
-        return;
-    }
+	lfb = (unsigned char*) mmap(0, available, PROT_WRITE|PROT_READ, MAP_SHARED, fd, 0);
+
+	if (lfb == NULL)
+	{
+		perror("mmap");
+		return;
+	}
 
     memset(lfb, 0, available);
 }
@@ -180,12 +182,10 @@ int main(int argc,char* argv[]) {
     {
         char ** TrackList = NULL;
         player->manager->audio->Command(player, MANAGER_LIST, &TrackList);
-        if (TrackList != NULL)
-        {
+        if (TrackList != NULL) {
             printf("AudioTrack List\n");
             int i = 0;
-            for (i = 0; TrackList[i] != NULL; i+=2)
-            {
+            for (i = 0; TrackList[i] != NULL; i+=2) {
                 printf("\t%s - %s\n", TrackList[i], TrackList[i+1]);
                 free(TrackList[i]);
                 free(TrackList[i+1]);
@@ -194,12 +194,10 @@ int main(int argc,char* argv[]) {
         }
 
         player->manager->video->Command(player, MANAGER_LIST, &TrackList);
-        if (TrackList != NULL)
-        {
+        if (TrackList != NULL) {
             printf("VideoTrack List\n");
             int i = 0;
-            for (i = 0; TrackList[i] != NULL; i+=2)
-            {
+            for (i = 0; TrackList[i] != NULL; i+=2) {
                 printf("\t%s - %s\n", TrackList[i], TrackList[i+1]);
                 free(TrackList[i]);
                 free(TrackList[i+1]);
@@ -211,8 +209,7 @@ int main(int argc,char* argv[]) {
         if (TrackList != NULL) {
             printf("SubtitleTrack List\n");
             int i = 0;
-            for (i = 0; TrackList[i] != NULL; i+=2)
-            {
+            for (i = 0; TrackList[i] != NULL; i+=2) {
                 printf("\t%s - %s\n", TrackList[i], TrackList[i+1]);
                 free(TrackList[i]);
                 free(TrackList[i+1]);
@@ -251,11 +248,11 @@ int main(int argc,char* argv[]) {
         AudioTrackEncoding = NULL;
         AudioTrackName = NULL;
 
-/*      player->manager->audio->Command(player, MANAGER_SET, 2);
-        player->manager->audio->Command(player, MANAGER_GET, &AudioTrackId);
-        player->manager->audio->Command(player, MANAGER_GETNAME, &AudioTrackName);
-        free(AudioTrackName);
-        AudioTrackName = NULL;*/
+        /*      player->manager->audio->Command(player, MANAGER_SET, 2);
+                player->manager->audio->Command(player, MANAGER_GET, &AudioTrackId);
+                player->manager->audio->Command(player, MANAGER_GETNAME, &AudioTrackName);
+                free(AudioTrackName);
+                AudioTrackName = NULL;*/
 
     }
     {
@@ -293,8 +290,7 @@ int main(int argc,char* argv[]) {
             player->output->Command(player, OUTPUT_CLOSE, NULL);
 
             exit(1);
-        }
-        else
+        } else
             player->playback->Command(player, PLAYBACK_PLAY, NULL);
 
         /*{
@@ -302,16 +298,14 @@ int main(int argc,char* argv[]) {
             player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&pid);
         }*/
 
-        while(player->playback->isPlaying)
-        {
+        while(player->playback->isPlaying) {
             int Key = 0;
 
             if(kbhit())
                 if(noinput == 0)
                     Key = getchar();
 
-            if(!player->playback->isPlaying)
-            {
+            if(!player->playback->isPlaying) {
                 break;
             }
 
@@ -464,6 +458,7 @@ int main(int argc,char* argv[]) {
                     case -6: speedmap = -160; break;
                     case -7: speedmap = -320; break;
                 }
+
                 player->playback->Command(player, PLAYBACK_FASTBACKWARD, &speedmap);
                 break;
             }
@@ -480,23 +475,18 @@ int main(int argc,char* argv[]) {
                 if (player->container && player->container->selectedContainer)
                     player->container->selectedContainer->Command(player, CONTAINER_LENGTH, &length);
 
-                    if (gotoPos <= 0)
-                    {
-                        printf("kleiner als erlaubt\n");
-                        sec = 0.0;
-                    }
-                    else if (gotoPos >= ((int)length - 10))
-                    {
-                        printf("laenger als erlaubt\n");
-                        sec = (int)length - 10;
-                    }
-                    else
-                    {
-                        printf("normal action\n");
-                        sec = gotoPos;
-                    }
+				if(gotoPos <= 0){
+					printf("kleiner als erlaubt\n");
+					sec = 0.0;
+				}else if(gotoPos >= ((int)length - 10)){
+					printf("laenger als erlaubt\n");
+					sec = (int)length - 10;
+				}else{
+					printf("normal action\n");
+					sec = gotoPos;
+				}
 
-                    player->playback->Command(player, PLAYBACK_SEEK, (void*)&sec);	
+				player->playback->Command(player, PLAYBACK_SEEK, (void*)&sec);	
                 printf("goto postion (%i sec)\n", sec);
                 break;
             }
@@ -515,37 +505,32 @@ int main(int argc,char* argv[]) {
                     case 9: sec= 300.0;break;
                 }
 #else
-                char seek [256];
-                gets (seek);
+		char seek [256];
+		gets (seek);
                 unsigned int seekTo = atoi(seek);
-                double length = 0;
-                float sec;
-
-                unsigned long long int CurrentPTS = 0;
+		double length = 0;
+		float sec;
+		
+		unsigned long long int CurrentPTS = 0;
                 player->playback->Command(player, PLAYBACK_PTS, &CurrentPTS);
                 if (player->container && player->container->selectedContainer)
                     player->container->selectedContainer->Command(player, CONTAINER_LENGTH, &length);
+				
+		int CurrentSec = CurrentPTS / 90000;
+		printf("CurrentSec = %i, seekTo = %i, abs(seekTo) = %i  seekTo + CurrentSec %i\n", CurrentSec, seekTo, abs(seekTo), (seekTo + CurrentSec));
+		int ergSec = CurrentSec + seekTo;
+		if(ergSec < 0){
+			printf("kleiner als erlaubt\n");
+			sec = 0.0;
+		}else if((CurrentSec + seekTo) >= ((int)length - 10)){
+			printf("laenger als erlaubt\n");
+			sec = (int)length - 10;
+		}else{
+			printf("normal action\n");
+			sec = seekTo + CurrentSec;
+		}
 
-                int CurrentSec = CurrentPTS / 90000;
-                printf("CurrentSec = %i, seekTo = %i, abs(seekTo) = %i  seekTo + CurrentSec %i\n", CurrentSec, seekTo, abs(seekTo), (seekTo + CurrentSec));
-                int ergSec = CurrentSec + seekTo;
-                if (ergSec < 0)
-                {
-                    printf("kleiner als erlaubt\n");
-                    sec = 0.0;
-                }
-                else if ((CurrentSec + seekTo) >= ((int)length - 10))
-                {
-                    printf("laenger als erlaubt\n");
-                    sec = (int)length - 10;
-                }
-                else
-                {
-                    printf("normal action\n");
-                    sec = seekTo + CurrentSec;
-                }
-
-                printf("springe %i \n", (int)sec);
+		printf("springe %i \n", (int)sec);
 #endif
                 player->playback->Command(player, PLAYBACK_SEEK, (void*)&sec);
                 break;
