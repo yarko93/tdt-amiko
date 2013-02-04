@@ -77,24 +77,6 @@
 #   @INSTALL_udpxy@ command could be 'make install' and commands to copy other files to PKDIR.
 BEGIN[[
 
-ntpclient
-  #second param is version
-  2007_365
-  #third is buid dir
-  {PN}-2007
-  #sources goes below
-  http://doolittle.icarus.com/ntpclient/{PN}_{PV}.tar.gz
-  nothing:file://{PN}-init.file
-;
-
-udpxy
-  1.0.23-0
-  {PN}-{PV}
-  http://sourceforge.net/projects/udpxy/files/udpxy/Chipmunk-1.0/udpxy.{PV}-prod.tar.gz
-  #for patch -p0 use the following
-  patch-0:file://udpxy-makefile.patch
-;
-
 #opkg-host
 opkg_host
   0.1.8
@@ -209,85 +191,11 @@ busybox
   patch:file://{PN}-{PV}-sys-resource.patch
   make:install:CONFIG_PREFIX=PKDIR
 ;
-lsb
-  3.2-28
-  {PN}-3.2
-  extract:http://www.emdebian.org/locale/pool/main/l/lsb/{PN}_{PV}.tar.gz
-  install:-d:PKDIR/lib/{PN}
-  install:-m644:init-functions:PKDIR/lib/{PN}
-;
-ipkg
-  0.99.163
-  {PN}-{PV}
-  extract:ftp.gwdg.de/linux/handhelds/packages/{PN}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-;
-module_init_tools
-  3.16
-  {PN}-{PV}
-  extract:http://ftp.be.debian.org/pub/linux/utils/kernel/{PN}/{PN}-{PV}.tar.bz2
-  patch:file://module-init-tools-no-man.patch
-  make:INSTALL=install:install:sbin_PROGRAMS="depmod modinfo":bin_PROGRAMS=:mandir=/usr/share/man:DESTDIR=TARGETS
-;
 sysvinit
   2.86
   {PN}-{PV}
   extract:ftp://ftp.cistron.nl/pub/people/miquels/{PN}/{PN}-{PV}.tar.gz
   nothing:http://ftp.de.debian.org/debian/pool/main/s/{PN}/{PN}_{PV}.ds1-38.diff.gz
-;
-bzip2
-  1.0.6
-  {PN}-{PV}
-  extract:http://www.bzip.org/{PV}/{PN}-{PV}.tar.gz
-  patch:file://{PN}.diff
-  make:install:PREFIX=PKDIR/usr
-;
-grep
-  2.5.1
-  {PN}-{PV}
-  extract:ftp://mirrors.kernel.org/gnu/{PN}/{PN}-{PV}.tar.bz2
-  nothing:http://64studio.hivelocity.net/apt/pool/main/g/{PN}/{PN}_{PV}.ds2-6.diff.gz
-  make:install:DESTDIR=PKDIR
-;
-openrdate
-  1.1.2
-  {PN}-{PV}
-  extract:http://downloads.sourceforge.net/project/openrdate/openrdate/{PN}-{PV}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=PKDIR
-;
-e2fsprogs
-  1.42.4
-  {PN}-{PV}
-  extract:http://prdownloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
-  patch:file://{PN}-{PV}.patch
-  make:install:DESTDIR=PKDIR
-;
-xfsprogs
-  2.9.4-1
-  {PN}-2.9.4
-  extract:http://pkgs.fedoraproject.org/repo/pkgs/xfsprogs/xfsprogs_2.9.4-1.tar.gz/174683e3b86b587ed59823fdbbb96ea4/{PN}_{PV}.tar.gz
-  patch:file://{PN}.diff
-  make:install:prefix=/usr:DESTDIR=PKDIR
-;
-mc
-  4.8.1.6
-  {PN}-{PV}
-  extract:http://www.midnight-commander.org/downloads/{PN}-{PV}.tar.bz2
-#nothing:file://{PN}.diff
-  make:install:DESTDIR=PKDIR
-;
-sdparm
-  1.07
-  {PN}-{PV}
-  extract:http://sg.danny.cz/sg/p/{PN}-{PV}.tgz
-  make:install:DESTDIR=PKDIR
-;
-sg3_utils
-  1.24
-  sg3_utils-{PV}
-  extract:http://sg.torque.net/sg/p/sg3_utils-{PV}.tgz
-  patch:file://sg3_utils.diff
-  make:install:DESTDIR=TARGETS
 ;
 console_data
   1.03
@@ -295,148 +203,12 @@ console_data
   extract:ftp://ftp.debian.org/debian/pool/main/c/{PN}/{PN}_{PV}.orig.tar.gz
   make:install
 ;
-nano
-  2.0.6
-  {PN}-{PV}
-  extract:http://www.{PN}-editor.org/dist/v2.0/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-;
-rsync
-  2.6.9
-  {PN}-{PV}
-  extract:http://samba.anu.edu.au/ftp/{PN}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-;
-ntfs_3g
-  2012.1.15
-  ntfs-3g_ntfsprogs-{PV}
-  extract:http://tuxera.com/opensource/ntfs-3g_ntfsprogs-{PV}.tgz
-  make:install:DESTDIR=PKDIR
-;
-lm_sensors
-  2.9.2
-  lm_sensors-{PV}
-  extract:http://dl.{PN}.org/{PN}/releases/lm_sensors-{PV}.tar.gz
-  make:user_install:MACHINE=sh:PREFIX=/usr:MANDIR=/usr/share/man:DESTDIR=PKDIR
-;
-fuse
-  2.9.0
-  {PN}-{PV}
-  extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
-  patch:file://{PN}.diff
-  make:install:DESTDIR=PKDIR
-;
-curlftpfs
-  0.9.2
-  {PN}-{PV}
-  extract:http://sourceforge.net/projects/{PN}/files/latest/download/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-;
-fbset
-  2.1
-  {PN}-{PV}
-  extract:http://ftp.de.debian.org/debian/pool/main/f/{PN}/{PN}_{PV}.orig.tar.gz
-  patch:http://archive.debian.org/debian/dists/potato/main/source/admin/{PN}_{PV}-6.diff.gz
-  patch:file://{PN}_{PV}-fb.modes-ST.patch
-  install:-d:-m755:TARGETS/{usr/sbin,etc}
-  install:-m755:{PN}:TARGETS/usr/sbin
-  install:-m755:con2fbmap:TARGETS/usr/sbin
-  install:-m644:etc/fb.modes.ATI:TARGETS/etc/fb.modes
-;
 util_linux
   2.12r
   {PN}-{PV}
   extract:ftp://debian.lcs.mit.edu/pub/linux/utils/{PN}/v2.12/{PN}-{PV}.tar.bz2
   patch:file://{PN}_{PV}-12.deb.diff.gz
   nothing:file://{PN}-stm.diff
-;
-pngquant
-  1.1
-  {PN}-{PV}
-  extract:ftp://ftp.simplesystems.org/pub/libpng/png/applications/{PN}/{PN}-{PV}-src.tgz
-  install:-m755:{PN}:TARGETS/usr/bin
-;
-mplayer
-  1.0
-  {PN}-export-*
-  extract:ftp://ftp.{PN}hq.hu/MPlayer/releases/{PN}-export-snapshot.tar.bz2
-  make:install INSTALLSTRIP="":DESTDIR=TARGETS
-;
-mencoder
-  1.0
-  mplayer-export-*
-  extract:ftp://ftp.mplayerhq.hu/MPlayer/releases/mplayer-export-snapshot.tar.bz2
-  make:install INSTALLSTRIP="":DESTDIR=TARGETS
-;
-jfsutils
-  1.1.15
-  {PN}-{PV}
-  extract:http://jfs.sourceforge.net/project/pub/{PN}-{PV}.tar.gz
-  make:install:mandir=/usr/share/man:DESTDIR=PKDIR
-;
-opkg
-  0.1.8
-  {PN}-{PV}
-  extract:http://{PN}.googlecode.com/files/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=PKDIR
-  link:/usr/bin/{PN}-cl:PKDIR/usr/bin/{PN}
-;
-pppd
-  2.4.5
-  ppp-{PV}
-  extract:ftp://ftp.samba.org/pub/ppp/ppp-{PV}.tar.gz
-  make:install:DESTDIR=PKDIR
-;
-usb_modeswitch
-  1.2.5
-  {PN}-{PV}
-  extract:http://www.draisberghof.de/usb_modeswitch/{PN}-{PV}.tar.bz2
-  patch:file://{PN}.patch
-  make:install:DESTDIR=PKDIR
-;
-usb_modeswitch_data
-  20121109
-  {PN}-{PV}
-  extract:http://www.draisberghof.de/usb_modeswitch/{PN}-{PV}.tar.bz2
-  patch:file://{PN}.patch
-  make:install:DESTDIR=PKDIR
-;
-sysstat
-  10.0.4
-  {PN}-{PV}
-  extract:http://pagesperso-orange.fr/sebastien.godard/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=TARGETS
-;
-hotplug_e2
-  git
-  {PN}-helper
-  git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper
-  patch:file://hotplug-e2-helper-support_fw_upload.patch
-  make:install:prefix=/usr:DESTDIR=PKDIR
-;
-autofs
-  4.1.4
-  {PN}-{PV}
-  extract:http://kernel.org/pub/linux/daemons/{PN}/v4/{PN}-{PV}.tar.gz
-  patch:file://{PN}-{PV}-misc-fixes.patch
-  patch:file://{PN}-{PV}-multi-parse-fix.patch
-  patch:file://{PN}-{PV}-non-replicated-ping.patch
-  patch:file://{PN}-{PV}-locking-fix-1.patch
-  patch:file://{PN}-{PV}-cross.patch
-  patch:file://{PN}-{PV}-Makefile.rules-cross.patch
-  patch:file://{PN}-{PV}-install.patch
-  patch:file://{PN}-{PV}-auto.net-sort-option-fix.patch
-  patch:file://{PN}-{PV}-{PN}-additional-distros.patch
-  patch:file://{PN}-{PV}-no-bash.patch
-  patch:file://{PN}-{PV}-{PN}-add-hotplug.patch
-  patch:file://{PN}-{PV}-no_man.patch
-  make:install:INSTALLROOT=PKDIR
-;
-imagemagick
-  6.8.0-4
-  ImageMagick-{PV}
-  extract:ftp://ftp.fifi.org/pub/ImageMagick/ImageMagick-{PV}.tar.bz2
-  make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 ncurses
   5.5
@@ -475,12 +247,6 @@ dvbdata
   0.6
   {PN}-{PV}
   extract:file://{PN}-{PV}.tar.gz
-;
-rfkill
-  git
-  {PN}-{PV}
-  nothing:git://git.sipsolutions.net/rfkill.git
-  make:install:DESTDIR=PKDIR
 ;
 enigma2_networkbrowser
   git
@@ -573,15 +339,7 @@ ustslave
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
-portmap
-  6.0
-  {PN}_{PV}
-  extract:http://fossies.org/unix/misc/{PN}-{PV}.tgz
-  patch:file://{PN}_{PV}.diff
-  nothing:http://debian.osuosl.org/debian/pool/main/p/{PN}/{PN}_{PV}.0-2.diff.gz
-  make:install:BASEDIR=PKDIR
-  install:-m755:debian/init.d:PKDIR/etc/init.d/{PN}
-;
+
 nfs_utils
   1.1.1
   {PN}-{PV}
@@ -634,12 +392,7 @@ lighttpd
   extract:http://www.{PN}.net/download/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
 ;
-zd1211
-  2_15_0_0
-  ZD1211LnxDrv_2_15_0_0
-  extract:http://www.lutec.eu/treiber/{PN}lnxdrv_2_15_0_0.tar.gz
-  patch:file://{PN}.diff
-;
+
 wireless_tools
   29
   wireless_tools.{PV}
@@ -723,31 +476,6 @@ modem_scripts
   nothing:file://../root/etc/modem.list
   nothing:file://../root/etc/55-modem.rules
   nothing:file://../root/etc/30-modemswitcher.rules
-;
-grab
-  git
-  {PN}-{PV}
-  git://github.com/technic/aio-grab.git
-  make:install:DESTDIR=PKDIR
-;
-enigma2_plugin_cams_oscam
-  svn
-  {PN}-{PV}
-  svn://www.streamboard.tv/svn/oscam/trunk/
-  make:install:DESTDIR=PKDIR:OSCAM_BIN = OSCAM_BIN
-;
-parted
-  3.1
-  {PN}-{PV}
-  extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.xz
-  patch:file://{PN}_{PV}.patch
-  make:install:DESTDIR=PKDIR
-;
-gettext
-  0.18
-  {PN}-{PV}
-  extract:ftp://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=PKDIR
 ;
 udev_rules
   0.2
