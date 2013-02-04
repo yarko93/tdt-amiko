@@ -70,8 +70,6 @@ typedef struct ManagerHandler_s {
     Manager_t * audio;
     Manager_t * video;
     Manager_t * subtitle;
-    Manager_t * dvbsubtitle;
-    Manager_t * teletext;
 } ManagerHandler_t;
 
 void freeTrack(Track_t* track);
