@@ -445,7 +445,7 @@ sub process_make ($$)
   $output .= "LIST_DISTCLEAN += $package-distclean" . "\n";
 
   $output .= "DEPENDS_$package += $package.version_\$(PKGV_$package)-\$(PKGR_$package)" . "\n";
-  $output .= "$package.version_\$(PKGV_$package)-\$(PKGR_$package):\n\ttouch \$\@" . "\n";
+  $output .= "\$(DEPDIR)/$package.version_\$(PKGV_$package)-\$(PKGR_$package):\n\ttouch \$\@" . "\n";
 
   return $output;
 }
