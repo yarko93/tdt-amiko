@@ -44,7 +44,7 @@ sub load ($$)
   warn "output to $foutname";
   open FILE, "+>", "$foutname";
   
-  my $lines;
+  my $lines = "";
   my $start = 0;
   while ( <$fh> )
   {
@@ -443,6 +443,9 @@ sub process_make ($$)
   $output .= "DISTCLEANUP += \$(DIR_$package)" . "\n";
   $output .= "DEPSDISTCLEANUP_$package = rm .deps/$package .deps/$package.do_compile .deps/$package.do_prepare" . "\n";
   $output .= "LIST_DISTCLEAN += $package-distclean" . "\n";
+
+  $output .= "DEPENDS_$package += $package.version_\$(PKGV_$package)-\$(PKGR_$package)" . "\n";
+  $output .= "$package.version_\$(PKGV_$package)-\$(PKGR_$package):\n\ttouch \$\@" . "\n";
 
   return $output;
 }
