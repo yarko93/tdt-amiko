@@ -1481,10 +1481,10 @@ $(DEPDIR)/%libdvdread: libdvdread.do_compile
 #
 BEGIN[[
 ffmpeg
-  1.0
+  1.1.1
   {PN}-{PV}
   extract:http://{PN}.org/releases/{PN}-{PV}.tar.gz
-  patch:file://{PN}-{PV}.patch
+  patch:file://{PN}-1.0.patch
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -1503,6 +1503,8 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 	cd $(DIR_ffmpeg) && \
 	$(BUILDENV) \
 	./configure \
+		--disable-vfp \
+		--disable-runtime-cpudetect \
 		--disable-static \
 		--enable-shared \
 		--enable-cross-compile \
@@ -1511,7 +1513,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--disable-altivec \
 		--disable-debug \
 		--disable-asm \
-		--disable-altivec \
 		--disable-amd3dnow \
 		--disable-amd3dnowext \
 		--disable-mmx \
@@ -1527,8 +1528,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--disable-armv5te \
 		--disable-armv6 \
 		--disable-armv6t2 \
-		--disable-armvfp \
-		--disable-mmi \
 		--disable-neon \
 		--disable-vis \
 		--disable-inline-asm \
@@ -1542,7 +1541,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--disable-muxers \
 		--enable-muxer=ogg \
 		--enable-muxer=flac \
-		--enable-muxer=aac \
 		--enable-muxer=mp3 \
 		--enable-muxer=h261 \
 		--enable-muxer=h263 \
@@ -1552,8 +1550,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-muxer=image2 \
 		--disable-encoders \
 		--enable-encoder=aac \
-		--enable-encoder=mp3 \
-		--enable-encoder=theora \
 		--enable-encoder=h261 \
 		--enable-encoder=h263 \
 		--enable-encoder=h263p \
@@ -1573,7 +1569,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-decoder=mpeg1video \
 		--enable-decoder=mpeg2video \
 		--enable-decoder=png \
-		--enable-decoder=ljpeg \
 		--enable-decoder=mjpeg \
 		--enable-decoder=vorbis \
 		--enable-decoder=flac \
@@ -1583,11 +1578,11 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-pthreads \
 		--enable-bzlib \
 		--enable-librtmp \
-		--pkg-config=pkg-config \
+		--pkg-config="pkg-config" \
 		--cross-prefix=$(target)- \
 		--target-os=linux \
 		--arch=sh4 \
-		--extra-cflags=-fno-strict-aliasing \
+		--extra-cflags="-fno-strict-aliasing" \
 		--enable-stripping \
 		--prefix=/usr
 	touch $@
