@@ -536,5 +536,5 @@ $(DEPDIR)/libtool: \
 $(DEPDIR)/%libtool: $(DEPDIR)/libtool.do_compile
 	cd $(DIR_libtool) && \
 	$(INSTALL_libtool)
-#		sed -i -r -e 's,\(hardcode_into_libs)=yes,\1=no,g' $(hostprefix)/bin/libtool
+		ln -sf $(hostprefix)/share/aclocal $(hostprefix)/share/aclocal-1.11
 	touch $@
