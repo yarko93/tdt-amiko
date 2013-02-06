@@ -426,7 +426,7 @@ CROSS_CPP = cross-sh4-cpp
 CROSS_G++ = cross-sh4-g++
 CROSS_PROTOIZE = cross-sh4-protoize
 CROSS_LIBGCC = cross-sh4-libgcc
-CROSS_GCC_VERSION = 4.5.2-78
+CROSS_GCC_VERSION = 4.7.2-144
 CROSS_GCC_RAWVERSION = $(firstword $(subst -, ,$(CROSS_GCC_VERSION)))
 CROSS_GCC_SPEC = stm-$(subst cross-sh4-,cross-,$(CROSS_GCC)).spec
 CROSS_GCC_SPEC_PATCH = $(CROSS_GCC_SPEC).$(CROSS_GCC_VERSION).diff
@@ -442,7 +442,7 @@ CROSS_LIBGCC_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_LIBGCC)-$(CROSS_GCC_VERS
 $(CROSS_GCC_RPM) $(CROSS_CPP_RPM) $(CROSS_G++_RPM) $(CROSS_PROTOIZE_RPM) $(CROSS_LIBGCC_RPM): \
 		$(if $(CROSS_GCC_SPEC_PATCH),Patches/$(CROSS_GCC_SPEC_PATCH)) \
 		$(if $(CROSS_GCC_PATCHES),$(CROSS_GCC_PATCHES:%=Patches/%)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_GCC))-$(CROSS_GCC_VERSION).src.rpm \
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_GCC))-$(CROSS_GCC_VERSION).src.rpm \
 		| $(archivedir)/$(STLINUX)-sh4-$(GLIBC)-$(GLIBC_VERSION).sh4.rpm \
 		$(archivedir)/$(STLINUX)-sh4-$(GLIBC_DEV)-$(GLIBC_VERSION).sh4.rpm \
 		$(if $(CROSS_MPFR),$(CROSS_MPFR)) \
