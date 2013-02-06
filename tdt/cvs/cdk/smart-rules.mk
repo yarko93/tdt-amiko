@@ -458,7 +458,8 @@ init_scripts
 e2plugin
   git
   {PN}
-  git://github.com/schpuntik/enigma2-plugins-sh4.git
+  git://code.google.com/p/taapat-plugins:protocol=https
+#  git://github.com/schpuntik/enigma2-plugins-sh4.git
 ;
 e2skin
   git
@@ -525,7 +526,8 @@ if ENABLE_E2PD6
 endif
 
 if ENABLE_E2PD7
-  git://github.com/technic/amiko-e2-pli.git:b=last
+  git://bitbucket.org:Taapat/enigma2-pli-arp.git;b=master;protocol=ssh
+#  git://github.com/technic/amiko-e2-pli.git:b=last
 endif
 
 if ENABLE_E2PD8
