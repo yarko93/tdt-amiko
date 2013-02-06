@@ -19,15 +19,6 @@
          --enable-__cxa_atexit \
  %if "%{_stm_target_fpu}" == "no"
  %if_target_arch sh4_uclibc
-@@ -277,7 +280,7 @@
- %endif
-         && true
- 
--%make all
-+%pmake all
- 
- ##############################################################################
- %install
 @@ -284,15 +289,6 @@
  %cross_setup
  %cross_makeinstall
