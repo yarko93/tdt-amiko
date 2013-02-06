@@ -1524,16 +1524,13 @@ $(DEPDIR)/hotplug_e2.do_prepare: bootstrap $(DEPENDS_hotplug_e2)
 
 $(DEPDIR)/hotplug_e2.do_compile: $(DEPDIR)/hotplug_e2.do_prepare
 	cd $(DIR_hotplug_e2) && \
-		aclocal -I $(hostprefix)/share/aclocal && \
-		autoconf && \
-		automake --foreign && \
-		libtoolize --force && \
+		./autogen.sh &&\
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr && \
-		$(MAKE) all
+		$(MAKE) al
 	touch $@
 
 $(DEPDIR)/hotplug_e2: \
