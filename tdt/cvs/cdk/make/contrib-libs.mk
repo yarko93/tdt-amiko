@@ -820,7 +820,7 @@ DESCRIPTION_glib2 = "libglib2"
 FILES_glib2 = \
 /usr/lib/*.so*
 
-$(DEPDIR)/glib2.do_prepare: bootstrap libz libffi $(DEPENDS_glib2)
+$(DEPDIR)/glib2.do_prepare: bootstrap libz $(DEPENDS_glib2)
 	$(PREPARE_glib2)
 	touch $@
 
