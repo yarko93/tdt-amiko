@@ -1530,7 +1530,7 @@ $(DEPDIR)/hotplug_e2.do_compile: $(DEPDIR)/hotplug_e2.do_prepare
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr && \
-		$(MAKE) al
+		$(MAKE) all
 	touch $@
 
 $(DEPDIR)/hotplug_e2: \
