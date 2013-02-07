@@ -167,8 +167,8 @@ $(DEPDIR)/$(MPFR): $(MPFR_RPM)
 MPC := mpc
 MPC_VERSION := 0.9-3
 MPC_SPEC := stm-target-$(MPC).spec
-MPC_SPEC_PATCH := $(MPC_SPEC).$(MPC_VERSION).diff
-MPC_PATCHES := stm-target-$(MPC).$(MPC_VERSION).diff
+MPC_SPEC_PATCH :=
+MPC_PATCHES :=
 MPC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(MPC)-$(MPC_VERSION).sh4.rpm
 
 $(MPC_RPM): \
