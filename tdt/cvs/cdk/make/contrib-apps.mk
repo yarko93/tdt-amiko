@@ -342,7 +342,7 @@ portmap
   {PN}_{PV}
   extract:http://fossies.org/unix/misc/{PN}-{PV}.tgz
   patch:file://{PN}_{PV}.diff
-  nothing:http://debian.osuosl.org/debian/pool/main/p/{PN}/{PN}_{PV}.0-2.diff.gz
+  patch:http://debian.osuosl.org/debian/pool/main/p/{PN}/{PN}_{PV}.0-2.diff.gz
   make:install:BASEDIR=PKDIR
   install:-m755:debian/init.d:PKDIR/etc/init.d/{PN}
 ;
