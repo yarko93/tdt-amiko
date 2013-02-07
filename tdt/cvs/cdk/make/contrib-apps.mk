@@ -1734,7 +1734,7 @@ $(DEPDIR)/enigma2_plugin_cams_oscam: enigma2_plugin_cams_oscam.do_compile
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.services $(PKDIR)/var/keys/oscam.services
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.srvid    $(PKDIR)/var/keys/oscam.srvid
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.user     $(PKDIR)/var/keys/oscam.user
-if ENABLE_SPARK7162
+ifdef ENABLE_SPARK7162
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.server2  $(PKDIR)/var/keys/oscam.server
 else
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.server   $(PKDIR)/var/keys/oscam.server

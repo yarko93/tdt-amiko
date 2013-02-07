@@ -1,21 +1,21 @@
 # tuxbox/enigma2
 E_CONFIG_OPTS =
 
-if ENABLE_EXTERNALLCD
+ifdef ENABLE_EXTERNALLCD
 E_CONFIG_OPTS += --with-graphlcd
 endif
 
-if ENABLE_MEDIAFWGSTREAMER
+ifdef ENABLE_MEDIAFWGSTREAMER
 E_CONFIG_OPTS += --enable-mediafwgstreamer
 else
 E_CONFIG_OPTS += --enable-libeplayer3
 endif
 
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 E_CONFIG_OPTS += --enable-spark
 endif
 
-if ENABLE_SPARK7162
+ifdef ENABLE_SPARK7162
 E_CONFIG_OPTS += --enable-spark7162
 endif
 

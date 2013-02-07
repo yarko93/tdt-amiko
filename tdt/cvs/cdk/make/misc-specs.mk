@@ -3,10 +3,10 @@ $(DEPDIR)/boot-elf:
 	cp $(buildprefix)/root/firmware/*.fw $(targetprefix)/lib/firmware/
 	@[ "x$*" = "x" ] && touch $@ || true
 
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 LIRCD_CONF := lircd_spark.conf
 else !ENABLE_SPARK
-if ENABLE_SPARK7162
+ifdef ENABLE_SPARK7162
 LIRCD_CONF := lircd_spark7162.conf
 else !ENABLE_SPARK7162
 LIRCD_CONF := lircd.conf

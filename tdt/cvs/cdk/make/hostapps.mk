@@ -8,7 +8,7 @@ hostapps: $(hostappsdir)/config.status
 	$(MAKE) -C $(hostappsdir)
 #	touch $@
 
-if ENABLE_CCACHE
+ifdef ENABLE_CCACHE
 $(hostprefix)/bin/ccache: $(DEPENDS_ccache)
 	$(PREPARE_ccache)
 	cd $(DIR_ccache) && \

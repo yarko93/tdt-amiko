@@ -116,13 +116,13 @@ SRC_URI_driver_ptinp = unknown
 $(DEPDIR)/driver-ptinp:
 	$(start_build)
 	mkdir -p $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0209),cp -dp $(archivedir)/ptinp/pti_209.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0210),cp -dp $(archivedir)/ptinp/pti_210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0211),cp -dp $(archivedir)/ptinp/pti_211.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko)
 endif
-if ENABLE_SPARK7162
+ifdef ENABLE_SPARK7162
 	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207s2.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0209),cp -dp $(archivedir)/ptinp/pti_209s2.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0210),cp -dp $(archivedir)/ptinp/pti_210s2.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
@@ -139,11 +139,11 @@ SRC_URI_driver_encrypt = unknown
 $(DEPDIR)/driver-encrypt:
 	$(start_build)
 	mkdir -p $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 	$(if $(P0210), cp -dp $(buildprefix)/root/release/encrypt_spark_stm24_0210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	$(if $(P0211), cp -dp $(buildprefix)/root/release/encrypt_spark_stm24_0211.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
 endif
-if ENABLE_SPARK7162	
+ifdef ENABLE_SPARK7162
 	$(if $(P0207), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0207.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	$(if $(P0209), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0209.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	$(if $(P0210), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
@@ -323,7 +323,7 @@ release_base: driver-ptinp driver-encrypt
 
 release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname
-if ENABLE_PY27
+ifdef ENABLE_PY27
 	echo "src/gz AR-P http://alien.sat-universum.de/2.7" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf
@@ -338,7 +338,7 @@ endif
 
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname
-if ENABLE_PY27
+ifdef ENABLE_PY27
 	echo "src/gz AR-P http://alien2.sat-universum.de/2.7" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf

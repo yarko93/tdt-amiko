@@ -83,28 +83,28 @@ opkg_host
   {PN}
   dirextract:http://opkg.googlecode.com/files/opkg-{PV}.tar.gz
 ;
-if ENABLE_P0207
+ifdef ENABLE_P0207
 linux
   2.6.32.28_stm24_0207
   linux-sh4-2.6.32.28_stm24_0207
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.28_stm24_0207-207.src.rpm
 ;
 endif
-if ENABLE_P0209
+ifdef ENABLE_P0209
 linux
   2.6.32.46_stm24_0209
   linux-sh4-2.6.32.46_stm24_0209
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.46_stm24_0209-209.src.rpm
 ;
 endif
-if ENABLE_P0210
+ifdef ENABLE_P0210
 linux
   2.6.32.57_stm24_0210
   linux-sh4-2.6.32.57_stm24_0210
   nothing:ftp://ftp.stlinux.com/pub/stlinux/2.4/updates/SRPMS/stlinux24-host-kernel-source-sh4-2.6.32.57_stm24_0210-210.src.rpm
 ;
 endif
-if ENABLE_P0211
+ifdef ENABLE_P0211
 linux
   2.6.32.59_stm24_0211
   linux-sh4-2.6.32.59_stm24_0211
@@ -154,7 +154,7 @@ ipkg_host
   dirextract:ftp://ftp.gwdg.de/linux/handhelds/packages/ipkg/ipkg-{PV}.tar.gz
   patch:file://{PN}.diff
 ;
-if ENABLE_PY27
+ifdef ENABLE_PY27
 host_python
   2.7.3
   {PN}-{PV}
@@ -488,54 +488,54 @@ enigma2_pli
   git
   $(appsdir)/{PN}-nightly
 
-if ENABLE_E2PD0
+ifdef ENABLE_E2PD0
   git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
   patch:file://enigma2-pli-nightly.0.diff
 endif
 
-if ENABLE_E2PD1
+ifdef ENABLE_E2PD1
   git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
   patch:file://enigma2-pli-nightly.1.diff
   patch:file://enigma2-pli-nightly.1.gstreamer.diff
   patch:file://enigma2-pli-nightly.1.graphlcd.diff
 endif
 
-if ENABLE_E2PD2
+ifdef ENABLE_E2PD2
   git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=839e96b79600aba73f743fd39628f32bc1628f4c
   patch:file://enigma2-pli-nightly.2.diff
   patch:file://enigma2-pli-nightly.2.graphlcd.diff
 endif
 
-if ENABLE_E2PD3
+ifdef ENABLE_E2PD3
   git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=51a7b9349070830b5c75feddc52e97a1109e381e
   patch:file://enigma2-pli-nightly.3.diff
 endif
 
-if ENABLE_E2PD4
+ifdef ENABLE_E2PD4
   git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880
   patch:file://enigma2-pli-nightly.4.diff
 endif
 
-if ENABLE_E2PD5
+ifdef ENABLE_E2PD5
   git://github.com:schpuntik/enigma2-pli.git;b=master;protocol=ssh
 endif
 
-if ENABLE_E2PD6
+ifdef ENABLE_E2PD6
     git://github.com/technic/amiko-e2-pli.git:b=testing
 endif
 
-if ENABLE_E2PD7
+ifdef ENABLE_E2PD7
   git://github.com/technic/amiko-e2-pli.git:b=last
 endif
 
-if ENABLE_E2PD8
+ifdef ENABLE_E2PD8
   git://github.com/technic/amiko-e2-pli.git:b=master
 endif
 ;
 enigma2
   git
   $(appsdir)/{PN}-nightly
-if ENABLE_E2D0
+ifdef ENABLE_E2D0
   git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=945aeb939308b3652b56bc6c577853369d54a537
   patch:file://enigma2-nightly.0.diff
   patch:file://enigma2-nightly.0.eplayer3.diff
@@ -543,72 +543,72 @@ if ENABLE_E2D0
   patch:file://enigma2-nightly.0.graphlcd.diff
 endif
 
-if ENABLE_E2D1
+ifdef ENABLE_E2D1
   git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=945aeb939308b3652b56bc6c577853369d54a537
   patch:file://enigma2-nightly.1.diff
 endif
 
-if ENABLE_E2D2
+ifdef ENABLE_E2D2
   git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=839e96b79600aba73f743fd39628f32bc1628f4c
   patch:file://enigma2-nightly.2.diff
   patch:file://enigma2-nightly.2.gstreamer.diff
   patch:file://enigma2-nightly.2.graphlcd.diff
 endif
 
-if ENABLE_E2D3
+ifdef ENABLE_E2D3
   git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=51a7b9349070830b5c75feddc52e97a1109e381e
   patch:file://enigma2-nightly.3.diff
   patch:file://enigma2-nightly.3.gstreamer.diff
   patch:file://enigma2-nightly.3.graphlcd.diff
 endif
 
-if ENABLE_E2D4
+ifdef ENABLE_E2D4
   git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880
   patch:file://enigma2-pli-nightly.4.diff
 endif
 
-if ENABLE_E2D5
+ifdef ENABLE_E2D5
   git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=a869076762f6e24305d6a58f95c3918e02a1442a
   patch:file://enigma2-pli-nightly.5.diff
 endif
 
-if ENABLE_E2D6
+ifdef ENABLE_E2D6
   git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=388dcd814d4e99720cb9a6c769611be4951e4ad4
   patch:file://enigma2-pli-nightly.6.diff
 endif
 
-if ENABLE_E2D7
+ifdef ENABLE_E2D7
   git://code.google.com/p/enigma2-dmm:protocol=https
 endif
 
-if ENABLE_E2D8
+ifdef ENABLE_E2D8
   git://gitorious.org/~schpuntik/open-duckbox-project-sh4/amiko-guigit.git:b=arp-no_gst
 endif
 ;
 xbmc_nightly
   git
   $(appsdir)/{PN}
-if ENABLE_XBD0
+ifdef ENABLE_XBD0
   git://github.com/xbmc/xbmc.git
   patch:file://xbmc-nightly.0.diff
 endif
 
-if ENABLE_XBD1
+ifdef ENABLE_XBD1
   git://github.com/xbmc/xbmc.git:r=460e79416c5cb13010456794f36f89d49d25da75
   patch:file://xbmc-nightly.1.diff
 endif
 
-if ENABLE_XBD2
+ifdef ENABLE_XBD2
   git://github.com/xbmc/xbmc.git:r=327710767d2257dad27e3885effba1d49d4557f0
   patch:file://xbmc-nightly.2.diff
 endif
 
-if ENABLE_XBD3
+ifdef ENABLE_XBD3
   git://github.com/xbmc/xbmc.git:r=12840c28d8fbfd71c26be798ff6b13828b05b168
   patch:file://xbmc-nightly.3.diff
 endif
 
-if ENABLE_XBD4
+ifdef ENABLE_XBD4
   git://github.com/xbmc/xbmc.git:r=e292b1147bd89a7e53742e3e5039b9a906a3b1d0
   patch:file://xbmc-nightly.4.diff
 endif

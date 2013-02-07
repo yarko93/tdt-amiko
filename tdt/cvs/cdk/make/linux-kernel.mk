@@ -1,18 +1,18 @@
 ############ Patches Kernel 24 ###############
 
-if ENABLE_P0207
+ifdef ENABLE_P0207
 PATCH_STR=_0207
 endif
 
-if ENABLE_P0209
+ifdef ENABLE_P0209
 PATCH_STR=_0209
 endif
 
-if ENABLE_P0210
+ifdef ENABLE_P0210
 PATCH_STR=_0210
 endif
 
-if ENABLE_P0211
+ifdef ENABLE_P0211
 PATCH_STR=_0211
 endif
 
@@ -85,16 +85,16 @@ $(DEPDIR)/kernel-headers: linux-kernel.do_prepare
 	touch $@
 
 KERNELHEADERS := linux-kernel-headers
-if ENABLE_P0207
+ifdef ENABLE_P0207
 KERNELHEADERS_VERSION := 2.6.32.16-44
 else
-if ENABLE_P0209
+ifdef ENABLE_P0209
 KERNELHEADERS_VERSION := 2.6.32.46-45
 else
-if ENABLE_P0210
+ifdef ENABLE_P0210
 KERNELHEADERS_VERSION := 2.6.32.46-45
 else
-if ENABLE_P0211
+ifdef ENABLE_P0211
 KERNELHEADERS_VERSION := 2.6.32.46-45
 endif
 endif
@@ -130,7 +130,7 @@ $(DEPDIR)/%$(KERNELHEADERS): $(KERNELHEADERS_RPM)
 # IMPORTANT: it is expected that only one define is set
 MODNAME = $(SPARK)$(SPARK7162)$(HL101)
 
-if DEBUG
+ifdef DEBUG
 DEBUG_STR=.debug
 else !DEBUG
 DEBUG_STR=
@@ -138,16 +138,16 @@ endif !DEBUG
 
 HOST_KERNEL := host-kernel
 
-if ENABLE_P0207
+ifdef ENABLE_P0207
 HOST_KERNEL_VERSION = 2.6.32.28$(KERNELSTMLABEL)-$(KERNELLABEL)
 else
-if ENABLE_P0209
+ifdef ENABLE_P0209
 HOST_KERNEL_VERSION = 2.6.32.46$(KERNELSTMLABEL)-$(KERNELLABEL)
 else
-if ENABLE_P0210
+ifdef ENABLE_P0210
 HOST_KERNEL_VERSION = 2.6.32.57$(KERNELSTMLABEL)-$(KERNELLABEL)
 else
-if ENABLE_P0211
+ifdef ENABLE_P0211
 HOST_KERNEL_VERSION = 2.6.32.59$(KERNELSTMLABEL)-$(KERNELLABEL)
 endif
 endif
@@ -188,7 +188,7 @@ $(DEPDIR)/linux-kernel.do_prepare: \
 	rm $(KERNEL_DIR)/.config
 	touch $@
 
-if ENABLE_GRAPHICFWDIRECTFB
+ifdef ENABLE_GRAPHICFWDIRECTFB
 GRAPHICFWDIRECTFB_SED_CONF=-i s"/^\# CONFIG_BPA2_DIRECTFBOPTIMIZED is not set/CONFIG_BPA2_DIRECTFBOPTIMIZED=y/"
 else
 GRAPHICFWDIRECTFB_SED_CONF=-i s"/^CONFIG_BPA2_DIRECTFBOPTIMIZED=y/\# CONFIG_BPA2_DIRECTFBOPTIMIZED is not set/"
@@ -212,20 +212,20 @@ $(DEPDIR)/linux-kernel.do_compile: \
 
 NFS_FLASH_SED_CONF=$(foreach param,XCONFIG_NFS_FS XCONFIG_LOCKD XCONFIG_SUNRPC,-e s"/^.*$(param)[= ].*/$(param)=m/")
 
-if ENABLE_XFS
+ifdef ENABLE_XFS
 XFS_SED_CONF=$(foreach param,CONFIG_XFS_FS,-e s"/^.*$(param)[= ].*/$(param)=m/")
 else
 XFS_SED_CONF=-e ""
 endif
 
-if ENABLE_NFSSERVER
+ifdef ENABLE_NFSSERVER
 #NFSSERVER_SED_CONF=$(foreach param,CONFIG_NFSD CONFIG_NFSD_V3 CONFIG_NFSD_TCP,-e s"/^.*$(param)[= ].*/$(param)=y/")
 NFSSERVER_SED_CONF=$(foreach param,CONFIG_NFSD,-e s"/^.*$(param)[= ].*/$(param)=y\nCONFIG_NFSD_V3=y\n\# CONFIG_NFSD_V3_ACL is not set\n\# CONFIG_NFSD_V4 is not set\nCONFIG_NFSD_TCP=y/")
 else
 NFSSERVER_SED_CONF=-e ""
 endif
 
-if ENABLE_NTFS
+ifdef ENABLE_NTFS
 NTFS_SED_CONF=$(foreach param,CONFIG_NTFS_FS,-e s"/^.*$(param)[= ].*/$(param)=m/")
 else
 NTFS_SED_CONF=-e ""
