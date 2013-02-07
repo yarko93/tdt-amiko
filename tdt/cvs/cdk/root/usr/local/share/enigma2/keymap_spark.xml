@@ -77,15 +77,15 @@
 	</map>
 
 	<map context="InfobarChannelSelection">
-                <key id="KEY_LEFT" mapto="zapUp" flags="mr" />
-                <key id="KEY_RIGHT" mapto="zapDown" flags="mr" />
+		<key id="KEY_LEFT" mapto="zapUp" flags="mr" />
+		<key id="KEY_RIGHT" mapto="zapDown" flags="mr" />
 		<key id="KEY_PAGEUP" mapto="zapDown" flags="m" />
 		<key id="KEY_PAGEDOWN" mapto="zapUp" flags="m" />
-		<key id="KEY_UP" mapto="openServiceList" flags="mr" />
-		<key id="KEY_DOWN" mapto="openServiceList" flags="mr" />
+		<key id="KEY_UP" mapto="switchChannelUp" flags="mr" />
+		<key id="KEY_DOWN" mapto="switchChannelDown" flags="mr" />
 		<key id="KEY_REWIND" mapto="historyBack" flags="mr" />
 		<key id="KEY_FASTFORWARD" mapto="historyNext" flags="mr" />
-		<key id="KEY_OK" mapto="InfoBarShow" flags="m" />
+		<key id="KEY_OK" mapto="openServiceList" flags="m" />
 		<key id="KEY_1" mapto="1" flags="m" />
 		<key id="KEY_2" mapto="2" flags="m" />
 		<key id="KEY_3" mapto="3" flags="m" />
@@ -256,6 +256,7 @@
 
 	<map context="MoviePlayerActions">
 		<key id="KEY_STOP" mapto="leavePlayer" flags="m" />
+		<key id="KEY_HOME" mapto="leavePlayer" flags="m" />
 	</map>
 	
 	<map context="InfobarCueSheetActions">
@@ -436,6 +437,7 @@
 		<key id="KEY_PAUSE" mapto="pause" flags="m" />
 		<key id="KEY_PLAY" mapto="play" flags="m" />
 		<key id="KEY_STOP" mapto="stop" flags="b" />
+		<key id="KEY_HOME" mapto="stop" flags="b" />
 		
 		<key id="KEY_MENU" mapto="menu" flags="m" />
 
