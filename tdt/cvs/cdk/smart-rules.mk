@@ -163,6 +163,7 @@ host_python
   patch:file://python_{PV}.diff
   patch:file://python_{PV}-ctypes-libffi-fix-configure.diff
   patch:file://python_{PV}-pgettext.diff
+;
 else
 host_python
   2.6.6
