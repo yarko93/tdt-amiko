@@ -2,19 +2,14 @@
 
 .PRECIOUS: Makefile
 
-srcdir     := @srcdir@
-archivedir := @archivedir@
-
 $(srcdir)/configure: configure.ac aclocal.m4
 	cd '$(srcdir)' && autoconf
 
-Makefile: Makefile.in config.status
+Makefile: Config.in Makefile.in config.status smart-rules.pl *.mk make/*.mk
 	./config.status
-config.status: configure smart-rules.pl
-	./config.status --recheck
 
-qq:
-	echo $(INSTALL)
+config.status: configure
+	./config.status --recheck
 
 # this makes sure we do not build top-level dependencies in parallel
 # (which would not be too helpful anyway, running many configure and
