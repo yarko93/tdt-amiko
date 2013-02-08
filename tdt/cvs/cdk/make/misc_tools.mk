@@ -37,6 +37,15 @@
 #
 # DEVINIT
 #
+BEGIN[[
+devinit
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_devinit = "devinit"
 SRC_URI_devinit = "https://code.google.com/p/tdt-amiko/"
 
@@ -70,6 +79,15 @@ $(DEPDIR)/%devinit: $(DEPDIR)/devinit.do_compile
 #
 # EVREMOTE2
 #
+BEGIN[[
+evremote2
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_evremote2 = "evremote2"
 SRC_URI_evremote2 = "https://code.google.com/p/tdt-amiko/"
 
@@ -110,6 +128,15 @@ $(DEPDIR)/%evremote2: $(DEPDIR)/evremote2.do_compile
 #
 # FP-CONTROL
 #
+BEGIN[[
+fp_control
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/fp_control:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_fp_control = "fp_control"
 SRC_URI_fp_control = "https://code.google.com/p/tdt-amiko/"
 
@@ -149,6 +176,15 @@ $(DEPDIR)/%fp_control: $(DEPDIR)/fp_control.do_compile
 #
 # gitVCInfo
 #
+BEGIN[[
+gitVCInfo
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_gitVCInfo = "gitVCInfo"
 SRC_URI_gitVCInfo = "https://code.google.com/p/tdt-amiko/"
 
@@ -182,6 +218,15 @@ $(DEPDIR)/%gitVCInfo: $(DEPDIR)/gitVCInfo.do_compile
 #
 # HOTPLUG
 #
+BEGIN[[
+hotplug
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_hotplug = "hotplug"
 SRC_URI_hotplug = "https://code.google.com/p/tdt-amiko/"
 
@@ -215,6 +260,15 @@ $(DEPDIR)/%hotplug: $(DEPDIR)/hotplug.do_compile
 #
 # LIBEPLAYER3
 #
+BEGIN[[
+libeplayer3
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libeplayer3 = "libeplayer3"
 SRC_URI_libeplayer3 = "https://code.google.com/p/tdt-amiko/"
 
@@ -256,6 +310,15 @@ $(DEPDIR)/%libeplayer3: $(DEPDIR)/libeplayer3.do_compile
 #
 # LIBMME-HOST
 #
+BEGIN[[
+libmme_host
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/libmme_host:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libmme_host = "libmme-host"
 SRC_URI_libmme_host = "https://code.google.com/p/tdt-amiko/"
 
@@ -295,6 +358,15 @@ $(DEPDIR)/%libmme_host: $(DEPDIR)/libmme_host.do_compile
 #
 # LIBMMEIMAGE
 #
+BEGIN[[
+libmmeimage
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libmmeimage = "libmmeimage"
 SRC_URI_libmmeimage = "https://code.google.com/p/tdt-amiko/"
 
@@ -334,6 +406,15 @@ $(DEPDIR)/%libmmeimage: $(DEPDIR)/libmmeimage.do_compile
 #
 # SHOWIFRAME
 #
+BEGIN[[
+showiframe
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_showiframe = "showiframe"
 SRC_URI_showiframe = "https://code.google.com/p/tdt-amiko/"
 
@@ -373,6 +454,15 @@ $(DEPDIR)/%showiframe: $(DEPDIR)/showiframe.do_compile
 #
 #STFBCONTROL
 #
+BEGIN[[
+stfbcontrol
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_stfbcontrol = "stfbcontrol"
 SRC_URI_stfbcontrol = "https://code.google.com/p/tdt-amiko/"
 
@@ -412,6 +502,15 @@ $(DEPDIR)/%stfbcontrol: $(DEPDIR)/stfbcontrol.do_compile
 #
 # STREAMPROXY
 #
+BEGIN[[
+streamproxy
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_streamproxy = "streamproxy"
 SRC_URI_streamproxy = "https://code.google.com/p/tdt-amiko/"
 
@@ -451,6 +550,15 @@ $(DEPDIR)/%streamproxy: $(DEPDIR)/streamproxy.do_compile
 #
 # USTSLAVE
 #
+BEGIN[[
+ustslave
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_ustslave = "ustslave"
 SRC_URI_ustslave = "https://code.google.com/p/tdt-amiko/"
 
@@ -490,6 +598,15 @@ $(DEPDIR)/%ustslave: $(DEPDIR)/ustslave.do_compile
 #
 # EPLAYER4
 #
+BEGIN[[
+eplayer4
+  0.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_eplayer4 = "eplayer4"
 SRC_URI_eplayer4 = "https://code.google.com/p/tdt-amiko/"
 

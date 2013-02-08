@@ -17,6 +17,15 @@ host-filesystem:
 #
 # CCACHE
 #
+BEGIN[[
+ccache
+  2.4
+  {PN}-{PV}
+  extract:http://samba.org/ftp/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=HOST
+;
+]]END
+
 $(hostprefix)/ccache-bin:
 	$(INSTALL) -d $@
 	$(INSTALL) -d $(hostprefix)/bin
@@ -516,6 +525,16 @@ $(DEPDIR)/setup-cross-optional: \
 #
 # LIBTOOL
 #
+BEGIN[[
+libtool
+  2.4.2
+  {PN}-2.4.2
+  extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
+  patch:file://{PN}-{PV}-duckbox-branding.patch
+  make:install
+;
+]]END
+
 $(DEPDIR)/libtool.do_prepare: $(DEPENDS_libtool)
 	$(PREPARE_libtool)
 	touch $@

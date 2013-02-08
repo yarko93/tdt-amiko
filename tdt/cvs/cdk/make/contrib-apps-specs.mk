@@ -1,6 +1,15 @@
 #
 # CONSOLE_DATA
 #
+BEGIN[[
+console_data
+  1.03
+  {PN}-{PV}
+  extract:ftp://ftp.debian.org/debian/pool/main/c/{PN}/{PN}_{PV}.orig.tar.gz
+  make:install
+;
+]]END
+
 $(DEPDIR)/console_data: bootstrap $(DEPENDS_console_data)
 	$(PREPARE_console_data)
 	cd $(DIR_console_data) && \
@@ -17,6 +26,15 @@ $(DEPDIR)/console_data: bootstrap $(DEPENDS_console_data)
 #
 # SYSVINIT/INITSCRIPTS
 #
+BEGIN[[
+sysvinit
+  2.86
+  {PN}-{PV}
+  extract:ftp://ftp.cistron.nl/pub/people/miquels/{PN}/{PN}-{PV}.tar.gz
+  nothing:http://ftp.de.debian.org/debian/pool/main/s/{PN}/{PN}_{PV}.ds1-38.diff.gz
+;
+]]END
+
 SYSVINIT := sysvinit
 INITSCRIPTS := initscripts
 FILES_sysvinit = \
@@ -482,6 +500,16 @@ $(DEPDIR)/$(STRACE): $(DEPDIR)/%$(STRACE): $(DEPDIR)/%$(GLIBC) $(STRACE_RPM)
 #
 # UTIL LINUX
 # 
+BEGIN[[
+util_linux
+  2.12r
+  {PN}-{PV}
+  extract:ftp://debian.lcs.mit.edu/pub/linux/utils/{PN}/v2.12/{PN}-{PV}.tar.bz2
+  patch:file://{PN}_{PV}-12.deb.diff.gz
+  nothing:file://{PN}-stm.diff
+;
+]]END
+
 UTIL_LINUX = util-linux
 FILES_util_linux = \
 /sbin/mkfs \

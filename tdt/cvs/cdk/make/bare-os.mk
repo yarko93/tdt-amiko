@@ -590,6 +590,16 @@ $(DEPDIR)/$(USBUTILS): $(DEPDIR)/%$(USBUTILS): $(USBUTILS_RPM)
 #
 # UDEV
 #
+BEGIN[[
+udev_rules
+  0.2
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/60-dvb-ca.rules
+  nothing:file://../root/etc/90-cec_aotom.rules
+;
+]]END
+
 UDEV := udev
 UDEV_DEV := udev-dev
 UDEV_VERSION := 162-32

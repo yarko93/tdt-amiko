@@ -1,6 +1,30 @@
 #
 # INIT-SCRIPTS customized
 #
+BEGIN[[
+init_scripts
+  0.6
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/inittab
+  nothing:file://../root/release/hostname
+  nothing:file://../root/release/inetd
+# for 'nothing:' only 'cp' is executed so '*' is ok.
+  nothing:file://../root/release/initmodules_*
+  nothing:file://../root/release/halt_*
+  nothing:file://../root/release/mountall
+  nothing:file://../root/release/mountsysfs
+  nothing:file://../root/release/networking
+  nothing:file://../root/release/rc
+  nothing:file://../root/release/reboot
+  nothing:file://../root/release/sendsigs
+  nothing:file://../root/release/telnetd
+  nothing:file://../root/release/syslogd
+  nothing:file://../root/release/crond
+  nothing:file://../root/release/umountfs
+  nothing:file://../root/release/lircd
+;
+]]END
 
 DESCRIPTION_init_scripts = init scripts and rules for system start
 init_scripts_initd_files = \
@@ -87,6 +111,21 @@ $(DEPDIR)/fonts-extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fon
 #
 # 3G MODEMS
 #
+BEGIN[[
+modem_scripts
+  0.3
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/ppp/ip-*
+  nothing:file://../root/usr/bin/modem.sh
+  nothing:file://../root/usr/bin/modemctrl.sh
+  nothing:file://../root/etc/modem.conf
+  nothing:file://../root/etc/modem.list
+  nothing:file://../root/etc/55-modem.rules
+  nothing:file://../root/etc/30-modemswitcher.rules
+;
+]]END
+
 DESCRIPTION_modem_scripts = utils to setup 3G modems
 RDEPENDS_modem_scripts = pppd usb_modeswitch iptables iptables-dev
 

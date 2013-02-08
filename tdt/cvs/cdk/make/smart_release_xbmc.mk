@@ -1,6 +1,29 @@
 #
 # INIT-SCRIPTS customized
 #
+BEGIN[[
+init_scripts_xbmc
+  0.1
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/inittab_xbmc
+  nothing:file://../root/release/hostname
+  nothing:file://../root/release/inetd
+# for 'nothing:' only 'cp' is executed so '*' is ok.
+  nothing:file://../root/release/initmodules_*
+  nothing:file://../root/release/halt_*
+  nothing:file://../root/release/mountall
+  nothing:file://../root/release/mountsysfs
+  nothing:file://../root/release/networking
+  nothing:file://../root/release/rc
+  nothing:file://../root/release/reboot
+  nothing:file://../root/release/sendsigs
+  nothing:file://../root/release/telnetd
+  nothing:file://../root/release/syslogd
+  nothing:file://../root/release/umountfs
+  nothing:file://../root/release/lircd
+;
+]]END
 
 DESCRIPTION_init_scripts_xbmc = init scripts and rules for system start
 init_scripts_initd_xbmc_files = \
