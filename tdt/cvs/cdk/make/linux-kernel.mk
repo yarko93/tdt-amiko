@@ -162,9 +162,9 @@ MODNAME = $(SPARK)$(SPARK7162)$(HL101)
 
 ifdef DEBUG
 DEBUG_STR=.debug
-else !DEBUG
+else
 DEBUG_STR=
-endif !DEBUG
+endif
 
 HOST_KERNEL := host-kernel
 

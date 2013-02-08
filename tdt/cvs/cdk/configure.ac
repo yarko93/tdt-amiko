@@ -936,10 +936,10 @@ Makefile\
 :smart-rules.mk\
 :make/archive-specs.mk\
 :make/hostapps.mk\
+:make/bare-os.mk\
 :make/bootstrap.mk\
 :make/u-boot.mk\
 :make/root-etc.mk\
-:make/bare-os.mk\
 :make/linux-kernel.mk\
 :make/busybox.mk\
 :make/contrib-libs.mk\
