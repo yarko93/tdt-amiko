@@ -2512,6 +2512,7 @@ pilimaging
   1.1.7
   Imaging-{PV}
   extract:http://effbot.org/downloads/Imaging-{PV}.tar.gz
+  patch:file://pilimaging-fix-search-paths.patch
 ;
 ]]END
 
@@ -2524,9 +2525,9 @@ $(DEPDIR)/pilimaging: bootstrap python $(DEPENDS_pilimaging)
 	$(PREPARE_pilimaging)
 	$(start_build)
 	cd $(DIR_pilimaging) && \
-		echo 'JPEG_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' > setup_site.py && \
-		echo 'ZLIB_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
-		echo 'FREETYPE_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
+		echo 'JPEG_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' > setup_site.py && \
+		echo 'ZLIB_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
+		echo 'FREETYPE_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py build && \
