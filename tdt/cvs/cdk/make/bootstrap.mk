@@ -17,14 +17,6 @@ host-filesystem:
 #
 # CCACHE
 #
-BEGIN[[
-ccache
-  2.4
-  {PN}-{PV}
-  extract:http://samba.org/ftp/{PN}/{PN}-{PV}.tar.gz
-  make:install:DESTDIR=HOST
-;
-]]END
 
 $(hostprefix)/ccache-bin:
 	$(INSTALL) -d $@

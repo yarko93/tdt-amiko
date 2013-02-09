@@ -8,6 +8,19 @@ hostapps: $(hostappsdir)/config.status
 	$(MAKE) -C $(hostappsdir)
 #	touch $@
 
+#
+# ccache
+#
+
+BEGIN[[
+ccache
+  2.4
+  {PN}-{PV}
+  extract:http://samba.org/ftp/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=HOST
+;
+]]END
+
 ifdef ENABLE_CCACHE
 $(hostprefix)/bin/ccache: $(DEPENDS_ccache)
 	$(PREPARE_ccache)
