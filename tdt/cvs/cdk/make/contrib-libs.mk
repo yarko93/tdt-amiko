@@ -1356,7 +1356,8 @@ $(DEPDIR)/libdvdcss.do_compile: $(DEPDIR)/libdvdcss.do_prepare
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr \
-			--disable-doc
+			--disable-doc \
+		&& \
 		$(MAKE) all
 	touch $@
 
