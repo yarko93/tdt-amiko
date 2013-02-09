@@ -535,6 +535,13 @@ AC_SUBST(serversupport)
 AC_SUBST(customizationsdir)
 AC_SUBST(updatehttpprefix)
 
+packagingtmpdir=$buildprefix/packagingtmpdir
+ipkgbuilddir=$buildprefix/ipkgbuild
+PKDIR=$packagingtmpdir
+AC_SUBST(packagingtmpdir)
+AC_SUBST(ipkgbuilddir)
+AC_SUBST(PKDIR)
+
 AC_ARG_WITH(checkImage,
 	[  --with-checkImage=[[none,rename,warn]]	How/if to invoke checkImage [[none]]],
 	[CHECKIMAGE_BEHAVIOR="$withval"],[CHECKIMAGE_BEHAVIOR="true"])
@@ -655,6 +662,7 @@ AC_SUBST(hostappsdir)
 AC_SUBST(gnuserver)
 AC_SUBST(defaultserver)
 AC_SUBST(archivedir)
+AC_SUBST(srcdir)
 
 AC_PATH_PROG(M4,m4,no)
 if test "$M4" = "no"; then
@@ -936,11 +944,11 @@ Makefile\
 :smart-rules.mk\
 :make/archive-specs.mk\
 :make/hostapps.mk\
+:make/u-boot.mk\
+:make/linux-kernel.mk\
 :make/bare-os.mk\
 :make/bootstrap.mk\
-:make/u-boot.mk\
 :make/root-etc.mk\
-:make/linux-kernel.mk\
 :make/busybox.mk\
 :make/contrib-libs.mk\
 :make/contrib-apps-specs.mk\
