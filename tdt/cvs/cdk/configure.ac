@@ -972,7 +972,8 @@ Makefile\
 :make/release_neutrino.mk\
 :make/release_neutrino_nightly.mk\
 :make/smart_release_vdr.mk\
-:make/vdr.mk
+:make/vdr.mk\
+:make/update.mk
 ], [mv Makefile Makefile.pre; ./smart-rules.pl Makefile.pre])
 
 # AC_CONFIG_COMMANDS([rules-downcheck-chmod],[chmod +x rules-downcheck.pl])

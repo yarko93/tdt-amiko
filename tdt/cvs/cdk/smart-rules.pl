@@ -256,7 +256,15 @@ sub process_dir ($)
   $output .= "LIST_DISTCLEAN += $package-distclean" . "\n";
 
   $output .= "DEPENDS_$package = \$(DEPDIR)/$package.version_\$(PKGV_$package)-\$(PKGR_$package)" . "\n";
-  $output .= "\$(DEPDIR)/$package.version_%:\n\ttouch \$\@" . "\n";
+
+  if ($version =~ m#^git|svn$#)
+  {
+    $output .= "UPDATEPKGV_$package = [ -d \$(DIR_$package) ] && (touch \$\@ -d `cd \$(DIR_$package) && \$(git_version) && cd -`) || true" . "\n";
+    $output .= "LIST_AUTOPKGV += \$(DEPDIR)/$package.version_\$(PKGV_$package)-\$(PKGR_$package)" . "\n";
+  } else {
+    $output .= "UPDATEPKGV_$package = touch \$\@" . "\n";
+  }
+  $output .= "\$(DEPDIR)/$package.version_%:\n\t\$(UPDATEPKGV_$package)" . "\n";
 
   print FILE subs_vars($output);
 }
@@ -267,6 +275,7 @@ sub process_prepare ($)
 
   my $output = "";
   my $autoversion = "";
+  my $updateversion = "";
 
     my @args = split( /:/, $_ );
     my ($p, $f, $cmd, $url, $opts_ref) = process_rule($_);
@@ -344,6 +353,7 @@ sub process_prepare ($)
       $branch = $opts{"b"} if $opts{"b"};
       $output .= "(cd $f && git fetch && git checkout $branch && git pull --ff-only origin $branch && git pull --rebase origin $branch; cd -) && ";
       $output .= "(cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) && " if $opts{"r"};
+      $updateversion = "[ -d $f ] && (true" . $output . "(touch \$\@ -d `cd $f && \$(git_version) && cd -`) ) || true";
       $output .= "cp -a " . $f . $subdir . " " . $dir;
       $autoversion = "\$(eval export PKGV_$package = \$(shell cd $f && \$(git_version)))";
     }
@@ -429,6 +439,7 @@ sub process_prepare ($)
     }
 
   $output .= "\nAUTOPKGV_$package = $autoversion" if $autoversion;
+  $output .= "\nUPDATEPKGV_$package = $updateversion" if $updateversion;
   return $output
 }
 
