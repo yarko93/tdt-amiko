@@ -326,12 +326,17 @@ $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 
 linux-kernel-distclean: $(KERNELHEADERS)-distclean
 
+BEGIN[[
+driver
+  git
+  $(driverdir)
+;
+]]END
 DESCRIPTION_driver = Drivers for stm box
 PKGR_driver = r2
 PACKAGES_driver = driver_pti driver
 FILES_driver = /lib/modules/$(KERNELVERSION)/extra
 SRC_URI_driver = "http://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko"
-DIR_driver = $(driverdir)
 DESCRIPTION_driver_pti = open source st-pti kernel module
 RCONFLICTS_driver_pti = driver_ptinp
 FILES_driver_pti = /lib/modules/$(KERNELVERSION)/extra/pti
@@ -342,10 +347,9 @@ define postinst_driver
 depmod
 endef
 
-$(DEPDIR)/driver: $(driverdir)/Makefile linux-kernel.do_compile
+$(DEPDIR)/driver: $(DEPENDS_dirver) $(driverdir)/Makefile linux-kernel.do_compile
 #	$(MAKE) -C $(KERNEL_DIR) $(MAKE_OPTS) ARCH=sh modules_prepare
 	$(start_build)
-	$(get_git_version)
 	$(eval export PKGV_driver = $(PKGV_driver)$(KERNELSTMLABEL))
 	$(if $(PLAYER179),cp $(driverdir)/stgfb/stmfb/linux/drivers/video/stmfb.h $(targetprefix)/usr/include/linux)
 	$(if $(PLAYER191),cp $(driverdir)/stgfb/stmfb/linux/drivers/video/stmfb.h $(targetprefix)/usr/include/linux)
