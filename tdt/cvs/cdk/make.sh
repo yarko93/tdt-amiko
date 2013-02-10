@@ -478,6 +478,10 @@ CONFIGPARAM="$CONFIGPARAM $PLAYER $MULTICOM $PYTHON $MEDIAFW  $EXTERNAL_LCD $IMA
 
 ##############################################
 
+# configure still want's this
+# ignore errors here
+automake --add-missing
+
 echo && \
 echo "Performing autogen.sh..." && \
 echo "------------------------" && \
