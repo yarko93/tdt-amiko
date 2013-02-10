@@ -193,6 +193,16 @@ endif
 #
 # UDEV RULES
 #
+BEGIN[[
+udev_rules
+  0.2
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/60-dvb-ca.rules
+  nothing:file://../root/etc/90-cec_aotom.rules
+;
+]]END
+
 DESCRIPTION_udev_rules = custom udev rules
 RDEPENDS_udev_rules = udev
 
