@@ -2223,7 +2223,7 @@ $(DEPDIR)/%libxml2: $(DEPDIR)/libxml2.do_compile
 #
 BEGIN[[
 libxslt
-  1.1.24
+  1.1.28
   {PN}-{PV}
   extract:http://xmlsoft.org/sources/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
