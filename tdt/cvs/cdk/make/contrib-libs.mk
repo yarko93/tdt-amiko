@@ -1105,7 +1105,7 @@ $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
 #
 BEGIN[[
 libstgles
-  1.0
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -4003,7 +4003,7 @@ $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
 #
 BEGIN[[
 libdreamdvd
-  1.0
+  git
   {PN}
   plink:../apps/misc/tools/{PN}:{PN}
   make:install:prefix=/usr:DESTDIR=PKDIR

@@ -39,7 +39,7 @@
 #
 BEGIN[[
 devinit
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -81,7 +81,7 @@ $(DEPDIR)/%devinit: $(DEPDIR)/devinit.do_compile
 #
 BEGIN[[
 evremote2
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -130,7 +130,7 @@ $(DEPDIR)/%evremote2: $(DEPDIR)/evremote2.do_compile
 #
 BEGIN[[
 fp_control
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/fp_control:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -178,7 +178,7 @@ $(DEPDIR)/%fp_control: $(DEPDIR)/fp_control.do_compile
 #
 BEGIN[[
 gitVCInfo
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -220,7 +220,7 @@ $(DEPDIR)/%gitVCInfo: $(DEPDIR)/gitVCInfo.do_compile
 #
 BEGIN[[
 hotplug
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -262,7 +262,7 @@ $(DEPDIR)/%hotplug: $(DEPDIR)/hotplug.do_compile
 #
 BEGIN[[
 libeplayer3
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -312,7 +312,7 @@ $(DEPDIR)/%libeplayer3: $(DEPDIR)/libeplayer3.do_compile
 #
 BEGIN[[
 libmme_host
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/libmme_host:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -360,7 +360,7 @@ $(DEPDIR)/%libmme_host: $(DEPDIR)/libmme_host.do_compile
 #
 BEGIN[[
 libmmeimage
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -408,7 +408,7 @@ $(DEPDIR)/%libmmeimage: $(DEPDIR)/libmmeimage.do_compile
 #
 BEGIN[[
 showiframe
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -456,7 +456,7 @@ $(DEPDIR)/%showiframe: $(DEPDIR)/showiframe.do_compile
 #
 BEGIN[[
 stfbcontrol
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -504,7 +504,7 @@ $(DEPDIR)/%stfbcontrol: $(DEPDIR)/stfbcontrol.do_compile
 #
 BEGIN[[
 streamproxy
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -552,7 +552,7 @@ $(DEPDIR)/%streamproxy: $(DEPDIR)/streamproxy.do_compile
 #
 BEGIN[[
 ustslave
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -600,7 +600,7 @@ $(DEPDIR)/%ustslave: $(DEPDIR)/ustslave.do_compile
 #
 BEGIN[[
 eplayer4
-  0.1
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
