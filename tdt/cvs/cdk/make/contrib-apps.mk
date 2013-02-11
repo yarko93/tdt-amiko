@@ -439,9 +439,9 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 #
 BEGIN[[
 e2fsprogs
-  1.42.4
+  1.42.7
   {PN}-{PV}
-  extract:http://prdownloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
+  extract:http://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v{PV}/{PN}-{PV}.tar.gz
   patch:file://{PN}-{PV}.patch
   make:install:DESTDIR=PKDIR
 ;
