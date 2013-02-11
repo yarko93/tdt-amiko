@@ -2,6 +2,14 @@
 # Make Extern-Plugins
 #
 #
+BEGIN[[
+e2plugin
+  git
+  {PN}
+  git://github.com/schpuntik/enigma2-plugins-sh4.git
+;
+]]END
+
 DESCRIPTION_e2plugin := Additional plugins for Enigma2
 
 PKGR_e2plugin = r2

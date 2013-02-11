@@ -157,10 +157,10 @@ release_vdr:
 	cp -f $(targetprefix)/usr/sbin/automount $(prefix)/release_vdr/usr/sbin/
 	cp -f $(buildprefix)/root/release/auto.usb $(prefix)/release_vdr/etc/
 
-if ENABLE_VDR1722
+ifdef ENABLE_VDR1722
 	cp $(buildprefix)/root/var/vdr/plugins_vdrdev2.load $(prefix)/release_vdr/usr/local/share/vdr/plugins.load 
 endif
-if ENABLE_VDR1727
+ifdef ENABLE_VDR1727
 	cp $(buildprefix)/root/var/vdr/plugins.load $(prefix)/release_vdr/usr/local/share/vdr/plugins.load
 	cp $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/setup/examples/x-vdr/vdr-menu.xml $(prefix)/release_vdr/usr/local/share/vdr/plugins/setup
 	cp -dpR $(appsdir)/vdr/vdr-1.7.27/PLUGINS/src/PearlHD $(prefix)/release_vdr/usr/local/share/vdr/plugins/text2skin
@@ -172,7 +172,7 @@ if ENABLE_VDR1727
 endif
 	
 
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 	echo "spark" > $(prefix)/release_vdr/etc/hostname
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
@@ -193,7 +193,7 @@ if ENABLE_SPARK
 	rm -f $(prefix)/release_vdr/bin/gotosleep
 
 else
-if ENABLE_SPARK7162
+ifdef ENABLE_SPARK7162
 	echo "spark7162" > $(prefix)/release_vdr/etc/hostname
 	rm -f $(prefix)/release_vdr/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_vdr/sbin/
@@ -233,13 +233,13 @@ endif
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/compcache/lzo-kmod/lzo1x_compress.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/compcache/lzo-kmod/lzo1x_decompress.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/compcache/ramzswap.ko $(prefix)/release_vdr/lib/modules/
-if !ENABLE_SPARK
-if !ENABLE_SPARK7162
+ifdef !ENABLE_SPARK
+ifdef !ENABLE_SPARK7162
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cic/*.ko $(prefix)/release_vdr/lib/modules/
 endif
 endif
 
-if ENABLE_PLAYER179
+ifdef ENABLE_PLAYER179
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stm_v4l2.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmvbi.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmvout.ko $(prefix)/release_vdr/lib/modules/
@@ -271,7 +271,7 @@ if ENABLE_PLAYER179
 	done
 endif
 
-if ENABLE_PLAYER191
+ifdef ENABLE_PLAYER191
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stm_v4l2.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmvbi.ko $(prefix)/release_vdr/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmvout.ko $(prefix)/release_vdr/lib/modules/
@@ -465,7 +465,7 @@ endif
 
 	cp $(kernelprefix)/linux-sh4/arch/sh/boot/uImage $(prefix)/release_vdr/boot/
 
-if STM24
+ifdef STM24
 	[ -e $(kernelprefix)/linux-sh4/fs/autofs4/autofs4.ko ] && cp $(kernelprefix)/linux-sh4/fs/autofs4/autofs4.ko $(prefix)/release_vdr/lib/modules || true
 	[ -e $(kernelprefix)/linux-sh4/drivers/usb/serial/ftdi_sio.ko ] && cp $(kernelprefix)/linux-sh4/drivers/usb/serial/ftdi_sio.ko $(prefix)/release_vdr/lib/modules/ftdi.ko || true
 	[ -e $(kernelprefix)/linux-sh4/drivers/usb/serial/pl2303.ko ] && cp $(kernelprefix)/linux-sh4/drivers/usb/serial/pl2303.ko $(prefix)/release_vdr/lib/modules || true

@@ -248,7 +248,7 @@ $(DEPDIR)/%lirc: $(DEPDIR)/lirc.do_compile
 	$(INSTALL_DIR) $(PKDIR)/etc
 	$(INSTALL_DIR) $(PKDIR)/var/run/lirc/
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162)).conf $(PKDIR)/etc/lircd.conf
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_0B $(PKDIR)/etc/lircd.conf.09_00_0B
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_07 $(PKDIR)/etc/lircd.conf.09_00_07
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_08 $(PKDIR)/etc/lircd.conf.09_00_08
@@ -1105,7 +1105,7 @@ $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
 #
 BEGIN[[
 libstgles
-  1.0
+  git
   {PN}-{PV}
   plink:../apps/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
@@ -1356,7 +1356,8 @@ $(DEPDIR)/libdvdcss.do_compile: $(DEPDIR)/libdvdcss.do_prepare
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr \
-			--disable-doc
+			--disable-doc \
+		&& \
 		$(MAKE) all
 	touch $@
 
@@ -2507,6 +2508,7 @@ pilimaging
   1.1.7
   Imaging-{PV}
   extract:http://effbot.org/downloads/Imaging-{PV}.tar.gz
+  patch:file://pilimaging-fix-search-paths.patch
 ;
 ]]END
 
@@ -2519,9 +2521,9 @@ $(DEPDIR)/pilimaging: bootstrap python $(DEPENDS_pilimaging)
 	$(PREPARE_pilimaging)
 	$(start_build)
 	cd $(DIR_pilimaging) && \
-		echo 'JPEG_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' > setup_site.py && \
-		echo 'ZLIB_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
-		echo 'FREETYPE_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
+		echo 'JPEG_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' > setup_site.py && \
+		echo 'ZLIB_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
+		echo 'FREETYPE_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py build && \
@@ -2654,7 +2656,7 @@ $(DEPDIR)/%pyopenssl: $(DEPDIR)/pyopenssl.do_compile
 # python
 #
 BEGIN[[
-if ENABLE_PY27
+ifdef ENABLE_PY27
 python
   2.7.3
   {PN}-{PV}
@@ -2663,6 +2665,7 @@ python
   patch:file://{PN}_{PV}.diff
   patch:file://{PN}_{PV}-ctypes-libffi-fix-configure.diff
   patch:file://{PN}_{PV}-pgettext.diff
+;
 else
 python
   2.6.6
@@ -3995,7 +3998,7 @@ $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
 #
 BEGIN[[
 libdreamdvd
-  1.0
+  git
   {PN}
   plink:../apps/misc/tools/{PN}:{PN}
   make:install:prefix=/usr:DESTDIR=PKDIR

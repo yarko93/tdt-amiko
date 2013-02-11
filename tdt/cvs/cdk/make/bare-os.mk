@@ -251,7 +251,7 @@ $(DEPDIR)/$(GCC): $(DEPDIR)/%$(GCC): $(DEPDIR)/%$(GLIBC_DEV) $(GCC_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	[ "x$*" = "x" ] && touch $@ || true
 
-$(DEPDIR)/$(LIBSTDC): $(DEPDIR)/%$(LIBSTDC): $(DEPDIR)/%$(CROSS_LIBGCC) $(LIBSTDC_RPM)
+$(DEPDIR)/$(LIBSTDC): $(DEPDIR)/%$(LIBSTDC): $(LIBSTDC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
@@ -591,6 +591,7 @@ $(DEPDIR)/$(USBUTILS): $(DEPDIR)/%$(USBUTILS): $(USBUTILS_RPM)
 #
 # UDEV
 #
+
 UDEV := udev
 UDEV_DEV := udev-dev
 UDEV_VERSION := 162-32
@@ -620,7 +621,7 @@ $(DEPDIR)/$(UDEV_DEV): $(DEPDIR)/%$(UDEV_DEV): $(UDEV_DEV_RPM)
 	[ "x$*" = "x" ] && touch $@ || true
 	$(REWRITE_LIBDEP)/libgudev-1.0.la
 
-$(DEPDIR)/$(UDEV): $(DEPDIR)/%$(UDEV): $(DEPENDS_udev) $(UDEV_RPM)
+$(DEPDIR)/$(UDEV): $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	( export HHL_CROSS_TARGET_DIR=$(prefix)/$*cdkroot && cd $(prefix)/$*cdkroot/etc/init.d && \

@@ -15,8 +15,8 @@ if test "$target" = "sh4-unknown-linux-gnu" ; then
 fi
 AC_SUBST(target)
 
-AM_INIT_AUTOMAKE([])
-AM_MAINTAINER_MODE
+AC_PROG_INSTALL
+AC_SUBST(INSTALL)
 
 AC_PROG_CC
 
@@ -33,7 +33,7 @@ AC_ARG_ENABLE(player191,
 	[case "${enableval}" in
 		yes) PLAYER191=player191 ;;
 	esac],[enable_player191=no])
-AM_CONDITIONAL(ENABLE_PLAYER191,test "$enable_player191" = "yes")
+TDT_CONDITIONAL(ENABLE_PLAYER191,test "$enable_player191" = "yes")
 AC_SUBST(PLAYER191)
 
 AC_ARG_ENABLE(multicom322,
@@ -41,7 +41,7 @@ AC_ARG_ENABLE(multicom322,
 	[case "${enableval}" in
 		yes) MULTICOM322=multicom322 ;;
 	esac],[enable_multicom322=no])
-AM_CONDITIONAL(ENABLE_MULTICOM322,test "$enable_multicom322" = "yes")
+TDT_CONDITIONAL(ENABLE_MULTICOM322,test "$enable_multicom322" = "yes")
 AC_SUBST(MULTICOM322)
 
 AC_ARG_ENABLE(multicom324,
@@ -49,20 +49,20 @@ AC_ARG_ENABLE(multicom324,
 	[case "${enableval}" in
 		yes) MULTICOM324=multicom324 ;;
 	esac],[enable_multicom324=no])
-AM_CONDITIONAL(ENABLE_MULTICOM324,test "$enable_multicom324" = "yes")
+TDT_CONDITIONAL(ENABLE_MULTICOM324,test "$enable_multicom324" = "yes")
 AC_SUBST(MULTICOM324)
 
 AC_ARG_ENABLE(stm24,
 	AS_HELP_STRING(--enable-stm24,	set up the CDK to use the STLinux 2.4),
 	,[enable_stm24=no])
-AM_CONDITIONAL(STM24,test "$enable_stm24" = "yes")
+TDT_CONDITIONAL(STM24,test "$enable_stm24" = "yes")
 
 AC_ARG_ENABLE(py27,
 	AS_HELP_STRING(--enable-py27,      enable Python 2.7 ),
 	[case "${enableval}" in
 		yes) PY27=py27 ;;
 	esac],[enable_py27=no])
-AM_CONDITIONAL(ENABLE_PY27,test "$enable_py27" = "yes")
+TDT_CONDITIONAL(ENABLE_PY27,test "$enable_py27" = "yes")
 AC_SUBST(PY27)
 
 AC_ARG_ENABLE(py26,
@@ -70,7 +70,7 @@ AC_ARG_ENABLE(py26,
 	[case "${enableval}" in
 		yes) PY26=py26 ;;
 	esac],[enable_py26=no])
-AM_CONDITIONAL(ENABLE_PY26,test "$enable_py26" = "yes")
+TDT_CONDITIONAL(ENABLE_PY26,test "$enable_py26" = "yes")
 AC_SUBST(PY26)
 
 AC_ARG_ENABLE(p0207,
@@ -78,7 +78,7 @@ AC_ARG_ENABLE(p0207,
 	[case "${enableval}" in
 		yes) P0207=p0207 ;;
 	esac], [enable_p0207=no])
-AM_CONDITIONAL(ENABLE_P0207,test "$enable_p0207" = "yes")
+TDT_CONDITIONAL(ENABLE_P0207,test "$enable_p0207" = "yes")
 AC_SUBST(P0207)
 
 AC_ARG_ENABLE(p0209,
@@ -86,7 +86,7 @@ AC_ARG_ENABLE(p0209,
 	[case "${enableval}" in
 		yes) P0209=p0209 ;;
 	esac], [enable_p0209=no])
-AM_CONDITIONAL(ENABLE_P0209,test "$enable_p0209" = "yes")
+TDT_CONDITIONAL(ENABLE_P0209,test "$enable_p0209" = "yes")
 AC_SUBST(P0209)
 
 AC_ARG_ENABLE(p0210,
@@ -94,7 +94,7 @@ AC_ARG_ENABLE(p0210,
 	[case "${enableval}" in
 		yes) P0210=p0210 ;;
 	esac], [enable_p0210=no])
-AM_CONDITIONAL(ENABLE_P0210,test "$enable_p0210" = "yes")
+TDT_CONDITIONAL(ENABLE_P0210,test "$enable_p0210" = "yes")
 AC_SUBST(P0210)
 
 AC_ARG_ENABLE(p0211,
@@ -102,13 +102,13 @@ AC_ARG_ENABLE(p0211,
 	[case "${enableval}" in
 		yes) P0211=p0211 ;;
 	esac], [enable_p0211=no])
-AM_CONDITIONAL(ENABLE_P0211,test "$enable_p0211" = "yes")
+TDT_CONDITIONAL(ENABLE_P0211,test "$enable_p0211" = "yes")
 AC_SUBST(P0211)
 
 AC_ARG_ENABLE(debug,
 	AS_HELP_STRING(--enable-debug,	set up the CDK to use debug kernel configs),
 	,[enable_debug=no])
-AM_CONDITIONAL(DEBUG,test "$enable_debug" = "yes")
+TDT_CONDITIONAL(DEBUG,test "$enable_debug" = "yes")
 
 AC_ARG_WITH(cpu,
 	[  --with-cpu=MODEL        cpu model [[sh4]]],
@@ -118,30 +118,30 @@ AC_SUBST(CPU_MODEL)
 AC_ARG_WITH(assume-kernelsources-old,
 	[  --with-assume-kernelsources-old	Do not recompile due to new kernel sources],
 	[assume_kernelsources_old="yes"],[assume_kernelsources_old="no"])
-AM_CONDITIONAL(ASSUME_KERNELSOURCES_OLD,test "$assume_kernelsources_old" = "yes")
+TDT_CONDITIONAL(ASSUME_KERNELSOURCES_OLD,test "$assume_kernelsources_old" = "yes")
 
 AC_ARG_ENABLE(mediafwgstreamer,
 	AS_HELP_STRING(--enable-mediafwgstreamer,	set up the CDK to use mediafw gstreamer),
 	,[enable_mediafwgstreamer=no])
-AM_CONDITIONAL(ENABLE_MEDIAFWGSTREAMER,test "$enable_mediafwgstreamer" = "yes")
+TDT_CONDITIONAL(ENABLE_MEDIAFWGSTREAMER,test "$enable_mediafwgstreamer" = "yes")
 AC_SUBST(MEDIAFWGSTREAMER)
 
 AC_ARG_ENABLE(eplayer3,
 	AS_HELP_STRING(--enable-eplayer3,    enable eplayer3 support),
 	,[enable_eplayer3=no])
-AM_CONDITIONAL(ENABLE_EPLAYER3,test "$enable_eplayer3" = "yes")
+TDT_CONDITIONAL(ENABLE_EPLAYER3,test "$enable_eplayer3" = "yes")
 AC_SUBST(EPLAYER3)
 
 AC_ARG_ENABLE(graphicfwdirectfb,
 	AS_HELP_STRING(--enable-graphicfwdirectfb,	set up the CDK to use graphicfw directfb),
 	,[enable_graphicfwdirectfb=no])
-AM_CONDITIONAL(ENABLE_GRAPHICFWDIRECTFB,test "$enable_graphicfwdirectfb" = "yes")
+TDT_CONDITIONAL(ENABLE_GRAPHICFWDIRECTFB,test "$enable_graphicfwdirectfb" = "yes")
 AC_SUBST(GRAPHICFWDIRECTFB)
 
 AC_ARG_ENABLE(externallcd,
 	AS_HELP_STRING(--enable-externallcd,	set up the CDK to use graphlcd),
 	,[enable_externallcd=no])
-AM_CONDITIONAL(ENABLE_EXTERNALLCD,test "$enable_externallcd" = "yes")
+TDT_CONDITIONAL(ENABLE_EXTERNALLCD,test "$enable_externallcd" = "yes")
 AC_SUBST(EXTERNALLCD)
 
 if test "$enable_externallcd" != "yes"  ; then
@@ -169,7 +169,7 @@ AC_ARG_ENABLE(lirc,
 	[case "${enableval}" in
 		yes) LIRC=lirc ;;
 	esac], [enable_lirc=no])
-AM_CONDITIONAL(ENABLE_LIRC,test "$enable_lirc" = "yes")
+TDT_CONDITIONAL(ENABLE_LIRC,test "$enable_lirc" = "yes")
 AC_SUBST(LIRC)
 
 AC_ARG_ENABLE(xfs,
@@ -177,7 +177,7 @@ AC_ARG_ENABLE(xfs,
 	[case "${enableval}" in
 		yes) XFSPROGS=xfsprogs ;;
 	esac],[enable_xfs=no])
-AM_CONDITIONAL(ENABLE_XFS,test "$enable_xfs" = "yes")
+TDT_CONDITIONAL(ENABLE_XFS,test "$enable_xfs" = "yes")
 AC_SUBST(XFSPROGS)
 
 AC_ARG_ENABLE(ntfs,
@@ -185,7 +185,7 @@ AC_ARG_ENABLE(ntfs,
 	[case "${enableval}" in
 		yes) NTFS=ntfs ;;
 	esac],[enable_ntfs=no])
-AM_CONDITIONAL(ENABLE_NTFS,test "$enable_ntfs" = "yes")
+TDT_CONDITIONAL(ENABLE_NTFS,test "$enable_ntfs" = "yes")
 AC_SUBST(NTFS)
 
 AC_ARG_ENABLE(nfsserver,
@@ -193,7 +193,7 @@ AC_ARG_ENABLE(nfsserver,
 	[case "${enableval}" in
 		yes) NFSSERVER=nfs-utils ;;
 	esac],[enable_nfsserver=no])
-AM_CONDITIONAL(ENABLE_NFSSERVER,test "$enable_nfsserver" = "yes")
+TDT_CONDITIONAL(ENABLE_NFSSERVER,test "$enable_nfsserver" = "yes")
 AC_SUBST(NFSSERVER)
 
 AC_ARG_ENABLE(cifs,
@@ -201,7 +201,7 @@ AC_ARG_ENABLE(cifs,
 	[case "${enableval}" in
 		yes) CIFS=samba ;;
 	esac],[enable_cifs=no])
-AM_CONDITIONAL(ENABLE_CIFS,test "$enable_cifs" = "yes")
+TDT_CONDITIONAL(ENABLE_CIFS,test "$enable_cifs" = "yes")
 AC_SUBST(CIFS)
 
 AC_ARG_ENABLE(sg3,
@@ -209,7 +209,7 @@ AC_ARG_ENABLE(sg3,
 	[case "${enableval}" in
 		yes) SG3=sg3_utils ;;
 	esac],[enable_sg3=no])
-AM_CONDITIONAL(ENABLE_SG3,test "$enable_sg3" = "yes")
+TDT_CONDITIONAL(ENABLE_SG3,test "$enable_sg3" = "yes")
 AC_SUBST(SG3)
 
 AC_ARG_ENABLE(var,
@@ -217,7 +217,7 @@ AC_ARG_ENABLE(var,
 	[case "${enableval}" in
 		yes) VAR=var ;;
 	esac],[enable_var=no])
-AM_CONDITIONAL(ENABLE_VAR,test "$enable_var" = "yes")
+TDT_CONDITIONAL(ENABLE_VAR,test "$enable_var" = "yes")
 AC_SUBST(VAR)
 
 AC_ARG_WITH(rootpartitionsize,
@@ -235,7 +235,7 @@ AC_ARG_ENABLE(ccache,
 	[case "${enableval}" in
 		yes) CCACHE_BIN=ccache;;
 	esac], [enable_ccache=no])
-AM_CONDITIONAL(ENABLE_CCACHE,test "$enable_ccache" = "yes")
+TDT_CONDITIONAL(ENABLE_CCACHE,test "$enable_ccache" = "yes")
 AC_SUBST(CCACHE_BIN)
 
 AC_ARG_ENABLE(hl101,
@@ -243,7 +243,7 @@ AC_ARG_ENABLE(hl101,
 	[case "${enableval}" in
 		yes) HL101=hl101 ;;
 	esac],[enable_hl101=no])
-AM_CONDITIONAL(ENABLE_HL101,test "$enable_hl101" = "yes")
+TDT_CONDITIONAL(ENABLE_HL101,test "$enable_hl101" = "yes")
 AC_SUBST(HL101)
 
 AC_ARG_ENABLE(spark,
@@ -251,7 +251,7 @@ AC_ARG_ENABLE(spark,
 	[case "${enableval}" in
 		yes) SPARK=spark ;;
 	esac],[enable_spark=no])
-AM_CONDITIONAL(ENABLE_SPARK,test "$enable_spark" = "yes")
+TDT_CONDITIONAL(ENABLE_SPARK,test "$enable_spark" = "yes")
 AC_SUBST(SPARK)
 
 AC_ARG_ENABLE(spark7162,
@@ -259,7 +259,7 @@ AC_ARG_ENABLE(spark7162,
 	[case "${enableval}" in
 		yes) SPARK7162=spark7162 ;;
 	esac],[enable_spark7162=no])
-AM_CONDITIONAL(ENABLE_SPARK7162,test "$enable_spark7162" = "yes")
+TDT_CONDITIONAL(ENABLE_SPARK7162,test "$enable_spark7162" = "yes")
 AC_SUBST(SPARK7162)
 
 AC_ARG_ENABLE(e2pd0,
@@ -267,7 +267,7 @@ AC_ARG_ENABLE(e2pd0,
 	[case "${enableval}" in
 		yes) E2PD0=e2pd0 ;;
 	esac], [enable_e2pd0=no])
-AM_CONDITIONAL(ENABLE_E2PD0,test "$enable_e2pd0" = "yes")
+TDT_CONDITIONAL(ENABLE_E2PD0,test "$enable_e2pd0" = "yes")
 AC_SUBST(E2PD0)
 
 AC_ARG_ENABLE(e2pd1,
@@ -275,7 +275,7 @@ AC_ARG_ENABLE(e2pd1,
 	[case "${enableval}" in
 		yes) E2PD1=e2pd1 ;;
 	esac], [enable_e2pd1=no])
-AM_CONDITIONAL(ENABLE_E2PD1,test "$enable_e2pd1" = "yes")
+TDT_CONDITIONAL(ENABLE_E2PD1,test "$enable_e2pd1" = "yes")
 AC_SUBST(E2PD1)
 
 AC_ARG_ENABLE(e2pd2,
@@ -283,7 +283,7 @@ AC_ARG_ENABLE(e2pd2,
 	[case "${enableval}" in
 		yes) E2PD2=e2pd2 ;;
 	esac], [enable_e2pd2=no])
-AM_CONDITIONAL(ENABLE_E2PD2,test "$enable_e2pd2" = "yes")
+TDT_CONDITIONAL(ENABLE_E2PD2,test "$enable_e2pd2" = "yes")
 AC_SUBST(E2PD2)
 
 AC_ARG_ENABLE(e2pd3,
@@ -291,7 +291,7 @@ AC_ARG_ENABLE(e2pd3,
 	[case "${enableval}" in
 		yes) E2PD3=e2pd3 ;;
 	esac], [enable_e2pd3=no])
-AM_CONDITIONAL(ENABLE_E2PD3,test "$enable_e2pd3" = "yes")
+TDT_CONDITIONAL(ENABLE_E2PD3,test "$enable_e2pd3" = "yes")
 AC_SUBST(E2PD3)
 
 AC_ARG_ENABLE(e2pd4,
@@ -299,7 +299,7 @@ AC_ARG_ENABLE(e2pd4,
 	[case "${enableval}" in
 		yes) E2PD4=e2pd4 ;;
 	esac], [enable_e2pd4=no])
-AM_CONDITIONAL(ENABLE_E2PD4,test "$enable_e2pd4" = "yes")
+TDT_CONDITIONAL(ENABLE_E2PD4,test "$enable_e2pd4" = "yes")
 AC_SUBST(E2PD4)
 
 AC_ARG_ENABLE(e2pd5,
@@ -307,7 +307,7 @@ AC_ARG_ENABLE(e2pd5,
 	[case "${enableval}" in
 		yes) E2PD5=e2pd5 ;;
 	esac], [enable_e2pd5=no])
-AM_CONDITIONAL(ENABLE_E2PD5,test "$enable_e2pd5" = "yes")
+TDT_CONDITIONAL(ENABLE_E2PD5,test "$enable_e2pd5" = "yes")
 AC_SUBST(E2PD5)
 
 AC_ARG_ENABLE(e2pd6,
@@ -315,7 +315,7 @@ AC_ARG_ENABLE(e2pd6,
 	[case "${enableval}" in
 		yes) E2PD6=e2pd6 ;;
 	esac], [enable_e2pd6=no])
-AM_CONDITIONAL(ENABLE_E2PD6,test "$enable_e2pd6" = "yes")
+TDT_CONDITIONAL(ENABLE_E2PD6,test "$enable_e2pd6" = "yes")
 AC_SUBST(E2PD6)
 
 AC_ARG_ENABLE(e2pd7,
@@ -323,7 +323,7 @@ AC_ARG_ENABLE(e2pd7,
 	[case "${enableval}" in
 		yes) E2PD7=e2pd7 ;;
 	esac], [enable_e2pd7=no])
-AM_CONDITIONAL(ENABLE_E2PD7,test "$enable_e2pd7" = "yes")
+TDT_CONDITIONAL(ENABLE_E2PD7,test "$enable_e2pd7" = "yes")
 AC_SUBST(E2PD7)
 
 AC_ARG_ENABLE(e2pd8,
@@ -331,7 +331,7 @@ AC_ARG_ENABLE(e2pd8,
 	[case "${enableval}" in
 		yes) E2PD8=e2pd8 ;;
 	esac], [enable_e2pd8=no])
-AM_CONDITIONAL(ENABLE_E2PD8,test "$enable_e2pd8" = "yes")
+TDT_CONDITIONAL(ENABLE_E2PD8,test "$enable_e2pd8" = "yes")
 AC_SUBST(E2PD8)
 
 AC_ARG_ENABLE(e2d0,
@@ -339,7 +339,7 @@ AC_ARG_ENABLE(e2d0,
 	[case "${enableval}" in
 		yes) E2D0=e2d0 ;;
 	esac], [enable_e2d0=no])
-AM_CONDITIONAL(ENABLE_E2D0,test "$enable_e2d0" = "yes")
+TDT_CONDITIONAL(ENABLE_E2D0,test "$enable_e2d0" = "yes")
 AC_SUBST(E2D0)
 
 AC_ARG_ENABLE(e2d1,
@@ -347,7 +347,7 @@ AC_ARG_ENABLE(e2d1,
 	[case "${enableval}" in
 		yes) E2D1=e2d1 ;;
 	esac], [enable_e2d1=no])
-AM_CONDITIONAL(ENABLE_E2D1,test "$enable_e2d1" = "yes")
+TDT_CONDITIONAL(ENABLE_E2D1,test "$enable_e2d1" = "yes")
 AC_SUBST(E2D1)
 
 AC_ARG_ENABLE(e2d2,
@@ -355,7 +355,7 @@ AC_ARG_ENABLE(e2d2,
 	[case "${enableval}" in
 		yes) E2D2=e2d2 ;;
 	esac], [enable_e2d2=no])
-AM_CONDITIONAL(ENABLE_E2D2,test "$enable_e2d2" = "yes")
+TDT_CONDITIONAL(ENABLE_E2D2,test "$enable_e2d2" = "yes")
 AC_SUBST(E2D2)
 
 AC_ARG_ENABLE(e2d3,
@@ -363,7 +363,7 @@ AC_ARG_ENABLE(e2d3,
 	[case "${enableval}" in
 		yes) E2D3=e2d3 ;;
 	esac], [enable_e2d3=no])
-AM_CONDITIONAL(ENABLE_E2D3,test "$enable_e2d3" = "yes")
+TDT_CONDITIONAL(ENABLE_E2D3,test "$enable_e2d3" = "yes")
 AC_SUBST(E2D3)
 
 AC_ARG_ENABLE(e2d4,
@@ -371,7 +371,7 @@ AC_ARG_ENABLE(e2d4,
 	[case "${enableval}" in
 		yes) E2D4=e2d4 ;;
 	esac], [enable_e2d4=no])
-AM_CONDITIONAL(ENABLE_E2D4,test "$enable_e2d4" = "yes")
+TDT_CONDITIONAL(ENABLE_E2D4,test "$enable_e2d4" = "yes")
 AC_SUBST(E2D4)
 
 AC_ARG_ENABLE(e2d5,
@@ -379,7 +379,7 @@ AC_ARG_ENABLE(e2d5,
 	[case "${enableval}" in
 		yes) E2D5=e2d5 ;;
 	esac], [enable_e2d5=no])
-AM_CONDITIONAL(ENABLE_E2D5,test "$enable_e2d5" = "yes")
+TDT_CONDITIONAL(ENABLE_E2D5,test "$enable_e2d5" = "yes")
 AC_SUBST(E2D5)
 
 AC_ARG_ENABLE(e2d6,
@@ -387,7 +387,7 @@ AC_ARG_ENABLE(e2d6,
 	[case "${enableval}" in
 		yes) E2D6=e2d6 ;;
 	esac], [enable_e2d6=no])
-AM_CONDITIONAL(ENABLE_E2D6,test "$enable_e2d6" = "yes")
+TDT_CONDITIONAL(ENABLE_E2D6,test "$enable_e2d6" = "yes")
 AC_SUBST(E2D6)
 
 AC_ARG_ENABLE(e2d7,
@@ -395,7 +395,7 @@ AC_ARG_ENABLE(e2d7,
 	[case "${enableval}" in
 		yes) E2D7=e2d7 ;;
 	esac], [enable_e2d7=no])
-AM_CONDITIONAL(ENABLE_E2D7,test "$enable_e2d7" = "yes")
+TDT_CONDITIONAL(ENABLE_E2D7,test "$enable_e2d7" = "yes")
 AC_SUBST(E2D7)
 
 AC_ARG_ENABLE(e2d8,
@@ -403,7 +403,7 @@ AC_ARG_ENABLE(e2d8,
 	[case "${enableval}" in
 		yes) E2D8=e2d8 ;;
 	esac], [enable_e2d8=no])
-AM_CONDITIONAL(ENABLE_E2D8,test "$enable_e2d8" = "yes")
+TDT_CONDITIONAL(ENABLE_E2D8,test "$enable_e2d8" = "yes")
 AC_SUBST(E2D8)
 
 AC_ARG_ENABLE(xbd0,
@@ -411,7 +411,7 @@ AC_ARG_ENABLE(xbd0,
 	[case "${enableval}" in
 		yes) XBD0=xbd0 ;;
 	esac], [enable_xbd0=no])
-AM_CONDITIONAL(ENABLE_XBD0,test "$enable_xbd0" = "yes")
+TDT_CONDITIONAL(ENABLE_XBD0,test "$enable_xbd0" = "yes")
 AC_SUBST(XBD0)
 
 AC_ARG_ENABLE(xbd1,
@@ -419,7 +419,7 @@ AC_ARG_ENABLE(xbd1,
 	[case "${enableval}" in
 		yes) XBD1=xbd1 ;;
 	esac], [enable_xbd1=no])
-AM_CONDITIONAL(ENABLE_XBD1,test "$enable_xbd1" = "yes")
+TDT_CONDITIONAL(ENABLE_XBD1,test "$enable_xbd1" = "yes")
 AC_SUBST(XBD1)
 
 AC_ARG_ENABLE(xbd2,
@@ -427,7 +427,7 @@ AC_ARG_ENABLE(xbd2,
 	[case "${enableval}" in
 		yes) XBD2=xbd2 ;;
 	esac], [enable_xbd2=no])
-AM_CONDITIONAL(ENABLE_XBD2,test "$enable_xbd2" = "yes")
+TDT_CONDITIONAL(ENABLE_XBD2,test "$enable_xbd2" = "yes")
 AC_SUBST(XBD2)
 
 AC_ARG_ENABLE(xbd3,
@@ -435,7 +435,7 @@ AC_ARG_ENABLE(xbd3,
 	[case "${enableval}" in
 		yes) XBD3=xbd3 ;;
 	esac], [enable_xbd3=no])
-AM_CONDITIONAL(ENABLE_XBD3,test "$enable_xbd3" = "yes")
+TDT_CONDITIONAL(ENABLE_XBD3,test "$enable_xbd3" = "yes")
 AC_SUBST(XBD3)
 
 AC_ARG_ENABLE(xbd4,
@@ -443,7 +443,7 @@ AC_ARG_ENABLE(xbd4,
 	[case "${enableval}" in
 		yes) XBD2=xbd4 ;;
 	esac], [enable_xbd4=no])
-AM_CONDITIONAL(ENABLE_XBD4,test "$enable_xbd4" = "yes")
+TDT_CONDITIONAL(ENABLE_XBD4,test "$enable_xbd4" = "yes")
 AC_SUBST(XBD4)
 
 AC_ARG_ENABLE(nhd0,
@@ -451,7 +451,7 @@ AC_ARG_ENABLE(nhd0,
 	[case "${enableval}" in
 		yes) NHD0=nhd0 ;;
 	esac], [enable_nhd0=no])
-AM_CONDITIONAL(ENABLE_NHD0,test "$enable_nhd0" = "yes")
+TDT_CONDITIONAL(ENABLE_NHD0,test "$enable_nhd0" = "yes")
 AC_SUBST(NHD0)
 
 AC_ARG_ENABLE(nhd1,
@@ -459,7 +459,7 @@ AC_ARG_ENABLE(nhd1,
 	[case "${enableval}" in
 		yes) NHD1=nhd1 ;;
 	esac], [enable_nhd1=no])
-AM_CONDITIONAL(ENABLE_NHD1,test "$enable_nhd1" = "yes")
+TDT_CONDITIONAL(ENABLE_NHD1,test "$enable_nhd1" = "yes")
 AC_SUBST(NHD1)
 
 AC_ARG_ENABLE(nhd2,
@@ -467,7 +467,7 @@ AC_ARG_ENABLE(nhd2,
 	[case "${enableval}" in
 		yes) NHD2=nhd2 ;;
 	esac], [enable_nhd2=no])
-AM_CONDITIONAL(ENABLE_NHD2,test "$enable_nhd2" = "yes")
+TDT_CONDITIONAL(ENABLE_NHD2,test "$enable_nhd2" = "yes")
 AC_SUBST(NHD2)
 
 AC_ARG_ENABLE(vdr1722,
@@ -475,7 +475,7 @@ AC_ARG_ENABLE(vdr1722,
 	[case "${enableval}" in
 		yes) VDR1722=vdr1722 ;;
 	esac],[enable_vdr1722=no])
-AM_CONDITIONAL(ENABLE_VDR1722,test "$enable_vdr1722" = "yes")
+TDT_CONDITIONAL(ENABLE_VDR1722,test "$enable_vdr1722" = "yes")
 AC_SUBST(VDR1722)
 
 AC_ARG_ENABLE(vdr1727,
@@ -483,7 +483,7 @@ AC_ARG_ENABLE(vdr1727,
 	[case "${enableval}" in
 		yes) VDR1722=vdr1727 ;;
 	esac],[enable_vdr1727=no])
-AM_CONDITIONAL(ENABLE_VDR1727,test "$enable_vdr1727" = "yes")
+TDT_CONDITIONAL(ENABLE_VDR1727,test "$enable_vdr1727" = "yes")
 AC_SUBST(VDR1727)
 
 AC_SUBST(CFLAGS)
@@ -505,6 +505,10 @@ AC_ARG_WITH(hostprefix,
 	[  --with-hostprefix=DIR   prefix for host files [[PREFIX/host]]],
 	[hostprefix="$with_hostprefix"],[hostprefix="${prefix}/host"])
 
+AC_ARG_WITH(workprefix,
+	[  --with-workprefix=DIR   prefix for work files [[PREFIX/work]]],
+	[workprefix="$with_workprefix"],[workprefix="${prefix}/work"])
+
 AC_ARG_WITH(bootprefix,
 	[  --with-bootprefix=DIR   prefix for boot files [[PREFIX/cdkroot-tftpboot]]],
 	[bootprefix="$with_bootprefix"],[bootprefix="${prefix}/cdkroot-tftpboot"])
@@ -524,11 +528,19 @@ AC_ARG_WITH(updatehttpprefix,
 buildprefix=`pwd`
 AC_SUBST(targetprefix)
 AC_SUBST(hostprefix)
+AC_SUBST(workprefix)
 AC_SUBST(buildprefix)
 AC_SUBST(bootprefix)
 AC_SUBST(serversupport)
 AC_SUBST(customizationsdir)
 AC_SUBST(updatehttpprefix)
+
+packagingtmpdir=$buildprefix/packagingtmpdir
+ipkgbuilddir=$buildprefix/ipkgbuild
+PKDIR=$packagingtmpdir
+AC_SUBST(packagingtmpdir)
+AC_SUBST(ipkgbuilddir)
+AC_SUBST(PKDIR)
 
 AC_ARG_WITH(checkImage,
 	[  --with-checkImage=[[none,rename,warn]]	How/if to invoke checkImage [[none]]],
@@ -650,6 +662,7 @@ AC_SUBST(hostappsdir)
 AC_SUBST(gnuserver)
 AC_SUBST(defaultserver)
 AC_SUBST(archivedir)
+AC_SUBST(srcdir)
 
 AC_PATH_PROG(M4,m4,no)
 if test "$M4" = "no"; then
@@ -843,7 +856,7 @@ AC_SUBST(DRPMBUILD)
 
 AC_SUBST(DOWNLOAD_FOR_SMART)
 AC_SUBST(SMART_DOWNLOAD_RULES)
-AM_SUBST_NOTMAKE(SMART_DOWNLOAD_RULES)
+dnl AM_SUBST_NOTMAKE(SMART_DOWNLOAD_RULES)
 
 #
 # summary
@@ -919,8 +932,48 @@ AC_SUBST(TUXBOX_CUSTOMIZE)
 TUXBOX_TOUCH='[@[ "x$*" = "x" ] && touch $@ || true]'
 AC_SUBST(TUXBOX_TOUCH)
 
+ac_subst_vars='m4_set_dump([_AC_SUBST_VARS], m4_newline)'
+echo $ac_subst_vars |perl -pe 's/ /\n/g' |perl -pe 's/(.*)/\1 = @\1@/' > Config.in
+
 AC_CONFIG_FILES([
-Makefile
+Makefile\
+:Config.in\
+:Makefile.in\
+:make/buildenv.mk\
+:packaging.mk\
+:smart-rules.mk\
+:make/archive-specs.mk\
+:make/hostapps.mk\
+:make/u-boot.mk\
+:make/linux-kernel.mk\
+:make/bare-os.mk\
+:make/bootstrap.mk\
+:make/root-etc.mk\
+:make/busybox.mk\
+:make/contrib-libs.mk\
+:make/contrib-apps-specs.mk\
+:make/contrib-apps.mk\
+:make/net-apps.mk\
+:make/misc_tools.mk\
+:make/enigma2-plugins.mk\
+:make/enigma2-nightly.mk\
+:make/externe-plugins.mk\
+:make/externe-skins.mk\
+:make/xbmc-nightly.mk\
+:make/enigma2-pli-nightly.mk\
+:make/neutrino.mk\
+:make/neutrino_hd2.mk\
+:make/yaud.mk\
+:make/misc-specs.mk\
+:make/cleantargets.mk\
+:make/tags.mk\
+:make/smart_release.mk\
+:make/smart_release_xbmc.mk\
+:make/release_neutrino.mk\
+:make/release_neutrino_nightly.mk\
+:make/smart_release_vdr.mk\
+:make/vdr.mk\
+:make/update.mk
 ], [mv Makefile Makefile.pre; ./smart-rules.pl Makefile.pre])
 
 # AC_CONFIG_COMMANDS([rules-downcheck-chmod],[chmod +x rules-downcheck.pl])

@@ -2,6 +2,13 @@
 # Make Extern-Skins
 #
 #
+BEGIN[[
+e2skin
+  git
+  {PN}
+  git://github.com/schpuntik/enigma2-skins-sh4.git:b=master
+;
+]]END
 
 DESCRIPTION_e2skin := Skins for Enigma2
 

@@ -138,7 +138,7 @@ $(DEPDIR)/release_neutrino: $(DEPDIR)/%release_neutrino:
 	$(if $(UFS922),cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/ufs922_fan/fan_ctrl.ko $(prefix)/release_neutrino/lib/modules/)
 
 
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 	echo "Amiko" > $(prefix)/release_neutrino/etc/hostname
 	rm -f $(prefix)/release_neutrino/sbin/halt
 	cp -f $(targetprefix)/sbin/halt $(prefix)/release_neutrino/sbin/
@@ -185,7 +185,7 @@ if ENABLE_SPARK
 	rm -f $(prefix)/release_neutrino/bin/gotosleep
 
 else
-if ENABLE_SPARK7162
+ifdef ENABLE_SPARK7162
 
 	echo "spark7162" > $(prefix)/release_neutrino/etc/hostname
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/aotom/aotom.ko $(prefix)/release_neutrino/lib/modules/
@@ -199,7 +199,7 @@ if ENABLE_SPARK7162
 	rm -f $(prefix)/release_neutrino/bin/gotosleep
 
 else
-if ENABLE_HL101
+ifdef ENABLE_HL101
 
 	echo "hl101" > $(prefix)/release_neutrino/etc/hostname
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/proton/proton.ko $(prefix)/release_neutrino/lib/modules/
@@ -248,12 +248,12 @@ else
 endif
 endif
 endif
-if !ENABLE_SPARK
-if !ENABLE_SPARK7162
+ifdef !ENABLE_SPARK
+ifdef !ENABLE_SPARK7162
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/cic/*.ko $(prefix)/release_neutrino/lib/modules/
 endif
 endif
-if ENABLE_PLAYER179
+ifdef ENABLE_PLAYER179
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stm_v4l2.ko $(prefix)/release_neutrino/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmvbi.ko $(prefix)/release_neutrino/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmvout.ko $(prefix)/release_neutrino/lib/modules/
@@ -287,7 +287,7 @@ if ENABLE_PLAYER179
 	done
 endif
 
-if ENABLE_PLAYER191
+ifdef ENABLE_PLAYER191
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stm_v4l2.ko $(prefix)/release_neutrino/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmvbi.ko $(prefix)/release_neutrino/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmvout.ko $(prefix)/release_neutrino/lib/modules/
@@ -343,7 +343,7 @@ endif
 	$(INSTALL_DIR) $(prefix)/release_neutrino/usr/lib
 	cp -p $(targetprefix)/usr/sbin/vsftpd $(prefix)/release_neutrino/usr/bin/
 
-if ENABLE_HL101
+ifdef ENABLE_HL101
 	cp -dp $(buildprefix)/root/etc/lircd_hl101.conf $(prefix)/release_neutrino/etc/lircd.conf
 	cp -dp $(targetprefix)/usr/bin/lircd $(prefix)/release_neutrino/usr/bin/
 	cp -dp $(targetprefix)/usr/lib/liblirc* $(prefix)/release_neutrino/usr/lib/

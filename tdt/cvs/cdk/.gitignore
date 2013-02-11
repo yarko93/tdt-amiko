@@ -115,6 +115,8 @@ pycrypto-*
 Imaging-*
 pyusb-*
 RPMS
+!Makefile.in
+!acinclude.m4
 Makefile
 Makefile.pre
 SRPMS

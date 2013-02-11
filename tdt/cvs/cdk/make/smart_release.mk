@@ -1,6 +1,30 @@
 #
 # INIT-SCRIPTS customized
 #
+BEGIN[[
+init_scripts
+  0.6
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/inittab
+  nothing:file://../root/release/hostname
+  nothing:file://../root/release/inetd
+# for 'nothing:' only 'cp' is executed so '*' is ok.
+  nothing:file://../root/release/initmodules_*
+  nothing:file://../root/release/halt_*
+  nothing:file://../root/release/mountall
+  nothing:file://../root/release/mountsysfs
+  nothing:file://../root/release/networking
+  nothing:file://../root/release/rc
+  nothing:file://../root/release/reboot
+  nothing:file://../root/release/sendsigs
+  nothing:file://../root/release/telnetd
+  nothing:file://../root/release/syslogd
+  nothing:file://../root/release/crond
+  nothing:file://../root/release/umountfs
+  nothing:file://../root/release/lircd
+;
+]]END
 
 DESCRIPTION_init_scripts = init scripts and rules for system start
 init_scripts_initd_files = \
@@ -87,6 +111,21 @@ $(DEPDIR)/fonts-extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fon
 #
 # 3G MODEMS
 #
+BEGIN[[
+modem_scripts
+  0.3
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/ppp/ip-*
+  nothing:file://../root/usr/bin/modem.sh
+  nothing:file://../root/usr/bin/modemctrl.sh
+  nothing:file://../root/etc/modem.conf
+  nothing:file://../root/etc/modem.list
+  nothing:file://../root/etc/55-modem.rules
+  nothing:file://../root/etc/30-modemswitcher.rules
+;
+]]END
+
 DESCRIPTION_modem_scripts = utils to setup 3G modems
 RDEPENDS_modem_scripts = pppd usb_modeswitch iptables iptables-dev
 
@@ -116,13 +155,13 @@ SRC_URI_driver_ptinp = unknown
 $(DEPDIR)/driver-ptinp:
 	$(start_build)
 	mkdir -p $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0209),cp -dp $(archivedir)/ptinp/pti_209.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0210),cp -dp $(archivedir)/ptinp/pti_210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0211),cp -dp $(archivedir)/ptinp/pti_211.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko)
 endif
-if ENABLE_SPARK7162
+ifdef ENABLE_SPARK7162
 	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207s2.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0209),cp -dp $(archivedir)/ptinp/pti_209s2.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0210),cp -dp $(archivedir)/ptinp/pti_210s2.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
@@ -139,11 +178,11 @@ SRC_URI_driver_encrypt = unknown
 $(DEPDIR)/driver-encrypt:
 	$(start_build)
 	mkdir -p $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 	$(if $(P0210), cp -dp $(buildprefix)/root/release/encrypt_spark_stm24_0210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	$(if $(P0211), cp -dp $(buildprefix)/root/release/encrypt_spark_stm24_0211.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
 endif
-if ENABLE_SPARK7162	
+ifdef ENABLE_SPARK7162
 	$(if $(P0207), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0207.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	$(if $(P0209), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0209.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	$(if $(P0210), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
@@ -154,6 +193,16 @@ endif
 #
 # UDEV RULES
 #
+BEGIN[[
+udev_rules
+  0.2
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/60-dvb-ca.rules
+  nothing:file://../root/etc/90-cec_aotom.rules
+;
+]]END
+
 DESCRIPTION_udev_rules = custom udev rules
 RDEPENDS_udev_rules = udev
 
@@ -323,7 +372,7 @@ release_base: driver-ptinp driver-encrypt
 
 release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname
-if ENABLE_PY27
+ifdef ENABLE_PY27
 	echo "src/gz AR-P http://alien.sat-universum.de/2.7" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf
@@ -338,7 +387,7 @@ endif
 
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname
-if ENABLE_PY27
+ifdef ENABLE_PY27
 	echo "src/gz AR-P http://alien2.sat-universum.de/2.7" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf

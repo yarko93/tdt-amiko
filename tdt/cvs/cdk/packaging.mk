@@ -7,10 +7,6 @@ EXPORT_ENV = $(filter PARENT_PK, $(EXPORT_ALLENV))
 EXPORT_ENV += $(filter $(addsuffix _%, $(PACKAGE_PARAMS_LIST)), $(EXPORT_ALLENV))
 export $(EXPORT_ENV)
 
-packagingtmpdir := $(buildprefix)/packagingtmpdir
-ipkgbuilddir := $(buildprefix)/ipkgbuild
-PKDIR := $(packagingtmpdir)
-
 export packagingtmpdir
 export ipkgbuilddir
 IPKGBUILDDIR := $(ipkgbuilddir)

@@ -6,6 +6,14 @@ $(DEPDIR)/enigma2-plugins: enigma2_openwebif enigma2_networkbrowser openpli-plug
 #
 # enigma2-openwebif
 #
+BEGIN[[
+enigma2_openwebif
+  git
+  e2openplugin-OpenWebif
+  nothing:git://github.com/schpuntik/e2openplugin-OpenWebif.git
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_enigma2_openwebif = "open webinteface plugin for enigma2 by openpli team"
 PKGR_enigma2_openwebif = r1
@@ -31,6 +39,15 @@ $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 #
 # enigma2-networkbrowser
 #
+BEGIN[[
+enigma2_networkbrowser
+  git
+  {PN}-{PV}
+  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/plugins-enigma2:sub=networkbrowser
+  patch:file://{PN}-support_autofs.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_enigma2_networkbrowser = "networkbrowser plugin for enigma2"
 

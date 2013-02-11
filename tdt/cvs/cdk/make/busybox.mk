@@ -1,6 +1,19 @@
 #
 # busybox
 #
+BEGIN[[
+busybox
+  1.20.2
+  {PN}-{PV}
+  extract:http://www.{PN}.net/downloads/{PN}-{PV}.tar.bz2
+  patch:file://{PN}-{PV}-kernel_ver.patch
+  patch:file://{PN}-{PV}-ntpd.patch
+  patch:file://{PN}-{PV}-pkg-config-selinux.patch
+  patch:file://{PN}-{PV}-sys-resource.patch
+  make:install:CONFIG_PREFIX=PKDIR
+;
+]]END
+
 $(DEPDIR)/busybox.do_prepare: $(DEPENDS_busybox)
 	$(PREPARE_busybox)
 	touch $@
