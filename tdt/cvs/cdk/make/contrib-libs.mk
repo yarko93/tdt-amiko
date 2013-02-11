@@ -2617,9 +2617,9 @@ $(DEPDIR)/%pyusb: $(DEPDIR)/pyusb.do_compile
 #
 BEGIN[[
 pyopenssl
-  0.9
+  0.11
   pyOpenSSL-{PV}
-  extract:http://sourceforge.net/projects/pyopenssl/files/{PN}/{PV}/pyOpenSSL-{PV}.tar.gz
+  extracthttp://launchpad.net/pyopenssl/main/{PV}/+download/pyOpenSSL-{PV}.tar.gz
 ;
 ]]END
 
