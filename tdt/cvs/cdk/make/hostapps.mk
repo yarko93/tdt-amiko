@@ -14,7 +14,7 @@ hostapps: $(hostappsdir)/config.status
 
 BEGIN[[
 ccache
-  2.4
+  3.1.8
   {PN}-{PV}
   extract:http://samba.org/ftp/{PN}/{PN}-{PV}.tar.gz
   make:install:DESTDIR=HOST
