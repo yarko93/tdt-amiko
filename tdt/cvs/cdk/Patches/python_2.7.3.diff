@@ -48,7 +48,18 @@ diff -urN Python-2.7.3/configure.in ltib/rpm/BUILD/Python-2.7.3/configure.in
 +            [Define to 'int' if <sys/socket.h> does not define.]),[
  #ifdef HAVE_SYS_TYPES_H
  #include <sys/types.h>
-
+ #endif
+--- python-2.7.3.org/Include/pyport.h	2012-04-10 01:07:29.000000000 +0200
++++ python-2.7.3/Include/pyport.h	2012-11-18 13:32:01.396962900 +0100
+@@ -846,7 +846,7 @@
+  * rather than waiting for integer multiplication to trigger bogus
+  * overflows.
+  */
+-#error "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)."
++/* #error "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)." */
+ #endif
+ 
+ #ifdef __cplusplus
 --- Python-2.7.3.orig/Lib/distutils/command/build_ext.py	2010-09-10 16:03:17.000000000 -0400
 +++ Python-2.7.3/Lib/distutils/command/build_ext.py	2010-12-26 10:07:28.492632349 -0500
 @@ -438,7 +438,9 @@
