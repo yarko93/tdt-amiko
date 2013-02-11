@@ -584,7 +584,7 @@ $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
 #
 BEGIN[[
 libfribidi
-  0.10.4
+  0.19.5
   fribidi-{PV}
   extract:http://fribidi.org/download/fribidi-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
