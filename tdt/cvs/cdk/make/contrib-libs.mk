@@ -4894,9 +4894,9 @@ $(DEPDIR)/%libupnp: $(DEPDIR)/libupnp.do_compile
 #
 BEGIN[[
 rarfs
-  0.0.10
+  0.1.1
   {PN}-{PV}
-  extract:http://sourceforge.net/projects/{PN}/files/latest/download/{PN}-{PV}.tar.gz
+  extract:http://sourceforge.net/projects/{PN}/files/{PN}/{PV}/{PN}-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
 ;
 ]]END
