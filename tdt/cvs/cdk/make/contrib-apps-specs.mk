@@ -46,7 +46,7 @@ FILES_sysvinit = \
 /sbin/shutdown \
 /sbin/reboot
 
-SYSVINIT_VERSION := 2.86-10
+SYSVINIT_VERSION := 2.86-15
 SYSVINIT_SPEC := stm-target-$(SYSVINIT).spec
 SYSVINIT_SPEC_PATCH :=
 SYSVINIT_PATCHES :=
