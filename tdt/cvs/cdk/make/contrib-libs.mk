@@ -2619,7 +2619,7 @@ BEGIN[[
 pyopenssl
   0.11
   pyOpenSSL-{PV}
-  extracthttp://launchpad.net/pyopenssl/main/{PV}/+download/pyOpenSSL-{PV}.tar.gz
+  extract:http://launchpad.net/pyopenssl/main/{PV}/+download/pyOpenSSL-{PV}.tar.gz
 ;
 ]]END
 
