@@ -586,7 +586,7 @@ BEGIN[[
 libfribidi
   0.19.5
   fribidi-{PV}
-  extract:http://fribidi.org/download/fribidi-{PV}.tar.gz
+  extract:http://fribidi.org/download/fribidi-{PV}.tar.bz2
   make:install:DESTDIR=PKDIR
 ;
 ]]END
