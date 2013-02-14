@@ -25,40 +25,10 @@ typedef struct RemoteControl_s {
   tLongKeyPressSupport * LongKeyPressSupport;
 } RemoteControl_t;
 
-#if 0
-extern RemoteControl_t Ufs910_1W_RC;
-extern RemoteControl_t Ufs910_14W_RC;
-extern RemoteControl_t Tf7700_RC;
-extern RemoteControl_t Hl101_RC;
-extern RemoteControl_t Vip2_RC;
-extern RemoteControl_t UFS922_RC;
-extern RemoteControl_t HDBOX_RC;
-extern RemoteControl_t Hs5101_RC;
-extern RemoteControl_t UFS912_RC;
-#endif
 extern RemoteControl_t Spark_RC;
-#if 0
-extern RemoteControl_t Adb_Box_RC;
-extern RemoteControl_t Cuberevo_RC;
-#endif
 
 static RemoteControl_t * AvailableRemoteControls[] = {
-#if 0
-	&Ufs910_1W_RC,
-	&Ufs910_14W_RC,
-	&Tf7700_RC,
-	&Hl101_RC,
-	&Vip2_RC,
-	&UFS922_RC,
-	&HDBOX_RC,
-	&Hs5101_RC,
-	&UFS912_RC,
-#endif
 	&Spark_RC,
-#if 0
-	&Adb_Box_RC,
-	&Cuberevo_RC,
-#endif
 	NULL
 };
 

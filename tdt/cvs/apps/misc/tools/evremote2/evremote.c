@@ -314,104 +314,9 @@ void *detectKeyUpTask(void* dummy)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#if 0
-int getKathreinUfs910BoxType() {
-    char vType;
-    int vFdBox = open("/proc/boxtype", O_RDONLY);
-
-    read (vFdBox, &vType, 1);
-
-    close(vFdBox);
-
-    return vType=='0'?0:vType=='1'||vType=='3'?1:-1;
-}
-#endif
-
 int getModel()
 {
-#if 0
-    int         vFd             = -1;
-    const int   cSize           = 128;
-    char        vName[129]      = "Unknown";
-    int         vLen            = -1;
-#endif
     eBoxType    vBoxType        = Spark;
-#if 0
-    vFd = open("/proc/stb/info/model", O_RDONLY);
-    vLen = read (vFd, vName, cSize);
-
-    close(vFd);
-
-    if(vLen > 0) {
-        vName[vLen-1] = '\0';
-
-        printf("Model: %s\n", vName);
-
-        if(!strncasecmp(vName,"ufs910", 6)) {
-            switch(getKathreinUfs910BoxType())
-            {
-                case 0:
-                    vBoxType = Ufs910_1W;
-                    break;
-                case 1:
-                    vBoxType = Ufs910_14W;
-                    break;
-                default:
-                    vBoxType = Unknown;
-                    break;
-            }
-        } else if(!strncasecmp(vName,"ufs922", 6))
-            vBoxType = Ufs922;
-        else if(!strncasecmp(vName,"tf7700hdpvr", 11))
-            vBoxType = Tf7700;
-        else if(!strncasecmp(vName,"hl101", 5))
-            vBoxType = Hl101;
-        else if(!strncasecmp(vName,"vip1-v2", 7))
-            vBoxType = Vip2;
-        else if(!strncasecmp(vName,"vip2-v1", 7))
-            vBoxType = Vip2;
-        else if(!strncasecmp(vName,"hdbox", 5))
-            vBoxType = HdBox;
-        else if(!strncasecmp(vName,"atevio7500", 5))
-            vBoxType = HdBox;
-		else if(!strncasecmp(vName,"octagon1008", 11))
-            vBoxType = HdBox;
-		else if(!strncasecmp(vName,"hs7810a", 7))
-            vBoxType = HdBox;
-		else if(!strncasecmp(vName,"hs7110", 6))
-            vBoxType = HdBox;
-		else if(!strncasecmp(vName,"whitebox", 8))
-            vBoxType = HdBox;
-        else if(!strncasecmp(vName,"hs5101", 6))
-            vBoxType = Hs5101;
-        else if(!strncasecmp(vName,"adb_box", 7))
-            vBoxType = Adb_Box;
-        else if(!strncasecmp(vName,"ufs912", 5))
-            vBoxType = Ufs912;
-        else if(!strncasecmp(vName,"ufs913", 5))
-            vBoxType = Ufs912;
-        else if(!strncasecmp(vName,"spark", 5))
-        {
-    		vBoxType = Spark;
-        }
-        else if(!strncasecmp(vName,"spark7162", 9))
-        {
-    		vBoxType = Spark;
-        }
-        else if ((!strncasecmp(vName,"cuberevo", 8)) ||
-                 (!strncasecmp(vName,"cuberevo-mini", 13)) ||
-                 (!strncasecmp(vName,"cuberevo-mini2", 14)) ||
-                 (!strncasecmp(vName,"cuberevo-mini-fta", 17)) ||
-                 (!strncasecmp(vName,"cuberevo-250hd", 14)) ||
-                 (!strncasecmp(vName,"cuberevo-2000hd", 15)) ||
-                 (!strncasecmp(vName,"cuberevo-9500hd", 15)))
-        {
-    		vBoxType = Cuberevo;
-        }
-        else
-            vBoxType = Unknown;
-    }
-#endif
     printf("vBoxType: %d\n", vBoxType);
 
     return vBoxType;
@@ -441,11 +346,7 @@ int main (int argc, char* argv[])
      * evremote. so lets ignore it ...
      */
     ignoreSIGPIPE();
-#if 0
-    vBoxType = getModel();
 
-    if(vBoxType != Unknown)
-#endif
     if(!getEventDevice())
     {
         printf("unable to open event device\n");
@@ -501,17 +402,6 @@ int main (int argc, char* argv[])
 
     if (vButtonExtensionCounter > 0)
         ((RemoteControl_t*)context.r)->RemoteControl = vButtonExtension;
-    // TODO
-    //if(((RemoteControl_t*)context.r)->RemoteControl == NULL && vButtonExtensionCounter > 0)
-        //((RemoteControl_t*)context.r)->RemoteControl = vButtonExtension;
-    //else if (vButtonExtensionCounter > 0) {
-        //int vRemoteControlSize    = sizeof(((RemoteControl_t*)context.r)->RemoteControl) / sizeof(tButton);
-        //int vRemoteControlExtSize = vButtonExtensionCounter;
-        //((RemoteControl_t*)context.r)->RemoteControl = malloc((vRemoteControlSize + vRemoteControlExtSize - 1)*sizeof(tButton));
-    //}
-
-    //printf("RemoteControl Map:\n");
-    //printKeyMap((tButton*)((RemoteControl_t*)context.r)->RemoteControl);
 
     printf("Supports Long KeyPress: %d\n", ((RemoteControl_t*)context.r)->supportsLongKeyPress);
     if(((RemoteControl_t*)context.r)->supportsLongKeyPress)
