@@ -347,7 +347,7 @@ define postinst_driver
 depmod
 endef
 
-$(DEPDIR)/driver: $(DEPENDS_dirver) $(driverdir)/Makefile linux-kernel.do_compile
+$(DEPDIR)/driver: $(DEPENDS_driver) $(driverdir)/Makefile linux-kernel.do_compile
 #	$(MAKE) -C $(KERNEL_DIR) $(MAKE_OPTS) ARCH=sh modules_prepare
 	$(start_build)
 	$(eval export PKGV_driver = $(PKGV_driver)$(KERNELSTMLABEL))
