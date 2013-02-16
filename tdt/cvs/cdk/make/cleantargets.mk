@@ -82,6 +82,7 @@ distclean-local:
 	-rm -rf $(kernelprefix)/u-boot
 	-rm -rf $(STGFB_DIR)
 	-$(DISTCLEANUP)
+	-rm Makefile
 
 #
 # RPM stuff
