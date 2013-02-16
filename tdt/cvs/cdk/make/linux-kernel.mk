@@ -379,12 +379,14 @@ $(DEPDIR)/driver: $(DEPENDS_driver) $(driverdir)/Makefile linux-kernel.do_compil
 	$(toflash_build)
 	touch $@
 
-driver-clean:
+# overwrite make driver-distclean
+define DISTCLEANUP_driver
 	rm -f $(DEPDIR)/driver
 	rm -f $(buildprefix)/autoconf_rtl8192c_usb_linux.h
 	$(MAKE) -C $(driverdir) ARCH=sh \
 		KERNEL_LOCATION=$(buildprefix)/$(KERNEL_DIR) \
 		distclean
+endef
 
 #------------------- Helper
 
