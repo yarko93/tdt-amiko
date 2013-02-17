@@ -29,8 +29,20 @@
 #	$(toflash_build)
 #	[ "x$*" = "x" ] && touch $@ || true
 
-#misc-tools-clean:
-#	-$(MAKE) -C $(appsdir)/misc/tools distclean
+misc-tools-clean: \
+	devinit-clean \
+	evremote2-clean \
+	fp_control-clean \
+	gitVCInfo-clean \
+	hotplug-clean \
+	libeplayer3-clean \
+	libmme_host-clean \
+	libmmeimage-clean \
+	showiframe-clean \
+	stfbcontrol-clean \
+	streamproxy-clean \
+	ustslave-clean \
+	eplayer4-clean
 
 
 
