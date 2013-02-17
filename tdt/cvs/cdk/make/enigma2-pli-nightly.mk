@@ -41,7 +41,7 @@ ifdef ENABLE_E2PD6
 endif
 
 ifdef ENABLE_E2PD7
-  git://github.com/technic/amiko-e2-pli.git:b=last
+  git://github.com:schpuntik/enigma2-pli.git;b=last;protocol=ssh
 endif
 
 ifdef ENABLE_E2PD8
