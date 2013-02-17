@@ -94,8 +94,4 @@ BEGIN[[
 #  {PN}-{PV}
 #  extract:file://{PN}-{PV}.tar.gz
 #;
-  git://code.google.com/p/taapat-plugins:protocol=https
-#  git://github.com/schpuntik/enigma2-plugins-sh4.git
-  git://bitbucket.org:Taapat/enigma2-pli-arp.git;b=master;protocol=ssh
-#  git://github.com/technic/amiko-e2-pli.git:b=last
 ]]END
