@@ -2184,7 +2184,7 @@ FILES_libxml2 = \
 /usr/lib/libxml2* \
 $(PYTHON_DIR)/site-packages/*libxml2.py
 
-$(DEPDIR)/libxml2.do_prepare: bootstrap $(DEPENDS_libxml2)
+$(DEPDIR)/libxml2.do_prepare: bootstrap python $(DEPENDS_libxml2)
 	$(PREPARE_libxml2)
 	touch $@
 
