@@ -566,17 +566,9 @@ AC_ARG_WITH(appsdir,
 	[  --with-appsdir=DIR      apps dir from cvs [[[CVS/]apps/]]],
 	[appsdir="$with_appsdir"],[appsdir="NONE"])
 
-AC_ARG_WITH(bootdir,
-	[  --with-bootdir=DIR      boot dir from cvs [[[CVS/]boot/]]],
-	[bootdir="$with_bootdir"],[bootdir="NONE"])
-
 AC_ARG_WITH(driverdir,
 	[  --with-driverdir=DIR    driver dir from cvs [[[CVS/]driver]]],
 	[driverdir="$with_driverdir"],[driverdir="NONE"])
-
-AC_ARG_WITH(hostappsdir,
-	[  --with-hostappsdir=DIR  hostapps dir from cvs [[[CVS/]hostapps]]],
-	[hostappsdir="$with_hostappsdir"],[hostappsdir="NONE"])
 
 AC_ARG_WITH(gnuserver,
 	[  --with-gnuserver=ADDRESS   the gnu server for gnu-stuff (without ftp://)],
@@ -590,27 +582,15 @@ if test "$cvsdir" = "NONE"; then
 	if test "$appsdir" = "NONE"; then
 		appsdir="$buildprefix/apps"
 	fi
-	if test "$bootdir" = "NONE"; then
-		bootdir="$buildprefix/boot"
-	fi
 	if test "$driverdir" = "NONE"; then
 		driverdir="$buildprefix/driver"
-	fi
-	if test "$hostappsdir" = "NONE"; then
-		hostappsdir="$buildprefix/hostapps"
 	fi
 else
 	if test "$appsdir" = "NONE"; then
 		appsdir="$cvsdir/apps"
 	fi
-	if test "$bootdir" = "NONE"; then
-		bootdir="$cvsdir/boot"
-	fi
 	if test "$driverdir" = "NONE"; then
 		driverdir="$cvsdir/driver"
-	fi
-	if test "$hostappsdir" = "NONE"; then
-		hostappsdir="$cvsdir/hostapps"
 	fi
 fi
 
@@ -628,15 +608,6 @@ else
 	AC_MSG_RESULT([yes])
 fi
 
-AC_MSG_CHECKING([for boot directory])
-if test ! -d "$bootdir/u-boot-tufsbox" ; then
-	AC_MSG_WARN([bootdir $bootdir not found])
-	bootdir="missing_bootdir"
-	dircheck="fail"
-else
-	AC_MSG_RESULT([yes])
-fi
-
 AC_MSG_CHECKING([for driver directory])
 if test ! -f "$driverdir/Makefile" ; then
 	AC_MSG_WARN([driverdir $driverdir not found])
@@ -646,19 +617,8 @@ else
 	AC_MSG_RESULT([yes])
 fi
 
-AC_MSG_CHECKING([for hostapps directory])
-if test ! -f "$hostappsdir/configure.ac" ; then
-	AC_MSG_WARN([hostappsdir $hostappsdir not found])
-	hostappsdir="missing_hostappsdir"
-	dircheck="fail"
-else
-	AC_MSG_RESULT([yes])
-fi
-
 AC_SUBST(appsdir)
-AC_SUBST(bootdir)
 AC_SUBST(driverdir)
-AC_SUBST(hostappsdir)
 AC_SUBST(gnuserver)
 AC_SUBST(defaultserver)
 AC_SUBST(archivedir)
@@ -887,9 +847,7 @@ data partition size         : $DATA_PARTITION_SIZE
 serversupport               : $serversupport
 checkImage                  : $CHECKIMAGE_BEHAVIOR
 target apps directory       : $appsdir
-boot directory              : $bootdir
 driver directory            : $driverdir
-host apps directory         : $hostappsdir
 customization directory     : $customizationsdir
 archive directory           : $archivedir
 spider-box hl101 stuff      : $enable_hl101
@@ -941,7 +899,6 @@ Makefile\
 :Makefile.in\
 :make/buildenv.mk\
 :packaging.mk\
-:smart-rules.mk\
 :make/archive-specs.mk\
 :make/hostapps.mk\
 :make/u-boot.mk\

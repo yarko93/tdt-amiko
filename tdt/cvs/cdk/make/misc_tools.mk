@@ -29,8 +29,20 @@
 #	$(toflash_build)
 #	[ "x$*" = "x" ] && touch $@ || true
 
-#misc-tools-clean:
-#	-$(MAKE) -C $(appsdir)/misc/tools distclean
+misc-tools-clean: \
+	devinit-clean \
+	evremote2-clean \
+	fp_control-clean \
+	gitVCInfo-clean \
+	hotplug-clean \
+	libeplayer3-clean \
+	libmme_host-clean \
+	libmmeimage-clean \
+	showiframe-clean \
+	stfbcontrol-clean \
+	streamproxy-clean \
+	ustslave-clean \
+	eplayer4-clean
 
 
 
@@ -45,6 +57,18 @@ devinit
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_devinit
+	cd $(DIR_devinit) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/devinit
+	rm -f $(DIR_devinit)
+endef
+define DEPSCLEANUP_devinit
+	cd $(DIR_devinit) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/devinit.do_compile
+endef
 
 DESCRIPTION_devinit = "devinit"
 SRC_URI_devinit = "https://code.google.com/p/tdt-amiko/"
@@ -71,7 +95,12 @@ $(DEPDIR)/%devinit: $(DEPDIR)/devinit.do_compile
 	$(get_git_version)
 	cd $(DIR_devinit) && \
 		$(INSTALL_devinit)
-#	@DISTCLEANUP_devinit@
+	CPPFLAGS="\
+	$(if $(SPARK), -DPLATFORM_SPARK) \
+	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
+	$(if $(HL101), -DPLATFORM_HL101) \
+	$(if $(PLAYER179), -DPLAYER179) \
+	$(if $(PLAYER191), -DPLAYER191)"
 	$(tocdk_build)
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
@@ -87,6 +116,18 @@ evremote2
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_evremote2
+	cd $(DIR_evremote2) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/evremote2
+	rm -f $(DIR_evremote2)
+endef
+define DEPSCLEANUP_evremote2
+	cd $(DIR_evremote2) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/evremote2.do_compile
+endef
 
 DESCRIPTION_evremote2 = "evremote2"
 SRC_URI_evremote2 = "https://code.google.com/p/tdt-amiko/"
@@ -114,7 +155,6 @@ $(DEPDIR)/%evremote2: $(DEPDIR)/evremote2.do_compile
 	$(get_git_version)
 	cd $(DIR_evremote2) && \
 		$(INSTALL_evremote2)
-#	@DISTCLEANUP_evremote2@
 	CPPFLAGS="\
 	$(if $(SPARK), -DPLATFORM_SPARK) \
 	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
@@ -136,6 +176,18 @@ fp_control
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_fp_control
+	cd $(DIR_fp_control) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/fp_control
+	rm -f $(DIR_fp_control)
+endef
+define DEPSCLEANUP_fp_control
+	cd $(DIR_fp_control) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/fp_control.do_compile
+endef
 
 DESCRIPTION_fp_control = "fp_control"
 SRC_URI_fp_control = "https://code.google.com/p/tdt-amiko/"
@@ -162,7 +214,6 @@ $(DEPDIR)/%fp_control: $(DEPDIR)/fp_control.do_compile
 	$(get_git_version)
 	cd $(DIR_fp_control) && \
 		$(INSTALL_fp_control)
-#	@DISTCLEANUP_fp_control@
 	CPPFLAGS="\
 	$(if $(SPARK), -DPLATFORM_SPARK) \
 	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
@@ -184,6 +235,18 @@ gitVCInfo
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_gitVCInfo
+	cd $(DIR_gitVCInfo) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/gitVCInfo
+	rm -f $(DIR_gitVCInfo)
+endef
+define DEPSCLEANUP_gitVCInfo
+	cd $(DIR_gitVCInfo) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/gitVCInfo.do_compile
+endef
 
 DESCRIPTION_gitVCInfo = "gitVCInfo"
 SRC_URI_gitVCInfo = "https://code.google.com/p/tdt-amiko/"
@@ -210,7 +273,12 @@ $(DEPDIR)/%gitVCInfo: $(DEPDIR)/gitVCInfo.do_compile
 	$(get_git_version)
 	cd $(DIR_gitVCInfo) && \
 		$(INSTALL_gitVCInfo)
-#	@DISTCLEANUP_gitVCInfo@
+	CPPFLAGS="\
+	$(if $(SPARK), -DPLATFORM_SPARK) \
+	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
+	$(if $(HL101), -DPLATFORM_HL101) \
+	$(if $(PLAYER179), -DPLAYER179) \
+	$(if $(PLAYER191), -DPLAYER191)"
 	$(tocdk_build)
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true
@@ -226,6 +294,18 @@ hotplug
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_hotplug
+	cd $(DIR_hotplug) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/hotplug
+	rm -f $(DIR_hotplug)
+endef
+define DEPSCLEANUP_hotplug
+	cd $(DIR_hotplug) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/hotplug.do_compile
+endef
 
 DESCRIPTION_hotplug = "hotplug"
 SRC_URI_hotplug = "https://code.google.com/p/tdt-amiko/"
@@ -252,7 +332,12 @@ $(DEPDIR)/%hotplug: $(DEPDIR)/hotplug.do_compile
 	$(get_git_version)
 	cd $(DIR_hotplug) && \
 		$(INSTALL_hotplug)
-#	@DISTCLEANUP_hotplug@
+	CPPFLAGS="\
+	$(if $(SPARK), -DPLATFORM_SPARK) \
+	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
+	$(if $(HL101), -DPLATFORM_HL101) \
+	$(if $(PLAYER179), -DPLAYER179) \
+	$(if $(PLAYER191), -DPLAYER191)"
 	$(tocdk_build)
 	$(toflash_build)
 	[ "x$*" = "x" ] && touch $@ || true#
@@ -268,6 +353,18 @@ libeplayer3
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_libeplayer3
+	cd $(DIR_libeplayer3) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/libeplayer3
+	rm -f $(DIR_libeplayer3)
+endef
+define DEPSCLEANUP_libeplayer3
+	cd $(DIR_libeplayer3) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/libeplayer3.do_compile
+endef
 
 DESCRIPTION_libeplayer3 = "libeplayer3"
 SRC_URI_libeplayer3 = "https://code.google.com/p/tdt-amiko/"
@@ -296,7 +393,6 @@ $(DEPDIR)/%libeplayer3: $(DEPDIR)/libeplayer3.do_compile
 	$(get_git_version)
 	cd $(DIR_libeplayer3) && \
 		$(INSTALL_libeplayer3)
-#	@DISTCLEANUP_libeplayer3@
 	CPPFLAGS="\
 	$(if $(SPARK), -DPLATFORM_SPARK) \
 	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
@@ -318,6 +414,18 @@ libmme_host
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_libmme_host
+	cd $(DIR_libmme_host) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/libmme_host
+	rm -f $(DIR_libmme_host)
+endef
+define DEPSCLEANUP_libmme_host
+	cd $(DIR_libmme_host) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/libmme_host.do_compile
+endef
 
 DESCRIPTION_libmme_host = "libmme-host"
 SRC_URI_libmme_host = "https://code.google.com/p/tdt-amiko/"
@@ -344,7 +452,6 @@ $(DEPDIR)/%libmme_host: $(DEPDIR)/libmme_host.do_compile
 	$(get_git_version)
 	cd $(DIR_libmme_host) && \
 		$(INSTALL_libmme_host)
-#	@DISTCLEANUP_libmme_host@
 	CPPFLAGS="\
 	$(if $(SPARK), -DPLATFORM_SPARK) \
 	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
@@ -366,6 +473,18 @@ libmmeimage
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_libmmeimage
+	cd $(DIR_libmmeimage) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/libmmeimage
+	rm -f $(DIR_libmmeimage)
+endef
+define DEPSCLEANUP_libmmeimage
+	cd $(DIR_libmmeimage) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/libmmeimage.do_compile
+endef
 
 DESCRIPTION_libmmeimage = "libmmeimage"
 SRC_URI_libmmeimage = "https://code.google.com/p/tdt-amiko/"
@@ -392,7 +511,6 @@ $(DEPDIR)/%libmmeimage: $(DEPDIR)/libmmeimage.do_compile
 	$(get_git_version)
 	cd $(DIR_libmmeimage) && \
 		$(INSTALL_libmmeimage)
-#	@DISTCLEANUP_libmmeimage@
 	CPPFLAGS="\
 	$(if $(SPARK), -DPLATFORM_SPARK) \
 	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
@@ -414,6 +532,18 @@ showiframe
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_showiframe
+	cd $(DIR_showiframe) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/showiframe
+	rm -f $(DIR_showiframe)
+endef
+define DEPSCLEANUP_showiframe
+	cd $(DIR_showiframe) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/showiframe.do_compile
+endef
 
 DESCRIPTION_showiframe = "showiframe"
 SRC_URI_showiframe = "https://code.google.com/p/tdt-amiko/"
@@ -440,7 +570,6 @@ $(DEPDIR)/%showiframe: $(DEPDIR)/showiframe.do_compile
 	$(get_git_version)
 	cd $(DIR_showiframe) && \
 		$(INSTALL_showiframe)
-#	@DISTCLEANUP_showiframe@
 	CPPFLAGS="\
 	$(if $(SPARK), -DPLATFORM_SPARK) \
 	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
@@ -462,6 +591,18 @@ stfbcontrol
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_stfbcontrol
+	cd $(DIR_stfbcontrol) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/stfbcontrol
+	rm -f $(DIR_stfbcontrol)
+endef
+define DEPSCLEANUP_stfbcontrol
+	cd $(DIR_stfbcontrol) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/stfbcontrol.do_compile
+endef
 
 DESCRIPTION_stfbcontrol = "stfbcontrol"
 SRC_URI_stfbcontrol = "https://code.google.com/p/tdt-amiko/"
@@ -488,7 +629,6 @@ $(DEPDIR)/%stfbcontrol: $(DEPDIR)/stfbcontrol.do_compile
 	$(get_git_version)
 	cd $(DIR_stfbcontrol) && \
 		$(INSTALL_stfbcontrol)
-#	@DISTCLEANUP_stfbcontrol@
 	CPPFLAGS="\
 	$(if $(SPARK), -DPLATFORM_SPARK) \
 	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
@@ -510,6 +650,18 @@ streamproxy
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_streamproxy
+	cd $(DIR_streamproxy) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/streamproxy
+	rm -f $(DIR_streamproxy)
+endef
+define DEPSCLEANUP_streamproxy
+	cd $(DIR_streamproxy) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/streamproxy.do_compile
+endef
 
 DESCRIPTION_streamproxy = "streamproxy"
 SRC_URI_streamproxy = "https://code.google.com/p/tdt-amiko/"
@@ -536,7 +688,6 @@ $(DEPDIR)/%streamproxy: $(DEPDIR)/streamproxy.do_compile
 	$(get_git_version)
 	cd $(DIR_streamproxy) && \
 		$(INSTALL_streamproxy)
-#	@DISTCLEANUP_streamproxy@
 	CPPFLAGS="\
 	$(if $(SPARK), -DPLATFORM_SPARK) \
 	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
@@ -558,6 +709,18 @@ ustslave
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_ustslave
+	cd $(DIR_ustslave) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/ustslave
+	rm -f $(DIR_ustslave)
+endef
+define DEPSCLEANUP_ustslave
+	cd $(DIR_ustslave) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/ustslave.do_compile
+endef
 
 DESCRIPTION_ustslave = "ustslave"
 SRC_URI_ustslave = "https://code.google.com/p/tdt-amiko/"
@@ -584,7 +747,6 @@ $(DEPDIR)/%ustslave: $(DEPDIR)/ustslave.do_compile
 	$(get_git_version)
 	cd $(DIR_ustslave) && \
 		$(INSTALL_ustslave)
-#	@DISTCLEANUP_ustslave@
 	CPPFLAGS="\
 	$(if $(SPARK), -DPLATFORM_SPARK) \
 	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
@@ -606,6 +768,18 @@ eplayer4
   make:install:DESTDIR=PKDIR
 ;
 ]]END
+
+define DISTCLEANUP_eplayer4
+	cd $(DIR_eplayer4) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/eplayer4
+	rm -f $(DIR_eplayer4)
+endef
+define DEPSCLEANUP_eplayer4
+	cd $(DIR_eplayer4) && \
+	$(MAKE) distclean
+	rm -f $(DEPDIR)/eplayer4.do_compile
+endef
 
 DESCRIPTION_eplayer4 = "eplayer4"
 SRC_URI_eplayer4 = "https://code.google.com/p/tdt-amiko/"
@@ -632,7 +806,6 @@ $(DEPDIR)/%eplayer4: $(DEPDIR)/eplayer4.do_compile
 	$(get_git_version)
 	cd $(DIR_eplayer4) && \
 		$(INSTALL_eplayer4)
-#	@DISTCLEANUP_eplayer4@
 	CPPFLAGS="\
 	$(if $(SPARK), -DPLATFORM_SPARK) \
 	$(if $(SPARK7162), -DPLATFORM_SPARK7162) \
