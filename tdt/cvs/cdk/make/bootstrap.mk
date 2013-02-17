@@ -450,7 +450,7 @@ $(CROSS_GCC_RPM) $(CROSS_CPP_RPM) $(CROSS_G++_RPM) $(CROSS_PROTOIZE_RPM) $(CROSS
 		$(if $(CROSS_MPC),$(CROSS_MPC)) \
 		$(if $(CROSS_LIBELF),$(CROSS_LIBELF)) \
 		$(if $(KERNELHEADERS),$(KERNELHEADERS)) \
-		linux-kernel-headers
+		kernel-headers
 	rpm $(DRPM) --nosignature --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(STM_RELOCATE)/devkit/sh4/target=$(targetprefix) $(word 1,$|) && \
 	rpm $(DRPM) --nosignature --ignorearch --nodeps --force -Uhv \
