@@ -2189,6 +2189,7 @@ $(DEPDIR)/libxml2.do_prepare: bootstrap python $(DEPENDS_libxml2)
 	touch $@
 
 $(DEPDIR)/libxml2.do_compile: $(DEPDIR)/libxml2.do_prepare
+	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd $(DIR_libxml2) && \
 		$(BUILDENV) \
 		./configure \
@@ -2208,6 +2209,7 @@ $(DEPDIR)/%libxml2: $(DEPDIR)/libxml2.do_compile
 	$(start_build)
 	cd $(DIR_libxml2) && \
 		$(INSTALL_libxml2) && \
+		sed -e "/^dependency_libs/ s,/usr/lib/libxml2.la,$(targetprefix)/usr/lib/libxml2.la,g" -i $(targetprefix)$(PYTHON_DIR)/site-packages/libxml2mod.la && \
 		sed -e "s,^prefix=,prefix=$(targetprefix)," < xml2-config > $(crossprefix)/bin/xml2-config && \
 		chmod 755 $(crossprefix)/bin/xml2-config
 	$(tocdk_build_start)
