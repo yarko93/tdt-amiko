@@ -724,7 +724,7 @@ BEGIN[[
 libid3tag
   0.15.1b
   {PN}-{PV}
-  extract:http://bent.latency.net/bent/darcs/{PN}-{PV}/src/{PN}-{PV}.tar.gz
+  extract:ftp://ftp.mars.org/pub/mpeg/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
   make:install:DESTDIR=PKDIR
 ;
