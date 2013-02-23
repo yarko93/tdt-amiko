@@ -2411,9 +2411,9 @@ $(DEPDIR)/%gdata: $(DEPDIR)/gdata.do_compile
 #
 BEGIN[[
 twisted
-  12.3.0
+  12.2.0
   Twisted-{PV}
-  extract:http://twistedmatrix.com/Releases/Twisted/12.3/Twisted-{PV}.tar.bz2
+  extract:http://twistedmatrix.com/Releases/Twisted/12.2/Twisted-{PV}.tar.bz2
 ;
 ]]END
 
