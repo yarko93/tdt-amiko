@@ -129,7 +129,8 @@ min-extras: \
 	enigma2_openwebif \
 	enigma2-plugins-sh4-networkbrowser \
 	$(addsuffix -openpli,$(openpli_plugin_distlist)) \
-	wireless_tools
+	wireless_tools \
+	enigma2-plugins-sh4
 	
 all-extras: \
 	usb_modeswitch \
@@ -139,6 +140,7 @@ all-extras: \
 	enigma2-plugins \
 	xupnpd \
 	ntfs_3g \
+	enigma2-plugins-sh4 \
 	wireless_tools \
 	enigma2-skins-sh4 \
 	ntpclient \
