@@ -3429,7 +3429,7 @@ BEGIN[[
 graphlcd
   git
   {PN}-{PV}
-  nothing:git://projects.vdr-developer.org/{PN}-base.git:r=a39f265732d0bc28cb66b58b5ecf1964a130d02b:b=touchcol
+  nothing:git://projects.vdr-developer.org/{PN}-base.git:r=281feef328f8e3772f7a0dde0a90c3a5260c334d:b=touchcol
   patch:file://{PN}.patch
   make:install:DESTDIR=PKDIR
 ;
