@@ -70,8 +70,6 @@ echo "-----------------------------------------------------------------------"
 echo "It's expected that an image was already build prior to this execution!"
 echo "-----------------------------------------------------------------------"
 
-$BASEDIR/flash/common/common.sh $BASEDIR/flash/common/
-
 echo "-----------------------------------------------------------------------"
 
 echo "Checking targets..."
