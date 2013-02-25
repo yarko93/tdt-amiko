@@ -255,7 +255,7 @@ $(DEPDIR)/%usb_modeswitch_data: $(DEPDIR)/usb_modeswitch_data.do_compile
 #
 BEGIN[[
 ntfs_3g
-  2012.1.15
+  2013.1.13
   ntfs-3g_ntfsprogs-{PV}
   extract:http://tuxera.com/opensource/ntfs-3g_ntfsprogs-{PV}.tgz
   make:install:DESTDIR=PKDIR
