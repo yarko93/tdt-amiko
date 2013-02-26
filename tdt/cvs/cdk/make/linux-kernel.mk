@@ -329,7 +329,8 @@ linux-kernel-distclean: $(KERNELHEADERS)-distclean
 BEGIN[[
 driver
   git
-  $(driverdir)
+  {PN}
+  plink:$(driverdir):{PN}
 ;
 ]]END
 DESCRIPTION_driver = Drivers for stm box
@@ -348,6 +349,7 @@ depmod
 endef
 
 $(DEPDIR)/driver: $(DEPENDS_driver) $(driverdir)/Makefile linux-kernel.do_compile
+	$(PREPARE_driver)
 #	$(MAKE) -C $(KERNEL_DIR) $(MAKE_OPTS) ARCH=sh modules_prepare
 	$(start_build)
 	$(get_git_version)
