@@ -1482,7 +1482,7 @@ $(DEPDIR)/%libdvdread: libdvdread.do_compile
 #
 BEGIN[[
 ffmpeg
-  1.1.2
+  1.1.3
   {PN}-{PV}
   extract:http://{PN}.org/releases/{PN}-{PV}.tar.gz
   patch:file://{PN}-1.0.patch
