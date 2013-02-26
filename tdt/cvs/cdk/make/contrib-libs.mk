@@ -2696,11 +2696,13 @@ $(PYTHON_DIR)/lib-tk \
 $(PYTHON_DIR)/lib2to3 \
 $(PYTHON_DIR)/logging \
 $(PYTHON_DIR)/multiprocessing \
-$(PYTHON_DIR)/plat-linux3 \
 $(PYTHON_DIR)/sqlite3 \
 $(PYTHON_DIR)/wsgiref \
+$(PYTHON_DIR)/xml \
+$(PYTHON_DIR)/plat-linux2 \
 /usr/include/python$(PYTHON_VERSION)/pyconfig.h \
-$(PYTHON_DIR)/xml
+$(PYTHON_DIR)/plat-linux3
+
 
 DESCRIPTION_python_ctypes = python ctypes module
 FILES_python_ctypes = \
