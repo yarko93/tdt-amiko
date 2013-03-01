@@ -34,7 +34,7 @@ $(DEPDIR)/%bzip2: $(DEPDIR)/bzip2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_bzip2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # MODULE-INIT-TOOLS
@@ -70,7 +70,7 @@ $(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS:%=root/etc/%) $
 	$(call adapted-etc-files,$(MODULE_INIT_TOOLS_ADAPTED_ETC_FILES))
 	$(call initdconfig,module-init-tools)
 #	@DISTCLEANUP_module_init_tools@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GREP
@@ -119,7 +119,7 @@ $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_grep@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # PPPD
@@ -169,7 +169,7 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
 	$(toflash_build)
 #	@DISTCLEANUP_pppd@
-	@[ "x$*" = "x" ] && touch $@ || true
+	@touch $@
 	
 #
 # USB MODESWITCH
@@ -208,7 +208,7 @@ $(DEPDIR)/%usb_modeswitch: $(DEPDIR)/usb_modeswitch.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch@
-	@[ "x$*" = "x" ] && touch $@ || true
+	@touch $@
 	
 
 #
@@ -248,7 +248,7 @@ $(DEPDIR)/%usb_modeswitch_data: $(DEPDIR)/usb_modeswitch_data.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch_data@
-	@[ "x$*" = "x" ] && touch $@ || true
+	@touch $@
 	
 #
 # NTFS-3G
@@ -296,7 +296,7 @@ $(DEPDIR)/%ntfs_3g: $(DEPDIR)/ntfs_3g.do_compile
 	$(tocdk_build)	
 	$(toflash_build)
 #	@DISTCLEANUP_ntfs_3g@
-	@[ "x$*" = "x" ] && touch $@ || true
+	@touch $@
 	
 
 #
@@ -331,7 +331,7 @@ $(DEPDIR)/%lsb: $(DEPDIR)/lsb.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lsb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # PORTMAP
@@ -380,7 +380,7 @@ $(DEPDIR)/%portmap: $(DEPDIR)/%lsb $(PORTMAP_ADAPTED_ETC_FILES:%=root/etc/%) $(D
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_portmap@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # OPENRDATE
@@ -432,7 +432,7 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_openrdate@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # E2FSPROGS
@@ -559,7 +559,7 @@ $(DEPDIR)/%xfsprogs: $(DEPDIR)/xfsprogs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_xfsprogs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # MC
@@ -609,7 +609,7 @@ $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
 #		export top_builddir=`pwd` && \
 #		$(MAKE) install DESTDIR=$(prefix)/$*cdkroot
 #	@DISTCLEANUP_mc@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # SDPARM
@@ -657,7 +657,7 @@ $(DEPDIR)/%sdparm: $(DEPDIR)/sdparm.do_compile
 	mv -f $(PKDIR)/usr/bin/sdparm $(PKDIR)/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_sdparm@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # SG3_UTILS
@@ -705,7 +705,7 @@ $(DEPDIR)/%sg3_utils: $(DEPDIR)/sg3_utils.do_compile
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done ) && \
 	$(INSTALL) -m755 root/usr/sbin/sg_down.sh $(prefix)/$*cdkroot/usr/sbin
 #	@DISTCLEANUP_sg3_utils@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # IPKG
@@ -743,7 +743,7 @@ $(DEPDIR)/%ipkg: $(DEPDIR)/ipkg.do_compile
 	$(INSTALL) -d $(prefix)/$*cdkroot/usr/lib/ipkg
 	$(INSTALL) -m 644 root/usr/lib/ipkg/status.initial $(prefix)/$*cdkroot/usr/lib/ipkg/status
 #	@DISTCLEANUP_ipkg@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # ZD1211
@@ -778,7 +778,7 @@ $(DEPDIR)/%zd1211: $(DEPDIR)/zd1211.do_compile
 			install
 	$(DEPMOD) -ae -b $(targetprefix) -r $(KERNELVERSION)
 #	@DISTCLEANUP_zd1211@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # NANO
@@ -814,7 +814,7 @@ $(DEPDIR)/%nano: $(DEPDIR)/nano.do_compile
 	cd $(DIR_nano) && \
 		$(INSTALL_nano)
 #	@DISTCLEANUP_nano@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # RSYNC
@@ -849,7 +849,7 @@ $(DEPDIR)/%rsync: $(DEPDIR)/rsync.do_compile
 	cd $(DIR_rsync) && \
 		$(INSTALL_rsync)
 #	@DISTCLEANUP_rsync@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # RFKILL
@@ -884,7 +884,7 @@ $(DEPDIR)/%rfkill: $(DEPDIR)/rfkill.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_rfkill@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # LM_SENSORS
@@ -929,7 +929,7 @@ $(DEPDIR)/%lm_sensors: $(DEPDIR)/lm_sensors.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lm_sensors@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # FUSE
@@ -987,7 +987,7 @@ $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_fuse@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # CURLFTPFS
@@ -1022,7 +1022,7 @@ $(DEPDIR)/%curlftpfs: %fuse $(DEPDIR)/curlftpfs.do_compile
 	cd $(DIR_curlftpfs) && \
 		$(INSTALL_curlftpfs)
 #	@DISTCLEANUP_curlftpfs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # FBSET
@@ -1055,7 +1055,7 @@ $(DEPDIR)/%fbset: fbset.do_compile
 	cd $(DIR_fbset) && \
 		$(INSTALL_fbset)
 #	@DISTCLEANUP_fbset@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # PNGQUANT
@@ -1083,7 +1083,7 @@ $(DEPDIR)/%pngquant: $(DEPDIR)/pngquant.do_compile
 	cd $(DIR_pngquant) && \
 		$(INSTALL_pngquant)
 #	@DISTCLEANUP_pngquant@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # MPLAYER
@@ -1118,7 +1118,7 @@ $(DEPDIR)/%mplayer: $(DEPDIR)/mplayer.do_compile
 	cd $(DIR_mplayer) && \
 		$(INSTALL_mplayer)
 #	@DISTCLEANUP_mplayer@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # MENCODER
@@ -1178,7 +1178,7 @@ $(DEPDIR)/%mencoder: $(DEPDIR)/mencoder.do_compile
 	cd $(DIR_mencoder) && \
 		$(INSTALL_mencoder)
 #	@DISTCLEANUP_mencoder@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # jfsutils
@@ -1219,7 +1219,7 @@ $(DEPDIR)/%jfsutils: $(DEPDIR)/jfsutils.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_jfsutils@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # opkg
@@ -1265,7 +1265,7 @@ $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_opkg@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # ntpclient
@@ -1543,7 +1543,7 @@ $(DEPDIR)/%hotplug_e2: $(DEPDIR)/hotplug_e2.do_compile
 	cp -f $(PKDIR)/usr/bin/* $(PKDIR)/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_hotplug_e2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # autofs
@@ -1597,7 +1597,7 @@ $(DEPDIR)/%autofs: $(DEPDIR)/autofs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_autofs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # imagemagick
@@ -1652,7 +1652,7 @@ $(DEPDIR)/%imagemagick: $(DEPDIR)/imagemagick.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_imagemagick@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # grab
@@ -1785,7 +1785,7 @@ $(DEPDIR)/%parted: $(DEPDIR)/parted.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_parted@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # gettext
@@ -1830,4 +1830,4 @@ $(DEPDIR)/%gettext: $(DEPDIR)/gettext.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_gettext@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@

@@ -60,7 +60,7 @@ $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libz@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libreadline
@@ -101,7 +101,7 @@ $(DEPDIR)/%libreadline: $(DEPDIR)/libreadline.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libreadline@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # FREETYPE_OLD
@@ -143,7 +143,7 @@ $(DEPDIR)/freetype-old: $(DEPDIR)/freetype-old.do_compile
 		sed 's,-I$${prefix}/include/freetype2,-I$(targetprefix)/usr/include/freetype-old -I$(targetprefix)/usr/include/freetype-old/freetype2,g' -i $(crossprefix)/bin/freetype-old-config; \
 		sed 's,/usr/include/freetype2/,$(targetprefix)/usr/include/freetype-old/freetype2/,g' -i $(crossprefix)/bin/freetype-old-config
 #	@DISTCLEANUP_freetype_old@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # freetype
@@ -190,7 +190,7 @@ $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_freetype@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # lirc
@@ -256,7 +256,7 @@ ifdef ENABLE_SPARK
 endif
 	$(toflash_build)
 #	@DISTCLEANUP_lirc@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # jpeg
@@ -300,7 +300,7 @@ $(DEPDIR)/%jpeg: $(DEPDIR)/jpeg.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_jpeg@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # jpeg-6b
@@ -343,7 +343,7 @@ $(DEPDIR)/%libjpeg6b: $(DEPDIR)/libjpeg6b.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libjpeg6b@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libpng
@@ -393,7 +393,7 @@ $(DEPDIR)/%libpng: $(DEPDIR)/libpng.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libpng@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libpng12
@@ -441,7 +441,7 @@ $(DEPDIR)/%libpng12: $(DEPDIR)/libpng12.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libpng12@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libungif
@@ -483,7 +483,7 @@ $(DEPDIR)/%libungif: $(DEPDIR)/libungif.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libungif@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libgif
@@ -525,7 +525,7 @@ $(DEPDIR)/%libgif: $(DEPDIR)/libgif.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libgif@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libcurl
@@ -577,7 +577,7 @@ $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_curl@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libfribidi
@@ -621,7 +621,7 @@ $(DEPDIR)/%libfribidi: $(DEPDIR)/libfribidi.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libfribidi@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libsigc
@@ -663,7 +663,7 @@ $(DEPDIR)/%libsigc: $(DEPDIR)/libsigc.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libsigc@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libmad
@@ -715,7 +715,7 @@ $(DEPDIR)/%libmad: $(DEPDIR)/libmad.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libmad@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libid3tag
@@ -759,7 +759,7 @@ $(DEPDIR)/%libid3tag: %libz $(DEPDIR)/libid3tag.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libid3tag@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libvorbisidec
@@ -799,7 +799,7 @@ $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libvorbisidec@
-	@[ "x$*" = "x" ] && touch $@ || true
+	@touch $@
 
 #
 # libglib2
@@ -856,7 +856,7 @@ $(DEPDIR)/%glib2: $(DEPDIR)/glib2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_glib2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libiconv
@@ -899,7 +899,7 @@ $(DEPDIR)/%libiconv: $(DEPDIR)/libiconv.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libiconv@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libmng
@@ -948,7 +948,7 @@ $(DEPDIR)/%libmng: $(DEPDIR)/libmng.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libmng@
-	[ "x$*" = "x" ] && touch $@ || true	
+	touch $@	
 #
 # lcms
 #
@@ -991,7 +991,7 @@ $(DEPDIR)/%lcms: $(DEPDIR)/lcms.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lcms@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 #
 # directfb
 #
@@ -1058,7 +1058,7 @@ $(DEPDIR)/%directfb: $(DEPDIR)/directfb.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_directfb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # DFB++
@@ -1098,7 +1098,7 @@ $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_dfbpp@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # LIBSTGLES
@@ -1144,7 +1144,7 @@ $(DEPDIR)/%libstgles: $(DEPDIR)/libstgles.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libstgles@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # expat
@@ -1187,7 +1187,7 @@ $(DEPDIR)/%expat: $(DEPDIR)/expat.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_expat@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # fontconfig
@@ -1240,7 +1240,7 @@ $(DEPDIR)/%fontconfig: $(DEPDIR)/fontconfig.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_fontconfig@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libxmlccwrap
@@ -1284,7 +1284,7 @@ $(DEPDIR)/%libxmlccwrap: libxmlccwrap.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libxmlccwrap@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # a52dec
@@ -1325,7 +1325,7 @@ $(DEPDIR)/%a52dec: a52dec.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_a52dec@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdvdcss
@@ -1369,7 +1369,7 @@ $(DEPDIR)/%libdvdcss: libdvdcss.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdvdcss@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdvdnav
@@ -1422,7 +1422,7 @@ $(DEPDIR)/%libdvdnav: libdvdnav.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdvdnav@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdvdread
@@ -1475,7 +1475,7 @@ $(DEPDIR)/%libdvdread: libdvdread.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdvdread@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # ffmpeg
@@ -1597,7 +1597,7 @@ $(DEPDIR)/%ffmpeg: $(DEPDIR)/ffmpeg.do_compile
 	mv $(PKDIR)/usr/bin $(PKDIR)/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_ffmpeg@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libass
@@ -1639,7 +1639,7 @@ $(DEPDIR)/%libass: $(DEPDIR)/libass.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libass@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # WebKitDFB
@@ -1702,7 +1702,7 @@ $(DEPDIR)/%webkitdfb: $(DEPDIR)/webkitdfb.do_compile
 	$(tocdk_build)
 	$(e2extra_build)
 #	@DISTCLEANUP_webkitdfb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # icu4c
@@ -1760,7 +1760,7 @@ $(DEPDIR)/%icu4c: $(DEPDIR)/icu4c.do_compile
 	$(tocdk_build)
 	$(e2extra_build)
 #	@DISTCLEANUP_icu4c@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # enchant
@@ -1809,7 +1809,7 @@ $(DEPDIR)/%enchant: $(DEPDIR)/enchant.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_enchant@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # lite
@@ -1854,7 +1854,7 @@ $(DEPDIR)/%lite: $(DEPDIR)/lite.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lite@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # sqlite
@@ -1899,7 +1899,7 @@ $(DEPDIR)/%sqlite: $(DEPDIR)/sqlite.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_sqlite@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libsoup
@@ -1941,7 +1941,7 @@ $(DEPDIR)/%libsoup: $(DEPDIR)/libsoup.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libsoup@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pixman
@@ -1981,7 +1981,7 @@ $(DEPDIR)/%pixman: $(DEPDIR)/pixman.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pixman@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # cairo
@@ -2033,7 +2033,7 @@ $(DEPDIR)/%cairo: $(DEPDIR)/cairo.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_cairo@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libogg
@@ -2073,7 +2073,7 @@ $(DEPDIR)/%libogg: $(DEPDIR)/libogg.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libogg@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libflac
@@ -2127,7 +2127,7 @@ $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libflac@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 
 ##############################   PYTHON   #####################################
@@ -2164,7 +2164,7 @@ $(DEPDIR)/%elementtree: $(DEPDIR)/elementtree.do_compile
 	$(tocdk_build)
 	$(remove_pyo)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libxml2
@@ -2216,7 +2216,7 @@ $(DEPDIR)/%libxml2: $(DEPDIR)/libxml2.do_compile
 	$(call do_build_pkg,install,cdk)
 	$(toflash_build)
 #	@DISTCLEANUP_libxml2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libxslt
@@ -2272,7 +2272,7 @@ $(DEPDIR)/%libxslt: %libxml2 libxslt.do_compile
 	$(call do_build_pkg,install,cdk)
 	$(toflash_build)
 #	@DISTCLEANUP_libxslt@
-	@[ "x$*" = "x" ] && touch $@ || true
+	@touch $@
 
 #
 # lxml
@@ -2313,7 +2313,7 @@ $(DEPDIR)/%lxml: $(DEPDIR)/lxml.do_compile
 	$(tocdk_build)
 	$(remove_pyo)
 	$(extra_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # setuptools
@@ -2352,7 +2352,7 @@ $(DEPDIR)/%setuptools: $(DEPDIR)/setuptools.do_compile
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 #	@DISTCLEANUP_setuptools@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # gdata
@@ -2405,7 +2405,7 @@ $(DEPDIR)/%gdata: $(DEPDIR)/gdata.do_compile
 	$(tocdk_build)
 	$(remove_pyo)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 #
 # twisted
 #
@@ -2456,7 +2456,7 @@ $(DEPDIR)/%twisted: $(DEPDIR)/twisted.do_compile
 	$(tocdk_build)
 	$(remove_pyo)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # twistedweb2
@@ -2498,7 +2498,7 @@ $(DEPDIR)/%twistedweb2: $(DEPDIR)/twistedweb2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_twistedweb2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pilimaging
@@ -2531,7 +2531,7 @@ $(DEPDIR)/pilimaging: bootstrap python $(DEPENDS_pilimaging)
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pilimaging@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pycrypto
@@ -2573,7 +2573,7 @@ $(DEPDIR)/%pycrypto: $(DEPDIR)/pycrypto.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pycrypto@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pyusb
@@ -2610,7 +2610,7 @@ $(DEPDIR)/%pyusb: $(DEPDIR)/pyusb.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pyusb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pyopenssl
@@ -2650,7 +2650,7 @@ $(DEPDIR)/%pyopenssl: $(DEPDIR)/pyopenssl.do_compile
 	$(tocdk_build)
 	$(remove_pyo)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # python
@@ -2763,7 +2763,7 @@ $(DEPDIR)/%python: $(DEPDIR)/python.do_compile
 	$(tocdk_build)
 	$(remove_pyc)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pythonwifi
@@ -2800,7 +2800,7 @@ $(DEPDIR)/%pythonwifi: $(DEPDIR)/pythonwifi.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pythonwifi@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pythoncheetah
@@ -2837,7 +2837,7 @@ $(DEPDIR)/%pythoncheetah: $(DEPDIR)/pythoncheetah.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pythoncheetah@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # zope interface
@@ -2875,7 +2875,7 @@ $(DEPDIR)/%zope_interface: $(DEPDIR)/zope_interface.do_compile
 	$(tocdk_build)
 #	$(remove_pyo)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 
 
@@ -2930,7 +2930,7 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 	$(tocdk_build)
 	sh4-linux-strip --strip-unneeded $(PKDIR)/usr/bin/gst-launch*
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -2990,7 +2990,7 @@ $(DEPDIR)/%gst_plugins_base: $(DEPDIR)/gst_plugins_base.do_compile
 #	@DISTCLEANUP_gst_plugins_base@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGINS-GOOD
@@ -3056,7 +3056,7 @@ $(DEPDIR)/%gst_plugins_good: $(DEPDIR)/gst_plugins_good.do_compile
 #	@DISTCLEANUP_gst_plugins_good@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGINS-BAD
@@ -3112,7 +3112,7 @@ $(DEPDIR)/%gst_plugins_bad: $(DEPDIR)/gst_plugins_bad.do_compile
 #	@DISTCLEANUP_gst_plugins_bad@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGINS-UGLY
@@ -3158,7 +3158,7 @@ $(DEPDIR)/%gst_plugins_ugly: $(DEPDIR)/gst_plugins_ugly.do_compile
 #	@DISTCLEANUP_gst_plugins_ugly@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-FFMPEG
@@ -3239,7 +3239,7 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 #	@DISTCLEANUP_gst_ffmpeg@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
@@ -3282,7 +3282,7 @@ $(DEPDIR)/%gst_plugins_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemu
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_gst_plugins_fluendo_mpegdemux@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGIN-SUBSINK
@@ -3328,7 +3328,7 @@ $(DEPDIR)/%gst_plugin_subsink: $(DEPDIR)/gst_plugin_subsink.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_gst_plugin_subsink@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGINS-DVBMEDIASINK
@@ -3377,7 +3377,7 @@ $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compi
 #	@DISTCLEANUP_gst_plugins_dvbmediasink@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 
 
@@ -3423,7 +3423,7 @@ $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libusb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # graphlcd
@@ -3467,7 +3467,7 @@ $(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_graphlcd@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 ##############################   LCD4LINUX   ###################################
 
@@ -3514,7 +3514,7 @@ $(DEPDIR)/%libgd2: $(DEPDIR)/libgd2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libgd2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libusb2
@@ -3554,7 +3554,7 @@ $(DEPDIR)/%libusb2: $(DEPDIR)/libusb2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libusb2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libusbcompat
@@ -3593,7 +3593,7 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libusbcompat@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 ##############################   END EXTERNAL_LCD   #############################
 
@@ -3648,7 +3648,7 @@ $(DEPDIR)/%evebrowser: $(DEPDIR)/evebrowser.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_evebrowser@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # brofs
@@ -3691,7 +3691,7 @@ $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_brofs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libcap
@@ -3746,7 +3746,7 @@ $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libcap@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 	
 #
@@ -3797,7 +3797,7 @@ $(DEPDIR)/%libalsa: $(DEPDIR)/libalsa.do_compile
 #	@DISTCLEANUP_libalsa@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # rtmpdump
@@ -3839,7 +3839,7 @@ $(DEPDIR)/%rtmpdump: $(DEPDIR)/rtmpdump.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_rtmpdump@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdvbsi++
@@ -3885,7 +3885,7 @@ $(DEPDIR)/%libdvbsipp: $(DEPDIR)/libdvbsipp.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdvbsipp@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # tuxtxtlib
@@ -3937,7 +3937,7 @@ $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_tuxtxtlib@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # tuxtxt32bpp
@@ -3994,7 +3994,7 @@ $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_tuxtxt32bpp@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdreamdvd
@@ -4042,7 +4042,7 @@ $(DEPDIR)/%libdreamdvd: $(DEPDIR)/libdreamdvd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdreamdvd@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdreamdvd2
@@ -4088,7 +4088,7 @@ $(DEPDIR)/%libdreamdvd2: $(DEPDIR)/libdreamdvd2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdreamdvd2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libmpeg2
@@ -4131,7 +4131,7 @@ $(DEPDIR)/%libmpeg2: $(DEPDIR)/libmpeg2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libmpeg2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libsamplerate
@@ -4173,7 +4173,7 @@ $(DEPDIR)/%libsamplerate: $(DEPDIR)/libsamplerate.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libsamplerate@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libvorbis
@@ -4213,7 +4213,7 @@ $(DEPDIR)/%libvorbis: $(DEPDIR)/libvorbis.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libvorbis@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libmodplug
@@ -4254,7 +4254,7 @@ $(DEPDIR)/%libmodplug: $(DEPDIR)/libmodplug.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libmodplug@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # tiff
@@ -4296,7 +4296,7 @@ $(DEPDIR)/%tiff: $(DEPDIR)/tiff.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_tiff@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # lzo
@@ -4337,7 +4337,7 @@ $(DEPDIR)/%lzo: $(DEPDIR)/lzo.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lzo@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # yajl
@@ -4379,7 +4379,7 @@ $(DEPDIR)/%yajl: $(DEPDIR)/yajl.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_yajl@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libpcre (shouldn't this be named pcre without the lib?)
@@ -4426,7 +4426,7 @@ $(DEPDIR)/%libpcre: $(DEPDIR)/libpcre.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libpcre@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libcdio
@@ -4468,7 +4468,7 @@ $(DEPDIR)/%libcdio: $(DEPDIR)/libcdio.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libcdio@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # jasper
@@ -4512,7 +4512,7 @@ $(DEPDIR)/%jasper: $(DEPDIR)/jasper.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_jasper@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # mysql
@@ -4553,7 +4553,7 @@ $(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_mysql@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # xupnpd
@@ -4601,7 +4601,7 @@ $(DEPDIR)/%xupnpd: $(DEPDIR)/xupnpd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_xupnpd@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
    
 #
 # libmicrohttpd
@@ -4642,7 +4642,7 @@ $(DEPDIR)/%libmicrohttpd: $(DEPDIR)/libmicrohttpd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libmicrohttpd@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libexif
@@ -4682,7 +4682,7 @@ $(DEPDIR)/%libexif: $(DEPDIR)/libexif.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libexif@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # minidlna
@@ -4729,7 +4729,7 @@ $(DEPDIR)/%minidlna: $(DEPDIR)/minidlna.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_minidlna@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # vlc
@@ -4807,7 +4807,7 @@ $(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_vlc@
-	@[ "x$*" = "x" ] && touch $@ || true
+	@touch $@
 
 #
 # djmount
@@ -4849,7 +4849,7 @@ $(DEPDIR)/%djmount: $(DEPDIR)/djmount.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_djmount@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libupnp
@@ -4890,7 +4890,7 @@ $(DEPDIR)/%libupnp: $(DEPDIR)/libupnp.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libupnp@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # rarfs
@@ -4935,7 +4935,7 @@ $(DEPDIR)/%rarfs: $(DEPDIR)/rarfs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_rarfs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # sshfs
@@ -4968,7 +4968,7 @@ $(DEPDIR)/%sshfs: $(DEPDIR)/sshfs.do_compile
 	cd $(DIR_sshfs) && \
 		$(INSTALL_sshfs)
 #	@DISTCLEANUP_sshfs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # gmediarender
@@ -5004,7 +5004,7 @@ $(DEPDIR)/%gmediarender: $(DEPDIR)/gmediarender.do_compile
 	cd $(DIR_gmediarender) && \
 		$(INSTALL_gmediarender)
 #	@DISTCLEANUP_gmediarender@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 #
 # mediatomb
 #
@@ -5058,7 +5058,7 @@ $(DEPDIR)/%mediatomb: $(DEPDIR)/mediatomb.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_mediatomb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # tinyxml
@@ -5097,7 +5097,7 @@ $(DEPDIR)/%tinyxml: $(DEPDIR)/tinyxml.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_tinyxml@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libnfs
@@ -5142,7 +5142,7 @@ $(DEPDIR)/%libnfs: $(DEPDIR)/libnfs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libnfs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # taglib
@@ -5179,7 +5179,7 @@ $(DEPDIR)/%taglib: $(DEPDIR)/taglib.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_taglib@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # e2-rtmpgw
@@ -5215,4 +5215,4 @@ $(DEPDIR)/%e2_rtmpgw: $(DEPDIR)/e2_rtmpgw.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_e2_rtmpgw@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@

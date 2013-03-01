@@ -73,7 +73,7 @@ $(DEPDIR)/%$(SYSVINIT): $(SYSVINIT_ADAPTED_ETC_FILES:%=root/etc/%) \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done )
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/$(INITSCRIPTS): \
 $(DEPDIR)/%$(INITSCRIPTS): $(INITSCRIPTS_ADAPTED_ETC_FILES:%=root/etc/%) \
@@ -104,7 +104,7 @@ $(DEPDIR)/%$(INITSCRIPTS): $(INITSCRIPTS_ADAPTED_ETC_FILES:%=root/etc/%) \
 		rmnologin single stop-bootlogd ; do \
 			$(hostprefix)/bin/target-initdconfig --add $${s#init.d/} || \
 			echo "Unable to enable initd service: $${s#init.d/}" ; done && rm *rpmsave *.orig 2>/dev/null || true )
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -142,7 +142,7 @@ $(DEPDIR)/%$(NETBASE): \
 		for i in if-down.d if-post-down.d if-pre-up.d if-up.d run; do \
 			$(INSTALL) -d $$i; \
 		done )
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -169,7 +169,7 @@ $(DEPDIR)/$(BC): \
 $(DEPDIR)/%$(BC): $(BC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -196,7 +196,7 @@ $(FINDUTILS_RPM): \
 $(DEPDIR)/$(FINDUTILS): $(DEPDIR)/%$(FINDUTILS): $(FINDUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $<
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -231,13 +231,13 @@ $(DEPDIR)/%$(DISTRIBUTIONUTILS): $(DISTRIBUTIONUTILS_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/$(DISTRIBUTIONUTILS_DOC): \
 $(DEPDIR)/%$(DISTRIBUTIONUTILS_DOC): $(DISTRIBUTIONUTILS_DOC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # HOST-MTD-UTILS
@@ -263,7 +263,7 @@ $(DEPDIR)/$(MTD_UTILS): \
 $(DEPDIR)/%$(MTD_UTILS): $(MTD_UTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -494,7 +494,7 @@ $(STRACE_RPM): \
 $(DEPDIR)/$(STRACE): $(DEPDIR)/%$(STRACE): $(DEPDIR)/%$(GLIBC) $(STRACE_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -574,12 +574,12 @@ $(DEPDIR)/$(IPTABLES_DEV): $(DEPDIR)/%$(IPTABLES_DEV): $(IPTABLES_DEV_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/$(IPTABLES): $(DEPDIR)/%$(IPTABLES): $(IPTABLES_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
