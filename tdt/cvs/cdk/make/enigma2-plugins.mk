@@ -33,8 +33,7 @@ $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 		cp -a plugin $(PKDIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif && \
 		cp -a $(buildprefix)/root/usr/bin/grab.sh $(PKDIR)/usr/bin/
 	$(toflash_build)
-#	@DISTCLEANUP_enigma2_openwebif@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # enigma2-networkbrowser
@@ -87,8 +86,7 @@ $(DEPDIR)/%enigma2_networkbrowser: $(DEPDIR)/enigma2_networkbrowser.do_prepare
 		cp -a src/lib/netscan.so $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ && \
 		rm -rf $(PKDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/lib
 	$(e2extra_build)
-#	@DISTCLEANUP_enigma2_networkbrowser@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/%-openpli:
 	$(call git_fetch_prepare,$*_openpli,git://github.com/E2OpenPlugins/e2openplugin-$*.git)

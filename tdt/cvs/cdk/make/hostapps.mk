@@ -116,7 +116,7 @@ $(crossprefix)/bin/ipkg-build: filesystem $(DEPENDS_ipkg_utils) | $(ipkprefix)
 	cd $(DIR_ipkg_utils) && \
 		$(MAKE) all PREFIX=$(crossprefix) && \
 		$(MAKE) install PREFIX=$(crossprefix)
-#       @DISTCLEANUP_ipkg-utils@
+	touch $@
 
 #
 # OPKG-HOST
@@ -155,6 +155,7 @@ $(crossprefix)/bin/opkg: $(DEPENDS_opkg_host)
 	  echo "arch sh4 10"; \
 	  echo "arch all 1"; \
 	  echo "src/gz cross file://$(ipkcdk)" ) >>$(OPKG_CONFCDK)
+	  touch $@
 
 
 #

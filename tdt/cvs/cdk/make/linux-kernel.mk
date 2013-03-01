@@ -322,7 +322,7 @@ $(DEPDIR)/%linux-kernel: bootstrap $(DEPDIR)/linux-kernel.do_compile
 #endif
 	$(tocdk_build)
 	$(toflash_build)
-	@[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 linux-kernel-distclean: $(KERNELHEADERS)-distclean
 
