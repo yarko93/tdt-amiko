@@ -2411,9 +2411,9 @@ $(DEPDIR)/%gdata: $(DEPDIR)/gdata.do_compile
 #
 BEGIN[[
 twisted
-  12.2.0
+  12.3.0
   Twisted-{PV}
-  extract:http://twistedmatrix.com/Releases/Twisted/12.2/Twisted-{PV}.tar.bz2
+  extract:http://twistedmatrix.com/Releases/Twisted/12.3/Twisted-{PV}.tar.bz2
 ;
 ]]END
 
@@ -2708,9 +2708,8 @@ DESCRIPTION_python_ctypes = python ctypes module
 FILES_python_ctypes = \
 $(PYTHON_DIR)/ctypes
 
-$(DEPDIR)/python.do_prepare: bootstrap host_python openssl openssl-dev sqlite $(DEPENDS_python)
+$(DEPDIR)/python.do_prepare: bootstrap host_python openssl-dev sqlite $(DEPENDS_python)
 	$(PREPARE_python)
-	which autoconf
 	touch $@
 
 $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
@@ -2730,11 +2729,12 @@ $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
 			--without-cxx-main \
 			--with-threads \
 			--with-pymalloc \
+			--with-signal-module \
+			--with-wctype-functions \
 			HOSTPYTHON=$(crossprefix)/bin/python \
 			OPT="$(TARGET_CFLAGS)" && \
 		$(MAKE) $(MAKE_ARGS) \
 			TARGET_OS=$(target) \
-			PYTHON_DISABLE_MODULES="_tkinter" \
 			PYTHON_MODULES_INCLUDE="$(prefix)/$*cdkroot/usr/include" \
 			PYTHON_MODULES_LIB="$(prefix)/$*cdkroot/usr/lib" \
 			CROSS_COMPILE_TARGET=yes \
@@ -2758,6 +2758,7 @@ $(DEPDIR)/%python: $(DEPDIR)/python.do_compile
 			HOSTPGEN=$(crossprefix)/bin/pgen \
 			install DESTDIR=$(PKDIR) ) && \
 	$(LN_SF) ../../libpython$(PYTHON_VERSION).so.1.0 $(PKDIR)$(PYTHON_DIR)/config/libpython$(PYTHON_VERSION).so
+	$(LN_SF) $(PKDIR)$(PYTHON_INCLUDE_DIR) $(PKDIR)/usr/include/python
 #	@DISTCLEANUP_python@
 	$(tocdk_build)
 	$(remove_pyc)
