@@ -7,6 +7,8 @@ busybox
   {PN}-{PV}
   extract:http://www.{PN}.net/downloads/{PN}-{PV}.tar.bz2
   patch:file://{PN}-{PV}-mdev.patch
+  patch:file://{PN}-{PV}-platform.patch
+  patch:file://{PN}-{PV}-xz.patch
   make:install:CONFIG_PREFIX=PKDIR
 ;
 ]]END
