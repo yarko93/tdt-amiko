@@ -169,7 +169,7 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
 	$(toflash_build)
 #	@DISTCLEANUP_pppd@
-	@touch $@
+	touch $@
 	
 #
 # USB MODESWITCH
@@ -208,7 +208,7 @@ $(DEPDIR)/%usb_modeswitch: $(DEPDIR)/usb_modeswitch.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch@
-	@touch $@
+	touch $@
 	
 
 #
@@ -248,7 +248,7 @@ $(DEPDIR)/%usb_modeswitch_data: $(DEPDIR)/usb_modeswitch_data.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch_data@
-	@touch $@
+	touch $@
 	
 #
 # NTFS-3G
@@ -296,7 +296,7 @@ $(DEPDIR)/%ntfs_3g: $(DEPDIR)/ntfs_3g.do_compile
 	$(tocdk_build)	
 	$(toflash_build)
 #	@DISTCLEANUP_ntfs_3g@
-	@touch $@
+	touch $@
 	
 
 #
@@ -1498,7 +1498,7 @@ $(DEPDIR)/sysstat: bootstrap $(DEPENDS_sysstat)
 		$(MAKE) && \
 		$(INSTALL_sysstat)
 	@DISTCLEANUP_sysstat@
-	@touch $@
+	touch $@
 
 #
 # hotplug-e2

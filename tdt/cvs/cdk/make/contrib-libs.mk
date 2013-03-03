@@ -799,7 +799,7 @@ $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libvorbisidec@
-	@touch $@
+	touch $@
 
 #
 # libglib2
@@ -2272,7 +2272,7 @@ $(DEPDIR)/%libxslt: %libxml2 libxslt.do_compile
 	$(call do_build_pkg,install,cdk)
 	$(toflash_build)
 #	@DISTCLEANUP_libxslt@
-	@touch $@
+	touch $@
 
 #
 # lxml
@@ -4807,7 +4807,7 @@ $(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_vlc@
-	@touch $@
+	touch $@
 
 #
 # djmount
