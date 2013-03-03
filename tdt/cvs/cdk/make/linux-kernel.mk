@@ -329,8 +329,8 @@ linux-kernel-distclean: $(KERNELHEADERS)-distclean
 BEGIN[[
 driver
   git
-  {PN}
-  plink:$(driverdir):{PN}
+  {PN}-{PV}
+  plink:$(driverdir):{PN}-{PV}
 ;
 ]]END
 DESCRIPTION_driver = Drivers for stm box
