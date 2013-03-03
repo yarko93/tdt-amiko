@@ -39,7 +39,6 @@ flac-*
 alsa-*
 DirectFB-*
 freetype-*
-busybox-*
 libpng-*
 rtmpdump-*
 !*.diff
