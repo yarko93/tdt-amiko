@@ -3849,7 +3849,7 @@ libdvbsipp
   0.3.6
   libdvbsi++-{PV}
   extract:http://www.saftware.de/libdvbsi++/libdvbsi++-{PV}.tar.bz2
-  patch:file://libdvbsi++-{PV}-fix_unaligned_access.patch
+  patch:file://libdvbsi++-{PV}.patch
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 ]]END
