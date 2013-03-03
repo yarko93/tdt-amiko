@@ -4,10 +4,10 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
  echo "Parameter 1: target system (1-3)"
  echo "Parameter 2: kernel (1-4)"
  echo "Parameter 3: debug (Y/N)"
- echo "Parameter 4: player (1-2)"
- echo "Parameter 5: Media Framework (1-2)"
- echo "Parameter 6: External LCD support (1-2)"
- echo "Parameter 7: Image  (1-5)"
+ echo "Parameter 4: Python (1-2)"
+ echo "Parameter 5: External LCD support (1-2)"
+ echo "Parameter 6: Image  (1-5)"
+ echo "Parameter 7: Media Framework (1-2)" 
  exit
 fi
 
@@ -16,7 +16,6 @@ KATIDIR=${CURDIR%/cvs/cdk}
 export PATH=/usr/sbin:/sbin:$PATH
 
 CONFIGPARAM=" \
- --enable-maintainer-mode \
  --prefix=$KATIDIR/tufsbox \
  --with-cvsdir=$KATIDIR/cvs \
  --with-customizationsdir=$KATIDIR/custom \
@@ -119,185 +118,13 @@ echo "# Automatically generated config: don't edit" > .config
 echo "#" >> .config
 echo "export CONFIG_ZD1211REV_B=y" >> .config
 echo "export CONFIG_ZD1211=n"		>> .config
+echo "export CONFIG_PLAYER_191=y" >> .config
+echo "export CONFIG_MULTICOM324=y" >> .config
 cd - &>/dev/null
+MULTICOM="--enable-multicom324"
+PLAYER="--enable-player191"
 
 ##############################################
-
-echo -e "\nPlayer:"
-echo "   1) Player 179 & Multicom 3.2.2 "
-echo "   2) Player 191 & Multicom 3.2.4 (Recommended)"
-case $4 in
-        [1-2]) REPLY=$4
-        echo -e "\nSelected player: $REPLY\n"
-        ;;
-        *)
-        read -p "Select player (1-2)? ";;
-esac
-
-case "$REPLY" in
-	1) PLAYER="--enable-player179"
-       cd ../driver/include/
-       if [ -L player2 ]; then
-          rm player2
-       fi
-
-       if [ -L stmfb ]; then
-          rm stmfb
-       fi
-       ln -s player2_179 player2
-       if [ "$STMFB" == "stm24" ]; then
-           ln -s stmfb-3.1_stm24_0102 stmfb
-       else
-           ln -s stmfb-3.1_stm23_0032 stmfb
-       fi
-       cd - &>/dev/null
-
-       cd ../driver/
-       if [ -L player2 ]; then
-          rm player2
-       fi
-       ln -s player2_179 player2
-       echo "export CONFIG_PLAYER_179=y" >> .config
-       cd - &>/dev/null
-
-       cd ../driver/stgfb
-       if [ -L stmfb ]; then
-          rm stmfb
-       fi
-       if [ "$STMFB" == "stm24" ]; then
-           ln -s stmfb-3.1_stm24_0102 stmfb
-       else
-           ln -s stmfb-3.1_stm23_0032 stmfb
-       fi
-       cd - &>/dev/null
-       MULTICOM="--enable-multicom322"
-       cd ../driver/include/
-       if [ -L multicom ]; then
-          rm multicom
-       fi
-
-       ln -s multicom-3.2.2 multicom
-       cd - &>/dev/null
-
-       cd ../driver/
-       if [ -L multicom ]; then
-          rm multicom
-       fi
-
-       ln -s multicom-3.2.2 multicom
-       echo "export CONFIG_MULTICOM322=y" >> .config
-       cd - &>/dev/null
-    ;;
-	2) PLAYER="--enable-player191"
-       cd ../driver/include/
-       if [ -L player2 ]; then
-          rm player2
-       fi
-
-       if [ -L stmfb ]; then
-          rm stmfb
-       fi
-       ln -s player2_179 player2
-       if [ "$STMFB" == "stm24" ]; then
-           ln -s stmfb-3.1_stm24_0102 stmfb
-       else
-           ln -s stmfb-3.1_stm23_0032 stmfb
-       fi
-       cd - &>/dev/null
-
-       cd ../driver/
-       if [ -L player2 ]; then
-          rm player2
-       fi
-       ln -s player2_191 player2
-       echo "export CONFIG_PLAYER_191=y" >> .config
-       cd - &>/dev/null
-
-       cd ../driver/stgfb
-       if [ -L stmfb ]; then
-          rm stmfb
-       fi
-       if [ "$STMFB" == "stm24" ]; then
-           ln -s stmfb-3.1_stm24_0104 stmfb
-       else
-           ln -s stmfb-3.1_stm23_0032 stmfb
-       fi
-       cd - &>/dev/null
-       MULTICOM="--enable-multicom324"
-       cd ../driver/include/
-       if [ -L multicom ]; then
-          rm multicom
-       fi
-
-       ln -s ../multicom-3.2.4/include multicom
-       cd - &>/dev/null
-
-       cd ../driver/
-       if [ -L multicom ]; then
-          rm multicom
-       fi
-
-       ln -s multicom-3.2.4 multicom
-       echo "export CONFIG_MULTICOM324=y" >> .config
-       cd - &>/dev/null
-    ;;
-	*) PLAYER="--enable-player191"
-       cd ../driver/include/
-       if [ -L player2 ]; then
-          rm player2
-       fi
-
-       if [ -L stmfb ]; then
-          rm stmfb
-       fi
-       ln -s player2_179 player2
-       if [ "$STMFB" == "stm24" ]; then
-           ln -s stmfb-3.1_stm24_0102 stmfb
-       else
-           ln -s stmfb-3.1_stm23_0032 stmfb
-       fi
-       cd - &>/dev/null
-
-       cd ../driver/
-       if [ -L player2 ]; then
-          rm player2
-       fi
-       ln -s player2_191 player2
-       echo "export CONFIG_PLAYER_191=y" >> .config
-       cd - &>/dev/null
-
-       cd ../driver/stgfb
-       if [ -L stmfb ]; then
-          rm stmfb
-       fi
-       if [ "$STMFB" == "stm24" ]; then
-           ln -s stmfb-3.1_stm24_0104 stmfb
-       else
-           ln -s stmfb-3.1_stm23_0032 stmfb
-       fi
-       cd - &>/dev/null
-       MULTICOM="--enable-multicom324"
-       cd ../driver/include/
-       if [ -L multicom ]; then
-          rm multicom
-       fi
-
-       ln -s ../multicom-3.2.4/include multicom
-       cd - &>/dev/null
-
-       cd ../driver/
-       if [ -L multicom ]; then
-          rm multicom
-       fi
-
-       ln -s multicom-3.2.4 multicom
-       echo "export CONFIG_MULTICOM324=y" >> .config
-       cd - &>/dev/null
-    ;;
-esac
-
-##############################################
-
 echo -e "\nSelect Python:"
 echo "   1) Python 2.6"
 echo "   2) Python 2.7"
