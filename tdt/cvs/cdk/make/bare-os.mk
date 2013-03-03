@@ -55,7 +55,7 @@ $(DEPDIR)/%$(GLIBC): $(GLIBC_RPM) | $(DEPDIR)/%filesystem
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/$(GLIBC_DEV): \
 $(DEPDIR)/%$(GLIBC_DEV): $(DEPDIR)/%$(GLIBC) $(GLIBC_DEV_RPM)
@@ -107,7 +107,7 @@ GMP_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GMP)-$(GMP_VERSION).sh4.rpm
 
 $(GMP_RPM): \
 		$(addprefix Patches/,$(GMP_SPEC_PATCH) $(GMP_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(GMP)-$(GMP_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(GMP)-$(GMP_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(GMP_SPEC_PATCH),( cd SPECS && patch -p1 $(GMP_SPEC) < $(buildprefix)/Patches/$(GMP_SPEC_PATCH) ) &&) \
 	$(if $(GMP_PATCHES),cp $(addprefix Patches/,$(GMP_PATCHES)) SOURCES/ &&) \

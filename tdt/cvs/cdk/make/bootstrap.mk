@@ -2,7 +2,7 @@
 #
 # HOST-FILESYSTEM
 #
-$(DEPDIR)/host-filesystem:
+host-filesystem:
 	$(INSTALL) -d $(prefix)
 	$(INSTALL) -d $(configprefix)
 	$(INSTALL) -d $(devkitprefix)
@@ -12,18 +12,18 @@ $(DEPDIR)/host-filesystem:
 	$(INSTALL) -d $(hostprefix)/{bin,doc,etc,include,info,lib,man,share,var}
 	ln -sf $(hostprefix)/lib $(hostprefix)/lib64
 	$(INSTALL) -d $(hostprefix)/man/man{1,2,3,4,5,6,7,8,9}
-	touch $@
+	touch .deps/$@
 
 #
 # CCACHE
 #
 
-$(DEPDIR)/$(hostprefix)/ccache-bin:
+$(hostprefix)/ccache-bin:
 	$(INSTALL) -d $@
 	$(INSTALL) -d $(hostprefix)/bin
 
 ccache: | $(hostprefix)/ccache-bin/gcc
-	touch $@
+	touch .deps/$@
 
 $(hostprefix)/ccache-bin/gcc: | $(CCACHE)
 	make $(hostprefix)/ccache-bin
