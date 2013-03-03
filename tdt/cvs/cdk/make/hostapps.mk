@@ -1,13 +1,3 @@
-
-$(hostappsdir)/config.status: bootstrap
-	cd $(hostappsdir) && \
-	./autogen.sh && \
-	./configure --prefix=$(hostprefix)
-
-hostapps: $(hostappsdir)/config.status
-	$(MAKE) -C $(hostappsdir)
-#	touch $@
-
 #
 # ccache
 #

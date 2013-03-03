@@ -24,7 +24,6 @@ cdk-clean:
 		BIN_DEST=$(targetprefix)/bin \
 		INSTALL_MOD_PATH=$(targetprefix) clean
 	-$(MAKE) -C $(appsdir)/misc/tools distclean
-	-$(MAKE) -C $(hostappsdir) clean
 #	-$(MAKE) -C root clean
 	-rm -rf build
 
