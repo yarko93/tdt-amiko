@@ -1196,7 +1196,7 @@ DESCRIPTION_jfsutils = "jfsutils"
 FILES_jfsutils = \
 /sbin/*
 
-$(DEPDIR)/jfsutils.do_prepare: bootstrap $(DEPENDS_jfsutils)
+$(DEPDIR)/jfsutils.do_prepare: bootstrap e2fsprogs $(DEPENDS_jfsutils)
 	$(PREPARE_jfsutils)
 	touch $@
 
@@ -1205,10 +1205,10 @@ $(DEPDIR)/jfsutils.do_compile: $(DEPDIR)/jfsutils.do_prepare
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
 		./configure \
-			--host=gcc \
+			--host=$(target) \
 			--target=$(target) \
 			--prefix= && \
-		$(MAKE) CC="$(target)-gcc"
+		$(MAKE)
 	touch $@
 
 $(DEPDIR)/jfsutils: \
