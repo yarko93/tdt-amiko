@@ -24,7 +24,7 @@ $(DEPDIR)/enigma2-skins-sh4.do_prepare: $(DEPENDS_e2skin)
 
 $(DIR_e2skin)/config.status: enigma2-skins-sh4.do_prepare
 	cd $(DIR_e2skin) && \
-		autoreconf --force --install -I$(hostprefix)/share/aclocal && \
+		./autogen.sh && \
 		$(BUILDENV) \
 		./configure \
 			--host=$(target) \
