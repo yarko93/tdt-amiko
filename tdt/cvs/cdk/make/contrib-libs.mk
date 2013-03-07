@@ -3853,6 +3853,8 @@ libdvbsipp
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 ]]END
+PKGR_libdvbsipp = r0
+
 DESCRIPTION_libdvbsipp = "libdvbsi++ is a open source C++ library for parsing DVB Service Information and MPEG-2 Program Specific Information."
 
 FILES_libdvbsipp = \
