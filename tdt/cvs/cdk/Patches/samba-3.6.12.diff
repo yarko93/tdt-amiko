@@ -70,7 +70,7 @@
  	fi
  	AC_MSG_RESULT([$LINUX_LFS_SUPPORT])
  	;;
-@@ -1116,10 +1085,8 @@
+@@ -1147,10 +1116,8 @@
  # Check to see if core dump directory is defined in linux
  # with /proc/sys/kernel/core_pattern
  
@@ -82,7 +82,7 @@
  
  #############################
  # check if building with gpfs
-@@ -2562,40 +2529,6 @@
+@@ -2593,40 +2564,6 @@
  fi
  # end utmp details
  
@@ -123,7 +123,7 @@
  ICONV_LOOK_DIRS="/usr /usr/local /sw /opt"
  AC_ARG_WITH(libiconv,
  [AS_HELP_STRING([--with-libiconv=BASEDIR], [Use libiconv in BASEDIR/lib and BASEDIR/include (default=auto)])],
-@@ -2802,6 +2735,10 @@
+@@ -2833,6 +2770,10 @@
      AC_DEFINE(HAVE_KERNEL_OPLOCKS_LINUX,1,[Whether to use linux kernel oplocks])
  fi
  
@@ -134,7 +134,7 @@
  AC_CACHE_CHECK([for kernel change notify support],samba_cv_HAVE_KERNEL_CHANGE_NOTIFY,[
  AC_TRY_RUN([
  #include <sys/types.h>
-@@ -3814,7 +3751,6 @@
+@@ -3845,7 +3785,6 @@
    # Heimdal checks.
    AC_CHECK_LIB_EXT(crypto, KRB5_LIBS, des_set_key)
    AC_CHECK_LIB_EXT(asn1, KRB5_LIBS, copy_Authenticator)
