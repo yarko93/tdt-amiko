@@ -351,7 +351,7 @@ sub process_prepare ($)
     {
       my $branch = "master";
       $branch = $opts{"b"} if $opts{"b"};
-      $output .= "(cd $f && git fetch && git checkout $branch && git pull --ff-only origin $branch && git pull --rebase origin $branch; cd -) && ";
+      $output .= "(cd $f && git fetch && git checkout $branch && git pull --rebase origin $branch; cd -) && ";
       $output .= "(cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) && " if $opts{"r"};
       $updateversion = "[ -d $f ] && (true" . $output . "(touch \$\@ -d `cd $f && \$(git_version) && cd -`) ) || true";
       $output .= "cp -a " . $f . $subdir . " " . $dir;
