@@ -3,10 +3,9 @@
 #
 $(DEPDIR)/filesystem: \
 $(DEPDIR)/%filesystem: bootstrap-cross
-	$(INSTALL) -d $(targetprefix)/{bin,boot,dev,dev.static,etc,home,lib,mnt,opt,proc,root,sbin,sys,tmp,usr,var}
+	$(INSTALL) -d $(targetprefix)/{bin,boot,dev,dev.static,etc,lib,mnt,opt,proc,root,sbin,sys,tmp,usr,var}
 	$(INSTALL) -d $(targetprefix)/etc/{default,opt}
 	$(INSTALL) -d $(targetprefix)/usr/{bin,include,lib,local,sbin,share,src}
-	$(INSTALL) -d $(targetprefix)/usr/lib/X11
 	$(INSTALL) -d $(targetprefix)/usr/local/{bin,include,lib,man,sbin,share,src}
 	$(INSTALL) -d $(targetprefix)/usr/local/man/{man1,man2,man3,man4,man5,man6,man7,man8}
 	$(INSTALL) -d $(targetprefix)/usr/share/{aclocal,doc,info,locale,man,misc,nls}
@@ -14,25 +13,15 @@ $(DEPDIR)/%filesystem: bootstrap-cross
 	$(INSTALL) -d $(targetprefix)/var/{backups,cache,lib,local,lock,log,mail,opt,run,spool}
 	ln -sf $(targetprefix)/lib $(targetprefix)/lib64
 	ln -sf $(targetprefix)/usr/lib $(targetprefix)/usr/lib64
-	ln -s /tmp $(targetprefix)/var/tmp
 	$(INSTALL) -d $(targetprefix)/var/lib/misc
 	$(INSTALL) -d $(targetprefix)/var/lock/subsys
-#	$(LN_S) ../mail $(targetprefix)/var/spool/mail
-	ln -sf ../mail $(targetprefix)/var/spool/mail
 	$(INSTALL) -d $(targetprefix)/etc/{init.d,rc.d,samba}
 	$(INSTALL) -d $(targetprefix)/etc/rc.d/{rc3.d,rcS.d}
 	ln -s ../init.d $(targetprefix)/etc/rc.d/init.d
 	$(INSTALL) -d $(targetprefix)/etc/samba/private
-	$(INSTALL) -d $(targetprefix)/jffs
 	$(INSTALL) -d $(targetprefix)/media
-#	$(INSTALL) -d $(targetprefix)/include
-	$(INSTALL) -d $(targetprefix)/ram
-	$(INSTALL) -d $(targetprefix)/rom
-#	$(INSTALL) -d $(targetprefix)/share/{doc,info,locale,man,misc,nls}
-	$(INSTALL) -d $(targetprefix)/srv
-	$(INSTALL) -d $(targetprefix)/srv/www
 	$(INSTALL) -d $(targetprefix)/var/bin
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GLIBC
@@ -41,7 +30,7 @@ GLIBC := glibc
 GLIBC_DEV := glibc-dev
 FILES_glibc = /lib
 FILES_glibc_dev = /lib /usr/lib
-GLIBC_VERSION := 2.10.2-34
+GLIBC_VERSION := 2.10.2-38
 GLIBC_RAWVERSION := $(firstword $(subst -, ,$(GLIBC_VERSION)))
 GLIBC_SPEC := stm-target-$(GLIBC).spec
 GLIBC_SPEC_PATCH :=
@@ -66,7 +55,7 @@ $(DEPDIR)/%$(GLIBC): $(GLIBC_RPM) | $(DEPDIR)/%filesystem
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/$(GLIBC_DEV): \
 $(DEPDIR)/%$(GLIBC_DEV): $(DEPDIR)/%$(GLIBC) $(GLIBC_DEV_RPM)
@@ -74,16 +63,16 @@ $(DEPDIR)/%$(GLIBC_DEV): $(DEPDIR)/%$(GLIBC) $(GLIBC_DEV_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # BINUTILS
 #
 BINUTILS := binutils
 BINUTILS_DEV := binutils-dev
-BINUTILS_VERSION := $(if $(OLDSTM24),2.19.1-41,2.22-64)
+BINUTILS_VERSION := 2.22-68
 BINUTILS_SPEC := stm-target-$(BINUTILS).spec
-BINUTILS_SPEC_PATCH := $(if $(OLDSTM24),,$(BINUTILS_SPEC).$(BINUTILS_VERSION).diff)
+BINUTILS_SPEC_PATCH := $(BINUTILS_SPEC).$(BINUTILS_VERSION).diff
 BINUTILS_PATCHES :=
 BINUTILS_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BINUTILS)-$(BINUTILS_VERSION).sh4.rpm
 BINUTILS_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BINUTILS_DEV)-$(BINUTILS_VERSION).sh4.rpm
@@ -91,26 +80,26 @@ BINUTILS_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(BINUTILS_DEV)-$(BINUTILS_VERSION).
 $(BINUTILS_RPM) $(BINUTILS_DEV_RPM): \
 		$(if $(BINUTILS_SPEC_PATCH),Patches/$(BINUTILS_SPEC_PATCH)) \
 		$(if $(BINUTILS_PATCHES),$(BINUTILS_PATCHES:%=Patches/%)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(BINUTILS)-$(BINUTILS_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(BINUTILS)-$(BINUTILS_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(BINUTILS_SPEC_PATCH),( cd SPECS && patch -p1 $(BINUTILS_SPEC) < $(buildprefix)/Patches/$(BINUTILS_SPEC_PATCH) ) &&) \
 	$(if $(BINUTILS_PATCHES),cp $(BINUTILS_PATCHES:%=Patches/%) SOURCES/ &&) \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(BINUTILS_SPEC)
 
-$(BINUTILS): $(BINUTILS_RPM)
+$(DEPDIR)/$(BINUTILS): $(BINUTILS_RPM)
 	@rpm $(DRPM) --ignorearch --nodeps -Uhv $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
-$(BINUTILS_DEV): $(BINUTILS_DEV_RPM)
+$(DEPDIR)/$(BINUTILS_DEV): $(BINUTILS_DEV_RPM)
 	@rpm $(DRPM) --ignorearch --nodeps --noscripts -Uhv $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
 #
 # GMP
 #
 GMP := gmp
-GMP_VERSION := 5.0.1-5
+GMP_VERSION := 5.1.0-7
 GMP_SPEC := stm-target-$(GMP).spec
 GMP_SPEC_PATCH :=
 GMP_PATCHES :=
@@ -118,7 +107,7 @@ GMP_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GMP)-$(GMP_VERSION).sh4.rpm
 
 $(GMP_RPM): \
 		$(addprefix Patches/,$(GMP_SPEC_PATCH) $(GMP_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(GMP)-$(GMP_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(GMP)-$(GMP_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(GMP_SPEC_PATCH),( cd SPECS && patch -p1 $(GMP_SPEC) < $(buildprefix)/Patches/$(GMP_SPEC_PATCH) ) &&) \
 	$(if $(GMP_PATCHES),cp $(addprefix Patches/,$(GMP_PATCHES)) SOURCES/ &&) \
@@ -137,7 +126,7 @@ $(DEPDIR)/$(GMP): $(GMP_RPM)
 # MPFR
 #
 MPFR := mpfr
-MPFR_VERSION := 3.0.0-5
+MPFR_VERSION := 3.1.1-7
 MPFR_SPEC := stm-target-$(MPFR).spec
 MPFR_SPEC_PATCH :=
 MPFR_PATCHES :=
@@ -146,7 +135,7 @@ MPFR_RPM := RPMS/sh4/$(STLINUX)-sh4-$(MPFR)-$(MPFR_VERSION).sh4.rpm
 $(MPFR_RPM): \
 		$(GMP) \
 		$(addprefix Patches/,$(MPFR_SPEC_PATCH) $(MPFR_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(MPFR)-$(MPFR_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(MPFR)-$(MPFR_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(MPFR_SPEC_PATCH),( cd SPECS && patch -p1 $(MPFR_SPEC) < $(buildprefix)/Patches/$(MPFR_SPEC_PATCH) ) &&) \
 	$(if $(MPFR_PATCHES),cp $(addprefix Patches/,$(MPFR_PATCHES)) SOURCES/ &&) \
@@ -159,22 +148,22 @@ $(DEPDIR)/$(MPFR): $(MPFR_RPM)
 	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libmpfr.la
 	$(start_build)
 	$(fromrpm_build)
-	touch .deps/$(notdir $@)
+	touch $@
 
 #
 # MPC
 #
 MPC := mpc
-MPC_VERSION := 0.8.2-2
+MPC_VERSION := 1.0.1-4
 MPC_SPEC := stm-target-$(MPC).spec
-MPC_SPEC_PATCH := $(MPC_SPEC).$(MPC_VERSION).diff
-MPC_PATCHES := stm-target-$(MPC).$(MPC_VERSION).diff
+MPC_SPEC_PATCH :=
+MPC_PATCHES :=
 MPC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(MPC)-$(MPC_VERSION).sh4.rpm
 
 $(MPC_RPM): \
 		$(MPFR) \
 		$(addprefix Patches/,$(MPC_SPEC_PATCH) $(MPC_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(MPC)-$(MPC_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(MPC)-$(MPC_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(MPC_SPEC_PATCH),( cd SPECS && patch -p1 $(MPC_SPEC) < $(buildprefix)/Patches/$(MPC_SPEC_PATCH) ) &&) \
 	$(if $(MPC_PATCHES),cp $(addprefix Patches/,$(MPC_PATCHES)) SOURCES/ &&) \
@@ -201,7 +190,7 @@ LIBELF_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBELF)-$(LIBELF_VERSION).sh4.rpm
 
 $(LIBELF_RPM): \
 		$(addprefix Patches/,$(LIBELF_SPEC_PATCH) $(LIBELF_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(LIBELF)-$(LIBELF_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-target-$(LIBELF)-$(LIBELF_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(LIBELF_SPEC_PATCH),( cd SPECS && patch -p1 $(LIBELF_SPEC) < $(buildprefix)/Patches/$(LIBELF_SPEC_PATCH) ) &&) \
 	$(if $(LIBELF_PATCHES),cp $(addprefix Patches/,$(LIBELF_PATCHES)) SOURCES/ &&) \
@@ -226,18 +215,19 @@ FILES_libstdc++-dev = \
 /usr/lib/*.so*
 
 LIBGCC := libgcc
-GCC_VERSION := 4.5.2-82
+GCC_VERSION := 4.7.2-119
 GCC_SPEC := stm-target-$(GCC).spec
 GCC_SPEC_PATCH := $(GCC_SPEC).$(GCC_VERSION).diff
-GCC_PATCHES :=
+GCC_PATCHES := stm-target-$(GCC).$(GCC_VERSION).diff
 GCC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(GCC)-$(GCC_VERSION).sh4.rpm
 LIBSTDC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBSTDC)-$(GCC_VERSION).sh4.rpm
 LIBSTDC_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBSTDC_DEV)-$(GCC_VERSION).sh4.rpm
 LIBGCC_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBGCC)-$(GCC_VERSION).sh4.rpm
 
 $(GCC_RPM) $(LIBSTDC_RPM) $(LIBSTDC_DEV_RPM) $(LIBGCC_RPM): \
-		$(addprefix Patches/,$(GCC_SPEC_PATCH) $(GCC_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-target-$(GCC)-$(GCC_VERSION).src.rpm \
+		$(if $(GCC_SPEC_PATCH),Patches/$(GCC_SPEC_PATCH)) \
+		$(if $(GCC_PATCHES),$(GCC_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-target-$(GCC)-$(GCC_VERSION).src.rpm \
 		| $(DEPDIR)/$(GLIBC_DEV) $(MPFR) $(MPC) $(LIBELF)
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(GCC_SPEC_PATCH),( cd SPECS && patch -p1 $(GCC_SPEC) < $(buildprefix)/Patches/$(GCC_SPEC_PATCH) ) &&) \
@@ -248,21 +238,21 @@ $(GCC_RPM) $(LIBSTDC_RPM) $(LIBSTDC_DEV_RPM) $(LIBGCC_RPM): \
 $(DEPDIR)/$(GCC): $(DEPDIR)/%$(GCC): $(DEPDIR)/%$(GLIBC_DEV) $(GCC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
-$(DEPDIR)/$(LIBSTDC): $(DEPDIR)/%$(LIBSTDC): $(DEPDIR)/%$(CROSS_LIBGCC) $(LIBSTDC_RPM)
+$(DEPDIR)/$(LIBSTDC): $(DEPDIR)/%$(LIBSTDC): $(LIBSTDC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/$(LIBSTDC_DEV): $(DEPDIR)/%$(LIBSTDC_DEV): $(DEPDIR)/%$(LIBSTDC) $(LIBSTDC_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/lib{std,sup}c++.la
 	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/lib{std,sup}c++.la
 
@@ -271,7 +261,7 @@ $(DEPDIR)/$(LIBGCC): $(DEPDIR)/%$(LIBGCC): $(LIBGCC_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 # END OF BOOTSTRAP
 
@@ -316,7 +306,7 @@ $(DEPDIR)/%$(LIBTERMCAP): bootstrap $(LIBTERMCAP_RPM)
 	$(INSTALL) -m 644 $(buildprefix)/root/etc/termcap $(prefix)/$*cdkroot/etc
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 $(DEPDIR)/$(LIBTERMCAP_DEV): \
@@ -325,14 +315,14 @@ $(DEPDIR)/%$(LIBTERMCAP_DEV): $(DEPDIR)/%$(LIBTERMCAP) $(LIBTERMCAP_DEV_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 $(DEPDIR)/$(LIBTERMCAP_DOC): \
 $(DEPDIR)/%$(LIBTERMCAP_DOC): $(LIBTERMCAP_DOC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -366,7 +356,7 @@ $(DEPDIR)/$(NCURSES_BASE): \
 $(DEPDIR)/%$(NCURSES_BASE): $(NCURSES_BASE_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $<)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/$(NCURSES): \
 $(DEPDIR)/%$(NCURSES): $(DEPDIR)/%$(NCURSES_BASE) $(NCURSES_RPM)
@@ -374,7 +364,7 @@ $(DEPDIR)/%$(NCURSES): $(DEPDIR)/%$(NCURSES_BASE) $(NCURSES_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 $(DEPDIR)/$(NCURSES_DEV): \
 $(DEPDIR)/%$(NCURSES_DEV): $(DEPDIR)/%$(NCURSES_BASE) $(NCURSES_DEV_RPM)
@@ -382,14 +372,14 @@ $(DEPDIR)/%$(NCURSES_DEV): $(DEPDIR)/%$(NCURSES_BASE) $(NCURSES_DEV_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
 # BASE-PASSWD
 #
 BASE_PASSWD := base-passwd
-BASE_PASSWD_VERSION := 3.5.9-9
+BASE_PASSWD_VERSION := 3.5.9-11
 BASE_PASSWD_SPEC := stm-target-$(BASE_PASSWD).spec
 BASE_PASSWD_SPEC_PATCH :=
 BASE_PASSWD_PATCHES :=
@@ -416,7 +406,7 @@ $(DEPDIR)/%$(BASE_PASSWD): $(BASE_FILES_ADAPTED_ETC_FILES:%=root/etc/%) \
 	chmod 600 $(prefix)/$*cdkroot/etc/shadow && \
 	( cd $(prefix)/$*cdkroot/etc && sed -e "s|/bin/bash|/bin/sh|g" -i passwd ) && \
 	rm -f $(prefix)/$*cdkroot/etc/shadow
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -444,7 +434,7 @@ $(DEPDIR)/%$(MAKEDEV): root/sbin/MAKEDEV $(MAKEDEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --nopost -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(INSTALL) -m 755 root/sbin/MAKEDEV $(prefix)/$*cdkroot/sbin
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -476,7 +466,7 @@ $(DEPDIR)/$(BASE_FILES): $(DEPDIR)/%$(BASE_FILES): $(BASE_FILES_ADAPTED_ETC_FILE
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done ) && \
 	echo "proc          /proc               proc    defaults                        0 0" >> $(prefix)/$*cdkroot/etc/fstab && \
 	echo "tmpfs         /tmp                tmpfs   defaults                        0 0" >> $(prefix)/$*cdkroot/etc/fstab && \
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -507,7 +497,7 @@ $(DEPDIR)/$(LIBATTR): $(DEPDIR)/%$(LIBATTR): $(LIBATTR_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 $(DEPDIR)/$(LIBATTR_DEV): $(DEPDIR)/%$(LIBATTR_DEV): $(LIBATTR_DEV_RPM)
@@ -516,7 +506,7 @@ $(DEPDIR)/$(LIBATTR_DEV): $(DEPDIR)/%$(LIBATTR_DEV): $(LIBATTR_DEV_RPM)
 #	sed -i "/^libdir/s|'/usr/lib'|'$(targetprefix)/usr/lib'|" $(targetprefix)/usr/lib/libattr.la
 #	sed -i "/^dependency_libs/s|-L/usr/lib -L/lib ||" $(targetprefix)/usr/lib/libattr.la
 	$(REWRITE_LIBDIR)/libattr.la
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 
@@ -525,7 +515,7 @@ $(DEPDIR)/$(LIBATTR_DEV): $(DEPDIR)/%$(LIBATTR_DEV): $(LIBATTR_DEV_RPM)
 #
 LIBACL := libacl
 LIBACL_DEV := libacl-dev
-LIBACL_VERSION := 2.2.47-3
+LIBACL_VERSION := 2.2.47-5
 LIBACL_SPEC := stm-target-$(LIBACL).spec
 LIBACL_SPEC_PATCH :=
 LIBACL_PATCHES :=
@@ -547,7 +537,7 @@ $(LIBACL_RPM) $(LIBACL_DEV_RPM): \
 $(DEPDIR)/$(LIBACL): $(DEPDIR)/%$(LIBACL): $(LIBACL_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	$(start_build)
 	$(fromrpm_build)
 	
@@ -556,7 +546,7 @@ $(DEPDIR)/$(LIBACL_DEV): $(DEPDIR)/%$(LIBACL_DEV): $(LIBACL_DEV_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(REWRITE_LIBDIR)/libacl.la
 	$(REWRITE_LIBDEP)/libacl.la
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 
@@ -584,15 +574,16 @@ $(USBUTILS_RPM): \
 $(DEPDIR)/$(USBUTILS): $(DEPDIR)/%$(USBUTILS): $(USBUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
 # UDEV
 #
+
 UDEV := udev
 UDEV_DEV := udev-dev
-UDEV_VERSION := 162-32
+UDEV_VERSION := 162-33
 PKGR_udev := r0
 UDEV_SPEC := stm-target-$(UDEV).spec
 UDEV_SPEC_PATCH := stm-target-udev.spec.diff
@@ -616,10 +607,10 @@ $(UDEV_RPM) $(UDEV_DEV_RPM): \
 $(DEPDIR)/$(UDEV_DEV): $(DEPDIR)/%$(UDEV_DEV): $(UDEV_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	$(REWRITE_LIBDEP)/libgudev-1.0.la
 
-$(DEPDIR)/$(UDEV): $(DEPDIR)/%$(UDEV): $(DEPENDS_udev) $(UDEV_RPM)
+$(DEPDIR)/$(UDEV): $(DEPDIR)/%$(UDEV): $(UDEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	( export HHL_CROSS_TARGET_DIR=$(prefix)/$*cdkroot && cd $(prefix)/$*cdkroot/etc/init.d && \
@@ -632,5 +623,5 @@ $(DEPDIR)/$(UDEV): $(DEPDIR)/%$(UDEV): $(DEPENDS_udev) $(UDEV_RPM)
 	sed -i 's/# chkconfig: S 99 0/# chkconfig: S 6 0/' $(PKDIR)/etc/init.d/udevadm
 	$(INSTALL_udev)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	

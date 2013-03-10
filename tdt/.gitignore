@@ -144,11 +144,3 @@ cvs/cdk/SPECS/
 cvs/cdk/linux
 cvs/cdk/linux-*
 cvs/cdk/root/var/etc/.version
-
-#Theses are only links which are created by make.sh
-cvs/driver/include/multicom
-cvs/driver/include/player2
-cvs/driver/include/stmfb
-cvs/driver/multicom
-cvs/driver/player2
-cvs/driver/stgfb/stmfb

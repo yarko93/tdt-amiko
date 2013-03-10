@@ -1,18 +1,3 @@
-$(DEPDIR)/boot-elf:
-	$(INSTALL_DIR) $(targetprefix)/lib/firmware
-	cp $(buildprefix)/root/firmware/*.fw $(targetprefix)/lib/firmware/
-	@[ "x$*" = "x" ] && touch $@ || true
-
-if ENABLE_SPARK
-LIRCD_CONF := lircd_spark.conf
-else !ENABLE_SPARK
-if ENABLE_SPARK7162
-LIRCD_CONF := lircd_spark7162.conf
-else !ENABLE_SPARK7162
-LIRCD_CONF := lircd.conf
-endif !ENABLE_SPARK7162
-endif !ENABLE_SPARK
-
 $(DEPDIR)/misc-cp:
 	cp $(buildprefix)/root/sbin/hotplug $(targetprefix)/sbin
 	cp $(buildprefix)/root/etc/$(LIRCD_CONF) $(targetprefix)/etc/lircd.conf
@@ -69,7 +54,7 @@ $(DEPDIR)/$(SPLASHUTILS): $(DEPDIR)/%$(SPLASHUTILS): $(SPLASHUTILS_RPM)
 #
 STSLAVE := stslave
 # if STM24
-STSLAVE_VERSION := 0.7-18
+STSLAVE_VERSION := 0.7-25
 STSLAVE_SPEC := stm-target-$(STSLAVE).spec
 STSLAVE_SPEC_PATCH :=
 STSLAVE_PATCHES :=
@@ -96,6 +81,14 @@ $(DEPDIR)/$(STSLAVE): $(DEPDIR)/%$(STSLAVE): linux-kernel-headers binutils-dev $
 #
 # OPENSSL
 #
+BEGIN[[
+openssl
+  1.0.1c
+  {PN}-{PV}
+  extract:ftp://ftp.{PN}.org/source/{PN}-{PV}.tar.gz
+;
+]]END
+
 OPENSSL := openssl
 OPENSSL_DEV := openssl-dev
 FILES_openssl_dev = \

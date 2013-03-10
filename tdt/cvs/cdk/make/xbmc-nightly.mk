@@ -1,4 +1,34 @@
 # tuxbox/enigma2
+BEGIN[[
+xbmc_nightly
+  git
+  $(appsdir)/{PN}
+ifdef ENABLE_XBD0
+  git://github.com/xbmc/xbmc.git
+  patch:file://xbmc-nightly.0.diff
+endif
+
+ifdef ENABLE_XBD1
+  git://github.com/xbmc/xbmc.git:r=460e79416c5cb13010456794f36f89d49d25da75
+  patch:file://xbmc-nightly.1.diff
+endif
+
+ifdef ENABLE_XBD2
+  git://github.com/xbmc/xbmc.git:r=327710767d2257dad27e3885effba1d49d4557f0
+  patch:file://xbmc-nightly.2.diff
+endif
+
+ifdef ENABLE_XBD3
+  git://github.com/xbmc/xbmc.git:r=12840c28d8fbfd71c26be798ff6b13828b05b168
+  patch:file://xbmc-nightly.3.diff
+endif
+
+ifdef ENABLE_XBD4
+  git://github.com/xbmc/xbmc.git:r=e292b1147bd89a7e53742e3e5039b9a906a3b1d0
+  patch:file://xbmc-nightly.4.diff
+endif
+;
+]]END
 
 $(DEPDIR)/xbmc-nightly.do_prepare: $(DEPENDS_xbmc_nightly)
 	$(PREPARE_xbmc_nightly)

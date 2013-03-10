@@ -1,21 +1,72 @@
 # tuxbox/enigma2
+BEGIN[[
+enigma2_pli
+  git
+  $(appsdir)/{PN}-nightly
+
+ifdef ENABLE_E2PD0
+  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
+  patch:file://enigma2-pli-nightly.0.diff
+endif
+
+ifdef ENABLE_E2PD1
+  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
+  patch:file://enigma2-pli-nightly.1.diff
+  patch:file://enigma2-pli-nightly.1.gstreamer.diff
+  patch:file://enigma2-pli-nightly.1.graphlcd.diff
+endif
+
+ifdef ENABLE_E2PD2
+  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=839e96b79600aba73f743fd39628f32bc1628f4c
+  patch:file://enigma2-pli-nightly.2.diff
+  patch:file://enigma2-pli-nightly.2.graphlcd.diff
+endif
+
+ifdef ENABLE_E2PD3
+  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=51a7b9349070830b5c75feddc52e97a1109e381e
+  patch:file://enigma2-pli-nightly.3.diff
+endif
+
+ifdef ENABLE_E2PD4
+  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880
+  patch:file://enigma2-pli-nightly.4.diff
+endif
+
+ifdef ENABLE_E2PD5
+  git://github.com:schpuntik/enigma2-pli.git;b=master;protocol=ssh
+endif
+
+ifdef ENABLE_E2PD6
+    git://github.com/technic/amiko-e2-pli.git:b=testing
+endif
+
+ifdef ENABLE_E2PD7
+  git://github.com:schpuntik/enigma2-pli.git;b=last;protocol=ssh
+endif
+
+ifdef ENABLE_E2PD8
+  git://github.com/technic/amiko-e2-pli.git:b=master
+endif
+;
+]]END
+
 E_CONFIG_OPTS =
 
-if ENABLE_EXTERNALLCD
+ifdef ENABLE_EXTERNALLCD
 E_CONFIG_OPTS += --with-graphlcd
 endif
 
-if ENABLE_MEDIAFWGSTREAMER
+ifdef ENABLE_MEDIAFWGSTREAMER
 E_CONFIG_OPTS += --enable-mediafwgstreamer
 else
 E_CONFIG_OPTS += --enable-libeplayer3
 endif
 
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 E_CONFIG_OPTS += --enable-spark
 endif
 
-if ENABLE_SPARK7162
+ifdef ENABLE_SPARK7162
 E_CONFIG_OPTS += --enable-spark7162
 endif
 
@@ -26,7 +77,7 @@ $(DEPDIR)/enigma2-pli-nightly.do_prepare: $(DEPENDS_enigma2_pli)
 $(DIR_enigma2_pli)/config.status: bootstrap freetype expat fontconfig libpng jpeg libgif libmme_host libmmeimage libfribidi libid3tag libmad libsigc libreadline font-valis-enigma \
 		enigma2-pli-nightly.do_prepare \
 		libdvbsipp python libxml2 libxslt elementtree zope_interface twisted pycrypto pyusb pilimaging pyopenssl pythonwifi lxml libxmlccwrap \
-		ncurses-dev libdreamdvd2 tuxtxt32bpp sdparm openrdate hotplug_e2 $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
+		ncurses-dev libdreamdvd2 tuxtxt32bpp sdparm hotplug_e2 $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
 	cd $(DIR_enigma2_pli) && \
 		./autogen.sh && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \

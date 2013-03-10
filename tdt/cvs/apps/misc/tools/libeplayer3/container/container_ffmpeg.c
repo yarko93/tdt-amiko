@@ -1575,7 +1575,7 @@ int container_ffmpeg_init(Context_t *context, char * filename)
 
                 } else if(stream->codec->codec_id == CODEC_ID_WMAV1
                     || stream->codec->codec_id == CODEC_ID_WMAV2
-                    || 86056 ) //CODEC_ID_WMAPRO) //if (stream->codec->extradata_size > 0)
+                    || stream->codec->codec_id == 86056 ) //CODEC_ID_WMAPRO) //if (stream->codec->extradata_size > 0)
                 {
                     ffmpeg_printf(10,"Create WMA ExtraData\n");
                     track.aacbuflen = 104 + stream->codec->extradata_size;

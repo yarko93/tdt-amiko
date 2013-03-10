@@ -22,7 +22,7 @@ case $1 in
 		boxver	# determine boxtype
 		# if a /etc/lircd.conf.$BOX_ID exists, use it...
 		[ -z "$LIRCD_OPTS" ] && [ -e /etc/lircd.conf.$BOX_ID ] && LIRCD_OPTS=/etc/lircd.conf.$BOX_ID
-		nice -n -20 /usr/bin/lircd $LIRCD_OPTS
+		/usr/bin/lircd $LIRCD_OPTS
 		start-stop-daemon -S -b -x /bin/evremote2
 		echo "LIRCD_OPTS = $LIRCD_OPTS"
 		;;

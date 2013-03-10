@@ -17,12 +17,13 @@ host-filesystem:
 #
 # CCACHE
 #
+
 $(hostprefix)/ccache-bin:
 	$(INSTALL) -d $@
 	$(INSTALL) -d $(hostprefix)/bin
 
 ccache: | $(hostprefix)/ccache-bin/gcc
-	touch .deps/$(notdir $@)
+	touch .deps/$@
 
 $(hostprefix)/ccache-bin/gcc: | $(CCACHE)
 	make $(hostprefix)/ccache-bin
@@ -37,7 +38,7 @@ $(hostprefix)/ccache-bin/gcc: | $(CCACHE)
 # HOST-RPMCONFIG
 #
 HOST_RPMCONFIG = host-rpmconfig
-HOST_RPMCONFIG_VERSION = 2.4-21
+HOST_RPMCONFIG_VERSION = 2.4-31
 HOST_RPMCONFIG_SPEC = stm-$(HOST_RPMCONFIG).spec
 HOST_RPMCONFIG_SPEC_PATCH = $(HOST_RPMCONFIG_SPEC).$(HOST_RPMCONFIG_VERSION).diff
 HOST_RPMCONFIG_PATCHES = stm-$(HOST_RPMCONFIG)-$(HOST_RPMCONFIG_VERSION)-ignore-skip-cvs-errors.patch \
@@ -54,10 +55,10 @@ $(HOST_RPMCONFIG_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild  $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(HOST_RPMCONFIG_SPEC)
 
-$(HOST_RPMCONFIG): $(HOST_RPMCONFIG_RPM)
+$(DEPDIR)/$(HOST_RPMCONFIG): $(HOST_RPMCONFIG_RPM)
 	@rpm $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(STM_RELOCATE)=$(prefix) $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
 #
 # HOST-BASE-PASSWD
@@ -79,15 +80,15 @@ $(HOST_BASE_PASSWD_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild  $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(HOST_BASE_PASSWD_SPEC)
 
-$(HOST_BASE_PASSWD): $(HOST_BASE_PASSWD_RPM)
+$(DEPDIR)/$(HOST_BASE_PASSWD): $(HOST_BASE_PASSWD_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
 #
 # HOST-DISTRIBUTIONUTILS
 #
 HOST_DISTRIBUTIONUTILS = host-distributionutils
-HOST_DISTRIBUTIONUTILS_VERSION = 2.8.4-5
+HOST_DISTRIBUTIONUTILS_VERSION = 2.8.4-6
 HOST_DISTRIBUTIONUTILS_SPEC = stm-$(HOST_DISTRIBUTIONUTILS).spec
 HOST_DISTRIBUTIONUTILS_SPEC_PATCH =
 HOST_DISTRIBUTIONUTILS_PATCHES =
@@ -103,15 +104,15 @@ $(HOST_DISTRIBUTIONUTILS_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild  $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(HOST_DISTRIBUTIONUTILS_SPEC)
 
-$(HOST_DISTRIBUTIONUTILS): $(HOST_DISTRIBUTIONUTILS_RPM)
+$(DEPDIR)/$(HOST_DISTRIBUTIONUTILS): $(HOST_DISTRIBUTIONUTILS_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
 #
 # HOST AUTOTOOLS
 #
 HOST_AUTOTOOLS = host-autotools
-HOST_AUTOTOOLS_VERSION = dev-20091012-2
+HOST_AUTOTOOLS_VERSION = dev-20091012-3
 HOST_AUTOTOOLS_SPEC = stm-$(HOST_AUTOTOOLS)-dev.spec
 HOST_AUTOTOOLS_SPEC_PATCH =
 HOST_AUTOTOOLS_PATCHES =
@@ -119,7 +120,7 @@ HOST_AUTOTOOLS_RPM = RPMS/sh4/$(STLINUX)-$(HOST_AUTOTOOLS)-$(HOST_AUTOTOOLS_VERS
 
 $(HOST_AUTOTOOLS_RPM): \
 		$(addprefix Patches/,$(HOST_AUTOTOOLS_SPEC_PATCH) $(HOST_AUTOTOOLS_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_AUTOTOOLS)-$(HOST_AUTOTOOLS_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_AUTOTOOLS)-$(HOST_AUTOTOOLS_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_AUTOTOOLS_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_AUTOTOOLS_SPEC) < $(buildprefix)/Patches/$(HOST_AUTOTOOLS_SPEC_PATCH) ) &&) \
 	$(if $(HOST_AUTOTOOLS_PATCHES),cp $(addprefix Patches/,$(HOST_AUTOTOOLS_PATCHES)) SOURCES/ &&) \
@@ -134,7 +135,7 @@ $(DEPDIR)/$(HOST_AUTOTOOLS): $(HOST_AUTOTOOLS_RPM)
 # HOST AUTOMAKE
 #
 HOST_AUTOMAKE = host-automake
-HOST_AUTOMAKE_VERSION = 1.11-2
+HOST_AUTOMAKE_VERSION = 1.11.1-3
 HOST_AUTOMAKE_SPEC = stm-$(HOST_AUTOMAKE).spec
 HOST_AUTOMAKE_SPEC_PATCH =
 HOST_AUTOMAKE_PATCHES =
@@ -142,7 +143,7 @@ HOST_AUTOMAKE_RPM = RPMS/sh4/$(STLINUX)-$(HOST_AUTOMAKE)-$(HOST_AUTOMAKE_VERSION
 
 $(HOST_AUTOMAKE_RPM): \
 		$(addprefix Patches/,$(HOST_AUTOMAKE_SPEC_PATCH) $(HOST_AUTOMAKE_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_AUTOMAKE)-$(HOST_AUTOMAKE_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_AUTOMAKE)-$(HOST_AUTOMAKE_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_AUTOMAKE_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_AUTOMAKE_SPEC) < $(buildprefix)/Patches/$(HOST_AUTOMAKE_SPEC_PATCH) ) &&) \
 	$(if $(HOST_AUTOMAKE_PATCHES),cp $(addprefix Patches/,$(HOST_AUTOMAKE_PATCHES)) SOURCES/ &&) \
@@ -156,7 +157,7 @@ $(DEPDIR)/$(HOST_AUTOMAKE): $(HOST_AUTOMAKE_RPM)
 # HOST AUTOCONF
 #
 HOST_AUTOCONF = host-autoconf
-HOST_AUTOCONF_VERSION = 2.64-4
+HOST_AUTOCONF_VERSION = 2.64-6
 HOST_AUTOCONF_SPEC = stm-$(HOST_AUTOCONF).spec
 HOST_AUTOCONF_SPEC_PATCH = stm-$(HOST_AUTOCONF).$(HOST_AUTOCONF_VERSION).spec.diff
 HOST_AUTOCONF_PATCHES = stm-$(HOST_AUTOCONF).$(HOST_AUTOCONF_VERSION).diff
@@ -164,7 +165,7 @@ HOST_AUTOCONF_RPM = RPMS/sh4/$(STLINUX)-$(HOST_AUTOCONF)-$(HOST_AUTOCONF_VERSION
 
 $(HOST_AUTOCONF_RPM): \
 		$(addprefix Patches/,$(HOST_AUTOCONF_SPEC_PATCH) $(HOST_AUTOCONF_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_AUTOCONF)-$(HOST_AUTOCONF_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_AUTOCONF)-$(HOST_AUTOCONF_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_AUTOCONF_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_AUTOCONF_SPEC) < $(buildprefix)/Patches/$(HOST_AUTOCONF_SPEC_PATCH) ) &&) \
 	$(if $(HOST_AUTOCONF_PATCHES),cp $(addprefix Patches/,$(HOST_AUTOCONF_PATCHES)) SOURCES/ &&) \
@@ -189,7 +190,7 @@ HOST_MODINIT_RPM = RPMS/sh4/$(STLINUX)-$(HOST_MODINIT)-$(HOST_MODINIT_VERSION).s
 
 $(HOST_MODINIT_RPM): \
 		$(addprefix Patches/,$(HOST_MODINIT_SPEC_PATCH) $(HOST_MODINIT_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_MODINIT)-$(HOST_MODINIT_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_MODINIT)-$(HOST_MODINIT_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_MODINIT_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_MODINIT_SPEC) < $(buildprefix)/Patches/$(HOST_MODINIT_SPEC_PATCH) ) &&) \
 	$(if $(HOST_MODINIT_PATCHES),cp $(addprefix Patches/,$(HOST_MODINIT_PATCHES)) SOURCES/ &&) \
@@ -204,7 +205,7 @@ $(DEPDIR)/$(HOST_MODINIT): $(HOST_MODINIT_RPM)
 # HOST PKGCONFIG
 #
 HOST_PKGCONFIG = host-pkg-config
-HOST_PKGCONFIG_VERSION = 0.23-2
+HOST_PKGCONFIG_VERSION = 0.23-3
 HOST_PKGCONFIG_SPEC = stm-$(HOST_PKGCONFIG).spec
 HOST_PKGCONFIG_SPEC_PATCH =
 HOST_PKGCONFIG_PATCHES =
@@ -212,7 +213,7 @@ HOST_PKGCONFIG_RPM = RPMS/sh4/$(STLINUX)-$(HOST_PKGCONFIG)-$(HOST_PKGCONFIG_VERS
 
 $(HOST_PKGCONFIG_RPM): \
 		$(addprefix Patches/,$(HOST_PKGCONFIG_SPEC_PATCH) $(HOST_PKGCONFIG_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(HOST_PKGCONFIG)-$(HOST_PKGCONFIG_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(HOST_PKGCONFIG)-$(HOST_PKGCONFIG_VERSION).src.rpm
 	rpm  $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(HOST_PKGCONFIG_SPEC_PATCH),( cd SPECS && patch -p1 $(HOST_PKGCONFIG_SPEC) < $(buildprefix)/Patches/$(HOST_PKGCONFIG_SPEC_PATCH) ) &&) \
 	$(if $(HOST_PKGCONFIG_PATCHES),cp $(addprefix Patches/,$(HOST_PKGCONFIG_PATCHES)) SOURCES/ &&) \
@@ -292,16 +293,16 @@ $(CROSS_DISTRIBUTIONUTILS_RPM): \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild  $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(CROSS_DISTRIBUTIONUTILS_SPEC)
 
-$(CROSS_DISTRIBUTIONUTILS): $(CROSS_DISTRIBUTIONUTILS_RPM)
+$(DEPDIR)/$(CROSS_DISTRIBUTIONUTILS): $(CROSS_DISTRIBUTIONUTILS_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
 #
 # CROSS BINUTILS
 #
 CROSS_BINUTILS = cross-sh4-binutils
 CROSS_BINUTILS_DEV = cross-sh4-binutils-dev
-CROSS_BINUTILS_VERSION = 2.19.1-41
+CROSS_BINUTILS_VERSION = 2.22-64
 CROSS_BINUTILS_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_BINUTILS)).spec
 CROSS_BINUTILS_SPEC_PATCH = $(CROSS_BINUTILS_SPEC).$(CROSS_BINUTILS_VERSION).diff
 CROSS_BINUTILS_PATCHES =
@@ -318,19 +319,19 @@ $(CROSS_BINUTILS_RPM) $(CROSS_BINUTILS_DEV_RPM) : \
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	rpmbuild  $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(CROSS_BINUTILS_SPEC)
 
-$(CROSS_BINUTILS): $(CROSS_BINUTILS_RPM)
+$(DEPDIR)/$(CROSS_BINUTILS): $(CROSS_BINUTILS_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
-$(CROSS_BINUTILS_DEV): $(CROSS_BINUTILS_DEV_RPM)
+$(DEPDIR)/$(CROSS_BINUTILS_DEV): $(CROSS_BINUTILS_DEV_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps --noscripts -Uhv $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
 #
 # CROSS GMP
 #
 CROSS_GMP = cross-sh4-gmp
-CROSS_GMP_VERSION = 5.0.1-9
+CROSS_GMP_VERSION = 5.1.0-11
 CROSS_GMP_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_GMP)).spec
 CROSS_GMP_SPEC_PATCH = $(CROSS_GMP_SPEC).$(CROSS_GMP_VERSION).diff
 CROSS_GMP_PATCHES =
@@ -338,7 +339,7 @@ CROSS_GMP_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_GMP)-$(CROSS_GMP_VERSION).$
 
 $(CROSS_GMP_RPM): \
 		$(addprefix Patches/,$(CROSS_GMP_SPEC_PATCH) $(CROSS_GMP_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_GMP))-$(CROSS_GMP_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_GMP))-$(CROSS_GMP_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(CROSS_GMP_SPEC_PATCH),( cd SPECS && patch -p1 $(CROSS_GMP_SPEC) < $(buildprefix)/Patches/$(CROSS_GMP_SPEC_PATCH) ) &&) \
 	$(if $(CROSS_GMP_PATCHES),cp $(addprefix Patches/,$(CROSS_GMP_PATCHES)) SOURCES/ &&) \
@@ -352,7 +353,7 @@ $(DEPDIR)/$(CROSS_GMP): $(CROSS_GMP_RPM)
 # CROSS MPFR
 #
 CROSS_MPFR = cross-sh4-mpfr
-CROSS_MPFR_VERSION = 2.4.2-6
+CROSS_MPFR_VERSION = 3.1.1-11
 CROSS_MPFR_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_MPFR)).spec
 CROSS_MPFR_SPEC_PATCH = $(CROSS_MPFR_SPEC).$(CROSS_MPFR_VERSION).diff
 CROSS_MPFR_PATCHES =
@@ -361,7 +362,7 @@ CROSS_MPFR_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_MPFR)-$(CROSS_MPFR_VERSION
 $(CROSS_MPFR_RPM): \
 		$(CROSS_GMP_RPM) \
 		$(addprefix Patches/,$(CROSS_MPFR_SPEC_PATCH) $(CROSS_MPFR_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_MPFR))-$(CROSS_MPFR_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_MPFR))-$(CROSS_MPFR_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(CROSS_MPFR_SPEC_PATCH),( cd SPECS && patch -p1 $(CROSS_MPFR_SPEC) < $(buildprefix)/Patches/$(CROSS_MPFR_SPEC_PATCH) ) &&) \
 	$(if $(CROSS_MPFR_PATCHES),cp $(addprefix Patches/,$(CROSS_MPFR_PATCHES)) SOURCES/ &&) \
@@ -376,7 +377,7 @@ $(DEPDIR)/$(CROSS_MPFR): $(CROSS_GMP) $(CROSS_MPFR_RPM)
 # CROSS MPC
 #
 CROSS_MPC = cross-sh4-mpc
-CROSS_MPC_VERSION = 0.8.2-3
+CROSS_MPC_VERSION = 1.0.1-5
 CROSS_MPC_SPEC = stm-$(subst cross-sh4,cross,$(CROSS_MPC)).spec
 CROSS_MPC_SPEC_PATCH = $(CROSS_MPC_SPEC).$(CROSS_MPC_VERSION).diff
 CROSS_MPC_PATCHES =
@@ -384,7 +385,7 @@ CROSS_MPC_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_MPC)-$(CROSS_MPC_VERSION).$
 
 $(CROSS_MPC_RPM): \
 		$(addprefix Patches/,$(CROSS_MPC_SPEC_PATCH) $(CROSS_MPC_PATCHES)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_MPC))-$(CROSS_MPC_VERSION).src.rpm
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_MPC))-$(CROSS_MPC_VERSION).src.rpm
 	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
 	$(if $(CROSS_MPC_SPEC_PATCH),( cd SPECS && patch -p1 $(CROSS_MPC_SPEC) < $(buildprefix)/Patches/$(CROSS_MPC_SPEC_PATCH) ) &&) \
 	$(if $(CROSS_MPC_PATCHES),cp $(addprefix Patches/,$(CROSS_MPC_PATCHES)) SOURCES/ &&) \
@@ -426,7 +427,7 @@ CROSS_CPP = cross-sh4-cpp
 CROSS_G++ = cross-sh4-g++
 CROSS_PROTOIZE = cross-sh4-protoize
 CROSS_LIBGCC = cross-sh4-libgcc
-CROSS_GCC_VERSION = 4.5.2-78
+CROSS_GCC_VERSION = 4.7.2-115
 CROSS_GCC_RAWVERSION = $(firstword $(subst -, ,$(CROSS_GCC_VERSION)))
 CROSS_GCC_SPEC = stm-$(subst cross-sh4-,cross-,$(CROSS_GCC)).spec
 CROSS_GCC_SPEC_PATCH = $(CROSS_GCC_SPEC).$(CROSS_GCC_VERSION).diff
@@ -442,7 +443,7 @@ CROSS_LIBGCC_RPM = RPMS/$(host_arch)/$(STLINUX)-$(CROSS_LIBGCC)-$(CROSS_GCC_VERS
 $(CROSS_GCC_RPM) $(CROSS_CPP_RPM) $(CROSS_G++_RPM) $(CROSS_PROTOIZE_RPM) $(CROSS_LIBGCC_RPM): \
 		$(if $(CROSS_GCC_SPEC_PATCH),Patches/$(CROSS_GCC_SPEC_PATCH)) \
 		$(if $(CROSS_GCC_PATCHES),$(CROSS_GCC_PATCHES:%=Patches/%)) \
-		$(archivedir)/$(STLINUX:%23=%24)-$(subst cross-sh4-,cross-,$(CROSS_GCC))-$(CROSS_GCC_VERSION).src.rpm \
+		$(archivedir)/$(STLINUX)-$(subst cross-sh4-,cross-,$(CROSS_GCC))-$(CROSS_GCC_VERSION).src.rpm \
 		| $(archivedir)/$(STLINUX)-sh4-$(GLIBC)-$(GLIBC_VERSION).sh4.rpm \
 		$(archivedir)/$(STLINUX)-sh4-$(GLIBC_DEV)-$(GLIBC_VERSION).sh4.rpm \
 		$(if $(CROSS_MPFR),$(CROSS_MPFR)) \
@@ -462,47 +463,47 @@ $(CROSS_GCC_RPM) $(CROSS_CPP_RPM) $(CROSS_G++_RPM) $(CROSS_PROTOIZE_RPM) $(CROSS
 	rpm $(DRPM) --nodeps -ev $(STLINUX)-sh4-$(GLIBC_DEV) && \
 	rpm $(DRPM) --nodeps -ev $(STLINUX)-sh4-$(GLIBC)
 
-$(CROSS_GCC): $(CROSS_GCC_RPM)
+$(DEPDIR)/$(CROSS_GCC): $(CROSS_GCC_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
 	$(if $(CROSS_GCC_INVALIDATE),sh4-linux-objcopy -v --redefine-sym __ic_invalidate_syscall=__ic_invalidate $(prefix)/devkit/sh4/lib/gcc/sh4-linux/$(CROSS_GCC_RAWVERSION)/libgcc.a &&) \
-	touch .deps/$(notdir $@)
+	touch $@
 
-$(CROSS_CPP): $(CROSS_CPP_RPM)
+$(DEPDIR)/$(CROSS_CPP): $(CROSS_CPP_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
-$(CROSS_G++): $(CROSS_G++_RPM)
+$(DEPDIR)/$(CROSS_G++): $(CROSS_G++_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
 $(DEPDIR)/$(CROSS_LIBGCC): \
 $(DEPDIR)/%$(CROSS_LIBGCC): $(CROSS_LIBGCC_RPM) | $(DEPDIR)/%$(GLIBC)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb  $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	$(start_build)
 	$(fromrpm_build)
 
-$(CROSS_PROTOIZE): $(CROSS_PROTOIZE_RPM)
+$(DEPDIR)/$(CROSS_PROTOIZE): $(CROSS_PROTOIZE_RPM)
 	@rpm  $(DRPM) --ignorearch --nodeps -Uhv $< && \
-	touch .deps/$(notdir $@)
+	touch $@
 
 #
 # BOOTSTRAP-CROSS
 #
 $(DEPDIR)/bootstrap-cross: | \
-		bootstrap-host \
-		cross-sh4-distributionutils \
-		cross-sh4-filesystem \
-		cross-sh4-binutils \
-		cross-sh4-binutils-dev \
-		cross-sh4-cpp \
-		cross-sh4-gcc \
-		cross-sh4-g++ \
-		ipkg-utils \
-		opkg-host \
-		cross-sh4-libgcc
-	[ "x$*" = "x" ] && touch -r $(CROSS_G++_RPM) $@ || true
+	bootstrap-host \
+	cross-sh4-distributionutils \
+	cross-sh4-filesystem \
+	cross-sh4-binutils \
+	cross-sh4-binutils-dev \
+	cross-sh4-cpp \
+	cross-sh4-gcc \
+	cross-sh4-g++ \
+	ipkg-utils \
+	opkg-host \
+	cross-sh4-libgcc
+	touch -r $(CROSS_G++_RPM) $@
 
 $(DEPDIR)/setup-cross-doc: \
 	cross-binutils-doc \
@@ -516,6 +517,16 @@ $(DEPDIR)/setup-cross-optional: \
 #
 # LIBTOOL
 #
+BEGIN[[
+libtool
+  2.4.2
+  {PN}-2.4.2
+  extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
+  patch:file://{PN}-{PV}-duckbox-branding.patch
+  make:install
+;
+]]END
+
 $(DEPDIR)/libtool.do_prepare: $(DEPENDS_libtool)
 	$(PREPARE_libtool)
 	touch $@
@@ -536,5 +547,5 @@ $(DEPDIR)/libtool: \
 $(DEPDIR)/%libtool: $(DEPDIR)/libtool.do_compile
 	cd $(DIR_libtool) && \
 	$(INSTALL_libtool)
-#		sed -i -r -e 's,\(hardcode_into_libs)=yes,\1=no,g' $(hostprefix)/bin/libtool
+		ln -sf $(hostprefix)/share/aclocal $(hostprefix)/share/aclocal-1.11
 	touch $@

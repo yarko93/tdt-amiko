@@ -4,11 +4,12 @@ use warnings;
 use IO::File;
 use constant DEBUG => 1;
 
-my $version;
 my @allurls;
 
 my $filename = shift;
 my $package = ""; # current processing package
+my $version; # version of current processing package
+my $dir; # dir for current processing package
 
 # command sytax definitions
 my $supported_protocols = "https|http|ftp|file|git|svn";
@@ -44,70 +45,85 @@ sub load ($$)
   warn "output to $foutname";
   open FILE, "+>", "$foutname";
   
-  my $lines;
+  my $lines = "";
   my $start = 0;
+  my $nextpkg = 0;
   while ( <$fh> )
   {
     if ( $_ =~ m#^\]\]END# )
     {
-      process_block($lines);
       $start = 0;
       next;
     }
     if ( $_ =~ m#^BEGIN\[\[# )
     {
       $start = 1;
-      $lines = "";
       next;
     }
-    if ( not $start)
+    if (not $start or ($_ =~ m#^(ifdef |ifndef |ifeq |ifneq |else|endif)#) )
     {
       print FILE $_;
       next;
     }
+    # remove comments
     $_ =~ s/#.*$//;
-    $lines .= $_ if not $_ =~ m#^\s+$#;
+    if ($_ =~ m#^\s+$#) {
+      next;
+    }
+    chomp $_;
+    $_ =~ s/^\s+//; #remove leading spaces
+    $_ =~ s/\s+$//; #remove trailing spaces
+
+    if ($_ =~ m#;$#) {
+      if ($nextpkg < 3) {
+        die "no info"
+      }
+      $nextpkg += 1;
+      $_ =~ s/;$//;
+    }
+
+    if ($nextpkg == 0) {
+      process_begin($_);
+      $nextpkg += 1;
+    } elsif ($nextpkg == 1) {
+      process_version($_);
+      $nextpkg += 1;
+    } elsif ($nextpkg == 2) {
+      process_dir($_);
+      $nextpkg += 1;
+    } elsif ($nextpkg == 3) {
+      process_block($_);
+    } elsif ($nextpkg == 4) {
+      $nextpkg = 0;
+    }
+
   }
   close FILE;
 }
 
 sub process_block ($)
 {
-  my $lines = "@_";
-    
-  my @lines = split( /;;|\n\n|\n;|;\n/ , $lines);
+  warn "$package,$version,$dir  :  $_" if DEBUG;
+  my $out;
 
-  foreach ( @lines )
-  {
-    my @l = split ( /\n/ , $_ );
-    chomp @l;
-    my @rule;
-    foreach (@l)
-    {
-      $_ =~ s/^\s+//; #remove leading spaces
-      $_ =~ s/\s+$//; #remove trailing spaces
-      push(@rule, $_) if ( $_ ne "" );
-    }
-    
-    warn "BEGIN package\n" . join(";", @rule) . "\nEND\n" if DEBUG;
+# We don't need this feature any more
+#     if( ($rule[0] eq ">>>" or $rule[0] eq ">>?") and defined $rule[1])
+#     {
+#       load ( $rule[1], 0 ) if $rule[0] eq ">>>";
+#       load ( $rule[1], 1 ) if $rule[0] eq ">>?";
+#     }
 
-    if( ($rule[0] eq ">>>" or $rule[0] eq ">>?") and defined $rule[1])
-    {
-      load ( $rule[1], 0 ) if $rule[0] eq ">>>";
-      load ( $rule[1], 1 ) if $rule[0] eq ">>?";
-    }
-    elsif (defined $rule[0]) {
-      $package = shift @rule;
-      my $allout = "";
-      foreach ( sort keys %ruletypes )
-      {
-        $allout = &{$ruletypes{$_}} ($package, \@rule);
-        #print "$allout\n";
-        print FILE subs_vars($allout);
-      }
-    }
-  }
+  $out = "DEPENDS_$package += " . process_depends($_) . "\n";
+  print FILE subs_vars($out);
+  $out = "PREPARE_$package += " . process_prepare($_) . "\n";
+  print FILE subs_vars($out);
+  $out = "SRC_URI_$package += " . process_sources($_) . "\n";
+  print FILE subs_vars($out);
+  $out = "INSTALL_$package += " . process_install($_) . "\n";
+  print FILE subs_vars($out);
 
+  print FILE subs_vars(process_download($_) . "\n")
+  
 }
 
 sub process_rule($) {
@@ -196,18 +212,13 @@ sub process_rule($) {
   return ($p, $f, $cmd, $url, \%args, \@argv);
 }
 
-sub process_make_depends (@)
-{
-  #return "\"fu\"";
-  shift;
-  shift;
 
+sub process_depends ($)
+{
   my $output = "";
 
-  foreach ( @_ )
-  {  
     my ($p, $f) = process_rule($_);
-    next if ( $p eq "none" );
+    return if ( $p eq "none" );
 
     if ( $p =~ m#^(file)$# or $p =~ m#^($supported_protocols)$#  )
     {
@@ -217,27 +228,55 @@ sub process_make_depends (@)
     {
       die "can't recognize protocol " . $_;
     }
-  }
 
   return $output;
 }
 
-sub process_make_dir (@)
+sub process_dir ($)
 {
-  return $_[1];
+  $dir = $_;
+  my $out = "DIR_$package = $dir\n";
+  print FILE subs_vars($out);
+
+  my $output;
+
+#echo '====> prepare $package\' &&
+#echo '====> install $package ' &&
+
+  $output =  "PREPARE_$package = ( rm -rf \$(DIR_$package) || /bin/true)" . "\n";
+  $output .= "INSTALL_$package = /bin/true\n";
+
+  $output .= "DEPSCLEANUP_$package = rm .deps/$package" . "\n";
+  $output .= "DEPSCLEANUP += .deps/$package .deps/$package.do_compile .deps/$package.do_prepare" . "\n";
+  $output .= "LIST_CLEAN += $package-clean" . "\n";
+
+  $output .= "DISTCLEANUP_$package = rm -rf \$(DIR_$package)" . "\n";
+  $output .= "DISTCLEANUP += \$(DIR_$package)" . "\n";
+  $output .= "DEPSDISTCLEANUP_$package = rm .deps/$package .deps/$package.do_compile .deps/$package.do_prepare" . "\n";
+  $output .= "LIST_DISTCLEAN += $package-distclean" . "\n";
+
+  $output .= "DEPENDS_$package = \$(DEPDIR)/$package.version_\$(PKGV_$package)-\$(PKGR_$package)" . "\n";
+
+  if ($version =~ m#^git|svn$#)
+  {
+    $output .= "UPDATEPKGV_$package = [ -d \$(DIR_$package) ] && (touch \$\@ -d `cd \$(DIR_$package) && \$(git_version) && cd -`) || true" . "\n";
+    $output .= "LIST_AUTOPKGV += \$(DEPDIR)/$package.version_\$(PKGV_$package)-\$(PKGR_$package)" . "\n";
+  } else {
+    $output .= "UPDATEPKGV_$package = touch \$\@" . "\n";
+  }
+  $output .= "\$(DEPDIR)/$package.version_%:\n\t\$(UPDATEPKGV_$package)" . "\n";
+
+  print FILE subs_vars($output);
 }
 
 
-sub process_make_prepare (@)
+sub process_prepare ($)
 {
-  shift;
-  my $dir = shift;
 
-  my $output = "( rm -rf " . $dir . " || /bin/true)";
+  my $output = "";
   my $autoversion = "";
+  my $updateversion = "";
 
-  foreach ( @_ )
-  {
     my @args = split( /:/, $_ );
     my ($p, $f, $cmd, $url, $opts_ref) = process_rule($_);
     my %opts = %$opts_ref;
@@ -248,13 +287,10 @@ sub process_make_prepare (@)
 
     if ( $cmd !~ m#$make_commands# and $p !~ m#(git|svn)# )
     {
-      next;
+      return;
     }
     
-    if ( $output ne "" )
-    {
       $output .= " && ";
-    }
     
     if ( ($cmd eq "rpm" || $cmd eq "extract") and $p !~ m#(git|svn)#)
     {
@@ -315,8 +351,9 @@ sub process_make_prepare (@)
     {
       my $branch = "master";
       $branch = $opts{"b"} if $opts{"b"};
-      $output .= "(cd $f && git fetch && git checkout $branch && git pull --ff-only origin $branch && git pull --rebase origin $branch; cd -) && ";
+      $output .= "(cd $f && git fetch && git checkout $branch && git pull --rebase origin $branch; cd -) && ";
       $output .= "(cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) && " if $opts{"r"};
+      $updateversion = "[ -d $f ] && (true" . $output . "(touch \$\@ -d `cd $f && \$(git_version) && cd -`) ) || true";
       $output .= "cp -a " . $f . $subdir . " " . $dir;
       $autoversion = "\$(eval export PKGV_$package = \$(shell cd $f && \$(git_version)))";
     }
@@ -400,57 +437,30 @@ sub process_make_prepare (@)
     {
       die "can't recognize command @_";
     }
-  }
 
   $output .= "\nAUTOPKGV_$package = $autoversion" if $autoversion;
+  $output .= "\nUPDATEPKGV_$package = $updateversion" if $updateversion;
   return $output
 }
 
-sub process_make_version (@)
+sub process_version ($)
 {
-  $version = $_[0];
-  return $_[0];
+  $version = $_;
+  my $out;
+  $out  = "VERSION_$package = $version\n";
+  $out .= "PKGV_$package = \$(VERSION_$package)" . "\n";
+  print FILE subs_vars($out);
 }
 
-sub process_make ($$)
+sub process_begin ($)
 {
-  #warn $_[0];
-  my $package = $_[0];
-  my @rules = @{$_[1]};
-  my $output = "";
-
-  my %args =
-  (
-    depends => \&process_make_depends,
-    dir => \&process_make_dir,
-    prepare => \&process_make_prepare,
-    version => \&process_make_version,
-    src_uri => \&process_make_sources,
-  );
-
-  foreach ( sort keys %args )
-  {
-    ( my $tmp = $_ ) =~ y/a-z/A-Z/;
-    $output .= $tmp . "_" . $package . " = " . &{$args{$_}} (@rules) . "\n";
-  }
-  $output .= "PKGV_$package = \$(VERSION_$package)" . "\n";
-
-  $output .= "DEPSCLEANUP_$package = rm .deps/$package" . "\n";
-  $output .= "DEPSCLEANUP += .deps/$package .deps/$package.do_compile .deps/$package.do_prepare" . "\n";
-  $output .= "LIST_CLEAN += $package-clean" . "\n";
-
-  $output .= "DISTCLEANUP_$package = rm -rf \$(DIR_$package)" . "\n";
-  $output .= "DISTCLEANUP += \$(DIR_$package)" . "\n";
-  $output .= "DEPSDISTCLEANUP_$package = rm .deps/$package .deps/$package.do_compile .deps/$package.do_prepare" . "\n";
-  $output .= "LIST_DISTCLEAN += $package-distclean" . "\n";
-
-  return $output;
+  $package = $_;
 }
 
-sub process_install_rule ($)
+sub process_install ($)
 {
-  
-  my $rule = shift;
+
+  my $rule = $_;
   my ($p, $f, $cmd, $url, $opts_ref, $dest_ref) = process_rule($rule);
   my @dest = @$dest_ref;
 
@@ -462,7 +472,7 @@ sub process_install_rule ($)
   @_ = split ( /:/, $rule );
   $_ = shift @_;
 
-  my $output = "";
+  my $output = " && ";
 
   if ( $cmd =~ m#$install_commands# )
   {
@@ -595,71 +605,29 @@ sub process_uninstall_rule ($)
   return $output;
 }
 
-sub process_install ($$)
+sub process_sources ($)
 {
-  my @rules = @{$_[1]};
   my $output = "";
-  $version = shift @rules;
-  shift @rules;
 
-  foreach ( @rules )
-  {
-    $output .= " && " if $output;
-    $output .= process_install_rule ($_);
-  }
-
-  return "INSTALL_$package = " . $output . "\n";
-}
-
-sub process_uninstall ($$)
-{
-  my @rules = @{$_[1]};
-  my $output = "";
-  shift @rules;
-  shift @rules;
-
-  foreach ( @rules )
-  {
-    $output .= " && " if $output;
-    $output .= process_uninstall_rule ($_);
-  }
-
-  return $output;
-}
-
-sub process_make_sources ($$$)
-{
-  shift;
-  shift;
-  my $output = "";
-  
-  foreach ( @_ )
-  {
     my ($p, $f, $cmd, $url, $opts_ref) = process_rule($_);
     my %opts = %$opts_ref;
-    next if ( $p eq "none" );
+    return if ( $p eq "none" );
     my $rev = "";
     $rev = ":r$opts{'r'}" if $opts{"r"};
     $output .= "$url$rev ";
-  }
-  return "\"$output\""
+
+  return "$output"
 }
 
-sub process_download ($$)
+sub process_download ($)
 {
-  my @rules = @{$_[1]};
-  process_make_version (@rules);
 
   my $head;
   my $output = "";
 
-  shift @rules;
-  shift @rules;
-  foreach ( @rules )
-  {
     my ($p, $f, $cmd, $url, $opts_ref) = process_rule($_);
     my %opts = %$opts_ref;
-    next if ( $p eq "file" || $p eq "none" );
+    return if ( $p eq "file" || $p eq "none" );
     
     $_ =~ s/$cmd:// if ($cmd ne "");
     
@@ -679,7 +647,7 @@ sub process_download ($$)
     #warn "download: " . $url . "\n";
     
     $head .= " " . $f;
-    $output .= " " . $f . ":\n\tfalse";
+    $output .= $f . ":\n\tfalse";
 
     if ( $_ =~ m#^ftp://# )
     {
@@ -735,7 +703,7 @@ sub process_download ($$)
       $output .= "\n\t\@touch \$\@";
     }
     $output .= "\n\n";
-  }
+
   return "$output"
 
 }

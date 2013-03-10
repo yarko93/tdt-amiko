@@ -1,6 +1,15 @@
 #
 # CONSOLE_DATA
 #
+BEGIN[[
+console_data
+  1.03
+  {PN}-{PV}
+  extract:ftp://ftp.debian.org/debian/pool/main/c/{PN}/{PN}_{PV}.orig.tar.gz
+  make:install
+;
+]]END
+
 $(DEPDIR)/console_data: bootstrap $(DEPENDS_console_data)
 	$(PREPARE_console_data)
 	cd $(DIR_console_data) && \
@@ -17,6 +26,15 @@ $(DEPDIR)/console_data: bootstrap $(DEPENDS_console_data)
 #
 # SYSVINIT/INITSCRIPTS
 #
+BEGIN[[
+sysvinit
+  2.86
+  {PN}-{PV}
+  extract:ftp://ftp.cistron.nl/pub/people/miquels/{PN}/{PN}-{PV}.tar.gz
+  nothing:http://ftp.de.debian.org/debian/pool/main/s/{PN}/{PN}_{PV}.ds1-38.diff.gz
+;
+]]END
+
 SYSVINIT := sysvinit
 INITSCRIPTS := initscripts
 FILES_sysvinit = \
@@ -28,7 +46,7 @@ FILES_sysvinit = \
 /sbin/shutdown \
 /sbin/reboot
 
-SYSVINIT_VERSION := 2.86-10
+SYSVINIT_VERSION := 2.86-15
 SYSVINIT_SPEC := stm-target-$(SYSVINIT).spec
 SYSVINIT_SPEC_PATCH :=
 SYSVINIT_PATCHES :=
@@ -55,7 +73,7 @@ $(DEPDIR)/%$(SYSVINIT): $(SYSVINIT_ADAPTED_ETC_FILES:%=root/etc/%) \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done )
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/$(INITSCRIPTS): \
 $(DEPDIR)/%$(INITSCRIPTS): $(INITSCRIPTS_ADAPTED_ETC_FILES:%=root/etc/%) \
@@ -86,14 +104,14 @@ $(DEPDIR)/%$(INITSCRIPTS): $(INITSCRIPTS_ADAPTED_ETC_FILES:%=root/etc/%) \
 		rmnologin single stop-bootlogd ; do \
 			$(hostprefix)/bin/target-initdconfig --add $${s#init.d/} || \
 			echo "Unable to enable initd service: $${s#init.d/}" ; done && rm *rpmsave *.orig 2>/dev/null || true )
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
 # NETBASE
 #
 NETBASE := netbase
-NETBASE_VERSION := 4.34-8
+NETBASE_VERSION := 4.34-9
 NETBASE_SPEC := stm-target-$(NETBASE).spec
 NETBASE_SPEC_PATCHES :=
 NETBASE_PATCHES :=
@@ -124,14 +142,14 @@ $(DEPDIR)/%$(NETBASE): \
 		for i in if-down.d if-post-down.d if-pre-up.d if-up.d run; do \
 			$(INSTALL) -d $$i; \
 		done )
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
 # BC
 #
 BC := bc
-BC_VERSION := 1.06-5
+BC_VERSION := 1.06-6
 BC_SPEC := stm-target-$(BC).spec
 BC_SPEC_PATCH :=
 BC_PATCHES :=
@@ -151,7 +169,7 @@ $(DEPDIR)/$(BC): \
 $(DEPDIR)/%$(BC): $(BC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -178,7 +196,7 @@ $(FINDUTILS_RPM): \
 $(DEPDIR)/$(FINDUTILS): $(DEPDIR)/%$(FINDUTILS): $(FINDUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps  -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $<
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -188,7 +206,7 @@ DISTRIBUTIONUTILS := distributionutils
 DESCRIPTION_distributionutils = utilities to setup system
 FILES_distributionutils = /usr/sbin/initdconfig
 DISTRIBUTIONUTILS_DOC := distributionutils-doc
-DISTRIBUTIONUTILS_VERSION := 3.2.1-9
+DISTRIBUTIONUTILS_VERSION := 3.2.1-10
 DISTRIBUTIONUTILS_SPEC := stm-target-$(DISTRIBUTIONUTILS).spec
 DISTRIBUTIONUTILS_SPEC_PATCH :=
 DISTRIBUTIONUTILS_PATCHES :=
@@ -213,13 +231,13 @@ $(DEPDIR)/%$(DISTRIBUTIONUTILS): $(DISTRIBUTIONUTILS_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/$(DISTRIBUTIONUTILS_DOC): \
 $(DEPDIR)/%$(DISTRIBUTIONUTILS_DOC): $(DISTRIBUTIONUTILS_DOC_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # HOST-MTD-UTILS
@@ -245,7 +263,7 @@ $(DEPDIR)/$(MTD_UTILS): \
 $(DEPDIR)/%$(MTD_UTILS): $(MTD_UTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
@@ -288,7 +306,7 @@ $(BASH).do_clean: %$(BASH).do_clean:
 # COREUTILS
 #
 COREUTILS := coreutils
-COREUTILS_VERSION := 5.2.1-14
+COREUTILS_VERSION := 8.9-19
 COREUTILS_SPEC := stm-target-$(COREUTILS).spec 
 COREUTILS_SPEC_PATCH :=
 COREUTILS_PATCHES := 
@@ -476,12 +494,22 @@ $(STRACE_RPM): \
 $(DEPDIR)/$(STRACE): $(DEPDIR)/%$(STRACE): $(DEPDIR)/%$(GLIBC) $(STRACE_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch  --force --noscripts -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
 # UTIL LINUX
 # 
+BEGIN[[
+util_linux
+  2.12r
+  {PN}-{PV}
+  extract:ftp://debian.lcs.mit.edu/pub/linux/utils/{PN}/v2.12/{PN}-{PV}.tar.bz2
+  patch:file://{PN}_{PV}-12.deb.diff.gz
+  nothing:file://{PN}-stm.diff
+;
+]]END
+
 UTIL_LINUX = util-linux
 FILES_util_linux = \
 /sbin/mkfs \
@@ -546,12 +574,12 @@ $(DEPDIR)/$(IPTABLES_DEV): $(DEPDIR)/%$(IPTABLES_DEV): $(IPTABLES_DEV_RPM)
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 $(DEPDIR)/$(IPTABLES): $(DEPDIR)/%$(IPTABLES): $(IPTABLES_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps --force -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^)
 	$(start_build)
 	$(fromrpm_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	

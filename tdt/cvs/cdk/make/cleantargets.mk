@@ -30,9 +30,7 @@ cdk-clean:
 
 # Clean tuxbox source directories. Clean up in cdkroot as much as the
 # uninstall facilities of the components allow.
-clean-local: mostlyclean-local depsclean rpmdepsclean
-	-$(MAKE) -C $(appsdir)/misc/tools uninstall
-	-$(MAKE) -C $(hostappsdir) uninstall
+clean-local: mostlyclean-local depsclean rpmdepsclean misc-tools-clean
 	-rm -rf $(hostprefix)
 	-rm -rf $(crossprefix)/
 	-rm -rf $(configprefix)/
@@ -47,6 +45,9 @@ clean-local: mostlyclean-local depsclean rpmdepsclean
 	-rm -rf $(prefix)/ccache
 	-rm -rf $(DEPDIR)/u-boot-utils*
 	-rm -rf $(DEPDIR)/linux-kernel*
+	-rm -rf $(DEPDIR)/enigma2-pli-nightly.do_compile
+	-rm -rf $(DEPDIR)/enigma2-nightly.do_compile
+	-rm -rf $(DEPDIR)/xbmc-nightly.do_compile
 
 
 
@@ -54,8 +55,6 @@ clean-local: mostlyclean-local depsclean rpmdepsclean
 distclean-local:
 #	-$(MAKE) -C root distclean
 	-$(MAKE) -C $(appsdir) distclean
-	-$(MAKE) -C $(appsdir)/misc/tools distclean
-	-$(MAKE) -C $(hostappsdir) distclean
 	-$(MAKE) driver-clean
 	-rm -f Makefile-archive
 	-rm -f rules-downcheck.pl
@@ -82,6 +81,7 @@ distclean-local:
 	-rm -rf $(kernelprefix)/u-boot
 	-rm -rf $(STGFB_DIR)
 	-$(DISTCLEANUP)
+	-rm Makefile
 
 #
 # RPM stuff

@@ -3,7 +3,6 @@
 # originally created by schischu and konfetti
 # fedora parts prepared by lareq
 # fedora/suse/ubuntu scripts merged by kire pudsje (kpc)
-
 if [[ $EUID -ne 0 ]]; then
 	echo "This script must be run as root (sudo $0)" 1>&2
 	exit 1
@@ -13,7 +12,7 @@ fi
 UBUNTU=
 FEDORA=
 SUSE=
-
+UBUVERSION=`lsb_release -c | cut -d : -f2 | cut -b2-35`
 # Try to detect the distribution
 if `which lsb_release > /dev/null 2>&1`; then 
 	case `lsb_release -s -i` in
@@ -43,6 +42,7 @@ if [ -z "$FEDORA$SUSE$UBUNTU" ]; then
 	echo "Try installing the following packages: "
 	# determine probable distribution, based on package system, 
 	# Suse should be last because the others may also have rpm installed.
+	UBUVERSION=`lsb_release -c | cut -d : -f2 | cut -b2-35`
 	{ `which apt-get > /dev/null 2>&1` && UBUNTU=1; } || \
 	{ `which yum     > /dev/null 2>&1` && FEDORA=1; } || \
 	SUSE=2
@@ -101,6 +101,32 @@ PACKAGES="\
 	${UBUNTU:+ruby} \
 	${UBUNTU:+cmake} \
 ";
+if [ "$UBUVERSION" == "quantal" ];then
+	# we lock now the rpm-packages, so ubu not updating them!
+	echo "Package: rpm" >> /etc/apt/preferences
+	echo "Pin: version 4.9.1.1*" >> /etc/apt/preferences
+	echo "Pin-Priority: 1001" >> /etc/apt/preferences
+	echo "" >> /etc/apt/preferences
+	echo "Package: rpm-common" >> /etc/apt/preferences
+	echo "Pin: version 4.9.1.1*" >> /etc/apt/preferences
+	echo "Pin-Priority: 1001" >> /etc/apt/preferences
+	echo "" >> /etc/apt/preferences
+	echo "Package: rpm2cpio" >> /etc/apt/preferences
+	echo "Pin: version 4.9.1.1*" >> /etc/apt/preferences
+	echo "Pin-Priority: 1001" >> /etc/apt/preferences
+	echo "" >> /etc/apt/preferences
+	echo "Package: librpm2" >> /etc/apt/preferences
+	echo "Pin: version 4.9.1.1*" >> /etc/apt/preferences
+	echo "Pin-Priority: 1001" >> /etc/apt/preferences
+	echo "" >> /etc/apt/preferences
+	echo "Package: librpmbuild2" >> /etc/apt/preferences
+	echo "Pin: version 4.9.1.1*" >> /etc/apt/preferences
+	echo "Pin-Priority: 1001" >> /etc/apt/preferences
+	echo "" >> /etc/apt/preferences
+	echo "Package: librpmsign0" >> /etc/apt/preferences
+	echo "Pin: version 4.9.1.1*" >> /etc/apt/preferences
+	echo "Pin-Priority: 1001" >> /etc/apt/preferences
+fi
 
 if [ `which arch > /dev/null 2>&1 && arch || uname -m` == x86_64 ]; then
 	# ST changed to the -m32 option for their gcc compiler build

@@ -25,7 +25,7 @@ STM_RELOCATE := /opt/STM/STLinux-2.4
 
 #######################################      #########################################
 
-if ENABLE_CCACHE
+ifdef ENABLE_CCACHE
 PATH := $(hostprefix)/ccache-bin:$(crossprefix)/bin:$(PATH):/usr/sbin
 else
 PATH := $(crossprefix)/bin:$(PATH):/usr/sbin
@@ -120,11 +120,11 @@ CONFIGURE_OPTS = \
 	--with-dvbincludes=$(driverdir)/include \
 	--with-target=cdk
 
-if ENABLE_CCACHE
+ifdef ENABLE_CCACHE
 CONFIGURE_OPTS += --enable-ccache 
 endif
 
-if MAINTAINER_MODE
+ifdef MAINTAINER_MODE
 CONFIGURE_OPTS += --enable-maintainer-mode
 endif
 

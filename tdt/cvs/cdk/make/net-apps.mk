@@ -1,6 +1,22 @@
 #
 # NFS-UTILS
 #
+BEGIN[[
+nfs_utils
+  1.1.1
+  {PN}-{PV}
+  extract:ftp://ftp.piotrkosoft.net/pub/mirrors/ftp.kernel.org/linux/utils/nfs/{PN}-{PV}.tar.bz2
+  patch:file://{PN}_{PV}-12.diff.gz
+  make:install:DESTDIR=PKDIR
+  install:-m644:debian/nfs-common.default:PKDIR/etc/default/nfs-common
+  install:-m755:debian/nfs-common.init:PKDIR/etc/init.d/nfs-common
+  install:-m644:debian/nfs-kernel-server.default:PKDIR/etc/default/nfs-kernel-server
+  install:-m755:debian/nfs-kernel-server.init:PKDIR/etc/init.d/nfs-kernel-server
+  install:-m644:debian/etc.exports:PKDIR/etc/exports
+  remove:PKDIR/sbin/mount.nfs4:PKDIR/sbin/umount.nfs4
+;
+]]END
+
 DESCRIPTION_nfs_utils = "nfs_utils"
 FILES_nfs_utils = \
 /usr/bin/*
@@ -48,6 +64,21 @@ $(DEPDIR)/%nfs_utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
 #
 # vsftpd
 #
+BEGIN[[
+vsftpd
+  3.0.2
+  {PN}-{PV}
+  extract:http://fossies.org/unix/misc/{PN}-{PV}.tar.gz
+  patch:file://{PN}_{PV}.diff
+  nothing:file://../root/release/vsftpd
+  nothing:file://../root/etc/vsftpd.conf
+  pmove:{PN}-{PV}/vsftpd:{PN}-{PV}/vsftpd.initscript
+  make:install:PREFIX=PKDIR
+  install:-m644:vsftpd.conf:PKDIR/etc
+  install:-m755 -D:vsftpd.initscript:PKDIR/etc/init.d/vsftpd
+;
+]]END
+
 DESCRIPTION_vsftpd = "vsftpd"
 PKGR_vsftpd = r0
 FILES_vsftpd = \
@@ -91,6 +122,15 @@ $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
 #
 # ETHTOOL
 #
+BEGIN[[
+ethtool
+  6
+  {PN}-{PV}
+  extract:http://downloads.openwrt.org/sources/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_ethtool = "ethtool"
 FILES_ethtool = \
 /usr/sbin/*
@@ -123,6 +163,16 @@ $(DEPDIR)/%ethtool: $(DEPDIR)/ethtool.do_compile
 #
 # SAMBA
 #
+BEGIN[[
+samba
+  3.6.12
+  {PN}-{PV}
+  extract:http://www.{PN}.org/{PN}/ftp/stable/{PN}-{PV}.tar.gz
+  patch:file://{PN}-{PV}.diff
+  make:install bin/smbd bin/nmbd:DESTDIR=PKDIR:prefix=./.
+;
+]]END
+
 DESCRIPTION_samba = "samba"
 FILES_samba = \
 /usr/sbin/* \
@@ -211,6 +261,16 @@ $(DEPDIR)/%samba: $(DEPDIR)/samba.do_compile
 #
 # NETIO
 #
+BEGIN[[
+netio
+  1.26
+  {PN}126
+  extract:http://bnsmb.de/files/public/windows/{PN}126.zip
+  install:-m755:{PN}:PKDIR/usr/bin
+  install:-m755:bin/linux-i386:HOST/bin/{PN}
+;
+]]END
+
 DESCRIPTION_netio = "netio"
 FILES_netio = \
 /usr/bin/*
@@ -239,6 +299,15 @@ $(DEPDIR)/%netio: $(DEPDIR)/netio.do_compile
 #
 # LIGHTTPD
 #
+BEGIN[[
+lighttpd
+  1.4.15
+  {PN}-{PV}
+  extract:http://www.{PN}.net/download/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_lighttpd = "lighttpd"
 FILES_lighttpd = \
 /usr/bin/* \
@@ -283,6 +352,16 @@ $(DEPDIR)/%lighttpd: $(DEPDIR)/lighttpd.do_compile
 #
 # NETKIT_FTP
 #
+BEGIN[[
+netkit_ftp
+  0.17
+  {PN}-{PV}
+  extract:http://ibiblio.org/pub/linux/system/network/netkit//{PN}-{PV}.tar.gz
+#patch:file://{PN}.diff
+  make:install:MANDIR=/usr/share/man:INSTALLROOT=TARGETS
+;
+]]END
+
 DESCRIPTION_netkit_ftp = "netkit_ftp"
 FILES_netkit_ftp = \
 /usr/bin/*
@@ -314,6 +393,15 @@ $(DEPDIR)/%netkit_ftp: $(DEPDIR)/netkit_ftp.do_compile
 #
 # WIRELESS_TOOLS
 #
+BEGIN[[
+wireless_tools
+  29
+  wireless_tools.{PV}
+  extract:http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/wireless_tools.{PV}.tar.gz
+  make:install:INSTALL_MAN=PKDIR/usr/share/man:PREFIX=PKDIR/usr
+;
+]]END
+
 DESCRIPTION_wireless_tools = wireless-tools
 RDEPENDS_wireless_tools = rfkill wpa-supplicant
 FILES_wireless_tools = \
@@ -342,6 +430,16 @@ $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 #
 # WPA_SUPPLICANT
 #
+BEGIN[[
+wpa_supplicant
+  1.0
+  wpa_supplicant-{PV}
+  extract:http://hostap.epitest.fi/releases/wpa_supplicant-{PV}.tar.gz
+  nothing:file://wpa_supplicant.config
+  make:install:DESTDIR=PKDIR:LIBDIR=/usr/lib:BINDIR=/usr/sbin
+;
+]]END
+
 DESCRIPTION_wpa_supplicant = "wpa-supplicant"
 PKGR_wpa_supplicant = r0
 FILES_wpa_supplicant = \

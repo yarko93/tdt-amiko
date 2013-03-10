@@ -13,5 +13,4 @@ $(DEPDIR)/diverse-tools: $(DEPDIR)/%diverse-tools: $(DIVERSE_TOOLS_ADAPTED_ETC_F
 	ln -sf /usr/share/zoneinfo/Europe/Berlin $(prefix)/$*cdkroot/etc/localtime
 	$(INSTALL_BIN) root/usr/sbin/mountro $(prefix)/$*cdkroot/usr/sbin/
 	$(INSTALL_BIN) root/usr/sbin/mountrw $(prefix)/$*cdkroot/usr/sbin/
-#	$(INSTALL_BIN) root/bin/devinit $(prefix)/$*cdkroot/bin
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@

@@ -2,6 +2,14 @@
 # Make Extern-Plugins
 #
 #
+BEGIN[[
+e2plugin
+  git
+  {PN}
+  git://github.com/schpuntik/enigma2-plugins-sh4.git
+;
+]]END
+
 DESCRIPTION_e2plugin := Additional plugins for Enigma2
 
 PKGR_e2plugin = r2
@@ -28,7 +36,7 @@ $(DEPDIR)/enigma2-plugins-sh4.do_prepare: $(DEPENDS_e2plugin)
 
 $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
 	cd $(DIR_e2plugin) && \
-		autoreconf -i -I$(hostprefix)/share/aclocal && \
+		./autogen.sh && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i xml2po.py && \
 		$(BUILDENV) \
 		./configure \

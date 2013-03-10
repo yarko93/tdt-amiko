@@ -8,7 +8,20 @@ hostapps: $(hostappsdir)/config.status
 	$(MAKE) -C $(hostappsdir)
 #	touch $@
 
-if ENABLE_CCACHE
+#
+# ccache
+#
+
+BEGIN[[
+ccache
+  3.1.8
+  {PN}-{PV}
+  extract:http://samba.org/ftp/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=HOST
+;
+]]END
+
+ifdef ENABLE_CCACHE
 $(hostprefix)/bin/ccache: $(DEPENDS_ccache)
 	$(PREPARE_ccache)
 	cd $(DIR_ccache) && \
@@ -24,6 +37,15 @@ endif
 #
 # MKCRAMFS
 #
+BEGIN[[
+cramfs
+  1.1
+  {PN}-{PV}
+  extract:http://heanet.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
+  install:mk{PN}:HOST/bin
+;
+]]END
+
 mkcramfs: @MKCRAMFS@
 
 $(hostprefix)/bin/mkcramfs: $(DEPENDS_cramfs)
@@ -36,6 +58,26 @@ $(hostprefix)/bin/mkcramfs: $(DEPENDS_cramfs)
 #
 # MKSQUASHFS with LZMA support
 #
+BEGIN[[
+squashfs
+  3.0
+  mk{PN}
+  pdircreate:mk{PN}
+  extract:http://heanet.dl.sourceforge.net/sourceforge/sevenzip/lzma442.tar.bz2
+  patch:file://lzma_zlib-stream.diff
+  extract:http://heanet.dl.sourceforge.net/sourceforge/{PN}/{PN}{PV}.tar.gz
+  patch:file://mk{PN}_lzma.diff
+;
+squashfs
+  4.0
+  mk{PN}
+  pdircreate:mk{PN}
+  extract:http://heanet.dl.sourceforge.net/sourceforge/sevenzip/lzma465.tar.bz2
+  extract:http://heanet.dl.sourceforge.net/sourceforge/{PN}/{PN}{PV}.tar.gz
+  patch:file://{PN}-tools-{PV}-lzma.patch
+;
+]]END
+
 MKSQUASHFS = $(hostprefix)/bin/mksquashfs
 mksquashfs: $(MKSQUASHFS)
 
@@ -55,6 +97,16 @@ $(hostprefix)/bin/mksquashfs: $(DEPENDS_squashfs)
 #
 # IPKG-UTILS
 #
+BEGIN[[
+ipkg_utils
+  050831
+  {PN}-{PV}
+  extract:ftp://ftp.gwdg.de/linux/handhelds/packages/{PN}/{PN}-{PV}.tar.gz
+  patch:file://{PN}.diff
+  make:install
+;
+]]END
+
 IPKG_BUILD_BIN = $(crossprefix)/bin/ipkg-build
 
 ipkg-utils: $(IPKG_BUILD_BIN)
@@ -64,11 +116,19 @@ $(crossprefix)/bin/ipkg-build: filesystem $(DEPENDS_ipkg_utils) | $(ipkprefix)
 	cd $(DIR_ipkg_utils) && \
 		$(MAKE) all PREFIX=$(crossprefix) && \
 		$(MAKE) install PREFIX=$(crossprefix)
-#       @DISTCLEANUP_ipkg-utils@
+	touch $@
 
 #
 # OPKG-HOST
 #
+BEGIN[[
+opkg_host
+  0.1.8
+  {PN}
+  dirextract:http://opkg.googlecode.com/files/opkg-{PV}.tar.gz
+;
+]]END
+
 OPKG_BIN = $(crossprefix)/bin/opkg
 OPKG_CONF = $(crossprefix)/etc/opkg.conf
 OPKG_CONFCDK = $(crossprefix)/etc/opkg-cdk.conf
@@ -95,11 +155,35 @@ $(crossprefix)/bin/opkg: $(DEPENDS_opkg_host)
 	  echo "arch sh4 10"; \
 	  echo "arch all 1"; \
 	  echo "src/gz cross file://$(ipkcdk)" ) >>$(OPKG_CONFCDK)
+	  touch $@
 
 
 #
 # PYTHON-HOST
 #
+BEGIN[[
+ifdef ENABLE_PY27
+host_python
+  2.7.3
+  {PN}-{PV}
+  extract:http://www.python.org/ftp/python/{PV}/Python-{PV}.tar.bz2
+  pmove:Python-{PV}:{PN}-{PV}
+  patch:file://python_{PV}.diff
+  patch:file://python_{PV}-ctypes-libffi-fix-configure.diff
+  patch:file://python_{PV}-pgettext.diff
+;
+else
+host_python
+  2.6.6
+  {PN}-{PV}
+  extract:http://www.python.org/ftp/python/{PV}/Python-{PV}.tar.bz2
+  pmove:Python-{PV}:{PN}-{PV}
+  patch:file://python_{PV}.diff
+  patch:file://python_{PV}-ctypes-libffi-fix-configure.diff
+  patch:file://python_{PV}-pgettext.diff
+endif
+;
+]]END
 
 python := $(crossprefix)/bin/python
 

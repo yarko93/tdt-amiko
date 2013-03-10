@@ -1,6 +1,30 @@
 #
 # INIT-SCRIPTS customized
 #
+BEGIN[[
+init_scripts
+  0.6
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/inittab
+  nothing:file://../root/release/hostname
+  nothing:file://../root/release/inetd
+# for 'nothing:' only 'cp' is executed so '*' is ok.
+  nothing:file://../root/release/initmodules_*
+  nothing:file://../root/release/halt_*
+  nothing:file://../root/release/mountall
+  nothing:file://../root/release/mountsysfs
+  nothing:file://../root/release/networking
+  nothing:file://../root/release/rc
+  nothing:file://../root/release/reboot
+  nothing:file://../root/release/sendsigs
+  nothing:file://../root/release/telnetd
+  nothing:file://../root/release/syslogd
+  nothing:file://../root/release/crond
+  nothing:file://../root/release/umountfs
+  nothing:file://../root/release/lircd
+;
+]]END
 
 DESCRIPTION_init_scripts = init scripts and rules for system start
 init_scripts_initd_files = \
@@ -87,6 +111,21 @@ $(DEPDIR)/fonts-extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fon
 #
 # 3G MODEMS
 #
+BEGIN[[
+modem_scripts
+  0.3
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/ppp/ip-*
+  nothing:file://../root/usr/bin/modem.sh
+  nothing:file://../root/usr/bin/modemctrl.sh
+  nothing:file://../root/etc/modem.conf
+  nothing:file://../root/etc/modem.list
+  nothing:file://../root/etc/55-modem.rules
+  nothing:file://../root/etc/30-modemswitcher.rules
+;
+]]END
+
 DESCRIPTION_modem_scripts = utils to setup 3G modems
 RDEPENDS_modem_scripts = pppd usb_modeswitch iptables iptables-dev
 
@@ -116,13 +155,13 @@ SRC_URI_driver_ptinp = unknown
 $(DEPDIR)/driver-ptinp:
 	$(start_build)
 	mkdir -p $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0209),cp -dp $(archivedir)/ptinp/pti_209.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0210),cp -dp $(archivedir)/ptinp/pti_210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0211),cp -dp $(archivedir)/ptinp/pti_211.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko)
 endif
-if ENABLE_SPARK7162
+ifdef ENABLE_SPARK7162
 	$(if $(P0207),cp -dp $(archivedir)/ptinp/pti_207s2.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0209),cp -dp $(archivedir)/ptinp/pti_209s2.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
 	$(if $(P0210),cp -dp $(archivedir)/ptinp/pti_210s2.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/pti/pti.ko) \
@@ -139,11 +178,11 @@ SRC_URI_driver_encrypt = unknown
 $(DEPDIR)/driver-encrypt:
 	$(start_build)
 	mkdir -p $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 	$(if $(P0210), cp -dp $(buildprefix)/root/release/encrypt_spark_stm24_0210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	$(if $(P0211), cp -dp $(buildprefix)/root/release/encrypt_spark_stm24_0211.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko)
 endif
-if ENABLE_SPARK7162	
+ifdef ENABLE_SPARK7162
 	$(if $(P0207), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0207.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	$(if $(P0209), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0209.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
 	$(if $(P0210), cp -dp $(buildprefix)/root/release/encrypt_spark7162_stm24_0210.ko $(PKDIR)/lib/modules/$(KERNELVERSION)/extra/encrypt/encrypt.ko) \
@@ -154,6 +193,16 @@ endif
 #
 # UDEV RULES
 #
+BEGIN[[
+udev_rules
+  0.2
+  {PN}-{PV}
+  pdircreate:{PN}-{PV}
+  nothing:file://../root/etc/60-dvb-ca.rules
+  nothing:file://../root/etc/90-cec_aotom.rules
+;
+]]END
+
 DESCRIPTION_udev_rules = custom udev rules
 RDEPENDS_udev_rules = udev
 
@@ -166,7 +215,47 @@ $(DEPDIR)/udev-rules: $(DEPENDS_udev_rules) $(RDEPENDS_udev_rules)
 	$(INSTALL_FILE) 90-cec_aotom.rules $(PKDIR)/etc/udev/rules.d/
 	$(toflash_build)
 	touch $@
+#
+# boot-elf
+#
 
+DESCRIPTION_boot_elf = firmware non public
+SRC_URI_boot_elf = unknown
+PKGV_boot_elf = r1
+
+$(DEPDIR)/boot-elf: release_base firmware $(RDEPENDS_boot_elf)
+	$(start_build)
+	$(INSTALL_DIR) $(PKDIR)/boot/
+ifdef ENABLE_SPARK
+	$(INSTALL_FILE) $(archivedir)/boot/video_7111.elf $(PKDIR)/boot/video.elf
+	$(INSTALL_FILE) $(archivedir)/boot/audio_7111.elf $(PKDIR)/boot/audio.elf
+endif
+ifdef ENABLE_SPARK7162
+	$(INSTALL_FILE) $(archivedir)/boot/video_7105.elf $(PKDIR)/boot/video.elf
+	$(INSTALL_FILE) $(archivedir)/boot/audio_7105.elf $(PKDIR)/boot/audio.elf
+endif
+	$(toflash_build)
+	touch $@
+
+#
+# firmware
+#
+
+DESCRIPTION_firmware = firmware non public
+SRC_URI_firmware = unknown
+PKGV_firmware = r1
+
+$(DEPDIR)/firmware: release_base $(RDEPENDS_firmware)
+	$(start_build)
+	$(INSTALL_DIR) $(PKDIR)/lib/firmware/
+ifdef ENABLE_SPARK
+	$(INSTALL_FILE) $(buildprefix)/root/firmware/component_7111_mb618.fw $(PKDIR)/lib/firmware/component.fw
+endif
+ifdef ENABLE_SPARK7162
+	$(INSTALL_FILE) $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(PKDIR)/lib/firmware/component.fw
+endif
+	$(toflash_build)
+	touch $@
 
 # auxiliary targets for model-specific builds
 release_common_utils:
@@ -176,19 +265,6 @@ release_common_utils:
 	cp -f $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
 	cp -f $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
 	$(call initdconfig,$(shell ls $(prefix)/release/etc/init.d))
-
-# Copy video_7105
-	$(if $(SPARK7162),cp -f $(archivedir)/boot/video_7105.elf $(prefix)/release/boot/video.elf)
-# Copy audio_7105
-	$(if $(SPARK7162),cp -f $(archivedir)/boot/audio_7105.elf $(prefix)/release/boot/audio.elf)
-# Copy video_7109
-	$(if $(HL101),cp -f $(archivedir)/boot/video_7109.elf $(prefix)/release/boot/video.elf)
-# Copy audio_7109
-	$(if $(HL101),cp -f $(archivedir)/boot/audio_7109.elf $(prefix)/release/boot/audio.elf)
-# Copy video_7111
-	$(if $(SPARK),cp -f $(archivedir)/boot/video_7111.elf $(prefix)/release/boot/video.elf)
-# Copy audio_7111
-	$(if $(SPARK),cp -f $(archivedir)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf )
 	
 release_base: driver-ptinp driver-encrypt
 	rm -rf $(prefix)/release || true
@@ -284,8 +360,6 @@ release_base: driver-ptinp driver-encrypt
 	fi
 
 # Copy lircd.conf
-	cp -f $(buildprefix)/root/etc/lircd$(if $(HL101),_$(HL101))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162)).conf $(prefix)/release/etc/lircd.conf
-
 	touch $(prefix)/release/var/etc/.firstboot && \
 	cp -f $(buildprefix)/root/release/mme_check $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/bootscreen/bootlogo.mvi $(prefix)/release/boot/ && \
@@ -323,7 +397,7 @@ release_base: driver-ptinp driver-encrypt
 
 release_spark:
 	echo "spark" > $(prefix)/release/etc/hostname
-if ENABLE_PY27
+ifdef ENABLE_PY27
 	echo "src/gz AR-P http://alien.sat-universum.de/2.7" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf
@@ -332,22 +406,19 @@ else
 	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf
 endif
-	cp $(buildprefix)/root/etc/lircd_spark.conf.09_00_0B $(prefix)/release/etc/lircd.conf.09_00_0B && \
-	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
 	true
 
 release_spark7162:
 	echo "spark7162" > $(prefix)/release/etc/hostname
-if ENABLE_PY27
+ifdef ENABLE_PY27
 	echo "src/gz AR-P http://alien2.sat-universum.de/2.7" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf
 else
-		echo "src/gz AR-P http://alien2.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
+	echo "src/gz AR-P http://alien2.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf
 endif
-	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw
 	true
 
 
@@ -371,7 +442,6 @@ release-clean:
 	rm -f $(DEPDIR)/release_base
 	rm -f $(DEPDIR)/release_$(HL101)$(SPARK)$(SPARK7162)
 	rm -f $(DEPDIR)/release_common_utils 
-	rm -f $(DEPDIR)/release_cube_common
 
 ######## FOR YOUR OWN CHANGES use these folder in cdk/own_build/enigma2 #############
 	cp -RP $(buildprefix)/own_build/enigma2/* $(prefix)/release/

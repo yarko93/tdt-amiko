@@ -1,14 +1,26 @@
 #
 # busybox
 #
+
+PKGR_busybox = r0
+BEGIN[[
+busybox
+  1.21.0
+  {PN}-{PV}
+  extract:http://www.{PN}.net/downloads/{PN}-{PV}.tar.bz2
+  patch:file://{PN}-{PV}-mdev.patch
+  patch:file://{PN}-{PV}-platform.patch
+  patch:file://{PN}-{PV}-xz.patch
+  make:install:CONFIG_PREFIX=PKDIR
+;
+]]END
+
 $(DEPDIR)/busybox.do_prepare: $(DEPENDS_busybox)
 	$(PREPARE_busybox)
 	touch $@
 
-$(DEPDIR)/busybox.do_compile: bootstrap $(DEPDIR)/busybox.do_prepare Patches/busybox-1.20.2.config | $(DEPDIR)/$(GLIBC_DEV)
+$(DEPDIR)/busybox.do_compile: bootstrap $(DEPDIR)/busybox.do_prepare Patches/busybox-1.21.0.config | $(DEPDIR)/$(GLIBC_DEV)
 	cd $(DIR_busybox) && \
-		export CROSS_COMPILE=$(target)- && \
-		$(MAKE) mrproper && \
 		$(INSTALL) -m644 ../$(lastword $^) .config && \
 		$(MAKE) all \
 			CROSS_COMPILE=$(target)- \
@@ -28,7 +40,7 @@ $(DEPDIR)/%busybox: $(DEPDIR)/busybox.do_compile
 	export HHL_CROSS_TARGET_DIR=$(PKDIR) && $(hostprefix)/bin/target-shellconfig --add /bin/ash 5
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 
 $(eval $(call guiconfig,busybox))

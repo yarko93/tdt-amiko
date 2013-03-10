@@ -1,4 +1,59 @@
 # tuxbox/enigma2
+BEGIN[[
+enigma2
+  git
+  $(appsdir)/{PN}-nightly
+ifdef ENABLE_E2D0
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=945aeb939308b3652b56bc6c577853369d54a537
+  patch:file://enigma2-nightly.0.diff
+  patch:file://enigma2-nightly.0.eplayer3.diff
+  patch:file://enigma2-nightly.0.gstreamer.diff
+  patch:file://enigma2-nightly.0.graphlcd.diff
+endif
+
+ifdef ENABLE_E2D1
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=945aeb939308b3652b56bc6c577853369d54a537
+  patch:file://enigma2-nightly.1.diff
+endif
+
+ifdef ENABLE_E2D2
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=839e96b79600aba73f743fd39628f32bc1628f4c
+  patch:file://enigma2-nightly.2.diff
+  patch:file://enigma2-nightly.2.gstreamer.diff
+  patch:file://enigma2-nightly.2.graphlcd.diff
+endif
+
+ifdef ENABLE_E2D3
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=51a7b9349070830b5c75feddc52e97a1109e381e
+  patch:file://enigma2-nightly.3.diff
+  patch:file://enigma2-nightly.3.gstreamer.diff
+  patch:file://enigma2-nightly.3.graphlcd.diff
+endif
+
+ifdef ENABLE_E2D4
+  git://gitorious.org/open-duckbox-project-sh4/guigit.git:r=002b85aa8350e9d8e88f75af48c3eb8a6cdfb880
+  patch:file://enigma2-pli-nightly.4.diff
+endif
+
+ifdef ENABLE_E2D5
+  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=a869076762f6e24305d6a58f95c3918e02a1442a
+  patch:file://enigma2-pli-nightly.5.diff
+endif
+
+ifdef ENABLE_E2D6
+  git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=388dcd814d4e99720cb9a6c769611be4951e4ad4
+  patch:file://enigma2-pli-nightly.6.diff
+endif
+
+ifdef ENABLE_E2D7
+  git://code.google.com/p/enigma2-dmm:protocol=https
+endif
+
+ifdef ENABLE_E2D8
+  git://gitorious.org/~schpuntik/open-duckbox-project-sh4/amiko-guigit.git:b=arp-no_gst
+endif
+;
+]]END
 
 $(DEPDIR)/enigma2-nightly.do_prepare:$(DEPENDS_enigma2)
 	$(PREPARE_enigma2)

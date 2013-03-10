@@ -1,6 +1,17 @@
 #
 # libboost
 #
+BEGIN[[
+libboost
+  boost-1.53.0
+  boost_1_53_0
+  extract:http://prdownloads.sourceforge.net/sourceforge/boost/boost_1_53_0.tar.bz2
+  patch:file://{PN}.diff
+  remove:TARGETS/include/boost
+  move:boost:TARGETS/usr/include/boost
+;
+]]END
+
 $(DEPDIR)/libboost: bootstrap $(DEPENDS_libboost)
 	$(PREPARE_libboost)
 	cd $(DIR_libboost) && \
@@ -11,6 +22,16 @@ $(DEPDIR)/libboost: bootstrap $(DEPENDS_libboost)
 #
 # libz
 #
+BEGIN[[
+libz
+  1.2.7
+  zlib-{PV}
+  extract:http://zlib.net/zlib-{PV}.tar.bz2
+  patch:file://zlib-{PV}.patch
+  make:install:prefix=PKDIR/usr
+  install:-m644:{PN}.a:TARGETS/usr/lib
+;
+]]END
 
 DESCRIPTION_libz = "Compression library implementing the deflate compression method found in gzip and PKZIP"
 FILES_libz = \
@@ -39,11 +60,19 @@ $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libz@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libreadline
 #
+BEGIN[[
+libreadline
+  5.2
+  readline-{PV}
+  extract:ftp://ftp.cwru.edu/pub/bash/readline-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_libreadline = GNU readline library
 FILES_libreadline = \
@@ -72,11 +101,21 @@ $(DEPDIR)/%libreadline: $(DEPDIR)/libreadline.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libreadline@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # FREETYPE_OLD
 #
+BEGIN[[
+freetype_old
+  2.1.4
+  freetype-{PV}
+  extract:file://freetype-{PV}.tar.bz2
+  patch:file://libfreetype.diff
+  make:install:DESTDIR=BUILD/freetype-{PV}/install_dir
+;
+]]END
+
 $(DEPDIR)/freetype-old.do_prepare: bootstrap $(DEPENDS_freetype_old)
 	$(PREPARE_freetype_old)
 	touch $@
@@ -104,11 +143,20 @@ $(DEPDIR)/freetype-old: $(DEPDIR)/freetype-old.do_compile
 		sed 's,-I$${prefix}/include/freetype2,-I$(targetprefix)/usr/include/freetype-old -I$(targetprefix)/usr/include/freetype-old/freetype2,g' -i $(crossprefix)/bin/freetype-old-config; \
 		sed 's,/usr/include/freetype2/,$(targetprefix)/usr/include/freetype-old/freetype2/,g' -i $(crossprefix)/bin/freetype-old-config
 #	@DISTCLEANUP_freetype_old@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # freetype
 #
+BEGIN[[
+freetype
+  2.4.9
+  {PN}-{PV}
+  extract:http://download.savannah.gnu.org/releases/{PN}/{PN}-{PV}.tar.bz2
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_freetype = "freetype"
 
 FILES_freetype = \
@@ -142,11 +190,21 @@ $(DEPDIR)/%freetype: $(DEPDIR)/freetype.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_freetype@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # lirc
 #
+BEGIN[[
+lirc
+  0.9.0
+  {PN}-{PV}
+  extract:http://prdownloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
+  patch:file://{PN}-{PV}-try_first_last_remote.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_lirc ="lirc"
 PKGR_lirc = r3
 FILES_lirc = \
@@ -190,7 +248,7 @@ $(DEPDIR)/%lirc: $(DEPDIR)/lirc.do_compile
 	$(INSTALL_DIR) $(PKDIR)/etc
 	$(INSTALL_DIR) $(PKDIR)/var/run/lirc/
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162)).conf $(PKDIR)/etc/lircd.conf
-if ENABLE_SPARK
+ifdef ENABLE_SPARK
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_0B $(PKDIR)/etc/lircd.conf.09_00_0B
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_07 $(PKDIR)/etc/lircd.conf.09_00_07
 	$(INSTALL_FILE) $(buildprefix)/root/etc/lircd$(if $(SPARK),_$(SPARK)).conf.09_00_08 $(PKDIR)/etc/lircd.conf.09_00_08
@@ -198,11 +256,21 @@ if ENABLE_SPARK
 endif
 	$(toflash_build)
 #	@DISTCLEANUP_lirc@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # jpeg
 #
+BEGIN[[
+jpeg
+  8d
+  {PN}-{PV}
+  extract:http://www.ijg.org/files/{PN}src.v{PV}.tar.gz
+  patch:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_jpeg = "jpeg"
 
 FILES_jpeg = \
@@ -232,11 +300,20 @@ $(DEPDIR)/%jpeg: $(DEPDIR)/jpeg.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_jpeg@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # jpeg-6b
 #
+BEGIN[[
+libjpeg6b
+  6b1
+  jpeg-{PV}
+  extract:http://ftp.de.debian.org/debian/pool/main/libj/libjpeg6b/{PN}_{PV}.orig.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libjpeg6b = "libjpeg6b"
 
 FILES_libjpeg6b = \
@@ -266,11 +343,22 @@ $(DEPDIR)/%libjpeg6b: $(DEPDIR)/libjpeg6b.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libjpeg6b@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libpng
 #
+BEGIN[[
+libpng
+  1.5.6
+  {PN}-{PV}
+  extract:http://www.fhloston-paradise.de/{PN}-{PV}.tar.gz
+  nothing:file://{PN}.diff
+  patch:file://{PN}-{PV}-workaround_for_stmfb_alpha_error.patch
+  make:install:prefix=PKDIR/usr
+;
+]]END
+
 DESCRIPTION_libpng = "libpng"
 
 FILES_libpng = \
@@ -305,11 +393,20 @@ $(DEPDIR)/%libpng: $(DEPDIR)/libpng.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libpng@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libpng12
 #
+BEGIN[[
+libpng12
+  1.2.49
+  libpng-{PV}
+  extract:http://ftp.de.debian.org/debian/pool/main/libp/libpng/libpng_{PV}.orig.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libpng12 = "libpng12"
 
 FILES_libpng12 = \
@@ -344,11 +441,20 @@ $(DEPDIR)/%libpng12: $(DEPDIR)/libpng12.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libpng12@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libungif
 #
+BEGIN[[
+libungif
+  4.1.4
+  {PN}-{PV}
+  extract:http://heanet.dl.sourceforge.net/sourceforge/giflib/{PN}-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libungif = "libungif"
 
 FILES_libungif = \
@@ -377,11 +483,20 @@ $(DEPDIR)/%libungif: $(DEPDIR)/libungif.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libungif@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libgif
 #
+BEGIN[[
+libgif
+  4.1.6
+  giflib-{PV}
+  extract:http://heanet.dl.sourceforge.net/sourceforge/giflib/giflib-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libgif = "libgif"
 
 FILES_libgif = \
@@ -410,11 +525,20 @@ $(DEPDIR)/%libgif: $(DEPDIR)/libgif.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libgif@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libcurl
 #
+BEGIN[[
+curl
+  7.29.0
+  {PN}-{PV}
+  extract:http://{PN}.haxx.se/download/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_curl = "Curl is a command line tool for transferring data specified with URL syntax"
 
 FILES_curl = \
@@ -453,11 +577,20 @@ $(DEPDIR)/%curl: $(DEPDIR)/curl.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_curl@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libfribidi
 #
+BEGIN[[
+libfribidi
+  0.19.5
+  fribidi-{PV}
+  extract:http://fribidi.org/download/fribidi-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libfribidi = "libfribidi"
 
 FILES_libfribidi = \
@@ -488,11 +621,20 @@ $(DEPDIR)/%libfribidi: $(DEPDIR)/libfribidi.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libfribidi@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libsigc
 #
+BEGIN[[
+libsigc
+  1.2.5
+  {PN}++-{PV}
+  extract:http://ftp.gnome.org/pub/GNOME/sources/{PN}++/1.2/{PN}++-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libsigc = "libsigc"
 
 FILES_libsigc = \
@@ -521,11 +663,21 @@ $(DEPDIR)/%libsigc: $(DEPDIR)/libsigc.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libsigc@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libmad
 #
+BEGIN[[
+libmad
+  0.15.1b
+  {PN}-{PV}
+  extract:ftp://ftp.mars.org/pub/mpeg/{PN}-{PV}.tar.gz
+  patch:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libmad = "libmad - MPEG audio decoder library"
 
 FILES_libmad = \
@@ -563,11 +715,21 @@ $(DEPDIR)/%libmad: $(DEPDIR)/libmad.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libmad@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libid3tag
 #
+BEGIN[[
+libid3tag
+  0.15.1b
+  {PN}-{PV}
+  extract:ftp://ftp.mars.org/pub/mpeg/{PN}-{PV}.tar.gz
+  patch:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libid3tag = "libid3tag"
 
 FILES_libid3tag = \
@@ -597,11 +759,20 @@ $(DEPDIR)/%libid3tag: %libz $(DEPDIR)/libid3tag.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libid3tag@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libvorbisidec
 #
+BEGIN[[
+libvorbisidec
+  1.0.2+svn16259
+  {PN}-{PV}
+  extract:http://ftp.debian.org/debian/pool/main/libv/{PN}/{PN}_{PV}.orig.tar.gz
+  patch:file://tremor.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_libvorbisidec = "libvorbisidec"
 
 FILES_libvorbisidec = \
@@ -628,12 +799,22 @@ $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libvorbisidec@
-	@[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libglib2
 # You need libglib2.0-dev on host system
 #
+BEGIN[[
+glib2
+  2.28.3
+  glib-{PV}
+  extract:http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.28/glib-{PV}.tar.gz
+  patch:file://glib-{PV}.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_glib2 = "libglib2"
 
 FILES_glib2 = \
@@ -675,11 +856,20 @@ $(DEPDIR)/%glib2: $(DEPDIR)/glib2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_glib2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libiconv
 #
+BEGIN[[
+libiconv
+  1.14
+  {PN}-{PV}
+  extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libiconv = "libiconv"
 
 FILES_libiconv = \
@@ -709,11 +899,20 @@ $(DEPDIR)/%libiconv: $(DEPDIR)/libiconv.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libiconv@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libmng
 #
+BEGIN[[
+libmng
+  1.0.10
+  {PN}-{PV}
+  extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libmng = "libmng - Multiple-image Network Graphics"
 
 FILES_libmng = \
@@ -749,10 +948,20 @@ $(DEPDIR)/%libmng: $(DEPDIR)/libmng.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libmng@
-	[ "x$*" = "x" ] && touch $@ || true	
+	touch $@	
 #
 # lcms
 #
+BEGIN[[
+lcms
+  1.17
+  {PN}-{PV}
+  extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
+  patch:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_lcms = "lcms"
 
 FILES_lcms = \
@@ -782,10 +991,23 @@ $(DEPDIR)/%lcms: $(DEPDIR)/lcms.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lcms@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 #
 # directfb
 #
+BEGIN[[
+directfb
+  1.4.11
+  DirectFB-{PV}
+  extract:http://{PN}.org/downloads/Core/DirectFB-1.4/DirectFB-{PV}.tar.gz
+  patch:file://{PN}-{PV}+STM2010.12.15-4.diff
+  patch:file://{PN}-{PV}+STM2010.12.15-4.no-vt.diff
+  patch:file://{PN}-libpng.diff
+  patch:file://{PN}-{PV}+STM2010.12.15-4.enigma2remote.diff
+  make:install:DESTDIR=PKDIR:LD=sh4-linux-ld
+;
+]]END
+
 DESCRIPTION_directfb = "directfb"
 
 FILES_directfb = \
@@ -836,11 +1058,19 @@ $(DEPDIR)/%directfb: $(DEPDIR)/directfb.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_directfb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # DFB++
 #
+BEGIN[[
+dfbpp
+  1.0.0
+  DFB++-{PV}
+  extract:http://www.directfb.org/downloads/Extras/DFB++-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_dfbpp = ""
 
 FILES_dfbpp = \
@@ -868,11 +1098,20 @@ $(DEPDIR)/%dfbpp: $(DEPDIR)/dfbpp.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_dfbpp@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # LIBSTGLES
 #
+BEGIN[[
+libstgles
+  git
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libstgles = "libstgles"
 SRC_URI_libstgles = "https://code.google.com/p/tdt-amiko/"
 FILES_libstgles = \
@@ -905,11 +1144,20 @@ $(DEPDIR)/%libstgles: $(DEPDIR)/libstgles.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libstgles@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # expat
 #
+BEGIN[[
+expat
+  2.1.0
+  {PN}-{PV}
+  extract:http://prdownloads.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_expat = "Expat is an XML parser library written in C. It is a stream-oriented parser in which an application registers handlers for things the parser might find in the XML document"
 
 FILES_expat = \
@@ -939,11 +1187,19 @@ $(DEPDIR)/%expat: $(DEPDIR)/expat.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_expat@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # fontconfig
 #
+BEGIN[[
+fontconfig
+  2.10.2
+  {PN}-{PV}
+  extract:http://{PN}.org/release/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_fontconfig = "Fontconfig is a library for configuring and customizing font access."
 
 FILES_fontconfig = \
@@ -984,11 +1240,20 @@ $(DEPDIR)/%fontconfig: $(DEPDIR)/fontconfig.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_fontconfig@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libxmlccwrap
 #
+BEGIN[[
+libxmlccwrap
+  0.0.12
+  {PN}-{PV}
+  extract:http://www.ant.uni-bremen.de/whomes/rinas/{PN}/download/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libxmlccwrap = "libxmlccwrap is a small C++ wrapper around libxml2 and libxslt "
 
 FILES_libxmlccwrap = \
@@ -1019,11 +1284,20 @@ $(DEPDIR)/%libxmlccwrap: libxmlccwrap.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libxmlccwrap@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # a52dec
 #
+BEGIN[[
+a52dec
+  0.7.4
+  {PN}-{PV}
+  extract:http://liba52.sourceforge.net/files/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_a52dec = "liba52 is a free library for decoding ATSC A/52 streams. It is released under the terms of the GPL license"
 
 FILES_a52dec = \
@@ -1051,11 +1325,20 @@ $(DEPDIR)/%a52dec: a52dec.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_a52dec@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdvdcss
 #
+BEGIN[[
+libdvdcss
+  1.2.12
+  {PN}-{PV}
+  extract:http://download.videolan.org/pub/{PN}/{PV}/{PN}-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libdvdcss = "libdvdcss"
 
 FILES_libdvdcss = \
@@ -1073,7 +1356,8 @@ $(DEPDIR)/libdvdcss.do_compile: $(DEPDIR)/libdvdcss.do_prepare
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr \
-			--disable-doc
+			--disable-doc \
+		&& \
 		$(MAKE) all
 	touch $@
 
@@ -1085,11 +1369,21 @@ $(DEPDIR)/%libdvdcss: libdvdcss.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdvdcss@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdvdnav
 #
+BEGIN[[
+libdvdnav
+  4.1.3
+  {PN}-{PV}
+  extract:http://www.mplayerhq.hu/MPlayer/releases/dvdnav-old/{PN}-{PV}.tar.bz2
+  patch:file://{PN}_{PV}-3.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libdvdnav = "libdvdnav"
 
 FILES_libdvdnav = \
@@ -1128,11 +1422,21 @@ $(DEPDIR)/%libdvdnav: libdvdnav.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdvdnav@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdvdread
 #
+BEGIN[[
+libdvdread
+  4.1.3
+  {PN}-{PV}
+  extract:http://www.mplayerhq.hu/MPlayer/releases/dvdnav-old/{PN}-{PV}.tar.bz2
+  patch:file://{PN}_{PV}-5.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libdvdread = "libdvdread"
 
 FILES_libdvdread = \
@@ -1171,11 +1475,21 @@ $(DEPDIR)/%libdvdread: libdvdread.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdvdread@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # ffmpeg
 #
+BEGIN[[
+ffmpeg
+  1.1.3
+  {PN}-{PV}
+  extract:http://{PN}.org/releases/{PN}-{PV}.tar.gz
+  patch:file://{PN}-1.0.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_ffmpeg = "ffmpeg"
 
 FILES_ffmpeg = \
@@ -1190,6 +1504,8 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 	cd $(DIR_ffmpeg) && \
 	$(BUILDENV) \
 	./configure \
+		--disable-vfp \
+		--disable-runtime-cpudetect \
 		--disable-static \
 		--enable-shared \
 		--enable-cross-compile \
@@ -1198,7 +1514,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--disable-altivec \
 		--disable-debug \
 		--disable-asm \
-		--disable-altivec \
 		--disable-amd3dnow \
 		--disable-amd3dnowext \
 		--disable-mmx \
@@ -1214,8 +1529,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--disable-armv5te \
 		--disable-armv6 \
 		--disable-armv6t2 \
-		--disable-armvfp \
-		--disable-mmi \
 		--disable-neon \
 		--disable-vis \
 		--disable-inline-asm \
@@ -1229,7 +1542,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--disable-muxers \
 		--enable-muxer=ogg \
 		--enable-muxer=flac \
-		--enable-muxer=aac \
 		--enable-muxer=mp3 \
 		--enable-muxer=h261 \
 		--enable-muxer=h263 \
@@ -1239,8 +1551,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-muxer=image2 \
 		--disable-encoders \
 		--enable-encoder=aac \
-		--enable-encoder=mp3 \
-		--enable-encoder=theora \
 		--enable-encoder=h261 \
 		--enable-encoder=h263 \
 		--enable-encoder=h263p \
@@ -1260,7 +1570,6 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-decoder=mpeg1video \
 		--enable-decoder=mpeg2video \
 		--enable-decoder=png \
-		--enable-decoder=ljpeg \
 		--enable-decoder=mjpeg \
 		--enable-decoder=vorbis \
 		--enable-decoder=flac \
@@ -1270,11 +1579,11 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-pthreads \
 		--enable-bzlib \
 		--enable-librtmp \
-		--pkg-config=pkg-config \
+		--pkg-config="pkg-config" \
 		--cross-prefix=$(target)- \
 		--target-os=linux \
 		--arch=sh4 \
-		--extra-cflags=-fno-strict-aliasing \
+		--extra-cflags="-fno-strict-aliasing" \
 		--enable-stripping \
 		--prefix=/usr
 	touch $@
@@ -1288,11 +1597,20 @@ $(DEPDIR)/%ffmpeg: $(DEPDIR)/ffmpeg.do_compile
 	mv $(PKDIR)/usr/bin $(PKDIR)/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_ffmpeg@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libass
 #
+BEGIN[[
+libass
+  0.10.1
+  {PN}-{PV}
+  extract:http://{PN}.googlecode.com/files/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libass = "libass"
 
 FILES_libass = \
@@ -1321,11 +1639,21 @@ $(DEPDIR)/%libass: $(DEPDIR)/libass.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libass@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # WebKitDFB
 #
+BEGIN[[
+webkitdfb
+  2010-11-18
+  {PN}_{PV}
+  extract:http://www.duckbox.info/files/packages/{PN}_{PV}.tar.gz
+  patch:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_webkitdfb = "webkitdfb"
 RDEPENDS_webkitdfb = lite enchant fontconfig sqlite cairo enchant
 FILES_webkitdfb = \
@@ -1374,11 +1702,21 @@ $(DEPDIR)/%webkitdfb: $(DEPDIR)/webkitdfb.do_compile
 	$(tocdk_build)
 	$(e2extra_build)
 #	@DISTCLEANUP_webkitdfb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # icu4c
 #
+BEGIN[[
+icu4c
+  4_4_1
+  icu/source
+  extract:http://download.icu-project.org/files/{PN}/4.4.1/{PN}-4_4_1-src.tgz
+  nothing:file://{PN}-4_4_1_locales.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_icu4c = "icu4c"
 
 FILES_icu4c = \
@@ -1422,11 +1760,20 @@ $(DEPDIR)/%icu4c: $(DEPDIR)/icu4c.do_compile
 	$(tocdk_build)
 	$(e2extra_build)
 #	@DISTCLEANUP_icu4c@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # enchant
 #
+BEGIN[[
+enchant
+  1.5.0
+  {PN}-{PV}
+  extract:http://www.abisource.com/downloads/{PN}/{PV}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_enchant = "libenchant -- Generic spell checking library"
 
 FILES_enchant = \
@@ -1462,11 +1809,20 @@ $(DEPDIR)/%enchant: $(DEPDIR)/enchant.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_enchant@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # lite
 #
+BEGIN[[
+lite
+  0.9.0
+  {PN}-{PV}+git0.7982ccc
+  extract:http://www.duckbox.info/files/packages/{PN}-{PV}+git0.7982ccc.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_lite = "LiTE is a Toolkit Engine"
 
 FILES_lite = \
@@ -1498,11 +1854,20 @@ $(DEPDIR)/%lite: $(DEPDIR)/lite.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lite@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # sqlite
 #
+BEGIN[[
+sqlite
+  3.7.11
+  {PN}-autoconf-3071100
+  extract:http://www.{PN}.org/{PN}-autoconf-3071100.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_sqlite = "sqlite"
 
 FILES_sqlite = \
@@ -1534,11 +1899,20 @@ $(DEPDIR)/%sqlite: $(DEPDIR)/sqlite.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_sqlite@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libsoup
 #
+BEGIN[[
+libsoup
+  2.33.90
+  {PN}-{PV}
+  extract:http://download.gnome.org/sources/{PN}/2.33/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libsoup = "libsoup is an HTTP client/server library"
 
 FILES_libsoup = \
@@ -1567,11 +1941,20 @@ $(DEPDIR)/%libsoup: $(DEPDIR)/libsoup.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libsoup@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pixman
 #
+BEGIN[[
+pixman
+  0.18.0
+  {PN}-{PV}
+  extract:http://cairographics.org/releases/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_pixman = "pixman is a library that provides low-level pixel manipulation"
 
 FILES_pixman = \
@@ -1598,11 +1981,21 @@ $(DEPDIR)/%pixman: $(DEPDIR)/pixman.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pixman@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # cairo
 #
+BEGIN[[
+cairo
+  1.8.10
+  {PN}-{PV}
+  extract:http://{PN}graphics.org/releases/{PN}-{PV}.tar.gz
+  patch:file://{PN}-{PV}.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_cairo = "Cairo - Multi-platform 2D graphics library"
 
 FILES_cairo = \
@@ -1640,11 +2033,20 @@ $(DEPDIR)/%cairo: $(DEPDIR)/cairo.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_cairo@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libogg
 #
+BEGIN[[
+libogg
+  1.2.2
+  {PN}-{PV}
+  extract:http://downloads.xiph.org/releases/ogg/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libogg = "distribution includes libogg and nothing else"
 
 FILES_libogg = \
@@ -1671,11 +2073,21 @@ $(DEPDIR)/%libogg: $(DEPDIR)/libogg.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libogg@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libflac
 #
+BEGIN[[
+libflac
+  1.2.1
+  flac-{PV}
+  extract:http://ignum.dl.sourceforge.net/project/flac/flac-src/flac-{PV}-src/flac-{PV}.tar.gz
+  patch:file://flac-{PV}.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libflac = "libflac is Open Source lossless audio codec"
 
 FILES_libflac = \
@@ -1715,7 +2127,7 @@ $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libflac@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 
 ##############################   PYTHON   #####################################
@@ -1723,6 +2135,13 @@ $(DEPDIR)/%libflac: $(DEPDIR)/libflac.do_compile
 #
 # elementtree
 #
+BEGIN[[
+elementtree
+  1.2.6-20050316
+  {PN}-{PV}
+  extract:http://effbot.org/media/downloads/{PN}-{PV}.tar.gz
+;
+]]END
 
 DESCRIPTION_elementtree = "Provides light-weight components for working with XML"
 FILES_elementtree = \
@@ -1745,18 +2164,27 @@ $(DEPDIR)/%elementtree: $(DEPDIR)/elementtree.do_compile
 	$(tocdk_build)
 	$(remove_pyo)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libxml2
 #
+BEGIN[[
+libxml2
+  2.9.0
+  {PN}-{PV}
+  extract:http://xmlsoft.org/sources/{PN}-{PV}.tar.gz
+  patch:file://{PN}-{PV}.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_libxml2 = "XML parsing library, version 2"
 FILES_libxml2 = \
 /usr/lib/libxml2* \
 $(PYTHON_DIR)/site-packages/*libxml2.py
 
-$(DEPDIR)/libxml2.do_prepare: bootstrap $(DEPENDS_libxml2)
+$(DEPDIR)/libxml2.do_prepare: bootstrap python $(DEPENDS_libxml2)
 	$(PREPARE_libxml2)
 	touch $@
 
@@ -1788,11 +2216,19 @@ $(DEPDIR)/%libxml2: $(DEPDIR)/libxml2.do_compile
 	$(call do_build_pkg,install,cdk)
 	$(toflash_build)
 #	@DISTCLEANUP_libxml2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libxslt
 #
+BEGIN[[
+libxslt
+  1.1.28
+  {PN}-{PV}
+  extract:http://xmlsoft.org/sources/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_libxslt = "XML stylesheet transformation library"
 FILES_libxslt = \
@@ -1836,11 +2272,18 @@ $(DEPDIR)/%libxslt: %libxml2 libxslt.do_compile
 	$(call do_build_pkg,install,cdk)
 	$(toflash_build)
 #	@DISTCLEANUP_libxslt@
-	@[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # lxml
 #
+BEGIN[[
+lxml
+  2.2.8
+  {PN}-{PV}
+  extract:http://launchpad.net/{PN}/2.2/{PV}/+download/{PN}-{PV}.tgz
+;
+]]END
 
 DESCRIPTION_lxml = "Python binding for the libxml2 and libxslt libraries"
 FILES_lxml = \
@@ -1870,11 +2313,19 @@ $(DEPDIR)/%lxml: $(DEPDIR)/lxml.do_compile
 	$(tocdk_build)
 	$(remove_pyo)
 	$(extra_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # setuptools
 #
+BEGIN[[
+setuptools
+  0.6c11
+  {PN}-{PV}
+  extract:http://pypi.python.org/packages/source/s/{PN}/{PN}-{PV}.tar.gz
+;
+]]END
+
 DESCRIPTION_setuptools = "setuptools"
 
 FILES_setuptools = \
@@ -1901,11 +2352,19 @@ $(DEPDIR)/%setuptools: $(DEPDIR)/setuptools.do_compile
 		$(crossprefix)/bin/python ./setup.py install --root=$(PKDIR) --prefix=/usr
 	$(tocdk_build)
 #	@DISTCLEANUP_setuptools@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
-#gdata
+# gdata
 #
+BEGIN[[
+gdata
+  2.0.17
+  gdata-{PV}
+  extract:http://gdata-python-client.googlecode.com/files/gdata-{PV}.tar.gz
+;
+]]END
+
 DESCRIPTION_gdata = "The Google Data APIs (Google Data) provide a simple protocol for reading and writing data on the web. Though it is possible to use these services with a simple HTTP client, this library provides helpful tools to streamline your code and keep up with server-side changes. "
 FILES_gdata = \
 $(PYTHON_DIR)/site-packages/atom/*.py \
@@ -1946,10 +2405,17 @@ $(DEPDIR)/%gdata: $(DEPDIR)/gdata.do_compile
 	$(tocdk_build)
 	$(remove_pyo)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 #
 # twisted
 #
+BEGIN[[
+twisted
+  12.3.0
+  Twisted-{PV}
+  extract:http://twistedmatrix.com/Releases/Twisted/12.3/Twisted-{PV}.tar.bz2
+;
+]]END
 
 DESCRIPTION_twisted = "Asynchronous networking framework written in Python"
 FILES_twisted = \
@@ -1990,11 +2456,19 @@ $(DEPDIR)/%twisted: $(DEPDIR)/twisted.do_compile
 	$(tocdk_build)
 	$(remove_pyo)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # twistedweb2
 #
+BEGIN[[
+twistedweb2
+  8.1.0
+  TwistedWeb2-{PV}
+  extract:http://twistedmatrix.com/Releases/Web2/8.1/TwistedWeb2-{PV}.tar.bz2
+;
+]]END
+
 DESCRIPTION_twistedweb2 = "twistedweb2"
 
 FILES_twistedweb2 = \
@@ -2024,11 +2498,20 @@ $(DEPDIR)/%twistedweb2: $(DEPDIR)/twistedweb2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_twistedweb2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pilimaging
 #
+BEGIN[[
+pilimaging
+  1.1.7
+  Imaging-{PV}
+  extract:http://effbot.org/downloads/Imaging-{PV}.tar.gz
+  patch:file://pilimaging-fix-search-paths.patch
+;
+]]END
+
 DESCRIPTION_pilimaging = "pilimaging"
 FILES_pilimaging = \
 $(PYTHON_DIR)/site-packages \
@@ -2038,9 +2521,9 @@ $(DEPDIR)/pilimaging: bootstrap python $(DEPENDS_pilimaging)
 	$(PREPARE_pilimaging)
 	$(start_build)
 	cd $(DIR_pilimaging) && \
-		echo 'JPEG_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' > setup_site.py && \
-		echo 'ZLIB_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
-		echo 'FREETYPE_ROOT = "$(PKDIR)/usr/lib", "$(PKDIR)/usr/include"' >> setup_site.py && \
+		echo 'JPEG_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' > setup_site.py && \
+		echo 'ZLIB_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
+		echo 'FREETYPE_ROOT = "$(targetprefix)/usr/lib", "$(targetprefix)/usr/include"' >> setup_site.py && \
 		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
 		PYTHONPATH=$(targetprefix)$(PYTHON_DIR)/site-packages \
 		$(crossprefix)/bin/python ./setup.py build && \
@@ -2048,11 +2531,20 @@ $(DEPDIR)/pilimaging: bootstrap python $(DEPENDS_pilimaging)
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pilimaging@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pycrypto
 #
+BEGIN[[
+pycrypto
+  2.5
+  {PN}-{PV}
+  extract:http://ftp.dlitz.net/pub/dlitz/crypto/{PN}/{PN}-{PV}.tar.gz
+  patch:file://python-{PN}-no-usr-include.patch
+;
+]]END
+
 DESCRIPTION_pycrypto = pycrypto
 FILES_pycrypto = \
 $(PYTHON_DIR)/site-packages/Crypto/*
@@ -2081,11 +2573,19 @@ $(DEPDIR)/%pycrypto: $(DEPDIR)/pycrypto.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pycrypto@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pyusb
 #
+BEGIN[[
+pyusb
+  1.0.0a3
+  {PN}-{PV}
+  extract:http://pypi.python.org/packages/source/p/{PN}/{PN}-{PV}.tar.gz
+;
+]]END
+
 DESCRIPTION_pyusb = pyusb
 FILES_pyusb = \
 $(PYTHON_DIR)/site-packages/usb/*
@@ -2110,11 +2610,18 @@ $(DEPDIR)/%pyusb: $(DEPDIR)/pyusb.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pyusb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pyopenssl
 #
+BEGIN[[
+pyopenssl
+  0.11
+  pyOpenSSL-{PV}
+  extract:http://launchpad.net/pyopenssl/main/{PV}/+download/pyOpenSSL-{PV}.tar.gz
+;
+]]END
 
 DESCRIPTION_pyopenssl = "Python wrapper module around the OpenSSL library"
 FILES_pyopenssl = \
@@ -2143,11 +2650,34 @@ $(DEPDIR)/%pyopenssl: $(DEPDIR)/pyopenssl.do_compile
 	$(tocdk_build)
 	$(remove_pyo)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # python
 #
+BEGIN[[
+ifdef ENABLE_PY27
+python
+  2.7.3
+  {PN}-{PV}
+  extract:http://www.{PN}.org/ftp/{PN}/{PV}/Python-{PV}.tar.bz2
+  pmove:Python-{PV}:{PN}-{PV}
+  patch:file://{PN}_{PV}.diff
+  patch:file://{PN}_{PV}-ctypes-libffi-fix-configure.diff
+  patch:file://{PN}_{PV}-pgettext.diff
+;
+else
+python
+  2.6.6
+  {PN}-{PV}
+  extract:http://www.{PN}.org/ftp/{PN}/{PV}/Python-{PV}.tar.bz2
+  pmove:Python-{PV}:{PN}-{PV}
+  patch:file://{PN}_{PV}.diff
+  patch:file://{PN}_{PV}-ctypes-libffi-fix-configure.diff
+  patch:file://{PN}_{PV}-pgettext.diff
+endif
+;
+]]END
 
 PACKAGES_python = python python_ctypes
 
@@ -2166,19 +2696,20 @@ $(PYTHON_DIR)/lib-tk \
 $(PYTHON_DIR)/lib2to3 \
 $(PYTHON_DIR)/logging \
 $(PYTHON_DIR)/multiprocessing \
-$(PYTHON_DIR)/plat-linux3 \
 $(PYTHON_DIR)/sqlite3 \
 $(PYTHON_DIR)/wsgiref \
+$(PYTHON_DIR)/xml \
+$(PYTHON_DIR)/plat-linux2 \
 /usr/include/python$(PYTHON_VERSION)/pyconfig.h \
-$(PYTHON_DIR)/xml
+$(PYTHON_DIR)/plat-linux3
+
 
 DESCRIPTION_python_ctypes = python ctypes module
 FILES_python_ctypes = \
 $(PYTHON_DIR)/ctypes
 
-$(DEPDIR)/python.do_prepare: bootstrap host_python openssl openssl-dev sqlite $(DEPENDS_python)
+$(DEPDIR)/python.do_prepare: bootstrap host_python openssl-dev sqlite $(DEPENDS_python)
 	$(PREPARE_python)
-	which autoconf
 	touch $@
 
 $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
@@ -2198,11 +2729,12 @@ $(DEPDIR)/python.do_compile: $(DEPDIR)/python.do_prepare
 			--without-cxx-main \
 			--with-threads \
 			--with-pymalloc \
+			--with-signal-module \
+			--with-wctype-functions \
 			HOSTPYTHON=$(crossprefix)/bin/python \
 			OPT="$(TARGET_CFLAGS)" && \
 		$(MAKE) $(MAKE_ARGS) \
 			TARGET_OS=$(target) \
-			PYTHON_DISABLE_MODULES="_tkinter" \
 			PYTHON_MODULES_INCLUDE="$(prefix)/$*cdkroot/usr/include" \
 			PYTHON_MODULES_LIB="$(prefix)/$*cdkroot/usr/lib" \
 			CROSS_COMPILE_TARGET=yes \
@@ -2226,15 +2758,24 @@ $(DEPDIR)/%python: $(DEPDIR)/python.do_compile
 			HOSTPGEN=$(crossprefix)/bin/pgen \
 			install DESTDIR=$(PKDIR) ) && \
 	$(LN_SF) ../../libpython$(PYTHON_VERSION).so.1.0 $(PKDIR)$(PYTHON_DIR)/config/libpython$(PYTHON_VERSION).so
+	$(LN_SF) $(PKDIR)$(PYTHON_INCLUDE_DIR) $(PKDIR)/usr/include/python
 #	@DISTCLEANUP_python@
 	$(tocdk_build)
 	$(remove_pyc)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pythonwifi
 #
+BEGIN[[
+pythonwifi
+  0.5.0
+  python-wifi-{PV}
+  extract:http://freefr.dl.sourceforge.net/project/{PN}.berlios/python-wifi-{PV}.tar.bz2
+;
+]]END
+
 DESCRIPTION_pythonwifi = "pythonwifi"
 FILES_pythonwifi =\
 $(PYTHON_DIR)/site-packages/pythonwifi
@@ -2259,11 +2800,19 @@ $(DEPDIR)/%pythonwifi: $(DEPDIR)/pythonwifi.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pythonwifi@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # pythoncheetah
 #
+BEGIN[[
+pythoncheetah
+  2.4.4
+  Cheetah-{PV}
+  extract:http://pypi.python.org/packages/source/C/Cheetah/Cheetah-{PV}.tar.gz
+;
+]]END
+
 DESCRIPTION_pythoncheetah = "pythoncheetah"
 FILES_pythoncheetah = \
 $(PYTHON_DIR)/site-packages/Cheetah
@@ -2288,11 +2837,18 @@ $(DEPDIR)/%pythoncheetah: $(DEPDIR)/pythoncheetah.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_pythoncheetah@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # zope interface
 #
+BEGIN[[
+zope_interface
+  4.0.1
+  zope.interface-{PV}
+  extract:http://pypi.python.org/packages/source/z/zope.interface/zope.interface-{PV}.tar.gz
+;
+]]END
 
 DESCRIPTION_zope_interface = "Zope Interfaces for Python2"
 FILES_zope_interface = \
@@ -2319,7 +2875,7 @@ $(DEPDIR)/%zope_interface: $(DEPDIR)/zope_interface.do_compile
 	$(tocdk_build)
 #	$(remove_pyo)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 
 
@@ -2328,6 +2884,14 @@ $(DEPDIR)/%zope_interface: $(DEPDIR)/zope_interface.do_compile
 #
 # GSTREAMER
 #
+BEGIN[[
+gstreamer
+  0.10.36
+  {PN}-{PV}
+  extract:http://{PN}.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_gstreamer = "GStreamer Multimedia Framework"
 
@@ -2366,12 +2930,20 @@ $(DEPDIR)/%gstreamer: $(DEPDIR)/gstreamer.do_compile
 	$(tocdk_build)
 	sh4-linux-strip --strip-unneeded $(PKDIR)/usr/bin/gst-launch*
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
 # GST-PLUGINS-BASE
 #
+BEGIN[[
+gst_plugins_base
+  0.10.36
+  {PN}-{PV}
+  extract:http://gstreamer.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_gst_plugins_base = "GStreamer Multimedia Framework base plugins"
 
@@ -2418,11 +2990,20 @@ $(DEPDIR)/%gst_plugins_base: $(DEPDIR)/gst_plugins_base.do_compile
 #	@DISTCLEANUP_gst_plugins_base@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGINS-GOOD
 #
+BEGIN[[
+gst_plugins_good
+  0.10.31
+  {PN}-{PV}
+  extract:http://gstreamer.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
+  patch:file://{PN}-0.10.29_avidemux_only_send_pts_on_keyframe.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_gst_plugins_good = "GStreamer Multimedia Framework good plugins"
 
@@ -2475,11 +3056,21 @@ $(DEPDIR)/%gst_plugins_good: $(DEPDIR)/gst_plugins_good.do_compile
 #	@DISTCLEANUP_gst_plugins_good@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGINS-BAD
 #
+BEGIN[[
+gst_plugins_bad
+  0.10.23
+  {PN}-{PV}
+  extract:http://gstreamer.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
+  patch:file://{PN}-0.10.22-mpegtsdemux_remove_bluray_pgs_detection.diff
+  patch:file://{PN}-0.10.22-mpegtsdemux_speedup.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_gst_plugins_bad = "GStreamer Multimedia Framework bad plugins"
 
@@ -2521,11 +3112,19 @@ $(DEPDIR)/%gst_plugins_bad: $(DEPDIR)/gst_plugins_bad.do_compile
 #	@DISTCLEANUP_gst_plugins_bad@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGINS-UGLY
 #
+BEGIN[[
+gst_plugins_ugly
+  0.10.19
+  {PN}-{PV}
+  extract:http://gstreamer.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_gst_plugins_ugly = "GStreamer Multimedia Framework ugly plugins"
 
@@ -2559,11 +3158,20 @@ $(DEPDIR)/%gst_plugins_ugly: $(DEPDIR)/gst_plugins_ugly.do_compile
 #	@DISTCLEANUP_gst_plugins_ugly@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-FFMPEG
 #
+BEGIN[[
+gst_ffmpeg
+  0.10.13
+  {PN}-{PV}
+  extract:http://gstreamer.freedesktop.org/src/{PN}/{PN}-{PV}.tar.bz2
+  patch:file://{PN}-0.10.12_lower_rank.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_gst_ffmpeg = "GStreamer Multimedia Framework ffmpeg module"
 
@@ -2631,10 +3239,20 @@ $(DEPDIR)/%gst_ffmpeg: $(DEPDIR)/gst_ffmpeg.do_compile
 #	@DISTCLEANUP_gst_ffmpeg@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGINS-FLUENDO-MPEGDEMUX
+#
+BEGIN[[
+gst_plugins_fluendo_mpegdemux
+  0.10.71
+  gst-fluendo-mpegdemux-{PV}
+  extract:http://core.fluendo.com/gstreamer/src/gst-fluendo-mpegdemux/gst-fluendo-mpegdemux-{PV}.tar.gz
+  patch:file://{PN}-0.10.69-add_dts_hd_detection.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_gst_plugins_fluendo_mpegdemux = "GStreamer Multimedia Framework fluendo"
 FILES_gst_plugins_fluendo_mpegdemux = \
@@ -2664,11 +3282,20 @@ $(DEPDIR)/%gst_plugins_fluendo_mpegdemux: $(DEPDIR)/gst_plugins_fluendo_mpegdemu
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_gst_plugins_fluendo_mpegdemux@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGIN-SUBSINK
 #
+BEGIN[[
+gst_plugin_subsink
+  git
+  {PN}
+  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/gstsubsink:r=8182abe751364f6eb1ed45377b0625102aeb68d5
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_gst_plugin_subsink = GStreamer Multimedia Framework gstsubsink
 
 FILES_gst_plugin_subsink = \
@@ -2701,11 +3328,20 @@ $(DEPDIR)/%gst_plugin_subsink: $(DEPDIR)/gst_plugin_subsink.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_gst_plugin_subsink@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GST-PLUGINS-DVBMEDIASINK
 #
+BEGIN[[
+gst_plugins_dvbmediasink
+  0.10.1
+  {PN}-{PV}
+  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_gst_plugins_dvbmediasink = "GStreamer Multimedia Framework dvbmediasink"
 SRC_URI_gst_plugins_dvbmediasink = "https://code.google.com/p/tdt-amiko/"
 
@@ -2741,7 +3377,7 @@ $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compi
 #	@DISTCLEANUP_gst_plugins_dvbmediasink@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 
 
@@ -2750,6 +3386,15 @@ $(DEPDIR)/%gst_plugins_dvbmediasink: $(DEPDIR)/gst_plugins_dvbmediasink.do_compi
 #
 # libusb
 #
+BEGIN[[
+libusb
+  0.1.12
+  {PN}-{PV}
+  extract:http://downloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libusb = "libusb is a library which allows userspace application access to USB devices."
 
 FILES_libusb = \
@@ -2778,11 +3423,21 @@ $(DEPDIR)/%libusb: $(DEPDIR)/libusb.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libusb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # graphlcd
 #
+BEGIN[[
+graphlcd
+  git
+  {PN}-{PV}
+  nothing:git://projects.vdr-developer.org/{PN}-base.git:r=281feef328f8e3772f7a0dde0a90c3a5260c334d:b=touchcol
+  patch:file://{PN}.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_graphlcd = "Driver and Tools for LCD4LINUX"
 
 FILES_graphlcd = \
@@ -2812,7 +3467,7 @@ $(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_graphlcd@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 ##############################   LCD4LINUX   ###################################
 
@@ -2820,6 +3475,14 @@ $(DEPDIR)/%graphlcd: $(DEPDIR)/graphlcd.do_compile
 #
 # libgd2
 #
+BEGIN[[
+libgd2
+  2.0.35
+  gd-{PV}
+  extract:http://www.chipsnbytes.net/downloads/gd-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_libgd2 = "A graphics library for fast image creation"
 
 FILES_libgd2 = \
@@ -2851,11 +3514,20 @@ $(DEPDIR)/%libgd2: $(DEPDIR)/libgd2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libgd2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libusb2
 #
+BEGIN[[
+libusb2
+  1.0.8
+  libusb-{PV}
+  extract:http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-{PV}/libusb-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libusb2 = "libusb2"
 FILES_libusb2 = \
 /usr/lib/*.so*
@@ -2882,11 +3554,20 @@ $(DEPDIR)/%libusb2: $(DEPDIR)/libusb2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libusb2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libusbcompat
 #
+BEGIN[[
+libusbcompat
+  0.1.3
+  libusb-compat-{PV}
+  extract:http://downloads.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-{PV}/libusb-compat-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libusbcompat = "A compatibility layer allowing applications written for libusb-0.1 to work with libusb-1.0"
 FILES_libusbcompat = \
 /usr/lib/*.so*
@@ -2912,7 +3593,7 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libusbcompat@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 ##############################   END EXTERNAL_LCD   #############################
 
@@ -2920,6 +3601,15 @@ $(DEPDIR)/%libusbcompat: $(DEPDIR)/libusbcompat.do_compile
 #
 # eve-browser
 #
+BEGIN[[
+evebrowser
+  svn
+  {PN}-{PV}
+  svn://eve-browser.googlecode.com/svn/trunk/
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_evebrowser = evebrowser for HbbTv
 #RDEPENDS_evebrowser = webkitdfb
 FILES_evebrowser = \
@@ -2958,11 +3648,20 @@ $(DEPDIR)/%evebrowser: $(DEPDIR)/evebrowser.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_evebrowser@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # brofs
 #
+BEGIN[[
+brofs
+  1.2
+  BroFS{PV}
+  extract:http://www.avalpa.com/assets/freesoft/other/BroFS{PV}.tgz
+  make:install:prefix=/usr/bin:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_brofs = "BROFS (BroadcastReadOnlyFileSystem)"
 FILES_brofs = \
 /usr/bin/*
@@ -2992,11 +3691,19 @@ $(DEPDIR)/%brofs: $(DEPDIR)/brofs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_brofs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libcap
 #
+BEGIN[[
+libcap
+  2.22
+  {PN}-{PV}
+  extract:http://mirror.linux.org.au/linux/libs/security/linux-privs/{PN}2/{PN}-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_libcap = "This is a library for getting and setting POSIX"
 FILES_libcap = \
 /usr/lib/*.so* \
@@ -3039,12 +3746,21 @@ $(DEPDIR)/%libcap: $(DEPDIR)/libcap.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libcap@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 	
 #
 # alsa-lib
 #
+BEGIN[[
+libalsa
+  1.0.26
+  alsa-lib-{PV}
+  extract:http://alsa.cybermirror.org/lib/alsa-lib-{PV}.tar.bz2
+  #patch:file://alsa-lib-{PV}-soft_float.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_libalsa = "ALSA library"
 
 FILES_libalsa = \
@@ -3081,11 +3797,20 @@ $(DEPDIR)/%libalsa: $(DEPDIR)/libalsa.do_compile
 #	@DISTCLEANUP_libalsa@
 	$(tocdk_build)
 	$(toflash_build)
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # rtmpdump
 #
+BEGIN[[
+rtmpdump
+  2.4
+  {PN}-{PV}
+  extract:http://{PN}.mplayerhq.hu/download/{PN}-{PV}.tar.gz
+  pmove:{PN}:{PN}-{PV}
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_rtmpdump = "rtmpdump is a tool for dumping media content streamed over RTMP."
 
 FILES_rtmpdump = \
@@ -3114,11 +3839,20 @@ $(DEPDIR)/%rtmpdump: $(DEPDIR)/rtmpdump.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_rtmpdump@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdvbsi++
 #
+BEGIN[[
+libdvbsipp
+  0.3.6
+  libdvbsi++-{PV}
+  extract:http://www.saftware.de/libdvbsi++/libdvbsi++-{PV}.tar.bz2
+  patch:file://libdvbsi++-{PV}.patch
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_libdvbsipp = "libdvbsi++ is a open source C++ library for parsing DVB Service Information and MPEG-2 Program Specific Information."
 
 FILES_libdvbsipp = \
@@ -3151,11 +3885,20 @@ $(DEPDIR)/%libdvbsipp: $(DEPDIR)/libdvbsipp.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdvbsipp@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # tuxtxtlib
 #
+BEGIN[[
+tuxtxtlib
+  1.0
+  libtuxtxt
+  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=libtuxtxt
+  patch:file://libtuxtxt-{PV}-fix_dbox_headers.diff
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_tuxtxtlib = "tuxtxt library"
 PKGR_tuxtxtlib = r1
 
@@ -3194,11 +3937,23 @@ $(DEPDIR)/%tuxtxtlib: $(DEPDIR)/tuxtxtlib.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_tuxtxtlib@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # tuxtxt32bpp
 #
+BEGIN[[
+tuxtxt32bpp
+  1.0
+  tuxtxt
+  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=tuxtxt
+  patch:file://{PN}-{PV}-fix_dbox_headers.diff
+  make:install:prefix=/usr:DESTDIR=PKDIR
+# overwrite after make install
+  install -m644 -D:file://../root/usr/tuxtxt/tuxtxt2.conf:PKDIR/etc/tuxtxt/tuxtxt2.conf
+;
+]]END
+
 DESCRIPTION_tuxtxt32bpp = "tuxtxt plugin"
 PKGR_tuxtxt32bpp = r2
 
@@ -3239,11 +3994,20 @@ $(DEPDIR)/%tuxtxt32bpp: $(DEPDIR)/tuxtxt32bpp.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_tuxtxt32bpp@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdreamdvd
 #
+BEGIN[[
+libdreamdvd
+  git
+  {PN}
+  plink:../apps/misc/tools/{PN}:{PN}
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libdreamdvd = "libdreamdvd"
 
 FILES_libdreamdvd = \
@@ -3278,11 +4042,20 @@ $(DEPDIR)/%libdreamdvd: $(DEPDIR)/libdreamdvd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdreamdvd@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libdreamdvd2
 #
+BEGIN[[
+libdreamdvd2
+  git
+  libdreamdvd
+  nothing:git://github.com/mirakels/libdreamdvd.git:r=1bdc2c33f912b9e87cb7e204485a57c6a08a0e8c
+  patch:file://libdreamdvd-1.0-support_sh4.patch
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_libdreamdvd2 = ""
 
 FILES_libdreamdvd2 = \
@@ -3315,11 +4088,20 @@ $(DEPDIR)/%libdreamdvd2: $(DEPDIR)/libdreamdvd2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libdreamdvd2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libmpeg2
 #
+BEGIN[[
+libmpeg2
+  0.5.1
+  {PN}-{PV}
+  extract:http://{PN}.sourceforge.net/files/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libmpeg2 = "libmpeg2 is a free library for decoding mpeg-2 and mpeg-1 video streams. It is released under the terms of the GPL license."
 
 FILES_libmpeg2 = \
@@ -3349,11 +4131,20 @@ $(DEPDIR)/%libmpeg2: $(DEPDIR)/libmpeg2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libmpeg2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libsamplerate
 #
+BEGIN[[
+libsamplerate
+  0.1.8
+  {PN}-{PV}
+  extract:http://www.mega-nerd.com/SRC/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libsamplerate = "libsamplerate (also known as Secret Rabbit Code) is a library for perfroming sample rate conversion of audio data."
 
 FILES_libsamplerate = \
@@ -3382,11 +4173,19 @@ $(DEPDIR)/%libsamplerate: $(DEPDIR)/libsamplerate.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libsamplerate@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libvorbis
 #
+BEGIN[[
+libvorbis
+  1.3.2
+  {PN}-{PV}
+  extract:http://downloads.xiph.org/releases/vorbis/{PN}-{PV}.tar.bz2
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
 DESCRIPTION_libvorbis = "The libvorbis reference implementation provides both a standard encoder and decoder"
 
 FILES_libvorbis = \
@@ -3414,11 +4213,20 @@ $(DEPDIR)/%libvorbis: $(DEPDIR)/libvorbis.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libvorbis@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libmodplug
 #
+BEGIN[[
+libmodplug
+  0.8.8.4
+  {PN}-{PV}
+  extract:http://downloads.sourceforge.net/project/modplug-xmms/{PN}/{PV}/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libmodplug = "the library for decoding mod-like music formats"
 
 FILES_libmodplug = \
@@ -3446,11 +4254,20 @@ $(DEPDIR)/%libmodplug: $(DEPDIR)/libmodplug.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libmodplug@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # tiff
 #
+BEGIN[[
+tiff
+  4.0.1
+  {PN}-{PV}
+  extract:ftp://ftp.remotesensing.org/pub/lib{PN}/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_tiff = "TIFF Software Distribution"
 
 FILES_tiff = \
@@ -3479,11 +4296,20 @@ $(DEPDIR)/%tiff: $(DEPDIR)/tiff.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_tiff@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # lzo
 #
+BEGIN[[
+lzo
+  2.06
+  {PN}-{PV}
+  extract:http://www.oberhumer.com/opensource/{PN}/download/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_lzo = "LZO -- a real-time data compression library"
 
 FILES_lzo = \
@@ -3511,11 +4337,20 @@ $(DEPDIR)/%lzo: $(DEPDIR)/lzo.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lzo@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # yajl
 #
+BEGIN[[
+yajl
+  2.0.1
+  {PN}-{PV}
+  nothing:git://github.com/lloyd/{PN}:r=f4b2b1af87483caac60e50e5352fc783d9b2de2d
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_yajl = "Yet Another JSON Library"
 
 FILES_yajl = \
@@ -3544,11 +4379,20 @@ $(DEPDIR)/%yajl: $(DEPDIR)/yajl.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_yajl@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libpcre (shouldn't this be named pcre without the lib?)
 #
+BEGIN[[
+libpcre
+  8.30
+  pcre-{PV}
+  extract:ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-{PV}.tar.bz2
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libpcre = "Perl-compatible regular expression library"
 
 FILES_libpcre = \
@@ -3582,11 +4426,20 @@ $(DEPDIR)/%libpcre: $(DEPDIR)/libpcre.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libpcre@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libcdio
 #
+BEGIN[[
+libcdio
+  0.83
+  {PN}-{PV}
+  extract:ftp://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libcdio = "The libcdio package contains a library for CD-ROM and CD image access"
 
 FILES_libcdio = \
@@ -3615,11 +4468,20 @@ $(DEPDIR)/%libcdio: $(DEPDIR)/libcdio.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libcdio@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # jasper
 #
+BEGIN[[
+jasper
+  1.900.1
+  {PN}-{PV}
+  extract:http://www.ece.uvic.ca/~frodo/{PN}/software/{PN}-{PV}.zip
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_jasper = "JasPer is a collection \
 of software (i.e., a library and application programs) for the coding \
 and manipulation of images.  This software can handle image data in a \
@@ -3650,11 +4512,20 @@ $(DEPDIR)/%jasper: $(DEPDIR)/jasper.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_jasper@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # mysql
 #
+BEGIN[[
+mysql
+  5.1.40
+  {PN}-{PV}
+  extract:http://downloads.{PN}.com/archives/{PN}-5.1/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_mysql = "MySQL"
 
 FILES_mysql = \
@@ -3682,11 +4553,21 @@ $(DEPDIR)/%mysql: $(DEPDIR)/mysql.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_mysql@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # xupnpd
 #
+BEGIN[[
+xupnpd
+  svn
+  {PN}-{PV}
+  svn://tsdemuxer.googlecode.com/svn/trunk/xupnpd/src/
+  patch-0:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 
 DESCRIPTION_xupnpd = eXtensible UPnP agent
 FILES_xupnpd = \
@@ -3720,11 +4601,20 @@ $(DEPDIR)/%xupnpd: $(DEPDIR)/xupnpd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_xupnpd@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
    
 #
 # libmicrohttpd
 #
+BEGIN[[
+libmicrohttpd
+  0.9.19
+  {PN}-{PV}
+  extract:http://ftp.halifax.rwth-aachen.de/gnu/{PN}/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libmicrohttpd = ""
 
 FILES_libmicrohttpd = \
@@ -3752,11 +4642,20 @@ $(DEPDIR)/%libmicrohttpd: $(DEPDIR)/libmicrohttpd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libmicrohttpd@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libexif
 #
+BEGIN[[
+libexif
+  0.6.20
+  {PN}-{PV}
+  extract:http://sourceforge.net/projects/{PN}/files/{PN}/{PV}/{PN}-{PV}.tar.gz
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libexif = "libexif is a library for parsing, editing, and saving EXIF data."
 
 FILES_libexif = \
@@ -3783,11 +4682,21 @@ $(DEPDIR)/%libexif: $(DEPDIR)/libexif.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libexif@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # minidlna
 #
+BEGIN[[
+minidlna
+  1.0.25
+  {PN}-{PV}
+  extract:http://netcologne.dl.sourceforge.net/project/{PN}/{PN}/{PV}/{PN}_{PV}_src.tar.gz
+  patch:file://{PN}-{PV}.patch
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_minidlna = "The MiniDLNA daemon is an UPnP-A/V and DLNA service which serves multimedia content to compatible clients on the network."
 
 FILES_minidlna = \
@@ -3820,11 +4729,20 @@ $(DEPDIR)/%minidlna: $(DEPDIR)/minidlna.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_minidlna@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # vlc
 #
+BEGIN[[
+vlc
+  1.1.13
+  {PN}-{PV}
+  extract:http://download.videolan.org/pub/videolan/{PN}/{PV}/{PN}-{PV}.tar.bz2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_vlc = "VLC player"
 
 FILES_vlc = \
@@ -3889,11 +4807,20 @@ $(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_vlc@
-	@[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # djmount
 #
+BEGIN[[
+djmount
+  0.71
+  {PN}-{PV}
+  extract:http://sourceforge.net/projects/{PN}/files/{PN}/{PV}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_djmount = djmount is a UPnP AV client. It mounts as a Linux filesystem the media content of compatible UPnP AV devices.
 RDEPENDS_djmount = fuse
 FILES_djmount = \
@@ -3922,11 +4849,20 @@ $(DEPDIR)/%djmount: $(DEPDIR)/djmount.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_djmount@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libupnp
 #
+BEGIN[[
+libupnp
+  1.6.17
+  {PN}-{PV}
+  extract:http://sourceforge.net/projects/upnp/files/latest/download/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libupnp = "The portable SDK for UPnP™ Devices (libupnp) provides developers with an API and open source code for building control points"
 
 FILES_libupnp = \
@@ -3954,11 +4890,20 @@ $(DEPDIR)/%libupnp: $(DEPDIR)/libupnp.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libupnp@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # rarfs
 #
+BEGIN[[
+rarfs
+  0.1.1
+  {PN}-{PV}
+  extract:http://sourceforge.net/projects/{PN}/files/{PN}/{PV}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_rarfs = ""
 
 FILES_rarfs = \
@@ -3990,11 +4935,20 @@ $(DEPDIR)/%rarfs: $(DEPDIR)/rarfs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_rarfs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # sshfs
 #
+BEGIN[[
+sshfs
+  2.4
+  {PN}-fuse-{PV}
+  extract:http://fossies.org/linux/misc/{PN}-fuse-{PV}.tar.bz2
+  make:install:DESTDIR=TARGETS
+;
+]]END
+
 $(DEPDIR)/sshfs.do_prepare: bootstrap fuse $(DEPENDS_sshfs)
 	$(PREPARE_sshfs)
 	touch $@
@@ -4014,11 +4968,21 @@ $(DEPDIR)/%sshfs: $(DEPDIR)/sshfs.do_compile
 	cd $(DIR_sshfs) && \
 		$(INSTALL_sshfs)
 #	@DISTCLEANUP_sshfs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # gmediarender
 #
+BEGIN[[
+gmediarender
+  0.0.6
+  {PN}-{PV}
+  extract:http://savannah.nongnu.org/download/gmrender/{PN}-{PV}.tar.bz2
+  patch:file://{PN}.patch
+  make:install:DESTDIR=TARGETS
+;
+]]END
+
 $(DEPDIR)/gmediarender.do_prepare: bootstrap libstdc++-dev gst_plugins_dvbmediasink libupnp $(DEPENDS_gmediarender)
 	$(PREPARE_gmediarender)
 	touch $@
@@ -4040,10 +5004,21 @@ $(DEPDIR)/%gmediarender: $(DEPDIR)/gmediarender.do_compile
 	cd $(DIR_gmediarender) && \
 		$(INSTALL_gmediarender)
 #	@DISTCLEANUP_gmediarender@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 #
 # mediatomb
 #
+BEGIN[[
+mediatomb
+  0.12.1
+  {PN}-{PV}
+  extract:http://downloads.sourceforge.net/{PN}/{PN}-{PV}.tar.gz
+  patch:file://{PN}_metadata.patch
+#  patch:file://{PN}_libav_support.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_mediatomb = MediaTomb is an open source (GPL) UPnP MediaServer with a nice web user interfaces
 FILES_mediatomb = \
 /usr/bin/* \
@@ -4083,11 +5058,22 @@ $(DEPDIR)/%mediatomb: $(DEPDIR)/mediatomb.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_mediatomb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # tinyxml
 #
+BEGIN[[
+tinyxml
+  2.6.2
+  {PN}-{PV}
+  extract:http://ignum.dl.sourceforge.net/project/tinyxml/tinyxml/{PV}/tinyxml_2_6_2.tar.gz
+  pmove:{PN}:{PN}-{PV}
+  patch:file://{PN}{PV}.patch
+  make:install:PREFIX=PKDIR/usr:LD=sh4-linux-ld
+;
+]]END
+
 DESCRIPTION_tinyxml = tinyxml
 FILES_tinyxml = \
 /usr/lib/*
@@ -4111,11 +5097,20 @@ $(DEPDIR)/%tinyxml: $(DEPDIR)/tinyxml.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_tinyxml@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # libnfs
 #
+BEGIN[[
+libnfs
+  git
+  {PN}
+  git://github.com/sahlberg/libnfs.git:r=c0ebf57b212ffefe83e2a50358499f68e7289e93
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_libnfs = nfs
 FILES_libnfs = \
 /usr/lib/*
@@ -4147,11 +5142,20 @@ $(DEPDIR)/%libnfs: $(DEPDIR)/libnfs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libnfs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # taglib
 #
+BEGIN[[
+taglib
+  1.8
+  {PN}-{PV}
+  extract:https://github.com/downloads/{PN}/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_taglib = taglib
 FILES_taglib = \
 /usr/*
@@ -4175,11 +5179,20 @@ $(DEPDIR)/%taglib: $(DEPDIR)/taglib.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_taglib@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # e2-rtmpgw
 #
+BEGIN[[
+e2_rtmpgw
+  git
+  {PN}
+  git://github.com/zakalibit/e2-rtmpgw.git:b=gw-e2
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_e2_rtmpgw = A toolkit for RTMP streams
 FILES_e2_rtmpgw = \
 /usr/sbin/rtmpgw2
@@ -4202,4 +5215,4 @@ $(DEPDIR)/%e2_rtmpgw: $(DEPDIR)/e2_rtmpgw.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_e2_rtmpgw@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@

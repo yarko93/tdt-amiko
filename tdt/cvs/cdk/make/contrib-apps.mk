@@ -1,6 +1,15 @@
 #
-#bzip2
+# bzip2
 #
+BEGIN[[
+bzip2
+  1.0.6
+  {PN}-{PV}
+  extract:http://www.bzip.org/{PV}/{PN}-{PV}.tar.gz
+  patch:file://{PN}.diff
+  make:install:PREFIX=PKDIR/usr
+;
+]]END
 DESCRIPTION_bzip2 = "bzip2"
 
 FILES_bzip2 = \
@@ -25,11 +34,21 @@ $(DEPDIR)/%bzip2: $(DEPDIR)/bzip2.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_bzip2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # MODULE-INIT-TOOLS
 #
+BEGIN[[
+module_init_tools
+  3.16
+  {PN}-{PV}
+  extract:http://ftp.be.debian.org/pub/linux/utils/kernel/{PN}/{PN}-{PV}.tar.bz2
+  patch:file://module-init-tools-no-man.patch
+  make:INSTALL=install:install:sbin_PROGRAMS="depmod modinfo":bin_PROGRAMS=:mandir=/usr/share/man:DESTDIR=TARGETS
+;
+]]END
+
 $(DEPDIR)/module_init_tools.do_prepare: bootstrap $(DEPENDS_module_init_tools)
 	$(PREPARE_module_init_tools)
 	touch $@
@@ -51,11 +70,21 @@ $(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS:%=root/etc/%) $
 	$(call adapted-etc-files,$(MODULE_INIT_TOOLS_ADAPTED_ETC_FILES))
 	$(call initdconfig,module-init-tools)
 #	@DISTCLEANUP_module_init_tools@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # GREP
 #
+BEGIN[[
+grep
+  2.5.1
+  {PN}-{PV}
+  extract:ftp://mirrors.kernel.org/gnu/{PN}/{PN}-{PV}.tar.bz2
+  nothing:http://64studio.hivelocity.net/apt/pool/main/g/{PN}/{PN}_{PV}.ds2-6.diff.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_grep = "grep"
 
 FILES_grep = \
@@ -90,11 +119,20 @@ $(DEPDIR)/%grep: $(DEPDIR)/grep.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_grep@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # PPPD
 #
+BEGIN[[
+pppd
+  2.4.5
+  ppp-{PV}
+  extract:ftp://ftp.samba.org/pub/ppp/ppp-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_pppd = "pppd"
 FILES_pppd = \
 /sbin/* \
@@ -131,11 +169,21 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
 	$(toflash_build)
 #	@DISTCLEANUP_pppd@
-	@[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 #
 # USB MODESWITCH
 #
+BEGIN[[
+usb_modeswitch
+  1.2.5
+  {PN}-{PV}
+  extract:http://www.draisberghof.de/usb_modeswitch/{PN}-{PV}.tar.bz2
+  patch:file://{PN}.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_usb_modeswitch = usb_modeswitch
 RDEPENDS_usb_modeswitch = libusb usb_modeswitch_data
 FILES_usb_modeswitch = \
@@ -160,12 +208,22 @@ $(DEPDIR)/%usb_modeswitch: $(DEPDIR)/usb_modeswitch.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch@
-	@[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
 # USB MODESWITCH DATA
 #
+BEGIN[[
+usb_modeswitch_data
+  20121109
+  {PN}-{PV}
+  extract:http://www.draisberghof.de/usb_modeswitch/{PN}-{PV}.tar.bz2
+  patch:file://{PN}.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_usb_modeswitch_data = usb_modeswitch_data
 
 FILES_usb_modeswitch_data = \
@@ -190,11 +248,20 @@ $(DEPDIR)/%usb_modeswitch_data: $(DEPDIR)/usb_modeswitch_data.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch_data@
-	@[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 #
 # NTFS-3G
 #
+BEGIN[[
+ntfs_3g
+  2013.1.13
+  ntfs-3g_ntfsprogs-{PV}
+  extract:http://tuxera.com/opensource/ntfs-3g_ntfsprogs-{PV}.tgz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_ntfs_3g = ntfs-3g
 RDEPENDS_ntfs_3g = fuse
 FILES_ntfs_3g = \
@@ -229,12 +296,22 @@ $(DEPDIR)/%ntfs_3g: $(DEPDIR)/ntfs_3g.do_compile
 	$(tocdk_build)	
 	$(toflash_build)
 #	@DISTCLEANUP_ntfs_3g@
-	@[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 	
 
 #
 # LSB
 #
+BEGIN[[
+lsb
+  3.2-28
+  {PN}-3.2
+  extract:http://www.emdebian.org/locale/pool/main/l/lsb/{PN}_{PV}.tar.gz
+  install:-d:PKDIR/lib/{PN}
+  install:-m644:init-functions:PKDIR/lib/{PN}
+;
+]]END
+
 DESCRIPTION_lsb = "lsb"
 FILES_lsb = \
 /lib/lsb/*
@@ -254,11 +331,23 @@ $(DEPDIR)/%lsb: $(DEPDIR)/lsb.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lsb@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # PORTMAP
 #
+BEGIN[[
+portmap
+  6.0
+  {PN}_{PV}
+  extract:http://fossies.org/unix/misc/{PN}-{PV}.tgz
+  patch:file://{PN}_{PV}.diff
+  patch:http://debian.osuosl.org/debian/pool/main/p/{PN}/{PN}_{PV}.0-2.diff.gz
+  make:install:BASEDIR=PKDIR
+  install:-m755:debian/init.d:PKDIR/etc/init.d/{PN}
+;
+]]END
+
 DESCRIPTION_portmap = "the program supports access control in the style of the tcp wrapper (log_tcp) packag"
 FILES_portmap = \
 /sbin/* \
@@ -291,11 +380,20 @@ $(DEPDIR)/%portmap: $(DEPDIR)/%lsb $(PORTMAP_ADAPTED_ETC_FILES:%=root/etc/%) $(D
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_portmap@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # OPENRDATE
 #
+BEGIN[[
+openrdate
+  1.1.2
+  {PN}-{PV}
+  extract:http://downloads.sourceforge.net/project/openrdate/openrdate/{PN}-{PV}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_openrdate = openrdate
 FILES_openrdate = \
 /usr/bin/* \
@@ -334,11 +432,21 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_openrdate@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # E2FSPROGS
 #
+BEGIN[[
+e2fsprogs
+  1.42.7
+  {PN}-{PV}
+  extract:http://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v{PV}/{PN}-{PV}.tar.gz
+  patch:file://{PN}-{PV}.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_e2fsprogs = "e2fsprogs"
 FILES_e2fsprogs = \
 /sbin/e2fsck \
@@ -400,6 +508,16 @@ $(DEPDIR)/e2fsprogs: $(DEPDIR)/e2fsprogs.do_compile
 #
 # XFSPROGS
 #
+BEGIN[[
+xfsprogs
+  2.9.4-1
+  {PN}-2.9.4
+  extract:http://pkgs.fedoraproject.org/repo/pkgs/xfsprogs/xfsprogs_2.9.4-1.tar.gz/174683e3b86b587ed59823fdbbb96ea4/{PN}_{PV}.tar.gz
+  patch:file://{PN}.diff
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_xfsprogs = "xfsprogs"
 
 FILES_xfsprogs = \
@@ -441,11 +559,21 @@ $(DEPDIR)/%xfsprogs: $(DEPDIR)/xfsprogs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_xfsprogs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # MC
 #
+BEGIN[[
+mc
+  4.8.1.6
+  {PN}-{PV}
+  extract:http://www.midnight-commander.org/downloads/{PN}-{PV}.tar.bz2
+#nothing:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_mc = "Midnight Commander"
 
 FILES_mc = \
@@ -481,11 +609,20 @@ $(DEPDIR)/%mc: %glib2 $(DEPDIR)/mc.do_compile
 #		export top_builddir=`pwd` && \
 #		$(MAKE) install DESTDIR=$(prefix)/$*cdkroot
 #	@DISTCLEANUP_mc@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # SDPARM
 #
+BEGIN[[
+sdparm
+  1.07
+  {PN}-{PV}
+  extract:http://sg.danny.cz/sg/p/{PN}-{PV}.tgz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_sdparm = "sdparm"
 
 FILES_sdparm = \
@@ -520,11 +657,21 @@ $(DEPDIR)/%sdparm: $(DEPDIR)/sdparm.do_compile
 	mv -f $(PKDIR)/usr/bin/sdparm $(PKDIR)/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_sdparm@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # SG3_UTILS
 #
+BEGIN[[
+sg3_utils
+  1.24
+  sg3_utils-{PV}
+  extract:http://sg.torque.net/sg/p/sg3_utils-{PV}.tgz
+  patch:file://sg3_utils.diff
+  make:install:DESTDIR=TARGETS
+;
+]]END
+
 $(DEPDIR)/sg3_utils.do_prepare: bootstrap $(DEPENDS_sg3_utils)
 	$(PREPARE_sg3_utils)
 	touch $@
@@ -558,11 +705,20 @@ $(DEPDIR)/%sg3_utils: $(DEPDIR)/sg3_utils.do_compile
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(prefix)/$*cdkroot/etc/$$i || true; done ) && \
 	$(INSTALL) -m755 root/usr/sbin/sg_down.sh $(prefix)/$*cdkroot/usr/sbin
 #	@DISTCLEANUP_sg3_utils@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # IPKG
 #
+BEGIN[[
+ipkg
+  0.99.163
+  {PN}-{PV}
+  extract:ftp.gwdg.de/linux/handhelds/packages/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=TARGETS
+;
+]]END
+
 $(DEPDIR)/ipkg.do_prepare: bootstrap $(DEPENDS_ipkg)
 	$(PREPARE_ipkg)
 	touch $@
@@ -587,11 +743,20 @@ $(DEPDIR)/%ipkg: $(DEPDIR)/ipkg.do_compile
 	$(INSTALL) -d $(prefix)/$*cdkroot/usr/lib/ipkg
 	$(INSTALL) -m 644 root/usr/lib/ipkg/status.initial $(prefix)/$*cdkroot/usr/lib/ipkg/status
 #	@DISTCLEANUP_ipkg@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # ZD1211
 #
+BEGIN[[
+zd1211
+  2_15_0_0
+  ZD1211LnxDrv_2_15_0_0
+  extract:http://www.lutec.eu/treiber/{PN}lnxdrv_2_15_0_0.tar.gz
+  patch:file://{PN}.diff
+;
+]]END
+
 CONFIG_ZD1211B :=
 $(DEPDIR)/zd1211.do_prepare: bootstrap $(DEPENDS_zd1211)
 	$(PREPARE_zd1211)
@@ -613,11 +778,20 @@ $(DEPDIR)/%zd1211: $(DEPDIR)/zd1211.do_compile
 			install
 	$(DEPMOD) -ae -b $(targetprefix) -r $(KERNELVERSION)
 #	@DISTCLEANUP_zd1211@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # NANO
 #
+BEGIN[[
+nano
+  2.0.6
+  {PN}-{PV}
+  extract:http://www.{PN}-editor.org/dist/v2.0/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=TARGETS
+;
+]]END
+
 $(DEPDIR)/nano.do_prepare: bootstrap ncurses ncurses-dev $(DEPENDS_nano)
 	$(PREPARE_nano)
 	touch $@
@@ -640,11 +814,20 @@ $(DEPDIR)/%nano: $(DEPDIR)/nano.do_compile
 	cd $(DIR_nano) && \
 		$(INSTALL_nano)
 #	@DISTCLEANUP_nano@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # RSYNC
 #
+BEGIN[[
+rsync
+  2.6.9
+  {PN}-{PV}
+  extract:http://samba.anu.edu.au/ftp/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=TARGETS
+;
+]]END
+
 $(DEPDIR)/rsync.do_prepare: bootstrap $(DEPENDS_rsync)
 	$(PREPARE_rsync)
 	touch $@
@@ -666,11 +849,20 @@ $(DEPDIR)/%rsync: $(DEPDIR)/rsync.do_compile
 	cd $(DIR_rsync) && \
 		$(INSTALL_rsync)
 #	@DISTCLEANUP_rsync@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # RFKILL
 #
+BEGIN[[
+rfkill
+  git
+  {PN}-{PV}
+  nothing:git://git.sipsolutions.net/rfkill.git
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_rfkill = rfkill is a small tool to query the state of the rfkill switches, buttons and subsystem interfaces
 FILES_rfkill = \
 /usr/sbin/*
@@ -692,11 +884,20 @@ $(DEPDIR)/%rfkill: $(DEPDIR)/rfkill.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_rfkill@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # LM_SENSORS
 #
+BEGIN[[
+lm_sensors
+  2.9.2
+  lm_sensors-{PV}
+  extract:http://dl.{PN}.org/{PN}/releases/lm_sensors-{PV}.tar.gz
+  make:user_install:MACHINE=sh:PREFIX=/usr:MANDIR=/usr/share/man:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_lm_sensors = "lm_sensors"
 
 FILES_lm_sensors = \
@@ -728,11 +929,21 @@ $(DEPDIR)/%lm_sensors: $(DEPDIR)/lm_sensors.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lm_sensors@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # FUSE
 #
+BEGIN[[
+fuse
+  2.9.0
+  {PN}-{PV}
+  extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
+  patch:file://{PN}.diff
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_fuse = "With FUSE it is possible to implement a fully functional filesystem in a userspace program.  Features include:"
 
 FILES_fuse = \
@@ -776,11 +987,20 @@ $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_fuse@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # CURLFTPFS
 #
+BEGIN[[
+curlftpfs
+  0.9.2
+  {PN}-{PV}
+  extract:http://sourceforge.net/projects/{PN}/files/latest/download/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=TARGETS
+;
+]]END
+
 $(DEPDIR)/curlftpfs.do_prepare: bootstrap fuse $(DEPENDS_curlftpfs)
 	$(PREPARE_curlftpfs)
 	touch $@
@@ -802,11 +1022,25 @@ $(DEPDIR)/%curlftpfs: %fuse $(DEPDIR)/curlftpfs.do_compile
 	cd $(DIR_curlftpfs) && \
 		$(INSTALL_curlftpfs)
 #	@DISTCLEANUP_curlftpfs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # FBSET
 #
+BEGIN[[
+fbset
+  2.1
+  {PN}-{PV}
+  extract:http://ftp.de.debian.org/debian/pool/main/f/{PN}/{PN}_{PV}.orig.tar.gz
+  patch:http://archive.debian.org/debian/dists/potato/main/source/admin/{PN}_{PV}-6.diff.gz
+  patch:file://{PN}_{PV}-fb.modes-ST.patch
+  install:-d:-m755:TARGETS/{usr/sbin,etc}
+  install:-m755:{PN}:TARGETS/usr/sbin
+  install:-m755:con2fbmap:TARGETS/usr/sbin
+  install:-m644:etc/fb.modes.ATI:TARGETS/etc/fb.modes
+;
+]]END
+
 $(DEPDIR)/fbset.do_prepare: bootstrap $(DEPENDS_fbset)
 	$(PREPARE_fbset)
 	touch $@
@@ -821,11 +1055,20 @@ $(DEPDIR)/%fbset: fbset.do_compile
 	cd $(DIR_fbset) && \
 		$(INSTALL_fbset)
 #	@DISTCLEANUP_fbset@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # PNGQUANT
 #
+BEGIN[[
+pngquant
+  1.1
+  {PN}-{PV}
+  extract:ftp://ftp.simplesystems.org/pub/libpng/png/applications/{PN}/{PN}-{PV}-src.tgz
+  install:-m755:{PN}:TARGETS/usr/bin
+;
+]]END
+
 $(DEPDIR)/pngquant.do_prepare: bootstrap libz libpng $(DEPENDS_pngquant)
 	$(PREPARE_pngquant)
 	touch $@
@@ -840,11 +1083,20 @@ $(DEPDIR)/%pngquant: $(DEPDIR)/pngquant.do_compile
 	cd $(DIR_pngquant) && \
 		$(INSTALL_pngquant)
 #	@DISTCLEANUP_pngquant@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # MPLAYER
 #
+BEGIN[[
+mplayer
+  1.0
+  {PN}-export-*
+  extract:ftp://ftp.{PN}hq.hu/MPlayer/releases/{PN}-export-snapshot.tar.bz2
+  make:install INSTALLSTRIP="":DESTDIR=TARGETS
+;
+]]END
+
 $(DEPDIR)/mplayer.do_prepare: bootstrap $(DEPENDS_mplayer)
 	$(PREPARE_mplayer)
 	touch $@
@@ -866,11 +1118,20 @@ $(DEPDIR)/%mplayer: $(DEPDIR)/mplayer.do_compile
 	cd $(DIR_mplayer) && \
 		$(INSTALL_mplayer)
 #	@DISTCLEANUP_mplayer@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # MENCODER
 #
+BEGIN[[
+mencoder
+  1.0
+  mplayer-export-*
+  extract:ftp://ftp.mplayerhq.hu/MPlayer/releases/mplayer-export-snapshot.tar.bz2
+  make:install INSTALLSTRIP="":DESTDIR=TARGETS
+;
+]]END
+
 #$(DEPDIR)/mencoder.do_prepare: bootstrap $(DEPENDS_mencoder)
 #	$(PREPARE_mencoder)
 #	touch $@
@@ -917,16 +1178,25 @@ $(DEPDIR)/%mencoder: $(DEPDIR)/mencoder.do_compile
 	cd $(DIR_mencoder) && \
 		$(INSTALL_mencoder)
 #	@DISTCLEANUP_mencoder@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # jfsutils
 #
+BEGIN[[
+jfsutils
+  1.1.15
+  {PN}-{PV}
+  extract:http://jfs.sourceforge.net/project/pub/{PN}-{PV}.tar.gz
+  make:install:mandir=/usr/share/man:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_jfsutils = "jfsutils"
 FILES_jfsutils = \
 /sbin/*
 
-$(DEPDIR)/jfsutils.do_prepare: bootstrap $(DEPENDS_jfsutils)
+$(DEPDIR)/jfsutils.do_prepare: bootstrap e2fsprogs $(DEPENDS_jfsutils)
 	$(PREPARE_jfsutils)
 	touch $@
 
@@ -935,10 +1205,10 @@ $(DEPDIR)/jfsutils.do_compile: $(DEPDIR)/jfsutils.do_prepare
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
 		./configure \
-			--host=gcc \
+			--host=$(target) \
 			--target=$(target) \
 			--prefix= && \
-		$(MAKE) CC="$(target)-gcc"
+		$(MAKE)
 	touch $@
 
 $(DEPDIR)/jfsutils: \
@@ -949,11 +1219,21 @@ $(DEPDIR)/%jfsutils: $(DEPDIR)/jfsutils.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_jfsutils@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # opkg
 #
+BEGIN[[
+opkg
+  0.1.8
+  {PN}-{PV}
+  extract:http://{PN}.googlecode.com/files/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+  link:/usr/bin/{PN}-cl:PKDIR/usr/bin/{PN}
+;
+]]END
+
 
 DESCRIPTION_opkg = "lightweight package management system"
 FILES_opkg = \
@@ -985,11 +1265,23 @@ $(DEPDIR)/%opkg: $(DEPDIR)/opkg.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_opkg@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # ntpclient
 #
+BEGIN[[
+ntpclient
+  #second param is version
+  2007_365
+  #third is buid dir
+  {PN}-2007
+  #sources goes below
+  http://doolittle.icarus.com/ntpclient/{PN}_{PV}.tar.gz
+  nothing:file://{PN}-init.file
+;
+]]END
+
 
 # PARENT_PK defined as per rule variable below is main postfix
 # at first split_packages.py searches for variable PACKAGES_ + $(PARENT_PK)
@@ -1047,6 +1339,15 @@ $(DEPDIR)/ntpclient: $(DEPDIR)/ntpclient.do_compile
 #
 # udpxy
 #
+BEGIN[[
+udpxy
+  1.0.23-0
+  {PN}-{PV}
+  http://sourceforge.net/projects/udpxy/files/udpxy/Chipmunk-1.0/udpxy.{PV}-prod.tar.gz
+  #for patch -p0 use the following
+  patch-0:file://udpxy-makefile.patch
+;
+]]END
 
 # You can use it as example of building and making package for new utility.
 # First of all take a look at smart-rules file. Read the documentation at the beginning.
@@ -1172,8 +1473,18 @@ endef
 # just list them in EXTRA_parentfoo variable
 # DIST_parentfoo variable works vice-versa
 
+#
 # sysstat
 #
+BEGIN[[
+sysstat
+  10.0.4
+  {PN}-{PV}
+  extract:http://pagesperso-orange.fr/sebastien.godard/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=TARGETS
+;
+]]END
+
 $(DEPDIR)/sysstat: bootstrap $(DEPENDS_sysstat)
 	$(PREPARE_sysstat)
 	export PATH=$(hostprefix)/bin:$(PATH) && \
@@ -1187,11 +1498,21 @@ $(DEPDIR)/sysstat: bootstrap $(DEPENDS_sysstat)
 		$(MAKE) && \
 		$(INSTALL_sysstat)
 	@DISTCLEANUP_sysstat@
-	@touch $@
+	touch $@
 
 #
 # hotplug-e2
 #
+BEGIN[[
+hotplug_e2
+  git
+  {PN}-helper
+  git://openpli.git.sourceforge.net/gitroot/openpli/hotplug-e2-helper
+  patch:file://hotplug-e2-helper-support_fw_upload.patch
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_hotplug_e2 = "hotplug_e2"
 FILES_hotplug_e2 = \
 /sbin/bdpoll \
@@ -1203,10 +1524,7 @@ $(DEPDIR)/hotplug_e2.do_prepare: bootstrap $(DEPENDS_hotplug_e2)
 
 $(DEPDIR)/hotplug_e2.do_compile: $(DEPDIR)/hotplug_e2.do_prepare
 	cd $(DIR_hotplug_e2) && \
-		aclocal -I $(hostprefix)/share/aclocal && \
-		autoconf && \
-		automake --foreign && \
-		libtoolize --force && \
+		./autogen.sh &&\
 		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
@@ -1225,11 +1543,32 @@ $(DEPDIR)/%hotplug_e2: $(DEPDIR)/hotplug_e2.do_compile
 	cp -f $(PKDIR)/usr/bin/* $(PKDIR)/sbin
 	$(toflash_build)
 #	@DISTCLEANUP_hotplug_e2@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # autofs
 #
+BEGIN[[
+autofs
+  4.1.4
+  {PN}-{PV}
+  extract:http://kernel.org/pub/linux/daemons/{PN}/v4/{PN}-{PV}.tar.gz
+  patch:file://{PN}-{PV}-misc-fixes.patch
+  patch:file://{PN}-{PV}-multi-parse-fix.patch
+  patch:file://{PN}-{PV}-non-replicated-ping.patch
+  patch:file://{PN}-{PV}-locking-fix-1.patch
+  patch:file://{PN}-{PV}-cross.patch
+  patch:file://{PN}-{PV}-Makefile.rules-cross.patch
+  patch:file://{PN}-{PV}-install.patch
+  patch:file://{PN}-{PV}-auto.net-sort-option-fix.patch
+  patch:file://{PN}-{PV}-{PN}-additional-distros.patch
+  patch:file://{PN}-{PV}-no-bash.patch
+  patch:file://{PN}-{PV}-{PN}-add-hotplug.patch
+  patch:file://{PN}-{PV}-no_man.patch
+  make:install:INSTALLROOT=PKDIR
+;
+]]END
+
 DESCRIPTION_autofs = "autofs"
 FILES_autofs = \
 /usr/*
@@ -1258,11 +1597,20 @@ $(DEPDIR)/%autofs: $(DEPDIR)/autofs.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_autofs@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # imagemagick
 #
+BEGIN[[
+imagemagick
+  6.8.0-4
+  ImageMagick-{PV}
+  extract:ftp://ftp.fifi.org/pub/ImageMagick/ImageMagick-{PV}.tar.bz2
+  make:install:prefix=/usr:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_imagemagick = "imagemagick"
 FILES_imagemagick = \
 /usr/*
@@ -1304,11 +1652,19 @@ $(DEPDIR)/%imagemagick: $(DEPDIR)/imagemagick.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_imagemagick@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # grab
 #
+BEGIN[[
+grab
+  git
+  {PN}-{PV}
+  git://github.com/technic/aio-grab.git
+  make:install:DESTDIR=PKDIR
+;
+]]END
 
 DESCRIPTION_grab = make enigma2 screenshots
 RDEPENDS_grab = libpng jpeg
@@ -1338,6 +1694,14 @@ $(DEPDIR)/grab: grab.do_compile
 #
 # enigma2-plugin-cams-oscam
 #
+BEGIN[[
+enigma2_plugin_cams_oscam
+  svn
+  {PN}-{PV}
+  svn://www.streamboard.tv/svn/oscam/trunk/
+  make:install:DESTDIR=PKDIR:OSCAM_BIN = OSCAM_BIN
+;
+]]END
 
 DESCRIPTION_enigma2_plugin_cams_oscam = Open Source Conditional Access Module software
 SRC_URI_enigma2_plugin_cams_oscam = http://www.streamboard.tv/oscam/
@@ -1367,7 +1731,7 @@ $(DEPDIR)/enigma2_plugin_cams_oscam: enigma2_plugin_cams_oscam.do_compile
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.services $(PKDIR)/var/keys/oscam.services
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.srvid    $(PKDIR)/var/keys/oscam.srvid
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.user     $(PKDIR)/var/keys/oscam.user
-if ENABLE_SPARK7162
+ifdef ENABLE_SPARK7162
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.server2  $(PKDIR)/var/keys/oscam.server
 else
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.server   $(PKDIR)/var/keys/oscam.server
@@ -1379,6 +1743,16 @@ endif
 #
 # parted
 #
+BEGIN[[
+parted
+  3.1
+  {PN}-{PV}
+  extract:http://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.xz
+  patch:file://{PN}_{PV}.patch
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_parted = "parted"
 FILES_parted = \
 /usr/lib/libparted-fs-resize.s* \
@@ -1411,11 +1785,20 @@ $(DEPDIR)/%parted: $(DEPDIR)/parted.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_parted@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
 
 #
 # gettext
 #
+BEGIN[[
+gettext
+  0.18
+  {PN}-{PV}
+  extract:ftp://ftp.gnu.org/gnu/{PN}/{PN}-{PV}.tar.gz
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
 DESCRIPTION_gettext = "gettext"
 FILES_gettext = \
 *
@@ -1447,4 +1830,4 @@ $(DEPDIR)/%gettext: $(DEPDIR)/gettext.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_gettext@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@
