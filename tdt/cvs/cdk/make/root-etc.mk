@@ -23,6 +23,10 @@ ETC_RW_FILES +=  nologin hostname \
 		init.d/rc init.d/reboot init.d/rmnologin init.d/sendsigs init.d/single init.d/skeleton \
 		init.d/stop-bootlogd init.d/umountfs init.d/umountnfs.sh init.d/urandom
 
+OPENRDATE_ADAPTED_ETC_FILES = init.d/rdate.sh
+ETC_RW_FILES += init.d/rdate.sh \
+	localtime 
+
 NETBASE_ADAPTED_ETC_FILES = network/interfaces
 ETC_RW_FILES += network/interfaces \
 	gateways init.d/networking network network/options protocols services
