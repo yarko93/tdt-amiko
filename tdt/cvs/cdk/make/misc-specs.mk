@@ -1,9 +1,3 @@
-$(DEPDIR)/boot-elf:
-	$(INSTALL_DIR) $(targetprefix)/lib/firmware
-	cp $(buildprefix)/root/firmware/*.fw $(targetprefix)/lib/firmware/
-	@[ "x$*" = "x" ] && touch $@ || true
-
-
 $(DEPDIR)/misc-cp:
 	cp $(buildprefix)/root/sbin/hotplug $(targetprefix)/sbin
 	cp $(buildprefix)/root/etc/$(LIRCD_CONF) $(targetprefix)/etc/lircd.conf

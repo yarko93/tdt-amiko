@@ -215,7 +215,47 @@ $(DEPDIR)/udev-rules: $(DEPENDS_udev_rules) $(RDEPENDS_udev_rules)
 	$(INSTALL_FILE) 90-cec_aotom.rules $(PKDIR)/etc/udev/rules.d/
 	$(toflash_build)
 	touch $@
+#
+# boot-elf
+#
 
+DESCRIPTION_boot_elf = firmware non public
+SRC_URI_boot_elf = unknown
+PKGV_boot_elf = r1
+
+$(DEPDIR)/boot-elf: release_base firmware $(RDEPENDS_boot_elf)
+	$(start_build)
+	$(INSTALL_DIR) $(PKDIR)/boot/
+ifdef ENABLE_SPARK
+	$(INSTALL_FILE) $(archivedir)/boot/video_7111.elf $(PKDIR)/boot/video.elf
+	$(INSTALL_FILE) $(archivedir)/boot/audio_7111.elf $(PKDIR)/boot/audio.elf
+endif
+ifdef ENABLE_SPARK7162
+	$(INSTALL_FILE) $(archivedir)/boot/video_7105.elf $(PKDIR)/boot/video.elf
+	$(INSTALL_FILE) $(archivedir)/boot/audio_7105.elf $(PKDIR)/boot/audio.elf
+endif
+	$(toflash_build)
+	touch $@
+
+#
+# firmware
+#
+
+DESCRIPTION_firmware = firmware non public
+SRC_URI_firmware = unknown
+PKGV_firmware = r1
+
+$(DEPDIR)/firmware: release_base $(RDEPENDS_firmware)
+	$(start_build)
+	$(INSTALL_DIR) $(PKDIR)/lib/firmware/
+ifdef ENABLE_SPARK
+	$(INSTALL_FILE) $(buildprefix)/root/firmware/component_7111_mb618.fw $(PKDIR)/lib/firmware/component.fw
+endif
+ifdef ENABLE_SPARK7162
+	$(INSTALL_FILE) $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(PKDIR)/lib/firmware/component.fw
+endif
+	$(toflash_build)
+	touch $@
 
 # auxiliary targets for model-specific builds
 release_common_utils:
@@ -225,19 +265,6 @@ release_common_utils:
 	cp -f $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
 	cp -f $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
 	$(call initdconfig,$(shell ls $(prefix)/release/etc/init.d))
-
-# Copy video_7105
-	$(if $(SPARK7162),cp -f $(archivedir)/boot/video_7105.elf $(prefix)/release/boot/video.elf)
-# Copy audio_7105
-	$(if $(SPARK7162),cp -f $(archivedir)/boot/audio_7105.elf $(prefix)/release/boot/audio.elf)
-# Copy video_7109
-	$(if $(HL101),cp -f $(archivedir)/boot/video_7109.elf $(prefix)/release/boot/video.elf)
-# Copy audio_7109
-	$(if $(HL101),cp -f $(archivedir)/boot/audio_7109.elf $(prefix)/release/boot/audio.elf)
-# Copy video_7111
-	$(if $(SPARK),cp -f $(archivedir)/boot/video_7111.elf $(prefix)/release/boot/video.elf)
-# Copy audio_7111
-	$(if $(SPARK),cp -f $(archivedir)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf )
 	
 release_base: driver-ptinp driver-encrypt
 	rm -rf $(prefix)/release || true
@@ -333,8 +360,6 @@ release_base: driver-ptinp driver-encrypt
 	fi
 
 # Copy lircd.conf
-	cp -f $(buildprefix)/root/etc/lircd$(if $(HL101),_$(HL101))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162)).conf $(prefix)/release/etc/lircd.conf
-
 	touch $(prefix)/release/var/etc/.firstboot && \
 	cp -f $(buildprefix)/root/release/mme_check $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/bootscreen/bootlogo.mvi $(prefix)/release/boot/ && \
@@ -381,7 +406,6 @@ else
 	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf
 endif
-	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
 	true
 
 release_spark7162:
@@ -395,7 +419,6 @@ else
 	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf
 endif
-	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw
 	true
 
 
