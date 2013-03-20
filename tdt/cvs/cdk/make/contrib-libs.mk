@@ -1617,7 +1617,7 @@ DESCRIPTION_libass = "libass"
 FILES_libass = \
 /usr/lib/*.so*
 
-$(DEPDIR)/libass.do_prepare: bootstrap freetype $(DEPENDS_libass)
+$(DEPDIR)/libass.do_prepare: bootstrap freetype libfribidi $(DEPENDS_libass)
 	$(PREPARE_libass)
 	touch $@
 
