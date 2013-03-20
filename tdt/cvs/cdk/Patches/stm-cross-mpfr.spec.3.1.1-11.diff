@@ -1,6 +1,6 @@
---- stm-cross-mpfr.spec.org	2011-11-26 03:05:04.000000000 +0100
-+++ stm-cross-mpfr.spec	2012-04-20 21:46:46.000000000 +0200
-@@ -29,6 +29,7 @@
+--- stm-cross-mpfr.spec.orig	2013-02-15 03:05:03.000000000 +0100
++++ stm-cross-mpfr.spec	2013-03-20 21:12:38.727059012 +0100
+@@ -31,14 +31,12 @@
  
  %build
  %cross_setup
@@ -8,8 +8,6 @@
  
  mkdir objdir
  cd objdir
-@@ -40,9 +41,6 @@
- fi
  
  ../configure \
 -%if_force_32bit
@@ -17,4 +15,4 @@
 -%endif
      --prefix=%{_stm_cross_dir} \
      --build=%{_stm_host_config} \
- %if "%{_stm_target_fpu}" == "yes"
+     --with-gmp=%{_stm_cross_dir} \
