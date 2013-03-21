@@ -1,0 +1,12 @@
+--- stm-cross-mpc.spec.orig	2013-03-01 03:05:04.000000000 +0100
++++ stm-cross-mpc.spec	2013-03-20 22:26:47.355059020 +0100
+@@ -47,9 +47,6 @@
+ cd objdir
+ 
+ ../configure \
+-%if %force_32bit
+-     ABI=32 \
+-%endif
+     --prefix=%{_stm_cross_dir} \
+     --build=%{_stm_host_config} \
+     --disable-shared \
