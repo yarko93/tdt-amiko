@@ -1617,7 +1617,7 @@ DESCRIPTION_libass = "libass"
 FILES_libass = \
 /usr/lib/*.so*
 
-$(DEPDIR)/libass.do_prepare: bootstrap freetype $(DEPENDS_libass)
+$(DEPDIR)/libass.do_prepare: bootstrap freetype libfribidi $(DEPENDS_libass)
 	$(PREPARE_libass)
 	touch $@
 
@@ -3897,7 +3897,7 @@ BEGIN[[
 tuxtxtlib
   1.0
   libtuxtxt
-  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=libtuxtxt
+  nothing:git://git.code.sf.net/p/openpli/tuxtxt:r=4ff8fff:sub=libtuxtxt
   patch:file://libtuxtxt-{PV}-fix_dbox_headers.diff
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
@@ -3949,7 +3949,7 @@ BEGIN[[
 tuxtxt32bpp
   1.0
   tuxtxt
-  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=tuxtxt
+  nothing:git://git.code.sf.net/p/openpli/tuxtxt:r=4ff8fff:sub=tuxtxt
   patch:file://{PN}-{PV}-fix_dbox_headers.diff
   make:install:prefix=/usr:DESTDIR=PKDIR
 # overwrite after make install
