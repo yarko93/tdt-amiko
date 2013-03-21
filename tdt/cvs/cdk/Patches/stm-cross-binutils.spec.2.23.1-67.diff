@@ -1,5 +1,5 @@
---- stm-cross-binutils.spec.orig	2012-07-12 12:08:25.728242751 +0200
-+++ stm-cross-binutils.spec	2012-07-12 12:08:25.676242761 +0200
+--- stm-cross-binutils.spec.orig	2013-02-26 03:05:03.000000000 +0100
++++ stm-cross-binutils.spec	2013-03-20 21:37:54.363059014 +0100
 @@ -39,9 +39,6 @@
  BuildRequires: texinfo
  %endif
@@ -10,11 +10,11 @@
  BuildRequires: %{_stm_pkg_prefix}-host-rpmconfig
  
  Group: Development/Languages
-@@ -119,6 +116,7 @@
+@@ -117,6 +114,7 @@
         --enable-nls \
         --disable-multilib \
         --with-system-zlib \
 +       --disable-werror \
  %if "%{_stm_target_fpu}" == "yes"
- %if_target_arch armv7 armv7_uclibc
+ %if %target_arch armv7 armv7_uclibc
          --with-float=hard \
