@@ -263,7 +263,7 @@ ntfs_3g
 ]]END
 
 DESCRIPTION_ntfs_3g = ntfs-3g
-RDEPENDS_ntfs_3g = fuse
+#RDEPENDS_ntfs_3g = fuse
 FILES_ntfs_3g = \
 /bin/ntfs-3g \
 /sbin/mount.ntfs-3g \
