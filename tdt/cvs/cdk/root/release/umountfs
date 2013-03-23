@@ -4,7 +4,7 @@
 #
 # Version:      @(#)umountfs  2.85-16  03-Jun-2004  miquels@cistron.nl
 #
-# chkconfig: 06 40 0
+# chkconfig: S 06 40
 #
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin

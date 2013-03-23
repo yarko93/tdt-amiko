@@ -4,7 +4,7 @@
 #
 # Version:      @(#)reboot  2.75  22-Jun-1998  miquels@cistron.nl
 #
-# chkconfig: 6 90 0
+# chkconfig: S 0 100
 #
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
