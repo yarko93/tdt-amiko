@@ -4,7 +4,7 @@
 #
 # Version:      @(#)sendsigs  2.85-8  05-Nov-2003  miquels@cistron.nl
 #
-# chkconfig: S 06 20
+# chkconfig: 06 20 0
 #
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
