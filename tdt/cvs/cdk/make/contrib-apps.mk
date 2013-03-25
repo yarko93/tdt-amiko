@@ -263,7 +263,7 @@ ntfs_3g
 ]]END
 
 DESCRIPTION_ntfs_3g = ntfs-3g
-RDEPENDS_ntfs_3g = fuse
+#RDEPENDS_ntfs_3g = fuse
 FILES_ntfs_3g = \
 /bin/ntfs-3g \
 /sbin/mount.ntfs-3g \
@@ -936,7 +936,7 @@ $(DEPDIR)/%lm_sensors: $(DEPDIR)/lm_sensors.do_compile
 #
 BEGIN[[
 fuse
-  2.9.0
+  2.9.2
   {PN}-{PV}
   extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
@@ -944,13 +944,13 @@ fuse
 ;
 ]]END
 
-DESCRIPTION_fuse = "With FUSE it is possible to implement a fully functional filesystem in a userspace program.  Features include:"
+DESCRIPTION_fuse = With FUSE it is possible to implement a fully functional filesystem in a userspace program.  Features include
 
 FILES_fuse = \
 /usr/lib/*.so* \
 /etc/init.d/* \
 /etc/udev/* \
-Usr/bin/*
+/usr/bin/*
 
 $(DEPDIR)/fuse.do_prepare: bootstrap curl glib2 $(DEPENDS_fuse)
 	$(PREPARE_fuse)
@@ -964,8 +964,6 @@ $(DEPDIR)/fuse.do_compile: $(DEPDIR)/fuse.do_prepare
 			--build=$(build) \
 			--host=$(target) \
 			--target=$(target) \
-			--with-kernel=$(buildprefix)/$(KERNEL_DIR) \
-			--disable-kernel-module \
 			--prefix=/usr && \
 		$(MAKE) all
 	touch $@
@@ -975,12 +973,10 @@ $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
 	  $(start_build)
 	  cd $(DIR_fuse) && \
 		$(INSTALL_fuse)
-	-rm $(prefix)/$*cdkroot/etc/udev/rules.d/99-fuse.rules
-	-rmdir $(prefix)/$*cdkroot/etc/udev/rules.d
-	-rmdir $(prefix)/$*cdkroot/etc/udev
-	$(LN_SF) sh4-linux-fusermount $(prefix)/$*cdkroot/usr/bin/fusermount
-	$(LN_SF) sh4-linux-ulockmgr_server $(prefix)/$*cdkroot/usr/bin/ulockmgr_server
-	( export HHL_CROSS_TARGET_DIR=$(prefix)/$*cdkroot && cd $(prefix)/$*cdkroot/etc/init.d && \
+	rm -R $(PKDIR)/dev
+	$(LN_SF) sh4-linux-fusermount $(PKDIR)/usr/bin/fusermount
+	$(LN_SF) sh4-linux-ulockmgr_server $(PKDIR)/usr/bin/ulockmgr_server
+	( export HHL_CROSS_TARGET_DIR=$(prefix)/release && $(prefix)/release/etc/init.d && \
 		for s in fuse ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )

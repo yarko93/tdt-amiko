@@ -1,5 +1,5 @@
---- stm-cross-gmp.spec.orig	2013-02-19 03:05:04.000000000 +0100
-+++ stm-cross-gmp.spec	2013-03-20 21:12:14.539059012 +0100
+--- stm-cross-gmp.spec.orig	2013-03-01 03:05:04.000000000 +0100
++++ stm-cross-gmp.spec	2013-03-20 22:16:05.723059018 +0100
 @@ -29,6 +29,7 @@
  
  %build
@@ -8,11 +8,9 @@
  
  mkdir objdir
  cd objdir
-@@ -40,9 +41,6 @@
- fi
  
  ../configure \
--%if_force_32bit
+-%if %force_32bit
 -   ABI=32 \
 -%endif
      --prefix=%{_stm_cross_dir} \

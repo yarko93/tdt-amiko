@@ -223,7 +223,7 @@ DESCRIPTION_boot_elf = firmware non public
 SRC_URI_boot_elf = unknown
 PKGV_boot_elf = r1
 
-$(DEPDIR)/boot-elf: release_base firmware $(RDEPENDS_boot_elf)
+$(DEPDIR)/boot-elf: firmware $(RDEPENDS_boot_elf)
 	$(start_build)
 	$(INSTALL_DIR) $(PKDIR)/boot/
 ifdef ENABLE_SPARK
@@ -245,7 +245,7 @@ DESCRIPTION_firmware = firmware non public
 SRC_URI_firmware = unknown
 PKGV_firmware = r1
 
-$(DEPDIR)/firmware: release_base $(RDEPENDS_firmware)
+$(DEPDIR)/firmware:  $(RDEPENDS_firmware)
 	$(start_build)
 	$(INSTALL_DIR) $(PKDIR)/lib/firmware/
 ifdef ENABLE_SPARK
@@ -432,7 +432,7 @@ release_hl101:
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
-$(DEPDIR)/release: $(DEPDIR)/%release:release_base release_common_utils release_$(HL101)$(SPARK)$(SPARK7162)
+$(DEPDIR)/release: $(DEPDIR)/%release:boot-elf release_base release_common_utils release_$(HL101)$(SPARK)$(SPARK7162)
 # Post tweaks
 	$(DEPMOD) -b $(prefix)/release $(KERNELVERSION)
 	touch $@
