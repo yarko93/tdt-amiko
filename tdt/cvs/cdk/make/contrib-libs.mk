@@ -66,7 +66,7 @@ $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
 #
 BEGIN[[
 libreadline
-  5.2
+  6.2
   readline-{PV}
   extract:ftp://ftp.cwru.edu/pub/bash/readline-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
