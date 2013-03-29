@@ -1304,11 +1304,11 @@ PKGR_ntpclient = r0
 # moreover line breaks are also correctly exported to python, enjoy!
 define postinst_ntpclient
 #!/bin/sh
-update-rc.d mgcamd_1.35 defaults 65
+initconfig --add ntpclient
 endef
 define postrm_ntpclient
 #!/bin/sh
-update-rc.d mgcamd_1.35 remove
+initconfig --del ntpclient
 endef
 
 $(DEPDIR)/ntpclient.do_prepare: $(DEPENDS_ntpclient)
