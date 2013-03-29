@@ -2185,19 +2185,19 @@ FILES_libxml2 = \
 /usr/lib/libxml2* \
 $(PYTHON_DIR)/site-packages/*libxml2.py
 
-$(DEPDIR)/libxml2.do_prepare: bootstrap python $(DEPENDS_libxml2)
+$(DEPDIR)/libxml2.do_prepare: bootstrap $(DEPENDS_libxml2)
 	$(PREPARE_libxml2)
 	touch $@
 
 $(DEPDIR)/libxml2.do_compile: $(DEPDIR)/libxml2.do_prepare
 	cd $(DIR_libxml2) && \
-		$(BUILDENV) \
 		./configure \
+			 $(BUILDENV) \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr \
 			--mandir=/usr/share/man \
-			--with-python=$(crossprefix) \
+			--with-python=$(crossprefix)/bin \
 			--without-c14n \
 			--without-debug \
 			--without-mem-debug && \
@@ -2243,17 +2243,17 @@ $(DEPDIR)/libxslt.do_prepare: bootstrap libxml2 $(DEPENDS_libxslt)
 
 $(DEPDIR)/libxslt.do_compile: $(DEPDIR)/libxslt.do_prepare
 	cd $(DIR_libxslt) && \
+		./configure \
 		$(BUILDENV) \
 		CPPFLAGS="$(CPPFLAGS) -I$(targetprefix)/usr/include/libxml2 -Os" \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
-		./configure \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr \
 			--with-libxml-prefix="$(crossprefix)" \
 			--with-libxml-include-prefix="$(targetprefix)/usr/include" \
 			--with-libxml-libs-prefix="$(targetprefix)/usr/lib" \
-			--with-python=$(crossprefix) \
+			--with-python=$(crossprefix)/bin \
 			--without-crypto \
 			--without-debug \
 			--without-mem-debug && \
