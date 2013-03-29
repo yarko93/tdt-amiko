@@ -28,14 +28,13 @@ libz
   zlib-{PV}
   extract:http://zlib.net/zlib-{PV}.tar.bz2
   patch:file://zlib-{PV}.patch
-  make:install:prefix=PKDIR/usr
-  install:-m644:{PN}.a:TARGETS/usr/lib
+  make:install:DESTDIR=PKDIR
 ;
 ]]END
 
 DESCRIPTION_libz = "Compression library implementing the deflate compression method found in gzip and PKZIP"
 FILES_libz = \
-/usr/lib
+/usr/lib/*
 
 LIBZ_ORDER = binutils-dev
 
@@ -49,7 +48,7 @@ $(DEPDIR)/libz.do_compile: $(DEPDIR)/libz.do_prepare
 		./configure \
 			--prefix=/usr \
 			--shared && \
-		$(MAKE) all
+		$(MAKE)
 	touch $@
 
 $(DEPDIR)/libz: \
