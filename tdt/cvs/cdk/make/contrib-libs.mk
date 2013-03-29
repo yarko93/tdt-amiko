@@ -628,7 +628,7 @@ $(DEPDIR)/%libfribidi: $(DEPDIR)/libfribidi.do_compile
 #
 BEGIN[[
 libsigc
-  1.2.5
+  1.2.7
   {PN}++-{PV}
   extract:http://ftp.gnome.org/pub/GNOME/sources/{PN}++/1.2/{PN}++-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
