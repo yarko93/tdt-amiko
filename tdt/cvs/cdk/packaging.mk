@@ -234,13 +234,13 @@ opkg-sanitycheck:
 package-index: $(ipkprefix)/Packages
 $(ipkprefix)/Packages: $(ipkprefix)
 	cd $(ipkprefix) && \
-		$(crossprefix)/bin/ipkg-make-index . > Packages && \
+		/usr/bin/python $(crossprefix)/bin/ipkg-make-index . > Packages && \
 		cat Packages | gzip > Packages.gz
 
 package-index-extras: $(ipkextras)/Packages
 $(ipkextras)/Packages: $(ipkextras)
 	cd $(ipkextras) && \
-		$(crossprefix)/bin/ipkg-make-index . > Packages && \
+		/usr/bin/python $(crossprefix)/bin/ipkg-make-index . > Packages && \
 		cat Packages | gzip > Packages.gz
 
 svn_version := svn info | awk '/Revision:/ { print $$2 }'
