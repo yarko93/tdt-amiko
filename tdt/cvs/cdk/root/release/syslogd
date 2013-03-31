@@ -10,46 +10,31 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON="/sbin/syslogd"
 OPTIONS="-l7 -s1000 -b0"
-DESC="System logger"
-NAME=syslogd
-
-test -x $DAEMON || exit 0
+DESC="syslogd/klogd"
 
 # Defaults
 CONFIGFILE="/etc/syslogd.conf"
-USERID=root
-GROUPID=root
-ENABLE="true"
-
-if [ "$ENABLE" != "true" ]; then
-	echo "$NAME daemon disabled "
-	exit 0
-fi
 
 set -e
 
 case "$1" in
   start)
-	echo -n "Starting $DESC: "
-	start-stop-daemon --start --quiet --chuid $USERID:$GROUPID \
-		--exec $DAEMON  -- $OPTIONS
+	echo "Starting $DESC... "
+	start-stop-daemon --start --exec /sbin/syslogd -- $OPTIONS
+	start-stop-daemon --start --exec /sbin/klogd
 		#--exec $DAEMON -- -f $CONFIGFILE
-	echo "$NAME."
+	echo "done."
 	;;
   stop)
-	echo -n "Stopping $DESC: "
-	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
-	echo "$NAME."
-	;;
-
-  restart)
-	echo -n "Restarting $DESC: "
-	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
+	echo "Stopping $DESC... "
+	start-stop-daemon --stop --exec /sbin/syslogd
+	start-stop-daemon --stop --exec /sbin/klogd
 	echo "done."
-	sleep 1
-	start-stop-daemon --start --quiet --chuid $USERID:$GROUPID \
-		--exec $DAEMON -b --
-	echo "$NAME."
+	;;
+  restart)
+	echo "Restarting $DESC... "
+	$0 stop
+	$0 start
 	;;
   *)
 	echo "Usage: $0 {start|stop|restart}" >&2

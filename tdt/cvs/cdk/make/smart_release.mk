@@ -3,7 +3,7 @@
 #
 BEGIN[[
 init_scripts
-  0.6
+  0.7
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
