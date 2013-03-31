@@ -1,1 +1,0 @@
-/home/user/amikoAR-P/tdt/tufsbox/host/share/libtool/config/ltmain.sh
