@@ -247,6 +247,25 @@ endif
 	$(toflash_build)
 	touch $@
 
+##
+DESCRIPTION_enigma2_plugin_nonfree_feed = Download non free plugins and skins
+SRC_URI_enigma2_plugin_nonfree_feed = unknown
+PKGV_enigma2_plugin_nonfree_feed = r3
+
+define postinst_enigma2_plugin_nonfree_feed
+#!/bin/sh
+# postinst script for nonfree-feed
+(sleep 10; opkg update) &
+exit 0
+endef
+
+$(DEPDIR)/enigma2-plugin-nonfree-feed: bootstrap $(DEPENDS_enigma2_plugin_nonfree_feed)
+	$(start_build)
+	$(INSTALL_DIR) $(PKDIR)/etc/opkg/ && \
+	$(INSTALL_FILE) $(buildprefix)/root/etc/ipkg/non-free-feed.conf $(PKDIR)/etc/opkg/non-free-feed.conf
+	$(e2extra_build)
+	touch $@
+	
 #
 # firmware
 #
