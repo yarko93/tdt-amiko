@@ -228,8 +228,8 @@ define postinst_boot_elf
 rm -rf /boot/video.elf
 rm -rf /boot/audio.elf
 sleep 5
-exit 0
 init 6
+exit 0
 endef
 
 
