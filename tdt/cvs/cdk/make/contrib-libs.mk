@@ -2404,7 +2404,7 @@ $(DEPDIR)/%gdata: $(DEPDIR)/gdata.do_compile
 #	@DISTCLEANUP_gdata@
 	$(tocdk_build)
 	$(remove_pyo)
-	$(toflash_build)
+	$(e2extra_build)
 	touch $@
 #
 # twisted
