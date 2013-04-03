@@ -222,15 +222,6 @@ $(DEPDIR)/udev-rules: $(DEPENDS_udev_rules) $(RDEPENDS_udev_rules)
 DESCRIPTION_boot_elf = firmware non public
 SRC_URI_boot_elf = unknown
 PKGV_boot_elf = r2
-define postinst_boot_elf
-#!/bin/sh
-# postinst script for boot-elf
-rm -rf /boot/video.elf
-rm -rf /boot/audio.elf
-sleep 5
-init 6
-exit 0
-endef
 
 
 $(DEPDIR)/boot-elf: firmware $(RDEPENDS_boot_elf)
