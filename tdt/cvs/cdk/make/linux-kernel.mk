@@ -285,7 +285,7 @@ $(DEPDIR)/linux-kernel.%.do_compile: \
 
 DESCRIPTION_linux_kernel = "The Linux Kernel and modules"
 PKGV_linux_kernel = $(KERNELVERSION)
-PKGR_linux_kernel = r3
+PKGR_linux_kernel = r4
 SRC_URI_linux_kernel = stlinux.com
 FILES_linux_kernel = \
 /lib/modules/$(KERNELVERSION)/kernel \
@@ -334,7 +334,7 @@ driver
 ;
 ]]END
 DESCRIPTION_driver = Drivers for stm box
-PKGR_driver = r2
+PKGR_driver = r3
 PACKAGES_driver = driver_pti driver
 FILES_driver = /lib/modules/$(KERNELVERSION)/extra
 SRC_URI_driver = "http://gitorious.org/~schpuntik/open-duckbox-project-sh4/tdt-amiko"
