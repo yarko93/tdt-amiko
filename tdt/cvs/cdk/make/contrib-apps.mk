@@ -64,7 +64,7 @@ $(DEPDIR)/module_init_tools.do_compile: $(DEPDIR)/module_init_tools.do_prepare
 	touch $@
 
 $(DEPDIR)/module_init_tools: \
-$(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS:%=root/etc/%) $(DEPDIR)/module_init_tools.do_compile
+$(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS_ADAPTED_ETC_FILES:%=root/etc/%) $(DEPDIR)/module_init_tools.do_compile
 	cd $(DIR_module_init_tools) && \
 		$(INSTALL_module_init_tools)
 	$(call adapted-etc-files,$(MODULE_INIT_TOOLS_ADAPTED_ETC_FILES))
@@ -129,6 +129,7 @@ pppd
   2.4.5
   ppp-{PV}
   extract:ftp://ftp.samba.org/pub/ppp/ppp-{PV}.tar.gz
+  patch:file://{PN}.patch
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -140,10 +141,7 @@ FILES_pppd = \
 
 $(DEPDIR)/pppd.do_prepare: bootstrap $(DEPENDS_pppd)
 	$(PREPARE_pppd)
-	cd $(DIR_pppd) && \
-		sed -ie s:/usr/include/pcap-bpf.h:$(prefix)/cdkroot/usr/include/pcap-bpf.h: pppd/Makefile.linux && \
-		patch -p1 < ../Patches/pppd.patch
-	touch $@
+	sed -ie s:/usr/include/pcap-bpf.h:$(prefix)/cdkroot/usr/include/pcap-bpf.h: $(DIR_pppd)/pppd/Makefile.linux
 
 $(DEPDIR)/pppd.do_compile: pppd.do_prepare
 	cd $(DIR_pppd)  && \
