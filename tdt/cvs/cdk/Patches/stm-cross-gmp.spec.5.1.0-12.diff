@@ -1,0 +1,18 @@
+--- stm-cross-gmp.spec.orig	2013-03-01 03:05:04.000000000 +0100
++++ stm-cross-gmp.spec	2013-03-20 22:16:05.723059018 +0100
+@@ -29,6 +29,7 @@
+ 
+ %build
+ %cross_setup
++export CC="gcc -m32"
+ 
+ mkdir objdir
+ cd objdir
+ 
+ ../configure \
+-%if %force_32bit
+-   ABI=32 \
+-%endif
+     --prefix=%{_stm_cross_dir} \
+     --build=%{_stm_host_config} \
+ %if "%{_stm_target_fpu}" == "yes"

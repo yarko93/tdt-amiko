@@ -1,0 +1,18 @@
+--- stm-cross-mpfr.spec.orig	2013-03-15 16:37:24.000000000 +0100
++++ stm-cross-mpfr.spec	2013-03-20 22:22:51.679059019 +0100
+@@ -31,14 +31,12 @@
+ 
+ %build
+ %cross_setup
++export CC="gcc -m32"
+ 
+ mkdir objdir
+ cd objdir
+ 
+ ../configure \
+-%if %force_32bit
+-   ABI=32 \
+-%endif
+     --prefix=%{_stm_cross_dir} \
+     --build=%{_stm_host_config} \
+     --with-gmp=%{_stm_cross_dir} \

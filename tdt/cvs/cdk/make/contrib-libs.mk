@@ -28,14 +28,13 @@ libz
   zlib-{PV}
   extract:http://zlib.net/zlib-{PV}.tar.bz2
   patch:file://zlib-{PV}.patch
-  make:install:prefix=PKDIR/usr
-  install:-m644:{PN}.a:TARGETS/usr/lib
+  make:install:DESTDIR=PKDIR
 ;
 ]]END
 
 DESCRIPTION_libz = "Compression library implementing the deflate compression method found in gzip and PKZIP"
 FILES_libz = \
-/usr/lib
+/usr/lib/*
 
 LIBZ_ORDER = binutils-dev
 
@@ -49,7 +48,7 @@ $(DEPDIR)/libz.do_compile: $(DEPDIR)/libz.do_prepare
 		./configure \
 			--prefix=/usr \
 			--shared && \
-		$(MAKE) all
+		$(MAKE)
 	touch $@
 
 $(DEPDIR)/libz: \
@@ -67,7 +66,7 @@ $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
 #
 BEGIN[[
 libreadline
-  5.2
+  6.2
   readline-{PV}
   extract:ftp://ftp.cwru.edu/pub/bash/readline-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
@@ -628,7 +627,7 @@ $(DEPDIR)/%libfribidi: $(DEPDIR)/libfribidi.do_compile
 #
 BEGIN[[
 libsigc
-  1.2.5
+  1.2.7
   {PN}++-{PV}
   extract:http://ftp.gnome.org/pub/GNOME/sources/{PN}++/1.2/{PN}++-{PV}.tar.gz
   make:install:DESTDIR=PKDIR
@@ -799,7 +798,7 @@ $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_libvorbisidec@
-	@touch $@
+	touch $@
 
 #
 # libglib2
@@ -1482,7 +1481,7 @@ $(DEPDIR)/%libdvdread: libdvdread.do_compile
 #
 BEGIN[[
 ffmpeg
-  1.1.3
+  1.2
   {PN}-{PV}
   extract:http://{PN}.org/releases/{PN}-{PV}.tar.gz
   patch:file://{PN}-1.0.patch
@@ -1576,6 +1575,7 @@ $(DEPDIR)/ffmpeg.do_compile: $(DEPDIR)/ffmpeg.do_prepare
 		--enable-decoder=dvbsub \
 		--enable-decoder=iff_byterun1 \
 		--enable-small \
+		--enable-avresample \
 		--enable-pthreads \
 		--enable-bzlib \
 		--enable-librtmp \
@@ -1616,7 +1616,7 @@ DESCRIPTION_libass = "libass"
 FILES_libass = \
 /usr/lib/*.so*
 
-$(DEPDIR)/libass.do_prepare: bootstrap freetype $(DEPENDS_libass)
+$(DEPDIR)/libass.do_prepare: bootstrap freetype libfribidi $(DEPENDS_libass)
 	$(PREPARE_libass)
 	touch $@
 
@@ -2184,19 +2184,19 @@ FILES_libxml2 = \
 /usr/lib/libxml2* \
 $(PYTHON_DIR)/site-packages/*libxml2.py
 
-$(DEPDIR)/libxml2.do_prepare: bootstrap python $(DEPENDS_libxml2)
+$(DEPDIR)/libxml2.do_prepare: bootstrap $(DEPENDS_libxml2)
 	$(PREPARE_libxml2)
 	touch $@
 
 $(DEPDIR)/libxml2.do_compile: $(DEPDIR)/libxml2.do_prepare
 	cd $(DIR_libxml2) && \
-		$(BUILDENV) \
 		./configure \
+			 $(BUILDENV) \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr \
 			--mandir=/usr/share/man \
-			--with-python=$(crossprefix) \
+			--with-python=$(crossprefix)/bin \
 			--without-c14n \
 			--without-debug \
 			--without-mem-debug && \
@@ -2242,17 +2242,17 @@ $(DEPDIR)/libxslt.do_prepare: bootstrap libxml2 $(DEPENDS_libxslt)
 
 $(DEPDIR)/libxslt.do_compile: $(DEPDIR)/libxslt.do_prepare
 	cd $(DIR_libxslt) && \
+		./configure \
 		$(BUILDENV) \
 		CPPFLAGS="$(CPPFLAGS) -I$(targetprefix)/usr/include/libxml2 -Os" \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
-		./configure \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr \
 			--with-libxml-prefix="$(crossprefix)" \
 			--with-libxml-include-prefix="$(targetprefix)/usr/include" \
 			--with-libxml-libs-prefix="$(targetprefix)/usr/lib" \
-			--with-python=$(crossprefix) \
+			--with-python=$(crossprefix)/bin \
 			--without-crypto \
 			--without-debug \
 			--without-mem-debug && \
@@ -2272,7 +2272,7 @@ $(DEPDIR)/%libxslt: %libxml2 libxslt.do_compile
 	$(call do_build_pkg,install,cdk)
 	$(toflash_build)
 #	@DISTCLEANUP_libxslt@
-	@touch $@
+	touch $@
 
 #
 # lxml
@@ -2404,7 +2404,7 @@ $(DEPDIR)/%gdata: $(DEPDIR)/gdata.do_compile
 #	@DISTCLEANUP_gdata@
 	$(tocdk_build)
 	$(remove_pyo)
-	$(toflash_build)
+	$(e2extra_build)
 	touch $@
 #
 # twisted
@@ -3849,10 +3849,12 @@ libdvbsipp
   0.3.6
   libdvbsi++-{PV}
   extract:http://www.saftware.de/libdvbsi++/libdvbsi++-{PV}.tar.bz2
-  patch:file://libdvbsi++-{PV}-fix_unaligned_access.patch
+  patch:file://libdvbsi++-{PV}.patch
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 ]]END
+PKGR_libdvbsipp = r0
+
 DESCRIPTION_libdvbsipp = "libdvbsi++ is a open source C++ library for parsing DVB Service Information and MPEG-2 Program Specific Information."
 
 FILES_libdvbsipp = \
@@ -3894,7 +3896,7 @@ BEGIN[[
 tuxtxtlib
   1.0
   libtuxtxt
-  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=libtuxtxt
+  nothing:git://git.code.sf.net/p/openpli/tuxtxt:r=4ff8fff:sub=libtuxtxt
   patch:file://libtuxtxt-{PV}-fix_dbox_headers.diff
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
@@ -3946,7 +3948,7 @@ BEGIN[[
 tuxtxt32bpp
   1.0
   tuxtxt
-  nothing:git://openpli.git.sourceforge.net/gitroot/openpli/tuxtxt:r=4ff8fffd72115130ff6594841e7bad2f85e85f12:b=HEAD:sub=tuxtxt
+  nothing:git://git.code.sf.net/p/openpli/tuxtxt:r=4ff8fff:sub=tuxtxt
   patch:file://{PN}-{PV}-fix_dbox_headers.diff
   make:install:prefix=/usr:DESTDIR=PKDIR
 # overwrite after make install
@@ -4807,7 +4809,7 @@ $(DEPDIR)/%vlc: $(DEPDIR)/vlc.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_vlc@
-	@touch $@
+	touch $@
 
 #
 # djmount

@@ -169,7 +169,7 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
 	$(toflash_build)
 #	@DISTCLEANUP_pppd@
-	@touch $@
+	touch $@
 	
 #
 # USB MODESWITCH
@@ -208,7 +208,7 @@ $(DEPDIR)/%usb_modeswitch: $(DEPDIR)/usb_modeswitch.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch@
-	@touch $@
+	touch $@
 	
 
 #
@@ -248,7 +248,7 @@ $(DEPDIR)/%usb_modeswitch_data: $(DEPDIR)/usb_modeswitch_data.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_usb_modeswitch_data@
-	@touch $@
+	touch $@
 	
 #
 # NTFS-3G
@@ -263,7 +263,7 @@ ntfs_3g
 ]]END
 
 DESCRIPTION_ntfs_3g = ntfs-3g
-RDEPENDS_ntfs_3g = fuse
+#RDEPENDS_ntfs_3g = fuse
 FILES_ntfs_3g = \
 /bin/ntfs-3g \
 /sbin/mount.ntfs-3g \
@@ -296,7 +296,7 @@ $(DEPDIR)/%ntfs_3g: $(DEPDIR)/ntfs_3g.do_compile
 	$(tocdk_build)	
 	$(toflash_build)
 #	@DISTCLEANUP_ntfs_3g@
-	@touch $@
+	touch $@
 	
 
 #
@@ -936,7 +936,7 @@ $(DEPDIR)/%lm_sensors: $(DEPDIR)/lm_sensors.do_compile
 #
 BEGIN[[
 fuse
-  2.9.0
+  2.9.2
   {PN}-{PV}
   extract:http://dfn.dl.sourceforge.net/sourceforge/{PN}/{PN}-{PV}.tar.gz
   patch:file://{PN}.diff
@@ -944,13 +944,13 @@ fuse
 ;
 ]]END
 
-DESCRIPTION_fuse = "With FUSE it is possible to implement a fully functional filesystem in a userspace program.  Features include:"
+DESCRIPTION_fuse = With FUSE it is possible to implement a fully functional filesystem in a userspace program.  Features include
 
 FILES_fuse = \
 /usr/lib/*.so* \
 /etc/init.d/* \
 /etc/udev/* \
-Usr/bin/*
+/usr/bin/*
 
 $(DEPDIR)/fuse.do_prepare: bootstrap curl glib2 $(DEPENDS_fuse)
 	$(PREPARE_fuse)
@@ -964,8 +964,6 @@ $(DEPDIR)/fuse.do_compile: $(DEPDIR)/fuse.do_prepare
 			--build=$(build) \
 			--host=$(target) \
 			--target=$(target) \
-			--with-kernel=$(buildprefix)/$(KERNEL_DIR) \
-			--disable-kernel-module \
 			--prefix=/usr && \
 		$(MAKE) all
 	touch $@
@@ -975,12 +973,10 @@ $(DEPDIR)/%fuse: %curl %glib2 $(DEPDIR)/fuse.do_compile
 	  $(start_build)
 	  cd $(DIR_fuse) && \
 		$(INSTALL_fuse)
-	-rm $(prefix)/$*cdkroot/etc/udev/rules.d/99-fuse.rules
-	-rmdir $(prefix)/$*cdkroot/etc/udev/rules.d
-	-rmdir $(prefix)/$*cdkroot/etc/udev
-	$(LN_SF) sh4-linux-fusermount $(prefix)/$*cdkroot/usr/bin/fusermount
-	$(LN_SF) sh4-linux-ulockmgr_server $(prefix)/$*cdkroot/usr/bin/ulockmgr_server
-	( export HHL_CROSS_TARGET_DIR=$(prefix)/$*cdkroot && cd $(prefix)/$*cdkroot/etc/init.d && \
+	rm -R $(PKDIR)/dev
+	$(LN_SF) sh4-linux-fusermount $(PKDIR)/usr/bin/fusermount
+	$(LN_SF) sh4-linux-ulockmgr_server $(PKDIR)/usr/bin/ulockmgr_server
+	( export HHL_CROSS_TARGET_DIR=$(prefix)/release && $(prefix)/release/etc/init.d && \
 		for s in fuse ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
@@ -1196,7 +1192,7 @@ DESCRIPTION_jfsutils = "jfsutils"
 FILES_jfsutils = \
 /sbin/*
 
-$(DEPDIR)/jfsutils.do_prepare: bootstrap $(DEPENDS_jfsutils)
+$(DEPDIR)/jfsutils.do_prepare: bootstrap e2fsprogs $(DEPENDS_jfsutils)
 	$(PREPARE_jfsutils)
 	touch $@
 
@@ -1205,10 +1201,10 @@ $(DEPDIR)/jfsutils.do_compile: $(DEPDIR)/jfsutils.do_prepare
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
 		./configure \
-			--host=gcc \
+			--host=$(target) \
 			--target=$(target) \
 			--prefix= && \
-		$(MAKE) CC="$(target)-gcc"
+		$(MAKE)
 	touch $@
 
 $(DEPDIR)/jfsutils: \
@@ -1308,11 +1304,11 @@ PKGR_ntpclient = r0
 # moreover line breaks are also correctly exported to python, enjoy!
 define postinst_ntpclient
 #!/bin/sh
-update-rc.d mgcamd_1.35 defaults 65
+initconfig --add ntpclient
 endef
 define postrm_ntpclient
 #!/bin/sh
-update-rc.d mgcamd_1.35 remove
+initconfig --del ntpclient
 endef
 
 $(DEPDIR)/ntpclient.do_prepare: $(DEPENDS_ntpclient)
@@ -1498,7 +1494,7 @@ $(DEPDIR)/sysstat: bootstrap $(DEPENDS_sysstat)
 		$(MAKE) && \
 		$(INSTALL_sysstat)
 	@DISTCLEANUP_sysstat@
-	@touch $@
+	touch $@
 
 #
 # hotplug-e2

@@ -3,7 +3,7 @@
 #
 BEGIN[[
 init_scripts
-  0.6
+  0.7
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
@@ -215,7 +215,76 @@ $(DEPDIR)/udev-rules: $(DEPENDS_udev_rules) $(RDEPENDS_udev_rules)
 	$(INSTALL_FILE) 90-cec_aotom.rules $(PKDIR)/etc/udev/rules.d/
 	$(toflash_build)
 	touch $@
+#
+# boot-elf
+#
 
+DESCRIPTION_boot_elf = firmware non public
+SRC_URI_boot_elf = unknown
+PKGV_boot_elf = r2
+define postinst_boot_elf
+#!/bin/sh
+# postinst script for boot-elf
+rm -rf /boot/video.elf
+rm -rf /boot/audio.elf
+sleep 5
+init 6
+exit 0
+endef
+
+
+$(DEPDIR)/boot-elf: firmware $(RDEPENDS_boot_elf)
+	$(start_build)
+	$(INSTALL_DIR) $(PKDIR)/boot/
+ifdef ENABLE_SPARK
+	$(INSTALL_FILE) $(archivedir)/boot/video_7111.elf $(PKDIR)/boot/video.elf
+	$(INSTALL_FILE) $(archivedir)/boot/audio_7111.elf $(PKDIR)/boot/audio.elf
+endif
+ifdef ENABLE_SPARK7162
+	$(INSTALL_FILE) $(archivedir)/boot/video_7105.elf $(PKDIR)/boot/video.elf
+	$(INSTALL_FILE) $(archivedir)/boot/audio_7105.elf $(PKDIR)/boot/audio.elf
+endif
+	$(toflash_build)
+	touch $@
+
+##
+DESCRIPTION_enigma2_plugin_nonfree_feed = Download non free plugins and skins
+SRC_URI_enigma2_plugin_nonfree_feed = unknown
+PKGV_enigma2_plugin_nonfree_feed = r3
+
+define postinst_enigma2_plugin_nonfree_feed
+#!/bin/sh
+# postinst script for nonfree-feed
+(sleep 10; opkg update) &
+exit 0
+endef
+
+$(DEPDIR)/enigma2-plugin-nonfree-feed: bootstrap $(DEPENDS_enigma2_plugin_nonfree_feed)
+	$(start_build)
+	$(INSTALL_DIR) $(PKDIR)/etc/opkg/ && \
+	$(INSTALL_FILE) $(buildprefix)/root/etc/ipkg/non-free-feed.conf $(PKDIR)/etc/opkg/non-free-feed.conf
+	$(e2extra_build)
+	touch $@
+	
+#
+# firmware
+#
+
+DESCRIPTION_firmware = firmware non public
+SRC_URI_firmware = unknown
+PKGV_firmware = r1
+
+$(DEPDIR)/firmware:  $(RDEPENDS_firmware)
+	$(start_build)
+	$(INSTALL_DIR) $(PKDIR)/lib/firmware/
+ifdef ENABLE_SPARK
+	$(INSTALL_FILE) $(buildprefix)/root/firmware/component_7111_mb618.fw $(PKDIR)/lib/firmware/component.fw
+endif
+ifdef ENABLE_SPARK7162
+	$(INSTALL_FILE) $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(PKDIR)/lib/firmware/component.fw
+endif
+	$(toflash_build)
+	touch $@
 
 # auxiliary targets for model-specific builds
 release_common_utils:
@@ -225,19 +294,6 @@ release_common_utils:
 	cp -f $(buildprefix)/root/release/official-feed.conf $(prefix)/release/etc/opkg/
 	cp -f $(buildprefix)/root/release/opkg.conf $(prefix)/release/etc/
 	$(call initdconfig,$(shell ls $(prefix)/release/etc/init.d))
-
-# Copy video_7105
-	$(if $(SPARK7162),cp -f $(archivedir)/boot/video_7105.elf $(prefix)/release/boot/video.elf)
-# Copy audio_7105
-	$(if $(SPARK7162),cp -f $(archivedir)/boot/audio_7105.elf $(prefix)/release/boot/audio.elf)
-# Copy video_7109
-	$(if $(HL101),cp -f $(archivedir)/boot/video_7109.elf $(prefix)/release/boot/video.elf)
-# Copy audio_7109
-	$(if $(HL101),cp -f $(archivedir)/boot/audio_7109.elf $(prefix)/release/boot/audio.elf)
-# Copy video_7111
-	$(if $(SPARK),cp -f $(archivedir)/boot/video_7111.elf $(prefix)/release/boot/video.elf)
-# Copy audio_7111
-	$(if $(SPARK),cp -f $(archivedir)/boot/audio_7111.elf $(prefix)/release/boot/audio.elf )
 	
 release_base: driver-ptinp driver-encrypt
 	rm -rf $(prefix)/release || true
@@ -333,8 +389,6 @@ release_base: driver-ptinp driver-encrypt
 	fi
 
 # Copy lircd.conf
-	cp -f $(buildprefix)/root/etc/lircd$(if $(HL101),_$(HL101))$(if $(SPARK),_$(SPARK))$(if $(SPARK7162),_$(SPARK7162)).conf $(prefix)/release/etc/lircd.conf
-
 	touch $(prefix)/release/var/etc/.firstboot && \
 	cp -f $(buildprefix)/root/release/mme_check $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/bootscreen/bootlogo.mvi $(prefix)/release/boot/ && \
@@ -381,8 +435,6 @@ else
 	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf
 endif
-	cp $(buildprefix)/root/etc/lircd_spark.conf.09_00_0B $(prefix)/release/etc/lircd.conf.09_00_0B && \
-	cp $(buildprefix)/root/firmware/component_7111_mb618.fw $(prefix)/release/lib/firmware/component.fw
 	true
 
 release_spark7162:
@@ -392,11 +444,10 @@ ifdef ENABLE_PY27
 	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf
 else
-		echo "src/gz AR-P http://alien2.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
+	echo "src/gz AR-P http://alien2.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf
 endif
-	cp $(buildprefix)/root/firmware/component_7105_pdk7105.fw $(prefix)/release/lib/firmware/component.fw
 	true
 
 
@@ -410,7 +461,7 @@ release_hl101:
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
-$(DEPDIR)/release: $(DEPDIR)/%release:release_base release_common_utils release_$(HL101)$(SPARK)$(SPARK7162)
+$(DEPDIR)/release: $(DEPDIR)/%release:boot-elf release_base release_common_utils release_$(HL101)$(SPARK)$(SPARK7162)
 # Post tweaks
 	$(DEPMOD) -b $(prefix)/release $(KERNELVERSION)
 	touch $@
@@ -420,7 +471,6 @@ release-clean:
 	rm -f $(DEPDIR)/release_base
 	rm -f $(DEPDIR)/release_$(HL101)$(SPARK)$(SPARK7162)
 	rm -f $(DEPDIR)/release_common_utils 
-	rm -f $(DEPDIR)/release_cube_common
 
 ######## FOR YOUR OWN CHANGES use these folder in cdk/own_build/enigma2 #############
 	cp -RP $(buildprefix)/own_build/enigma2/* $(prefix)/release/

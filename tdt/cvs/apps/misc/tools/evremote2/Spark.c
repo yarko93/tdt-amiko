@@ -172,7 +172,6 @@ static int pRead(Context_t* context ) {
 	char                vBuffer[cSize];
 	char                keyname[cSize];
 	int                 updown;
-	char                vData[10];
 	int                 vCurrentCode  = -1;
 	int                 rc;
 
@@ -181,7 +180,7 @@ static int pRead(Context_t* context ) {
     rc = read (context->fd, vBuffer, cSize);
 	if(rc <= 0)return -1;
 
-	printf("[RCU] key: %s -> %s\n", vData, &vBuffer[0]);
+	printf("[RCU] key: %s\n", &vBuffer[0]);
 
 	if (2 == sscanf(vBuffer, "%*x %x %s %*s", &updown, keyname)) {
 		vCurrentCode = lookupKey(keyname);

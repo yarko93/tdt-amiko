@@ -28,7 +28,6 @@ bare-os: \
 		%libz \
 		%grep \
 		%$(INITSCRIPTS) \
-		%openrdate \
 		%$(NETBASE) \
 		%$(BC) \
 		%$(SYSVINIT) \

@@ -37,7 +37,7 @@
 #define VIDEO_EVENT_VSYNC_OFFSET_MEASURED       (VIDEO_EVENT_TRICK_MODE_CHANGE+1)
 #define VIDEO_EVENT_FATAL_ERROR                 (VIDEO_EVENT_VSYNC_OFFSET_MEASURED+1)
 #define VIDEO_EVENT_OUTPUT_SIZE_CHANGED         (VIDEO_EVENT_FATAL_ERROR+1)
-#define VIDEO_EVENT_FATAL_HARDWARE_FAILURE      (VIDEO_EVENT_OUTPUT_SIZE_CHANGED+1)
+#define VIDEO_EVENT_FATAL_HARDWARE_FAILURE	(VIDEO_EVENT_OUTPUT_SIZE_CHANGED+1)
 
 /*
  * List of possible container types - used to select demux..  If stream_source is VIDEO_SOURCE_DEMUX
@@ -58,7 +58,7 @@ typedef enum {
 	STREAM_TYPE_H264,     /* Deprecated */
 	STREAM_TYPE_ASF,      /* Needs work so it can be deprecated */
 	STREAM_TYPE_MP4,      /* Deprecated */
-	STREAM_TYPE_RAW      /* Deprecated */
+	STREAM_TYPE_RAW       /* Deprecated */
 } stream_type_t;
 
 /*
@@ -115,7 +115,6 @@ typedef enum {
 	AUDIO_ENCODING_RMA,
 	AUDIO_ENCODING_AVS,
 	AUDIO_ENCODING_VORBIS,
-	AUDIO_ENCODING_FLAC,
 	AUDIO_ENCODING_NONE,
 	AUDIO_ENCODING_PRIVATE
 } audio_encoding_t;
@@ -191,43 +190,6 @@ typedef dvb_play_info_t                 video_play_info_t;
 typedef dvb_play_info_t                 audio_play_info_t;
 
 
-typedef enum
-{
-	DVB_TIME_FORMAT_US              = 0,
-	DVB_TIME_FORMAT_PTS
-} dvb_time_format_t;
-
-typedef enum
-{
-	AUDIO_TIME_FORMAT_US            = DVB_TIME_FORMAT_US,
-	AUDIO_TIME_FORMAT_PTS           = DVB_TIME_FORMAT_PTS
-} audio_time_format_t;
-
-typedef enum
-{
-	VIDEO_TIME_FORMAT_US            = DVB_TIME_FORMAT_US,
-	VIDEO_TIME_FORMAT_PTS           = DVB_TIME_FORMAT_PTS
-} video_time_format_t;
-
-typedef struct dvb_clock_data_point_s {
-	dvb_time_format_t               time_format;
-	unsigned long long              source_time;
-	unsigned long long              system_time;
-} dvb_clock_data_point_t;
-
-typedef dvb_clock_data_point_t           video_clock_data_point_t;
-typedef dvb_clock_data_point_t           audio_clock_data_point_t;
-
-
-typedef struct dvb_time_mapping_s {
-	unsigned long long              native_stream_time;
-	unsigned long long              system_presentation_time;
-} dvb_time_mapping_t;
-
-typedef dvb_time_mapping_t              video_time_mapping_t;
-typedef dvb_time_mapping_t              audio_time_mapping_t;
-
-
 typedef enum {
 #define DVB_OPTION_VALUE_DISABLE                                                        0
 #define DVB_OPTION_VALUE_ENABLE                                                         1
@@ -298,27 +260,15 @@ typedef enum {
 
     DVB_OPTION_PIXEL_ASPECT_RATIO_CORRECTION                                            = 32,
 
-    DVB_OPTION_H264_FORCE_PIC_ORDER_CNT_IGNORE_DPB_DISPLAY_FRAME_ORDERING               = 33,
+    DVB_OPTION_H264_FORCE_PIC_ORDER_CNT_IGNORE_DPB_DISPLAY_FRAME_ORDERING		= 33,
 
     DVB_OPTION_PTS_SYMMETRIC_JUMP_DETECTION                                             = 34,
 
     DVB_OPTION_ALLOW_FRAME_DISCARD_AT_NORMAL_SPEED                                      = 35,
 
-    DVB_OPTION_OPERATE_COLLATOR2_IN_REVERSIBLE_MODE                                     = 36,
+    /* OPTION_MAX must always be one greater than largest option - currently DVB_OPTION_ALLOW_FRAME_DISCARD_AT_NORMAL_SPEED */
 
-    DVB_OPTION_VIDEO_OUTPUT_WINDOW_RESIZE_STEPS                                         = 37,
-
-    DVB_OPTION_IGNORE_STREAM_UNPLAYABLE_CALLS                                           = 38,
-
-    DVB_OPTION_USE_PTS_DEDUCED_DEFAULT_FRAME_RATES                                      = 39,
-
-    DVB_OPTION_H264_TREAT_TOP_BOTTOM_PICTURE_STRUCT_AS_INTERLACED                       = 40,
-
-    DVB_OPTION_SYNC_START_IMMEDIATE                                                     = 42,
-
-    /* OPTION_MAX must always be one greater than largest option - currently DVB_OPTION_H264_TREAT_TOP_BOTTOM_PICTURE_STRUCT_AS_INTERLACED */
-
-    DVB_OPTION_MAX                                                                      = 43
+    DVB_OPTION_MAX                                                                      = 35
 } dvb_option_t;
 
 // Legacy typo correction
@@ -359,9 +309,6 @@ typedef dvb_option_t                    video_option_t;
 #define VIDEO_SET_SYNC_GROUP            _IO('o',  87)
 #define VIDEO_GET_PLAY_TIME             _IOR('o', 88, video_play_time_t)
 #define VIDEO_GET_PLAY_INFO             _IOR('o', 89, video_play_info_t)
-#define VIDEO_SET_CLOCK_DATA_POINT      _IOW('o', 90, video_clock_data_point_t)
-#define VIDEO_SET_TIME_MAPPING          _IOW('o', 91, video_time_mapping_t)
-
 
 /* ST specific audio ioctls */
 #define AUDIO_SET_ENCODING              _IO('o',  70)
@@ -373,8 +320,5 @@ typedef dvb_option_t                    video_option_t;
 #define AUDIO_SET_SYNC_GROUP            _IO('o',  76)
 #define AUDIO_GET_PLAY_TIME             _IOR('o', 77, audio_play_time_t)
 #define AUDIO_GET_PLAY_INFO             _IOR('o', 78, audio_play_info_t)
-#define AUDIO_SET_CLOCK_DATA_POINT      _IOW('o', 79, audio_clock_data_point_t)
-#define AUDIO_SET_TIME_MAPPING          _IOW('o', 80, audio_time_mapping_t)
 
 #endif /* H_DVB_STM_H */
-

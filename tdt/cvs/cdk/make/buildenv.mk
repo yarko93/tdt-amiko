@@ -73,6 +73,7 @@ BUILDENV := \
 	CXXFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS) -Wl,-rpath-link,$(packagingtmpdir)/usr/lib" \
 	PKG_CONFIG_SYSROOT_DIR="$(targetprefix)" \
+	PKG_CONFIG_PATH="$(targetprefix)/usr/lib/pkgconfig" \
 	PKG_CONFIG_LIBDIR="$(targetprefix)/usr/lib/pkgconfig"
 
 MAKE_OPTS := \

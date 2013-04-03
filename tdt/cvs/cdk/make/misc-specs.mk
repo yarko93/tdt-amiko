@@ -1,9 +1,3 @@
-$(DEPDIR)/boot-elf:
-	$(INSTALL_DIR) $(targetprefix)/lib/firmware
-	cp $(buildprefix)/root/firmware/*.fw $(targetprefix)/lib/firmware/
-	@[ "x$*" = "x" ] && touch $@ || true
-
-
 $(DEPDIR)/misc-cp:
 	cp $(buildprefix)/root/sbin/hotplug $(targetprefix)/sbin
 	cp $(buildprefix)/root/etc/$(LIRCD_CONF) $(targetprefix)/etc/lircd.conf
@@ -87,13 +81,6 @@ $(DEPDIR)/$(STSLAVE): $(DEPDIR)/%$(STSLAVE): linux-kernel-headers binutils-dev $
 #
 # OPENSSL
 #
-BEGIN[[
-openssl
-  1.0.1c
-  {PN}-{PV}
-  extract:ftp://ftp.{PN}.org/source/{PN}-{PV}.tar.gz
-;
-]]END
 
 OPENSSL := openssl
 OPENSSL_DEV := openssl-dev
@@ -102,13 +89,10 @@ FILES_openssl_dev = \
 FILES_openssl = \
 /usr/lib/*.so*
 
-# if STM24
-OPENSSL_VERSION := 0.9.8l-16
+OPENSSL_VERSION := 1.0.1e-29
 OPENSSL_SPEC := stm-target-$(OPENSSL).spec
 OPENSSL_SPEC_PATCH :=
 OPENSSL_PATCHES :=
-# endif STM24
-
 OPENSSL_RPM := RPMS/sh4/$(STLINUX)-sh4-$(OPENSSL)-$(OPENSSL_VERSION).sh4.rpm
 OPENSSL_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(OPENSSL_DEV)-$(OPENSSL_VERSION).sh4.rpm
 
@@ -128,14 +112,14 @@ $(DEPDIR)/$(OPENSSL): $(DEPDIR)/%$(OPENSSL): $(OPENSSL_RPM)
 	sed -i "s,^prefix=.*,prefix=$(targetprefix)/usr," $(targetprefix)/usr/lib/pkgconfig/libcrypto.pc
 	sed -i "s,^prefix=.*,prefix=$(targetprefix)/usr," $(targetprefix)/usr/lib/pkgconfig/libssl.pc
 	sed -i "s,^prefix=.*,prefix=$(targetprefix)/usr," $(targetprefix)/usr/lib/pkgconfig/openssl.pc
-	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
+	touch $@ || true
 	$(start_build)
 	$(fromrpm_build)
 
 $(DEPDIR)/$(OPENSSL_DEV): $(DEPDIR)/%$(OPENSSL_DEV): %$(OPENSSL) $(OPENSSL_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
+	touch $@ || true
 	$(start_build)
 	$(fromrpm_build)
 
@@ -167,12 +151,12 @@ $(ALSALIB_RPM) $(ALSALIB_DEV_RPM): \
 $(DEPDIR)/$(ALSALIB): $(DEPDIR)/%$(ALSALIB): $(ALSALIB_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
+	touch $@ || true
 
 $(DEPDIR)/$(ALSALIB_DEV): $(DEPDIR)/%$(ALSALIB_DEV): %$(ALSALIB) $(ALSALIB_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
+	touch $@ || true
 
 #
 # ALSAUTILS
@@ -201,19 +185,17 @@ $(ALSAUTILS_RPM): \
 $(DEPDIR)/$(ALSAUTILS): $(DEPDIR)/%$(ALSAUTILS): $(ALSAUTILS_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
+	touch $@ || true
 
 #
 # ALSAPLAYER
 #
 ALSAPLAYER := alsaplayer
 ALSAPLAYER_DEV := alsaplayer-dev
-# if STM24
 ALSAPLAYER_VERSION := 0.99.77-15
 ALSAPLAYER_SPEC := stm-target-$(ALSAPLAYER).spec
 ALSAPLAYER_SPEC_PATCH :=
 ALSAPLAYER_PATCHES :=
-# endif STM24
 
 ALSAPLAYER_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ALSAPLAYER)-$(ALSAPLAYER_VERSION).sh4.rpm
 ALSAPLAYER_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(ALSAPLAYER_DEV)-$(ALSAPLAYER_VERSION).sh4.rpm
@@ -233,9 +215,9 @@ $(ALSAPLAYER_RPM) $(ALSAPLAYER_DEV_RPM): \
 $(DEPDIR)/$(ALSAPLAYER): $(DEPDIR)/%$(ALSAPLAYER): $(ALSAPLAYER_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
+	touch $@ || true
 
 $(DEPDIR)/$(ALSAPLAYER_DEV): $(DEPDIR)/%$(ALSAPLAYER_DEV): $(ALSAPLAYER_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	[ "x$*" = "x" ] && touch -r $(lastword $^) $@ || true
+	touch $@ || true

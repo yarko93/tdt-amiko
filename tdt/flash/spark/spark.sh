@@ -13,25 +13,25 @@ OUTDIR=$CURDIR/out
 if [ -e $TMPDIR ]; then
   rm -rf $TMPDIR/*
 fi
-PLAY=`cat $LAST | awk -F '--enable-' '{print $10}' | cut -d ' ' -f 1`
+PLAY=`cat $LAST | awk -F '--enable-' '{print $9}' | cut -d ' ' -f 1`
 if [ "$PLAY" == "mediafwgstreamer" ]; then
 play='_gst'
 else
 play='_epl3'
 fi
-OE=`cat $LAST | awk -F '--enable-' '{print $9}' | cut -d ' ' -f 1`
+OE=`cat $LAST | awk -F '--enable-' '{print $8}' | cut -d ' ' -f 1`
 if [ "$OE" == "py27" ]; then
 oe='OE2.0'
 else
 oe='OE1.6'
 fi
-BOX=`cat $LAST | awk -F '--enable-' '{print $4}' | cut -d ' ' -f 1`
+BOX=`cat $LAST | awk -F '--enable-' '{print $3}' | cut -d ' ' -f 1`
 if [ "$BOX" == "spark" ]; then
 box='_alien'
 elif [ "$BOX" == "spark7162" ]; then
 box='_alien2'
 fi
-KERN=`cat $LAST | awk -F '--enable-' '{print $6}' | cut -d ' ' -f 1`
+KERN=`cat $LAST | awk -F '--enable-' '{print $5}' | cut -d ' ' -f 1`
 if [ "$KERN" == "p0211" ]; then
 kern='_211'
 elif [ "$KERN" == "p0210" ]; then
