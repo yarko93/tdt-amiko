@@ -11,17 +11,18 @@ busybox
   patch:file://{PN}-{PV}-mdev.patch
   patch:file://{PN}-{PV}-platform.patch
   patch:file://{PN}-{PV}-xz.patch
+  nothing:file://{PN}-{PV}.config
+  pmove:{PN}-{PV}/{PN}-{PV}.config:{PN}-{PV}/.config
   make:install:CONFIG_PREFIX=PKDIR
 ;
 ]]END
 
-$(DEPDIR)/busybox.do_prepare: $(DEPENDS_busybox)
+$(DEPDIR)/busybox.do_prepare: bootstrap $(DEPENDS_busybox)
 	$(PREPARE_busybox)
 	touch $@
 
-$(DEPDIR)/busybox.do_compile: bootstrap $(DEPDIR)/busybox.do_prepare Patches/busybox-1.21.0.config | $(DEPDIR)/$(GLIBC_DEV)
+$(DEPDIR)/busybox.do_compile: $(DEPDIR)/busybox.do_prepare
 	cd $(DIR_busybox) && \
-		$(INSTALL) -m644 ../$(lastword $^) .config && \
 		$(MAKE) all \
 			CROSS_COMPILE=$(target)- \
 			CFLAGS_EXTRA="$(TARGET_CFLAGS)"
