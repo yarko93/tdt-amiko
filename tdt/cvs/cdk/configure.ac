@@ -814,10 +814,6 @@ AC_SUBST(DRPMBUILD)
 #
 
 
-AC_SUBST(DOWNLOAD_FOR_SMART)
-AC_SUBST(SMART_DOWNLOAD_RULES)
-dnl AM_SUBST_NOTMAKE(SMART_DOWNLOAD_RULES)
-
 #
 # summary
 #
@@ -884,11 +880,6 @@ AC_MSG_RESULT([
 ******************************************************************
 ])
 fi
-
-TUXBOX_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNELVERSION=$(KERNELVERSION) && $(customizationsdir)/$(notdir $@)-local.sh $(buildprefix) || true]'
-AC_SUBST(TUXBOX_CUSTOMIZE)
-TUXBOX_TOUCH='[@[ "x$*" = "x" ] && touch $@ || true]'
-AC_SUBST(TUXBOX_TOUCH)
 
 ac_subst_vars='m4_set_dump([_AC_SUBST_VARS], m4_newline)'
 echo $ac_subst_vars |perl -pe 's/ /\n/g' |perl -pe 's/(.*)/\1 = @\1@/' > Config.in
