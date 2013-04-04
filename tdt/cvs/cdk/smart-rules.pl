@@ -16,13 +16,6 @@ my $supported_protocols = "https|http|ftp|file|git|svn";
 my $make_commands = "nothing|extract|dirextract|patch(time)?(-(\\d+))?|pmove|premove|plink|pdircreate";
 my $install_commands = "install -.+|install_file|install_bin";
 
-my %ruletypes =
-(
-  make => \&process_make,
-  download => \&process_download,
-  install => \&process_install,
-);
-
 my $patchesdir .= "\$(buildprefix)/Patches";
 
 sub load ($$);
@@ -60,6 +53,7 @@ sub load ($$)
       $start = 1;
       next;
     }
+    #don't touch Makefile conditional
     if (not $start or ($_ =~ m#^(ifdef |ifndef |ifeq |ifneq |else|endif)#) )
     {
       print FILE $_;
@@ -105,13 +99,6 @@ sub process_block ($)
 {
   warn "$package,$version,$dir  :  $_" if DEBUG;
   my $out;
-
-# We don't need this feature any more
-#     if( ($rule[0] eq ">>>" or $rule[0] eq ">>?") and defined $rule[1])
-#     {
-#       load ( $rule[1], 0 ) if $rule[0] eq ">>>";
-#       load ( $rule[1], 1 ) if $rule[0] eq ">>?";
-#     }
 
   $out = "DEPENDS_$package += " . process_depends($_) . "\n";
   print FILE subs_vars($out);
@@ -234,7 +221,7 @@ sub process_depends ($)
 
 sub process_dir ($)
 {
-  $dir = $_;
+  $dir = "\$(workprefix)/" . $_;
   my $out = "DIR_$package = $dir\n";
   print FILE subs_vars($out);
 
@@ -290,7 +277,7 @@ sub process_prepare ($)
       return;
     }
     
-      $output .= " && ";
+      $output .= " && cd \$(workprefix) && ";
     
     if ( ($cmd eq "rpm" || $cmd eq "extract") and $p !~ m#(git|svn)#)
     {
