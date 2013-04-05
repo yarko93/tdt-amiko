@@ -36,6 +36,8 @@ extern ManagerHandler_t        ManagerHandler;
 
 Context_t * player = NULL;
 
+#define URLLEN 1023
+
 /* ******************************************** */
 /* Framebuffer for subtitle                     */
 /* ******************************************** */
@@ -124,7 +126,7 @@ void framebuffer_init()
 int main(int argc,char* argv[]) {
     SubtitleOutputDef_t out;
     int showInfos = 0, noinput = 0;
-    char file[255] = {""};
+    char file[URLLEN] = {""};
     int speed = 0, speedmap = 0;
     printf("%s >\n", __FILE__);
 
@@ -138,6 +140,12 @@ int main(int argc,char* argv[]) {
     {
         strcpy(file, "file://");
     }
+    if (strlen(argv[1]) > URLLEN)
+    {
+        printf("URL must not exceed 1024 characters!\n");
+        exit(1);
+    }
+
 
     strcat(file, argv[1]);
 

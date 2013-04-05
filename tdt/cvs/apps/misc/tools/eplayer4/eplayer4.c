@@ -29,6 +29,7 @@
 #include <gst/gst.h>
 #include <gst/pbutils/missing-plugins.h>
 
+#define URLLEN 1023
 
 int kbhit(void) {
     struct timeval tv;
@@ -51,7 +52,7 @@ int kbhit(void) {
 
 int main(int argc,char* argv[]) {
     int showInfos = 0, noinput = 0;
-    char file[255] = {""};
+    char file[URLLEN] = {""};
     int speedmap = 0;
     gdouble speed = 1.0;
     printf("%s >\n", __FILE__);
@@ -59,6 +60,12 @@ int main(int argc,char* argv[]) {
     if (argc < 2)
     {
         printf("give me a filename please\n");
+        exit(1);
+    }
+
+    if (strlen(argv[1]) > URLLEN)
+    {
+        printf("URL must not exceed 1024 characters!\n");
         exit(1);
     }
 
