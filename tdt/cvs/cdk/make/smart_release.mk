@@ -239,7 +239,10 @@ endif
 	$(toflash_build)
 	touch $@
 
-##
+#
+# opkg plugin nonfree feed
+#
+
 DESCRIPTION_enigma2_plugin_nonfree_feed = Download non free plugins and skins
 SRC_URI_enigma2_plugin_nonfree_feed = unknown
 PKGV_enigma2_plugin_nonfree_feed = r3
