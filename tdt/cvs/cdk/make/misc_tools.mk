@@ -53,7 +53,7 @@ BEGIN[[
 devinit
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -112,7 +112,7 @@ BEGIN[[
 evremote2
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -172,7 +172,7 @@ BEGIN[[
 fp_control
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/fp_control:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/fp_control:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -231,7 +231,7 @@ BEGIN[[
 gitVCInfo
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -290,7 +290,7 @@ BEGIN[[
 hotplug
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -349,7 +349,7 @@ BEGIN[[
 libeplayer3
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -410,7 +410,7 @@ BEGIN[[
 libmme_host
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/libmme_host:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/libmme_host:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -469,7 +469,7 @@ BEGIN[[
 libmmeimage
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -528,7 +528,7 @@ BEGIN[[
 showiframe
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -587,7 +587,7 @@ BEGIN[[
 stfbcontrol
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -646,7 +646,7 @@ BEGIN[[
 streamproxy
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -705,7 +705,7 @@ BEGIN[[
 ustslave
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
@@ -764,7 +764,7 @@ BEGIN[[
 eplayer4
   git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
