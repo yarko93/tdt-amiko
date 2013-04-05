@@ -27,6 +27,7 @@ enigma2_plugin_systemplugins_libgisclubskin
 # that doesn't start with /usr/lib/enigma2/python/Plugins
 enigma2_plugins_nontyp := \
 $(DEPDIR)/enigma2-plugins-sh4-networkbrowser \
+$(DEPDIR)/enigma2-plugins-sh4-multiquickbutton \
 $(DEPDIR)/enigma2-plugins-sh4-libgisclubskin
 
 
