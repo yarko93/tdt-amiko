@@ -61,7 +61,7 @@ int main(int argc,char* argv[]) {
         exit(1);
     }
 
-    int n = snprintf(file, sizeof(file), "%s", strlen(argv[1]));
+    int n = snprintf(file, sizeof(file), "%s", argv[1]);
     if (n >= sizeof(file))
     {
         printf("URL must not exceed %d characters!\n", sizeof(file) - 1);
