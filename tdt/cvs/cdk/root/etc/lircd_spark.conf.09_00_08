@@ -17,7 +17,7 @@ begin remote
   name  rc09(edi_green)
   bits           16
   flags SPACE_ENC|CONST_LENGTH
-  eps            30
+  eps            45
   aeps          100
 
   header       9024  4416
@@ -94,7 +94,7 @@ begin remote
   name  rc09(edi_red)
   bits           16
   flags SPACE_ENC|CONST_LENGTH
-  eps            30
+  eps            45
   aeps          100
 
   header       9074  4344
@@ -171,7 +171,7 @@ begin remote
   name  SPARK(edi_green)
   bits           16
   flags SPACE_ENC|CONST_LENGTH
-  eps            30
+  eps            45
   aeps          100
 
   header       9028  4444
@@ -249,7 +249,7 @@ begin remote
   name  SPARK(edi_red)
   bits           16
   flags SPACE_ENC|CONST_LENGTH
-  eps            30
+  eps            45
   aeps          100
 
   header       9019  4429

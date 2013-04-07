@@ -3,7 +3,7 @@ begin remote
   name  rc08(HOF-55C)
   bits           16
   flags SPACE_ENC|CONST_LENGTH
-  eps            30
+  eps            45
   aeps          100
 
   header       9011  4455
@@ -82,7 +82,7 @@ begin remote
   name  SPARK(default)
   bits           16
   flags SPACE_ENC|CONST_LENGTH
-  eps            30
+  eps            45
   aeps          100
 
   header       9129  4358

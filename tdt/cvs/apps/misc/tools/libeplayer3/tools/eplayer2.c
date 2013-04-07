@@ -124,7 +124,7 @@ void framebuffer_init()
 int main(int argc,char* argv[]) {
     SubtitleOutputDef_t out;
     int showInfos = 0, noinput = 0;
-    char file[URLLEN] = {""};
+    char file[1025] = {""};
     int speed = 0, speedmap = 0;
     printf("%s >\n", __FILE__);
 
