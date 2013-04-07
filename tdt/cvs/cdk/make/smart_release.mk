@@ -38,7 +38,6 @@ networking \
 reboot \
 sendsigs \
 telnetd \
-syslogd \
 crond \
 lircd \
 umountfs
