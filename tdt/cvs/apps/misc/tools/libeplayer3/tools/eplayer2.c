@@ -36,8 +36,6 @@ extern ManagerHandler_t        ManagerHandler;
 
 Context_t * player = NULL;
 
-#define URLLEN 1023
-
 /* ******************************************** */
 /* Framebuffer for subtitle                     */
 /* ******************************************** */
@@ -136,19 +134,22 @@ int main(int argc,char* argv[]) {
         exit(1);
     }
 
+    int n = sizeof(file);
     if (strstr(argv[1], "://") == NULL)
     {
-        strcpy(file, "file://");
+        n = snprintf(file, sizeof(file), "file://%s", argv[1]);
     }
-    if (strlen(argv[1]) > URLLEN)
+    else
     {
-        printf("URL must not exceed 1024 characters!\n");
+    	n = snprintf(file, sizeof(file), "%s", argv[1]);
+    }
+    
+    if (n >= sizeof(file))
+    {
+        printf("URL must not exceed %d characters!\n", sizeof(file) - 1);
         exit(1);
     }
-
-
-    strcat(file, argv[1]);
-
+   
     /* debug helper */
     if(argc == 3 && !strcmp(argv[2], "-d"))
     {
