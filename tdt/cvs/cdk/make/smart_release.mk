@@ -3,7 +3,7 @@
 #
 BEGIN[[
 init_scripts
-  0.7
+  0.8
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
@@ -23,6 +23,7 @@ init_scripts
   nothing:file://../root/release/crond
   nothing:file://../root/release/umountfs
   nothing:file://../root/release/lircd
+  nothing:file://../root/etc/init.d/rdate.sh
 ;
 ]]END
 
@@ -40,7 +41,8 @@ sendsigs \
 telnetd \
 crond \
 lircd \
-umountfs
+umountfs \
+rdate.sh
 
 define postinst_init_scripts
 #!/bin/sh
