@@ -18,13 +18,13 @@ syslogd \
 lircd \
 umountfs
 
-define postinst_init_scripts
+define postinst_init_scripts_vdr
 #!/bin/sh
 $(foreach f,$(init_scripts_initd_vdr_files), initdconfig --add $f
 )
 endef
 
-define prerm_init_scripts
+define prerm_init_scripts_vdr
 #!/bin/sh
 $(foreach f,$(init_scripts_initd_vdr_files), initdconfig --del $f
 )

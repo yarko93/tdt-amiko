@@ -41,13 +41,13 @@ syslogd \
 lircd \
 umountfs
 
-define postinst_init_scripts
+define postinst_init_scripts_xbmc
 #!/bin/sh
 $(foreach f,$(init_scripts_initd_xbmc_files), initdconfig --add $f
 )
 endef
 
-define prerm_init_scripts
+define prerm_init_scripts_xbmc
 #!/bin/sh
 $(foreach f,$(init_scripts_initd_xbmc_files), initdconfig --del $f
 )
