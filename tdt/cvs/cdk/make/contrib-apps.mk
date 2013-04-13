@@ -129,20 +129,21 @@ pppd
   2.4.5
   ppp-{PV}
   extract:ftp://ftp.samba.org/pub/ppp/ppp-{PV}.tar.gz
-  make:install:DESTDIR=PKDIR
+  patch:file://{PN}.patch
+  make:install:DESTDIR=PKDIR/usr
 ;
 ]]END
 
+PKGV_pppd = r1
 DESCRIPTION_pppd = "pppd"
 FILES_pppd = \
-/sbin/* \
-/lib/modules/*.so
+/usr/sbin/* \
+/usr/lib/*
 
-$(DEPDIR)/pppd.do_prepare: bootstrap $(DEPENDS_pppd)
+$(DEPDIR)/pppd.do_prepare: bootstrap libpcap $(DEPENDS_pppd)
 	$(PREPARE_pppd)
 	cd $(DIR_pppd) && \
-		sed -ie s:/usr/include/pcap-bpf.h:$(prefix)/cdkroot/usr/include/pcap-bpf.h: pppd/Makefile.linux && \
-		patch -p1 < ../Patches/pppd.patch
+              sed -ie s:/usr/include/pcap-bpf.h:$(prefix)/cdkroot/usr/include/pcap-bpf.h: pppd/Makefile.linux
 	touch $@
 
 $(DEPDIR)/pppd.do_compile: pppd.do_prepare
@@ -165,8 +166,6 @@ $(DEPDIR)/%pppd: $(DEPDIR)/pppd.do_compile
 	cd $(DIR_pppd)  && \
 		$(INSTALL_pppd)
 	$(tocdk_build)
-	mkdir $(PKDIR)/lib/modules/
-	mv -f $(PKDIR)/lib/pppd/2.4.5/*.so $(PKDIR)/lib/modules/
 	$(toflash_build)
 #	@DISTCLEANUP_pppd@
 	touch $@
