@@ -6,8 +6,6 @@ export CXXFLAGS
 export DRPM
 export DRPMBUILD
 
-AUTOMAKE_OPTIONS = -Wno-portability
-
 #######################################      #########################################
 ifdef ENABLE_P0207
 KERNELVERSION := 2.6.32.28_stm24_0207
@@ -88,6 +86,29 @@ BUILDENV := \
 	PKG_CONFIG_PATH="$(targetprefix)/usr/lib/pkgconfig" \
 	PKG_CONFIG_LIBDIR="$(targetprefix)/usr/lib/pkgconfig"
 
+EXPORT_BUILDENV := \
+	export PATH=$(MAKE_PATH) && \
+	export CC=$(target)-gcc && \
+	export CXX=$(target)-g++ && \
+	export LD=$(target)-ld && \
+	export NM=$(target)-nm && \
+	export AR=$(target)-ar && \
+	export AS=$(target)-as && \
+	export RANLIB=$(target)-ranlib && \
+	export STRIP=$(target)-strip && \
+	export OBJCOPY=$(target)-objcopy && \
+	export OBJDUMP=$(target)-objdump && \
+	export LN_S="ln -s" && \
+	export CFLAGS="$(TARGET_CFLAGS)" && \
+	export CXXFLAGS="$(TARGET_CFLAGS)" && \
+	export LDFLAGS="$(TARGET_LDFLAGS) -Wl,-rpath-link,$(packagingtmpdir)/usr/lib" && \
+	export PKG_CONFIG_SYSROOT_DIR="$(targetprefix)" && \
+	export PKG_CONFIG_PATH="$(targetprefix)/usr/lib/pkgconfig" && \
+	export PKG_CONFIG_LIBDIR="$(targetprefix)/usr/lib/pkgconfig"
+
+build.env:
+	echo '$(EXPORT_BUILDENV)' |sed 's/&&/\n/g' |sed 's/^ //' > $@
+
 MAKE_OPTS := \
 	CC=$(target)-gcc \
 	CXX=$(target)-g++ \
@@ -116,10 +137,21 @@ MAKE_ARGS := \
 	OBJDUMP=$(target)-objdump \
 	LN_S="ln -s"
 
-PLATFORM_CPPFLAGS = \
-	$(if $(HL101),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_HL101 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include" --enable-hl101) \
-	$(if $(SPARK),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_SPARK -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include") \
-	$(if $(SPARK7162),CPPFLAGS="$(CPPFLAGS) -DPLATFORM_SPARK7162 -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include")
+PLATFORM_CPPFLAGS := $(CPPFLAGS) -I$(driverdir)/include -I $(buildprefix)/$(KERNEL_DIR)/include -I$(appsdir)/misc/tools
+
+ifdef ENABLE_SPARK
+PLATFORM_CPPFLAGS += -DPLATFORM_SPARK
+endif
+
+ifdef ENABLE_SPARK7162
+PLATFORM_CPPFLAGS += -DPLATFORM_SPARK7162
+endif
+
+ifdef ENABLE_HL101
+PLATFORM_CPPFLAGS += -DPLATFORM_HL101
+endif
+
+PLATFORM_CPPFLAGS := CPPFLAGS="$(PLATFORM_CPPFLAGS)"
 
 DEPDIR = .deps
 
@@ -152,12 +184,6 @@ CONFIGURE = \
 
 PYTHON_VERSION = $(word 1,$(subst ., ,$(VERSION_python))).$(word 2,$(subst ., ,$(VERSION_python)))
 PYTHON_DIR = /usr/lib/python$(PYTHON_VERSION)
-
-ACLOCAL_AMFLAGS = -I .
-
-CONFIG_STATUS_DEPENDENCIES = \
-	$(top_srcdir)/smart-rules.pl
-#	$(top_srcdir)/smart-rules.am
 
 query: %query:
 	rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) -qa
