@@ -3,6 +3,7 @@
 #
 $(DEPDIR)/bootstrap: \
 $(DEPDIR)/%bootstrap: \
+		build.env \
 		%libtool \
 		%$(FILESYSTEM) \
 		%$(GLIBC) \

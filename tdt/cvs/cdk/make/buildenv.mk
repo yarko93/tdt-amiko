@@ -7,6 +7,7 @@ export DRPM
 export DRPMBUILD
 
 #######################################      #########################################
+
 ifdef ENABLE_P0207
 KERNELVERSION := 2.6.32.28_stm24_0207
 endif
@@ -34,6 +35,7 @@ STM_SRC := $(STLINUX)
 STM_RELOCATE := /opt/STM/STLinux-2.4
 
 #######################################      #########################################
+# PATH is exported automatically
 
 ifdef ENABLE_CCACHE
 PATH := $(hostprefix)/ccache-bin:$(crossprefix)/bin:$(PATH):/usr/sbin
@@ -55,36 +57,18 @@ CP_P=$(shell which cp) -p
 CP_RD=$(shell which cp) -rd
 SED=$(shell which sed)
 
-MAKE_PATH := $(hostprefix)/bin:$(crossprefix)/bin:$(PATH)
+MAKE_PATH := $(hostprefix)/bin:$(PATH)
 
 ADAPTED_ETC_FILES =
 ETC_RW_FILES =
 
 # rpm helper-"functions":
-TARGETLIB = $(targetprefix)/usr/lib
 PKG_CONFIG_PATH = $(targetprefix)/usr/lib/pkgconfig
 REWRITE_LIBDIR = sed -i "s,^libdir=.*,libdir='$(targetprefix)/usr/lib'," $(targetprefix)/usr/lib
 REWRITE_LIBDEP = sed -i -e "s,\(^dependency_libs='\| \|-L\|^dependency_libs='\)/usr/lib,\$(targetprefix)/usr/lib," $(targetprefix)/usr/lib
-REWRITE_PKGCONF = sed -i "s,^prefix=.*,prefix='$(targetprefix)/usr',"
 
 BUILDENV := \
-	CC=$(target)-gcc \
-	CXX=$(target)-g++ \
-	LD=$(target)-ld \
-	NM=$(target)-nm \
-	AR=$(target)-ar \
-	AS=$(target)-as \
-	RANLIB=$(target)-ranlib \
-	STRIP=$(target)-strip \
-	OBJCOPY=$(target)-objcopy \
-	OBJDUMP=$(target)-objdump \
-	LN_S="ln -s" \
-	CFLAGS="$(TARGET_CFLAGS)" \
-	CXXFLAGS="$(TARGET_CFLAGS)" \
-	LDFLAGS="$(TARGET_LDFLAGS) -Wl,-rpath-link,$(packagingtmpdir)/usr/lib" \
-	PKG_CONFIG_SYSROOT_DIR="$(targetprefix)" \
-	PKG_CONFIG_PATH="$(targetprefix)/usr/lib/pkgconfig" \
-	PKG_CONFIG_LIBDIR="$(targetprefix)/usr/lib/pkgconfig"
+	source $(buildprefix)/build.env &&
 
 EXPORT_BUILDENV := \
 	export PATH=$(MAKE_PATH) && \
