@@ -3914,12 +3914,12 @@ $(DEPDIR)/tuxtxtlib.do_prepare: bootstrap $(DEPENDS_tuxtxtlib)
 $(DEPDIR)/tuxtxtlib.do_compile: $(DEPDIR)/tuxtxtlib.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd $(DIR_tuxtxtlib) && \
+	$(BUILDENV) \
 	aclocal -I $(hostprefix)/share/aclocal && \
 	autoheader && \
 	autoconf && \
-	automake --foreign && \
 	libtoolize --force && \
-	$(BUILDENV) \
+	automake --foreign --add-missing && \
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
@@ -3971,12 +3971,12 @@ $(DEPDIR)/tuxtxt32bpp.do_prepare: tuxtxtlib $(DEPENDS_tuxtxt32bpp)
 $(DEPDIR)/tuxtxt32bpp.do_compile: $(DEPDIR)/tuxtxt32bpp.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd $(DIR_tuxtxt32bpp) && \
+	$(BUILDENV) \
 	aclocal -I $(hostprefix)/share/aclocal && \
 	autoheader && \
 	autoconf && \
-	automake --foreign --add-missing && \
 	libtoolize --force && \
-	$(BUILDENV) \
+	automake --foreign --add-missing && \
 	./configure \
 		--host=$(target) \
 		--prefix=/usr \
@@ -4070,11 +4070,7 @@ $(DEPDIR)/libdreamdvd2.do_prepare: bootstrap $(DEPENDS_libdreamdvd2)
 $(DEPDIR)/libdreamdvd2.do_compile: $(DEPDIR)/libdreamdvd2.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd $(DIR_libdreamdvd2) && \
-	aclocal -I $(hostprefix)/share/aclocal && \
-	autoheader && \
-	autoconf && \
-	automake --foreign && \
-	libtoolize --force && \
+	autoreconf -i && \
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
