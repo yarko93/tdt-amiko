@@ -3,7 +3,7 @@
 #
 BEGIN[[
 init_scripts
-  0.7
+  0.9
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
@@ -19,10 +19,11 @@ init_scripts
   nothing:file://../root/release/reboot
   nothing:file://../root/release/sendsigs
   nothing:file://../root/release/telnetd
-  nothing:file://../root/release/syslogd
+ #nothing:file://../root/release/syslogd
   nothing:file://../root/release/crond
   nothing:file://../root/release/umountfs
   nothing:file://../root/release/lircd
+  nothing:file://../root/etc/init.d/rdate
 ;
 ]]END
 
@@ -40,7 +41,8 @@ sendsigs \
 telnetd \
 crond \
 lircd \
-umountfs
+umountfs \
+rdate
 
 define postinst_init_scripts
 #!/bin/sh
@@ -422,29 +424,17 @@ release_base: driver-ptinp driver-encrypt
 	echo "576i50" > $(prefix)/release/etc/videomode
 
 release_spark:
-	echo "spark" > $(prefix)/release/etc/hostname
-ifdef ENABLE_PY27
-	echo "src/gz AR-P http://alien.sat-universum.de/2.7" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
-	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
-	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf
-else
+	echo "spark" > $(prefix)/release/etc/hostname \
 	echo "src/gz AR-P http://alien.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf
-endif
 	true
 
 release_spark7162:
-	echo "spark7162" > $(prefix)/release/etc/hostname
-ifdef ENABLE_PY27
-	echo "src/gz AR-P http://alien2.sat-universum.de/2.7" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
-	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
-	echo "src/gz plugins-feed http://extra.sat-universum.de/2.7" > $(prefix)/release/etc/opkg/plugins-feed.conf
-else
+	echo "spark7162" > $(prefix)/release/etc/hostname \
 	echo "src/gz AR-P http://alien2.sat-universum.de" | cat - $(prefix)/release/etc/opkg/official-feed.conf > $(prefix)/release/etc/opkg/official-feed && \
 	mv -f $(prefix)/release/etc/opkg/official-feed $(prefix)/release/etc/opkg/official-feed.conf && \
 	echo "src/gz plugins-feed http://extra.sat-universum.de" > $(prefix)/release/etc/opkg/plugins-feed.conf
-endif
 	true
 
 

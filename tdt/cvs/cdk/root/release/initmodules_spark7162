@@ -56,6 +56,7 @@ modprobe e2_proc
    if [ ! `grep 'hdmicec.enabled=false' /etc/enigma2/settings` ]; then
     modprobe cec
    fi
+   echo "1" > /proc/sys/kernel/printk #for more log change level or  remake line
    cat /etc/videomode > /proc/stb/video/videomode
    showiframe -p /boot/bootlogo.mvi &
    stfbcontrol a 0
