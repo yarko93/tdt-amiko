@@ -9,13 +9,25 @@ export DRPMBUILD
 AUTOMAKE_OPTIONS = -Wno-portability
 
 #######################################      #########################################
+ifdef ENABLE_P0207
+KERNELVERSION := 2.6.32.28_stm24_0207
+endif
 
-KERNEL_DIR = $(DIR_linux)
-KERNEL_DEPENDS = $(DEPENDS_linux24)
-KERNEL_PREPARE = $(PREPARE_linux24)
-KERNELVERSION = $(VERSION_linux)
-KERNELSTMLABEL = _$(word 2,$(subst _, ,$(KERNELVERSION)))_$(word 3,$(subst _, ,$(KERNELVERSION)))
-KERNELLABEL = $(shell x=$(KERNELVERSION); echo $${x: -3})
+ifdef ENABLE_P0209
+KERNELVERSION := 2.6.32.46_stm24_0209
+endif
+
+ifdef ENABLE_P0210
+KERNELVERSION := 2.6.32.57_stm24_0210
+endif
+
+ifdef ENABLE_P0211
+KERNELVERSION := 2.6.32.59_stm24_0211
+endif
+
+KERNEL_DIR := linux-sh4-$(KERNELVERSION)
+KERNELSTMLABEL := _$(word 2,$(subst _, ,$(KERNELVERSION)))_$(word 3,$(subst _, ,$(KERNELVERSION)))
+KERNELLABEL := $(shell x=$(KERNELVERSION); echo $${x: -3})
 
 #######################################      #########################################
 
