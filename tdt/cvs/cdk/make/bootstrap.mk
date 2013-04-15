@@ -527,7 +527,7 @@ libtool
 ;
 ]]END
 
-$(DEPDIR)/libtool.do_prepare: $(DEPENDS_libtool)
+$(DEPDIR)/libtool.do_prepare: $(workprefix) $(DEPENDS_libtool)
 	$(PREPARE_libtool)
 	touch $@
 

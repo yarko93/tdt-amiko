@@ -15,6 +15,7 @@ export IPKGBUILDDIR
 ipkcdk := $(prefix)/ipkcdk
 ipkprefix := $(prefix)/ipkbox
 ipkextras := $(prefix)/ipkextras
+workprefix := $(prefix)/work
 
 $(ipkcdk):
 	$(INSTALL) -d $@
@@ -23,6 +24,9 @@ $(ipkprefix):
 	$(INSTALL) -d $@
 
 $(ipkextras):
+	$(INSTALL) -d $@
+
+$(workprefix):
 	$(INSTALL) -d $@
 
 define extra_build
