@@ -1669,8 +1669,8 @@ $(DEPDIR)/grab.do_prepare: bootstrap $(RDEPENDS_grab) $(DEPENDS_grab)
 
 $(DEPDIR)/grab.do_compile: grab.do_prepare
 	cd $(DIR_grab) && \
-		$(BUILDENV) && \
 		autoreconf -i && \
+		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
