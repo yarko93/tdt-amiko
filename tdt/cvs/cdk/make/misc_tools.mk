@@ -501,6 +501,7 @@ $(DEPDIR)/libmmeimage.do_compile: $(DEPDIR)/libmmeimage.do_prepare
 	cd $(DIR_libmmeimage) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
+		     --includedir=/usr/include \
 	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
