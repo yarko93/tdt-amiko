@@ -1709,7 +1709,7 @@ $(DEPDIR)/enigma2_plugin_cams_oscam.do_prepare: bootstrap $(DEPENDS_enigma2_plug
 
 $(DEPDIR)/enigma2_plugin_cams_oscam.do_compile: enigma2_plugin_cams_oscam.do_prepare
 	cd $(DIR_enigma2_plugin_cams_oscam) && \
-	$(BUILDENV) && \
+	$(BUILDENV) \
 	$(MAKE) CROSS=$(prefix)/devkit/sh4/bin/$(target)-  CONF_DIR=/var/keys
 	touch $@
 
