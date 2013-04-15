@@ -2242,8 +2242,8 @@ $(DEPDIR)/libxslt.do_prepare: bootstrap libxml2 $(DEPENDS_libxslt)
 
 $(DEPDIR)/libxslt.do_compile: $(DEPDIR)/libxslt.do_prepare
 	cd $(DIR_libxslt) && \
-		./configure \
 		$(BUILDENV) \
+		./configure \
 		CPPFLAGS="$(CPPFLAGS) -I$(targetprefix)/usr/include/libxml2 -Os" \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
 			--build=$(build) \
