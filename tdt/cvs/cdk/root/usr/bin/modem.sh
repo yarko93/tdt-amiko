@@ -3,7 +3,11 @@
 . /etc/modem.conf
 
 [ -z "$MODEMTYPE" ] && MODEMTYPE=0
-[ -z "$MODEMPORT" ] && MODEMPORT=ttyUSB0
+[ "$MODEMPORT" = "auto" ] &&  MODEMPORT=`cat /etc/modem.list | grep "$3\:$4"|cut -f 3 -d : -s`
+if [ -z "$MODEMPORT" ]; then
+	echo "Unknown modem $3\:$4 Please specify the modem port manually" >> /tmp/modem.log 
+	[ "$MODEMTYPE" = "0" ] && MODEMPORT=ttyUSB0 || MODEMPORT=ttyACM0
+fi
 [ -z "$MODEMSPEED" ] && MODEMSPEED=""
 [ -z "$APN" ] && APN="internet"
 [ -z "$MODEMUSERNAME" ] && MODEMUSERNAME=""
