@@ -58,8 +58,6 @@ distclean-local:
 	-rm -f Makefile-archive
 	-rm -f rules-downcheck.pl
 	-rm -f linux-sh4
-	-rm -rf $(appsdir)/enigma2-*
-	-rm -rf $(appsdir)/neutrino-*
 	-rm -rf $(DEPDIR)
 #	-rm -rf $(targetprefix)
 	-rm -rf $(hostprefix)
@@ -67,6 +65,8 @@ distclean-local:
 	-rm -rf $(crossprefix)/
 	-rm -rf $(configprefix)/
 	-rm -rf $(devkitprefix)/
+	-rm -rf $(workprefix)/
+	-rm -rf $(KERNEL_DIR)/
 	-rm -rf $(prefix)/*cdkroot/
 	-rm -rf $(prefix)/ipkcdk/
 	-rm -rf $(prefix)/ipkbox/
