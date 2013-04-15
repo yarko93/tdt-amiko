@@ -22,7 +22,16 @@ diff -urN Python-2.7.3/configure ltib/rpm/BUILD/Python-2.7.3/configure
 diff -urN Python-2.7.3/configure.in ltib/rpm/BUILD/Python-2.7.3/configure.in
 --- python-2.7.3/configure.in	2012-10-12 19:51:30.343932546 +0200
 +++ python-2.7.3/configure.in.org	2012-10-12 19:52:44.351934373 +0200
-@@ -3139,7 +3096,7 @@
+@@ -5,7 +5,7 @@
+ # Set VERSION so we only need to edit in one place (i.e., here)
+ m4_define(PYTHON_VERSION, 2.7)
+ 
+-AC_PREREQ(2.65)
++AC_PREREQ(2.64)
+ 
+ AC_REVISION($Revision$)
+ AC_INIT(python, PYTHON_VERSION, http://bugs.python.org/)
+@@ -3139,7 +3139,7 @@
  
  AC_MSG_RESULT($ac_cv_buggy_getaddrinfo)
  
@@ -31,7 +40,7 @@ diff -urN Python-2.7.3/configure.in ltib/rpm/BUILD/Python-2.7.3/configure.in
  then
  	if test $ipv6 = yes
  	then
-@@ -4222,7 +4179,7 @@
+@@ -4222,7 +4222,7 @@
    ]]])],
    [ac_cv_have_long_long_format=yes],
    [ac_cv_have_long_long_format=no],
@@ -40,7 +49,7 @@ diff -urN Python-2.7.3/configure.in ltib/rpm/BUILD/Python-2.7.3/configure.in
    )
    AC_MSG_RESULT($ac_cv_have_long_long_format)
  fi
-@@ -4244,7 +4244,7 @@
+@@ -4287,7 +4287,7 @@
  
  AC_CHECK_TYPE(socklen_t,,
    AC_DEFINE(socklen_t,int,
