@@ -534,6 +534,7 @@ AC_SUBST(bootprefix)
 AC_SUBST(serversupport)
 AC_SUBST(customizationsdir)
 AC_SUBST(updatehttpprefix)
+$INSTALL -d ${workprefix}
 
 packagingtmpdir=$buildprefix/packagingtmpdir
 ipkgbuilddir=$buildprefix/ipkgbuild
