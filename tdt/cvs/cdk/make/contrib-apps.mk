@@ -140,7 +140,7 @@ FILES_pppd = \
 /usr/sbin/* \
 /usr/lib/*
 
-$(DEPDIR)/pppd.do_prepare: bootstrap libpcap $(DEPENDS_pppd)
+$(DEPDIR)/pppd.do_prepare: bootstrap $(DEPENDS_pppd)
 	$(PREPARE_pppd)
 	cd $(DIR_pppd) && \
               sed -ie s:/usr/include/pcap-bpf.h:$(prefix)/cdkroot/usr/include/pcap-bpf.h: pppd/Makefile.linux
