@@ -6,4 +6,7 @@ AM_CFLAGS = -Wall -I../../../../driver/include/player2 -I../../../../driver/bpam
 
 libmmeimageincludedir =$(includedir)/libmmeimage
 
-libmmeimageinclude_HEADERS = libmmeimage.h
+libmmeimageinclude_HEADERS = libmmeimage.h \
+			hw_interface.h \
+			libmmeimg_debug.h \
+			libmmeimg_error.h
