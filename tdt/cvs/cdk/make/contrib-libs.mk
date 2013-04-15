@@ -2190,8 +2190,8 @@ $(DEPDIR)/libxml2.do_prepare: bootstrap $(DEPENDS_libxml2)
 
 $(DEPDIR)/libxml2.do_compile: $(DEPDIR)/libxml2.do_prepare
 	cd $(DIR_libxml2) && \
+		$(BUILDENV) \
 		./configure \
-			 $(BUILDENV) \
 			--build=$(build) \
 			--host=$(target) \
 			--prefix=/usr \
