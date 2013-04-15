@@ -27,3 +27,21 @@ eplayer3_LDADD =  -leplayer3 -lpthread -lass -lm -lpng
 
 meta_SOURCES = tools/meta.c
 meta_LDADD =  -leplayer3 -lpthread -lass -lm -lpng
+
+libeplayerincludedir =$(includedir)/libeplayer
+
+libeplayerinclude_HEADERS = \
+	include/aac.h \
+	include/common.h \
+	include/container.h \
+	include/debug.h \
+	include/ffmpeg_metadata.h \
+	include/manager.h \
+	include/misc.h \
+	include/output.h \
+	include/pcm.h \
+	include/pes.h \
+	include/playback.h \
+	include/stm_ioctls.h \
+	include/subtitle.h \
+	include/writer.h
