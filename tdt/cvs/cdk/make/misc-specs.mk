@@ -109,9 +109,6 @@ $(OPENSSL_RPM) $(OPENSSL_DEV_RPM): \
 $(DEPDIR)/$(OPENSSL): $(DEPDIR)/%$(OPENSSL): $(OPENSSL_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
-	sed -i "s,^prefix=.*,prefix=$(targetprefix)/usr," $(targetprefix)/usr/lib/pkgconfig/libcrypto.pc
-	sed -i "s,^prefix=.*,prefix=$(targetprefix)/usr," $(targetprefix)/usr/lib/pkgconfig/libssl.pc
-	sed -i "s,^prefix=.*,prefix=$(targetprefix)/usr," $(targetprefix)/usr/lib/pkgconfig/openssl.pc
 	touch $@ || true
 	$(start_build)
 	$(fromrpm_build)
