@@ -340,7 +340,7 @@ sub process_prepare ($)
       $branch = $opts{"b"} if $opts{"b"};
       $output .= "(cd $f && git fetch && git checkout $branch && git pull --rebase origin $branch; cd -) && ";
       $output .= "(cd " . $f . "; git checkout " . $opts{"r"} . "; cd -) && " if $opts{"r"};
-      $updateversion = "[ -d $f ] && (true" . $output . "(touch \$\@ -d `cd $f && \$(git_version) && cd -`) ) || true";
+      $updateversion = "[ -d $f ] && (true" . $output . "(touch \$(buildprefix)\$\@ -d `cd $f && \$(git_version) && cd -`) ) || true";
       $output .= "cp -a " . $f . $subdir . " " . $dir;
       $autoversion = "\$(eval export PKGV_$package = \$(shell cd $f && \$(git_version)))";
     }
