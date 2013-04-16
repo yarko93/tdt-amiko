@@ -115,7 +115,7 @@ $(DEPDIR)/fonts-extra: $(addsuffix .ttf, $(addprefix root/usr/share/fonts/,$(fon
 #
 BEGIN[[
 modem_scripts
-  0.3
+  0.4
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/ppp/ip-*
