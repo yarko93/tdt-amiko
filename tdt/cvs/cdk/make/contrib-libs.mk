@@ -1113,6 +1113,7 @@ libstgles
 
 DESCRIPTION_libstgles = "libstgles"
 SRC_URI_libstgles = "https://code.google.com/p/tdt-amiko/"
+PKGR_libstgles =r1
 FILES_libstgles = \
 /usr/lib/*
 
@@ -3297,7 +3298,7 @@ gst_plugin_subsink
 ]]END
 
 DESCRIPTION_gst_plugin_subsink = GStreamer Multimedia Framework gstsubsink
-
+PKGR_gst_plugin_subsink = r1
 FILES_gst_plugin_subsink = \
 /usr/lib/gstreamer-0.10/*.so
 
@@ -3439,7 +3440,7 @@ graphlcd
 ]]END
 
 DESCRIPTION_graphlcd = "Driver and Tools for LCD4LINUX"
-
+PKGR_graphlcd =r1
 FILES_graphlcd = \
 /usr/bin/* \
 /usr/lib/libglcddrivers* \
@@ -3901,9 +3902,9 @@ tuxtxtlib
   make:install:prefix=/usr:DESTDIR=PKDIR
 ;
 ]]END
+
 DESCRIPTION_tuxtxtlib = "tuxtxt library"
 PKGR_tuxtxtlib = r1
-
 FILES_tuxtxtlib = \
 /usr/lib/libtuxtxt*
 
@@ -3958,7 +3959,6 @@ tuxtxt32bpp
 
 DESCRIPTION_tuxtxt32bpp = "tuxtxt plugin"
 PKGR_tuxtxt32bpp = r2
-
 FILES_tuxtxt32bpp = \
 /usr/lib/libtuxtxt32bpp* \
 /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/* \
@@ -4011,7 +4011,7 @@ libdreamdvd
 ]]END
 
 DESCRIPTION_libdreamdvd = "libdreamdvd"
-
+PKGR_libdreamdvd = r1
 FILES_libdreamdvd = \
 /usr/lib/libdreamdvd*
 
@@ -4059,7 +4059,7 @@ libdreamdvd2
 ;
 ]]END
 DESCRIPTION_libdreamdvd2 = ""
-
+PKGR_libdreamdvd2 = r1
 FILES_libdreamdvd2 = \
 /usr/lib/*
 
@@ -4350,7 +4350,7 @@ yajl
 ]]END
 
 DESCRIPTION_yajl = "Yet Another JSON Library"
-
+PKGR_yajl = r1
 FILES_yajl = \
 /usr/lib/libyajl.* \
 /usr/bin/json*
@@ -5110,6 +5110,7 @@ libnfs
 ]]END
 
 DESCRIPTION_libnfs = nfs
+PKGR_libnfs = r1
 FILES_libnfs = \
 /usr/lib/*
 
@@ -5192,6 +5193,7 @@ e2_rtmpgw
 ]]END
 
 DESCRIPTION_e2_rtmpgw = A toolkit for RTMP streams
+PKGR_e2_rtmpgw = r1
 FILES_e2_rtmpgw = \
 /usr/sbin/rtmpgw2
 

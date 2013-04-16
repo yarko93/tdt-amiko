@@ -49,6 +49,7 @@ enigma2_networkbrowser
 ]]END
 
 DESCRIPTION_enigma2_networkbrowser = "networkbrowser plugin for enigma2"
+PKGR_enigma2_networkbrowser = r1
 
 $(DEPDIR)/enigma2_networkbrowser.do_prepare: $(DEPENDS_enigma2_networkbrowser)
 	$(PREPARE_enigma2_networkbrowser)
