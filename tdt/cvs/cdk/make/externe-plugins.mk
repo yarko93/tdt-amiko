@@ -53,6 +53,10 @@ $(DIR_e2plugin)/config.status: enigma2-plugins-sh4.do_prepare
 
 enigma2_plugindir = /usr/lib/enigma2/python/Plugins
 
+$(DEPDIR)/enigma2-plugins-bla: $(DIR_e2plugin)/config.status
+	$(eval enigma2-plugins-sh4-list = $(shell echo $(DIR_e2plugin)/*/Makefile | tr ' ' '\n' |sed 's:/Makefile::;s:.*/::'))
+	make $(addprefix $(DEPDIR)/enigma2-plugins-sh4-,$(enigma2-plugins-sh4-list))
+
 $(DEPDIR)/enigma2-plugins-sh4: $(DIR_e2plugin)/config.status $(enigma2_plugins_nontyp)
 	$(call parent_pk,e2plugin)
 #	Don't build meta
@@ -83,7 +87,8 @@ $(DEPDIR)/enigma2-plugins-sh4: $(DIR_e2plugin)/config.status $(enigma2_plugins_n
 	$(call do_build_pkg,none,extra)
 	touch $@
 
-$(enigma2_plugins_nontyp):
+#$(enigma2_plugins_nontyp):
+
 $(DEPDIR)/enigma2-plugins-sh4-%: $(DIR_e2plugin)/config.status
 	$(call parent_pk,e2plugin)
 	$(start_build)
@@ -109,7 +114,7 @@ $(DEPDIR)/enigma2-plugins-sh4-%: $(DIR_e2plugin)/config.status
 			pass \n\
 	do_finish() \n\
 	" | $(crossprefix)/bin/python
-
+	
 	rm -r $(ipkgbuilddir)/e2plugin_meta
 	$(call do_build_pkg,none,extra)
 	touch $@
