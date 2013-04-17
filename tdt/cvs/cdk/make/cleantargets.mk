@@ -75,6 +75,7 @@ distclean-local:
 	-rm -rf $(prefix)/*cdkroot-tftpboot
 	-rm -rf $(prefix)/cdkrootrewrite-pkgconfig
 	-rm -rf $(rpmdbprefix)/
+	-rm -rf $(prefix)/release*
 	-rm -rf SOURCES SPECS BUILD BUILDROOT SRPMS RPMS
 	-rm -rf $(prefix)/ccache
 	-rm -rf $(kernelprefix)/u-boot
