@@ -3412,6 +3412,7 @@ $(DEPDIR)/libusb.do_compile: $(DEPDIR)/libusb.do_prepare
 	$(BUILDENV) \
 	./configure \
 		--host=$(target) \
+		--disable-build-docs \
 		--prefix=/usr && \
 		$(MAKE) all
 	touch $@
