@@ -5,8 +5,8 @@
 # chkconfig: 100 2 0
 #
 
-PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
-DAEMON=/usr/local/bin/transmission-daemon
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/bin
+DAEMON=/usr/bin/transmission-daemon
 DESC="Torrent client"
 NAME=transmission
 
@@ -14,9 +14,7 @@ test -x $DAEMON || exit 0
 
 # Defaults
 CONFIGDIR="/etc/transmission"
-USERID=root
-GROUPID=root
-ENABLE="false"
+ENABLE="true"
 
 
 if [ "$ENABLE" != "true" ]; then
@@ -47,8 +45,8 @@ case "$1" in
 	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
 	echo "done."
 	sleep 1
-	start-stop-daemon --start --quiet --chuid $USERID:$GROUPID \
-		--exec $DAEMON -b --
+	start-stop-daemon --start --quiet  \
+		--exec $DAEMON -b -- -g $CONFIGDIR
 	echo "$NAME."
 	;;
   *)
