@@ -464,3 +464,65 @@ $(DEPDIR)/%wpa_supplicant: $(DEPDIR)/wpa_supplicant.do_compile
 	$(toflash_build)
 #	@DISTCLEANUP_wpa_supplicant@
 	[ "x$*" = "x" ] && touch $@ || true
+
+
+#
+# TRANSMISSION
+#
+
+BEGIN[[
+transmission
+2.77
+  {PN}-{PV}
+  extract:http://mirrors.m0k.org/transmission/files/{PN}-{PV}.tar.bz2
+  nothing:file://../root/etc/init.d/transmission
+  nothing:file://../root/etc/transmission.json
+  make:install:DESTDIR=PKDIR
+  install:-m644:../root/etc/transmission.json:PKDIR/etc/transmission.json
+  install:-m755:../root/etc/init.d/transmission:PKDIR/etc/init.d/transmission
+;
+]]END
+
+DESCRIPTION_transmission = "A free, lightweight BitTorrent client"
+DEPENDS_transmission = libevent-dev 
+RDEPENDS_transmission = curl openssl libevent
+FILES_transmission = \
+	/usr/local/bin/* \
+	/usr/share/transmission/*
+
+
+
+$(DEPDIR)/transmission.do_prepare: $(DEPENDS_transmission)
+	$(PREPARE_transmission)
+	touch $@
+
+$(DEPDIR)/transmission.do_compile: bootstrap $(DEPDIR)/transmission.do_prepare
+	cd $(DIR_transmission) && \
+		$(BUILDENV) \
+		./configure \
+			--disable-nls \
+			--disable-mac \
+			--disable-libappindicator \
+			--disable-libcanberra \
+			--with-gnu-ld \
+			--enable-daemon \
+			--enable-cli \
+			--disable-gtk \
+			--enable-largefile \
+			--enable-lightweight \
+			--build=$(build) \
+			--host=$(target) && \
+		$(MAKE)
+	touch $@
+
+$(DEPDIR)/transmission: \
+$(DEPDIR)/%transmission: $(DEPDIR)/transmission.do_compile
+	$(start_build)
+	cd $(DIR_transmission) && \
+		$(INSTALL_transmission) && \
+		$(INSTALL_FILE) transmission.json $(PKDIR)/etc/transmission.json && \
+		$(INSTALL_BIN) transmission $(PKDIR)/etc/init.d/transmission
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_transmission@
+	[ "x$*" = "x" ] && touch $@ || true
