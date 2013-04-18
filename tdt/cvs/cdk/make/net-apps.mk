@@ -485,8 +485,8 @@ DESCRIPTION_transmission = "A free, lightweight BitTorrent client"
 PKGR_transmission = r1
 RDEPENDS_transmission = curl openssl libevent
 FILES_transmission = \
-/usr/local/bin/* \
-/usr/local/share/transmission/*
+/usr/bin/* \
+/usr/share/transmission/*
 
 
 
@@ -498,6 +498,7 @@ $(DEPDIR)/transmission.do_compile: bootstrap libevent-dev $(DEPDIR)/transmission
 	cd $(DIR_transmission) && \
 		$(BUILDENV) \
 		./configure \
+			--prefix=/usr \
 			--disable-nls \
 			--disable-mac \
 			--disable-libappindicator \
