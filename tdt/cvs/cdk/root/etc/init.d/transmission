@@ -13,7 +13,7 @@ NAME=transmission
 test -x $DAEMON || exit 0
 
 # Defaults
-CONFIGFILE="/etc/transmission.json"
+CONFIGDIR="/etc/transmission"
 USERID=root
 GROUPID=root
 ENABLE="false"
@@ -30,7 +30,7 @@ case "$1" in
   start)
 	echo -n "Starting $DESC: "
 	start-stop-daemon --start --quiet  \
-		--exec $DAEMON -- -g $CONFIGFILE
+		--exec $DAEMON -- -g $CONFIGDIR
 	echo "$NAME."
 	;;
   stop)
