@@ -1,0 +1,71 @@
+--- stm-target-libevent.spec.org	2013-04-18 22:42:42.397264007 +0200
++++ stm-target-libevent.spec	2013-04-18 22:59:39.857264005 +0200
+@@ -8,9 +8,6 @@
+ URL:            http://libevent.org/
+ Source0:        https://github.com/downloads/libevent/libevent/libevent-%{version}-stable.tar.gz
+ Buildroot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-%{_stm_target_arch}-XXXXXX)
+-%if ! %{nohostbuilddeps}
+-BuildRequires:  doxygen
+-%endif
+ BuildRequires: %{_stm_pkg_prefix}-%{_stm_target_arch}-openssl-dev
+ 
+ %define _pkgname 	%{_stm_pkg_prefix}-%{_stm_target_arch}-libevent
+@@ -46,16 +43,6 @@
+ documentation for %{name}. If you like to develop programs using %{name},
+ you will need to install %{name}-dev.
+ 
+-%package -n %{_pkgname}-doc
+-Summary: Development documentation for %{name}
+-Group: Development/Libraries
+-Requires: %{_pkgname}-dev = %{version}-%{release}
+-
+-%description -n %{_pkgname}-doc
+-This package contains the development documentation for %{name}.
+-If you like to develop programs using %{name}-dev, you will
+-need to install %{name}-doc.
+-
+ %prep
+ %target_setup
+ %setup -q -n libevent-%{version}-stable
+@@ -71,27 +58,17 @@
+ %endif
+ 
+ %target_do_configure \
+-    --disable-dependency-tracking
++    --disable-dependency-tracking \
++    --disable-docs
+ 
+ make all
+ 
+-# Create the docs
+-make doxygen
+-
+ %install
+ %target_setup
+ # make DESTDIR=%{buildroot} install
+ %target_makeinstall
+ %target_install_fixup
+ 
+-mkdir -p %{buildroot}/%{_docdir}/%{_pkgname}-dev-%{version}/html
+-(cd doxygen/html; \
+-	install -p -m 644 *.* %{buildroot}/%{_docdir}/%{_pkgname}-dev-%{version}/html)
+-
+-mkdir -p %{buildroot}/%{_docdir}/%{_pkgname}-dev-%{version}/sample
+-(cd sample; \
+-	install -p -m 644 *.c Makefile* %{buildroot}/%{_docdir}/%{_pkgname}-dev-%{version}/sample)
+-
+ %files -n %{_pkgname}
+ %defattr(-,root,root,0755)
+ %doc README
+@@ -130,11 +107,6 @@
+ 
+ %{_stm_cross_target_dir}%{_stm_target_bin_dir}/event_rpcgen.*
+ 
+-%files -n %{_pkgname}-doc
+-%defattr(-,root,root,0644)
+-%{_stm_cross_target_dir}%{_stm_target_doc_dir}/%{_pkgname}-dev-%{version}/html/*
+-%{_stm_cross_target_dir}%{_stm_target_doc_dir}/%{_pkgname}-dev-%{version}/sample/*
+-
+ %changelog
+ * Mon Mar 18 2013 Filippo Arcidiacono <filippo.arcidiacono@st.com> 4
+ - [Spec] Bump release number to build against new openssl package.
