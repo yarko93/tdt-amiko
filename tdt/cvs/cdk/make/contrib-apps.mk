@@ -1298,16 +1298,16 @@ DESCRIPTION_ntpclient := time sync over ntp protocol
 FILES_ntpclient := /sbin /etc
 #version is handled by smart-rules
 #PKGV_ntpclient =
-PKGR_ntpclient = r0
+PKGR_ntpclient = r1
 # comment symbol '#' in define goes directly to split_packages.py. You do not need to escape it!
 # moreover line breaks are also correctly exported to python, enjoy!
 define postinst_ntpclient
 #!/bin/sh
-initconfig --add ntpclient
+initdconfig --add ntpclient
 endef
 define postrm_ntpclient
 #!/bin/sh
-initconfig --del ntpclient
+initdconfig --del ntpclient
 endef
 
 $(DEPDIR)/ntpclient.do_prepare: $(DEPENDS_ntpclient)
