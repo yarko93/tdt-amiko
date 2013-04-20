@@ -2,7 +2,7 @@
 # busybox
 #
 
-PKGR_busybox = r0
+PKGR_busybox = r1
 BEGIN[[
 busybox
   1.21.0
