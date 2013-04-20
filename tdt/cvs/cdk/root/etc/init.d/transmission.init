@@ -2,55 +2,51 @@
 #
 # transmission
 #
-# chkconfig: 100 2 0
+# chkconfig: S 100 2
 #
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/bin
 DAEMON=/usr/bin/transmission-daemon
 DESC="Torrent client"
 NAME=transmission
-
-test -x $DAEMON || exit 0
-
-# Defaults
 CONFIGDIR="/etc/transmission"
-ENABLE="true"
 
+[ -x $DAEMON ] || exit 1
 
-if [ "$ENABLE" != "true" ]; then
-	echo "$NAME daemon disabled"
-	exit 0
-fi
-
-set -e
 
 case "$1" in
   start)
 	echo -n "Starting $DESC: "
-	start-stop-daemon --start --quiet  \
+	start-stop-daemon --start \
 		--exec $DAEMON -- -g $CONFIGDIR
 	echo "$NAME."
 	;;
   stop)
 	echo -n "Stopping $DESC: "
-	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
+	start-stop-daemon --stop --oknodo --exec $DAEMON
 	echo "$NAME."
 	;;
   reload|force-reload)
 	echo "Reloading $DESC configuration files."
-	start-stop-daemon --stop --signal 1 --quiet --exec $DAEMON
+	start-stop-daemon --stop --signal 1 --exec $DAEMON
 	;;
   restart)
 	echo -n "Restarting $DESC: "
-	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
+	start-stop-daemon --stop --oknodo --exec $DAEMON
 	echo "done."
-	sleep 1
-	start-stop-daemon --start --quiet  \
-		--exec $DAEMON -b -- -g $CONFIGDIR
+	sleep 5
+	start-stop-daemon --start  \
+		--exec $DAEMON -- -g $CONFIGDIR
 	echo "$NAME."
+        ;;
+  enable)
+	initdconfig --add transmission
+	;;
+  disable)
+	initdconfig --del transmission
 	;;
   *)
-	echo "Usage: $0 {start|stop|restart|reload|force-reload}" >&2
+	echo "Usage: $0 {start|stop|restart|reload|force-reload|enable|disable}" >&2
 	exit 1
 	;;
 esac
