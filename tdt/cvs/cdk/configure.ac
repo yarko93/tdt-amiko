@@ -534,6 +534,7 @@ AC_SUBST(bootprefix)
 AC_SUBST(serversupport)
 AC_SUBST(customizationsdir)
 AC_SUBST(updatehttpprefix)
+$INSTALL -d ${workprefix}
 
 packagingtmpdir=$buildprefix/packagingtmpdir
 ipkgbuilddir=$buildprefix/ipkgbuild
@@ -681,34 +682,6 @@ AC_SUBST(DISTCLEANUP)
 # core
 #
 
-AC_SUBST(KERNELVERSION)
-AC_SUBST(KERNELSTMLABEL)
-AC_SUBST(KERNELLABEL)
-
-if test "$enable_stm24" = "yes"; then
-	if test "$enable_p0209" == "yes"; then
-		KERNELVERSION=${VERSION_linuxp0209}
-		KERNELSTMLABEL="_${VERSION_linuxp0209#*_}"
-		KERNELLABEL="209"
-	elif test "$enable_p0210" == "yes"; then
-		KERNELVERSION=${VERSION_linuxp0210}
-		KERNELSTMLABEL="_${VERSION_linuxp0210#*_}"
-		KERNELLABEL="210"
-	elif test "$enable_p0211" == "yes"; then
-		KERNELVERSION=${VERSION_linuxp0211}
-		KERNELSTMLABEL="_${VERSION_linuxp0211#*_}"
-		KERNELLABEL="211"
-	elif test "$enable_p0207" == "yes"; then
-		KERNELVERSION=${VERSION_linuxp0207}
-		KERNELSTMLABEL="_${VERSION_linuxp0207#*_}"
-		KERNELLABEL="207"
-	else
-		KERNELVERSION=${VERSION_linuxp0210}
-		KERNELSTMLABEL="_${VERSION_linuxp0210#*_}"
-		KERNELLABEL="210"
-	fi
-fi
-
 AC_SUBST(EXTERNALLCD_DEP)
 
 if test "$enable_externallcd" == "yes"; then
@@ -814,10 +787,6 @@ AC_SUBST(DRPMBUILD)
 #
 
 
-AC_SUBST(DOWNLOAD_FOR_SMART)
-AC_SUBST(SMART_DOWNLOAD_RULES)
-dnl AM_SUBST_NOTMAKE(SMART_DOWNLOAD_RULES)
-
 #
 # summary
 #
@@ -826,9 +795,6 @@ AC_MSG_RESULT([
 summary:
 -------------------------------------------------------------------------------
 target cpu                  : $CPU_MODEL
-linux kernel                : ${KERNELVERSION%.*}
-kernelversion               : $KERNELVERSION
-localversion                : $KERNELSTMLABEL
 STLinux 2.4                 : $enable_stm24
 Patchlevel P0207            : $enable_p0207
 Patchlevel P0209            : $enable_p0209
@@ -884,11 +850,6 @@ AC_MSG_RESULT([
 ******************************************************************
 ])
 fi
-
-TUXBOX_CUSTOMIZE='[[ -x $(customizationsdir)/$(notdir $@)-local.sh ] && KERNELVERSION=$(KERNELVERSION) && $(customizationsdir)/$(notdir $@)-local.sh $(buildprefix) || true]'
-AC_SUBST(TUXBOX_CUSTOMIZE)
-TUXBOX_TOUCH='[@[ "x$*" = "x" ] && touch $@ || true]'
-AC_SUBST(TUXBOX_TOUCH)
 
 ac_subst_vars='m4_set_dump([_AC_SUBST_VARS], m4_newline)'
 echo $ac_subst_vars |perl -pe 's/ /\n/g' |perl -pe 's/(.*)/\1 = @\1@/' > Config.in

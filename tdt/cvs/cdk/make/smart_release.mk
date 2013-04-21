@@ -224,6 +224,7 @@ $(DEPDIR)/udev-rules: $(DEPENDS_udev_rules) $(RDEPENDS_udev_rules)
 DESCRIPTION_boot_elf = firmware non public
 SRC_URI_boot_elf = unknown
 PKGV_boot_elf = r2
+RDEPENDS_boot_elf :=
 
 
 $(DEPDIR)/boot-elf: firmware $(RDEPENDS_boot_elf)
@@ -240,10 +241,14 @@ endif
 	$(toflash_build)
 	touch $@
 
-##
+#
+# opkg plugin nonfree feed
+#
+
 DESCRIPTION_enigma2_plugin_nonfree_feed = Download non free plugins and skins
 SRC_URI_enigma2_plugin_nonfree_feed = unknown
 PKGV_enigma2_plugin_nonfree_feed = r3
+RDEPENDS_enigma2_plugin_nonfree_feed :=
 
 define postinst_enigma2_plugin_nonfree_feed
 #!/bin/sh
@@ -252,7 +257,7 @@ define postinst_enigma2_plugin_nonfree_feed
 exit 0
 endef
 
-$(DEPDIR)/enigma2-plugin-nonfree-feed: bootstrap $(DEPENDS_enigma2_plugin_nonfree_feed)
+$(DEPDIR)/enigma2-plugin-nonfree-feed: $(RDEPENDS_enigma2_plugin_nonfree_feed)
 	$(start_build)
 	$(INSTALL_DIR) $(PKDIR)/etc/opkg/ && \
 	$(INSTALL_FILE) $(buildprefix)/root/etc/ipkg/non-free-feed.conf $(PKDIR)/etc/opkg/non-free-feed.conf
@@ -266,6 +271,7 @@ $(DEPDIR)/enigma2-plugin-nonfree-feed: bootstrap $(DEPENDS_enigma2_plugin_nonfre
 DESCRIPTION_firmware = firmware non public
 SRC_URI_firmware = unknown
 PKGV_firmware = r1
+RDEPENDS_firmware :=
 
 $(DEPDIR)/firmware:  $(RDEPENDS_firmware)
 	$(start_build)

@@ -64,7 +64,7 @@ $(DEPDIR)/module_init_tools.do_compile: $(DEPDIR)/module_init_tools.do_prepare
 	touch $@
 
 $(DEPDIR)/module_init_tools: \
-$(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS:%=root/etc/%) $(DEPDIR)/module_init_tools.do_compile
+$(DEPDIR)/%module_init_tools: $(DEPDIR)/%lsb $(MODULE_INIT_TOOLS_ADAPTED_ETC_FILES:%=root/etc/%) $(DEPDIR)/module_init_tools.do_compile
 	cd $(DIR_module_init_tools) && \
 		$(INSTALL_module_init_tools)
 	$(call adapted-etc-files,$(MODULE_INIT_TOOLS_ADAPTED_ETC_FILES))
@@ -863,6 +863,7 @@ rfkill
 ]]END
 
 DESCRIPTION_rfkill = rfkill is a small tool to query the state of the rfkill switches, buttons and subsystem interfaces
+PKGR_rfkill = r1
 FILES_rfkill = \
 /usr/sbin/*
 
@@ -1509,6 +1510,7 @@ hotplug_e2
 ]]END
 
 DESCRIPTION_hotplug_e2 = "hotplug_e2"
+PKGR_hotplug_e2 = r1
 FILES_hotplug_e2 = \
 /sbin/bdpoll \
 /usr/bin/hotplug_e2_helper
@@ -1662,6 +1664,7 @@ grab
 ]]END
 
 DESCRIPTION_grab = make enigma2 screenshots
+PKGR_grab = r1
 RDEPENDS_grab = libpng jpeg
 
 $(DEPDIR)/grab.do_prepare: bootstrap $(RDEPENDS_grab) $(DEPENDS_grab)
@@ -1670,8 +1673,8 @@ $(DEPDIR)/grab.do_prepare: bootstrap $(RDEPENDS_grab) $(DEPENDS_grab)
 
 $(DEPDIR)/grab.do_compile: grab.do_prepare
 	cd $(DIR_grab) && \
-		$(BUILDENV) && \
 		autoreconf -i && \
+		$(BUILDENV) \
 		./configure \
 			--build=$(build) \
 			--host=$(target) \
@@ -1710,7 +1713,7 @@ $(DEPDIR)/enigma2_plugin_cams_oscam.do_prepare: bootstrap $(DEPENDS_enigma2_plug
 
 $(DEPDIR)/enigma2_plugin_cams_oscam.do_compile: enigma2_plugin_cams_oscam.do_prepare
 	cd $(DIR_enigma2_plugin_cams_oscam) && \
-	$(BUILDENV) && \
+	$(BUILDENV) \
 	$(MAKE) CROSS=$(prefix)/devkit/sh4/bin/$(target)-  CONF_DIR=/var/keys
 	touch $@
 

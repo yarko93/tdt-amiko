@@ -55,6 +55,11 @@ endif
 ;
 ]]END
 
+DESCRIPTION_enigma2 := a framebuffer-based zapping application (GUI) for linux
+PKGR_enigma2 = r1
+SRC_URI_enigma2 := https://code.google.com/p/enigma2-dmm/
+FILES_enigma2 := /usr/bin /usr/lib/ /etc/enigma2 /usr/share
+
 $(DEPDIR)/enigma2-nightly.do_prepare:$(DEPENDS_enigma2)
 	$(PREPARE_enigma2)
 	touch $@
@@ -85,9 +90,6 @@ $(DEPDIR)/enigma2-nightly.do_compile: $(DIR_enigma2)/config.status
 		$(MAKE) all
 	touch $@
 
-DESCRIPTION_enigma2 := a framebuffer-based zapping application (GUI) for linux
-SRC_URI_enigma2 := https://code.google.com/p/enigma2-dmm/
-FILES_enigma2 := /usr/bin /usr/lib/ /etc/enigma2 /usr/share
 $(DEPDIR)/enigma2-nightly: enigma2-nightly.do_prepare enigma2-nightly.do_compile
 #alternate you can do the following: (see packaging.mk)
 	$(call parent_pk,enigma2)

@@ -2,7 +2,7 @@
 BEGIN[[
 enigma2_pli
   git
-  $(appsdir)/{PN}-nightly
+  {PN}-nightly
 
 ifdef ENABLE_E2PD0
   git://openpli.git.sourceforge.net/gitroot/openpli/enigma2:r=945aeb939308b3652b56bc6c577853369d54a537
@@ -50,6 +50,20 @@ endif
 ;
 ]]END
 
+DESCRIPTION_enigma2_pli := a framebuffer-based zapping application (GUI) for linux
+PKGR_enigma2_pli = r3
+SRC_URI_enigma2_pli := git://openpli.git.sourceforge.net/gitroot/openpli/enigma2
+FILES_enigma2_pli := /usr/lib/ /etc/enigma2 /usr/share /usr/bin
+RDEPENDS_enigma2_pli = fp_control \
+evremote2 \
+devinit \
+ustslave \
+stfbcontrol \
+showiframe
+
+# Select enigma2 keymap.xml
+enigma2_keymap_file = keymap$(if $(HL101),_$(HL101))$(if $(SPARK)$(SPARK7162),_spark).xml
+
 E_CONFIG_OPTS =
 
 ifdef ENABLE_EXTERNALLCD
@@ -59,7 +73,7 @@ endif
 ifdef ENABLE_MEDIAFWGSTREAMER
 E_CONFIG_OPTS += --enable-mediafwgstreamer
 else
-E_CONFIG_OPTS += --enable-libeplayer3
+E_CONFIG_OPTS += --enable-libeplayer3 LIBEPLAYER3_CPPFLAGS="-I$(appsdir)/misc/tools/libeplayer3/include"
 endif
 
 ifdef ENABLE_SPARK
@@ -79,10 +93,10 @@ $(DIR_enigma2_pli)/config.status: bootstrap opkg ethtool freetype expat fontconf
 		libdvbsipp python libxml2 libxslt elementtree zope_interface twisted pycrypto pyusb pilimaging pyopenssl pythonwifi lxml libxmlccwrap \
 		ncurses-dev libdreamdvd2 tuxtxt32bpp sdparm hotplug_e2 $(MEDIAFW_DEP) $(EXTERNALLCD_DEP)
 	cd $(DIR_enigma2_pli) && \
+		$(BUILDENV) \
 		./autogen.sh && \
 		sed -e 's|#!/usr/bin/python|#!$(crossprefix)/bin/python|' -i po/xml2po.py && \
 		./configure \
-			  $(BUILDENV) \
 			--host=$(target) \
 			--with-libsdl=no \
 			--datadir=/usr/share \
@@ -101,20 +115,6 @@ $(DEPDIR)/enigma2-pli-nightly.do_compile: $(DIR_enigma2_pli)/config.status
 	cd $(DIR_enigma2_pli) && \
 		$(MAKE) all
 	touch $@
-
-# Select enigma2 keymap.xml
-enigma2_keymap_file = keymap$(if $(HL101),_$(HL101))$(if $(SPARK)$(SPARK7162),_spark).xml
-
-DESCRIPTION_enigma2_pli := a framebuffer-based zapping application (GUI) for linux
-PKGR_enigma2_pli = r3
-SRC_URI_enigma2_pli := git://openpli.git.sourceforge.net/gitroot/openpli/enigma2
-FILES_enigma2_pli := /usr/lib/ /etc/enigma2 /usr/share /usr/bin
-RDEPENDS_enigma2_pli = fp_control \
-evremote2 \
-devinit \
-ustslave \
-stfbcontrol \
-showiframe
 
 $(DEPDIR)/enigma2-pli-nightly: enigma2-pli-nightly.do_compile
 	$(call parent_pk,enigma2_pli)

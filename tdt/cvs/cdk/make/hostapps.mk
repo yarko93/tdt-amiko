@@ -80,8 +80,8 @@ $(hostprefix)/bin/mksquashfs: $(DEPENDS_squashfs)
 	cd squashfs4.0/squashfs-tools && patch -p1 < $(buildprefix)/Patches/squashfs-tools-4.0-lzma.patch
 	$(MAKE) -C $(DIR_squashfs)/squashfs4.0/squashfs-tools
 	$(INSTALL) -d $(@D)
-	$(INSTALL) -m755 $(DIR_squashfs@/squashfs4.0/squashfs-tools/mksquashfs $)
-	$(INSTALL) -m755 $(DIR_squashfs@/squashfs4.0/squashfs-tools/unsquashfs $()D)
+	$(INSTALL) -m755 $(DIR_squashfs)/squashfs4.0/squashfs-tools/mksquashfs $@
+	$(INSTALL) -m755 $(DIR_squashfs)/squashfs4.0/squashfs-tools/unsquashfs $(@D)
 #	rm -rf $(DIR_squashfs)
 
 #
