@@ -475,26 +475,35 @@ transmission
   2.77
   {PN}-{PV}
   extract:http://mirrors.m0k.org/transmission/files/{PN}-{PV}.tar.bz2
-  nothing:file://../root/etc/init.d/transmission
+  nothing:file://../root/etc/init.d/transmission.init
   nothing:file://../root/etc/transmission.json
   make:install:DESTDIR=PKDIR
 ;
 ]]END
 
 DESCRIPTION_transmission = "A free, lightweight BitTorrent client"
-PKGR_transmission = r2
+PKGR_transmission = r3
 RDEPENDS_transmission = curl openssl libevent
 FILES_transmission = \
 /usr/bin/* \
 /usr/share/transmission/*
 
+define postinst_transmission
+#!/bin/sh
 
+initdconfig --add transmission
+endef
+define postrm_transmission
+#!/bin/sh
+
+initdconfig --del transmission
+endef
 
 $(DEPDIR)/transmission.do_prepare: $(DEPENDS_transmission)
 	$(PREPARE_transmission)
 	touch $@
 
-$(DEPDIR)/transmission.do_compile: bootstrap libevent-dev openssl-dev curl $(DEPDIR)/transmission.do_prepare
+$(DEPDIR)/transmission.do_compile: bootstrap libevent-dev curl $(DEPDIR)/transmission.do_prepare
 	cd $(DIR_transmission) && \
 		$(BUILDENV) \
 		./configure \
@@ -521,14 +530,9 @@ $(DEPDIR)/%transmission: $(DEPDIR)/transmission.do_compile
 		$(INSTALL_transmission) && \
 		$(INSTALL_DIR) $(PKDIR)/etc && \
 		$(INSTALL_DIR) $(PKDIR)/etc/transmission && \
-		$(INSTALL_FILE) $(PKDIR)/../root/etc/transmission.json $(PKDIR)/etc/transmission/settings.json && \
-		$(INSTALL_DIR) $(PKDIR)/etc/init.d
-		$(INSTALL_BIN) $(PKDIR)/../root/etc/init.d/transmission $(PKDIR)/etc/init.d/transmission
-		$(INSTALL_DIR) $(PKDIR)/etc/rc.d
-		$(INSTALL_DIR) $(PKDIR)/etc/rc.d/rcS.d
-		$(INSTALL_DIR) $(PKDIR)/etc/rc.d/rc6.d
-		ln -sf ../init.d/transmission $(PKDIR)/etc/rc.d/rcS.d/S100transmission
-		ln -sf ../init.d/transmission $(PKDIR)/etc/rc.d/rc6.d/K02transmission
+		$(INSTALL_FILE) transmission.json $(PKDIR)/etc/transmission/settings.json && \
+		$(INSTALL_DIR) $(PKDIR)/etc/init.d && \
+		$(INSTALL_BIN) transmission.init $(PKDIR)/etc/init.d/transmission
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_transmission@
