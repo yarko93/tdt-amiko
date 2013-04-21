@@ -76,14 +76,17 @@ echo "Checking targets..."
 echo "Found targets:"
 if [  -e $TUFSBOXDIR/release ]; then
   echo "   1) Prepare Enigma2"
+  REPLY="1"
 fi
 if [  -e $TUFSBOXDIR/release_neutrino ]; then
   echo "   2) Prepare Neutrino"
+  REPLY="2"
 fi
 if [  -e $TUFSBOXDIR/release_vdr ]; then
   echo "   3) Prepare VDR"
+ REPLY="3"
 fi
-read -p "Select target (1-3)? "
+# read -p "Select target (1-3)? "
 case "$REPLY" in
 	0)  echo "Skipping...";;
 	1)  echo "Preparing Enigma2 Root..."
@@ -95,20 +98,21 @@ case "$REPLY" in
 	*)  "Invalid Input! Exiting..."
 		exit 2;;
 esac
-echo "Root prepared"
-echo "Flashtool fup exists"
-echo "-----------------------------------------------------------------------"
-echo "Checking targets..."
-echo "Found flashtarget:"
-echo "   1) KERNEL with ROOT and FW"
-read -p "Select flashtarget (1)? "
-case "$REPLY" in
-	1)  echo "Creating KERNEL with ROOT and FW..."
-		$SCRIPTDIR/flash_part_w_fw.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPKERNELDIR $TMPROOTDIR $VERSION ;;
-	*)  "Invalid Input! Exiting..."
-		exit 3;;
-esac
-#clear
+# echo "Root prepared"
+# echo "Flashtool fup exists"
+# echo "-----------------------------------------------------------------------"
+# echo "Checking targets..."
+# echo "Found flashtarget:"
+# echo "   1) KERNEL with ROOT and FW"
+# read -p "Select flashtarget (1)? "
+# case "$REPLY" in
+# 	1)  echo "Creating KERNEL with ROOT and FW..."
+		$SCRIPTDIR/flash_part_w_fw.sh $CURDIR $TUFSBOXDIR $OUTDIR $TMPKERNELDIR $TMPROOTDIR $VERSION
+# 	;;
+# 	*)  "Invalid Input! Exiting..."
+# 		exit 3;;
+# esac
+# clear
 echo "-----------------------------------------------------------------------"
 AUDIOELFSIZE=`stat -c %s $TMPROOTDIR/boot/audio.elf`
 VIDEOELFSIZE=`stat -c %s $TMPROOTDIR/boot/video.elf`
