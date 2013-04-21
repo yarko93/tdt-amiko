@@ -134,7 +134,7 @@ pppd
 ;
 ]]END
 
-PKGV_pppd = r1
+PKGR_pppd = r1
 DESCRIPTION_pppd = "pppd"
 FILES_pppd = \
 /usr/sbin/* \
