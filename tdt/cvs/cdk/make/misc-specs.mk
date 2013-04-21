@@ -221,3 +221,46 @@ $(DEPDIR)/$(ALSAPLAYER_DEV): $(DEPDIR)/%$(ALSAPLAYER_DEV): $(ALSAPLAYER_DEV_RPM)
 	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
 		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
 	touch $@ || true
+
+
+#
+# LIBEVENT
+#
+
+LIBEVENT := libevent
+LIBEVENT_DEV := libevent-dev
+FILES_libevent_dev = \
+/usr/lib
+FILES_libevent = \
+/usr/lib/*.so*
+
+LIBEVENT_VERSION := 2.0.19-4
+LIBEVENT_SPEC := stm-target-$(LIBEVENT).spec
+LIBEVENT_SPEC_PATCH := stm-target-$(LIBEVENT).spec.diff
+LIBEVENT_PATCHES :=
+LIBEVENT_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBEVENT)-$(LIBEVENT_VERSION).sh4.rpm
+LIBEVENT_DEV_RPM := RPMS/sh4/$(STLINUX)-sh4-$(LIBEVENT_DEV)-$(LIBEVENT_VERSION).sh4.rpm
+
+$(LIBEVENT_RPM) $(LIBEVENT_DEV_RPM): \
+		$(if $(LIBEVENT_SPEC_PATCH),Patches/$(LIBEVENT_SPEC_PATCH)) \
+		$(if $(LIBEVENT_PATCHES),$(LIBEVENT_PATCHES:%=Patches/%)) \
+		$(archivedir)/$(STLINUX)-target-$(LIBEVENT)-$(LIBEVENT_VERSION).src.rpm
+	rpm $(DRPM) --nosignature -Uhv $(lastword $^) && \
+	$(if $(LIBEVENT_SPEC_PATCH),( cd SPECS && patch -p1 $(LIBEVENT_SPEC) < $(buildprefix)/Patches/$(LIBEVENT_SPEC_PATCH) ) &&) \
+	$(if $(LIBEVENT_PATCHES),cp $(LIBEVENT_PATCHES:%=Patches/%) SOURCES/ &&) \
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	rpmbuild $(DRPMBUILD) -bb -v --clean --target=sh4-linux SPECS/$(LIBEVENT_SPEC)
+
+$(DEPDIR)/$(LIBEVENT): $(DEPDIR)/%$(LIBEVENT): $(LIBEVENT_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
+	touch $@ || true
+	$(start_build)
+	$(fromrpm_build)
+
+$(DEPDIR)/$(LIBEVENT_DEV): $(DEPDIR)/%$(LIBEVENT_DEV): %$(LIBEVENT) $(LIBEVENT_DEV_RPM)
+	@rpm --dbpath $(prefix)/$*cdkroot-rpmdb $(DRPM) --ignorearch --nodeps -Uhv \
+		--badreloc --relocate $(targetprefix)=$(prefix)/$*cdkroot $(lastword $^) && \
+	touch $@ || true
+	$(start_build)
+	$(fromrpm_build)

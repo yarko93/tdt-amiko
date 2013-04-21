@@ -2,33 +2,6 @@
 
 . /etc/modem.conf
 
-[ -z "$MODEMTYPE" ] && MODEMTYPE=0
-[ "$MODEMPORT" = "auto" ] &&  MODEMPORT=`cat /etc/modem.list | grep "$3\:$4"|cut -f 3 -d : -s`
-if [ -z "$MODEMPORT" ]; then
-	echo "Unknown modem $3\:$4 Please specify the modem port manually" >> /tmp/modem.log 
-	[ "$MODEMTYPE" = "0" ] && MODEMPORT=ttyUSB0 || MODEMPORT=ttyACM0
-fi
-[ -z "$MODEMSPEED" ] && MODEMSPEED=""
-[ -z "$APN" ] && APN="internet"
-[ -z "$MODEMUSERNAME" ] && MODEMUSERNAME=""
-[ -z "$MODEMPASSWORD" ] && MODEMPASSWORD=""
-if [ -z "$MODEMMTU" ] || [ "$MODEMMTU" = "auto" ]; then
-    MODEMMTU=1492
-fi
-if [ -z "$MODEMMRU" ] || [ "$MODEMMRU" = "auto" ]; then
-    MODEMMRU=1492
-fi
-[ -z "$MODEMPPPDOPTS" ] && MODEMPPPDOPTS=""
-if [ -z "$DIALNUMBER" ] || [ "$DIALNUMBER" = "auto" ]; then
-    if [ "$MODEMTYPE" = "0" ]; then
-	DIALNUMBER="*99#"
-    else
-	DIALNUMBER="#777"
-    fi
-fi
-[ -z "$MODEMAUTOSTART" ] && MODEMAUTOSTART=1
-[ -z "$DEBUG" ] && DEBUG=0
-
 start(){
 if [ ! -d /etc/ppp/peers ]; then
     mkdir -p /etc/ppp/peers
@@ -79,7 +52,7 @@ nodetach
 persist
 user $MODEMUSERNAME
 password $MODEMPASSWORD
-connect \"/sbin/chat -s -S -V -t 60 -f /etc/ppp/peers/$MODEMTYPE.chat 2>/tmp/chat.log\"" > /etc/ppp/peers/dialup
+connect \"/usr/sbin/chat -s -S -V -t 60 -f /etc/ppp/peers/$MODEMTYPE.chat 2>/tmp/chat.log\"" > /etc/ppp/peers/dialup
 
 if [ ! -c /dev/ppp ]; then
     mknod /dev/ppp c 108 0
@@ -95,8 +68,24 @@ rm -rf /etc/ppp/peers/dialup
 rm -rf /etc/ppp/resolv.conf
 }
 
+
+
+if [ -z "$MODEMMTU" ] || [ "$MODEMMTU" = "auto" ]; then
+    MODEMMTU=1492
+fi
+if [ -z "$MODEMMRU" ] || [ "$MODEMMRU" = "auto" ]; then
+    MODEMMRU=1492
+fi
+if [ -z "$DIALNUMBER" ] || [ "$DIALNUMBER" = "auto" ]; then
+    if [ "$MODEMTYPE" = "0" ]; then
+	DIALNUMBER="*99#"
+    else
+	DIALNUMBER="#777"
+    fi
+fi
+
 if [ "$DEBUG" = "1" ]; then
-    echo "ACTION $1 MODEMPORT $2" >> /tmp/modem.log
+    echo -e "==================================================\nACTION $1 MODEMPORT $2" >> /tmp/modem.log
 else
     rm -rf /tmp/modem.log
 fi

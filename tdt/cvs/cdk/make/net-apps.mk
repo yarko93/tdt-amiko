@@ -59,7 +59,7 @@ $(DEPDIR)/%nfs_utils: $(NFS_UTILS_ADAPTED_ETC_FILES:%=root/etc/%) \
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_nfs_utils@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@ || true
 
 #
 # vsftpd
@@ -117,7 +117,7 @@ $(DEPDIR)/%vsftpd: $(DEPDIR)/vsftpd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_vsftpd@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@ || true
 
 #
 # ETHTOOL
@@ -158,7 +158,7 @@ $(DEPDIR)/%ethtool: $(DEPDIR)/ethtool.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_ethtool@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@ || true
 
 #
 # SAMBA
@@ -256,7 +256,7 @@ $(DEPDIR)/%samba: $(DEPDIR)/samba.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_samba@
-	@[ "x$*" = "x" ] && touch $@ || true
+	touch $@ || true
 
 #
 # NETIO
@@ -294,7 +294,7 @@ $(DEPDIR)/%netio: $(DEPDIR)/netio.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_netio@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@ || true
 
 #
 # LIGHTTPD
@@ -347,7 +347,7 @@ $(DEPDIR)/%lighttpd: $(DEPDIR)/lighttpd.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_lighttpd@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@ || true
 
 #
 # NETKIT_FTP
@@ -388,7 +388,7 @@ $(DEPDIR)/%netkit_ftp: $(DEPDIR)/netkit_ftp.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_netkit_ftp@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@ || true
 
 #
 # WIRELESS_TOOLS
@@ -425,7 +425,7 @@ $(DEPDIR)/%wireless_tools: $(DEPDIR)/wireless_tools.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_wireless_tools@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@ || true
 
 #
 # WPA_SUPPLICANT
@@ -463,4 +463,73 @@ $(DEPDIR)/%wpa_supplicant: $(DEPDIR)/wpa_supplicant.do_compile
 	$(tocdk_build)
 	$(toflash_build)
 #	@DISTCLEANUP_wpa_supplicant@
-	[ "x$*" = "x" ] && touch $@ || true
+	touch $@ || true
+
+
+#
+# TRANSMISSION
+#
+
+BEGIN[[
+transmission
+  2.77
+  {PN}-{PV}
+  extract:http://mirrors.m0k.org/transmission/files/{PN}-{PV}.tar.bz2
+  nothing:file://../root/etc/init.d/transmission
+  nothing:file://../root/etc/transmission.json
+  make:install:DESTDIR=PKDIR
+;
+]]END
+
+DESCRIPTION_transmission = "A free, lightweight BitTorrent client"
+PKGR_transmission = r2
+RDEPENDS_transmission = curl openssl libevent
+FILES_transmission = \
+/usr/bin/* \
+/usr/share/transmission/*
+
+
+
+$(DEPDIR)/transmission.do_prepare: $(DEPENDS_transmission)
+	$(PREPARE_transmission)
+	touch $@
+
+$(DEPDIR)/transmission.do_compile: bootstrap libevent-dev openssl-dev curl $(DEPDIR)/transmission.do_prepare
+	cd $(DIR_transmission) && \
+		$(BUILDENV) \
+		./configure \
+			--prefix=/usr \
+			--disable-nls \
+			--disable-mac \
+			--disable-libappindicator \
+			--disable-libcanberra \
+			--with-gnu-ld \
+			--enable-daemon \
+			--enable-cli \
+			--disable-gtk \
+			--enable-largefile \
+			--enable-lightweight \
+			--build=$(build) \
+			--host=$(target) && \
+		$(MAKE)
+	touch $@
+
+$(DEPDIR)/transmission: \
+$(DEPDIR)/%transmission: $(DEPDIR)/transmission.do_compile
+	$(start_build)
+	cd $(DIR_transmission) && \
+		$(INSTALL_transmission) && \
+		$(INSTALL_DIR) $(PKDIR)/etc && \
+		$(INSTALL_DIR) $(PKDIR)/etc/transmission && \
+		$(INSTALL_FILE) $(PKDIR)/../root/etc/transmission.json $(PKDIR)/etc/transmission/settings.json && \
+		$(INSTALL_DIR) $(PKDIR)/etc/init.d
+		$(INSTALL_BIN) $(PKDIR)/../root/etc/init.d/transmission $(PKDIR)/etc/init.d/transmission
+		$(INSTALL_DIR) $(PKDIR)/etc/rc.d
+		$(INSTALL_DIR) $(PKDIR)/etc/rc.d/rcS.d
+		$(INSTALL_DIR) $(PKDIR)/etc/rc.d/rc6.d
+		ln -sf ../init.d/transmission $(PKDIR)/etc/rc.d/rcS.d/S100transmission
+		ln -sf ../init.d/transmission $(PKDIR)/etc/rc.d/rc6.d/K02transmission
+	$(tocdk_build)
+	$(toflash_build)
+#	@DISTCLEANUP_transmission@
+	touch $@ || true

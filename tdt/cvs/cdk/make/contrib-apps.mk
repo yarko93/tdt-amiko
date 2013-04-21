@@ -134,7 +134,7 @@ pppd
 ;
 ]]END
 
-PKGV_pppd = r1
+PKGR_pppd = r1
 DESCRIPTION_pppd = "pppd"
 FILES_pppd = \
 /usr/sbin/* \
@@ -425,7 +425,7 @@ $(DEPDIR)/%openrdate: $(OPENRDATE_ADAPTED_ETC_FILES:%=root/etc/%) \
 		[ -f $$i ] && $(INSTALL) -m644 $$i $(PKDIR)/etc/$$i || true; \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(PKDIR)/etc/$$i || true; done ) && \
 	( export HHL_CROSS_TARGET_DIR=$(prefix)/release && cd $(prefix)/release/etc/init.d && \
-		for s in rdate.sh ; do \
+		for s in rdate ; do \
 			$(hostprefix)/bin/target-initdconfig --add $$s || \
 			echo "Unable to enable initd service: $$s" ; done && rm *rpmsave 2>/dev/null || true )
 	$(tocdk_build)
@@ -1298,16 +1298,16 @@ DESCRIPTION_ntpclient := time sync over ntp protocol
 FILES_ntpclient := /sbin /etc
 #version is handled by smart-rules
 #PKGV_ntpclient =
-PKGR_ntpclient = r0
+PKGR_ntpclient = r1
 # comment symbol '#' in define goes directly to split_packages.py. You do not need to escape it!
 # moreover line breaks are also correctly exported to python, enjoy!
 define postinst_ntpclient
 #!/bin/sh
-initconfig --add ntpclient
+initdconfig --add ntpclient
 endef
 define postrm_ntpclient
 #!/bin/sh
-initconfig --del ntpclient
+initdconfig --del ntpclient
 endef
 
 $(DEPDIR)/ntpclient.do_prepare: $(DEPENDS_ntpclient)
