@@ -683,7 +683,7 @@ ln -sf $configprefix/rpm config || true
 echo "%_topdir $buildprefix" >localmacros
 echo "%_specdir %_topdir/SPECS" >>localmacros
 echo "%_sourcedir %_topdir/SOURCES" >>localmacros
-echo "%_builddir %_topdir/BUILD" >>localmacros
+echo "%_builddir $workprefix" >>localmacros
 echo "%_buildrootdir %_topdir/BUILDROOT" >>localmacros
 echo "%buildroot %_topdir/BUILDROOT/%{name}-%{version}-%{release}.${host_arch}" >>localmacros
 echo "%_rpmdir %_topdir/RPMS" >>localmacros
