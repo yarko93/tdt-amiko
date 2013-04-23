@@ -32,7 +32,7 @@ $(DEPDIR)/%enigma2_openwebif: $(DEPDIR)/enigma2_openwebif.do_prepare
 		mkdir -p $(PKDIR)/usr/bin/ && \
 		cp -a plugin $(PKDIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif && \
 		cp -a $(buildprefix)/root/usr/bin/grab.sh $(PKDIR)/usr/bin/
-	$(toflash_build)
+	$(e2extra_build)
 	touch $@
 
 #
