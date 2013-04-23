@@ -70,6 +70,7 @@ distclean-local:
 	-rm -rf $(prefix)/*cdkroot/
 	-rm -rf $(prefix)/ipkcdk/
 	-rm -rf $(prefix)/ipkbox/
+	-rm -rf $(prefix)/ipkextras/
 	-rm -rf $(prefix)/pkgroot/
 	-rm -rf $(prefix)/*cdkroot-rpmdb
 	-rm -rf $(prefix)/*cdkroot-tftpboot

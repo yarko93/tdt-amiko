@@ -196,21 +196,6 @@ AC_ARG_ENABLE(nfsserver,
 TDT_CONDITIONAL(ENABLE_NFSSERVER,test "$enable_nfsserver" = "yes")
 AC_SUBST(NFSSERVER)
 
-AC_ARG_ENABLE(cifs,
-	AS_HELP_STRING(--enable-cifs,    enable the samba clients),
-	[case "${enableval}" in
-		yes) CIFS=samba ;;
-	esac],[enable_cifs=no])
-TDT_CONDITIONAL(ENABLE_CIFS,test "$enable_cifs" = "yes")
-AC_SUBST(CIFS)
-
-AC_ARG_ENABLE(sg3,
-	AS_HELP_STRING(--enable-sg3,    enable the sg3-utils),
-	[case "${enableval}" in
-		yes) SG3=sg3_utils ;;
-	esac],[enable_sg3=no])
-TDT_CONDITIONAL(ENABLE_SG3,test "$enable_sg3" = "yes")
-AC_SUBST(SG3)
 
 AC_ARG_ENABLE(var,
 	AS_HELP_STRING(--enable-var,    move stock and libs into var),
@@ -513,27 +498,14 @@ AC_ARG_WITH(bootprefix,
 	[  --with-bootprefix=DIR   prefix for boot files [[PREFIX/cdkroot-tftpboot]]],
 	[bootprefix="$with_bootprefix"],[bootprefix="${prefix}/cdkroot-tftpboot"])
 
-AC_ARG_WITH(serversupport,
-	[  --with-serversupport=DIR  prefix for server file templates [[PREFIX/serversupport]]],
-	[serversupport="$with_serversupport"],[serversupport="${prefix}/serversupport"])
-
-AC_ARG_WITH(customizationsdir,
-	[  --with-customizationsdir=DIR  optional directory containing customization scripts [[[CVS]]]],
-	[customizationsdir="$with_customizationsdir"],[customizationsdir="`pwd`"])
-
-AC_ARG_WITH(updatehttpprefix,
-	[  --with-updatehttpprefix=URL  optional URL containing the URL of a directory with update images [[NONE]]],
-	[updatehttpprefix="$with_updatehttpprefix"],[updatehttpprefix=])
-
 buildprefix=`pwd`
 AC_SUBST(targetprefix)
 AC_SUBST(hostprefix)
 AC_SUBST(workprefix)
 AC_SUBST(buildprefix)
 AC_SUBST(bootprefix)
-AC_SUBST(serversupport)
-AC_SUBST(customizationsdir)
-AC_SUBST(updatehttpprefix)
+
+
 $INSTALL -d ${workprefix}
 
 packagingtmpdir=$buildprefix/packagingtmpdir
@@ -542,18 +514,6 @@ PKDIR=$packagingtmpdir
 AC_SUBST(packagingtmpdir)
 AC_SUBST(ipkgbuilddir)
 AC_SUBST(PKDIR)
-
-AC_ARG_WITH(checkImage,
-	[  --with-checkImage=[[none,rename,warn]]	How/if to invoke checkImage [[none]]],
-	[CHECKIMAGE_BEHAVIOR="$withval"],[CHECKIMAGE_BEHAVIOR="true"])
-if [[ "$withval" = "rename" ]] ; then
-	TUXBOX_CHECKIMAGE='$(hostprefix)/bin/checkImage $@ || mv $@ $@_bad'
-elif [[ "$withval" = "warn" ]] ; then
-	TUXBOX_CHECKIMAGE='rm -f $@_bad; $(hostprefix)/bin/checkImage $@ || touch $@_bad'
-else
-	TUXBOX_CHECKIMAGE=@true
-fi
-AC_SUBST(TUXBOX_CHECKIMAGE)
 
 AC_ARG_WITH(archivedir,
 	[  --with-archivedir=DIR   where to store downloaded files [[Archive/]]],
@@ -571,14 +531,6 @@ AC_ARG_WITH(driverdir,
 	[  --with-driverdir=DIR    driver dir from cvs [[[CVS/]driver]]],
 	[driverdir="$with_driverdir"],[driverdir="NONE"])
 
-AC_ARG_WITH(gnuserver,
-	[  --with-gnuserver=ADDRESS   the gnu server for gnu-stuff (without ftp://)],
-	[gnuserver="$with_gnuserver"],[gnuserver=ftp.gwdg.de/pub/misc/gnu/ftp/gnu])
-
-AC_ARG_WITH(defaultserver,
-	[  --with-defaultserver=ADDRESS   the server that is taken if no server is given/works (without http://)],
-	[defaultserver="$with_defaultserver"],[defaultserver="NONE"])
-
 if test "$cvsdir" = "NONE"; then
 	if test "$appsdir" = "NONE"; then
 		appsdir="$buildprefix/apps"
@@ -595,9 +547,6 @@ else
 	fi
 fi
 
-if test "$defaultserver" = "NONE"; then
-	defaultserver=""
-fi
 
 dircheck="ok"
 AC_MSG_CHECKING([for apps directory])
@@ -620,8 +569,7 @@ fi
 
 AC_SUBST(appsdir)
 AC_SUBST(driverdir)
-AC_SUBST(gnuserver)
-AC_SUBST(defaultserver)
+
 AC_SUBST(archivedir)
 AC_SUBST(srcdir)
 
@@ -663,8 +611,6 @@ if test "$enable_ccache" = "yes"; then
 	fi
 fi
 
-FONTDIR="/share/fonts"
-AC_SUBST(FONTDIR)
 
 CLEANUP="rm -rf"
 AC_SUBST(CLEANUP)
@@ -737,7 +683,7 @@ ln -sf $configprefix/rpm config || true
 echo "%_topdir $buildprefix" >localmacros
 echo "%_specdir %_topdir/SPECS" >>localmacros
 echo "%_sourcedir %_topdir/SOURCES" >>localmacros
-echo "%_builddir %_topdir/BUILD" >>localmacros
+echo "%_builddir $workprefix" >>localmacros
 echo "%_buildrootdir %_topdir/BUILDROOT" >>localmacros
 echo "%buildroot %_topdir/BUILDROOT/%{name}-%{version}-%{release}.${host_arch}" >>localmacros
 echo "%_rpmdir %_topdir/RPMS" >>localmacros
@@ -893,7 +839,5 @@ Makefile\
 :make/vdr.mk\
 :make/update.mk
 ], [mv Makefile Makefile.pre; ./smart-rules.pl Makefile.pre])
-
-# AC_CONFIG_COMMANDS([rules-downcheck-chmod],[chmod +x rules-downcheck.pl])
 
 AC_OUTPUT
