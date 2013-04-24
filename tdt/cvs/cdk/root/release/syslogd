@@ -9,7 +9,8 @@
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON="/sbin/syslogd"
-OPTIONS="-l7 -s1000 -b0"
+IP="192.168.0.109"
+OPTIONS="-l7 -s200 -b0 -O /tmp/messages -L -R $IP:9514"
 DESC="syslogd/klogd"
 
 # Defaults
