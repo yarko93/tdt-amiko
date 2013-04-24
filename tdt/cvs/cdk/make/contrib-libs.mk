@@ -3338,9 +3338,9 @@ $(DEPDIR)/%gst_plugin_subsink: $(DEPDIR)/gst_plugin_subsink.do_compile
 #
 BEGIN[[
 gst_plugins_dvbmediasink
-  0.10.1
+  git
   {PN}-{PV}
-  plink:../apps/misc/tools/{PN}:{PN}-{PV}
+  plink:$(appsdir)/misc/tools/{PN}:{PN}-{PV}
   make:install:DESTDIR=PKDIR
 ;
 ]]END
