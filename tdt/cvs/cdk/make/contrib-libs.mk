@@ -3309,10 +3309,12 @@ $(DEPDIR)/gst_plugin_subsink.do_prepare: bootstrap gstreamer gst_ffmpeg gst_plug
 $(DEPDIR)/gst_plugin_subsink.do_compile: $(DEPDIR)/gst_plugin_subsink.do_prepare
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd $(DIR_gst_plugin_subsink) && \
+	touch NEWS README AUTHORS ChangeLog && \
 	aclocal -I $(hostprefix)/share/aclocal -I m4 && \
+	cp $(hostprefix)/share/libtool/config/ltmain.sh . && \
 	autoheader && \
 	autoconf && \
-	automake --foreign && \
+	automake --add-missing && \
 	libtoolize --force && \
 	$(BUILDENV) \
 	./configure \
