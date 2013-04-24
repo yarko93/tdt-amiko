@@ -533,7 +533,6 @@ $(DEPDIR)/%transmission: $(DEPDIR)/transmission.do_compile
 		$(INSTALL_FILE) transmission.json $(PKDIR)/etc/transmission/settings.json && \
 		$(INSTALL_DIR) $(PKDIR)/etc/init.d && \
 		$(INSTALL_BIN) transmission.init $(PKDIR)/etc/init.d/transmission
-	$(tocdk_build)
-	$(toflash_build)
+	$(extra_build)
 #	@DISTCLEANUP_transmission@
-	touch $@ || true
+	touch $@
