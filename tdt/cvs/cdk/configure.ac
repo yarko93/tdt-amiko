@@ -677,7 +677,7 @@ AC_SUBST(kernelprefix)
 #
 # localmacros
 #
-$INSTALL -d SOURCES SPECS BUILD SRPMS RPMS/{noarch,${host_arch},sh4}
+$INSTALL -d SOURCES SPECS SRPMS RPMS/{noarch,${host_arch},sh4}
 test -f config && rm config || true
 ln -sf $configprefix/rpm config || true
 echo "%_topdir $buildprefix" >localmacros
