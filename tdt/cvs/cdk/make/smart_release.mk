@@ -3,7 +3,7 @@
 #
 BEGIN[[
 init_scripts
-  0.9
+  0.10
   {PN}-{PV}
   pdircreate:{PN}-{PV}
   nothing:file://../root/etc/inittab
@@ -19,10 +19,11 @@ init_scripts
   nothing:file://../root/release/reboot
   nothing:file://../root/release/sendsigs
   nothing:file://../root/release/telnetd
- #nothing:file://../root/release/syslogd
+  nothing:file://../root/release/syslogd
   nothing:file://../root/release/crond
   nothing:file://../root/release/umountfs
   nothing:file://../root/release/lircd
+  nothing:file://../root/etc/init.d/avahi-daemon
   nothing:file://../root/etc/init.d/rdate
 ;
 ]]END
@@ -38,10 +39,12 @@ mountsysfs \
 networking \
 reboot \
 sendsigs \
+syslogd \
 telnetd \
 crond \
 lircd \
 umountfs \
+avahi-daemon \
 rdate
 
 define postinst_init_scripts
@@ -389,13 +392,10 @@ release_base: driver-ptinp driver-encrypt
 
 # Copy lircd.conf
 	touch $(prefix)/release/var/etc/.firstboot && \
-	cp -f $(buildprefix)/root/release/mme_check $(prefix)/release/etc/init.d/ && \
 	cp -f $(buildprefix)/root/bootscreen/bootlogo.mvi $(prefix)/release/boot/ && \
 	cp -f $(buildprefix)/root/bin/autologin $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/bin/vdstandby $(prefix)/release/bin/ && \
 	cp -f $(buildprefix)/root/etc/vdstandby.cfg $(prefix)/release/etc/ && \
-	cp -f $(buildprefix)/root/etc/init.d/avahi-daemon $(prefix)/release/etc/init.d/ && \
-	chmod 777 $(prefix)/release/etc/init.d/avahi-daemon && \
 	cp -f $(buildprefix)/root/etc/network/interfaces $(prefix)/release/etc/network/ && \
 	cp -f $(buildprefix)/root/sbin/flash_* $(prefix)/release/sbin/ && \
 	cp -f $(buildprefix)/root/sbin/nand* $(prefix)/release/sbin/ && \

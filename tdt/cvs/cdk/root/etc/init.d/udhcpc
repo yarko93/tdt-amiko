@@ -1,5 +1,8 @@
 #!/bin/sh
 # /etc/init.d/udhcpc: start or stop udhcpc client
+#
+# chkconfig: 0 0 0
+
 
 set -e
 

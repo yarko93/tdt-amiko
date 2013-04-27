@@ -1,4 +1,11 @@
 #!/bin/sh
+#
+# avachi-daemon
+#
+# chkconfig: S 0 20
+
+
+
 case "$1" in
 	start)
 	DHCP=`grep -c 'auto wlan0' /etc/network/interfaces`
