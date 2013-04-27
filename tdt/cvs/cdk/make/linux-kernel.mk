@@ -318,7 +318,7 @@ define postinst_driver
 depmod
 endef
 
-$(DEPDIR)/driver: $(DEPENDS_driver) $(driverdir)/Makefile linux-kernel.do_compile
+$(DEPDIR)/driver: $(DEPENDS_driver) $(driverdir)/Makefile glibc-dev linux-kernel.do_compile
 	$(PREPARE_driver)
 #	$(MAKE) -C $(KERNEL_DIR) $(MAKE_OPTS) ARCH=sh modules_prepare
 	$(start_build)
@@ -329,7 +329,9 @@ $(DEPDIR)/driver: $(DEPENDS_driver) $(driverdir)/Makefile linux-kernel.do_compil
 	cp $(driverdir)/player2/linux/include/linux/dvb/stm_ioctls.h $(targetprefix)/usr/include/linux/dvb
 	$(LN_SF) $(driverdir)/wireless/rtl8192cu/autoconf_rtl8192c_usb_linux.h $(buildprefix)/
 	$(MAKE) -C $(driverdir) ARCH=sh \
+		CONFIG_MODULES_PATH=$(targetprefix) \
 		KERNEL_LOCATION=$(buildprefix)/$(KERNEL_DIR) \
+		DRIVER_TOPDIR=$(driverdir) \
 		$(if $(HL101),HL101=$(HL101)) \
 		$(if $(SPARK),SPARK=$(SPARK)) \
 		$(if $(SPARK7162),SPARK7162=$(SPARK7162)) \
@@ -337,7 +339,9 @@ $(DEPDIR)/driver: $(DEPENDS_driver) $(driverdir)/Makefile linux-kernel.do_compil
 		$(if $(PLAYER191),PLAYER191=$(PLAYER191)) \
 		CROSS_COMPILE=$(target)-
 	$(MAKE) -C $(driverdir) ARCH=sh \
+		CONFIG_MODULES_PATH=$(targetprefix) \
 		KERNEL_LOCATION=$(buildprefix)/$(KERNEL_DIR) \
+		DRIVER_TOPDIR=$(driverdir) \
 		BIN_DEST=$(PKDIR)/bin \
 		INSTALL_MOD_PATH=$(PKDIR) \
 		DEPMOD=$(DEPMOD) \
