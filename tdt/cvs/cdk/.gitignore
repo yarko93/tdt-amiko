@@ -148,3 +148,5 @@ streamproxy-*
 ustslave-*
 Config.in
 driver-git
+build.env
+make.log
