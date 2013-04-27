@@ -1201,8 +1201,10 @@ $(DEPDIR)/jfsutils.do_compile: $(DEPDIR)/jfsutils.do_prepare
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
 		./configure \
+			--build=$(build) \
 			--host=$(target) \
 			--target=$(target) \
+			--disable-dependency-tracking \
 			--prefix= && \
 		$(MAKE)
 	touch $@
