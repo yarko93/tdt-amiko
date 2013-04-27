@@ -215,7 +215,7 @@ FILES_libstdc++-dev = \
 /usr/lib/*.so*
 
 LIBGCC := libgcc
-GCC_VERSION := 4.7.2-122
+GCC_VERSION := 4.7.2-124
 GCC_SPEC := stm-target-$(GCC).spec
 GCC_SPEC_PATCH := $(GCC_SPEC).$(GCC_VERSION).diff
 GCC_PATCHES := stm-target-$(GCC).$(GCC_VERSION).diff

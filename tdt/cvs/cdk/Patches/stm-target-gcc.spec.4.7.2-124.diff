@@ -16,7 +16,7 @@
  
  # Common patches
  %if "%{_stm_target_cpu}" != "arm"
-@@ -248,8 +250,6 @@
+@@ -245,8 +247,6 @@
  export CFLAGS="-Os"
  export CXXFLAGS="-Os"
  
@@ -25,7 +25,7 @@
  
  # When cross compiling this fails because it needs to run code
  export ac_cv_header_stdc=yes
-@@ -264,7 +264,6 @@
+@@ -261,7 +261,6 @@
  	--enable-nls \
  	--enable-c99 \
  	--enable-long-long \
@@ -33,7 +33,7 @@
  	--enable-shared \
  %if "%{_stm_target_arch}" != "armv7" && "%{_stm_target_arch}" != "armv7_uclibc"
  	--disable-libgomp \
-@@ -388,6 +389,7 @@
+@@ -383,6 +384,7 @@
  rm -r %{buildroot}%{_gccdir}/install-tools
  rm -r %{buildroot}%{_stm_cross_target_dir}%{_stm_target_libexec_dir}/gcc/%{_stm_target_config}/%{version}/install-tools
  rm -rf %{buildroot}%{_stm_cross_target_dir}%{_stm_target_libexec_dir}/gcc/%{_stm_target_config}/%{version}/plugin/gengtype
