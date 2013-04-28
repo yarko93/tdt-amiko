@@ -4,10 +4,11 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
  echo "Parameter 1: target system (1-3)"
  echo "Parameter 2: kernel (1-4)"
  echo "Parameter 3: debug (Y/N)"
- echo "Parameter 4: Python (1-2)"
- echo "Parameter 5: External LCD support (1-2)"
- echo "Parameter 6: Image  (1-5)"
- echo "Parameter 7: Media Framework (1-2)" 
+ echo "Parameter 4: Multicom (1-2)"
+ echo "Parameter 5: Python (1-2)"
+ echo "Parameter 6: External LCD support (1-2)"
+ echo "Parameter 7: Image  (1-5)"
+ echo "Parameter 8: Media Framework (1-2)" 
  exit
 fi
 
@@ -116,13 +117,61 @@ fi
 cd ../driver/
 echo "# Automatically generated config: don't edit" > .config
 echo "#" >> .config
-echo "export CONFIG_ZD1211REV_B=y" >> .config
-echo "export CONFIG_ZD1211=n"		>> .config
 echo "export CONFIG_PLAYER_191=y" >> .config
-echo "export CONFIG_MULTICOM324=y" >> .config
 cd - &>/dev/null
-MULTICOM="--enable-multicom324"
 PLAYER="--enable-player191"
+##############################################
+
+echo -e "\nMulticom:"
+echo "   1) Multicom 4.0.6 (testing)"
+echo "   2) Multicom 3.2.4 "
+case $4 in
+        [1-2]) REPLY=$4
+        echo -e "\nSelected multicom: $REPLY\n"
+        ;;
+        *)
+        read -p "Select multicom (1-2)? ";;
+esac
+
+case "$REPLY" in
+	1) MULTICOM="--enable-multicom406"
+       cd ../driver/include/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s ../multicom-4.0.6/include multicom
+       cd - &>/dev/null
+
+       cd ../driver/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s multicom-4.0.6 multicom
+       echo "export CONFIG_MULTICOM406=y" >> .config
+       cd - &>/dev/null
+    ;;
+	2 ) MULTICOM="--enable-multicom324"
+       cd ../driver/include/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s ../multicom-3.2.4/include multicom
+       cd - &>/dev/null
+
+       cd ../driver/
+       if [ -L multicom ]; then
+          rm multicom
+       fi
+
+       ln -s multicom-3.2.4 multicom
+       echo "export CONFIG_MULTICOM324=y" >> .config
+       cd - &>/dev/null
+    ;;
+	*) MULTICOM="--enable-multicom324";;
+esac
 
 ##############################################
 echo -e "\nSelect Python:"
@@ -265,7 +314,7 @@ esac
 			    rm vdr
 			fi
 			    ln -s vdr-1.7.22 vdr
-			cd -
+			cd - &>/dev/null
 			;;
 			2) IMAGE="--enable-vdr1727"
 			    cd ../apps/vdr/
@@ -273,7 +322,7 @@ esac
 			    rm vdr
 			fi
 			    ln -s vdr-1.7.27 vdr
-			cd -
+			cd - &>/dev/null
 			;;
 			*) IMAGE="--enable-vdr1722";;
 			esac

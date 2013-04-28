@@ -7,15 +7,15 @@ AC_PROG_CC
 AC_PROG_CXX
 AM_PROG_LIBTOOL
 
-AC_ARG_ENABLE([multicom322], 
-        [AS_HELP_STRING(--enable-multicom322,    enable multicom322 stuff)], 
+AC_ARG_ENABLE([multicom406], 
+        [AS_HELP_STRING(--enable-multicom406,    enable multicom406 stuff)], 
         [case "${enableval}" in 
-                yes) enable_multicom322=true ;; 
-                no) enable_multicom322=false ;; 
-                *) AC_MSG_ERROR([bad value ${enableval} for --enable-multicom322]) ;; 
+                yes) enable_multicom406=true ;; 
+                no) enable_multicom406=false ;; 
+                *) AC_MSG_ERROR([bad value ${enableval} for --enable-multicom406]) ;; 
         esac]) 
-AM_CONDITIONAL([ENABLE_MULTICOM322], [test x$enable_multicom322 = xtrue])
-AC_SUBST(MULTICOM322)
+AM_CONDITIONAL([ENABLE_MULTICOM406], [test x$enable_multicom406 = xtrue])
+AC_SUBST(MULTICOM406)
 
 AC_ARG_ENABLE([multicom324], 
         [AS_HELP_STRING(--enable-multicom324,    enable multicom324 stuff)], 

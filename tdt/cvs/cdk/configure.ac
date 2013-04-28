@@ -36,13 +36,13 @@ AC_ARG_ENABLE(player191,
 TDT_CONDITIONAL(ENABLE_PLAYER191,test "$enable_player191" = "yes")
 AC_SUBST(PLAYER191)
 
-AC_ARG_ENABLE(multicom322,
-	AS_HELP_STRING(--enable-multicom322, set up the CDK to use multicom322),
+AC_ARG_ENABLE(multicom406,
+	AS_HELP_STRING(--enable-multicom406, set up the CDK to use multicom406),
 	[case "${enableval}" in
-		yes) MULTICOM322=multicom322 ;;
-	esac],[enable_multicom322=no])
-TDT_CONDITIONAL(ENABLE_MULTICOM322,test "$enable_multicom322" = "yes")
-AC_SUBST(MULTICOM322)
+		yes) MULTICOM406=multicom406 ;;
+	esac],[enable_multicom406=no])
+TDT_CONDITIONAL(ENABLE_MULTICOM406,test "$enable_multicom406" = "yes")
+AC_SUBST(MULTICOM406)
 
 AC_ARG_ENABLE(multicom324,
 	AS_HELP_STRING(--enable-multicom324, set up the CDK to use multicom324),
@@ -773,7 +773,7 @@ sg3 utils                   : $enable_sg3
 DEBUG                       : $enable_debug
 Player179                   : $enable_player179
 Player191                   : $enable_player191
-Multicom322                 : $enable_multicom322
+Multicom406                 : $enable_multicom406
 Multicom324                 : $enable_multicom324
 MediaFw Gstreamer           : $enable_mediafwgstreamer
 MediaFw                     : $MEDIAFW

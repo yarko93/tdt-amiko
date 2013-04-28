@@ -11,7 +11,7 @@
 #	cd $(appsdir)/misc/tools && \
 #	libtoolize -f -c && \
 #	$(CONFIGURE) --prefix= \
-#	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324)
+#	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324)
 #
 #$(DEPDIR)/misc-tools: $(DEPDIR)/%misc-tools: driver libstdc++-dev libdvdnav libdvdcss libpng jpeg ffmpeg expat fontconfig bzip2 $(appsdir)/misc/tools/config.status
 #	$(start_build)
@@ -85,7 +85,7 @@ $(DEPDIR)/devinit.do_compile: $(DEPDIR)/devinit.do_prepare
 	cd $(DIR_devinit) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -145,7 +145,7 @@ $(DEPDIR)/evremote2.do_compile: $(DEPDIR)/evremote2.do_prepare
 	cd $(DIR_evremote2) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -204,7 +204,7 @@ $(DEPDIR)/fp_control.do_compile: $(DEPDIR)/fp_control.do_prepare
 	cd $(DIR_fp_control) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -263,7 +263,7 @@ $(DEPDIR)/gitVCInfo.do_compile: $(DEPDIR)/gitVCInfo.do_prepare
 	cd $(DIR_gitVCInfo) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -322,7 +322,7 @@ $(DEPDIR)/hotplug.do_compile: $(DEPDIR)/hotplug.do_prepare
 	cd $(DIR_hotplug) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -384,7 +384,7 @@ $(DEPDIR)/libeplayer3.do_compile: $(DEPDIR)/libeplayer3.do_prepare
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
 		--includedir=/usr/include \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -443,7 +443,7 @@ $(DEPDIR)/libmme_host.do_compile: $(DEPDIR)/libmme_host.do_prepare
 	cd $(DIR_libmme_host) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -503,7 +503,7 @@ $(DEPDIR)/libmmeimage.do_compile: $(DEPDIR)/libmmeimage.do_prepare
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
 		     --includedir=/usr/include \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -562,7 +562,7 @@ $(DEPDIR)/showiframe.do_compile: $(DEPDIR)/showiframe.do_prepare
 	cd $(DIR_showiframe) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -621,7 +621,7 @@ $(DEPDIR)/stfbcontrol.do_compile: $(DEPDIR)/stfbcontrol.do_prepare
 	cd $(DIR_stfbcontrol) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -680,7 +680,7 @@ $(DEPDIR)/streamproxy.do_compile: $(DEPDIR)/streamproxy.do_prepare
 	cd $(DIR_streamproxy) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -739,7 +739,7 @@ $(DEPDIR)/ustslave.do_compile: $(DEPDIR)/ustslave.do_prepare
 	cd $(DIR_ustslave) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
@@ -798,7 +798,7 @@ $(DEPDIR)/eplayer4.do_compile: $(DEPDIR)/eplayer4.do_prepare
 	cd $(DIR_eplayer4) && \
 	libtoolize -f -c && \
 	$(CONFIGURE) --prefix= \
-	$(if $(MULTICOM322), --enable-multicom322) $(if $(MULTICOM324), --enable-multicom324) \
+	$(if $(MULTICOM406), --enable-multicom406) $(if $(MULTICOM324), --enable-multicom324) \
 	$(MAKE)
 	touch $@
 
