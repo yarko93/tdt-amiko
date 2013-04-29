@@ -24,9 +24,9 @@ $(DEPDIR)/libboost: bootstrap $(DEPENDS_libboost)
 #
 BEGIN[[
 libz
-  1.2.7
+  1.2.8
   zlib-{PV}
-  extract:http://zlib.net/zlib-{PV}.tar.bz2
+  extract:http://zlib.net/zlib-{PV}.tar.gz
   patch:file://zlib-{PV}.patch
   make:install:DESTDIR=PKDIR
 ;
