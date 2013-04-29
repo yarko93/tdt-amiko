@@ -1706,8 +1706,7 @@ enigma2_plugin_cams_oscam
 DESCRIPTION_enigma2_plugin_cams_oscam = Open Source Conditional Access Module software
 SRC_URI_enigma2_plugin_cams_oscam = http://www.streamboard.tv/oscam/
 FILES_enigma2_plugin_cams_oscam = \
-/usr/bin/cam/oscam \
-/var/keys/oscam.*
+/usr/bin/cam/oscam
 
 $(DEPDIR)/enigma2_plugin_cams_oscam.do_prepare: bootstrap $(DEPENDS_enigma2_plugin_cams_oscam)
 	$(PREPARE_enigma2_plugin_cams_oscam)
@@ -1725,6 +1724,35 @@ $(DEPDIR)/enigma2_plugin_cams_oscam: enigma2_plugin_cams_oscam.do_compile
 		$(INSTALL_DIR) $(PKDIR)/usr/bin/cam; \
 		$(INSTALL_BIN) Distribution/oscam*-sh4-linux $(PKDIR)/usr/bin/cam/oscam
 	$(tocdk_build)
+	$(toflash_build)
+	touch $@
+
+#
+# enigma2-plugin-cams-oscam-config
+#
+BEGIN[[
+enigma2_plugin_cams_oscam_config
+  0.1
+  {PN}-{PV}
+  nothing:file://../root/var/keys/oscam.conf
+  nothing:file://../root/var/keys/oscam.dvbapi
+  nothing:file://../root/var/keys/oscam.services
+  nothing:file://../root/var/keys/oscam.srvid
+  nothing:file://../root/var/keys/oscam.user
+  nothing:file://../root/var/keys/oscam.server2
+  nothing:file://../root/var/keys/oscam.server
+  nothing:file://../root/var/keys/oscam.guess
+;
+]]END
+
+DESCRIPTION_enigma2_plugin_cams_oscam_config = Example configs for Open Source Conditional Access Module software
+SRC_URI_enigma2_plugin_cams_oscam_config = http://www.streamboard.tv/oscam/
+FILES_enigma2_plugin_cams_oscam_config = \
+/var/keys/oscam.*
+
+$(DEPDIR)/enigma2-plugin-cams-oscam-config: $(DEPENDS_enigma2_plugin_cams_oscam_config)
+	 $(PREPARE_enigma2_plugin_cams_oscam_config)
+	 $(start_build)
 		$(INSTALL_DIR) $(PKDIR)/var/keys
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.conf     $(PKDIR)/var/keys/oscam.conf
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.dvbapi   $(PKDIR)/var/keys/oscam.dvbapi
@@ -1736,10 +1764,11 @@ ifdef ENABLE_SPARK7162
 else
 		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.server   $(PKDIR)/var/keys/oscam.server
 endif
-		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.guess    $(PKDIR)/var/keys/oscam.guess
-	$(toflash_build)
+		$(INSTALL_FILE) $(buildprefix)/root/var/keys/oscam.guess    $(PKDIR)/var/keys/oscam.guess	 
+	 $(e2extra_build)
 	touch $@
-	
+
+
 #
 # parted
 #
