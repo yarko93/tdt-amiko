@@ -77,7 +77,7 @@ $(DEPDIR)/enigma2-plugins-sh4: $(DIR_e2plugin)/config.status $(enigma2_plugins_n
 			read_control_file('$(DIR_e2plugin)/' + pk + '/CONTROL/control') \n\
 		except IOError: \n\
 			print 'skipping', pk \n\
-		for s in ['preinst', 'postinst', 'prerm', 'postrm']: \n\
+		for s in ['preinst', 'postinst', 'prerm', 'postrm', 'conffiles']: \n\
 			try: \n\
 				bb_set(s + '_' + package, open('$(DIR_e2plugin)/' + pk + '/CONTROL/' + s).read()) \n\
 			except IOError: \n\
@@ -108,7 +108,7 @@ $(DEPDIR)/enigma2-plugins-sh4-%: $(DIR_e2plugin)/config.status
 		bb_set('FILES_' + package, '/') \n\
 	except IOError: \n\
 		print 'skipping', pk \n\
-	for s in ['preinst', 'postinst', 'prerm', 'postrm']: \n\
+	for s in ['preinst', 'postinst', 'prerm', 'postrm', 'conffiles']: \n\
 		try: \n\
 			bb_set(s + '_' + package, open('$(DIR_e2plugin)/' + pk + '/CONTROL/' + s).read()) \n\
 		except IOError: \n\
